@@ -1,4 +1,4 @@
-DROP FUNCTION IF EXISTS portal.atualizar_area_atuacao(id_osc_req INTEGER, cd_area_atuacao_req INTEGER, cd_subarea_atuacao_req INTEGER, tx_nome_outra_req TEXT, ft_area_atuacao_req TEXT, bo_oficial_req BOOLEAN);
+ÔªøDROP FUNCTION IF EXISTS portal.atualizar_area_atuacao(id_osc_req INTEGER, cd_area_atuacao_req INTEGER, cd_subarea_atuacao_req INTEGER, tx_nome_outra_req TEXT, ft_area_atuacao_req TEXT, bo_oficial_req BOOLEAN);
 
 CREATE OR REPLACE FUNCTION portal.atualizar_area_atuacao(id_osc_req INTEGER, cd_area_atuacao_req INTEGER, cd_subarea_atuacao_req INTEGER, tx_nome_outra_req TEXT, ft_area_atuacao_req TEXT, bo_oficial_req BOOLEAN)
  RETURNS TABLE(
@@ -36,6 +36,6 @@ BEGIN
 			cd_subarea_atuacao = cd_subarea_atuacao_req; 
 	END IF; 
 
-	mensagem := '¡rea de atuaÁ„o atualizada';
+	mensagem := '√Årea de atua√ß√£o atualizada';
 END; 
 $$ LANGUAGE 'plpgsql';
