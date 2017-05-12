@@ -20,7 +20,7 @@ BEGIN
 	RETURN QUERY 
 		EXECUTE 
 			'SELECT vw_busca_osc.id_osc, vw_busca_osc.tx_razao_social_osc as tx_nome_osc
-			FROM portal.vw_busca_osc
+			FROM osc.vw_busca_osc
 			WHERE 
 			(
 				similarity(vw_busca_osc.cd_identificador_osc::TEXT, LTRIM(''' || param::TEXT || ''', ''0'')) >= 0.25 
