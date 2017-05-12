@@ -19,11 +19,11 @@ CREATE MATERIALIZED VIEW portal.vw_osc_participacao_social_conselho_outro AS
     tb_participacao_social_conselho.ft_tipo_participacao,
 	tb_participacao_social_conselho.cd_periodicidade_reuniao_conselho,
     (SELECT tx_nome_periodicidade_reuniao_conselho FROM syst.dc_periodicidade_reuniao_conselho WHERE cd_periodicidade_reuniao_conselho = tb_participacao_social_conselho.cd_periodicidade_reuniao_conselho)::TEXT AS tx_nome_periodicidade_reuniao_conselho,
-    tb_participacao_social_conselho.ft_periodicidade_reuniao,
-    tb_participacao_social_conselho_outro.id_conselho
+    tb_participacao_social_conselho.ft_periodicidade_reuniao--,
+    --tb_participacao_social_conselho_outro.id_conselho
    FROM osc.tb_osc
      JOIN osc.tb_participacao_social_conselho ON tb_osc.id_osc = tb_participacao_social_conselho.id_osc
-     JOIN osc.tb_participacao_social_conselho_outro ON tb_participacao_social_conselho.id_conselho = tb_participacao_social_conselho_outro.id_conselho
+     JOIN osc.tb_participacao_social_conselho_outro ON tb_participacao_social_conselho.id_conselho = tb_participacao_social_conselho_outro.id_conselho_outro
   WHERE tb_osc.bo_osc_ativa
 WITH DATA;
 
