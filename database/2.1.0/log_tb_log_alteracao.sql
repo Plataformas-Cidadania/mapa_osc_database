@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS log.tb_log_alteracao;
+
 CREATE TABLE log.tb_log_alteracao
 (
   id_log_alteracao serial NOT NULL, -- Identificador do log de alteração
