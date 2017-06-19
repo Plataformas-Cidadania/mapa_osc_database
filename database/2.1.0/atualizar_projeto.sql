@@ -1,36 +1,9 @@
-﻿DROP FUNCTION IF EXISTS portal.atualizar_projeto(integer, integer, text, text, integer, text, date, text, date, text, double precision, text, text, text, integer, text, text, text, integer, text, double precision, text, integer, text, text, text, text, text);
+DROP FUNCTION IF EXISTS portal.atualizar_projeto(id INTEGER, idprojeto INTEGER, nomeprojeto TEXT, ftnomeprojeto TEXT, cdstatusprojeto INTEGER, ftstatusprojeto TEXT, dtdatainicioprojeto DATE, ftdatainicioprojeto TEXT, dtdatafimprojeto DATE, ftdatafimprojeto TEXT, nrvalortotalprojeto DOUBLE PRECISION, ftvalortotalprojeto TEXT, link_projeto TEXT, ftlinkprojeto TEXT, cdabrangenciaprojeto INTEGER, ftabrangenciaprojeto TEXT, descricaoprojeto TEXT, ftdescricaoprojeto TEXT, nrtotalbeneficiarios INTEGER, fttotalbeneficiarios TEXT, nrvalorcaptadoprojeto DOUBLE PRECISION, ftvalorcaptadoprojeto TEXT, cdzonaatuacaoprojeto INTEGER, ftzonaatuacao_projeto TEXT, metodologiamonitoramento TEXT, ftmetodologiamonitoramento TEXT, identificadorprojetoexterno TEXT, ftidentificadorprojetoexterno TEXT);
 
-CREATE OR REPLACE FUNCTION portal.atualizar_projeto(
-    IN id integer,
-    IN idprojeto integer,
-    IN nomeprojeto text,
-    IN ftnomeprojeto text,
-    IN cdstatusprojeto integer,
-    IN ftstatusprojeto text,
-    IN dtdatainicioprojeto date,
-    IN ftdatainicioprojeto text,
-    IN dtdatafimprojeto date,
-    IN ftdatafimprojeto text,
-    IN nrvalortotalprojeto double precision,
-    IN ftvalortotalprojeto text,
-    IN link_projeto text,
-    IN ftlinkprojeto text,
-    IN cdabrangenciaprojeto integer,
-    IN ftabrangenciaprojeto text,
-    IN descricaoprojeto text,
-    IN ftdescricaoprojeto text,
-    IN nrtotalbeneficiarios integer,
-    IN fttotalbeneficiarios text,
-    IN nrvalorcaptadoprojeto double precision,
-    IN ftvalorcaptadoprojeto text,
-    IN cdzonaatuacaoprojeto integer,
-    IN ftzonaatuacao_projeto text,
-    IN metodologiamonitoramento text,
-    IN ftmetodologiamonitoramento text,
-    IN identificadorprojetoexterno text,
-    IN ftidentificadorprojetoexterno text)
-  RETURNS TABLE(mensagem text) AS
-$BODY$
+CREATE OR REPLACE FUNCTION portal.atualizar_projeto(id INTEGER, idprojeto INTEGER, nomeprojeto TEXT, ftnomeprojeto TEXT, cdstatusprojeto INTEGER, ftstatusprojeto TEXT, dtdatainicioprojeto DATE, ftdatainicioprojeto TEXT, dtdatafimprojeto DATE, ftdatafimprojeto TEXT, nrvalortotalprojeto DOUBLE PRECISION, ftvalortotalprojeto TEXT, link_projeto TEXT, ftlinkprojeto TEXT, cdabrangenciaprojeto INTEGER, ftabrangenciaprojeto TEXT, descricaoprojeto TEXT, ftdescricaoprojeto TEXT, nrtotalbeneficiarios INTEGER, fttotalbeneficiarios TEXT, nrvalorcaptadoprojeto DOUBLE PRECISION, ftvalorcaptadoprojeto TEXT, cdzonaatuacaoprojeto INTEGER, ftzonaatuacao_projeto TEXT, metodologiamonitoramento TEXT, ftmetodologiamonitoramento TEXT, identificadorprojetoexterno TEXT, ftidentificadorprojetoexterno TEXT)
+  RETURNS TABLE(
+	mensagem TEXT
+)AS $$
 
 BEGIN 
 	UPDATE 
@@ -69,7 +42,4 @@ BEGIN
 	mensagem := 'Projeto atualizado';
 	RETURN NEXT;
 END; 
-$BODY$
-  LANGUAGE plpgsql VOLATILE
-  COST 100
-  ROWS 1000;
+$$ LANGUAGE 'plpgsql';
