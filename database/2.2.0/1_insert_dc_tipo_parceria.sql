@@ -6,5 +6,5 @@ VALUES
 	(2, 'Termo de parceria'), 
 	(3, 'Contrato de gestão'), 
 	(4, 'Convênio'), 
-	(5, 'Acordo de Cooperação Técnica'), 
+	(5, 'Acordo de cooperação técnica'), 
 	(6, 'Outro');
