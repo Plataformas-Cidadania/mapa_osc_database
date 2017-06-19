@@ -2,8 +2,9 @@ INSERT INTO
 	syst.dc_tipo_parceria (cd_tipo_parceria, tx_nome_tipo_parceria)
 VALUES 
 	(0, 'Termo de fomento'), 
-	(1, 'Termo de colaboração'), 
+	(1, 'Termo de colaboraÃ§Ã£o'), 
 	(2, 'Termo de parceria'), 
-	(3, 'Contrato de gestão'), 
-	(4, 'Convênio'), 
-	(5, 'Outro');
+	(3, 'Contrato de gestÃ£o'), 
+	(4, 'ConvÃªnio'), 
+	(5, 'Acordo de CooperaÃ§Ã£o TÃ©cnica'), 
+	(6, 'Outro');
