@@ -1,8 +1,8 @@
-﻿-- Materialized View: portal.vw_busca_osc
+﻿-- Materialized View: osc.vw_busca_osc
 
-DROP MATERIALIZED VIEW portal.vw_busca_osc;
+DROP MATERIALIZED VIEW osc.vw_busca_osc;
 
-CREATE MATERIALIZED VIEW portal.vw_busca_osc AS 
+CREATE MATERIALIZED VIEW osc.vw_busca_osc AS 
  SELECT tb_osc.id_osc,
     tb_osc.cd_identificador_osc,
     translate(btrim(tb_dados_gerais.tx_razao_social_osc), '.,/,\,|,:,#,@,$,&,!,?,(,),[,]'::text, ''::text) AS tx_razao_social_osc,
@@ -38,5 +38,5 @@ CREATE MATERIALIZED VIEW portal.vw_busca_osc AS
   WHERE tb_osc.bo_osc_ativa = true
 WITH DATA;
 
-ALTER TABLE portal.vw_busca_osc
+ALTER TABLE osc.vw_busca_osc
   OWNER TO postgres;
