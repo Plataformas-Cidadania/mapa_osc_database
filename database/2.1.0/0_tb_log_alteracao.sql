@@ -9,5 +9,5 @@ CREATE TABLE log.tb_log_alteracao
   dt_alteracao timestamp without time zone NOT NULL, -- Data de alteração do dado
   tx_dado_anterior json, -- Valor dado anterior
   tx_dado_posterior json, -- Valor do dado atualizado
-  CONSTRAINT pk_tb_log_alteracao2 PRIMARY KEY (id_log_alteracao) -- Chave primária da tabela de log de alteração
+  CONSTRAINT pk_tb_log_alteracao PRIMARY KEY (id_log_alteracao) -- Chave primária da tabela de log de alteração
 );
