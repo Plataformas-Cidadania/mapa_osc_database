@@ -4,7 +4,8 @@ CREATE OR REPLACE FUNCTION portal.obter_representante(id INTEGER) RETURNS TABLE(
 	tx_email_usuario TEXT, 
 	tx_nome_usuario TEXT, 
 	nr_cpf_usuario NUMERIC(11, 0), 
-	bo_lista_email BOOLEAN
+	bo_lista_email BOOLEAN, 
+	cd_tipo_usuario INTEGER
 ) AS $$ 
 BEGIN 
 	RETURN QUERY 
@@ -12,12 +13,11 @@ BEGIN
 			tb_usuario.tx_email_usuario, 
 			tb_usuario.tx_nome_usuario, 
 			tb_usuario.nr_cpf_usuario, 
-			tb_usuario.bo_lista_email 
+			tb_usuario.bo_lista_email, 
+			tb_usuario.cd_tipo_usuario 
 		FROM 
 			portal.tb_usuario 
 		WHERE 
-			tb_usuario.id_usuario = id
-		AND 
-			tb_usuario.cd_tipo_usuario = 2; 
+			tb_usuario.id_usuario = id; 
 END; 
 $$ LANGUAGE 'plpgsql';
