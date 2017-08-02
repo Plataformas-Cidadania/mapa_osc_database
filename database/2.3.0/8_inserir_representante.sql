@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS portal.inserir_representante(email TEXT, senha TEXT, nome TEXT, cpf NUMERIC(11, 0), lista_email BOOLEAN, representacao INTEGER[], token TEXT);
+DROP FUNCTION IF EXISTS portal.inserir_representante_osc(email TEXT, senha TEXT, nome TEXT, cpf NUMERIC(11, 0), lista_email BOOLEAN, representacao INTEGER[], token TEXT);
 
-CREATE OR REPLACE FUNCTION portal.inserir_representante(email TEXT, senha TEXT, nome TEXT, cpf NUMERIC(11, 0), lista_email BOOLEAN, representacao INTEGER[], token TEXT) RETURNS TABLE(
+CREATE OR REPLACE FUNCTION portal.inserir_representante_osc(email TEXT, senha TEXT, nome TEXT, cpf NUMERIC(11, 0), lista_email BOOLEAN, representacao INTEGER[], token TEXT) RETURNS TABLE(
 	status BOOLEAN,
 	mensagem TEXT
 )AS $$
