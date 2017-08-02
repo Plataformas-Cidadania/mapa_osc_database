@@ -1,7 +1,7 @@
 DROP FUNCTION IF EXISTS portal.inserir_representante_osc(email TEXT, senha TEXT, nome TEXT, cpf NUMERIC(11, 0), lista_email BOOLEAN, representacao INTEGER[], token TEXT);
 
 CREATE OR REPLACE FUNCTION portal.inserir_representante_osc(email TEXT, senha TEXT, nome TEXT, cpf NUMERIC(11, 0), lista_email BOOLEAN, representacao INTEGER[], token TEXT) RETURNS TABLE(
-	status BOOLEAN,
+	flag BOOLEAN,
 	mensagem TEXT
 )AS $$
 
@@ -25,28 +25,28 @@ BEGIN
 		VALUES (idosc, idusuario); 
 	END LOOP;
 	
-	status := true;
+	flag := true;
 	mensagem := 'Representante de OSC criado.';
 	RETURN NEXT;
 
 EXCEPTION 
 	WHEN foreign_key_violation THEN 
-		status := false;
+		flag := false;
 		mensagem := 'OSC(s) informada não existe.';
 		RETURN NEXT;
 
 	WHEN not_null_violation THEN 
-		status := false;
+		flag := false;
 		mensagem := 'Campo(s) obrigatório(s) não foram preenchido(s).';
 		RETURN NEXT;
 
 	WHEN unique_violation THEN 
-		status := false;
+		flag := false;
 		mensagem := 'Este CPF e/ou e-mail já está(ão) sendo utilizado(s).';
 		RETURN NEXT;
 
 	WHEN others THEN 
-		status := false;
+		flag := false;
 		mensagem := 'Ocorreu um erro.';
 		RETURN NEXT;
 
