@@ -16,6 +16,13 @@ BEGIN
 	INSERT INTO portal.tb_token(id_usuario, tx_token, dt_data_expiracao_token) 
 	VALUES (idusuario, token, (NOW() + (30 * interval '1 day'))::DATE);
 	
+	IF lista_email THEN 
+		IF (SELECT NOT EXISTS(SELECT true FROM portal.tb_newsletters WHERE tx_email_assinante = email)) THEN 
+			INSERT INTO portal.tb_newsletters (tx_email_assinante, tx_nome_assinante) 
+			VALUES (email, nome);
+		END IF;
+	END IF;
+	
 	flag := true;
 	mensagem := 'Representante de governo criado.';
 	RETURN NEXT;

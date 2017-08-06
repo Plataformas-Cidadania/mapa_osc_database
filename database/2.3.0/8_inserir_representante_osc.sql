@@ -25,6 +25,13 @@ BEGIN
 		VALUES (idosc, idusuario); 
 	END LOOP;
 	
+	IF lista_email THEN 
+		IF (SELECT NOT EXISTS(SELECT true FROM portal.tb_newsletters WHERE tx_email_assinante = email)) THEN 
+			INSERT INTO portal.tb_newsletters (tx_email_assinante, tx_nome_assinante) 
+			VALUES (email, nome);
+		END IF;
+	END IF;
+	
 	flag := true;
 	mensagem := 'Representante de OSC criado.';
 	RETURN NEXT;
