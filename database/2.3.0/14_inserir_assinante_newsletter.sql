@@ -16,17 +16,17 @@ BEGIN
 EXCEPTION 
 	WHEN not_null_violation THEN 
 		flag := false;
-		mensagem := 'Campo(s) obrigatório(s) não foram preenchido(s).';
+		mensagem := 'Campo(s) obrigatório(s) não foram preenchido(s) na gravação do assinante no banco de dados.';
 		RETURN NEXT;
 		
 	WHEN unique_violation THEN 
 		flag := false;
-		mensagem := 'Este e-mail já está sendo utilizado.';
+		mensagem := 'Este e-mail já está sendo utilizado na gravação do assinante no banco de dados.';
 		RETURN NEXT;
 		
 	WHEN others THEN 
 		flag := false;
-		mensagem := 'Ocorreu um erro.';
+		mensagem := 'Ocorreu um erro na gravação do assinante no banco de dados.';
 		RETURN NEXT;
 		
 END;
