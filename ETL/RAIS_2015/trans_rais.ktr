@@ -75,6 +75,30 @@
   <notepads>
   </notepads>
   <connection>
+    <name>desenv</name>
+    <server>10.1.4.110</server>
+    <type>POSTGRESQL</type>
+    <access>Native</access>
+    <database>portalosc</database>
+    <port>5432</port>
+    <username>i3geo</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb10be75dfc2ff8b</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>5432</attribute></attribute>
+      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>N</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
+  <connection>
     <name>localhost</name>
     <server>localhost</server>
     <type>POSTGRESQL</type>
@@ -99,10 +123,12 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Add constants</from><to>Execute SQL script</to><enabled>Y</enabled> </hop>
   <hop> <from>Replace in string</from><to>Add constants</to><enabled>Y</enabled> </hop>
   <hop> <from>Ler CSV</from><to>Select values</to><enabled>Y</enabled> </hop>
   <hop> <from>Select values</from><to>Replace in string</to><enabled>Y</enabled> </hop>
+  <hop> <from>Add constants</from><to>Execute SQL script</to><enabled>Y</enabled> </hop>
+  <hop> <from>Select values</from><to>Modified Java Script Value</to><enabled>Y</enabled> </hop>
+  <hop> <from>Modified Java Script Value</from><to>Add constants</to><enabled>Y</enabled> </hop>
   </order>
   <step>
     <name>Add constants</name>
@@ -123,7 +149,7 @@
         <currency/>
         <decimal/>
         <group/>
-        <nullif>MTE&#x2f;RAIS</nullif>
+        <nullif>RAIS&#x2f;MTE</nullif>
         <length>-1</length>
         <precision>-1</precision>
         <set_empty_string>N</set_empty_string>
@@ -131,7 +157,7 @@
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>426</xloc>
+      <xloc>392</xloc>
       <yloc>308</yloc>
       <draw>Y</draw>
       </GUI>
@@ -153,7 +179,7 @@
     <single_statement>N</single_statement>
     <replace_variables>Y</replace_variables>
     <quoteString>N</quoteString>
-    <sql>UPDATE osc.tb_osc SET bo_osc_ativa &#x3d; false WHERE ft_identificador_osc &#x3d; &#x27;MTE&#x2f;RAIS&#x27;&#x3b;&#xd;&#xa;&#xd;&#xa;UPDATE osc.tb_osc SET bo_osc_ativa &#x3d; &#x3f;&#x3a;&#x3a;BOOLEAN WHERE cd_identificador_osc &#x3d; &#x3f;&#x3b;&#xd;&#xa;&#xd;&#xa;INSERT INTO osc.tb_osc &#x28;cd_identificador_osc, ft_identificador_osc, bo_osc_ativa, ft_osc_ativa&#x29; &#xd;&#xa;SELECT &#x3f;, &#x27;&#x3f;&#x27;, &#x3f;&#x3a;&#x3a;BOOLEAN, &#x27;&#x3f;&#x27;&#xd;&#xa;WHERE NOT EXISTS&#x28;SELECT cd_identificador_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;UPDATE osc.tb_dados_gerais SET tx_razao_social_osc &#x3d; &#x27;&#x3f;&#x27;, ft_razao_social_osc &#x3d; &#x27;&#x3f;&#x27;, cd_subclasse_atividade_economica_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC, ft_subclasse_atividade_economica_osc &#x3d; &#x27;&#x3f;&#x27;, cd_natureza_juridica_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC, ft_natureza_juridica_osc &#x3d; &#x27;&#x3f;&#x27;, dt_fundacao_osc &#x3d; to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29;, ft_fundacao_osc &#x3d; &#x27;&#x3f;&#x27;&#xd;&#xa;WHERE id_osc &#x3d; &#x28;SELECT id_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;INSERT INTO osc.tb_dados_gerais &#x28;id_osc,tx_razao_social_osc, ft_razao_social_osc, cd_subclasse_atividade_economica_osc, ft_subclasse_atividade_economica_osc, cd_natureza_juridica_osc, ft_natureza_juridica_osc, dt_fundacao_osc, ft_fundacao_osc&#x29;&#xd;&#xa;SELECT a.id_osc, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;,&#x3f;&#x3a;&#x3a;NUMERIC, &#x27;&#x3f;&#x27;, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;&#x3f;&#x27;, to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29; as dt_inicial, &#x27;&#x3f;&#x27;&#xd;&#xa;FROM osc.tb_osc a &#xd;&#xa;WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#xd;&#xa;AND NOT EXISTS&#x28;SELECT &#x2a; FROM osc.tb_dados_gerais WHERE osc.tb_dados_gerais.id_osc &#x3d; a.id_osc&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;UPDATE osc.tb_contato SET tx_telefone &#x3d; &#x27;&#x3f;&#x27;, ft_telefone &#x3d; &#x27;&#x3f;&#x27;, tx_email &#x3d; &#x27;&#x3f;&#x27;, ft_email &#x3d; &#x27;&#x3f;&#x27;&#xd;&#xa;WHERE id_osc &#x3d; &#x28;SELECT id_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;INSERT INTO osc.tb_contato&#x28;id_osc, tx_telefone, ft_telefone, tx_email, ft_email&#x29;&#xd;&#xa;SELECT a.id_osc, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;&#xd;&#xa;FROM osc.tb_osc a &#xd;&#xa;WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#xd;&#xa;AND NOT EXISTS&#x28;SELECT &#x2a; FROM osc.tb_contato WHERE osc.tb_contato.id_osc &#x3d; a.id_osc&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;UPDATE osc.tb_localizacao SET tx_endereco &#x3d; &#x27;&#x3f;&#x27;, ft_endereco &#x3d; &#x27;&#x3f;&#x27;, tx_bairro &#x3d; &#x27;&#x3f;&#x27;, ft_bairro &#x3d; &#x27;&#x3f;&#x27;, cd_municipio &#x3d; edmu_cd_municipio, ft_municipio &#x3d; &#x27;&#x3f;&#x27;, nr_cep &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC, ft_cep &#x3d; &#x27;&#x3f;&#x27;, geo_localizacao &#x3d; ST_GeomFromText&#x28;concat&#x28;&#x27;POINT&#x28;&#x27;,CONCAT&#x28;&#x3f;&#x3a;&#x3a;NUMERIC,&#x27; &#x27;,&#x3f;&#x3a;&#x3a;NUMERIC&#x29;,&#x27;&#x29;&#x27;&#x29;,4674&#x29;, ft_geo_localizacao &#x3d; 3, bo_oficial &#x3d;true&#xd;&#xa;FROM spat.ed_municipio &#xd;&#xa;WHERE SUBSTRING&#x28;edmu_cd_municipio&#x3a;&#x3a;TEXT FROM 0 FOR 7&#x29; ILIKE &#x27;&#x3f;&#x27;&#x3a;&#x3a;TEXT&#xd;&#xa;AND osc.tb_localizacao.id_osc &#x3d; &#x28;SELECT id_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;INSERT INTO osc.tb_localizacao&#x28;id_osc, tx_endereco, ft_endereco, tx_bairro, ft_bairro, cd_municipio, ft_municipio, nr_cep, ft_cep, geo_localizacao, ft_geo_localizacao, bo_oficial&#x29;&#xd;&#xa;SELECT a.id_osc, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;, edmu_cd_municipio, &#x27;&#x3f;&#x27;, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;&#x3f;&#x27;, ST_GeomFromText&#x28;concat&#x28;&#x27;POINT&#x28;&#x27;,CONCAT&#x28;&#x3f;&#x3a;&#x3a;NUMERIC,&#x27; &#x27;,&#x3f;&#x3a;&#x3a;NUMERIC&#x29;,&#x27;&#x29;&#x27;&#x29;,4674&#x29;, 3, true&#xd;&#xa;FROM osc.tb_osc a&#xd;&#xa;INNER JOIN spat.ed_municipio ON SUBSTRING&#x28;edmu_cd_municipio&#x3a;&#x3a;TEXT FROM 0 FOR 7&#x29; ILIKE &#x27;&#x3f;&#x27;&#x3a;&#x3a;TEXT&#xd;&#xa;WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#xd;&#xa;AND NOT EXISTS&#x28;SELECT &#x2a; FROM osc.tb_localizacao WHERE osc.tb_localizacao.id_osc &#x3d; a.id_osc&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;UPDATE osc.tb_relacoes_trabalho SET nr_trabalhadores_vinculo &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC, ft_trabalhadores_vinculo &#x3d; &#x27;&#x3f;&#x27;&#xd;&#xa;WHERE id_osc &#x3d; &#x28;SELECT id_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;INSERT INTO osc.tb_relacoes_trabalho&#x28;id_osc, nr_trabalhadores_vinculo, ft_trabalhadores_vinculo&#x29;&#xd;&#xa;SELECT a.id_osc, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;&#x3f;&#x27;&#xd;&#xa;FROM osc.tb_osc a&#xd;&#xa;WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#xd;&#xa;AND NOT EXISTS&#x28;SELECT &#x2a; FROM osc.tb_relacoes_trabalho WHERE osc.tb_relacoes_trabalho.id_osc &#x3d; a.id_osc&#x29;&#x3b;</sql>
+    <sql>UPDATE osc.tb_osc SET bo_osc_ativa &#x3d; &#x3f;&#x3a;&#x3a;BOOLEAN, ft_identificador_osc &#x3d; &#x27;RAIS&#x2f;MTE&#x27; WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x3b;&#xd;&#xa;&#xd;&#xa;INSERT INTO osc.tb_osc &#x28;cd_identificador_osc, ft_identificador_osc, bo_osc_ativa, ft_osc_ativa&#x29; &#xd;&#xa;SELECT &#x3f;, &#x27;&#x3f;&#x27;, &#x3f;&#x3a;&#x3a;BOOLEAN, &#x27;&#x3f;&#x27;&#xd;&#xa;WHERE NOT EXISTS&#x28;SELECT cd_identificador_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;UPDATE osc.tb_dados_gerais SET tx_razao_social_osc &#x3d; &#x27;&#x3f;&#x27;, ft_razao_social_osc &#x3d; &#x27;&#x3f;&#x27;, cd_subclasse_atividade_economica_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC, ft_subclasse_atividade_economica_osc &#x3d; &#x27;&#x3f;&#x27;, cd_natureza_juridica_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC, ft_natureza_juridica_osc &#x3d; &#x27;&#x3f;&#x27;, dt_fundacao_osc &#x3d; to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29;, ft_fundacao_osc &#x3d; &#x27;&#x3f;&#x27;&#xd;&#xa;WHERE id_osc &#x3d; &#x28;SELECT id_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;INSERT INTO osc.tb_dados_gerais &#x28;id_osc,tx_razao_social_osc, ft_razao_social_osc, cd_subclasse_atividade_economica_osc, ft_subclasse_atividade_economica_osc, cd_natureza_juridica_osc, ft_natureza_juridica_osc, dt_fundacao_osc, ft_fundacao_osc&#x29;&#xd;&#xa;SELECT a.id_osc, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;,&#x3f;&#x3a;&#x3a;NUMERIC, &#x27;&#x3f;&#x27;, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;&#x3f;&#x27;, to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29; as dt_inicial, &#x27;&#x3f;&#x27;&#xd;&#xa;FROM osc.tb_osc a &#xd;&#xa;WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#xd;&#xa;AND NOT EXISTS&#x28;SELECT &#x2a; FROM osc.tb_dados_gerais WHERE osc.tb_dados_gerais.id_osc &#x3d; a.id_osc&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;UPDATE osc.tb_contato SET tx_telefone &#x3d; &#x27;&#x3f;&#x27;, ft_telefone &#x3d; &#x27;&#x3f;&#x27;, tx_email &#x3d; &#x27;&#x3f;&#x27;, ft_email &#x3d; &#x27;&#x3f;&#x27;&#xd;&#xa;WHERE id_osc &#x3d; &#x28;SELECT id_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;INSERT INTO osc.tb_contato&#x28;id_osc, tx_telefone, ft_telefone, tx_email, ft_email&#x29;&#xd;&#xa;SELECT a.id_osc, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;&#xd;&#xa;FROM osc.tb_osc a &#xd;&#xa;WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#xd;&#xa;AND NOT EXISTS&#x28;SELECT &#x2a; FROM osc.tb_contato WHERE osc.tb_contato.id_osc &#x3d; a.id_osc&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;UPDATE osc.tb_localizacao SET tx_endereco_corrigido &#x3d; &#x27;&#x3f;&#x27;, ft_endereco_corrigido &#x3d; 3,  tx_endereco &#x3d; &#x27;&#x3f;&#x27;, ft_endereco &#x3d; &#x27;&#x3f;&#x27;, tx_bairro &#x3d; &#x27;&#x3f;&#x27;, ft_bairro &#x3d; &#x27;&#x3f;&#x27;, cd_municipio &#x3d; edmu_cd_municipio, ft_municipio &#x3d; &#x27;&#x3f;&#x27;, nr_cep &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC, ft_cep &#x3d; &#x27;&#x3f;&#x27;, geo_localizacao &#x3d; ST_GeomFromText&#x28;concat&#x28;&#x27;POINT&#x28;&#x27;,CONCAT&#x28;&#x3f;&#x3a;&#x3a;NUMERIC,&#x27; &#x27;,&#x3f;&#x3a;&#x3a;NUMERIC&#x29;,&#x27;&#x29;&#x27;&#x29;,4674&#x29;, ft_geo_localizacao &#x3d; 3, bo_oficial &#x3d;true&#xd;&#xa;FROM spat.ed_municipio &#xd;&#xa;WHERE SUBSTRING&#x28;edmu_cd_municipio&#x3a;&#x3a;TEXT FROM 0 FOR 7&#x29; ILIKE &#x27;&#x3f;&#x27;&#x3a;&#x3a;TEXT&#xd;&#xa;AND osc.tb_localizacao.id_osc &#x3d; &#x28;SELECT id_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;INSERT INTO osc.tb_localizacao&#x28;id_osc, tx_endereco_corrigido, ft_endereco_corrigido, tx_endereco, ft_endereco, tx_bairro, ft_bairro, cd_municipio, ft_municipio, nr_cep, ft_cep, geo_localizacao, ft_geo_localizacao, bo_oficial&#x29;&#xd;&#xa;SELECT a.id_osc, &#x27;&#x3f;&#x27;, 3, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;, edmu_cd_municipio, &#x27;&#x3f;&#x27;, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;&#x3f;&#x27;, ST_GeomFromText&#x28;concat&#x28;&#x27;POINT&#x28;&#x27;,CONCAT&#x28;&#x3f;&#x3a;&#x3a;NUMERIC,&#x27; &#x27;,&#x3f;&#x3a;&#x3a;NUMERIC&#x29;,&#x27;&#x29;&#x27;&#x29;,4674&#x29;, 3, true&#xd;&#xa;FROM osc.tb_osc a&#xd;&#xa;INNER JOIN spat.ed_municipio ON SUBSTRING&#x28;edmu_cd_municipio&#x3a;&#x3a;TEXT FROM 0 FOR 7&#x29; ILIKE &#x27;&#x3f;&#x27;&#x3a;&#x3a;TEXT&#xd;&#xa;WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#xd;&#xa;AND NOT EXISTS&#x28;SELECT &#x2a; FROM osc.tb_localizacao WHERE osc.tb_localizacao.id_osc &#x3d; a.id_osc&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;UPDATE osc.tb_relacoes_trabalho SET nr_trabalhadores_vinculo &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC, ft_trabalhadores_vinculo &#x3d; &#x27;&#x3f;&#x27;&#xd;&#xa;WHERE id_osc &#x3d; &#x28;SELECT id_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;INSERT INTO osc.tb_relacoes_trabalho&#x28;id_osc, nr_trabalhadores_vinculo, ft_trabalhadores_vinculo&#x29;&#xd;&#xa;SELECT a.id_osc, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;&#x3f;&#x27;&#xd;&#xa;FROM osc.tb_osc a&#xd;&#xa;WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#xd;&#xa;AND NOT EXISTS&#x28;SELECT &#x2a; FROM osc.tb_relacoes_trabalho WHERE osc.tb_relacoes_trabalho.id_osc &#x3d; a.id_osc&#x29;&#x3b;</sql>
     <set_params>N</set_params>
     <insert_field/>
     <update_field/>
@@ -169,49 +195,51 @@
        <argument><name>id_estab</name></argument>
        <argument><name>razao_social</name></argument>
        <argument><name>fonte</name></argument>
-       <argument><name>sbcl_cnae22</name></argument>
+       <argument><name>sbcl_cnae_corrigido</name></argument>
        <argument><name>fonte</name></argument>
-       <argument><name>nat_jur2014</name></argument>
+       <argument><name>nat_jur_corrigido</name></argument>
        <argument><name>fonte</name></argument>
        <argument><name>data_abertura</name></argument>
        <argument><name>fonte</name></argument>
        <argument><name>id_estab</name></argument>
        <argument><name>razao_social</name></argument>
        <argument><name>fonte</name></argument>
-       <argument><name>sbcl_cnae22</name></argument>
+       <argument><name>sbcl_cnae_corrigido</name></argument>
        <argument><name>fonte</name></argument>
-       <argument><name>nat_jur2014</name></argument>
+       <argument><name>nat_jur_corrigido</name></argument>
        <argument><name>fonte</name></argument>
        <argument><name>data_abertura</name></argument>
        <argument><name>fonte</name></argument>
        <argument><name>id_estab</name></argument>
-       <argument><name>num_telefone</name></argument>
+       <argument><name>num_telefone15</name></argument>
        <argument><name>fonte</name></argument>
-       <argument><name>email_estab</name></argument>
-       <argument><name>fonte</name></argument>
-       <argument><name>id_estab</name></argument>
-       <argument><name>num_telefone</name></argument>
-       <argument><name>fonte</name></argument>
-       <argument><name>email_estab</name></argument>
+       <argument><name>email_estab15</name></argument>
        <argument><name>fonte</name></argument>
        <argument><name>id_estab</name></argument>
-       <argument><name>nome_logradouro</name></argument>
+       <argument><name>num_telefone15</name></argument>
        <argument><name>fonte</name></argument>
-       <argument><name>nome_bairro</name></argument>
+       <argument><name>email_estab15</name></argument>
+       <argument><name>fonte</name></argument>
+       <argument><name>id_estab</name></argument>
+       <argument><name>MatchedAddress</name></argument>
+       <argument><name>nome_logradouro15</name></argument>
+       <argument><name>fonte</name></argument>
+       <argument><name>nome_bairro15</name></argument>
        <argument><name>fonte</name></argument>
        <argument><name>fonte</name></argument>
-       <argument><name>cep_estab</name></argument>
+       <argument><name>cep_estab15</name></argument>
        <argument><name>fonte</name></argument>
        <argument><name>Longitude</name></argument>
        <argument><name>Latitude</name></argument>
        <argument><name>codemun</name></argument>
        <argument><name>id_estab</name></argument>
-       <argument><name>nome_logradouro</name></argument>
+       <argument><name>MatchedAddress</name></argument>
+       <argument><name>nome_logradouro15</name></argument>
        <argument><name>fonte</name></argument>
-       <argument><name>nome_bairro</name></argument>
+       <argument><name>nome_bairro15</name></argument>
        <argument><name>fonte</name></argument>
        <argument><name>fonte</name></argument>
-       <argument><name>cep_estab</name></argument>
+       <argument><name>cep_estab15</name></argument>
        <argument><name>fonte</name></argument>
        <argument><name>Longitude</name></argument>
        <argument><name>Latitude</name></argument>
@@ -226,8 +254,8 @@
     </arguments>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>549</xloc>
-      <yloc>309</yloc>
+      <xloc>525</xloc>
+      <yloc>308</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -243,7 +271,7 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <filename>C&#x3a;&#x5c;Users&#x5c;b6519563&#x5c;Downloads&#x5c;mapaosc_2015.csv</filename>
+    <filename>&#x2f;home&#x2f;DLIPEA&#x2f;b6519563&#x2f;Downloads&#x2f;portalosc.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -255,10 +283,10 @@
     <add_filename_result>N</add_filename_result>
     <parallel>N</parallel>
     <newline_possible>N</newline_possible>
-    <encoding>UTF-8</encoding>
+    <encoding>ISO-8859-1</encoding>
     <fields>
       <field>
-        <name>&#xfeff;PrecisionDepth</name>
+        <name>PrecisionDepth</name>
         <type>String</type>
         <format/>
         <currency>R&#x24;</currency>
@@ -275,14 +303,14 @@
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>78</length>
+        <length>79</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
       </field>
       <field>
         <name>Longitude</name>
         <type>String</type>
-        <format/>
+        <format>&#x23;.&#x23;</format>
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -293,7 +321,7 @@
       <field>
         <name>Latitude</name>
         <type>String</type>
-        <format/>
+        <format>&#x23;.&#x23;</format>
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -330,7 +358,7 @@
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>26</length>
+        <length>25</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
       </field>
@@ -379,73 +407,84 @@
         <trim_type>none</trim_type>
       </field>
       <field>
-        <name>secao_cnae20</name>
+        <name>secao_cnae20_corrigido</name>
         <type>String</type>
         <format/>
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>1</length>
+        <length>2</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
       </field>
       <field>
-        <name>div_cnae20</name>
-        <type>Integer</type>
-        <format>&#x23;</format>
+        <name>div_cnae20_corrigido</name>
+        <type>String</type>
+        <format/>
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
+        <length>2</length>
+        <precision>-1</precision>
         <trim_type>none</trim_type>
       </field>
       <field>
-        <name>grp_cnae20</name>
-        <type>Integer</type>
-        <format>&#x23;</format>
+        <name>grp_cnae20_corrigido</name>
+        <type>String</type>
+        <format/>
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
+        <length>3</length>
+        <precision>-1</precision>
         <trim_type>none</trim_type>
       </field>
       <field>
-        <name>clas_cnae20</name>
-        <type>Integer</type>
-        <format>&#x23;</format>
+        <name>clas_cnae20_corrigido</name>
+        <type>String</type>
+        <format/>
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
+        <length>5</length>
+        <precision>-1</precision>
         <trim_type>none</trim_type>
       </field>
       <field>
-        <name>sbcl_cnae22</name>
-        <type>Integer</type>
-        <format>&#x23;</format>
+        <name>sbcl_cnae_corrigido</name>
+        <type>String</type>
+        <format/>
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
+        <length>7</length>
+        <precision>-1</precision>
         <trim_type>none</trim_type>
       </field>
       <field>
-        <name>nat_jur2014</name>
-        <type>Integer</type>
-        <format>&#x23;</format>
+        <name>macro_area_atuacao</name>
+        <type>String</type>
+        <format/>
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
+        <length>57</length>
+        <precision>-1</precision>
         <trim_type>none</trim_type>
       </field>
       <field>
-        <name>nu_propriet_ativ</name>
+        <name>micro_area_atuacao</name>
+        <type>String</type>
+        <format/>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>57</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>nat_jur_corrigido</name>
         <type>Integer</type>
         <format>&#x23;</format>
         <currency>R&#x24;</currency>
@@ -500,83 +539,6 @@
         <trim_type>none</trim_type>
       </field>
       <field>
-        <name>qtd_vinc_clt</name>
-        <type>Integer</type>
-        <format>&#x23;</format>
-        <currency>R&#x24;</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>qtd_vinc_estat</name>
-        <type>Integer</type>
-        <format>&#x23;</format>
-        <currency>R&#x24;</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>qtd_portador_defic</name>
-        <type>Integer</type>
-        <format>&#x23;</format>
-        <currency>R&#x24;</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>nome_logradouro</name>
-        <type>String</type>
-        <format/>
-        <currency>R&#x24;</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>37</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>nome_bairro</name>
-        <type>String</type>
-        <format/>
-        <currency>R&#x24;</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>19</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>cep_estab</name>
-        <type>Integer</type>
-        <format>&#x23;</format>
-        <currency>R&#x24;</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>email_estab</name>
-        <type>String</type>
-        <format/>
-        <currency>R&#x24;</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>37</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
         <name>data_abertura</name>
         <type>Date</type>
         <format>dd&#x2f;MM&#x2f;yyyy</format>
@@ -599,40 +561,84 @@
         <trim_type>none</trim_type>
       </field>
       <field>
-        <name>num_telefone</name>
-        <type>Integer</type>
-        <format>&#x23;</format>
-        <currency>R&#x24;</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>ind_atividade</name>
-        <type>Integer</type>
-        <format>&#x23;</format>
-        <currency>R&#x24;</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>ind_rais_neg</name>
-        <type>Integer</type>
-        <format>&#x23;</format>
-        <currency>R&#x24;</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
         <name>ind_osc</name>
+        <type>Integer</type>
+        <format>&#x23;</format>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>ano_abertura</name>
+        <type>Integer</type>
+        <format>&#x23;</format>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>nome_logradouro15</name>
+        <type>String</type>
+        <format/>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>39</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>num_logradouro15</name>
+        <type>String</type>
+        <format/>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>4</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>nome_bairro15</name>
+        <type>String</type>
+        <format/>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>19</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>cep_estab15</name>
+        <type>Integer</type>
+        <format>&#x23;</format>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>email_estab15</name>
+        <type>String</type>
+        <format/>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>37</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>num_telefone15</name>
         <type>Integer</type>
         <format>&#x23;</format>
         <currency>R&#x24;</currency>
@@ -645,8 +651,8 @@
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>119</xloc>
-      <yloc>307</yloc>
+      <xloc>53</xloc>
+      <yloc>306</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -675,7 +681,18 @@
         <case_sensitive>no</case_sensitive>
       </field>
       <field>
-        <in_stream_name>nome_logradouro</in_stream_name>
+        <in_stream_name>nome_logradouro15</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>&#x27;</replace_string>
+        <replace_by_string>&#xb4;</replace_by_string>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>yes</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
+      <field>
+        <in_stream_name>nome_bairro15</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>&#x27;</replace_string>
@@ -686,18 +703,7 @@
         <case_sensitive>no</case_sensitive>
       </field>
       <field>
-        <in_stream_name>nome_bairro</in_stream_name>
-        <out_stream_name/>
-        <use_regex>no</use_regex>
-        <replace_string>&#x27;</replace_string>
-        <replace_by_string>&#xb4;</replace_by_string>
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string/>
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-      </field>
-      <field>
-        <in_stream_name>email_estab</in_stream_name>
+        <in_stream_name>email_estab15</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>&#x27;</replace_string>
@@ -732,7 +738,7 @@
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>299</xloc>
+      <xloc>271</xloc>
       <yloc>308</yloc>
       <draw>Y</draw>
       </GUI>
@@ -765,10 +771,61 @@
         <grouping_symbol/>
         <currency_symbol/>
         <storage_type/>
+      </meta>      <meta>        <name>nome_logradouro15</name>
+        <rename>nome_logradouro15</rename>
+        <type>String</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask/>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding>ISO-8859-1</encoding>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
       </meta>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>205</xloc>
-      <yloc>310</yloc>
+      <xloc>157</xloc>
+      <yloc>308</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Modified Java Script Value</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>&#x2f;&#x2f;Script here&#xa;&#xa;var log&#x3b;&#xa;var log2&#x3b;&#xa;&#xa;log &#x3d; replace&#x28;nome_logradouro15,&#x27;&#x5c;&#x27;&#x27;,&#x27;&#x5c;&#x27;&#x5c;&#x27;&#x27;&#x29;&#x3b;&#xa;log2 &#x3d; replace&#x28;MatchedAddress,&#x27;&#x5c;&#x27;&#x27;,&#x27;&#x5c;&#x27;&#x5c;&#x27;&#x27;&#x29;&#x3b;</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>log</name>
+        <rename>log</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>log2</name>
+        <rename>log2</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>279</xloc>
+      <yloc>389</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
