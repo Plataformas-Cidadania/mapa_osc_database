@@ -10,6 +10,7 @@ BEGIN
 		portal.tb_usuario 
 	SET 
 		bo_ativo = true, 
+		bo_email_confirmado = true, 
 		dt_atualizacao = NOW() 
 	WHERE 
 		id_usuario = idusuario AND 
