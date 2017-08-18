@@ -3,9 +3,13 @@ DROP FUNCTION IF EXISTS portal.atualizar_representante(id INTEGER, email TEXT, s
 CREATE OR REPLACE FUNCTION portal.atualizar_representante(id INTEGER, email TEXT, senha TEXT, nome TEXT, representacao INTEGER[]) RETURNS TABLE(
 	status BOOLEAN, 
 	mensagem TEXT,
-	nova_representacao []
+	nova_representacao INTEGER[]
 )AS $$
 
+DECLARE
+	id_osc_insert INTEGER;
+	id_representacao_delete INTEGER;
+	
 BEGIN 
 	IF senha IS NOT NULL THEN
 		UPDATE 

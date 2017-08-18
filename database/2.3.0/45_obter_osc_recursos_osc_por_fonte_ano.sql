@@ -1,9 +1,12 @@
-﻿-- Function: portal.obter_osc_recursos_osc_por_fonte_ano(integer, text, text)
+﻿DROP FUNCTION IF EXISTS portal.obter_osc_recursos_osc_por_fonte_ano(integer, text, text);
 
--- DROP FUNCTION portal.obter_osc_recursos_osc_por_fonte_ano(integer, text, text);
+CREATE OR REPLACE FUNCTION portal.obter_osc_recursos_osc_por_fonte_ano(fonte_param integer, ano_param text, osc_param text) RETURNS TABLE(
+	cd_fonte_recursos_osc integer, 
+	id_recursos_osc integer, 
+	nr_valor_recursos_osc double precision, 
+	ft_valor_recursos_osc text, bo_nao_possui boolean
+) AS
 
-CREATE OR REPLACE FUNCTION portal.obter_osc_recursos_osc_por_fonte_ano(IN fonte_param integer, IN ano_param text, IN osc_param text)
-  RETURNS TABLE(cd_fonte_recursos_osc integer, id_recursos_osc integer, nr_valor_recursos_osc double precision, ft_valor_recursos_osc text, bo_nao_possui boolean) AS
 $BODY$ 
 BEGIN 
 	RETURN QUERY 
@@ -18,8 +21,7 @@ BEGIN
 		WHERE 
 			vw_osc_recursos_osc.cd_fonte_recursos_osc = fonte_param AND 
 			vw_osc_recursos_osc.dt_ano_recursos_osc = ano_param AND 
-			(vw_osc_recursos_osc.id_osc::TEXT = osc_param OR 
-			vw_osc_recursos_osc.tx_apelido_osc = osc_param);
+			(vw_osc_recursos_osc.id_osc::TEXT = osc_param OR vw_osc_recursos_osc.tx_apelido_osc = osc_param);
 	RETURN;
 END;
 $BODY$
