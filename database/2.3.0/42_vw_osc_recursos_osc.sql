@@ -20,7 +20,8 @@ CREATE MATERIALIZED VIEW portal.vw_osc_recursos_osc AS
     tb_recursos_osc.ft_ano_recursos_osc,
     tb_recursos_osc.nr_valor_recursos_osc,
     tb_recursos_osc.ft_valor_recursos_osc,
-    tb_recursos_osc.bo_nao_possui
+    tb_recursos_osc.bo_nao_possui,
+	tb_recursos_osc.ft_nao_possui
    FROM osc.tb_osc
      JOIN osc.tb_recursos_osc ON tb_osc.id_osc = tb_recursos_osc.id_osc
   WHERE tb_osc.bo_osc_ativa
