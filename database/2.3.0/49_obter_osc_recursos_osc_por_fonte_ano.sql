@@ -4,9 +4,7 @@ CREATE OR REPLACE FUNCTION portal.obter_osc_recursos_osc_por_fonte_ano(fonte_par
 	cd_fonte_recursos_osc INTEGER, 
 	id_recursos_osc INTEGER, 
 	nr_valor_recursos_osc DOUBLE PRECISION, 
-	ft_valor_recursos_osc TEXT, 
-	bo_nao_possui BOOLEAN, 
-	ft_nao_possui TEXT 
+	ft_valor_recursos_osc TEXT 
 ) AS $$ 
 
 BEGIN 
@@ -15,9 +13,7 @@ BEGIN
 			vw_osc_recursos_osc.cd_fonte_recursos_osc, 
 			vw_osc_recursos_osc.id_recursos_osc, 
 			vw_osc_recursos_osc.nr_valor_recursos_osc, 
-			vw_osc_recursos_osc.ft_valor_recursos_osc, 
-			vw_osc_recursos_osc.bo_nao_possui, 
-			vw_osc_recursos_osc.ft_nao_possui 
+			vw_osc_recursos_osc.ft_valor_recursos_osc 
 		FROM 
 			portal.vw_osc_recursos_osc 
 		WHERE 
