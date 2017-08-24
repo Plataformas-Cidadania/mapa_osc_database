@@ -1,4 +1,6 @@
-﻿DROP MATERIALIZED VIEW IF EXISTS portal.vw_barra_transparencia CASCADE;
+﻿-- Materialized View: portal.vw_barra_transparencia
+
+DROP MATERIALIZED VIEW IF EXISTS portal.vw_barra_transparencia CASCADE;
 
 CREATE MATERIALIZED VIEW portal.vw_barra_transparencia AS 
 	SELECT 
@@ -19,7 +21,7 @@ CREATE MATERIALIZED VIEW portal.vw_barra_transparencia AS
 		20 AS peso_projetos_atividades_programas, 
 		x.fontes_recursos_osc, 
 		5 AS peso_fontes_recursos_osc, 
-		(SELECT CAST((x.dados_gerais + x.areas_subareas_atuacao_osc + x.descricao_osc + x.titulos_certificacoes + x.relacoes_trabalho_governanca + x.espacos_participacao_social + x.projetos_atividades_programas + x.fontes_recursos_osc) AS NUMERIC(7,2))) AS "Total" 
+		(SELECT CAST((x.dados_gerais + x.areas_subareas_atuacao_osc + x.descricao_osc + x.titulos_certificacoes + x.relacoes_trabalho_governanca + x.espacos_participacao_social + x.projetos_atividades_programas + x.fontes_recursos_osc) AS NUMERIC(7,2))) total 
 	FROM 
 		(SELECT d.id_osc, (
 			(CASE WHEN NOT(d.tx_nome_fantasia_osc IS NULL) THEN 1 ELSE 0 END) +
@@ -108,7 +110,13 @@ CREATE MATERIALIZED VIEW portal.vw_barra_transparencia AS
 		portal.vw_osc_area_atuacao_projeto AS ap ON ap.id_projeto = par.id_projeto LEFT JOIN 
 		portal.vw_osc_financiador_projeto AS fin ON fin.id_projeto = ap.id_projeto LEFT JOIN 
 		portal.vw_osc_objetivo_projeto AS o ON o.id_projeto = fin.id_projeto LEFT JOIN 
-		portal.vw_osc_recursos_osc AS rec ON rec.id_osc = d.id_osc
-	LIMIT 1) x;
+		portal.vw_osc_recursos_osc AS rec ON rec.id_osc = d.id_osc) x
+	GROUP BY 
+		x.id_osc, x.dados_gerais, peso_dados_gerais, x.areas_subareas_atuacao_osc, 
+		peso_areas_subareas_atuacao_osc, x.descricao_osc, peso_descricao_osc, 
+		x.titulos_certificacoes, peso_titulos_certificacoes, x.relacoes_trabalho_governanca, 
+		peso_relacoes_trabalho_governanca, x.espacos_participacao_social, 
+		peso_espacos_participacao_social, x.projetos_atividades_programas, 
+		peso_projetos_atividades_programas, x.fontes_recursos_osc, peso_fontes_recursos_osc, total ;
 
 ALTER MATERIALIZED VIEW portal.vw_barra_transparencia OWNER TO postgres;
