@@ -7,9 +7,9 @@ CREATE OR REPLACE FUNCTION portal.obter_barra_transparencia_espacos_participacao
 
 BEGIN 
 	RETURN QUERY 
-		SELECT 
+        SELECT 
 			conselho.id_osc, 
-			CAST((
+			(CAST(SUM(
 				(CASE WHEN NOT(conselho.tx_nome_conselho IS NULL) THEN 1 ELSE 0 END) + 
 				(CASE WHEN NOT(conselho.tx_nome_tipo_participacao IS NULL) THEN 1 ELSE 0 END) + 
 				(CASE WHEN NOT(conselho.tx_nome_periodicidade_reuniao_conselho IS NULL) THEN 1 ELSE 0 END) + 
@@ -20,12 +20,14 @@ BEGIN
 				(CASE WHEN NOT(conferencia.dt_ano_realizacao IS NULL) THEN 1 ELSE 0 END) + 
 				(CASE WHEN NOT(conferencia.tx_nome_forma_participacao_conferencia IS NULL) THEN 1 ELSE 0 END) + 
 				(CASE WHEN NOT(outra.tx_nome_participacao_social_outra IS NULL) THEN 1 ELSE 0 END)
-			) AS NUMERIC(7,2)) 
+			) / COUNT(*) AS NUMERIC(7, 2))) 
 		FROM 
 			portal.vw_osc_participacao_social_conselho AS conselho FULL JOIN 
 			portal.vw_osc_representante_conselho AS representante_conselho ON conselho.id_osc = representante_conselho.id_osc FULL JOIN 
 			portal.vw_osc_participacao_social_conferencia AS conferencia ON conselho.id_osc = conferencia.id_osc FULL JOIN 
-			portal.vw_osc_participacao_social_outra AS outra ON conselho.id_osc = outra.id_osc;
+			portal.vw_osc_participacao_social_outra AS outra ON conselho.id_osc = outra.id_osc 
+		GROUP BY 
+			conselho.id_osc;
 END;
 
 $$ LANGUAGE 'plpgsql';

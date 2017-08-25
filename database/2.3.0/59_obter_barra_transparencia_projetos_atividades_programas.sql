@@ -7,9 +7,9 @@ CREATE OR REPLACE FUNCTION portal.obter_barra_transparencia_projetos_atividades_
 
 BEGIN 
 	RETURN QUERY 
-		SELECT 
+        SELECT 
 			projeto.id_osc, 
-			CAST((
+			(CAST(SUM(
 				(CASE WHEN NOT(projeto.tx_descricao_projeto IS NULL) THEN 1.111111111111111 ELSE 0 END) + 
 				(CASE WHEN NOT(projeto.tx_nome_status_projeto IS NULL) THEN 1.111111111111111 ELSE 0 END) + 
 				(CASE WHEN NOT(projeto.dt_data_inicio_projeto IS NULL) THEN 1.111111111111111 ELSE 0 END) + 
@@ -28,7 +28,7 @@ BEGIN
 				(CASE WHEN NOT(financiador.tx_nome_financiador IS NULL) THEN 1.111111111111111 ELSE 0 END) + 
 				(CASE WHEN NOT(objetivo.tx_nome_objetivo_projeto IS NULL) THEN 1.111111111111111 ELSE 0 END) + 
 				(CASE WHEN NOT(objetivo.tx_nome_meta_projeto IS NULL) THEN 1.111111111111111 ELSE 0 END)
-			) AS NUMERIC(7,2)) 
+			) / COUNT(*) AS NUMERIC(7, 2))) 
 		FROM 
 			portal.vw_osc_projeto AS projeto FULL JOIN 
 			portal.vw_osc_fonte_recursos_projeto AS fonte_recursos ON projeto.id_projeto = fonte_recursos.id_projeto FULL JOIN 
@@ -36,7 +36,9 @@ BEGIN
 			portal.vw_osc_parceira_projeto AS parceira_projeto ON projeto.id_projeto = parceira_projeto.id_projeto FULL JOIN 
 			portal.vw_osc_area_atuacao_projeto AS area_atuacao ON projeto.id_projeto = area_atuacao.id_projeto FULL JOIN 
 			portal.vw_osc_financiador_projeto AS financiador ON projeto.id_projeto = financiador.id_projeto FULL JOIN 
-			portal.vw_osc_objetivo_projeto AS objetivo ON projeto.id_projeto = objetivo.id_projeto;
+			portal.vw_osc_objetivo_projeto AS objetivo ON projeto.id_projeto = objetivo.id_projeto 
+		GROUP BY 
+			projeto.id_osc;
 END;
 
 $$ LANGUAGE 'plpgsql';

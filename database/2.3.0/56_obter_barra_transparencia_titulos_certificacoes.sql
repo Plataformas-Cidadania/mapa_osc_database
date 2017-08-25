@@ -7,13 +7,15 @@ CREATE OR REPLACE FUNCTION portal.obter_barra_transparencia_titulos_certificacoe
 
 BEGIN 
 	RETURN QUERY 
-		SELECT 
+        SELECT 
 			titulos_certificacoes.id_osc, 
-			CAST((
+			(CAST(SUM(
 				(CASE WHEN NOT(titulos_certificacoes.tx_nome_certificado IS NULL) THEN 5 ELSE 0 END)
-			) AS NUMERIC(7,2)) 
+			) / COUNT(*) AS NUMERIC(7, 2))) 
 		FROM 
-			portal.vw_osc_certificado AS titulos_certificacoes;
+			portal.vw_osc_certificado AS titulos_certificacoes
+		GROUP BY 
+			titulos_certificacoes.id_osc;
 END;
 
 $$ LANGUAGE 'plpgsql';

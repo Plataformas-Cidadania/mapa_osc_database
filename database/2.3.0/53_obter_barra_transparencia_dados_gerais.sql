@@ -9,7 +9,7 @@ BEGIN
 	RETURN QUERY 
 		SELECT 
 			dados_gerais.id_osc, 
-			CAST((
+			(CAST(SUM(
 				(CASE WHEN NOT(dados_gerais.tx_nome_fantasia_osc IS NULL) THEN 1 ELSE 0 END) + 
 				(CASE WHEN NOT(dados_gerais.tx_sigla_osc IS NULL) THEN 1 ELSE 0 END) + 
 				(CASE WHEN NOT(dados_gerais.tx_nome_situacao_imovel_osc IS NULL) THEN 1 ELSE 0 END) + 
@@ -20,9 +20,11 @@ BEGIN
 				(CASE WHEN NOT(dados_gerais.tx_resumo_osc IS NULL) THEN 4 ELSE 0 END) + 
 				(CASE WHEN NOT(dados_gerais.tx_site IS NULL) THEN 2 ELSE 0 END) + 
 				(CASE WHEN NOT(dados_gerais.tx_telefone IS NULL) THEN 4 ELSE 0 END)
-			) AS NUMERIC(7,2)) 
+			) / COUNT(*) AS NUMERIC(7, 2))) 
 		FROM 
-			portal.vw_osc_dados_gerais AS dados_gerais;
+			portal.vw_osc_dados_gerais AS dados_gerais
+		GROUP BY 
+			dados_gerais.id_osc;
 END;
 
 $$ LANGUAGE 'plpgsql';
