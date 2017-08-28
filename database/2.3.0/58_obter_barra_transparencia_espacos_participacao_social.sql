@@ -10,16 +10,16 @@ BEGIN
         SELECT 
 			conselho.id_osc, 
 			(CAST(SUM(
-				(CASE WHEN NOT(conselho.tx_nome_conselho IS NULL) THEN 1 ELSE 0 END) + 
-				(CASE WHEN NOT(conselho.tx_nome_tipo_participacao IS NULL) THEN 1 ELSE 0 END) + 
-				(CASE WHEN NOT(conselho.tx_nome_periodicidade_reuniao_conselho IS NULL) THEN 1 ELSE 0 END) + 
-				(CASE WHEN NOT(conselho.dt_data_inicio_conselho IS NULL) THEN 1 ELSE 0 END) + 
-				(CASE WHEN NOT(conselho.dt_data_fim_conselho IS NULL) THEN 1 ELSE 0 END) + 
-				(CASE WHEN NOT(representante_conselho.tx_nome_representante_conselho IS NULL) THEN 1 ELSE 0 END) + 
-				(CASE WHEN NOT(conferencia.tx_nome_conferencia IS NULL) THEN 1 ELSE 0 END) + 
-				(CASE WHEN NOT(conferencia.dt_ano_realizacao IS NULL) THEN 1 ELSE 0 END) + 
-				(CASE WHEN NOT(conferencia.tx_nome_forma_participacao_conferencia IS NULL) THEN 1 ELSE 0 END) + 
-				(CASE WHEN NOT(outra.tx_nome_participacao_social_outra IS NULL) THEN 1 ELSE 0 END)
+				(CASE WHEN NOT(conselho.tx_nome_conselho IS NULL) THEN 10 ELSE 0 END) + 
+				(CASE WHEN NOT(conselho.tx_nome_tipo_participacao IS NULL) THEN 10 ELSE 0 END) + 
+				(CASE WHEN NOT(conselho.tx_nome_periodicidade_reuniao_conselho IS NULL) THEN 10 ELSE 0 END) + 
+				(CASE WHEN NOT(conselho.dt_data_inicio_conselho IS NULL) THEN 10 ELSE 0 END) + 
+				(CASE WHEN NOT(conselho.dt_data_fim_conselho IS NULL) THEN 10 ELSE 0 END) + 
+				(CASE WHEN NOT(representante_conselho.tx_nome_representante_conselho IS NULL) THEN 10 ELSE 0 END) + 
+				(CASE WHEN NOT(conferencia.tx_nome_conferencia IS NULL) THEN 10 ELSE 0 END) + 
+				(CASE WHEN NOT(conferencia.dt_ano_realizacao IS NULL) THEN 10 ELSE 0 END) + 
+				(CASE WHEN NOT(conferencia.tx_nome_forma_participacao_conferencia IS NULL) THEN 10 ELSE 0 END) + 
+				(CASE WHEN NOT(outra.tx_nome_participacao_social_outra IS NULL) THEN 10 ELSE 0 END)
 			) / COUNT(*) AS NUMERIC(7, 2))) 
 		FROM 
 			portal.vw_osc_participacao_social_conselho AS conselho FULL JOIN 

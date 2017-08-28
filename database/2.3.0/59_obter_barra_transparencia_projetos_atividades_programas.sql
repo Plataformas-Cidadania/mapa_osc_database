@@ -10,24 +10,24 @@ BEGIN
         SELECT 
 			projeto.id_osc, 
 			(CAST(SUM(
-				(CASE WHEN NOT(projeto.tx_descricao_projeto IS NULL) THEN 1.111111111111111 ELSE 0 END) + 
-				(CASE WHEN NOT(projeto.tx_nome_status_projeto IS NULL) THEN 1.111111111111111 ELSE 0 END) + 
-				(CASE WHEN NOT(projeto.dt_data_inicio_projeto IS NULL) THEN 1.111111111111111 ELSE 0 END) + 
-				(CASE WHEN NOT(projeto.dt_data_fim_projeto IS NULL) THEN 1.111111111111111 ELSE 0 END) + 
-				(CASE WHEN NOT(projeto.tx_link_projeto IS NULL) THEN 1.111111111111111 ELSE 0 END) + 
-				(CASE WHEN NOT(projeto.nr_total_beneficiarios IS NULL) THEN 1.111111111111111 ELSE 0 END) + 
-				(CASE WHEN NOT(projeto.nr_valor_total_projeto IS NULL) THEN 1.111111111111111 ELSE 0 END) + 
-				(CASE WHEN NOT(projeto.nr_valor_captado_projeto IS NULL) THEN 1.111111111111111 ELSE 0 END) + 
-				(CASE WHEN NOT(projeto.tx_nome_abrangencia_projeto IS NULL) THEN 1.111111111111111 ELSE 0 END) + 
-				(CASE WHEN NOT(projeto.tx_nome_zona_atuacao IS NULL) THEN 1.111111111111111 ELSE 0 END) + 
-				(CASE WHEN NOT(projeto.tx_metodologia_monitoramento IS NULL) THEN 1.111111111111111 ELSE 0 END) + 
-				(CASE WHEN NOT(fonte_recursos.tx_nome_origem_fonte_recursos_projeto IS NULL) THEN 1.111111111111111 ELSE 0 END) + 
-				(CASE WHEN NOT(publico_beneficiado.tx_nome_publico_beneficiado IS NULL) THEN 1.111111111111111 ELSE 0 END) + 
-				(CASE WHEN NOT(parceira_projeto.tx_nome_osc_parceira_projeto IS NULL) THEN 1.111111111111111 ELSE 0 END) + 
-				(CASE WHEN NOT(area_atuacao.tx_nome_area_atuacao_projeto IS NULL) THEN 1.111111111111111 ELSE 0 END) + 
-				(CASE WHEN NOT(financiador.tx_nome_financiador IS NULL) THEN 1.111111111111111 ELSE 0 END) + 
-				(CASE WHEN NOT(objetivo.tx_nome_objetivo_projeto IS NULL) THEN 1.111111111111111 ELSE 0 END) + 
-				(CASE WHEN NOT(objetivo.tx_nome_meta_projeto IS NULL) THEN 1.111111111111111 ELSE 0 END)
+				(CASE WHEN NOT(projeto.tx_descricao_projeto IS NULL) THEN 5.555555555555556 ELSE 0 END) + 
+				(CASE WHEN NOT(projeto.tx_nome_status_projeto IS NULL) THEN 5.555555555555556 ELSE 0 END) + 
+				(CASE WHEN NOT(projeto.dt_data_inicio_projeto IS NULL) THEN 5.555555555555556 ELSE 0 END) + 
+				(CASE WHEN NOT(projeto.dt_data_fim_projeto IS NULL) THEN 5.555555555555556 ELSE 0 END) + 
+				(CASE WHEN NOT(projeto.tx_link_projeto IS NULL) THEN 5.555555555555556 ELSE 0 END) + 
+				(CASE WHEN NOT(projeto.nr_total_beneficiarios IS NULL) THEN 5.555555555555556 ELSE 0 END) + 
+				(CASE WHEN NOT(projeto.nr_valor_total_projeto IS NULL) THEN 5.555555555555556 ELSE 0 END) + 
+				(CASE WHEN NOT(projeto.nr_valor_captado_projeto IS NULL) THEN 5.555555555555556 ELSE 0 END) + 
+				(CASE WHEN NOT(projeto.tx_nome_abrangencia_projeto IS NULL) THEN 5.555555555555556 ELSE 0 END) + 
+				(CASE WHEN NOT(projeto.tx_nome_zona_atuacao IS NULL) THEN 5.555555555555556 ELSE 0 END) + 
+				(CASE WHEN NOT(projeto.tx_metodologia_monitoramento IS NULL) THEN 5.555555555555556 ELSE 0 END) + 
+				(CASE WHEN NOT(fonte_recursos.tx_nome_origem_fonte_recursos_projeto IS NULL) THEN 5.555555555555556 ELSE 0 END) + 
+				(CASE WHEN NOT(publico_beneficiado.tx_nome_publico_beneficiado IS NULL) THEN 5.555555555555556 ELSE 0 END) + 
+				(CASE WHEN NOT(parceira_projeto.tx_nome_osc_parceira_projeto IS NULL) THEN 5.555555555555556 ELSE 0 END) + 
+				(CASE WHEN NOT(area_atuacao.tx_nome_area_atuacao_projeto IS NULL) THEN 5.555555555555556 ELSE 0 END) + 
+				(CASE WHEN NOT(financiador.tx_nome_financiador IS NULL) THEN 5.555555555555556 ELSE 0 END) + 
+				(CASE WHEN NOT(objetivo.tx_nome_objetivo_projeto IS NULL) THEN 5.555555555555556 ELSE 0 END) + 
+				(CASE WHEN NOT(objetivo.tx_nome_meta_projeto IS NULL) THEN 5.555555555555556 ELSE 0 END)
 			) / COUNT(*) AS NUMERIC(7, 2))) 
 		FROM 
 			portal.vw_osc_projeto AS projeto FULL JOIN 

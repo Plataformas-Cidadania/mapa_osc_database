@@ -21,7 +21,7 @@ CREATE MATERIALIZED VIEW portal.vw_osc_barra_transparencia  AS
 		20 AS peso_projetos_atividades_programas, 
 		COALESCE(fontes_recursos.transparencia, 0.00) AS transparencia_fontes_recursos, 
 		5 AS peso_fontes_recursos, 
-		CAST((
+		CAST(((
 			COALESCE(dados_gerais.transparencia, 0) + 
 			COALESCE(area_atuacao.transparencia, 0) + 
 			COALESCE(descricao.transparencia, 0) + 
@@ -30,7 +30,7 @@ CREATE MATERIALIZED VIEW portal.vw_osc_barra_transparencia  AS
 			COALESCE(espacos_participacao_social.transparencia, 0) + 
 			COALESCE(projetos_atividades_programas.transparencia, 0) + 
 			COALESCE(fontes_recursos.transparencia, 0)
-		) AS NUMERIC(7,2)) AS transparencia_osc 
+		) / 8) AS NUMERIC(7,2)) AS transparencia_osc 
 	FROM 
 		(SELECT * FROM portal.obter_barra_transparencia_dados_gerais()) AS dados_gerais FULL JOIN  
 		(SELECT * FROM portal.obter_barra_transparencia_area_atuacao()) AS area_atuacao ON dados_gerais.id_osc = area_atuacao.id_osc FULL JOIN 
