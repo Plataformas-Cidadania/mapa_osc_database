@@ -1,5 +1,5 @@
 INSERT INTO 
-	portal.tb_peso_barra_transparencia (id_peso_barra_transparencia, nome_secao, peso_dados_gerais)
+	portal.tb_peso_barra_transparencia (id_peso_barra_transparencia, nome_secao, peso_secao)
 VALUES 
 	(1, 'Dados Gerais', 20), 
 	(2, 'Áreas de Atuação', 15), 

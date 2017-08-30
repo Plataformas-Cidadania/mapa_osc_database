@@ -2,10 +2,16 @@ DROP FUNCTION IF EXISTS portal.obter_barra_transparencia_dados_gerais();
 
 CREATE OR REPLACE FUNCTION portal.obter_barra_transparencia_dados_gerais() RETURNS TABLE (
 	id_osc INTEGER, 
-	transparencia NUMERIC
+	transparencia NUMERIC, 
+	peso DOUBLE PRECISION
 ) AS $$ 
 
+DECLARE 
+	peso DOUBLE PRECISION;
+
 BEGIN 
+	peso := (SELECT peso_secao FROM portal.tb_peso_barra_transparencia WHERE id_peso_barra_transparencia = 1); 
+	
 	RETURN QUERY 
 		SELECT 
 			dados_gerais.id_osc, 
@@ -20,7 +26,8 @@ BEGIN
 				(CASE WHEN NOT(dados_gerais.tx_resumo_osc IS NULL) THEN 20 ELSE 0 END) + 
 				(CASE WHEN NOT(dados_gerais.tx_site IS NULL) THEN 10 ELSE 0 END) + 
 				(CASE WHEN NOT(dados_gerais.tx_telefone IS NULL) THEN 20 ELSE 0 END)
-			) / COUNT(*) AS NUMERIC(7, 2))) 
+			) / COUNT(*) AS NUMERIC(7, 2))), 
+			peso 
 		FROM 
 			portal.vw_osc_dados_gerais AS dados_gerais
 		GROUP BY 

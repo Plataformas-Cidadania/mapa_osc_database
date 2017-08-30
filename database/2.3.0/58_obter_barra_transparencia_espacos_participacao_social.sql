@@ -2,10 +2,16 @@ DROP FUNCTION IF EXISTS portal.obter_barra_transparencia_espacos_participacao_so
 
 CREATE OR REPLACE FUNCTION portal.obter_barra_transparencia_espacos_participacao_social() RETURNS TABLE (
 	id_osc INTEGER, 
-	transparencia NUMERIC
+	transparencia NUMERIC, 
+	peso DOUBLE PRECISION
 ) AS $$ 
 
+DECLARE 
+	peso DOUBLE PRECISION;
+
 BEGIN 
+	peso := (SELECT peso_secao FROM portal.tb_peso_barra_transparencia WHERE id_peso_barra_transparencia = 6); 
+	
 	RETURN QUERY 
         SELECT 
 			conselho.id_osc, 
@@ -20,7 +26,8 @@ BEGIN
 				(CASE WHEN NOT(conferencia.dt_ano_realizacao IS NULL) THEN 10 ELSE 0 END) + 
 				(CASE WHEN NOT(conferencia.tx_nome_forma_participacao_conferencia IS NULL) THEN 10 ELSE 0 END) + 
 				(CASE WHEN NOT(outra.tx_nome_participacao_social_outra IS NULL) THEN 10 ELSE 0 END)
-			) / COUNT(*) AS NUMERIC(7, 2))) 
+			) / COUNT(*) AS NUMERIC(7, 2))), 
+			peso 
 		FROM 
 			portal.vw_osc_participacao_social_conselho AS conselho FULL JOIN 
 			portal.vw_osc_representante_conselho AS representante_conselho ON conselho.id_osc = representante_conselho.id_osc FULL JOIN 

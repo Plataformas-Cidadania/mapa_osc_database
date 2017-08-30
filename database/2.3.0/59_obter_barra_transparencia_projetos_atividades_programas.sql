@@ -2,10 +2,16 @@ DROP FUNCTION IF EXISTS portal.obter_barra_transparencia_projetos_atividades_pro
 
 CREATE OR REPLACE FUNCTION portal.obter_barra_transparencia_projetos_atividades_programas() RETURNS TABLE (
 	id_osc INTEGER, 
-	transparencia NUMERIC
+	transparencia NUMERIC, 
+	peso DOUBLE PRECISION
 ) AS $$ 
 
+DECLARE 
+	peso DOUBLE PRECISION;
+
 BEGIN 
+	peso := (SELECT peso_secao FROM portal.tb_peso_barra_transparencia WHERE id_peso_barra_transparencia = 7); 
+	
 	RETURN QUERY 
         SELECT 
 			projeto.id_osc, 
@@ -28,7 +34,8 @@ BEGIN
 				(CASE WHEN NOT(financiador.tx_nome_financiador IS NULL) THEN 5.555555555555556 ELSE 0 END) + 
 				(CASE WHEN NOT(objetivo.tx_nome_objetivo_projeto IS NULL) THEN 5.555555555555556 ELSE 0 END) + 
 				(CASE WHEN NOT(objetivo.tx_nome_meta_projeto IS NULL) THEN 5.555555555555556 ELSE 0 END)
-			) / COUNT(*) AS NUMERIC(7, 2))) 
+			) / COUNT(*) AS NUMERIC(7, 2))), 
+			peso 
 		FROM 
 			portal.vw_osc_projeto AS projeto FULL JOIN 
 			portal.vw_osc_fonte_recursos_projeto AS fonte_recursos ON projeto.id_projeto = fonte_recursos.id_projeto FULL JOIN 
