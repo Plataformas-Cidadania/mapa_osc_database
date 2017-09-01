@@ -20,13 +20,13 @@ BEGIN
 	END IF; 
 	
 	flag := true; 
-	mensagem := 'Representante de OSC atualizado.'; 
+	mensagem := 'Representante de governo atualizado.'; 
 	RETURN NEXT; 
 
 EXCEPTION 
 	WHEN foreign_key_violation THEN 
 		flag := false;
-		mensagem := 'OSC informada não existe.';
+		mensagem := 'Localidade informada não existe.';
 		RETURN NEXT;
 		
 	WHEN not_null_violation THEN 
