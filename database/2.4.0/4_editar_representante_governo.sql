@@ -23,7 +23,8 @@ BEGIN
 			bo_lista_atualizacao_trimestral = lista_atualizacao_trimestral, 
 			dt_atualizacao = NOW() 
 		WHERE 
-			tb_usuario.id_usuario = idusuario; 
+			tb_usuario.id_usuario = idusuario AND 
+			(tb_usuario.cd_tipo_usuario = 3 OR tb_usuario.cd_tipo_usuario = 4); 
 	ELSE
 		UPDATE 
 			portal.tb_usuario 
@@ -37,7 +38,8 @@ BEGIN
 			bo_lista_atualizacao_trimestral = lista_atualizacao_trimestral, 
 			dt_atualizacao = NOW() 
 		WHERE 
-			tb_usuario.id_usuario = idusuario; 
+			tb_usuario.id_usuario = idusuario AND 
+			(tb_usuario.cd_tipo_usuario = 3 OR tb_usuario.cd_tipo_usuario = 4); 
 	END IF; 
 	
 	flag := true; 
