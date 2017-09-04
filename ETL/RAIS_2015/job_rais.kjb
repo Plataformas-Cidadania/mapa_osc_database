@@ -173,7 +173,7 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>432</xloc>
+      <xloc>504</xloc>
       <yloc>296</yloc>
       </entry>
     <entry>
@@ -189,8 +189,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>506</xloc>
-      <yloc>297</yloc>
+      <xloc>429</xloc>
+      <yloc>294</yloc>
       </entry>
   </entries>
   <hops>
@@ -213,7 +213,7 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Transformation</from>
+      <from>SQL 3</from>
       <to>SQL 2</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -223,7 +223,7 @@
     </hop>
     <hop>
       <from>SQL 2</from>
-      <to>SQL 3</to>
+      <to>Success</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -231,8 +231,8 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>SQL 3</from>
-      <to>Success</to>
+      <from>Transformation</from>
+      <to>SQL 3</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
