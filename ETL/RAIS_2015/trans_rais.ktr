@@ -6,6 +6,7 @@
     <extended_description/>
     <trans_version/>
     <trans_type>Normal</trans_type>
+    <trans_status>0</trans_status>
     <directory>&#x2f;</directory>
     <parameters>
     </parameters>
@@ -54,7 +55,7 @@
     <feedback_size>50000</feedback_size>
     <using_thread_priorities>Y</using_thread_priorities>
     <shared_objects_file/>
-    <capture_step_performance>N</capture_step_performance>
+    <capture_step_performance>Y</capture_step_performance>
     <step_performance_capturing_delay>1000</step_performance_capturing_delay>
     <step_performance_capturing_size_limit>100</step_performance_capturing_size_limit>
     <dependencies>
@@ -123,12 +124,12 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Replace in string</from><to>Add constants</to><enabled>Y</enabled> </hop>
   <hop> <from>Ler CSV</from><to>Select values</to><enabled>Y</enabled> </hop>
-  <hop> <from>Select values</from><to>Replace in string</to><enabled>Y</enabled> </hop>
   <hop> <from>Add constants</from><to>Execute SQL script</to><enabled>Y</enabled> </hop>
-  <hop> <from>Select values</from><to>Modified Java Script Value</to><enabled>Y</enabled> </hop>
-  <hop> <from>Modified Java Script Value</from><to>Add constants</to><enabled>Y</enabled> </hop>
+  <hop> <from>Modified Java Script Value</from><to>Add constants</to><enabled>N</enabled> </hop>
+  <hop> <from>Replace in string</from><to>Add constants</to><enabled>Y</enabled> </hop>
+  <hop> <from>Select values</from><to>Replace in string</to><enabled>Y</enabled> </hop>
+  <hop> <from>Execute SQL script</from><to>Write to log</to><enabled>N</enabled> </hop>
   </order>
   <step>
     <name>Add constants</name>
@@ -157,8 +158,8 @@
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>392</xloc>
-      <yloc>308</yloc>
+      <xloc>430</xloc>
+      <yloc>312</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -254,8 +255,8 @@
     </arguments>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>525</xloc>
-      <yloc>308</yloc>
+      <xloc>584</xloc>
+      <yloc>312</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -276,23 +277,23 @@
     <rownum_field/>
     <include_filename>N</include_filename>
     <separator>&#x3b;</separator>
-    <enclosure>&#x22;</enclosure>
+    <enclosure/>
     <header>Y</header>
-    <buffer_size>100</buffer_size>
+    <buffer_size>10000</buffer_size>
     <lazy_conversion>Y</lazy_conversion>
     <add_filename_result>N</add_filename_result>
     <parallel>N</parallel>
     <newline_possible>N</newline_possible>
-    <encoding>ISO-8859-1</encoding>
+    <encoding>UTF-8</encoding>
     <fields>
       <field>
-        <name>PrecisionDepth</name>
+        <name>&#xfeff;PrecisionDepth</name>
         <type>String</type>
         <format/>
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>10</length>
+        <length>9</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
       </field>
@@ -303,7 +304,7 @@
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>79</length>
+        <length>16</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
       </field>
@@ -326,7 +327,7 @@
         <decimal>,</decimal>
         <group>.</group>
         <length>15</length>
-        <precision>14</precision>
+        <precision>13</precision>
         <trim_type>none</trim_type>
       </field>
       <field>
@@ -358,7 +359,7 @@
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>25</length>
+        <length>12</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
       </field>
@@ -402,7 +403,7 @@
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>12</length>
+        <length>3</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
       </field>
@@ -413,52 +414,52 @@
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>2</length>
+        <length>1</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
       </field>
       <field>
         <name>div_cnae20_corrigido</name>
-        <type>String</type>
-        <format/>
+        <type>Integer</type>
+        <format>&#x23;</format>
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>2</length>
-        <precision>-1</precision>
+        <length>15</length>
+        <precision>0</precision>
         <trim_type>none</trim_type>
       </field>
       <field>
         <name>grp_cnae20_corrigido</name>
-        <type>String</type>
-        <format/>
+        <type>Integer</type>
+        <format>&#x23;</format>
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>3</length>
-        <precision>-1</precision>
+        <length>15</length>
+        <precision>0</precision>
         <trim_type>none</trim_type>
       </field>
       <field>
         <name>clas_cnae20_corrigido</name>
-        <type>String</type>
-        <format/>
+        <type>Integer</type>
+        <format>&#x23;</format>
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>5</length>
-        <precision>-1</precision>
+        <length>15</length>
+        <precision>0</precision>
         <trim_type>none</trim_type>
       </field>
       <field>
         <name>sbcl_cnae_corrigido</name>
-        <type>String</type>
-        <format/>
+        <type>Integer</type>
+        <format>&#x23;</format>
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>7</length>
-        <precision>-1</precision>
+        <length>15</length>
+        <precision>0</precision>
         <trim_type>none</trim_type>
       </field>
       <field>
@@ -468,7 +469,7 @@
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>57</length>
+        <length>19</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
       </field>
@@ -479,7 +480,7 @@
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>57</length>
+        <length>20</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
       </field>
@@ -501,7 +502,7 @@
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>52</length>
+        <length>40</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
       </field>
@@ -540,8 +541,8 @@
       </field>
       <field>
         <name>data_abertura</name>
-        <type>Date</type>
-        <format>dd&#x2f;MM&#x2f;yyyy</format>
+        <type>String</type>
+        <format/>
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -551,8 +552,8 @@
       </field>
       <field>
         <name>data_encerramento</name>
-        <type>Date</type>
-        <format>dd&#x2f;MM&#x2f;yyyy</format>
+        <type>String</type>
+        <format>yyyy&#x2f;MM&#x2f;dd HH&#x3a;mm&#x3a;ss.SSS</format>
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -573,7 +574,7 @@
       </field>
       <field>
         <name>ano_abertura</name>
-        <type>Integer</type>
+        <type>String</type>
         <format>&#x23;</format>
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
@@ -589,19 +590,19 @@
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>39</length>
+        <length>17</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
       </field>
       <field>
         <name>num_logradouro15</name>
         <type>String</type>
-        <format/>
+        <format>&#x23;</format>
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
-        <precision>-1</precision>
+        <length>15</length>
+        <precision>0</precision>
         <trim_type>none</trim_type>
       </field>
       <field>
@@ -611,19 +612,19 @@
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>19</length>
+        <length>2</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
       </field>
       <field>
         <name>cep_estab15</name>
-        <type>Integer</type>
-        <format>&#x23;</format>
+        <type>String</type>
+        <format/>
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
+        <length>2</length>
+        <precision>-1</precision>
         <trim_type>none</trim_type>
       </field>
       <field>
@@ -633,19 +634,19 @@
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>37</length>
+        <length>2</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
       </field>
       <field>
         <name>num_telefone15</name>
-        <type>Integer</type>
-        <format>&#x23;</format>
+        <type>String</type>
+        <format/>
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
+        <length>2</length>
+        <precision>-1</precision>
         <trim_type>none</trim_type>
       </field>
     </fields>
@@ -653,6 +654,72 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>53</xloc>
       <yloc>306</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Modified Java Script Value</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>&#x2f;&#x2f;Script here&#xa;&#xa;var log&#x3b;&#xa;var log2&#x3b;&#xa;var razao&#x3b;&#xa;var bairro&#x3b;&#xa;var email&#x3b;&#xa;var lat&#x3b;&#xa;var lon&#x3b;&#xa;&#xa;log &#x3d; replace&#x28;nome_logradouro15,&#x27;&#x5c;&#x27;&#x27;,&#x27;&#x5c;&#x27;&#x5c;&#x27;&#x27;&#x29;&#x3b;&#xa;log2 &#x3d; replace&#x28;MatchedAddress,&#x27;&#x5c;&#x27;&#x27;,&#x27;&#x5c;&#x27;&#x5c;&#x27;&#x27;&#x29;&#x3b;&#xa;razao &#x3d; replace&#x28;razao_social,&#x27;&#x5c;&#x27;&#x27;,&#x27;&#x5c;&#x27;&#x5c;&#x27;&#x27;&#x29;&#x3b;&#xa;bairro &#x3d; replace&#x28;nome_bairro15,&#x27;&#x5c;&#x27;&#x27;,&#x27;&#x5c;&#x27;&#x5c;&#x27;&#x27;&#x29;&#x3b;&#xa;email &#x3d; replace&#x28;email_estab15,&#x27;&#x5c;&#x27;&#x27;,&#x27;&#x5c;&#x27;&#x5c;&#x27;&#x27;&#x29;&#x3b;&#xa;lat &#x3d; replace&#x28;Latitude,&#x27;,&#x27;,&#x27;.&#x27;&#x29;&#x3b;&#xa;lon &#x3d; replace&#x28;Longitude,&#x27;,&#x27;,&#x27;.&#x27;&#x29;&#x3b;</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>log</name>
+        <rename>nome_logradouro15</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>Y</replace>
+      </field>      <field>        <name>log2</name>
+        <rename>MatchedAddress</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>Y</replace>
+      </field>      <field>        <name>razao</name>
+        <rename>razao_social</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>Y</replace>
+      </field>      <field>        <name>bairro</name>
+        <rename>nome_bairro15</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>Y</replace>
+      </field>      <field>        <name>email</name>
+        <rename>email_estab15</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>Y</replace>
+      </field>      <field>        <name>lat</name>
+        <rename>Latitude</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>Y</replace>
+      </field>      <field>        <name>lon</name>
+        <rename>Longitude</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>Y</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>538</xloc>
+      <yloc>405</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -669,50 +736,6 @@
            <schema_name/>
            </partitioning>
     <fields>
-      <field>
-        <in_stream_name>razao_social</in_stream_name>
-        <out_stream_name/>
-        <use_regex>no</use_regex>
-        <replace_string>&#x27;</replace_string>
-        <replace_by_string>&#xb4;</replace_by_string>
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string/>
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-      </field>
-      <field>
-        <in_stream_name>nome_logradouro15</in_stream_name>
-        <out_stream_name/>
-        <use_regex>no</use_regex>
-        <replace_string>&#x27;</replace_string>
-        <replace_by_string>&#xb4;</replace_by_string>
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string/>
-        <whole_word>yes</whole_word>
-        <case_sensitive>no</case_sensitive>
-      </field>
-      <field>
-        <in_stream_name>nome_bairro15</in_stream_name>
-        <out_stream_name/>
-        <use_regex>no</use_regex>
-        <replace_string>&#x27;</replace_string>
-        <replace_by_string>&#xb4;</replace_by_string>
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string/>
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-      </field>
-      <field>
-        <in_stream_name>email_estab15</in_stream_name>
-        <out_stream_name/>
-        <use_regex>no</use_regex>
-        <replace_string>&#x27;</replace_string>
-        <replace_by_string/>
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string/>
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-      </field>
       <field>
         <in_stream_name>Latitude</in_stream_name>
         <out_stream_name/>
@@ -735,11 +758,110 @@
         <whole_word>no</whole_word>
         <case_sensitive>no</case_sensitive>
       </field>
+      <field>
+        <in_stream_name>data_abertura</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>0000000000</replace_string>
+        <replace_by_string>01&#x2f;01&#x2f;1900</replace_by_string>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
+      <field>
+        <in_stream_name>cep_estab15</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>NA</replace_string>
+        <replace_by_string>0</replace_by_string>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
+      <field>
+        <in_stream_name>num_telefone15</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>NA</replace_string>
+        <replace_by_string/>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
+      <field>
+        <in_stream_name>nome_bairro15</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>NA</replace_string>
+        <replace_by_string/>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
+      <field>
+        <in_stream_name>email_estab15</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>NA</replace_string>
+        <replace_by_string/>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
+      <field>
+        <in_stream_name>data_abertura</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>NA</replace_string>
+        <replace_by_string/>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
+      <field>
+        <in_stream_name>data_encerramento</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>NA</replace_string>
+        <replace_by_string/>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
+      <field>
+        <in_stream_name>ano_abertura</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>NA</replace_string>
+        <replace_by_string/>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
+      <field>
+        <in_stream_name>num_logradouro15</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>NA</replace_string>
+        <replace_by_string>0</replace_by_string>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>271</xloc>
-      <yloc>308</yloc>
+      <xloc>282</xloc>
+      <yloc>309</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -748,7 +870,7 @@
     <name>Select values</name>
     <type>SelectValues</type>
     <description/>
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution/>
     <copies>1</copies>
          <partitioning>
@@ -786,17 +908,92 @@
         <grouping_symbol/>
         <currency_symbol/>
         <storage_type/>
+      </meta>      <meta>        <name>Latitude</name>
+        <rename>Latitude</rename>
+        <type>String</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask/>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>      <meta>        <name>Longitude</name>
+        <rename>Longitude</rename>
+        <type>String</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask/>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>      <meta>        <name>ind_osc</name>
+        <rename>ind_osc</rename>
+        <type>String</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask/>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>      <meta>        <name>MatchedAddress</name>
+        <rename>MatchedAddress</rename>
+        <type>String</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask/>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
+      </meta>      <meta>        <name>ano_abertura</name>
+        <rename>ano_abertura</rename>
+        <type>String</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask/>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale/>
+        <date_format_timezone/>
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding/>
+        <decimal_symbol/>
+        <grouping_symbol/>
+        <currency_symbol/>
+        <storage_type/>
       </meta>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>157</xloc>
-      <yloc>308</yloc>
+      <xloc>142</xloc>
+      <yloc>309</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step>
-    <name>Modified Java Script Value</name>
-    <type>ScriptValueMod</type>
+    <name>Write to log</name>
+    <type>WriteToLog</type>
     <description/>
     <distribute>Y</distribute>
     <custom_distribution/>
@@ -805,32 +1002,37 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <compatible>N</compatible>
-    <optimizationLevel>9</optimizationLevel>
-    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>&#x2f;&#x2f;Script here&#xa;&#xa;var log&#x3b;&#xa;var log2&#x3b;&#xa;&#xa;log &#x3d; replace&#x28;nome_logradouro15,&#x27;&#x5c;&#x27;&#x27;,&#x27;&#x5c;&#x27;&#x5c;&#x27;&#x27;&#x29;&#x3b;&#xa;log2 &#x3d; replace&#x28;MatchedAddress,&#x27;&#x5c;&#x27;&#x27;,&#x27;&#x5c;&#x27;&#x5c;&#x27;&#x27;&#x29;&#x3b;</jsScript_script>
-      </jsScript>    </jsScripts>    <fields>      <field>        <name>log</name>
-        <rename>log</rename>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>      <field>        <name>log2</name>
-        <rename>log2</rename>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>    </fields>     <cluster_schema/>
+      <loglevel>log_level_error</loglevel>
+      <displayHeader>Y</displayHeader>
+      <limitRows>N</limitRows>
+      <limitRowsNumber>0</limitRowsNumber>
+      <logmessage/>
+    <fields>
+      <field>
+        <name>id_estab</name>
+        </field>
+      </fields>
+     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>279</xloc>
-      <yloc>389</yloc>
+      <xloc>703</xloc>
+      <yloc>407</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
 
   <step_error_handling>
+      <error>
+        <source_step>Execute SQL script</source_step>
+        <target_step>Write to log</target_step>
+        <is_enabled>Y</is_enabled>
+        <nr_valuename/>
+        <descriptions_valuename/>
+        <fields_valuename/>
+        <codes_valuename/>
+        <max_errors/>
+        <max_pct_errors/>
+        <min_pct_rows/>
+      </error>
   </step_error_handling>
    <slave-step-copy-partition-distribution>
 </slave-step-copy-partition-distribution>
