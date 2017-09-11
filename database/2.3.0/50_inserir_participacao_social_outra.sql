@@ -1,6 +1,6 @@
 ﻿-- Function: portal.inserir_participacao_social_outra(integer, text, text, boolean)
 
-DROP FUNCTION portal.inserir_participacao_social_outra(integer, text, text, boolean);
+DROP FUNCTION IF EXISTS portal.inserir_participacao_social_outra(integer, text, text, boolean);
 
 CREATE OR REPLACE FUNCTION portal.inserir_participacao_social_outra(id integer, nomeparticipacaosocialoutra text, ftparticipacaosocialoutra text, oficial boolean, naopossui boolean)
   RETURNS boolean AS
