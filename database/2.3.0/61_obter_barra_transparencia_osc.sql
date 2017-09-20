@@ -1,4 +1,4 @@
-﻿DROP FUNCTION IF EXISTS portal.obter_barra_transparencia_osc();
+﻿DROP FUNCTION IF EXISTS portal.obter_barra_transparencia_osc() CASCADE;
 
 CREATE OR REPLACE FUNCTION portal.obter_barra_transparencia_osc() RETURNS TABLE (
 	id_osc INTEGER, 

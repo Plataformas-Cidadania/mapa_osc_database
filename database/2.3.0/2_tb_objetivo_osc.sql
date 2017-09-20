@@ -1,5 +1,6 @@
 -- object: osc.tb_objetivo_osc | type: TABLE --
--- DROP TABLE IF EXISTS osc.tb_objetivo_osc CASCADE;
+DROP TABLE IF EXISTS osc.tb_objetivo_osc CASCADE;
+
 CREATE TABLE osc.tb_objetivo_osc(
 	id_objetivo_osc serial NOT NULL,
 	id_osc integer NOT NULL,

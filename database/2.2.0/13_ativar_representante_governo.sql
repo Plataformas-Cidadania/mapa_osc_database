@@ -1,4 +1,4 @@
-﻿-- DROP FUNCTION portal.ativar_representante_governo(integer);
+﻿DROP FUNCTION portal.ativar_representante_governo(integer);
 
 CREATE OR REPLACE FUNCTION portal.ativar_representante_governo(id integer)
   RETURNS boolean AS
