@@ -136,8 +136,8 @@
     <commit>100</commit>
     <update_bypassed>N</update_bypassed>
     <lookup>
-      <schema/>
-      <table>lookup table</table>
+      <schema>osc</schema>
+      <table>tb_projeto</table>
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
