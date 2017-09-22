@@ -77,13 +77,13 @@
   </notepads>
   <connection>
     <name>mapaosc-desenv</name>
-    <server>mapaosc-desenv</server>
+    <server>localhost</server>
     <type>POSTGRESQL</type>
     <access>Native</access>
     <database>portalosc</database>
     <port>5432</port>
     <username>i3geo</username>
-    <password>Encrypted 2be98afc86aa7f2e4cb10be75dfc2ff8b</password>
+    <password>Encrypted 2be98afc86aa7f2e4cb79ce798d95aad5</password>
     <servername/>
     <data_tablespace/>
     <index_tablespace/>
@@ -154,7 +154,7 @@
       </steps>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>238</xloc>
+      <xloc>290</xloc>
       <yloc>409</yloc>
       <draw>Y</draw>
       </GUI>
@@ -391,8 +391,8 @@
            </partitioning>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>492</xloc>
-      <yloc>409</yloc>
+      <xloc>638</xloc>
+      <yloc>410</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -849,7 +849,7 @@
     <simulate>N</simulate>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>370</xloc>
+      <xloc>483</xloc>
       <yloc>409</yloc>
       <draw>Y</draw>
       </GUI>
