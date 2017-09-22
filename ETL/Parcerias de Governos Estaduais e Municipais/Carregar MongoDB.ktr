@@ -647,9 +647,9 @@
     <mongo_port>27017</mongo_port>
     <use_all_replica_members>N</use_all_replica_members>
 
-    <mongo_user>i3geo</mongo_user>
+    <mongo_user>mapaosc</mongo_user>
 
-    <mongo_password>Encrypted 2be98afc86aa7f2e4cb10be75dfc2ff8b</mongo_password>
+    <mongo_password>Encrypted 2be98afc86aa7f2e4cb79ff228dc6fa8c</mongo_password>
     <auth_kerberos>N</auth_kerberos>
 
     <mongo_db>mapaosc</mongo_db>
@@ -821,7 +821,19 @@
          <json_field>Y</json_field>
 
       </mongo_field>
-    </mongo_fields>     <cluster_schema/>
+    </mongo_fields>
+    <mongo_indexes>
+      <mongo_index>
+         <path_to_fields>numero_parceria</path_to_fields>
+
+         <drop>N</drop>
+
+         <unique>N</unique>
+
+         <sparse>N</sparse>
+
+      </mongo_index>
+    </mongo_indexes>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>583</xloc>
       <yloc>164</yloc>
@@ -846,7 +858,7 @@
     <addresultfilenames>N</addresultfilenames>
     <overwritetargetfile>N</overwritetargetfile>
     <createparentfolder>N</createparentfolder>
-    <simulate>N</simulate>
+    <simulate>Y</simulate>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>483</xloc>

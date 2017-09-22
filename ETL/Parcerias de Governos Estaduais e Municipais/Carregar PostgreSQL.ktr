@@ -115,7 +115,7 @@
            </partitioning>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>328</xloc>
+      <xloc>384</xloc>
       <yloc>252</yloc>
       <draw>Y</draw>
       </GUI>
@@ -141,7 +141,7 @@
     </lookup>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>203</xloc>
+      <xloc>229</xloc>
       <yloc>252</yloc>
       <draw>Y</draw>
       </GUI>
