@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS portal.editar_representante_governo(id INTEGER, email TEXT, senha TEXT, nome TEXT, orgao TEXT, telefone1 TEXT, telefone2 TEXT, lista_atualizacao_anual BOOLEAN, lista_atualizacao_trimestral BOOLEAN);
+DROP FUNCTION IF EXISTS portal.editar_representante_governo(id INTEGER, email TEXT, senha TEXT, nome TEXT, telefone1 TEXT, telefone2 TEXT, orgao TEXT, dado_institucional TEXT, email_confirmacao TEXT, lista_atualizacao_anual BOOLEAN, lista_atualizacao_trimestral BOOLEAN);
 
-CREATE OR REPLACE FUNCTION portal.editar_representante_governo(idusuario INTEGER, email TEXT, senha TEXT, nome TEXT, orgao TEXT, telefone1 TEXT, telefone2 TEXT, lista_atualizacao_anual BOOLEAN, lista_atualizacao_trimestral BOOLEAN) RETURNS TABLE(
+CREATE OR REPLACE FUNCTION portal.editar_representante_governo(idusuario INTEGER, email TEXT, senha TEXT, nome TEXT, telefone1 TEXT, telefone2 TEXT, orgao TEXT, dado_institucional TEXT, email_confirmacao TEXT, lista_atualizacao_anual BOOLEAN, lista_atualizacao_trimestral BOOLEAN) RETURNS TABLE(
 	flag BOOLEAN, 
 	mensagem TEXT
 )AS $$
@@ -16,9 +16,11 @@ BEGIN
 			tx_email_usuario = email, 
 			tx_senha_usuario = senha, 
 			tx_nome_usuario = nome, 
-			tx_orgao_trabalha = orgao, 
 			tx_telefone_1 = telefone1, 
 			tx_telefone_2 = telefone2, 
+			tx_orgao_trabalha = orgao, 
+			tx_dado_institucional = dado_institucional, 
+			tx_email_confirmacao = email_confirmacao, 
 			bo_lista_atualizacao_anual = lista_atualizacao_anual, 
 			bo_lista_atualizacao_trimestral = lista_atualizacao_trimestral, 
 			dt_atualizacao = NOW() 
