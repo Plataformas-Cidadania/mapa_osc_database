@@ -27,9 +27,7 @@ CREATE MATERIALIZED VIEW osc.vw_busca_osc AS
 	substr(tb_localizacao.cd_municipio::text, 0, 2)::numeric(1,0) AS cd_regiao,
     ( SELECT ed_regiao.edre_nm_regiao
            FROM spat.ed_regiao
-          WHERE ed_regiao.edre_cd_regiao = (( SELECT ed_uf.edre_cd_regiao
-                   FROM spat.ed_uf
-                  WHERE ed_uf.eduf_cd_uf = substr(tb_localizacao.cd_municipio::text, 0, 3)::numeric(2,0)))::numeric) AS tx_nome_regiao,
+          WHERE ed_regiao.edre_cd_regiao = substr(tb_localizacao.cd_municipio::text, 0, 2)::numeric(1,0)::numeric) AS tx_nome_regiao,
     COALESCE(tb_relacoes_trabalho.nr_trabalhadores_vinculo, 0) + COALESCE(tb_relacoes_trabalho.nr_trabalhadores_deficiencia, 0) + COALESCE(tb_relacoes_trabalho.nr_trabalhadores_voluntarios, 0) AS total_trabalhadores,
     tb_relacoes_trabalho.nr_trabalhadores_vinculo,
     tb_relacoes_trabalho.nr_trabalhadores_deficiencia,
