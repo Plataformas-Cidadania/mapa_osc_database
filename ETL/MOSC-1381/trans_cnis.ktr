@@ -69,7 +69,7 @@
   <created_date>2017&#x2f;09&#x2f;28 14&#x3a;01&#x3a;20.997</created_date>
   <modified_user>-</modified_user>
   <modified_date>2017&#x2f;09&#x2f;28 14&#x3a;01&#x3a;20.997</modified_date>
-    <key_for_session_key/>
+    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA&#x3d;</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
@@ -126,6 +126,39 @@
   <hop> <from>CSV file input</from><to>Add constants</to><enabled>Y</enabled> </hop>
   <hop> <from>Add constants</from><to>Execute SQL script</to><enabled>Y</enabled> </hop>
   </order>
+  <step>
+    <name>Add constants</name>
+    <type>Constant</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>
+      <field>
+        <name>fonte</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif>CNIS&#x2f;MPS</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>296</xloc>
+      <yloc>333</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
   <step>
     <name>CSV file input</name>
     <type>CsvInput</type>
@@ -220,7 +253,7 @@
     <single_statement>N</single_statement>
     <replace_variables>Y</replace_variables>
     <quoteString>N</quoteString>
-    <sql>UPDATE osc.tb_dados_gerais SET tx_razao_social_osc &#x3d; &#x27;&#x3f;&#x27;, ft_razao_social_osc &#x3d; &#x27;&#x3f;&#x27;&#xa;FROM osc.tb_osc&#xa;WHERE osc.tb_dados_gerais.id_osc &#x3d; osc.tb_osc.id_osc&#xa;AND cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x3b;&#xa;&#xa;UPDATE osc.tb_dados_gerais SET tx_nome_fantasia_osc &#x3d; &#x27;&#x3f;&#x27;, ft_nome_fantasia_osc &#x3d; &#x27;&#x3f;&#x27;&#xa;FROM osc.tb_osc&#xa;WHERE osc.tb_dados_gerais.id_osc &#x3d; osc.tb_osc.id_osc&#xa;AND cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#xa;AND tx_nome_fantasia_osc &#x3c;&#x3e; &#x27;&#x27;&#x3b;</sql>
+    <sql>UPDATE osc.tb_dados_gerais SET tx_razao_social_osc &#x3d; &#x27;&#x3f;&#x27;, ft_razao_social_osc &#x3d; &#x27;&#x3f;&#x27;&#xa;FROM osc.tb_osc&#xa;WHERE osc.tb_dados_gerais.id_osc &#x3d; osc.tb_osc.id_osc&#xa;AND cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#xa;AND ft_razao_social_osc &#x3c;&#x3e; &#x27;CNIS&#x2f;MPS&#x27;&#x3b;&#xa;&#xa;UPDATE osc.tb_dados_gerais SET tx_nome_fantasia_osc &#x3d; &#x27;&#x3f;&#x27;, ft_nome_fantasia_osc &#x3d; &#x27;&#x3f;&#x27;&#xa;FROM osc.tb_osc&#xa;WHERE osc.tb_dados_gerais.id_osc &#x3d; osc.tb_osc.id_osc&#xa;AND cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#xa;AND &#x28;tx_nome_fantasia_osc &#x3c;&#x3e; &#x27;&#x27; OR length&#x28;tx_nome_fantasia_osc&#x29; is null&#x29;&#xa;AND ft_nome_fantasia_osc &#x3c;&#x3e; &#x27;CNIS&#x2f;MPS&#x27;&#x3b;</sql>
     <set_params>N</set_params>
     <insert_field/>
     <update_field/>
@@ -238,39 +271,6 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>425</xloc>
       <yloc>331</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Add constants</name>
-    <type>Constant</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>
-      <field>
-        <name>fonte</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>CNIS&#x2f;MPS</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>296</xloc>
-      <yloc>333</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
