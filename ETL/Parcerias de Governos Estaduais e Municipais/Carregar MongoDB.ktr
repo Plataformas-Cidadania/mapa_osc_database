@@ -758,8 +758,8 @@
       <method>none</method>
       <schema_name />
     </partitioning>
-    <mongo_host>localhost</mongo_host>
-    <mongo_port>27017</mongo_port>
+    <mongo_host>mapaosc-desenv</mongo_host>
+    <mongo_port>27018</mongo_port>
     <use_all_replica_members>N</use_all_replica_members>
     <mongo_auth_database>admin</mongo_auth_database>
     <mongo_user>mapaosc</mongo_user>

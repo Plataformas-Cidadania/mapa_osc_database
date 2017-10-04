@@ -580,48 +580,13 @@
       <enabled>N</enabled>
     </hop>
     <hop>
-      <from>Table input 2</from>
-      <to>Merge Join 2</to>
-      <enabled>N</enabled>
-    </hop>
-    <hop>
-      <from>Insert Projeto</from>
-      <to>Merge Join 2</to>
-      <enabled>N</enabled>
-    </hop>
-    <hop>
-      <from>Insert Projeto</from>
-      <to>Block this step until steps finish</to>
-      <enabled>N</enabled>
-    </hop>
-    <hop>
-      <from>Block this step until steps finish</from>
-      <to>Select values 3</to>
-      <enabled>N</enabled>
-    </hop>
-    <hop>
-      <from>Merge Join 2</from>
-      <to>Select values 4</to>
-      <enabled>N</enabled>
-    </hop>
-    <hop>
       <from>Select values 4</from>
       <to>Insert Fonte Recursos</to>
       <enabled>N</enabled>
     </hop>
     <hop>
-      <from>Insert Fonte Recursos</from>
-      <to>Insert Dados Gerais</to>
-      <enabled>N</enabled>
-    </hop>
-    <hop>
-      <from>Insert Dados Gerais</from>
-      <to>Insert Localização</to>
-      <enabled>N</enabled>
-    </hop>
-    <hop>
-      <from>Insert Localização</from>
-      <to>Copy rows to result</to>
+      <from>Table input 2</from>
+      <to>Merge Join 2</to>
       <enabled>N</enabled>
     </hop>
     <hop>
@@ -630,14 +595,49 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
+      <from>Insert Projeto</from>
+      <to>Merge Join 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Insert Fonte Recursos</from>
+      <to>Insert Dados Gerais</to>
+      <enabled>N</enabled>
+    </hop>
+    <hop>
+      <from>Insert Projeto</from>
+      <to>Block this step until steps finish</to>
+      <enabled>N</enabled>
+    </hop>
+    <hop>
       <from>Ajustar Tipo Parceria</from>
       <to>Ajustar Situação Parceria</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
+      <from>Block this step until steps finish</from>
+      <to>Select values 3</to>
+      <enabled>N</enabled>
+    </hop>
+    <hop>
+      <from>Insert Dados Gerais</from>
+      <to>Insert Localização</to>
+      <enabled>N</enabled>
+    </hop>
+    <hop>
+      <from>Merge Join 2</from>
+      <to>Select values 4</to>
+      <enabled>N</enabled>
+    </hop>
+    <hop>
       <from>Ajustar Situação Parceria</from>
       <to>Add constants</to>
       <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Insert Localização</from>
+      <to>Copy rows to result</to>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>String operations</from>
@@ -672,16 +672,21 @@
     <hop>
       <from>Concat Fields</from>
       <to>Filter rows 2</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>Filter rows 2</from>
       <to>Select values 5</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>Filter rows 2</from>
       <to>Add constants 2</to>
+      <enabled>N</enabled>
+    </hop>
+    <hop>
+      <from>Add constants 2</from>
+      <to>Insert Projeto</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -692,7 +697,12 @@
     <hop>
       <from>Add constants 2</from>
       <to>Insert Projeto</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
+    </hop>
+    <hop>
+      <from>Select values 5</from>
+      <to>Insert Projeto</to>
+      <enabled>N</enabled>
     </hop>
   </order>
   <step>
@@ -728,8 +738,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>606</xloc>
-      <yloc>424</yloc>
+      <xloc>605</xloc>
+      <yloc>421</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -766,8 +776,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>866</xloc>
-      <yloc>584</yloc>
+      <xloc>570</xloc>
+      <yloc>626</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -803,8 +813,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1111</xloc>
-      <yloc>253</yloc>
+      <xloc>936</xloc>
+      <yloc>314</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -884,8 +894,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>624</xloc>
-      <yloc>314</yloc>
+      <xloc>760</xloc>
+      <yloc>421</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -957,8 +967,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>812</xloc>
-      <yloc>247</yloc>
+      <xloc>936</xloc>
+      <yloc>421</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -987,8 +997,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1143</xloc>
-      <yloc>548</yloc>
+      <xloc>930</xloc>
+      <yloc>577</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1073,8 +1083,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>620</xloc>
-      <yloc>535</yloc>
+      <xloc>484</xloc>
+      <yloc>421</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1097,8 +1107,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>225</xloc>
-      <yloc>685</yloc>
+      <xloc>35</xloc>
+      <yloc>714</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1137,41 +1147,7 @@
     </GUI>
   </step>
   <step>
-    <name>Filter rows 2</name>
-    <type>FilterRows</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <send_true_to>Select values 5</send_true_to>
-    <send_false_to>Add constants 2</send_false_to>
-    <compare>
-      <condition>
-        <negated>N</negated>
-        <leftvalue>situacao_parceria_ajustado</leftvalue>
-        <function>IS NULL</function>
-        <rightvalue />
-      </condition>
-    </compare>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>762</xloc>
-      <yloc>540</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Insert Dados Gerais</name>
+    <name>Insert Localização</name>
     <type>InsertUpdate</type>
     <description />
     <distribute>Y</distribute>
@@ -1186,7 +1162,7 @@
     <update_bypassed>N</update_bypassed>
     <lookup>
       <schema>osc</schema>
-      <table>tb_dados_gerais</table>
+      <table>tb_localizacao</table>
       <key>
         <name>id_osc</name>
         <field>id_osc</field>
@@ -1199,23 +1175,18 @@
         <update>N</update>
       </value>
       <value>
-        <name>tx_razao_social_osc</name>
-        <rename>razao_social_proponente</rename>
+        <name>tx_endereco</name>
+        <rename>endereco_proponente</rename>
         <update>N</update>
       </value>
       <value>
-        <name>ft_razao_social_osc</name>
+        <name>ft_endereco</name>
         <rename>usuario</rename>
         <update>N</update>
       </value>
       <value>
-        <name>tx_nome_fantasia_osc</name>
-        <rename>nome_fantasia_proponente</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>ft_nome_fantasia_osc</name>
-        <rename>usuario</rename>
+        <name>bo_oficial</name>
+        <rename>bo_oficial</rename>
         <update>N</update>
       </value>
     </lookup>
@@ -1227,8 +1198,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>536</xloc>
-      <yloc>685</yloc>
+      <xloc>165</xloc>
+      <yloc>714</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1300,13 +1271,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>698</xloc>
-      <yloc>685</yloc>
+      <xloc>485</xloc>
+      <yloc>714</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Insert Localização</name>
+    <name>Insert Dados Gerais</name>
     <type>InsertUpdate</type>
     <description />
     <distribute>Y</distribute>
@@ -1321,7 +1292,7 @@
     <update_bypassed>N</update_bypassed>
     <lookup>
       <schema>osc</schema>
-      <table>tb_localizacao</table>
+      <table>tb_dados_gerais</table>
       <key>
         <name>id_osc</name>
         <field>id_osc</field>
@@ -1334,18 +1305,23 @@
         <update>N</update>
       </value>
       <value>
-        <name>tx_endereco</name>
-        <rename>endereco_proponente</rename>
+        <name>tx_razao_social_osc</name>
+        <rename>razao_social_proponente</rename>
         <update>N</update>
       </value>
       <value>
-        <name>ft_endereco</name>
+        <name>ft_razao_social_osc</name>
         <rename>usuario</rename>
         <update>N</update>
       </value>
       <value>
-        <name>bo_oficial</name>
-        <rename>bo_oficial</rename>
+        <name>tx_nome_fantasia_osc</name>
+        <rename>nome_fantasia_proponente</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>ft_nome_fantasia_osc</name>
+        <rename>usuario</rename>
         <update>N</update>
       </value>
     </lookup>
@@ -1357,8 +1333,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>378</xloc>
-      <yloc>685</yloc>
+      <xloc>323</xloc>
+      <yloc>714</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1515,8 +1491,77 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>982</xloc>
-      <yloc>548</yloc>
+      <xloc>769</xloc>
+      <yloc>577</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Merge Join 2</name>
+    <type>MergeJoin</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <join_type>INNER</join_type>
+    <step1>Insert Projeto</step1>
+    <step2>Table input 2</step2>
+    <keys_1>
+      <key>id_osc</key>
+      <key>numero_parceria</key>
+    </keys_1>
+    <keys_2>
+      <key>id_osc</key>
+      <key>tx_identificador_projeto_externo</key>
+    </keys_2>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>769</xloc>
+      <yloc>714</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Filter rows 2</name>
+    <type>FilterRows</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <send_true_to>Select values 5</send_true_to>
+    <send_false_to>Add constants 2</send_false_to>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>situacao_parceria_ajustado</leftvalue>
+        <function>IS NULL</function>
+        <rightvalue />
+      </condition>
+    </compare>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>484</xloc>
+      <yloc>584</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1556,41 +1601,6 @@
     </GUI>
   </step>
   <step>
-    <name>Merge Join 2</name>
-    <type>MergeJoin</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <join_type>INNER</join_type>
-    <step1>Insert Projeto</step1>
-    <step2>Table input 2</step2>
-    <keys_1>
-      <key>id_osc</key>
-      <key>numero_parceria</key>
-    </keys_1>
-    <keys_2>
-      <key>id_osc</key>
-      <key>tx_identificador_projeto_externo</key>
-    </keys_2>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>982</xloc>
-      <yloc>685</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
     <name>MongoDB Input</name>
     <type>MongoDbInput</type>
     <description />
@@ -1601,8 +1611,8 @@
       <method>none</method>
       <schema_name />
     </partitioning>
-    <hostname>localhost</hostname>
-    <port>27017</port>
+    <hostname>mapaosc-desenv</hostname>
+    <port>27018</port>
     <use_all_replica_members>N</use_all_replica_members>
     <db_name>mapaosc</db_name>
     <fields_name />
@@ -1965,6 +1975,89 @@
     </GUI>
   </step>
   <step>
+    <name>Select values 4</name>
+    <type>SelectValues</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <select_unspecified>N</select_unspecified>
+      <remove>
+        <name>id_osc_1</name>
+      </remove>
+      <remove>
+        <name>tx_identificador_projeto_externo</name>
+      </remove>
+      <meta>
+        <name>fonte_recursos</name>
+        <rename>fonte_recursos</rename>
+        <type>Integer</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask />
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale />
+        <date_format_timezone />
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding />
+        <decimal_symbol />
+        <grouping_symbol />
+        <currency_symbol />
+        <storage_type />
+      </meta>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>635</xloc>
+      <yloc>714</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Select values 3</name>
+    <type>SelectValues</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>id_osc</name>
+      </field>
+      <field>
+        <name>numero_parceria</name>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1087</xloc>
+      <yloc>577</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>Replace in string 2</name>
     <type>ReplaceString</type>
     <description />
@@ -2007,8 +2100,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1113</xloc>
-      <yloc>130</yloc>
+      <xloc>936</xloc>
+      <yloc>210</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2111,8 +2204,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>831</xloc>
-      <yloc>126</yloc>
+      <xloc>816</xloc>
+      <yloc>125</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2248,8 +2341,8 @@
     </GUI>
   </step>
   <step>
-    <name>Select values 3</name>
-    <type>SelectValues</type>
+    <name>Table input 2</name>
+    <type>TableInput</type>
     <description />
     <distribute>Y</distribute>
     <custom_distribution />
@@ -2258,15 +2351,13 @@
       <method>none</method>
       <schema_name />
     </partitioning>
-    <fields>
-      <field>
-        <name>id_osc</name>
-      </field>
-      <field>
-        <name>numero_parceria</name>
-      </field>
-      <select_unspecified>N</select_unspecified>
-    </fields>
+    <connection>localhost</connection>
+    <sql>SELECT id_projeto, id_osc, tx_identificador_projeto_externo FROM osc.tb_projeto WHERE id_osc = ?::INTEGER AND tx_identificador_projeto_externo = ?::TEXT;</sql>
+    <limit>0</limit>
+    <lookup>Select values 3</lookup>
+    <execute_each_row>Y</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
     <cluster_schema />
     <remotesteps>
       <input>
@@ -2275,58 +2366,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1300</xloc>
-      <yloc>548</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Select values 4</name>
-    <type>SelectValues</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <select_unspecified>N</select_unspecified>
-      <remove>
-        <name>id_osc_1</name>
-      </remove>
-      <remove>
-        <name>tx_identificador_projeto_externo</name>
-      </remove>
-      <meta>
-        <name>fonte_recursos</name>
-        <rename>fonte_recursos</rename>
-        <type>Integer</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>848</xloc>
-      <yloc>685</yloc>
+      <xloc>1087</xloc>
+      <yloc>714</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2369,8 +2410,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>873</xloc>
-      <yloc>448</yloc>
+      <xloc>571</xloc>
+      <yloc>537</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2642,7 +2683,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>957</xloc>
+      <xloc>937</xloc>
       <yloc>125</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2658,7 +2699,7 @@
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection>localhost</connection>
+    <connection>mapaosc-desenv</connection>
     <sql>SELECT ? AS numero_parceria, id_osc, cd_identificador_osc FROM osc.tb_osc WHERE cd_identificador_osc = ?::NUMERIC;</sql>
     <limit>0</limit>
     <lookup>Select values 1</lookup>
@@ -2675,37 +2716,6 @@
     <GUI>
       <xloc>452</xloc>
       <yloc>255</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Table input 2</name>
-    <type>TableInput</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>localhost</connection>
-    <sql>SELECT id_projeto, id_osc, tx_identificador_projeto_externo FROM osc.tb_projeto WHERE id_osc = ?::INTEGER AND tx_identificador_projeto_externo = ?::TEXT;</sql>
-    <limit>0</limit>
-    <lookup>Select values 3</lookup>
-    <execute_each_row>Y</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1300</xloc>
-      <yloc>685</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

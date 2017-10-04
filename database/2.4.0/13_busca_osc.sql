@@ -1,4 +1,4 @@
-﻿DROP FUNCTION IF EXISTS portal.buscar_osc(param TEXT, limit_result INTEGER, similarity_result DOUBLE PRECISION);
+﻿DROP FUNCTION IF EXISTS portal.buscar_osc(param TEXT, limit_result INTEGER, offset_result INTEGER, similarity_result DOUBLE PRECISION);
 
 CREATE OR REPLACE FUNCTION portal.buscar_osc(param TEXT, limit_result INTEGER, offset_result INTEGER, similarity_result DOUBLE PRECISION) RETURNS TABLE(
 	id_osc INTEGER 
