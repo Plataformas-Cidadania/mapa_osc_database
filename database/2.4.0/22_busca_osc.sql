@@ -1,6 +1,6 @@
-﻿DROP FUNCTION IF EXISTS portal.buscar_osc_teste(param TEXT, limit_result INTEGER, offset_result INTEGER, tipo_busca INTEGER);
+﻿DROP FUNCTION IF EXISTS portal.buscar_osc(param TEXT, limit_result INTEGER, offset_result INTEGER, tipo_busca INTEGER);
 
-CREATE OR REPLACE FUNCTION portal.buscar_osc_teste(param TEXT, limit_result INTEGER, offset_result INTEGER, tipo_busca INTEGER) RETURNS TABLE(
+CREATE OR REPLACE FUNCTION portal.buscar_osc(param TEXT, limit_result INTEGER, offset_result INTEGER, tipo_busca INTEGER) RETURNS TABLE(
 	id_osc INTEGER 
 ) AS $$ 
 
@@ -75,4 +75,4 @@ BEGIN
 END; 
 $$ LANGUAGE 'plpgsql';
 
-SELECT * FROM portal.buscar_osc_teste('cieds', 10, 0, 0);
+SELECT * FROM portal.buscar_osc('cieds', 10, 0, 0);
