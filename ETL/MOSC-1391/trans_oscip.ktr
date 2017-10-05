@@ -123,9 +123,11 @@
     </attributes>
   </connection>
   <order>
-  <hop> <from>Add constants</from><to>Execute SQL script</to><enabled>Y</enabled> </hop>
+  <hop> <from>Add constants</from><to>Execute SQL script</to><enabled>N</enabled> </hop>
   <hop> <from>CSV file input</from><to>Replace in string</to><enabled>Y</enabled> </hop>
   <hop> <from>Replace in string</from><to>Add constants</to><enabled>Y</enabled> </hop>
+  <hop> <from>Execute SQL script</from><to>Filter rows</to><enabled>N</enabled> </hop>
+  <hop> <from>Filter rows</from><to>Execute SQL script 2</to><enabled>N</enabled> </hop>
   </order>
   <step>
     <name>CSV file input</name>
@@ -138,11 +140,11 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <filename>&#x2f;home&#x2f;DLIPEA&#x2f;b6519563&#x2f;Downloads&#x2f;tb_oscip.csv</filename>
+    <filename>&#x2f;home&#x2f;DLIPEA&#x2f;b6519563&#x2f;Downloads&#x2f;tb-oscip1.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
-    <separator>&#x3b;</separator>
+    <separator> </separator>
     <enclosure>&#x22;</enclosure>
     <header>Y</header>
     <buffer_size>50000</buffer_size>
@@ -153,7 +155,7 @@
     <encoding>UTF-8</encoding>
     <fields>
       <field>
-        <name>PrecisionDepth</name>
+        <name>&#xfeff;PrecisionDepth</name>
         <type>String</type>
         <format/>
         <currency>R&#x24;</currency>
@@ -179,10 +181,10 @@
         <type>String</type>
         <format>&#x23;.&#x23;</format>
         <currency>R&#x24;</currency>
-        <decimal>,</decimal>
-        <group>.</group>
+        <decimal>.</decimal>
+        <group>,</group>
         <length>15</length>
-        <precision>13</precision>
+        <precision>0</precision>
         <trim_type>none</trim_type>
       </field>
       <field>
@@ -190,10 +192,10 @@
         <type>String</type>
         <format>&#x23;.&#x23;</format>
         <currency>R&#x24;</currency>
-        <decimal>,</decimal>
-        <group>.</group>
+        <decimal>.</decimal>
+        <group>,</group>
         <length>15</length>
-        <precision>14</precision>
+        <precision>0</precision>
         <trim_type>none</trim_type>
       </field>
       <field>
@@ -342,7 +344,7 @@
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>372</xloc>
+      <xloc>414</xloc>
       <yloc>275</yloc>
       <draw>Y</draw>
       </GUI>
@@ -364,7 +366,7 @@
     <single_statement>N</single_statement>
     <replace_variables>Y</replace_variables>
     <quoteString>N</quoteString>
-    <sql>UPDATE osc.tb_dados_gerais SET tx_razao_social_osc &#x3d; &#x27;&#x3f;&#x27;, ft_razao_social_osc &#x3d; &#x27;&#x3f;&#x27;&#xa;WHERE id_osc &#x3d; &#x28;SELECT id_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x29;&#x3b;&#xa;&#xa;INSERT INTO osc.tb_dados_gerais &#x28;id_osc,tx_razao_social_osc, ft_razao_social_osc&#x29;&#xa;SELECT a.id_osc, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;&#xa;FROM osc.tb_osc a &#xa;WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#xa;AND NOT EXISTS&#x28;SELECT &#x2a; FROM osc.tb_dados_gerais WHERE osc.tb_dados_gerais.id_osc &#x3d; a.id_osc&#x29;&#x3b;&#xa;&#xa;UPDATE osc.tb_contato SET tx_telefone &#x3d; &#x27;&#x3f;&#x27;, ft_telefone &#x3d; &#x27;&#x3f;&#x27;&#xa;WHERE id_osc &#x3d; &#x28;SELECT id_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x29;&#x3b;&#xa;&#xa;INSERT INTO osc.tb_contato&#x28;id_osc, tx_telefone, ft_telefone&#x29;&#xa;SELECT a.id_osc, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;&#xa;FROM osc.tb_osc a &#xa;WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#xa;AND NOT EXISTS&#x28;SELECT &#x2a; FROM osc.tb_contato WHERE osc.tb_contato.id_osc &#x3d; a.id_osc&#x29;&#x3b;&#xa;&#xa;INSERT INTO osc.tb_certificado&#x28;id_osc, cd_certificado, ft_certificado, dt_inicio_certificado, ft_inicio_certificado, bo_oficial&#x29;&#xa;SELECT id_osc, syst.dc_certificado.cd_certificado, &#x27;&#x3f;&#x27;, to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29; as dt_inicial, &#x27;&#x3f;&#x27;,true&#xa;FROM osc.tb_osc&#xa;INNER JOIN syst.dc_certificado on tx_nome_certificado &#x3d; &#x27;OSCIP&#x27;&#xa;WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#xa;AND NOT EXISTS &#x28;select &#x2a; from osc.tb_certificado where osc.tb_certificado.id_osc &#x3d; osc.tb_osc.id_osc and osc.tb_certificado.cd_certificado &#x3d; syst.dc_certificado.cd_certificado&#x29;&#x3b;&#xa;&#xa;UPDATE osc.tb_localizacao SET tx_endereco_corrigido &#x3d; &#x27;&#x3f;&#x27;, ft_endereco_corrigido &#x3d; 3,  tx_endereco &#x3d; &#x27;&#x3f;&#x27;, ft_endereco &#x3d; &#x27;&#x3f;&#x27;, cd_municipio &#x3d; edmu_cd_municipio, ft_municipio &#x3d; &#x27;&#x3f;&#x27;, nr_cep &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC, ft_cep &#x3d; &#x27;&#x3f;&#x27;, geo_localizacao &#x3d; ST_GeomFromText&#x28;concat&#x28;&#x27;POINT&#x28;&#x27;,CONCAT&#x28;&#x3f;&#x3a;&#x3a;NUMERIC,&#x27; &#x27;,&#x3f;&#x3a;&#x3a;NUMERIC&#x29;,&#x27;&#x29;&#x27;&#x29;,4674&#x29;, ft_geo_localizacao &#x3d; 3, bo_oficial &#x3d;true, qualidade_classificacao &#x3d; &#x27;&#x3f;&#x27;&#xa;FROM spat.ed_municipio &#xa;WHERE lower&#x28;edmu_nm_municipio&#x29; &#x3d; lower&#x28;&#x27;&#x3f;&#x27;&#x3a;&#x3a;TEXT&#x29;&#xa;AND osc.tb_localizacao.id_osc &#x3d; &#x28;SELECT id_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x29;&#x3b;&#xa;&#xa;INSERT INTO osc.tb_localizacao&#x28;id_osc, tx_endereco_corrigido, ft_endereco_corrigido, tx_endereco, ft_endereco, cd_municipio, ft_municipio, nr_cep, ft_cep, geo_localizacao, ft_geo_localizacao, bo_oficial, qualidade_classificacao&#x29;&#xa;SELECT a.id_osc, &#x27;&#x3f;&#x27;, 3, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;, edmu_cd_municipio, &#x27;&#x3f;&#x27;, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;&#x3f;&#x27;, ST_GeomFromText&#x28;concat&#x28;&#x27;POINT&#x28;&#x27;,CONCAT&#x28;&#x3f;&#x3a;&#x3a;NUMERIC,&#x27; &#x27;,&#x3f;&#x3a;&#x3a;NUMERIC&#x29;,&#x27;&#x29;&#x27;&#x29;,4674&#x29;, 3, true, &#x27;&#x3f;&#x27;&#xa;FROM osc.tb_osc a&#xa;INNER JOIN spat.ed_municipio ON SUBSTRING&#x28;edmu_cd_municipio&#x3a;&#x3a;TEXT FROM 0 FOR 7&#x29; ILIKE &#x27;&#x3f;&#x27;&#x3a;&#x3a;TEXT&#xa;WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#xa;AND NOT EXISTS&#x28;SELECT &#x2a; FROM osc.tb_localizacao WHERE osc.tb_localizacao.id_osc &#x3d; a.id_osc&#x29;&#x3b;</sql>
+    <sql>UPDATE osc.tb_dados_gerais SET tx_razao_social_osc &#x3d; &#x27;&#x3f;&#x27;, ft_razao_social_osc &#x3d; &#x27;&#x3f;&#x27;&#xa;WHERE id_osc &#x3d; &#x28;SELECT id_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x29;&#x3b;&#xa;&#xa;INSERT INTO osc.tb_dados_gerais &#x28;id_osc,tx_razao_social_osc, ft_razao_social_osc&#x29;&#xa;SELECT a.id_osc, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;&#xa;FROM osc.tb_osc a &#xa;WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#xa;AND NOT EXISTS&#x28;SELECT &#x2a; FROM osc.tb_dados_gerais WHERE osc.tb_dados_gerais.id_osc &#x3d; a.id_osc&#x29;&#x3b;&#xa;&#xa;UPDATE osc.tb_contato SET tx_telefone &#x3d; &#x27;&#x3f;&#x27;, ft_telefone &#x3d; &#x27;&#x3f;&#x27;&#xa;WHERE id_osc &#x3d; &#x28;SELECT id_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x29;&#x3b;&#xa;&#xa;INSERT INTO osc.tb_contato&#x28;id_osc, tx_telefone, ft_telefone&#x29;&#xa;SELECT a.id_osc, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;&#xa;FROM osc.tb_osc a &#xa;WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#xa;AND NOT EXISTS&#x28;SELECT &#x2a; FROM osc.tb_contato WHERE osc.tb_contato.id_osc &#x3d; a.id_osc&#x29;&#x3b;&#xa;&#xa;INSERT INTO osc.tb_certificado&#x28;id_osc, cd_certificado, ft_certificado, dt_inicio_certificado, ft_inicio_certificado, bo_oficial&#x29;&#xa;SELECT id_osc, syst.dc_certificado.cd_certificado, &#x27;&#x3f;&#x27;, to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29; as dt_inicial, &#x27;&#x3f;&#x27;,true&#xa;FROM osc.tb_osc&#xa;INNER JOIN syst.dc_certificado on tx_nome_certificado &#x3d; &#x27;OSCIP&#x27;&#xa;WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#xa;AND NOT EXISTS &#x28;select &#x2a; from osc.tb_certificado where osc.tb_certificado.id_osc &#x3d; osc.tb_osc.id_osc and osc.tb_certificado.cd_certificado &#x3d; syst.dc_certificado.cd_certificado&#x29;&#x3b;</sql>
     <set_params>N</set_params>
     <insert_field/>
     <update_field/>
@@ -387,34 +389,10 @@
        <argument><name>publicacao</name></argument>
        <argument><name>fonte</name></argument>
        <argument><name>cnpj</name></argument>
-       <argument><name>MatchedAddress</name></argument>
-       <argument><name>fonte</name></argument>
-       <argument><name>endereco</name></argument>
-       <argument><name>fonte</name></argument>
-       <argument><name>fonte</name></argument>
-       <argument><name>cep</name></argument>
-       <argument><name>fonte</name></argument>
-       <argument><name>Longitude</name></argument>
-       <argument><name>Latitude</name></argument>
-       <argument><name>PrecisionDepth</name></argument>
-       <argument><name>cidade</name></argument>
-       <argument><name>cnpj</name></argument>
-       <argument><name>MatchedAddress</name></argument>
-       <argument><name>fonte</name></argument>
-       <argument><name>endereco</name></argument>
-       <argument><name>fonte</name></argument>
-       <argument><name>fonte</name></argument>
-       <argument><name>cep</name></argument>
-       <argument><name>fonte</name></argument>
-       <argument><name>Longitude</name></argument>
-       <argument><name>Latitude</name></argument>
-       <argument><name>PrecisionDepth</name></argument>
-       <argument><name>cidade</name></argument>
-       <argument><name>cnpj</name></argument>
     </arguments>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>504</xloc>
+      <xloc>535</xloc>
       <yloc>276</yloc>
       <draw>Y</draw>
       </GUI>
@@ -455,6 +433,17 @@
         <case_sensitive>no</case_sensitive>
       </field>
       <field>
+        <in_stream_name>cep</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>-</replace_string>
+        <replace_by_string/>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
+      <field>
         <in_stream_name>telefone</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
@@ -487,11 +476,196 @@
         <whole_word>no</whole_word>
         <case_sensitive>no</case_sensitive>
       </field>
+      <field>
+        <in_stream_name>telefone</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>&#x2f;</replace_string>
+        <replace_by_string/>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
+      <field>
+        <in_stream_name>telefone</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string> </replace_string>
+        <replace_by_string/>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
+      <field>
+        <in_stream_name>telefone</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>0&#x2a;&#x2a;</replace_string>
+        <replace_by_string/>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
+      <field>
+        <in_stream_name>telefone</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>NA</replace_string>
+        <replace_by_string/>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
+      <field>
+        <in_stream_name>telefone</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>&#x5b;</replace_string>
+        <replace_by_string/>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
+      <field>
+        <in_stream_name>telefone</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>&#x5d;</replace_string>
+        <replace_by_string/>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
+      <field>
+        <in_stream_name>telefone</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>0XX</replace_string>
+        <replace_by_string/>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
+      <field>
+        <in_stream_name>telefone</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>.</replace_string>
+        <replace_by_string/>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>235</xloc>
       <yloc>276</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Execute SQL script 2</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>localhost</connection>
+    <execute_each_row>Y</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>Y</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>UPDATE osc.tb_localizacao SET tx_endereco_corrigido &#x3d; &#x27;&#x3f;&#x27;, ft_endereco_corrigido &#x3d; 3,  tx_endereco &#x3d; &#x27;&#x3f;&#x27;, ft_endereco &#x3d; &#x27;&#x3f;&#x27;, cd_municipio &#x3d; edmu_cd_municipio, ft_municipio &#x3d; &#x27;&#x3f;&#x27;, nr_cep &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC, ft_cep &#x3d; &#x27;&#x3f;&#x27;, geo_localizacao &#x3d; ST_GeomFromText&#x28;concat&#x28;&#x27;POINT&#x28;&#x27;,CONCAT&#x28;&#x3f;&#x3a;&#x3a;NUMERIC,&#x27; &#x27;,&#x3f;&#x3a;&#x3a;NUMERIC&#x29;,&#x27;&#x29;&#x27;&#x29;,4674&#x29;, ft_geo_localizacao &#x3d; 3, bo_oficial &#x3d;true, qualidade_classificacao &#x3d; &#x27;&#x3f;&#x27;&#xa;FROM spat.ed_municipio&#xa;INNER JOIN spat.ed_uf ON spat.ed_municipio.eduf_cd_uf &#x3d; spat.ed_uf.eduf_cd_uf&#xa;WHERE lower&#x28;edmu_nm_municipio&#x29; &#x3d; lower&#x28;&#x27;&#x3f;&#x27;&#x3a;&#x3a;TEXT&#x29; AND eduf_sg_uf &#x3d; &#x27;&#x3f;&#x27;&#xa;AND osc.tb_localizacao.id_osc &#x3d; &#x28;SELECT id_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x29;&#x3b;&#xa;&#xa;INSERT INTO osc.tb_localizacao&#x28;id_osc, tx_endereco_corrigido, ft_endereco_corrigido, tx_endereco, ft_endereco, cd_municipio, ft_municipio, nr_cep, ft_cep, geo_localizacao, ft_geo_localizacao, bo_oficial, qualidade_classificacao&#x29;&#xa;SELECT a.id_osc, &#x27;&#x3f;&#x27;, 3, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;, edmu_cd_municipio, &#x27;&#x3f;&#x27;, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;&#x3f;&#x27;, ST_GeomFromText&#x28;concat&#x28;&#x27;POINT&#x28;&#x27;,CONCAT&#x28;&#x3f;&#x3a;&#x3a;NUMERIC,&#x27; &#x27;,&#x3f;&#x3a;&#x3a;NUMERIC&#x29;,&#x27;&#x29;&#x27;&#x29;,4674&#x29;, 3, true, &#x27;&#x3f;&#x27;&#xa;FROM osc.tb_osc a&#xa;INNER JOIN spat.ed_municipio ON lower&#x28;edmu_nm_municipio&#x29; &#x3d; lower&#x28;&#x27;&#x3f;&#x27;&#x3a;&#x3a;TEXT&#x29;&#xa;INNER JOIN spat.ed_uf ON spat.ed_municipio.eduf_cd_uf &#x3d; spat.ed_uf.eduf_cd_uf&#xa;WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC AND eduf_sg_uf &#x3d; &#x27;&#x3f;&#x27;&#xa;AND NOT EXISTS&#x28;SELECT &#x2a; FROM osc.tb_localizacao WHERE osc.tb_localizacao.id_osc &#x3d; a.id_osc&#x29;&#x3b;</sql>
+    <set_params>N</set_params>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+       <argument><name>MatchedAddress</name></argument>
+       <argument><name>endereco</name></argument>
+       <argument><name>fonte</name></argument>
+       <argument><name>fonte</name></argument>
+       <argument><name>cep</name></argument>
+       <argument><name>fonte</name></argument>
+       <argument><name>Longitude</name></argument>
+       <argument><name>Latitude</name></argument>
+       <argument><name>&#xfeff;PrecisionDepth</name></argument>
+       <argument><name>cidade</name></argument>
+       <argument><name>uf</name></argument>
+       <argument><name>cnpj</name></argument>
+       <argument><name>MatchedAddress</name></argument>
+       <argument><name>endereco</name></argument>
+       <argument><name>fonte</name></argument>
+       <argument><name>fonte</name></argument>
+       <argument><name>cep</name></argument>
+       <argument><name>fonte</name></argument>
+       <argument><name>Longitude</name></argument>
+       <argument><name>Latitude</name></argument>
+       <argument><name>&#xfeff;PrecisionDepth</name></argument>
+       <argument><name>cidade</name></argument>
+       <argument><name>uf</name></argument>
+       <argument><name>cnpj</name></argument>
+    </arguments>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>768</xloc>
+      <yloc>278</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Filter rows</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<send_true_to>Execute SQL script 2</send_true_to>
+<send_false_to/>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <conditions>
+  <condition>
+   <negated>N</negated>
+   <leftvalue>Longitude</leftvalue>
+   <function>IS NOT NULL</function>
+   <rightvalue/>
+   </condition>
+  <condition>
+   <negated>N</negated>
+   <operator>AND</operator>
+   <leftvalue>Latitude</leftvalue>
+   <function>IS NOT NULL</function>
+   <rightvalue/>
+   </condition>
+  </conditions>
+ </condition>
+    </compare>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>648</xloc>
+      <yloc>277</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
