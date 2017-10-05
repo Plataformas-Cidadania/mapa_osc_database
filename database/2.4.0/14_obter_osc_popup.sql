@@ -12,7 +12,7 @@ BEGIN
 	RETURN QUERY 
 		SELECT 
 			vw_osc_dados_gerais.tx_nome_osc, 
-			(vw_osc_dados_gerais.tx_endereco || COALESCE(', ' || vw_osc_dados_gerais.nr_localizacao::TEXT, '') || COALESCE(' - ' || vw_osc_dados_gerais.tx_endereco_complemento, '')) AS tx_endereco, 
+			LTRIM((COALESCE(vw_osc_dados_gerais.tx_endereco, '') || COALESCE(', ' || vw_osc_dados_gerais.nr_localizacao::TEXT, '') || COALESCE(' - ' || vw_osc_dados_gerais.tx_endereco_complemento, '')), ' ,-') AS tx_endereco, 
 			(vw_osc_dados_gerais.tx_bairro || ', ' || vw_osc_dados_gerais.tx_nome_municipio || ' - ' || vw_osc_dados_gerais.tx_sigla_uf) AS tx_bairro, 
 			vw_osc_dados_gerais.tx_nome_natureza_juridica_osc, 
 			vw_osc_dados_gerais.tx_nome_atividade_economica_osc 

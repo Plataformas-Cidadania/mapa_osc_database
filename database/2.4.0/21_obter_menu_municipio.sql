@@ -18,6 +18,8 @@ BEGIN
 		query_limit := ';'; 
 	END IF; 
 	
+	param := TRANSLATE(UNACCENT(LOWER(param::TEXT)), ' /_-', '');
+	
 	RETURN QUERY
 		EXECUTE 
 			'SELECT
@@ -27,10 +29,11 @@ BEGIN
 			FROM 
 				spat.vw_spat_municipio
 			WHERE 
-				vw_spat_municipio.edmu_nm_municipio_ajustado ILIKE UNACCENT(LOWER(''' || param::TEXT || '%''::TEXT)) OR 
-				vw_spat_municipio.edmu_nm_municipio_ajustado || vw_spat_municipio.eduf_sg_uf_ajustado ILIKE TRANSLATE(UNACCENT(LOWER(''' || param::TEXT || '%''::TEXT)), '' /-'', '''') 
+				vw_spat_municipio.edmu_nm_municipio_ajustado ILIKE ''' || param::TEXT || '%'' 
+			OR 
+				vw_spat_municipio.edmu_nm_municipio_ajustado || vw_spat_municipio.eduf_sg_uf_ajustado ILIKE ''' || param::TEXT || '%'' 
 			ORDER BY 
-				similarity(vw_spat_municipio.edmu_nm_municipio_ajustado || '' '' || vw_spat_municipio.eduf_sg_uf_ajustado, UNACCENT(LOWER(''' || param::TEXT || '%''::TEXT))) DESC ' || query_limit;
+				similarity(vw_spat_municipio.edmu_nm_municipio_ajustado || vw_spat_municipio.eduf_sg_uf_ajustado, ''' || param::TEXT || ''') DESC ' || query_limit;
 	
 END;
 $$ LANGUAGE 'plpgsql';
