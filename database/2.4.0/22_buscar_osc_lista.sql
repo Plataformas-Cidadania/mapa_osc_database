@@ -3,7 +3,7 @@ DROP FUNCTION IF EXISTS portal.buscar_osc_lista(param TEXT, limit_result INTEGER
 CREATE OR REPLACE FUNCTION portal.buscar_osc_lista(param TEXT, limit_result INTEGER, offset_result INTEGER, similarity_result INTEGER) RETURNS TABLE(
 	id_osc INTEGER,
 	tx_nome_osc TEXT,
-	cd_identificador_osc NUMERIC,
+	cd_identificador_osc TEXT,
 	tx_natureza_juridica_osc TEXT,
 	tx_endereco_osc TEXT,
 	tx_nome_atividade_economica TEXT,
