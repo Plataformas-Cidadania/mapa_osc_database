@@ -2595,7 +2595,7 @@ WHERE SUBSTRING(cd_identificador_osc::TEXT FROM 0 FOR CHAR_LENGTH(cd_identificad
     <limit>0</limit>
     <lookup>Select values 1</lookup>
     <execute_each_row>Y</execute_each_row>
-    <variables_active>N</variables_active>
+    <variables_active>Y</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
     <cluster_schema />
     <remotesteps>
