@@ -37,8 +37,6 @@ SELECT
 	tb_projeto.cd_zona_atuacao_projeto,
 	(SELECT tx_nome_zona_atuacao FROM syst.dc_zona_atuacao_projeto WHERE cd_zona_atuacao_projeto = tb_projeto.cd_zona_atuacao_projeto) AS tx_nome_zona_atuacao,
 	tb_projeto.ft_zona_atuacao_projeto,
-	tb_projeto.tx_orgao_concedente,
-	tb_projeto.ft_orgao_concedente,
 	tb_projeto.cd_municipio,
 	tb_projeto.ft_municipio,
 	tb_projeto.cd_uf,

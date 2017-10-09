@@ -1293,6 +1293,49 @@ OR (
     </GUI>
   </step>
   <step>
+    <name>Filter município único</name>
+    <type>FilterRows</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <send_true_to>Select values 8</send_true_to>
+    <send_false_to />
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>count_municipio</leftvalue>
+        <function>&lt;=</function>
+        <rightvalue />
+        <value>
+          <name>constant</name>
+          <type>Integer</type>
+          <text>1</text>
+          <length>-1</length>
+          <precision>0</precision>
+          <isnull>N</isnull>
+          <mask>####0;-####0</mask>
+        </value>
+      </condition>
+    </compare>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1012</xloc>
+      <yloc>881</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>Filter rows 5</name>
     <type>FilterRows</type>
     <description />
@@ -1577,6 +1620,16 @@ OR (
         <update>Y</update>
       </value>
       <value>
+        <name>tx_orgao_concedente</name>
+        <rename>orgao_concedente</rename>
+        <update>Y</update>
+      </value>
+      <value>
+        <name>ft_orgao_concedente</name>
+        <rename>usuario</rename>
+        <update>Y</update>
+      </value>
+      <value>
         <name>bo_oficial</name>
         <rename>bo_oficial</rename>
         <update>Y</update>
@@ -1782,16 +1835,6 @@ OR (
         <update>Y</update>
       </value>
       <value>
-        <name>tx_orgao_concedente</name>
-        <rename>orgao_concedente</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>ft_orgao_concedente</name>
-        <rename>usuario</rename>
-        <update>Y</update>
-      </value>
-      <value>
         <name>cd_municipio</name>
         <rename>cd_municipio</rename>
         <update>Y</update>
@@ -1946,16 +1989,6 @@ OR (
       </value>
       <value>
         <name>ft_status_projeto</name>
-        <rename>usuario</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>tx_orgao_concedente</name>
-        <rename>orgao_concedente</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>ft_orgao_concedente</name>
         <rename>usuario</rename>
         <update>Y</update>
       </value>
@@ -3799,49 +3832,6 @@ AND cd_uf = ?::INTEGER;</sql>
     <GUI>
       <xloc>1015</xloc>
       <yloc>250</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Filter município único</name>
-    <type>FilterRows</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <send_true_to>Select values 8</send_true_to>
-    <send_false_to />
-    <compare>
-      <condition>
-        <negated>N</negated>
-        <leftvalue>count_municipio</leftvalue>
-        <function>&lt;=</function>
-        <rightvalue />
-        <value>
-          <name>constant</name>
-          <type>Integer</type>
-          <text>1</text>
-          <length>-1</length>
-          <precision>0</precision>
-          <isnull>N</isnull>
-          <mask>####0;-####0</mask>
-        </value>
-      </condition>
-    </compare>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1012</xloc>
-      <yloc>881</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
