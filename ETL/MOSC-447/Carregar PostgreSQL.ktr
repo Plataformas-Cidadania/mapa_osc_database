@@ -615,11 +615,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Insert Fonte Recursos</from>
-      <to>Insert Dados Gerais</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Insert Localização</from>
       <to>Copy rows to result 2</to>
       <enabled>Y</enabled>
@@ -632,11 +627,6 @@
     <hop>
       <from>Filter tipo</from>
       <to>Select values 4</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Block</from>
-      <to>Select values 6</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -661,7 +651,7 @@
     </hop>
     <hop>
       <from>Filter município</from>
-      <to>Copy rows to result 1</to>
+      <to>Copy rows to result 3</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -692,11 +682,6 @@
     <hop>
       <from>Dummy 1</from>
       <to>Merge Join 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Dummy 1</from>
-      <to>Block</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -804,6 +789,21 @@
       <to>Select edmu_cd_municipio </to>
       <enabled>Y</enabled>
     </hop>
+    <hop>
+      <from>Select values 5</from>
+      <to>Insert Dados Gerais</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Insert Fonte Recursos</from>
+      <to>Copy rows to result 1</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Dummy 1</from>
+      <to>Select values 6</to>
+      <enabled>Y</enabled>
+    </hop>
   </order>
   <step>
     <name>Add constants 1</name>
@@ -862,8 +862,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>869</xloc>
-      <yloc>250</yloc>
+      <xloc>896</xloc>
+      <yloc>232</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -900,8 +900,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1333</xloc>
-      <yloc>528</yloc>
+      <xloc>1360</xloc>
+      <yloc>510</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -938,42 +938,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1048</xloc>
-      <yloc>530</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Block</name>
-    <type>BlockUntilStepsFinish</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <steps>
-      <step>
-        <name>Insert Projeto Município</name>
-        <CopyNr>0</CopyNr>
-      </step>
-      <step>
-        <name>Insert Projeto Estado</name>
-        <CopyNr>0</CopyNr>
-      </step>
-    </steps>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>67</xloc>
-      <yloc>765</yloc>
+      <xloc>1075</xloc>
+      <yloc>512</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1058,13 +1024,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1475</xloc>
-      <yloc>423</yloc>
+      <xloc>1502</xloc>
+      <yloc>405</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Copy rows to result 1</name>
+    <name>Copy rows to result 3</name>
     <type>RowsToResult</type>
     <description />
     <distribute>Y</distribute>
@@ -1082,8 +1048,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>869</xloc>
-      <yloc>774</yloc>
+      <xloc>648</xloc>
+      <yloc>760</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1106,8 +1072,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1475</xloc>
-      <yloc>643</yloc>
+      <xloc>1254</xloc>
+      <yloc>629</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1130,8 +1096,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>67</xloc>
-      <yloc>643</yloc>
+      <xloc>94</xloc>
+      <yloc>625</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1154,8 +1120,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1012</xloc>
-      <yloc>643</yloc>
+      <xloc>791</xloc>
+      <yloc>629</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1177,11 +1143,11 @@
     <quoteString>Y</quoteString>
     <sql>SELECT ? AS numero_parceria, edmu_cd_municipio 
 FROM spat.vw_spat_municipio 
-WHERE SUBSTRING(edmu_cd_municipio::TEXT FROM 0 FOR 7) = SUBSTRING(?::TEXT FROM 0 FOR 7) 
+WHERE substring(edmu_cd_municipio::TEXT from 0 for 7) = substring(?::TEXT from 0 for 7) 
 OR (
-	vw_spat_municipio.edmu_nm_municipio_ajustado::TEXT = ?::TEXT 
+	vw_spat_municipio.edmu_nm_municipio_ajustado::TEXT = unaccent(?::TEXT) 
 	OR 
-	vw_spat_municipio.edmu_nm_municipio_ajustado::TEXT || vw_spat_municipio.eduf_sg_uf_ajustado = ?::TEXT
+	vw_spat_municipio.edmu_nm_municipio_ajustado::TEXT || vw_spat_municipio.eduf_sg_uf_ajustado = unaccent(?::TEXT)
 );</sql>
     <set_params>N</set_params>
     <insert_field />
@@ -1210,8 +1176,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1012</xloc>
-      <yloc>775</yloc>
+      <xloc>791</xloc>
+      <yloc>761</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1253,8 +1219,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>784</xloc>
-      <yloc>423</yloc>
+      <xloc>811</xloc>
+      <yloc>405</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1270,7 +1236,7 @@ OR (
       <schema_name />
     </partitioning>
     <send_true_to>Dummy 2</send_true_to>
-    <send_false_to>Copy rows to result 1</send_false_to>
+    <send_false_to>Copy rows to result 3</send_false_to>
     <compare>
       <condition>
         <negated>N</negated>
@@ -1287,8 +1253,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>870</xloc>
-      <yloc>643</yloc>
+      <xloc>649</xloc>
+      <yloc>629</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1330,8 +1296,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1012</xloc>
-      <yloc>881</yloc>
+      <xloc>791</xloc>
+      <yloc>867</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1373,8 +1339,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>336</xloc>
-      <yloc>421</yloc>
+      <xloc>363</xloc>
+      <yloc>403</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1416,8 +1382,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1334</xloc>
-      <yloc>423</yloc>
+      <xloc>1361</xloc>
+      <yloc>405</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1459,8 +1425,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1048</xloc>
-      <yloc>423</yloc>
+      <xloc>1075</xloc>
+      <yloc>405</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1493,8 +1459,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>623</xloc>
-      <yloc>250</yloc>
+      <xloc>650</xloc>
+      <yloc>232</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1555,8 +1521,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>734</xloc>
-      <yloc>643</yloc>
+      <xloc>513</xloc>
+      <yloc>629</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1643,8 +1609,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>578</xloc>
-      <yloc>642</yloc>
+      <xloc>276</xloc>
+      <yloc>872</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1710,8 +1676,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1314</xloc>
-      <yloc>643</yloc>
+      <xloc>1093</xloc>
+      <yloc>629</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1868,8 +1834,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>179</xloc>
-      <yloc>421</yloc>
+      <xloc>206</xloc>
+      <yloc>403</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2026,8 +1992,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>336</xloc>
-      <yloc>539</yloc>
+      <xloc>363</xloc>
+      <yloc>521</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2063,8 +2029,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1179</xloc>
-      <yloc>250</yloc>
+      <xloc>1206</xloc>
+      <yloc>232</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2092,23 +2058,11 @@ OR (
         <target_value>1</target_value>
       </field>
       <field>
-        <source_value>em execução</source_value>
-        <target_value>2</target_value>
-      </field>
-      <field>
-        <source_value>em execucao</source_value>
-        <target_value>2</target_value>
-      </field>
-      <field>
         <source_value>execução</source_value>
         <target_value>2</target_value>
       </field>
       <field>
         <source_value>execucao</source_value>
-        <target_value>2</target_value>
-      </field>
-      <field>
-        <source_value>em andamento</source_value>
         <target_value>2</target_value>
       </field>
       <field>
@@ -2132,8 +2086,8 @@ OR (
         <target_value>3</target_value>
       </field>
       <field>
-        <source_value>finalizado</source_value>
-        <target_value>3</target_value>
+        <source_value>outro</source_value>
+        <target_value>4</target_value>
       </field>
     </fields>
     <cluster_schema />
@@ -2144,8 +2098,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1475</xloc>
-      <yloc>249</yloc>
+      <xloc>1502</xloc>
+      <yloc>231</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2165,27 +2119,27 @@ OR (
     <non_match_default />
     <fields>
       <field>
-        <source_value>termo de fomento</source_value>
+        <source_value>fomento</source_value>
         <target_value>0</target_value>
       </field>
       <field>
-        <source_value>termo de colaboração</source_value>
+        <source_value>colaboração</source_value>
         <target_value>1</target_value>
       </field>
       <field>
-        <source_value>termo de colaboracao</source_value>
+        <source_value>colaboracao</source_value>
         <target_value>1</target_value>
       </field>
       <field>
-        <source_value>termo de parceria</source_value>
+        <source_value>parceria</source_value>
         <target_value>2</target_value>
       </field>
       <field>
-        <source_value>contrato de gestão</source_value>
+        <source_value>gestão</source_value>
         <target_value>3</target_value>
       </field>
       <field>
-        <source_value>contrato de gestao</source_value>
+        <source_value>gestao</source_value>
         <target_value>3</target_value>
       </field>
       <field>
@@ -2197,11 +2151,11 @@ OR (
         <target_value>4</target_value>
       </field>
       <field>
-        <source_value>acordo de cooperação técnica</source_value>
+        <source_value>cooperaçãotécnica</source_value>
         <target_value>5</target_value>
       </field>
       <field>
-        <source_value>acordo de cooperacao tecnica</source_value>
+        <source_value>cooperacaotecnica</source_value>
         <target_value>5</target_value>
       </field>
       <field>
@@ -2217,8 +2171,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1340</xloc>
-      <yloc>249</yloc>
+      <xloc>1367</xloc>
+      <yloc>231</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2250,8 +2204,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1180</xloc>
-      <yloc>643</yloc>
+      <xloc>959</xloc>
+      <yloc>629</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2285,8 +2239,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>503</xloc>
-      <yloc>250</yloc>
+      <xloc>530</xloc>
+      <yloc>232</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2320,8 +2274,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>287</xloc>
-      <yloc>643</yloc>
+      <xloc>94</xloc>
+      <yloc>756</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2470,8 +2424,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>103</xloc>
-      <yloc>252</yloc>
+      <xloc>104</xloc>
+      <yloc>232</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2675,10 +2629,32 @@ OR (
         <case_sensitive>no</case_sensitive>
       </field>
       <field>
-        <in_stream_name>municipio_proponente</in_stream_name>
-        <out_stream_name>municipio_proponente_ajustado</out_stream_name>
+        <in_stream_name>municipio_proponente_ajustado</in_stream_name>
+        <out_stream_name />
         <use_regex>yes</use_regex>
-        <replace_string>[\.\,\/\\\|\:\#\@\$\&amp;\!\?\(\)\[\]\"\'\ ]</replace_string>
+        <replace_string>[^a-z\u00C0-\u017F]</replace_string>
+        <replace_by_string />
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string />
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
+      <field>
+        <in_stream_name>tipo_parceria_ajustado</in_stream_name>
+        <out_stream_name />
+        <use_regex>yes</use_regex>
+        <replace_string>[^a-z\u00C0-\u017F0-9]|(\bde\b)|(\bem\b)|(\btermo\b)|(\bcontrato\b)|(\bacordo\b)</replace_string>
+        <replace_by_string />
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string />
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
+      <field>
+        <in_stream_name>situacao_parceria_ajustado</in_stream_name>
+        <out_stream_name />
+        <use_regex>yes</use_regex>
+        <replace_string>[^a-z\u00C0-\u017F0-9]|(\bde\b)|(\bem\b)</replace_string>
         <replace_by_string />
         <set_empty_string>N</set_empty_string>
         <replace_field_by_string />
@@ -2694,8 +2670,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>366</xloc>
-      <yloc>250</yloc>
+      <xloc>393</xloc>
+      <yloc>232</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2713,11 +2689,11 @@ OR (
     <connection>localhost</connection>
     <sql>SELECT ? AS numero_parceria, edmu_cd_municipio 
 FROM spat.vw_spat_municipio 
-WHERE SUBSTRING(edmu_cd_municipio::TEXT FROM 0 FOR 7) = SUBSTRING(?::TEXT FROM 0 FOR 7) 
+WHERE substring(edmu_cd_municipio::TEXT from 0 for 7) = substring(?::TEXT from 0 for 7) 
 OR (
-	vw_spat_municipio.edmu_nm_municipio_ajustado::TEXT = ?::TEXT 
+	vw_spat_municipio.edmu_nm_municipio_ajustado::TEXT = unaccent(?::TEXT) 
 	OR 
-	vw_spat_municipio.edmu_nm_municipio_ajustado::TEXT || vw_spat_municipio.eduf_sg_uf_ajustado = ?::TEXT
+	vw_spat_municipio.edmu_nm_municipio_ajustado::TEXT || vw_spat_municipio.eduf_sg_uf_ajustado = unaccent(?::TEXT)
 );</sql>
     <limit>0</limit>
     <lookup>Select values 8</lookup>
@@ -2732,8 +2708,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1177</xloc>
-      <yloc>770</yloc>
+      <xloc>956</xloc>
+      <yloc>756</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2751,7 +2727,7 @@ OR (
     <connection>localhost</connection>
     <sql>SELECT ? AS numero_parceria, id_osc, cd_identificador_osc 
 FROM osc.tb_osc 
-WHERE SUBSTRING(cd_identificador_osc::TEXT FROM 0 FOR CHAR_LENGTH(cd_identificador_osc::TEXT) - 1) = LTRIM(SUBSTRING(? FROM 0 FOR CHAR_LENGTH(?) - 1), '0');</sql>
+WHERE substring(cd_identificador_osc::TEXT from 0 for char_length(cd_identificador_osc::TEXT) - 1) = ltrim(substring(? from 0 for char_length(?) - 1), '0');</sql>
     <limit>0</limit>
     <lookup>Select values 1</lookup>
     <execute_each_row>Y</execute_each_row>
@@ -2765,8 +2741,8 @@ WHERE SUBSTRING(cd_identificador_osc::TEXT FROM 0 FOR CHAR_LENGTH(cd_identificad
       </output>
     </remotesteps>
     <GUI>
-      <xloc>502</xloc>
-      <yloc>132</yloc>
+      <xloc>529</xloc>
+      <yloc>114</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2801,8 +2777,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>291</xloc>
-      <yloc>765</yloc>
+      <xloc>312</xloc>
+      <yloc>757</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2839,8 +2815,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>365</xloc>
-      <yloc>132</yloc>
+      <xloc>392</xloc>
+      <yloc>114</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2858,83 +2834,107 @@ AND cd_uf = ?::INTEGER;</sql>
     <fields>
       <field>
         <name>numero_parceria</name>
+        <rename />
       </field>
       <field>
         <name>cnpj_proponente</name>
+        <rename />
       </field>
       <field>
         <name>data_inicio</name>
+        <rename />
       </field>
       <field>
         <name>data_conclusao</name>
+        <rename />
       </field>
       <field>
         <name>situacao_parceria</name>
+        <rename />
       </field>
       <field>
         <name>tipo_parceria</name>
+        <rename />
       </field>
       <field>
         <name>valor_total</name>
+        <rename />
       </field>
       <field>
         <name>valor_pago</name>
+        <rename />
       </field>
       <field>
         <name>nome_arquivo</name>
+        <rename />
       </field>
       <field>
         <name>data</name>
+        <rename />
       </field>
       <field>
         <name>localidade</name>
+        <rename />
       </field>
       <field>
         <name>fonte_recursos</name>
+        <rename />
       </field>
       <field>
         <name>usuario</name>
+        <rename />
       </field>
       <field>
         <name>_id</name>
+        <rename />
       </field>
       <field>
         <name>hash</name>
+        <rename />
       </field>
       <field>
         <name>orgao_concedente</name>
+        <rename />
       </field>
       <field>
         <name>razao_social_proponente</name>
+        <rename />
       </field>
       <field>
         <name>nome_fantasia_proponente</name>
+        <rename />
       </field>
       <field>
         <name>municipio_proponente</name>
+        <rename />
       </field>
       <field>
         <name>endereco_proponente</name>
+        <rename />
       </field>
       <field>
         <name>objeto_parceria</name>
+        <rename />
       </field>
       <field>
         <name>municipio_proponente_ajustado</name>
+        <rename />
       </field>
       <field>
         <name>id_osc</name>
+        <rename />
       </field>
       <field>
         <name>cd_identificador_osc</name>
+        <rename />
       </field>
       <field>
-        <name>tipo_parceria</name>
-        <rename>tipo_parceria_ajustado</rename>
+        <name>tipo_parceria_ajustado</name>
+        <rename />
       </field>
       <field>
-        <name>situacao_parceria</name>
-        <rename>situacao_parceria_ajustado</rename>
+        <name>situacao_parceria_ajustado</name>
+        <rename />
       </field>
       <select_unspecified>N</select_unspecified>
       <meta>
@@ -3014,8 +3014,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>748</xloc>
-      <yloc>250</yloc>
+      <xloc>775</xloc>
+      <yloc>232</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3075,8 +3075,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1191</xloc>
-      <yloc>423</yloc>
+      <xloc>1218</xloc>
+      <yloc>405</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3136,8 +3136,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>913</xloc>
-      <yloc>423</yloc>
+      <xloc>940</xloc>
+      <yloc>405</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3287,8 +3287,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>486</xloc>
-      <yloc>421</yloc>
+      <xloc>513</xloc>
+      <yloc>403</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3326,8 +3326,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>167</xloc>
-      <yloc>765</yloc>
+      <xloc>312</xloc>
+      <yloc>625</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3376,8 +3376,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>420</xloc>
-      <yloc>643</yloc>
+      <xloc>94</xloc>
+      <yloc>872</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3418,8 +3418,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1177</xloc>
-      <yloc>881</yloc>
+      <xloc>956</xloc>
+      <yloc>867</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3448,8 +3448,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>628</xloc>
-      <yloc>364</yloc>
+      <xloc>655</xloc>
+      <yloc>346</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3478,8 +3478,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>628</xloc>
-      <yloc>467</yloc>
+      <xloc>655</xloc>
+      <yloc>449</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3511,8 +3511,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1195</xloc>
-      <yloc>528</yloc>
+      <xloc>1222</xloc>
+      <yloc>510</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3544,8 +3544,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>914</xloc>
-      <yloc>530</yloc>
+      <xloc>941</xloc>
+      <yloc>512</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3743,6 +3743,45 @@ AND cd_uf = ?::INTEGER;</sql>
         <digits>none</digits>
         <remove_special_characters>none</remove_special_characters>
       </field>
+      <field>
+        <in_stream_name>municipio_proponente</in_stream_name>
+        <out_stream_name>municipio_proponente_ajustado</out_stream_name>
+        <trim_type>both</trim_type>
+        <lower_upper>lower</lower_upper>
+        <padding_type>none</padding_type>
+        <pad_char />
+        <pad_len />
+        <init_cap>no</init_cap>
+        <mask_xml>none</mask_xml>
+        <digits>none</digits>
+        <remove_special_characters>none</remove_special_characters>
+      </field>
+      <field>
+        <in_stream_name>tipo_parceria</in_stream_name>
+        <out_stream_name>tipo_parceria_ajustado</out_stream_name>
+        <trim_type>both</trim_type>
+        <lower_upper>lower</lower_upper>
+        <padding_type>none</padding_type>
+        <pad_char />
+        <pad_len />
+        <init_cap>no</init_cap>
+        <mask_xml>none</mask_xml>
+        <digits>none</digits>
+        <remove_special_characters>none</remove_special_characters>
+      </field>
+      <field>
+        <in_stream_name>situacao_parceria</in_stream_name>
+        <out_stream_name>situacao_parceria_ajustado</out_stream_name>
+        <trim_type>both</trim_type>
+        <lower_upper>lower</lower_upper>
+        <padding_type>none</padding_type>
+        <pad_char />
+        <pad_len />
+        <init_cap>no</init_cap>
+        <mask_xml>none</mask_xml>
+        <digits>none</digits>
+        <remove_special_characters>none</remove_special_characters>
+      </field>
     </fields>
     <cluster_schema />
     <remotesteps>
@@ -3752,8 +3791,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>237</xloc>
-      <yloc>251</yloc>
+      <xloc>249</xloc>
+      <yloc>232</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3830,8 +3869,32 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1015</xloc>
-      <yloc>250</yloc>
+      <xloc>1042</xloc>
+      <yloc>232</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Copy rows to result 1</name>
+    <type>RowsToResult</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>466</xloc>
+      <yloc>872</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
