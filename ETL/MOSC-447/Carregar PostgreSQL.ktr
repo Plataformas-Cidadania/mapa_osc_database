@@ -585,16 +585,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>String operations 1</from>
-      <to>Replace in string 1</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>MongoDB Input</from>
-      <to>String operations 1</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Select id_projeto</from>
       <to>Merge Join 2</to>
       <enabled>Y</enabled>
@@ -802,6 +792,21 @@
     <hop>
       <from>Dummy 1</from>
       <to>Select values 6</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>MongoDB Input</from>
+      <to>JavaScript Script</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>JavaScript Script</from>
+      <to>String operations 1</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>String operations 1</from>
+      <to>Replace in string 1</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -1145,9 +1150,9 @@
 FROM spat.vw_spat_municipio 
 WHERE substring(edmu_cd_municipio::TEXT from 0 for 7) = substring(?::TEXT from 0 for 7) 
 OR (
-	vw_spat_municipio.edmu_nm_municipio_ajustado::TEXT = unaccent(?::TEXT) 
+	vw_spat_municipio.edmu_nm_municipio_ajustado::TEXT = ?::TEXT 
 	OR 
-	vw_spat_municipio.edmu_nm_municipio_ajustado::TEXT || vw_spat_municipio.eduf_sg_uf_ajustado = unaccent(?::TEXT)
+	vw_spat_municipio.edmu_nm_municipio_ajustado::TEXT || vw_spat_municipio.eduf_sg_uf_ajustado = ?::TEXT
 );</sql>
     <set_params>N</set_params>
     <insert_field />
@@ -2058,10 +2063,6 @@ OR (
         <target_value>1</target_value>
       </field>
       <field>
-        <source_value>execução</source_value>
-        <target_value>2</target_value>
-      </field>
-      <field>
         <source_value>execucao</source_value>
         <target_value>2</target_value>
       </field>
@@ -2071,10 +2072,6 @@ OR (
       </field>
       <field>
         <source_value>finalizado</source_value>
-        <target_value>3</target_value>
-      </field>
-      <field>
-        <source_value>concluído</source_value>
         <target_value>3</target_value>
       </field>
       <field>
@@ -2123,10 +2120,6 @@ OR (
         <target_value>0</target_value>
       </field>
       <field>
-        <source_value>colaboração</source_value>
-        <target_value>1</target_value>
-      </field>
-      <field>
         <source_value>colaboracao</source_value>
         <target_value>1</target_value>
       </field>
@@ -2135,24 +2128,12 @@ OR (
         <target_value>2</target_value>
       </field>
       <field>
-        <source_value>gestão</source_value>
-        <target_value>3</target_value>
-      </field>
-      <field>
         <source_value>gestao</source_value>
         <target_value>3</target_value>
       </field>
       <field>
-        <source_value>convênio</source_value>
-        <target_value>4</target_value>
-      </field>
-      <field>
         <source_value>convenio</source_value>
         <target_value>4</target_value>
-      </field>
-      <field>
-        <source_value>cooperaçãotécnica</source_value>
-        <target_value>5</target_value>
       </field>
       <field>
         <source_value>cooperacaotecnica</source_value>
@@ -2424,8 +2405,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>104</xloc>
-      <yloc>232</yloc>
+      <xloc>108</xloc>
+      <yloc>82</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2632,7 +2613,7 @@ OR (
         <in_stream_name>municipio_proponente_ajustado</in_stream_name>
         <out_stream_name />
         <use_regex>yes</use_regex>
-        <replace_string>[^a-z\u00C0-\u017F]</replace_string>
+        <replace_string>[^a-z$]</replace_string>
         <replace_by_string />
         <set_empty_string>N</set_empty_string>
         <replace_field_by_string />
@@ -2643,7 +2624,7 @@ OR (
         <in_stream_name>tipo_parceria_ajustado</in_stream_name>
         <out_stream_name />
         <use_regex>yes</use_regex>
-        <replace_string>[^a-z\u00C0-\u017F0-9]|(\bde\b)|(\bem\b)|(\btermo\b)|(\bcontrato\b)|(\bacordo\b)</replace_string>
+        <replace_string>[^~a-z0-9$]|( )?(de)( )?|( )?(termo)( )?|( )?(contrato)( )?|( )?(acordo)( )?</replace_string>
         <replace_by_string />
         <set_empty_string>N</set_empty_string>
         <replace_field_by_string />
@@ -2654,7 +2635,7 @@ OR (
         <in_stream_name>situacao_parceria_ajustado</in_stream_name>
         <out_stream_name />
         <use_regex>yes</use_regex>
-        <replace_string>[^a-z\u00C0-\u017F0-9]|(\bde\b)|(\bem\b)</replace_string>
+        <replace_string>[^~a-z0-9$]|( )?(em)( )?</replace_string>
         <replace_by_string />
         <set_empty_string>N</set_empty_string>
         <replace_field_by_string />
@@ -2691,9 +2672,9 @@ OR (
 FROM spat.vw_spat_municipio 
 WHERE substring(edmu_cd_municipio::TEXT from 0 for 7) = substring(?::TEXT from 0 for 7) 
 OR (
-	vw_spat_municipio.edmu_nm_municipio_ajustado::TEXT = unaccent(?::TEXT) 
+	vw_spat_municipio.edmu_nm_municipio_ajustado::TEXT = ?::TEXT 
 	OR 
-	vw_spat_municipio.edmu_nm_municipio_ajustado::TEXT || vw_spat_municipio.eduf_sg_uf_ajustado = unaccent(?::TEXT)
+	vw_spat_municipio.edmu_nm_municipio_ajustado::TEXT || vw_spat_municipio.eduf_sg_uf_ajustado = ?::TEXT
 );</sql>
     <limit>0</limit>
     <lookup>Select values 8</lookup>
@@ -2742,7 +2723,7 @@ WHERE substring(cd_identificador_osc::TEXT from 0 for char_length(cd_identificad
     </remotesteps>
     <GUI>
       <xloc>529</xloc>
-      <yloc>114</yloc>
+      <yloc>98</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2816,7 +2797,7 @@ AND cd_uf = ?::INTEGER;</sql>
     </remotesteps>
     <GUI>
       <xloc>392</xloc>
-      <yloc>114</yloc>
+      <yloc>98</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3744,8 +3725,8 @@ AND cd_uf = ?::INTEGER;</sql>
         <remove_special_characters>none</remove_special_characters>
       </field>
       <field>
-        <in_stream_name>municipio_proponente</in_stream_name>
-        <out_stream_name>municipio_proponente_ajustado</out_stream_name>
+        <in_stream_name>tipo_parceria_ajustado</in_stream_name>
+        <out_stream_name />
         <trim_type>both</trim_type>
         <lower_upper>lower</lower_upper>
         <padding_type>none</padding_type>
@@ -3757,8 +3738,8 @@ AND cd_uf = ?::INTEGER;</sql>
         <remove_special_characters>none</remove_special_characters>
       </field>
       <field>
-        <in_stream_name>tipo_parceria</in_stream_name>
-        <out_stream_name>tipo_parceria_ajustado</out_stream_name>
+        <in_stream_name>situacao_parceria_ajustado</in_stream_name>
+        <out_stream_name />
         <trim_type>both</trim_type>
         <lower_upper>lower</lower_upper>
         <padding_type>none</padding_type>
@@ -3770,8 +3751,8 @@ AND cd_uf = ?::INTEGER;</sql>
         <remove_special_characters>none</remove_special_characters>
       </field>
       <field>
-        <in_stream_name>situacao_parceria</in_stream_name>
-        <out_stream_name>situacao_parceria_ajustado</out_stream_name>
+        <in_stream_name>municipio_proponente_ajustado</in_stream_name>
+        <out_stream_name />
         <trim_type>both</trim_type>
         <lower_upper>lower</lower_upper>
         <padding_type>none</padding_type>
@@ -3895,6 +3876,84 @@ AND cd_uf = ?::INTEGER;</sql>
     <GUI>
       <xloc>466</xloc>
       <yloc>872</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>JavaScript Script</name>
+    <type>ScriptValueMod</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>function removeAccents(str) {
+	var accents    = 'ÀÁÂÃÄÅàáâãäåßÒÓÔÕÕÖØòóôõöøÈÉÊËèéêëðÇçÐÌÍÎÏìíîïÙÚÛÜùúûüÑñÿý';
+	var accentsOut = "AAAAAAaaaaaaBOOOOOOOooooooEEEEeeeeeCcDIIIIiiiiUUUUuuuuNnyy";
+	
+	str = str.split('');
+	var strLen = str.length;
+	
+	var i, x;
+	for (i = 0; i &lt; strLen; i++) {
+		if ((x = accents.indexOf(str[i])) != -1) {
+			str[i] = accentsOut[x];
+		}
+	}
+	
+	return str.join('');
+}
+
+var tipo_parceria_ajustado = removeAccents(tipo_parceria);
+var situacao_parceria_ajustado = removeAccents(situacao_parceria);
+var municipio_proponente_ajustado = removeAccents(municipio_proponente);</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>tipo_parceria_ajustado</name>
+        <rename>tipo_parceria_ajustado</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+      <field>
+        <name>situacao_parceria_ajustado</name>
+        <rename>situacao_parceria_ajustado</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+      <field>
+        <name>municipio_proponente_ajustado</name>
+        <rename>municipio_proponente_ajustado</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>108</xloc>
+      <yloc>232</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
