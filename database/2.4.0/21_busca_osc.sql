@@ -74,5 +74,3 @@ BEGIN
 			) DESC, vw_busca_osc.id_osc ASC ' || query_limit; 
 END; 
 $$ LANGUAGE 'plpgsql';
-
-SELECT * FROM portal.buscar_osc('cieds', 10, 0, 0);
