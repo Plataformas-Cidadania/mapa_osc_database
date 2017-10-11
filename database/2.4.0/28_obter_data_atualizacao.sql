@@ -19,7 +19,7 @@ BEGIN
 	
 	RETURN QUERY 
 		SELECT 
-			to_char(max(tb_log_alteracao.dt_alteracao), 'DD-MM-YYYY HH24:MI:SS')::TEXT AS dt_alteracao 
+			to_char(max(tb_log_alteracao.dt_alteracao), 'DD-MM-YYYY')::TEXT AS dt_alteracao 
 		FROM 
 			log.tb_log_alteracao 
 		WHERE 
