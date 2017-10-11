@@ -18,11 +18,13 @@ CREATE MATERIALIZED VIEW osc.vw_busca_osc AS
 		) AS tx_nome_natureza_juridica_osc,
 		tb_dados_gerais.dt_fundacao_osc,
 		tb_dados_gerais.cd_situacao_imovel_osc,
+		tb_localizacao.cd_municipio AS cd_municipio,
 		(
 			SELECT ed_municipio.edmu_nm_municipio
 			FROM spat.ed_municipio
 			WHERE ed_municipio.edmu_cd_municipio = tb_localizacao.cd_municipio
 		) AS tx_nome_municipio,
+		substr(tb_localizacao.cd_municipio::text, 0, 3)::numeric(2,0) AS cd_uf,
 		(
 			SELECT ed_uf.eduf_sg_uf
 			FROM spat.ed_uf
@@ -33,6 +35,7 @@ CREATE MATERIALIZED VIEW osc.vw_busca_osc AS
 			FROM spat.ed_uf
 			WHERE ed_uf.eduf_cd_uf = substr(tb_localizacao.cd_municipio::text, 0, 3)::numeric(2,0)
 		) AS tx_nome_uf,
+		substr(tb_localizacao.cd_municipio::text, 0, 2)::numeric(1,0)::numeric AS cd_regiao,
 		(
 			SELECT ed_regiao.edre_nm_regiao
 			FROM spat.ed_regiao
