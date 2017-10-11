@@ -143,7 +143,7 @@
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename/>
       <sendOneStatement>F</sendOneStatement>
-      <connection>localhost</connection>
+      <connection>desenv</connection>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
