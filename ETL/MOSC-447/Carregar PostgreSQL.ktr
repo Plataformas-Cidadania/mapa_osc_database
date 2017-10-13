@@ -770,11 +770,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>MongoDB Input</from>
-      <to>Remover acentos</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>String operations 1</from>
       <to>Replace in string 1</to>
       <enabled>Y</enabled>
@@ -792,6 +787,66 @@
     <hop>
       <from>Mapear tipo</from>
       <to>Concat Fields</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Insert Dados Gerais</from>
+      <to>Add constants</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Insert Dados Gerais</from>
+      <to>Add constants erro 3</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Add constants erro 3</from>
+      <to>Insert log_carga 3</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Add constants erro 4</from>
+      <to>Insert log_carga 4</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Insert Localização</from>
+      <to>Add constants erro 4</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Add constants erro 2</from>
+      <to>Insert log_carga 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Insert Fonte Recursos</from>
+      <to>Add constants erro 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Add constants erro 1</from>
+      <to>Insert log_carga 1</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Insert Projeto Estado</from>
+      <to>Add constants erro 1</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Insert Projeto Município</from>
+      <to>Add constants erro 1</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>MongoDB Input</from>
+      <to>Criar campos</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Criar campos</from>
+      <to>Remover acentos</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -852,8 +907,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1031</xloc>
-      <yloc>229</yloc>
+      <xloc>1121</xloc>
+      <yloc>228</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -890,8 +945,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1360</xloc>
-      <yloc>510</yloc>
+      <xloc>1450</xloc>
+      <yloc>509</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -928,8 +983,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1075</xloc>
-      <yloc>512</yloc>
+      <xloc>1165</xloc>
+      <yloc>511</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1014,8 +1069,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1502</xloc>
-      <yloc>405</yloc>
+      <xloc>1592</xloc>
+      <yloc>404</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1038,8 +1093,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>94</xloc>
-      <yloc>625</yloc>
+      <xloc>184</xloc>
+      <yloc>624</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1062,8 +1117,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>791</xloc>
-      <yloc>629</yloc>
+      <xloc>881</xloc>
+      <yloc>628</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1118,8 +1173,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>791</xloc>
-      <yloc>761</yloc>
+      <xloc>881</xloc>
+      <yloc>760</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1134,7 +1189,7 @@ OR (
       <method>none</method>
       <schema_name />
     </partitioning>
-    <send_true_to>Set field value 1</send_true_to>
+    <send_true_to>Add constants 5</send_true_to>
     <send_false_to>Set field value 2</send_false_to>
     <compare>
       <condition>
@@ -1161,8 +1216,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>811</xloc>
-      <yloc>405</yloc>
+      <xloc>901</xloc>
+      <yloc>404</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1195,8 +1250,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>649</xloc>
-      <yloc>629</yloc>
+      <xloc>739</xloc>
+      <yloc>628</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1238,8 +1293,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>791</xloc>
-      <yloc>867</yloc>
+      <xloc>881</xloc>
+      <yloc>866</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1281,8 +1336,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>363</xloc>
-      <yloc>403</yloc>
+      <xloc>453</xloc>
+      <yloc>402</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1324,8 +1379,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1361</xloc>
-      <yloc>405</yloc>
+      <xloc>1451</xloc>
+      <yloc>404</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1367,8 +1422,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1075</xloc>
-      <yloc>405</yloc>
+      <xloc>1165</xloc>
+      <yloc>404</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1401,8 +1456,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>785</xloc>
-      <yloc>229</yloc>
+      <xloc>875</xloc>
+      <yloc>228</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1463,8 +1518,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>513</xloc>
-      <yloc>629</yloc>
+      <xloc>603</xloc>
+      <yloc>628</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1551,8 +1606,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>276</xloc>
-      <yloc>872</yloc>
+      <xloc>366</xloc>
+      <yloc>871</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1618,8 +1673,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1093</xloc>
-      <yloc>629</yloc>
+      <xloc>1219</xloc>
+      <yloc>628</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1776,8 +1831,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>206</xloc>
-      <yloc>403</yloc>
+      <xloc>296</xloc>
+      <yloc>402</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1934,8 +1989,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>363</xloc>
-      <yloc>521</yloc>
+      <xloc>453</xloc>
+      <yloc>520</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2003,8 +2058,8 @@ var municipio_proponente_ajustado = removeAccents(municipio_proponente);</jsScri
       </output>
     </remotesteps>
     <GUI>
-      <xloc>108</xloc>
-      <yloc>229</yloc>
+      <xloc>198</xloc>
+      <yloc>228</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2040,8 +2095,8 @@ var municipio_proponente_ajustado = removeAccents(municipio_proponente);</jsScri
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1341</xloc>
-      <yloc>229</yloc>
+      <xloc>1431</xloc>
+      <yloc>228</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2097,7 +2152,7 @@ var municipio_proponente_ajustado = removeAccents(municipio_proponente);</jsScri
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1502</xloc>
+      <xloc>1591</xloc>
       <yloc>228</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2130,8 +2185,8 @@ var municipio_proponente_ajustado = removeAccents(municipio_proponente);</jsScri
       </output>
     </remotesteps>
     <GUI>
-      <xloc>959</xloc>
-      <yloc>629</yloc>
+      <xloc>1049</xloc>
+      <yloc>628</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2165,8 +2220,8 @@ var municipio_proponente_ajustado = removeAccents(municipio_proponente);</jsScri
       </output>
     </remotesteps>
     <GUI>
-      <xloc>665</xloc>
-      <yloc>229</yloc>
+      <xloc>755</xloc>
+      <yloc>228</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2200,8 +2255,8 @@ var municipio_proponente_ajustado = removeAccents(municipio_proponente);</jsScri
       </output>
     </remotesteps>
     <GUI>
-      <xloc>94</xloc>
-      <yloc>756</yloc>
+      <xloc>184</xloc>
+      <yloc>755</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2350,8 +2405,8 @@ var municipio_proponente_ajustado = removeAccents(municipio_proponente);</jsScri
       </output>
     </remotesteps>
     <GUI>
-      <xloc>108</xloc>
-      <yloc>79</yloc>
+      <xloc>81</xloc>
+      <yloc>83</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2585,8 +2640,8 @@ var municipio_proponente_ajustado = removeAccents(municipio_proponente);</jsScri
       </output>
     </remotesteps>
     <GUI>
-      <xloc>528</xloc>
-      <yloc>229</yloc>
+      <xloc>618</xloc>
+      <yloc>228</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2623,8 +2678,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>956</xloc>
-      <yloc>756</yloc>
+      <xloc>1046</xloc>
+      <yloc>755</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2656,8 +2711,8 @@ WHERE substring(cd_identificador_osc::TEXT from 0 for char_length(cd_identificad
       </output>
     </remotesteps>
     <GUI>
-      <xloc>664</xloc>
-      <yloc>95</yloc>
+      <xloc>754</xloc>
+      <yloc>94</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2692,8 +2747,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>312</xloc>
-      <yloc>757</yloc>
+      <xloc>402</xloc>
+      <yloc>756</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2730,8 +2785,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>527</xloc>
-      <yloc>95</yloc>
+      <xloc>617</xloc>
+      <yloc>94</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2929,8 +2984,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>910</xloc>
-      <yloc>229</yloc>
+      <xloc>1000</xloc>
+      <yloc>228</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2990,8 +3045,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1218</xloc>
-      <yloc>405</yloc>
+      <xloc>1308</xloc>
+      <yloc>404</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3051,8 +3106,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>940</xloc>
-      <yloc>405</yloc>
+      <xloc>1030</xloc>
+      <yloc>404</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3202,8 +3257,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>513</xloc>
-      <yloc>403</yloc>
+      <xloc>603</xloc>
+      <yloc>402</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3241,8 +3296,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>312</xloc>
-      <yloc>625</yloc>
+      <xloc>402</xloc>
+      <yloc>624</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3291,8 +3346,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>94</xloc>
-      <yloc>872</yloc>
+      <xloc>184</xloc>
+      <yloc>871</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3333,8 +3388,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>956</xloc>
-      <yloc>867</yloc>
+      <xloc>1046</xloc>
+      <yloc>866</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3363,8 +3418,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>653</xloc>
-      <yloc>347</yloc>
+      <xloc>743</xloc>
+      <yloc>346</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3393,8 +3448,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>655</xloc>
-      <yloc>449</yloc>
+      <xloc>745</xloc>
+      <yloc>448</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3426,8 +3481,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1222</xloc>
-      <yloc>510</yloc>
+      <xloc>1312</xloc>
+      <yloc>509</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3459,8 +3514,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>941</xloc>
-      <yloc>512</yloc>
+      <xloc>1031</xloc>
+      <yloc>511</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3693,8 +3748,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>384</xloc>
-      <yloc>229</yloc>
+      <xloc>474</xloc>
+      <yloc>228</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3771,8 +3826,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1177</xloc>
-      <yloc>229</yloc>
+      <xloc>1267</xloc>
+      <yloc>228</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3840,12 +3895,565 @@ var situacao_parceria_ajustado = setSituacaoParceria(data_inicio, data_conclusao
       </output>
     </remotesteps>
     <GUI>
-      <xloc>245</xloc>
-      <yloc>229</yloc>
+      <xloc>335</xloc>
+      <yloc>228</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Insert log_carga 3</name>
+    <type>InsertUpdate</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>localhost</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema>log</schema>
+      <table>tb_log_carga</table>
+      <value>
+        <name>cd_identificador_osc</name>
+        <rename>cd_identificador_osc</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>id_fonte_dados</name>
+        <rename>id_fonte_dados_carga</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>cd_status</name>
+        <rename>cd_status_carga</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>tx_mensagem</name>
+        <rename>tx_mensagem_carga</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>dt_carregamento_dados</name>
+        <rename>data_carregamento</rename>
+        <update>N</update>
+      </value>
+    </lookup>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>687</xloc>
+      <yloc>848</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Add constants</name>
+    <type>Constant</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>541</xloc>
+      <yloc>741</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Add constants erro 3</name>
+    <type>Constant</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>id_fonte_dados_carga</name>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif>Representante de estado ou município</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>cd_status_carga</name>
+        <type>Integer</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif>2</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>687</xloc>
+      <yloc>740</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Insert log_carga 4</name>
+    <type>InsertUpdate</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>localhost</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema>log</schema>
+      <table>tb_log_carga</table>
+      <value>
+        <name>cd_identificador_osc</name>
+        <rename>cd_identificador_osc</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>id_fonte_dados</name>
+        <rename>id_fonte_dados_carga</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>cd_status</name>
+        <rename>cd_status_carga</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>tx_mensagem</name>
+        <rename>tx_mensagem_carga</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>dt_carregamento_dados</name>
+        <rename>carregamento_dados</rename>
+        <update>N</update>
+      </value>
+    </lookup>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1224</xloc>
+      <yloc>863</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Add constants erro 4</name>
+    <type>Constant</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>id_fonte_dados_carga</name>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif>Representante de estado ou município</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>cd_status_carga</name>
+        <type>Integer</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif>2</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1224</xloc>
+      <yloc>755</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Insert log_carga 2</name>
+    <type>InsertUpdate</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>localhost</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema>log</schema>
+      <table>tb_log_carga</table>
+      <value>
+        <name>cd_identificador_osc</name>
+        <rename>cd_identificador_osc</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>id_fonte_dados</name>
+        <rename>id_fonte_dados_carga</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>cd_status</name>
+        <rename>cd_status_carga</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>tx_mensagem</name>
+        <rename>tx_mensagem_carga</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>dt_carregamento_dados</name>
+        <rename>carregamento_dados</rename>
+        <update>N</update>
+      </value>
+    </lookup>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>540</xloc>
+      <yloc>1013</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Add constants erro 2</name>
+    <type>Constant</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>id_fonte_dados_carga</name>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif>Representante de estado ou município</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>cd_status_carga</name>
+        <type>Integer</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif>2</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>540</xloc>
+      <yloc>905</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Insert log_carga 1</name>
+    <type>InsertUpdate</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>localhost</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema>log</schema>
+      <table>tb_log_carga</table>
+      <value>
+        <name>cd_identificador_osc</name>
+        <rename>cd_identificador_osc</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>id_fonte_dados</name>
+        <rename>id_fonte_dados_carga</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>cd_status</name>
+        <rename>cd_status_carga</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>tx_mensagem</name>
+        <rename>tx_mensagem_carga</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>dt_carregamento_dados</name>
+        <rename>data_carregamento</rename>
+        <update>N</update>
+      </value>
+    </lookup>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>91</xloc>
+      <yloc>506</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Add constants erro 1</name>
+    <type>Constant</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>id_fonte_dados_carga</name>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif>Representante de estado ou município</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>cd_status_carga</name>
+        <type>Integer</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif>2</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>91</xloc>
+      <yloc>398</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Criar campos</name>
+    <type>ScriptValueMod</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>var data_carregamento = Date.now();</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>data_carregamento</name>
+        <rename>data_carregamento</rename>
+        <type>Date</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>81</xloc>
+      <yloc>228</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step_error_handling>
+    <error>
+      <source_step>Insert Dados Gerais</source_step>
+      <target_step>Add constants erro 3</target_step>
+      <is_enabled>Y</is_enabled>
+      <nr_valuename />
+      <descriptions_valuename>tx_mensagem_carga</descriptions_valuename>
+      <fields_valuename />
+      <codes_valuename />
+      <max_errors />
+      <max_pct_errors />
+      <min_pct_rows />
+    </error>
+    <error>
+      <source_step>Insert Fonte Recursos</source_step>
+      <target_step>Add constants erro 2</target_step>
+      <is_enabled>Y</is_enabled>
+      <nr_valuename />
+      <descriptions_valuename>tx_mensagem_carga</descriptions_valuename>
+      <fields_valuename />
+      <codes_valuename />
+      <max_errors />
+      <max_pct_errors />
+      <min_pct_rows />
+    </error>
+    <error>
+      <source_step>Insert Localização</source_step>
+      <target_step>Add constants erro 4</target_step>
+      <is_enabled>Y</is_enabled>
+      <nr_valuename />
+      <descriptions_valuename>tx_mensagem_carga</descriptions_valuename>
+      <fields_valuename />
+      <codes_valuename />
+      <max_errors />
+      <max_pct_errors />
+      <min_pct_rows />
+    </error>
+    <error>
+      <source_step>Insert Projeto Estado</source_step>
+      <target_step>Add constants erro 1</target_step>
+      <is_enabled>Y</is_enabled>
+      <nr_valuename />
+      <descriptions_valuename>tx_mensagem_carga</descriptions_valuename>
+      <fields_valuename />
+      <codes_valuename />
+      <max_errors />
+      <max_pct_errors />
+      <min_pct_rows />
+    </error>
+    <error>
+      <source_step>Insert Projeto Município</source_step>
+      <target_step>Add constants erro 1</target_step>
+      <is_enabled>Y</is_enabled>
+      <nr_valuename />
+      <descriptions_valuename>tx_mensagem_carga</descriptions_valuename>
+      <fields_valuename />
+      <codes_valuename />
+      <max_errors />
+      <max_pct_errors />
+      <min_pct_rows />
+    </error>
   </step_error_handling>
   <slave-step-copy-partition-distribution>
   </slave-step-copy-partition-distribution>
