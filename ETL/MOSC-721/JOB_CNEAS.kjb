@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <job>
-  <name>JOB_CNES</name>
+  <name>JOB_CNEAS</name>
     <description/>
     <extended_description/>
     <job_version/>
+    <job_status>0</job_status>
   <directory>&#x2f;</directory>
   <created_user>-</created_user>
   <created_date>2017&#x2f;07&#x2f;25 10&#x3a;29&#x3a;20.118</created_date>
@@ -41,7 +42,7 @@
     <type>POSTGRESQL</type>
     <access>Native</access>
     <database>portalosc</database>
-    <port>5432</port>
+    <port>5434</port>
     <username>i3geo</username>
     <password>Encrypted 2be98afc86aa7f2e4cb10be75dfc2ff8b</password>
     <servername/>
@@ -51,7 +52,7 @@
       <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
       <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
       <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>5432</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>5434</attribute></attribute>
       <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>N</attribute></attribute>
       <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
       <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
@@ -153,7 +154,7 @@
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename/>
       <sendOneStatement>F</sendOneStatement>
-      <connection>localhost</connection>
+      <connection>mapaosc-desenv</connection>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
@@ -164,12 +165,12 @@
       <name>SQL 2</name>
       <description/>
       <type>SQL</type>
-      <sql>REFRESH MATERIALIZED VIEW portal.vw_osc_area_atuacao&#x3b;&#xa;REFRESH MATERIALIZED VIEW portal.vw_osc_dados_gerais&#x3b;</sql>
+      <sql>UPDATE osc.tb_dados_gerais SET tx_nome_fantasia_osc &#x3d; tb.nome&#xa;FROM&#xa;&#x28;select id_osc,regexp_replace&#x28;tx_nome_fantasia_osc, &#x27;&#x5b;&#x5e;a-zA-Z&#xe0;-&#xfa;&#xc0;-&#xda;0-9&#x2b;&#x3f;&#x2f;&#x3a;&#x28;&#x29;.,&#x22;&#x27;&#x27;&#x26;&#x40; -&#x5d;&#x27;,&#x27;&#x27;,&#x27;g&#x27;&#x29; as nome, tx_nome_fantasia_osc&#xa;from osc.tb_dados_gerais where tx_nome_fantasia_osc &#x7e; &#x27;&#x5b;&#x5e;a-zA-Z&#xe0;-&#xfa;&#xc0;-&#xda;0-9&#x2b;&#x3f;&#x2f;&#x3a;&#x28;&#x29;.,&#x22;&#x27;&#x27;&#x26;&#x40; -&#x5d;&#x27;&#xa;union all&#xa;select id_osc,regexp_replace&#x28;tx_nome_fantasia_osc, &#x27;&#x5b;&#x5e;a-zA-Z0-9&#x2b;&#x3f;&#x2f;&#x3a;&#x28;&#x29;,&#x22;&#x27;&#x27;&#x26;&#x40; -&#x5d;&#x27;,&#x27;&#x27;,&#x27;g&#x27;&#x29; as nome, tx_nome_fantasia_osc&#xa;from osc.tb_dados_gerais where tx_nome_fantasia_osc &#x3d; &#x27;.&#x27;&#xa;union all&#xa;select id_osc,regexp_replace&#x28;tx_nome_fantasia_osc, &#x27;&#x5b;&#x5e;a-zA-Z0-9&#x2b;&#x3f;&#x2f;&#x3a;&#x28;&#x29;,&#x22;&#x27;&#x27;&#x26;&#x40; -&#x5d;&#x27;,&#x27; &#x27;,&#x27;g&#x27;&#x29; as nome, tx_nome_fantasia_osc&#xa;from osc.tb_dados_gerais where tx_nome_fantasia_osc like &#x27;&#x25;...&#x25;&#x27;&#xa;union all&#xa;select id_osc,regexp_replace&#x28;tx_nome_fantasia_osc, &#x27;&#x5b;&#x5e;a-zA-Z0-9&#x2b;&#x3f;&#x2f;&#x3a;&#x28;&#x29;,&#x22;&#x27;&#x27;&#x26;&#x40; &#x5d;&#x27;,&#x27;&#x27;,&#x27;g&#x27;&#x29; as nome, tx_nome_fantasia_osc&#xa;from osc.tb_dados_gerais where tx_nome_fantasia_osc &#x3d; &#x27;-&#x27;&#xa;union all&#xa;select id_osc,regexp_replace&#x28;tx_nome_fantasia_osc, &#x27;&#x5b;&#x5e;a-zA-Z0-9&#x2b;&#x3f;&#x2f;&#x3a;&#x28;&#x29;&#x22;&#x27;&#x27;&#x26;&#x40; &#x5d;&#x27;,&#x27;&#x27;,&#x27;g&#x27;&#x29; as nome, tx_nome_fantasia_osc&#xa;from osc.tb_dados_gerais where tx_nome_fantasia_osc &#x3d; &#x27;,&#x27;&#xa;union all&#xa;select id_osc,regexp_replace&#x28;tx_nome_fantasia_osc, &#x27;&#x5b;&#x5e;a-zA-Z&#x2b;&#x3f;&#x2f;&#x3a;&#x28;&#x29;&#x22;&#x27;&#x27;&#x26;&#x40; &#x5d;&#x27;,&#x27;&#x27;,&#x27;g&#x27;&#x29; as nome, tx_nome_fantasia_osc&#xa;from osc.tb_dados_gerais where tx_nome_fantasia_osc like &#x27;000&#x25;&#x27;&#x29; as tb&#xa;WHERE osc.tb_dados_gerais.id_osc &#x3d; tb.id_osc&#xa;&#xa;REFRESH MATERIALIZED VIEW portal.vw_osc_area_atuacao&#x3b;&#xa;REFRESH MATERIALIZED VIEW portal.vw_osc_dados_gerais&#x3b;</sql>
       <useVariableSubstitution>F</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename/>
       <sendOneStatement>F</sendOneStatement>
-      <connection>localhost</connection>
+      <connection>mapaosc-desenv</connection>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
