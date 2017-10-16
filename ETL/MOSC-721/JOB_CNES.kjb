@@ -153,7 +153,7 @@
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename/>
       <sendOneStatement>F</sendOneStatement>
-      <connection>mapaosc-desenv</connection>
+      <connection>localhost</connection>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
@@ -164,12 +164,12 @@
       <name>SQL 2</name>
       <description/>
       <type>SQL</type>
-      <sql>REFRESH MATERIALIZED VIEW portal.vw_osc_area_atuacao&#x3b;</sql>
+      <sql>REFRESH MATERIALIZED VIEW portal.vw_osc_area_atuacao&#x3b;&#xa;REFRESH MATERIALIZED VIEW portal.vw_osc_dados_gerais&#x3b;</sql>
       <useVariableSubstitution>F</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename/>
       <sendOneStatement>F</sendOneStatement>
-      <connection>mapaosc-desenv</connection>
+      <connection>localhost</connection>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>

@@ -370,18 +370,22 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>mapaosc-desenv</connection>
+    <connection>localhost</connection>
     <execute_each_row>Y</execute_each_row>
     <single_statement>N</single_statement>
     <replace_variables>Y</replace_variables>
     <quoteString>N</quoteString>
-    <sql>INSERT INTO osc.tb_area_atuacao&#x28;id_osc, cd_area_atuacao, cd_subarea_atuacao, ft_area_atuacao, bo_oficial&#x29;&#xa;SELECT a.id_osc, 5, 17, &#x27;CNEAS&#x2f;MDS&#x27;, false&#xa;FROM osc.tb_osc a&#xa;WHERE a.cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#xa;AND NOT EXISTS &#x28;SELECT &#x2a; FROM osc.tb_area_atuacao b WHERE a.id_osc &#x3d; b.id_osc AND b.cd_area_atuacao &#x3d; 5 AND b.cd_subarea_atuacao &#x3d; 17&#x29;&#xa;AND &#x28;SELECT COUNT&#x28;DISTINCT cd_area_atuacao&#x29; FROM osc.tb_area_atuacao b WHERE a.id_osc &#x3d; b.id_osc&#x29; &#x3c; 2&#x3b;</sql>
+    <sql>INSERT INTO osc.tb_area_atuacao&#x28;id_osc, cd_area_atuacao, cd_subarea_atuacao, ft_area_atuacao, bo_oficial&#x29;&#xa;SELECT a.id_osc, 5, 17, &#x27;CNEAS&#x2f;MDS&#x27;, false&#xa;FROM osc.tb_osc a&#xa;WHERE a.cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#xa;AND NOT EXISTS &#x28;SELECT &#x2a; FROM osc.tb_area_atuacao b WHERE a.id_osc &#x3d; b.id_osc AND b.cd_area_atuacao &#x3d; 5 AND b.cd_subarea_atuacao &#x3d; 17&#x29;&#x3b;&#xa;&#xa;UPDATE osc.tb_dados_gerais SET tx_nome_fantasia_osc &#x3d; &#x27;&#x3f;&#x27;, ft_nome_fantasia_osc &#x3d; &#x27;CNEAS&#x2f;MDS&#x27;&#xa;WHERE id_osc &#x3d; &#x28;SELECT id_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x29;&#x3b;&#xa;&#xa;INSERT INTO osc.tb_dados_gerais &#x28;id_osc,tx_nome_fantasia_osc, ft_nome_fantasia_osc&#x29;&#xa;SELECT a.id_osc, &#x27;&#x3f;&#x27;, &#x27;CNEAS&#x2f;MDS&#x27;&#xa;FROM osc.tb_osc a &#xa;WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#xa;AND NOT EXISTS&#x28;SELECT &#x2a; FROM osc.tb_dados_gerais WHERE osc.tb_dados_gerais.id_osc &#x3d; a.id_osc&#x29;&#x3b;</sql>
     <set_params>N</set_params>
     <insert_field/>
     <update_field/>
     <delete_field/>
     <read_field/>
     <arguments>
+       <argument><name>NU_CNPJ</name></argument>
+       <argument><name>NO_FANTASIA</name></argument>
+       <argument><name>NU_CNPJ</name></argument>
+       <argument><name>NO_FANTASIA</name></argument>
        <argument><name>NU_CNPJ</name></argument>
     </arguments>
      <cluster_schema/>
