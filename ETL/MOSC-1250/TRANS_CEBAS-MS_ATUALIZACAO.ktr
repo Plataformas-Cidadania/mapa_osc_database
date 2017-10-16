@@ -555,7 +555,7 @@
     <single_statement>N</single_statement>
     <replace_variables>Y</replace_variables>
     <quoteString>N</quoteString>
-    <sql>UPDATE osc.tb_certificado b SET dt_inicio_certificado &#x3d; to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29;, dt_fim_certificado &#x3d; to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29;&#xa;FROM osc.tb_osc a&#xa;WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC AND a.id_osc &#x3d; b.id_osc AND cd_certificado &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x3b;&#xa;&#xa;INSERT INTO osc.tb_certificado&#x28;id_osc, cd_certificado, ft_certificado, dt_inicio_certificado, ft_inicio_certificado, dt_fim_certificado, ft_fim_certificado,bo_oficial&#x29;&#xa;SELECT a.id_osc, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;&#x3f;&#x27;, to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29; as dt_inicial, &#x27;&#x3f;&#x27;,to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29; as dt_fim, &#x27;&#x3f;&#x27;,true&#xa;FROM osc.tb_osc a&#xa;WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#xa;AND NOT EXISTS&#x28;SELECT &#x2a; FROM osc.tb_certificado c WHERE a.id_osc &#x3d; c.id_osc AND cd_certificado &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x29;&#x3b;</sql>
+    <sql>UPDATE osc.tb_certificado b SET dt_inicio_certificado &#x3d; to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29;, dt_fim_certificado &#x3d; to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29;&#xa;FROM osc.tb_osc a&#xa;WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC AND a.id_osc &#x3d; b.id_osc AND cd_certificado &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x3b;&#xa;&#xa;INSERT INTO osc.tb_certificado&#x28;id_osc, cd_certificado, ft_certificado, dt_inicio_certificado, ft_inicio_certificado, dt_fim_certificado, ft_fim_certificado,bo_oficial&#x29;&#xa;SELECT a.id_osc, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;&#x3f;&#x27;, to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29; as dt_inicial, &#x27;&#x3f;&#x27;,to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29; as dt_fim, &#x27;&#x3f;&#x27;,true&#xa;FROM osc.tb_osc a&#xa;WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#xa;AND NOT EXISTS&#x28;SELECT &#x2a; FROM osc.tb_certificado c WHERE a.id_osc &#x3d; c.id_osc AND cd_certificado &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x29;&#x3b;&#xa;&#xa;INSERT INTO osc.tb_area_atuacao&#x28;id_osc, cd_area_atuacao, ft_area_atuacao, bo_oficial&#x29;&#xa;SELECT a.id_osc, 2, &#x27;CEBAS&#x2f;MS&#x27;, true&#xa;FROM osc.tb_osc a&#xa;WHERE a.cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#xa;AND NOT EXISTS &#x28;SELECT &#x2a; FROM osc.tb_area_atuacao b WHERE a.id_osc &#x3d; b.id_osc AND b.cd_area_atuacao &#x3d; 2&#x29;&#x3b;</sql>
     <set_params>N</set_params>
     <insert_field/>
     <update_field/>
@@ -574,6 +574,7 @@
        <argument><name>fonte</name></argument>
        <argument><name>NU_CNPJ</name></argument>
        <argument><name>certificado</name></argument>
+       <argument><name>NU_CNPJ</name></argument>
     </arguments>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
