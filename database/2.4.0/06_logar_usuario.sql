@@ -23,7 +23,7 @@ BEGIN
 		FROM 
 			portal.tb_usuario 
 		WHERE 
-			tb_usuario.tx_email_usuario = login AND tx_senha_usuario = senha AND (tb_usuario.cd_tipo_usuario = 2 OR tb_usuario.cd_tipo_usuario = 3 OR tb_usuario.cd_tipo_usuario = 4); 
+			tb_usuario.tx_email_usuario = login AND tx_senha_usuario = senha; 
 END; 
 
 $$ LANGUAGE 'plpgsql';
