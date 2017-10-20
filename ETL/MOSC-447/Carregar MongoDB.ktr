@@ -672,27 +672,27 @@
       <field>
         <name>id_parceria</name>
         <path>$..id_parceria</path>
-        <type>None</type>
+        <type>String</type>
         <format />
         <currency />
         <decimal />
         <group />
         <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
         <repeat>N</repeat>
       </field>
       <field>
         <name>id_localidade</name>
         <path>$..id_localidade</path>
-        <type>None</type>
+        <type>Integer</type>
         <format />
         <currency />
         <decimal />
         <group />
         <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
         <repeat>N</repeat>
       </field>
       <field>
@@ -705,7 +705,7 @@
         <group />
         <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
         <repeat>N</repeat>
       </field>
       <field>
@@ -718,7 +718,7 @@
         <group />
         <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
         <repeat>N</repeat>
       </field>
     </fields>
@@ -758,13 +758,13 @@
       <method>none</method>
       <schema_name />
     </partitioning>
-    <mongo_host>mapaosc-desenv</mongo_host>
+    <mongo_host>localhost</mongo_host>
     <mongo_port>27017</mongo_port>
     <use_all_replica_members>N</use_all_replica_members>
     <mongo_auth_database>admin</mongo_auth_database>
     <mongo_user>mapaosc</mongo_user>
     <mongo_password>Encrypted 2be98afc86aa7f2e4cb79ff228dc6fa8c</mongo_password>
-    <auth_mech />
+    <auth_mech>SCRAM-SHA-1</auth_mech>
     <auth_kerberos>N</auth_kerberos>
     <mongo_db>mapaosc</mongo_db>
     <mongo_collection>parcerias_estado_municipio</mongo_collection>

@@ -849,7 +849,48 @@
       <to>Remover acentos</to>
       <enabled>Y</enabled>
     </hop>
+    <hop>
+      <from>JSON Input</from>
+      <to>JSON Input Parceria</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>JSON Input Parceria</from>
+      <to>JSON Input Assinatura</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>JSON Input Assinatura</from>
+      <to>Criar campos</to>
+      <enabled>Y</enabled>
+    </hop>
   </order>
+  <step>
+    <name>Add constants</name>
+    <type>Constant</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>702</xloc>
+      <yloc>784</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
   <step>
     <name>Add constants 1</name>
     <type>Constant</type>
@@ -907,8 +948,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1121</xloc>
-      <yloc>228</yloc>
+      <xloc>1282</xloc>
+      <yloc>271</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -945,8 +986,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1450</xloc>
-      <yloc>509</yloc>
+      <xloc>1611</xloc>
+      <yloc>552</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -983,8 +1024,208 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1165</xloc>
-      <yloc>511</yloc>
+      <xloc>1326</xloc>
+      <yloc>554</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Add constants erro 1</name>
+    <type>Constant</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>id_fonte_dados_carga</name>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif>Representante de estado ou município</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>cd_status_carga</name>
+        <type>Integer</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif>2</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>252</xloc>
+      <yloc>441</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Add constants erro 2</name>
+    <type>Constant</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>id_fonte_dados_carga</name>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif>Representante de estado ou município</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>cd_status_carga</name>
+        <type>Integer</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif>2</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>530</xloc>
+      <yloc>1042</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Add constants erro 3</name>
+    <type>Constant</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>id_fonte_dados_carga</name>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif>Representante de estado ou município</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>cd_status_carga</name>
+        <type>Integer</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif>2</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>848</xloc>
+      <yloc>783</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Add constants erro 4</name>
+    <type>Constant</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>id_fonte_dados_carga</name>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif>Representante de estado ou município</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>cd_status_carga</name>
+        <type>Integer</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif>2</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1385</xloc>
+      <yloc>798</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1069,8 +1310,120 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1592</xloc>
-      <yloc>404</yloc>
+      <xloc>1753</xloc>
+      <yloc>447</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Criar campos</name>
+    <type>ScriptValueMod</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>var data_carregamento = Date.now();</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>data_carregamento</name>
+        <rename>data_carregamento</rename>
+        <type>Date</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>242</xloc>
+      <yloc>271</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Definir situação</name>
+    <type>ScriptValueMod</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>function formatDate(data){
+	var parts = data.split('-');
+    var formatted = new Date(parts[2], parts[1] - 1, parts[0]);
+    return formatted;
+}
+
+function setSituacaoParceria(dataInicio, dataConclusao){
+	var dataInicio = formatDate(dataInicio);
+	var dataConclusao = formatDate(dataConclusao);
+	var dataAgora = Date.now();
+	
+	var situacao = 4;
+  
+	if(dataInicio &lt; dataConclusao){
+		if(dataInicio > dataAgora){
+        	situacao = 1;
+		}else if(dataInicio &lt;= dataAgora &amp;&amp; dataConclusao > dataAgora){
+			situacao = 2;
+		}else if(dataConclusao &lt;= dataAgora){
+			situacao = 3;
+		}
+	}
+	
+	return situacao;
+}
+
+var situacao_parceria_ajustado = setSituacaoParceria(data_inicio, data_conclusao);</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>situacao_parceria_ajustado</name>
+        <rename>situacao_parceria_ajustado</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>496</xloc>
+      <yloc>271</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1093,8 +1446,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>184</xloc>
-      <yloc>624</yloc>
+      <xloc>345</xloc>
+      <yloc>667</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1117,8 +1470,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>881</xloc>
-      <yloc>628</yloc>
+      <xloc>1042</xloc>
+      <yloc>671</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1173,8 +1526,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>881</xloc>
-      <yloc>760</yloc>
+      <xloc>1042</xloc>
+      <yloc>803</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1216,8 +1569,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>901</xloc>
-      <yloc>404</yloc>
+      <xloc>1062</xloc>
+      <yloc>447</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1250,8 +1603,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>739</xloc>
-      <yloc>628</yloc>
+      <xloc>900</xloc>
+      <yloc>671</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1293,8 +1646,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>881</xloc>
-      <yloc>866</yloc>
+      <xloc>1042</xloc>
+      <yloc>909</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1336,8 +1689,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>453</xloc>
-      <yloc>402</yloc>
+      <xloc>614</xloc>
+      <yloc>445</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1379,8 +1732,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1451</xloc>
-      <yloc>404</yloc>
+      <xloc>1612</xloc>
+      <yloc>447</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1422,8 +1775,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1165</xloc>
-      <yloc>404</yloc>
+      <xloc>1326</xloc>
+      <yloc>447</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1456,8 +1809,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>875</xloc>
-      <yloc>228</yloc>
+      <xloc>1036</xloc>
+      <yloc>271</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1518,8 +1871,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>603</xloc>
-      <yloc>628</yloc>
+      <xloc>764</xloc>
+      <yloc>671</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1606,8 +1959,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>366</xloc>
-      <yloc>871</yloc>
+      <xloc>527</xloc>
+      <yloc>914</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1673,8 +2026,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1219</xloc>
-      <yloc>628</yloc>
+      <xloc>1380</xloc>
+      <yloc>671</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1831,8 +2184,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>296</xloc>
-      <yloc>402</yloc>
+      <xloc>457</xloc>
+      <yloc>445</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1989,8 +2342,584 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>453</xloc>
-      <yloc>520</yloc>
+      <xloc>614</xloc>
+      <yloc>563</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Insert log_carga 1</name>
+    <type>InsertUpdate</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>localhost</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema>log</schema>
+      <table>tb_log_carga</table>
+      <value>
+        <name>cd_identificador_osc</name>
+        <rename>cd_identificador_osc</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>id_fonte_dados</name>
+        <rename>id_fonte_dados_carga</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>cd_status</name>
+        <rename>cd_status_carga</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>tx_mensagem</name>
+        <rename>tx_mensagem_carga</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>dt_carregamento_dados</name>
+        <rename>data_carregamento</rename>
+        <update>N</update>
+      </value>
+    </lookup>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>252</xloc>
+      <yloc>549</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Insert log_carga 2</name>
+    <type>InsertUpdate</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>localhost</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema>log</schema>
+      <table>tb_log_carga</table>
+      <value>
+        <name>cd_identificador_osc</name>
+        <rename>cd_identificador_osc</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>id_fonte_dados</name>
+        <rename>id_fonte_dados_carga</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>cd_status</name>
+        <rename>cd_status_carga</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>tx_mensagem</name>
+        <rename>tx_mensagem_carga</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>dt_carregamento_dados</name>
+        <rename>carregamento_dados</rename>
+        <update>N</update>
+      </value>
+    </lookup>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>530</xloc>
+      <yloc>1150</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Insert log_carga 3</name>
+    <type>InsertUpdate</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>localhost</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema>log</schema>
+      <table>tb_log_carga</table>
+      <value>
+        <name>cd_identificador_osc</name>
+        <rename>cd_identificador_osc</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>id_fonte_dados</name>
+        <rename>id_fonte_dados_carga</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>cd_status</name>
+        <rename>cd_status_carga</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>tx_mensagem</name>
+        <rename>tx_mensagem_carga</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>dt_carregamento_dados</name>
+        <rename>data_carregamento</rename>
+        <update>N</update>
+      </value>
+    </lookup>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>848</xloc>
+      <yloc>891</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Insert log_carga 4</name>
+    <type>InsertUpdate</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>localhost</connection>
+    <commit>100</commit>
+    <update_bypassed>N</update_bypassed>
+    <lookup>
+      <schema>log</schema>
+      <table>tb_log_carga</table>
+      <value>
+        <name>cd_identificador_osc</name>
+        <rename>cd_identificador_osc</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>id_fonte_dados</name>
+        <rename>id_fonte_dados_carga</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>cd_status</name>
+        <rename>cd_status_carga</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>tx_mensagem</name>
+        <rename>tx_mensagem_carga</rename>
+        <update>N</update>
+      </value>
+      <value>
+        <name>dt_carregamento_dados</name>
+        <rename>carregamento_dados</rename>
+        <update>N</update>
+      </value>
+    </lookup>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1385</xloc>
+      <yloc>906</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Mapear fonte recursos</name>
+    <type>ValueMapper</type>
+    <description />
+    <distribute>N</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <field_to_use>fonte_recursos</field_to_use>
+    <target_field />
+    <non_match_default />
+    <fields>
+      <field>
+        <source_value>governo estadual</source_value>
+        <target_value>2</target_value>
+      </field>
+      <field>
+        <source_value>governo municipal</source_value>
+        <target_value>3</target_value>
+      </field>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1592</xloc>
+      <yloc>271</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Mapear tipo</name>
+    <type>ValueMapper</type>
+    <description />
+    <distribute>N</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <field_to_use>tipo_parceria_ajustado</field_to_use>
+    <target_field />
+    <non_match_default />
+    <fields>
+      <field>
+        <source_value>fomento</source_value>
+        <target_value>0</target_value>
+      </field>
+      <field>
+        <source_value>colaboracao</source_value>
+        <target_value>1</target_value>
+      </field>
+      <field>
+        <source_value>parceria</source_value>
+        <target_value>2</target_value>
+      </field>
+      <field>
+        <source_value>gestao</source_value>
+        <target_value>3</target_value>
+      </field>
+      <field>
+        <source_value>convenio</source_value>
+        <target_value>4</target_value>
+      </field>
+      <field>
+        <source_value>cooperacaotecnica</source_value>
+        <target_value>5</target_value>
+      </field>
+      <field>
+        <source_value>outro</source_value>
+        <target_value>6</target_value>
+      </field>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1752</xloc>
+      <yloc>271</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Merge Join</name>
+    <type>MergeJoin</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <join_type>INNER</join_type>
+    <step1>Dummy 2</step1>
+    <step2>Select edmu_cd_municipio </step2>
+    <keys_1>
+      <key>numero_parceria</key>
+    </keys_1>
+    <keys_2>
+      <key>numero_parceria</key>
+    </keys_2>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1210</xloc>
+      <yloc>671</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Merge Join 1</name>
+    <type>MergeJoin</type>
+    <description />
+    <distribute>N</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <join_type>LEFT OUTER</join_type>
+    <step1>Replace in string 1</step1>
+    <step2>Select id_osc</step2>
+    <keys_1>
+      <key>numero_parceria</key>
+      <key>cnpj_proponente</key>
+    </keys_1>
+    <keys_2>
+      <key>numero_parceria</key>
+      <key>cd_identificador_osc</key>
+    </keys_2>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>916</xloc>
+      <yloc>271</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Merge Join 2</name>
+    <type>MergeJoin</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <join_type>LEFT OUTER</join_type>
+    <step1>Dummy 1</step1>
+    <step2>Select id_projeto</step2>
+    <keys_1>
+      <key>id_osc</key>
+      <key>numero_parceria</key>
+    </keys_1>
+    <keys_2>
+      <key>id_osc</key>
+      <key>tx_identificador_projeto_externo</key>
+    </keys_2>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>345</xloc>
+      <yloc>798</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>MongoDB Input</name>
+    <type>MongoDbInput</type>
+    <description />
+    <distribute>N</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <hostname>localhost</hostname>
+    <port>27017</port>
+    <use_all_replica_members>N</use_all_replica_members>
+    <db_name>mapaosc</db_name>
+    <fields_name />
+    <collection>parcerias_estado_municipio</collection>
+    <json_field_name />
+    <json_query />
+    <auth_database>admin</auth_database>
+    <auth_user>mapaosc</auth_user>
+    <auth_password>Encrypted 2be98afc86aa7f2e4cb79ff228dc6fa8c</auth_password>
+    <auth_mech>SCRAM-SHA-1</auth_mech>
+    <auth_kerberos>N</auth_kerberos>
+    <connect_timeout>30</connect_timeout>
+    <socket_timeout>30</socket_timeout>
+    <read_preference>primary</read_preference>
+    <output_json>N</output_json>
+    <query_is_pipeline>N</query_is_pipeline>
+    <execute_for_each_row>N</execute_for_each_row>
+    <mongo_fields>
+      <mongo_field>
+        <field_name>id_parceria</field_name>
+        <field_path>$.id_parceria</field_path>
+        <field_type>String</field_type>
+      </mongo_field>
+      <mongo_field>
+        <field_name>id_localidade</field_name>
+        <field_path>$.id_localidade</field_path>
+        <field_type>Integer</field_type>
+      </mongo_field>
+      <mongo_field>
+        <field_name>nome_arquivo</field_name>
+        <field_path>$.assinatura.nome_arquivo</field_path>
+        <field_type>String</field_type>
+      </mongo_field>
+      <mongo_field>
+        <field_name>data</field_name>
+        <field_path>$.assinatura.data</field_path>
+        <field_type>String</field_type>
+      </mongo_field>
+      <mongo_field>
+        <field_name>localidade</field_name>
+        <field_path>$.assinatura.localidade</field_path>
+        <field_type>String</field_type>
+      </mongo_field>
+      <mongo_field>
+        <field_name>fonte_recursos</field_name>
+        <field_path>$.assinatura.fonte_recursos</field_path>
+        <field_type>String</field_type>
+      </mongo_field>
+      <mongo_field>
+        <field_name>usuario</field_name>
+        <field_path>$.assinatura.usuario</field_path>
+        <field_type>Integer</field_type>
+      </mongo_field>
+      <mongo_field>
+        <field_name>hash</field_name>
+        <field_path>$.assinatura.hash</field_path>
+        <field_type>String</field_type>
+      </mongo_field>
+      <mongo_field>
+        <field_name>numero_parceria</field_name>
+        <field_path>$.parceria.numero_parceria</field_path>
+        <field_type>String</field_type>
+      </mongo_field>
+      <mongo_field>
+        <field_name>cnpj_proponente</field_name>
+        <field_path>$.parceria.cnpj_proponente</field_path>
+        <field_type>String</field_type>
+      </mongo_field>
+      <mongo_field>
+        <field_name>data_inicio</field_name>
+        <field_path>$.parceria.data_inicio</field_path>
+        <field_type>String</field_type>
+      </mongo_field>
+      <mongo_field>
+        <field_name>data_conclusao</field_name>
+        <field_path>$.parceria.data_conclusao</field_path>
+        <field_type>String</field_type>
+      </mongo_field>
+      <mongo_field>
+        <field_name>situacao_parceria</field_name>
+        <field_path>$.parceria.situacao_parceria</field_path>
+        <field_type>String</field_type>
+      </mongo_field>
+      <mongo_field>
+        <field_name>tipo_parceria</field_name>
+        <field_path>$.parceria.tipo_parceria</field_path>
+        <field_type>String</field_type>
+      </mongo_field>
+      <mongo_field>
+        <field_name>valor_total</field_name>
+        <field_path>$.parceria.valor_total</field_path>
+        <field_type>String</field_type>
+      </mongo_field>
+      <mongo_field>
+        <field_name>valor_pago</field_name>
+        <field_path>$.parceria.valor_pago</field_path>
+        <field_type>String</field_type>
+      </mongo_field>
+      <mongo_field>
+        <field_name>orgao_concedente</field_name>
+        <field_path>$.parceria.orgao_concedente</field_path>
+        <field_type>String</field_type>
+      </mongo_field>
+      <mongo_field>
+        <field_name>razao_social_proponente</field_name>
+        <field_path>$.parceria.razao_social_proponente</field_path>
+        <field_type>String</field_type>
+      </mongo_field>
+      <mongo_field>
+        <field_name>nome_fantasia_proponente</field_name>
+        <field_path>$.parceria.nome_fantasia_proponente</field_path>
+        <field_type>String</field_type>
+      </mongo_field>
+      <mongo_field>
+        <field_name>municipio_proponente</field_name>
+        <field_path>$.parceria.municipio_proponente</field_path>
+        <field_type>String</field_type>
+      </mongo_field>
+      <mongo_field>
+        <field_name>endereco_proponente</field_name>
+        <field_path>$.parceria.endereco_proponente</field_path>
+        <field_type>String</field_type>
+      </mongo_field>
+      <mongo_field>
+        <field_name>objeto_parceria</field_name>
+        <field_path>$.parceria.objeto_parceria</field_path>
+        <field_type>String</field_type>
+      </mongo_field>
+    </mongo_fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>87</xloc>
+      <yloc>272</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2058,355 +2987,8 @@ var municipio_proponente_ajustado = removeAccents(municipio_proponente);</jsScri
       </output>
     </remotesteps>
     <GUI>
-      <xloc>198</xloc>
-      <yloc>228</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Mapear fonte recursos</name>
-    <type>ValueMapper</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <field_to_use>fonte_recursos</field_to_use>
-    <target_field />
-    <non_match_default />
-    <fields>
-      <field>
-        <source_value>governo estadual</source_value>
-        <target_value>2</target_value>
-      </field>
-      <field>
-        <source_value>governo municipal</source_value>
-        <target_value>3</target_value>
-      </field>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1431</xloc>
-      <yloc>228</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Mapear tipo</name>
-    <type>ValueMapper</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <field_to_use>tipo_parceria_ajustado</field_to_use>
-    <target_field />
-    <non_match_default />
-    <fields>
-      <field>
-        <source_value>fomento</source_value>
-        <target_value>0</target_value>
-      </field>
-      <field>
-        <source_value>colaboracao</source_value>
-        <target_value>1</target_value>
-      </field>
-      <field>
-        <source_value>parceria</source_value>
-        <target_value>2</target_value>
-      </field>
-      <field>
-        <source_value>gestao</source_value>
-        <target_value>3</target_value>
-      </field>
-      <field>
-        <source_value>convenio</source_value>
-        <target_value>4</target_value>
-      </field>
-      <field>
-        <source_value>cooperacaotecnica</source_value>
-        <target_value>5</target_value>
-      </field>
-      <field>
-        <source_value>outro</source_value>
-        <target_value>6</target_value>
-      </field>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1591</xloc>
-      <yloc>228</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Merge Join</name>
-    <type>MergeJoin</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <join_type>INNER</join_type>
-    <step1>Dummy 2</step1>
-    <step2>Select edmu_cd_municipio </step2>
-    <keys_1>
-      <key>numero_parceria</key>
-    </keys_1>
-    <keys_2>
-      <key>numero_parceria</key>
-    </keys_2>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1049</xloc>
-      <yloc>628</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Merge Join 1</name>
-    <type>MergeJoin</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <join_type>LEFT OUTER</join_type>
-    <step1>Replace in string 1</step1>
-    <step2>Select id_osc</step2>
-    <keys_1>
-      <key>numero_parceria</key>
-      <key>cnpj_proponente</key>
-    </keys_1>
-    <keys_2>
-      <key>numero_parceria</key>
-      <key>cd_identificador_osc</key>
-    </keys_2>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>755</xloc>
-      <yloc>228</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Merge Join 2</name>
-    <type>MergeJoin</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <join_type>LEFT OUTER</join_type>
-    <step1>Dummy 1</step1>
-    <step2>Select id_projeto</step2>
-    <keys_1>
-      <key>id_osc</key>
-      <key>numero_parceria</key>
-    </keys_1>
-    <keys_2>
-      <key>id_osc</key>
-      <key>tx_identificador_projeto_externo</key>
-    </keys_2>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>184</xloc>
-      <yloc>755</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>MongoDB Input</name>
-    <type>MongoDbInput</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <hostname>localhost</hostname>
-    <port>27017</port>
-    <use_all_replica_members>N</use_all_replica_members>
-    <db_name>mapaosc</db_name>
-    <fields_name />
-    <collection>parcerias_estado_municipio</collection>
-    <json_field_name />
-    <json_query />
-    <auth_database>admin</auth_database>
-    <auth_user>mapaosc</auth_user>
-    <auth_password>Encrypted 2be98afc86aa7f2e4cb79ff228dc6fa8c</auth_password>
-    <auth_mech>SCRAM-SHA-1</auth_mech>
-    <auth_kerberos>N</auth_kerberos>
-    <connect_timeout>30</connect_timeout>
-    <socket_timeout>30</socket_timeout>
-    <read_preference>primary</read_preference>
-    <output_json>N</output_json>
-    <query_is_pipeline>N</query_is_pipeline>
-    <execute_for_each_row>N</execute_for_each_row>
-    <mongo_fields>
-      <mongo_field>
-        <field_name>numero_parceria</field_name>
-        <field_path>$.parceria.numero_parceria</field_path>
-        <field_type>String</field_type>
-      </mongo_field>
-      <mongo_field>
-        <field_name>cnpj_proponente</field_name>
-        <field_path>$.parceria.cnpj_proponente</field_path>
-        <field_type>String</field_type>
-      </mongo_field>
-      <mongo_field>
-        <field_name>data_inicio</field_name>
-        <field_path>$.parceria.data_inicio</field_path>
-        <field_type>String</field_type>
-      </mongo_field>
-      <mongo_field>
-        <field_name>data_conclusao</field_name>
-        <field_path>$.parceria.data_conclusao</field_path>
-        <field_type>String</field_type>
-      </mongo_field>
-      <mongo_field>
-        <field_name>situacao_parceria</field_name>
-        <field_path>$.parceria.situacao_parceria</field_path>
-        <field_type>String</field_type>
-      </mongo_field>
-      <mongo_field>
-        <field_name>tipo_parceria</field_name>
-        <field_path>$.parceria.tipo_parceria</field_path>
-        <field_type>String</field_type>
-      </mongo_field>
-      <mongo_field>
-        <field_name>valor_total</field_name>
-        <field_path>$.parceria.valor_total</field_path>
-        <field_type>String</field_type>
-      </mongo_field>
-      <mongo_field>
-        <field_name>valor_pago</field_name>
-        <field_path>$.parceria.valor_pago</field_path>
-        <field_type>String</field_type>
-      </mongo_field>
-      <mongo_field>
-        <field_name>nome_arquivo</field_name>
-        <field_path>$.assinatura.nome_arquivo</field_path>
-        <field_type>String</field_type>
-      </mongo_field>
-      <mongo_field>
-        <field_name>data</field_name>
-        <field_path>$.assinatura.data</field_path>
-        <field_type>String</field_type>
-      </mongo_field>
-      <mongo_field>
-        <field_name>localidade</field_name>
-        <field_path>$.assinatura.localidade</field_path>
-        <field_type>String</field_type>
-      </mongo_field>
-      <mongo_field>
-        <field_name>fonte_recursos</field_name>
-        <field_path>$.assinatura.fonte_recursos</field_path>
-        <field_type>String</field_type>
-      </mongo_field>
-      <mongo_field>
-        <field_name>usuario</field_name>
-        <field_path>$.assinatura.usuario</field_path>
-        <field_type>Integer</field_type>
-      </mongo_field>
-      <mongo_field>
-        <field_name>_id</field_name>
-        <field_path>$._id</field_path>
-        <field_type>String</field_type>
-      </mongo_field>
-      <mongo_field>
-        <field_name>hash</field_name>
-        <field_path>$.assinatura.hash</field_path>
-        <field_type>String</field_type>
-      </mongo_field>
-      <mongo_field>
-        <field_name>orgao_concedente</field_name>
-        <field_path>$.parceria.orgao_concedente</field_path>
-        <field_type>String</field_type>
-      </mongo_field>
-      <mongo_field>
-        <field_name>razao_social_proponente</field_name>
-        <field_path>$.parceria.razao_social_proponente</field_path>
-        <field_type>String</field_type>
-      </mongo_field>
-      <mongo_field>
-        <field_name>nome_fantasia_proponente</field_name>
-        <field_path>$.parceria.nome_fantasia_proponente</field_path>
-        <field_type>String</field_type>
-      </mongo_field>
-      <mongo_field>
-        <field_name>municipio_proponente</field_name>
-        <field_path>$.parceria.municipio_proponente</field_path>
-        <field_type>String</field_type>
-      </mongo_field>
-      <mongo_field>
-        <field_name>endereco_proponente</field_name>
-        <field_path>$.parceria.endereco_proponente</field_path>
-        <field_type>String</field_type>
-      </mongo_field>
-      <mongo_field>
-        <field_name>objeto_parceria</field_name>
-        <field_path>$.parceria.objeto_parceria</field_path>
-        <field_type>String</field_type>
-      </mongo_field>
-    </mongo_fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>81</xloc>
-      <yloc>83</yloc>
+      <xloc>359</xloc>
+      <yloc>271</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2640,8 +3222,8 @@ var municipio_proponente_ajustado = removeAccents(municipio_proponente);</jsScri
       </output>
     </remotesteps>
     <GUI>
-      <xloc>618</xloc>
-      <yloc>228</yloc>
+      <xloc>779</xloc>
+      <yloc>271</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2678,8 +3260,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1046</xloc>
-      <yloc>755</yloc>
+      <xloc>1207</xloc>
+      <yloc>798</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2711,8 +3293,8 @@ WHERE substring(cd_identificador_osc::TEXT from 0 for char_length(cd_identificad
       </output>
     </remotesteps>
     <GUI>
-      <xloc>754</xloc>
-      <yloc>94</yloc>
+      <xloc>915</xloc>
+      <yloc>137</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2747,8 +3329,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>402</xloc>
-      <yloc>756</yloc>
+      <xloc>563</xloc>
+      <yloc>799</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2785,8 +3367,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>617</xloc>
-      <yloc>94</yloc>
+      <xloc>778</xloc>
+      <yloc>137</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2852,10 +3434,6 @@ AND cd_uf = ?::INTEGER;</sql>
       </field>
       <field>
         <name>usuario</name>
-        <rename />
-      </field>
-      <field>
-        <name>_id</name>
         <rename />
       </field>
       <field>
@@ -2984,8 +3562,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1000</xloc>
-      <yloc>228</yloc>
+      <xloc>1161</xloc>
+      <yloc>271</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3045,8 +3623,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1308</xloc>
-      <yloc>404</yloc>
+      <xloc>1469</xloc>
+      <yloc>447</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3106,8 +3684,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1030</xloc>
-      <yloc>404</yloc>
+      <xloc>1191</xloc>
+      <yloc>447</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3257,8 +3835,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>603</xloc>
-      <yloc>402</yloc>
+      <xloc>764</xloc>
+      <yloc>445</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3296,8 +3874,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>402</xloc>
-      <yloc>624</yloc>
+      <xloc>563</xloc>
+      <yloc>667</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3346,8 +3924,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>184</xloc>
-      <yloc>871</yloc>
+      <xloc>345</xloc>
+      <yloc>914</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3388,8 +3966,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1046</xloc>
-      <yloc>866</yloc>
+      <xloc>1207</xloc>
+      <yloc>909</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3418,8 +3996,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>743</xloc>
-      <yloc>346</yloc>
+      <xloc>904</xloc>
+      <yloc>389</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3448,8 +4026,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>745</xloc>
-      <yloc>448</yloc>
+      <xloc>906</xloc>
+      <yloc>491</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3481,8 +4059,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1312</xloc>
-      <yloc>509</yloc>
+      <xloc>1473</xloc>
+      <yloc>552</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3514,8 +4092,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1031</xloc>
-      <yloc>511</yloc>
+      <xloc>1192</xloc>
+      <yloc>554</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3748,8 +4326,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>474</xloc>
-      <yloc>228</yloc>
+      <xloc>635</xloc>
+      <yloc>271</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3826,199 +4404,105 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1267</xloc>
-      <yloc>228</yloc>
+      <xloc>1428</xloc>
+      <yloc>271</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Definir situação</name>
-    <type>ScriptValueMod</type>
+    <name>JSON Input</name>
+    <type>JsonInput</type>
     <description />
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution />
     <copies>1</copies>
     <partitioning>
       <method>none</method>
       <schema_name />
     </partitioning>
-    <compatible>N</compatible>
-    <optimizationLevel>9</optimizationLevel>
-    <jsScripts>
-      <jsScript>
-        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>function formatDate(data){
-	var parts = data.split('-');
-    var formatted = new Date(parts[2], parts[1] - 1, parts[0]);
-    return formatted;
-}
-
-function setSituacaoParceria(dataInicio, dataConclusao){
-	var dataInicio = formatDate(dataInicio);
-	var dataConclusao = formatDate(dataConclusao);
-	var dataAgora = Date.now();
-	
-	var situacao = 4;
-  
-	if(dataInicio &lt; dataConclusao){
-		if(dataInicio > dataAgora){
-        	situacao = 1;
-		}else if(dataInicio &lt;= dataAgora &amp;&amp; dataConclusao > dataAgora){
-			situacao = 2;
-		}else if(dataConclusao &lt;= dataAgora){
-			situacao = 3;
-		}
-	}
-	
-	return situacao;
-}
-
-var situacao_parceria_ajustado = setSituacaoParceria(data_inicio, data_conclusao);</jsScript_script>
-      </jsScript>
-    </jsScripts>
+    <include>N</include>
+    <include_field />
+    <rownum>N</rownum>
+    <addresultfile>N</addresultfile>
+    <readurl>N</readurl>
+    <removeSourceField>N</removeSourceField>
+    <IsIgnoreEmptyFile>Y</IsIgnoreEmptyFile>
+    <doNotFailIfNoFile>Y</doNotFailIfNoFile>
+    <ignoreMissingPath>N</ignoreMissingPath>
+    <rownum_field />
+    <file>
+      <name>${DIRETORIO_ARQUIVOS}</name>
+      <filemask>.*\.json</filemask>
+      <exclude_filemask />
+      <file_required>N</file_required>
+      <include_subfolders>Y</include_subfolders>
+    </file>
     <fields>
       <field>
-        <name>situacao_parceria_ajustado</name>
-        <rename>situacao_parceria_ajustado</rename>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>335</xloc>
-      <yloc>228</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Insert log_carga 3</name>
-    <type>InsertUpdate</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>localhost</connection>
-    <commit>100</commit>
-    <update_bypassed>N</update_bypassed>
-    <lookup>
-      <schema>log</schema>
-      <table>tb_log_carga</table>
-      <value>
-        <name>cd_identificador_osc</name>
-        <rename>cd_identificador_osc</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>id_fonte_dados</name>
-        <rename>id_fonte_dados_carga</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>cd_status</name>
-        <rename>cd_status_carga</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>tx_mensagem</name>
-        <rename>tx_mensagem_carga</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>dt_carregamento_dados</name>
-        <rename>data_carregamento</rename>
-        <update>N</update>
-      </value>
-    </lookup>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>687</xloc>
-      <yloc>848</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Add constants</name>
-    <type>Constant</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>541</xloc>
-      <yloc>741</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Add constants erro 3</name>
-    <type>Constant</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <name>id_fonte_dados_carga</name>
+        <name>id_parceria</name>
+        <path>$..id_parceria</path>
         <type>String</type>
         <format />
         <currency />
         <decimal />
         <group />
-        <nullif>Representante de estado ou município</nullif>
         <length>-1</length>
         <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
+        <trim_type>both</trim_type>
+        <repeat>N</repeat>
       </field>
       <field>
-        <name>cd_status_carga</name>
+        <name>id_localidade</name>
+        <path>$..id_localidade</path>
         <type>Integer</type>
         <format />
         <currency />
         <decimal />
         <group />
-        <nullif>2</nullif>
         <length>-1</length>
         <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
+        <trim_type>both</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>parceria</name>
+        <path>$..parceria</path>
+        <type>None</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>assinatura</name>
+        <path>$..assinatura</path>
+        <type>None</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+        <repeat>N</repeat>
       </field>
     </fields>
+    <limit>0</limit>
+    <IsInFields>N</IsInFields>
+    <IsAFile>N</IsAFile>
+    <valueField />
+    <shortFileFieldName />
+    <pathFieldName />
+    <hiddenFieldName />
+    <lastModificationTimeFieldName />
+    <uriNameFieldName />
+    <rootUriNameFieldName />
+    <extensionFieldName />
+    <sizeFieldName />
     <cluster_schema />
     <remotesteps>
       <input>
@@ -4027,14 +4511,14 @@ var situacao_parceria_ajustado = setSituacaoParceria(data_inicio, data_conclusao
       </output>
     </remotesteps>
     <GUI>
-      <xloc>687</xloc>
-      <yloc>740</yloc>
+      <xloc>86</xloc>
+      <yloc>64</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Insert log_carga 4</name>
-    <type>InsertUpdate</type>
+    <name>JSON Input Parceria</name>
+    <type>JsonInput</type>
     <description />
     <distribute>Y</distribute>
     <custom_distribution />
@@ -4043,300 +4527,219 @@ var situacao_parceria_ajustado = setSituacaoParceria(data_inicio, data_conclusao
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection>localhost</connection>
-    <commit>100</commit>
-    <update_bypassed>N</update_bypassed>
-    <lookup>
-      <schema>log</schema>
-      <table>tb_log_carga</table>
-      <value>
-        <name>cd_identificador_osc</name>
-        <rename>cd_identificador_osc</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>id_fonte_dados</name>
-        <rename>id_fonte_dados_carga</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>cd_status</name>
-        <rename>cd_status_carga</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>tx_mensagem</name>
-        <rename>tx_mensagem_carga</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>dt_carregamento_dados</name>
-        <rename>carregamento_dados</rename>
-        <update>N</update>
-      </value>
-    </lookup>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1224</xloc>
-      <yloc>863</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Add constants erro 4</name>
-    <type>Constant</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
+    <include>N</include>
+    <include_field />
+    <rownum>N</rownum>
+    <addresultfile>N</addresultfile>
+    <readurl>N</readurl>
+    <removeSourceField>Y</removeSourceField>
+    <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
+    <doNotFailIfNoFile>Y</doNotFailIfNoFile>
+    <ignoreMissingPath>Y</ignoreMissingPath>
+    <rownum_field />
+    <file>
+      <name />
+      <filemask />
+      <exclude_filemask />
+      <file_required>N</file_required>
+      <include_subfolders>N</include_subfolders>
+    </file>
     <fields>
       <field>
-        <name>id_fonte_dados_carga</name>
+        <name>numero_parceria</name>
+        <path>$..numero_parceria</path>
         <type>String</type>
         <format />
         <currency />
         <decimal />
         <group />
-        <nullif>Representante de estado ou município</nullif>
         <length>-1</length>
         <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
       </field>
       <field>
-        <name>cd_status_carga</name>
-        <type>Integer</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif>2</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1224</xloc>
-      <yloc>755</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Insert log_carga 2</name>
-    <type>InsertUpdate</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>localhost</connection>
-    <commit>100</commit>
-    <update_bypassed>N</update_bypassed>
-    <lookup>
-      <schema>log</schema>
-      <table>tb_log_carga</table>
-      <value>
-        <name>cd_identificador_osc</name>
-        <rename>cd_identificador_osc</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>id_fonte_dados</name>
-        <rename>id_fonte_dados_carga</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>cd_status</name>
-        <rename>cd_status_carga</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>tx_mensagem</name>
-        <rename>tx_mensagem_carga</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>dt_carregamento_dados</name>
-        <rename>carregamento_dados</rename>
-        <update>N</update>
-      </value>
-    </lookup>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>540</xloc>
-      <yloc>1013</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Add constants erro 2</name>
-    <type>Constant</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <name>id_fonte_dados_carga</name>
+        <name>cnpj_proponente</name>
+        <path>$..cnpj_proponente</path>
         <type>String</type>
         <format />
         <currency />
         <decimal />
         <group />
-        <nullif>Representante de estado ou município</nullif>
         <length>-1</length>
         <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
       </field>
       <field>
-        <name>cd_status_carga</name>
-        <type>Integer</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif>2</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>540</xloc>
-      <yloc>905</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Insert log_carga 1</name>
-    <type>InsertUpdate</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>localhost</connection>
-    <commit>100</commit>
-    <update_bypassed>N</update_bypassed>
-    <lookup>
-      <schema>log</schema>
-      <table>tb_log_carga</table>
-      <value>
-        <name>cd_identificador_osc</name>
-        <rename>cd_identificador_osc</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>id_fonte_dados</name>
-        <rename>id_fonte_dados_carga</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>cd_status</name>
-        <rename>cd_status_carga</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>tx_mensagem</name>
-        <rename>tx_mensagem_carga</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>dt_carregamento_dados</name>
-        <rename>data_carregamento</rename>
-        <update>N</update>
-      </value>
-    </lookup>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>91</xloc>
-      <yloc>506</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Add constants erro 1</name>
-    <type>Constant</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <name>id_fonte_dados_carga</name>
+        <name>data_inicio</name>
+        <path>$..data_inicio</path>
         <type>String</type>
         <format />
         <currency />
         <decimal />
         <group />
-        <nullif>Representante de estado ou município</nullif>
         <length>-1</length>
         <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
       </field>
       <field>
-        <name>cd_status_carga</name>
-        <type>Integer</type>
+        <name>data_conclusao</name>
+        <path>$..data_conclusao</path>
+        <type>String</type>
         <format />
         <currency />
         <decimal />
         <group />
-        <nullif>2</nullif>
         <length>-1</length>
         <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>situacao_parceria</name>
+        <path>$..situacao_parceria</path>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>tipo_parceria</name>
+        <path>$..tipo_parceria</path>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>valor_total</name>
+        <path>$..valor_total</path>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>valor_pago</name>
+        <path>$..valor_pago</path>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>orgao_concedente</name>
+        <path>$..orgao_concedente</path>
+        <type>None</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>razao_social_proponente</name>
+        <path>$..razao_social_proponente</path>
+        <type>None</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>nome_fantasia_proponente</name>
+        <path>$..nome_fantasia_proponente</path>
+        <type>None</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>municipio_proponente</name>
+        <path>$..municipio_proponente</path>
+        <type>None</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>endereco_proponente</name>
+        <path>$..endereco_proponente</path>
+        <type>None</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>objeto_parceria</name>
+        <path>$..objeto_parceria</path>
+        <type>None</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
       </field>
     </fields>
+    <limit>0</limit>
+    <IsInFields>Y</IsInFields>
+    <IsAFile>N</IsAFile>
+    <valueField>parceria</valueField>
+    <shortFileFieldName />
+    <pathFieldName />
+    <hiddenFieldName />
+    <lastModificationTimeFieldName />
+    <uriNameFieldName />
+    <rootUriNameFieldName />
+    <extensionFieldName />
+    <sizeFieldName />
     <cluster_schema />
     <remotesteps>
       <input>
@@ -4345,14 +4748,14 @@ var situacao_parceria_ajustado = setSituacaoParceria(data_inicio, data_conclusao
       </output>
     </remotesteps>
     <GUI>
-      <xloc>91</xloc>
-      <yloc>398</yloc>
+      <xloc>241</xloc>
+      <yloc>63</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Criar campos</name>
-    <type>ScriptValueMod</type>
+    <name>JSON Input Assinatura</name>
+    <type>JsonInput</type>
     <description />
     <distribute>Y</distribute>
     <custom_distribution />
@@ -4361,25 +4764,115 @@ var situacao_parceria_ajustado = setSituacaoParceria(data_inicio, data_conclusao
       <method>none</method>
       <schema_name />
     </partitioning>
-    <compatible>N</compatible>
-    <optimizationLevel>9</optimizationLevel>
-    <jsScripts>
-      <jsScript>
-        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>var data_carregamento = Date.now();</jsScript_script>
-      </jsScript>
-    </jsScripts>
+    <include>N</include>
+    <include_field />
+    <rownum>N</rownum>
+    <addresultfile>N</addresultfile>
+    <readurl>N</readurl>
+    <removeSourceField>Y</removeSourceField>
+    <IsIgnoreEmptyFile>N</IsIgnoreEmptyFile>
+    <doNotFailIfNoFile>Y</doNotFailIfNoFile>
+    <ignoreMissingPath>Y</ignoreMissingPath>
+    <rownum_field />
+    <file>
+      <name />
+      <filemask />
+      <exclude_filemask />
+      <file_required>N</file_required>
+      <include_subfolders>N</include_subfolders>
+    </file>
     <fields>
       <field>
-        <name>data_carregamento</name>
-        <rename>data_carregamento</rename>
-        <type>Date</type>
+        <name>nome_arquivo</name>
+        <path>$..nome_arquivo</path>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
         <length>-1</length>
         <precision>-1</precision>
-        <replace>N</replace>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>data</name>
+        <path>$..data</path>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>localidade</name>
+        <path>$..localidade</path>
+        <type>Integer</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>fonte_recursos</name>
+        <path>$..fonte_recursos</path>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>usuario</name>
+        <path>$..usuario</path>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>hash</name>
+        <path>$..hash</path>
+        <type>String</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
       </field>
     </fields>
+    <limit>0</limit>
+    <IsInFields>Y</IsInFields>
+    <IsAFile>N</IsAFile>
+    <valueField>assinatura</valueField>
+    <shortFileFieldName />
+    <pathFieldName />
+    <hiddenFieldName />
+    <lastModificationTimeFieldName />
+    <uriNameFieldName />
+    <rootUriNameFieldName />
+    <extensionFieldName />
+    <sizeFieldName />
     <cluster_schema />
     <remotesteps>
       <input>
@@ -4388,8 +4881,8 @@ var situacao_parceria_ajustado = setSituacaoParceria(data_inicio, data_conclusao
       </output>
     </remotesteps>
     <GUI>
-      <xloc>81</xloc>
-      <yloc>228</yloc>
+      <xloc>242</xloc>
+      <yloc>167</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
