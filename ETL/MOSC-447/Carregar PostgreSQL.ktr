@@ -610,16 +610,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Select values 4</from>
-      <to>Filter fonte recursos</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Filter fonte recursos</from>
-      <to>Set field value 1</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Insert Dados Gerais</from>
       <to>Filter município</to>
       <enabled>Y</enabled>
@@ -630,18 +620,8 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Select values 5</from>
-      <to>Filter rows 5</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Dummy 1</from>
       <to>Merge Join 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Filter fonte recursos</from>
-      <to>Set field value 2</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -672,16 +652,6 @@
     <hop>
       <from>Select id_osc</from>
       <to>Merge Join 1</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Set field value 2</from>
-      <to>Select values 5</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Set field value 1</from>
-      <to>Select values 5</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -737,11 +707,6 @@
     <hop>
       <from>Select values 8</from>
       <to>Select edmu_cd_municipio </to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Select values 5</from>
-      <to>Insert Dados Gerais</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -810,32 +775,12 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Filter rows 5</from>
-      <to>Insert Projeto Município</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Insert Projeto Município</from>
+      <from>Insert Projeto</from>
       <to>Dummy 1</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Insert Projeto Município</from>
-      <to>Add constants erro 1</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Filter rows 5</from>
-      <to>Insert Projeto Estado</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Insert Projeto Estado</from>
-      <to>Dummy 1</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Insert Projeto Estado</from>
+      <from>Insert Projeto</from>
       <to>Add constants erro 1</to>
       <enabled>Y</enabled>
     </hop>
@@ -877,6 +822,16 @@
     <hop>
       <from>Replace quote 4</from>
       <to>Insert log_carga 4</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Select values 4</from>
+      <to>Insert Projeto</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Select values 4</from>
+      <to>Insert Dados Gerais</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -1064,7 +1019,7 @@
     </remotesteps>
     <GUI>
       <xloc>252</xloc>
-      <yloc>441</yloc>
+      <yloc>447</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1113,8 +1068,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>516</xloc>
-      <yloc>1042</yloc>
+      <xloc>436</xloc>
+      <yloc>918</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1435,8 +1390,8 @@ var situacao_parceria_ajustado = setSituacaoParceria(data_inicio, data_conclusao
       </output>
     </remotesteps>
     <GUI>
-      <xloc>345</xloc>
-      <yloc>667</yloc>
+      <xloc>265</xloc>
+      <yloc>549</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1521,49 +1476,6 @@ OR (
     </GUI>
   </step>
   <step>
-    <name>Filter fonte recursos</name>
-    <type>FilterRows</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <send_true_to>Set field value 1</send_true_to>
-    <send_false_to>Set field value 2</send_false_to>
-    <compare>
-      <condition>
-        <negated>N</negated>
-        <leftvalue>fonte_recursos</leftvalue>
-        <function>=</function>
-        <rightvalue />
-        <value>
-          <name>constant</name>
-          <type>String</type>
-          <text>2</text>
-          <length>-1</length>
-          <precision>-1</precision>
-          <isnull>N</isnull>
-          <mask>#</mask>
-        </value>
-      </condition>
-    </compare>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1062</xloc>
-      <yloc>447</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
     <name>Filter município</name>
     <type>FilterRows</type>
     <description />
@@ -1637,49 +1549,6 @@ OR (
     <GUI>
       <xloc>1042</xloc>
       <yloc>909</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Filter rows 5</name>
-    <type>FilterRows</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <send_true_to>Insert Projeto Estado</send_true_to>
-    <send_false_to>Insert Projeto Município</send_false_to>
-    <compare>
-      <condition>
-        <negated>N</negated>
-        <leftvalue>fonte_recursos</leftvalue>
-        <function>=</function>
-        <rightvalue />
-        <value>
-          <name>constant</name>
-          <type>String</type>
-          <text>2</text>
-          <length>-1</length>
-          <precision>-1</precision>
-          <isnull>N</isnull>
-          <mask />
-        </value>
-      </condition>
-    </compare>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>614</xloc>
-      <yloc>445</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1948,8 +1817,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>513</xloc>
-      <yloc>914</yloc>
+      <xloc>433</xloc>
+      <yloc>790</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2017,6 +1886,314 @@ OR (
     <GUI>
       <xloc>1380</xloc>
       <yloc>671</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Insert Projeto</name>
+    <type>ExecSQL</type>
+    <description />
+    <distribute>N</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>localhost</connection>
+    <execute_each_row>Y</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>Y</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>SELECT * FROM portal.atualizar_projeto_estado_municipio(
+	'?'::INTEGER, -- osc INTEGER
+	'?'::TEXT, -- identificadorexterno TEXT
+	'?'::INTEGER, -- localidade INTEGER
+	'?'::TEXT, -- nome TEXT
+	'?'::INTEGER, -- status INTEGER
+	'?'::DATE, -- datainicio DATE
+	'?'::DATE, -- datafim DATE
+	'?'::DOUBLE PRECISION, -- valortotal DOUBLE PRECISION
+	'?'::DOUBLE PRECISION, -- valorcaptado DOUBLE PRECISION
+	null::INTEGER, -- totalbeneficiarios INTEGER
+	null::INTEGER, -- abrangencia INTEGER
+	null::INTEGER, -- zonaatuacao INTEGER
+	'?'::TEXT, -- orgaoconcedente TEXT
+	'?'::TEXT, -- descricao TEXT
+	null::TEXT, -- metodologiamonitoramento TEXT
+	null::TEXT, -- link TEXT
+	'?'::TEXT, -- fonte TEXT
+	'?'::TIMESTAMP, -- dataatualizacao TIMESTAMP
+	false -- nullvalido BOOLEAN
+);</sql>
+    <set_params>N</set_params>
+    <insert_field />
+    <update_field />
+    <delete_field />
+    <read_field />
+    <arguments>
+      <argument>
+        <name>id_osc</name>
+      </argument>
+      <argument>
+        <name>numero_parceria</name>
+      </argument>
+      <argument>
+        <name>localidade</name>
+      </argument>
+      <argument>
+        <name>nome_parceria</name>
+      </argument>
+      <argument>
+        <name>situacao_parceria_ajustado</name>
+      </argument>
+      <argument>
+        <name>data_inicio</name>
+      </argument>
+      <argument>
+        <name>data_conclusao</name>
+      </argument>
+      <argument>
+        <name>valor_total</name>
+      </argument>
+      <argument>
+        <name>valor_pago</name>
+      </argument>
+      <argument>
+        <name>orgao_concedente</name>
+      </argument>
+      <argument>
+        <name>objeto_parceria</name>
+      </argument>
+      <argument>
+        <name>usuario</name>
+      </argument>
+      <argument>
+        <name>data</name>
+      </argument>
+    </arguments>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>536</xloc>
+      <yloc>447</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Insert log_carga 1</name>
+    <type>ExecSQL</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>localhost</connection>
+    <execute_each_row>Y</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>Y</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
+VALUES ('?'::INTEGER, '?'::TEXT, '?'::SMALLINT, '?'::TEXT, '?'::TIMESTAMP);</sql>
+    <set_params>N</set_params>
+    <insert_field />
+    <update_field />
+    <delete_field />
+    <read_field />
+    <arguments>
+      <argument>
+        <name>id_osc</name>
+      </argument>
+      <argument>
+        <name>id_fonte_dados_carga</name>
+      </argument>
+      <argument>
+        <name>cd_status_carga</name>
+      </argument>
+      <argument>
+        <name>tx_mensagem_carga</name>
+      </argument>
+      <argument>
+        <name>data_carregamento</name>
+      </argument>
+    </arguments>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>101</xloc>
+      <yloc>576</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Insert log_carga 2</name>
+    <type>ExecSQL</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>localhost</connection>
+    <execute_each_row>Y</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>Y</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
+VALUES ('?'::INTEGER, '?'::TEXT, '?'::SMALLINT, '?'::TEXT, '?'::TIMESTAMP);</sql>
+    <set_params>N</set_params>
+    <insert_field />
+    <update_field />
+    <delete_field />
+    <read_field />
+    <arguments>
+      <argument>
+        <name>id_osc</name>
+      </argument>
+      <argument>
+        <name>id_fonte_dados_carga</name>
+      </argument>
+      <argument>
+        <name>cd_status_carga</name>
+      </argument>
+      <argument>
+        <name>tx_mensagem_carga</name>
+      </argument>
+      <argument>
+        <name>data_carregamento</name>
+      </argument>
+    </arguments>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>587</xloc>
+      <yloc>1043</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Insert log_carga 3</name>
+    <type>ExecSQL</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>localhost</connection>
+    <execute_each_row>Y</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>Y</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
+VALUES ('?'::INTEGER, '?'::TEXT, '?'::SMALLINT, '?'::TEXT, '?'::TIMESTAMP);</sql>
+    <set_params>N</set_params>
+    <insert_field />
+    <update_field />
+    <delete_field />
+    <read_field />
+    <arguments>
+      <argument>
+        <name>id_osc</name>
+      </argument>
+      <argument>
+        <name>id_fonte_dados_carga</name>
+      </argument>
+      <argument>
+        <name>cd_status_carga</name>
+      </argument>
+      <argument>
+        <name>tx_mensagem_carga</name>
+      </argument>
+      <argument>
+        <name>data_carregamento</name>
+      </argument>
+    </arguments>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>767</xloc>
+      <yloc>1020</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Insert log_carga 4</name>
+    <type>ExecSQL</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>localhost</connection>
+    <execute_each_row>Y</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>Y</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
+VALUES ('?'::INTEGER, '?'::TEXT, '?'::SMALLINT, '?'::TEXT, '?'::TIMESTAMP);</sql>
+    <set_params>N</set_params>
+    <insert_field />
+    <update_field />
+    <delete_field />
+    <read_field />
+    <arguments>
+      <argument>
+        <name>id_osc</name>
+      </argument>
+      <argument>
+        <name>id_fonte_dados_carga</name>
+      </argument>
+      <argument>
+        <name>cd_status_carga</name>
+      </argument>
+      <argument>
+        <name>tx_mensagem_carga</name>
+      </argument>
+      <argument>
+        <name>data_carregamento</name>
+      </argument>
+    </arguments>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1387</xloc>
+      <yloc>1033</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2689,8 +2866,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>345</xloc>
-      <yloc>798</yloc>
+      <xloc>265</xloc>
+      <yloc>674</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3154,6 +3331,154 @@ var municipio_proponente_ajustado = removeAccents(municipio_proponente);</jsScri
     </GUI>
   </step>
   <step>
+    <name>Replace quote 1</name>
+    <type>ReplaceString</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <in_stream_name>tx_mensagem_carga</in_stream_name>
+        <out_stream_name />
+        <use_regex>no</use_regex>
+        <replace_string>'</replace_string>
+        <replace_by_string>''</replace_by_string>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string />
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>101</xloc>
+      <yloc>447</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Replace quote 2</name>
+    <type>ReplaceString</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <in_stream_name>tx_mensagem_carga</in_stream_name>
+        <out_stream_name />
+        <use_regex>no</use_regex>
+        <replace_string>'</replace_string>
+        <replace_by_string>''</replace_by_string>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string />
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>436</xloc>
+      <yloc>1043</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Replace quote 3</name>
+    <type>ReplaceString</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <in_stream_name>tx_mensagem_carga</in_stream_name>
+        <out_stream_name />
+        <use_regex>no</use_regex>
+        <replace_string>'</replace_string>
+        <replace_by_string>''</replace_by_string>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string />
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>765</xloc>
+      <yloc>905</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Replace quote 4</name>
+    <type>ReplaceString</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <in_stream_name>tx_mensagem_carga</in_stream_name>
+        <out_stream_name />
+        <use_regex>no</use_regex>
+        <replace_string>'</replace_string>
+        <replace_by_string>''</replace_by_string>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string />
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1387</xloc>
+      <yloc>914</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>Select edmu_cd_municipio </name>
     <type>TableInput</type>
     <description />
@@ -3255,8 +3580,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>563</xloc>
-      <yloc>799</yloc>
+      <xloc>483</xloc>
+      <yloc>675</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3312,107 +3637,81 @@ AND cd_uf = ?::INTEGER;</sql>
     <fields>
       <field>
         <name>numero_parceria</name>
-        <rename />
       </field>
       <field>
         <name>cnpj_proponente</name>
-        <rename />
       </field>
       <field>
         <name>data_inicio</name>
-        <rename />
       </field>
       <field>
         <name>data_conclusao</name>
-        <rename />
       </field>
       <field>
         <name>situacao_parceria</name>
-        <rename />
       </field>
       <field>
         <name>tipo_parceria</name>
-        <rename />
       </field>
       <field>
         <name>valor_total</name>
-        <rename />
       </field>
       <field>
         <name>valor_pago</name>
-        <rename />
       </field>
       <field>
         <name>nome_arquivo</name>
-        <rename />
       </field>
       <field>
         <name>data</name>
-        <rename />
       </field>
       <field>
         <name>localidade</name>
-        <rename />
       </field>
       <field>
         <name>fonte_recursos</name>
-        <rename />
       </field>
       <field>
         <name>usuario</name>
-        <rename />
       </field>
       <field>
         <name>hash</name>
-        <rename />
       </field>
       <field>
         <name>orgao_concedente</name>
-        <rename />
       </field>
       <field>
         <name>razao_social_proponente</name>
-        <rename />
       </field>
       <field>
         <name>nome_fantasia_proponente</name>
-        <rename />
       </field>
       <field>
         <name>municipio_proponente</name>
-        <rename />
       </field>
       <field>
         <name>endereco_proponente</name>
-        <rename />
       </field>
       <field>
         <name>objeto_parceria</name>
-        <rename />
       </field>
       <field>
         <name>municipio_proponente_ajustado</name>
-        <rename />
       </field>
       <field>
         <name>id_osc</name>
-        <rename />
       </field>
       <field>
         <name>cd_identificador_osc</name>
-        <rename />
       </field>
       <field>
         <name>tipo_parceria_ajustado</name>
-        <rename />
       </field>
       <field>
         <name>situacao_parceria_ajustado</name>
-        <rename />
       </field>
       <field>
         <name>data_carregamento</name>
-        <rename />
       </field>
       <select_unspecified>N</select_unspecified>
       <meta>
@@ -3562,7 +3861,7 @@ AND cd_uf = ?::INTEGER;</sql>
     <name>Select values 4</name>
     <type>SelectValues</type>
     <description />
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution />
     <copies>1</copies>
     <partitioning>
@@ -3620,187 +3919,6 @@ AND cd_uf = ?::INTEGER;</sql>
     </GUI>
   </step>
   <step>
-    <name>Select values 5</name>
-    <type>SelectValues</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <name>numero_parceria</name>
-        <rename />
-      </field>
-      <field>
-        <name>cnpj_proponente</name>
-        <rename />
-      </field>
-      <field>
-        <name>data_inicio</name>
-        <rename />
-      </field>
-      <field>
-        <name>data_conclusao</name>
-        <rename />
-      </field>
-      <field>
-        <name>situacao_parceria_outro</name>
-        <rename />
-      </field>
-      <field>
-        <name>tipo_parceria_outro</name>
-        <rename />
-      </field>
-      <field>
-        <name>valor_total</name>
-        <rename />
-      </field>
-      <field>
-        <name>valor_pago</name>
-        <rename />
-      </field>
-      <field>
-        <name>nome_arquivo</name>
-        <rename />
-      </field>
-      <field>
-        <name>data</name>
-        <rename />
-      </field>
-      <field>
-        <name>localidade</name>
-        <rename />
-      </field>
-      <field>
-        <name>fonte_recursos</name>
-        <rename />
-      </field>
-      <field>
-        <name>usuario</name>
-        <rename />
-      </field>
-      <field>
-        <name>hash</name>
-        <rename />
-      </field>
-      <field>
-        <name>orgao_concedente</name>
-        <rename />
-      </field>
-      <field>
-        <name>razao_social_proponente</name>
-        <rename />
-      </field>
-      <field>
-        <name>nome_fantasia_proponente</name>
-        <rename />
-      </field>
-      <field>
-        <name>municipio_proponente</name>
-        <rename />
-      </field>
-      <field>
-        <name>endereco_proponente</name>
-        <rename />
-      </field>
-      <field>
-        <name>objeto_parceria</name>
-        <rename />
-      </field>
-      <field>
-        <name>municipio_proponente_ajustado</name>
-        <rename />
-      </field>
-      <field>
-        <name>id_osc</name>
-        <rename />
-      </field>
-      <field>
-        <name>cd_identificador_osc</name>
-        <rename />
-      </field>
-      <field>
-        <name>tipo_parceria_ajustado</name>
-        <rename />
-      </field>
-      <field>
-        <name>situacao_parceria_ajustado</name>
-        <rename />
-      </field>
-      <field>
-        <name>cd_uf</name>
-        <rename />
-      </field>
-      <field>
-        <name>cd_municipio</name>
-        <rename />
-      </field>
-      <field>
-        <name>bo_oficial</name>
-        <rename />
-      </field>
-      <field>
-        <name>nome_parceria</name>
-        <rename />
-      </field>
-      <field>
-        <name>data_carregamento</name>
-        <rename />
-      </field>
-      <select_unspecified>N</select_unspecified>
-      <meta>
-        <name>cd_municipio</name>
-        <rename>cd_municipio</rename>
-        <type>Integer</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>cd_uf</name>
-        <rename>cd_uf</rename>
-        <type>Integer</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>764</xloc>
-      <yloc>445</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
     <name>Select values 6</name>
     <type>SelectValues</type>
     <description />
@@ -3834,8 +3952,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>563</xloc>
-      <yloc>667</yloc>
+      <xloc>483</xloc>
+      <yloc>545</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3884,8 +4002,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>345</xloc>
-      <yloc>914</yloc>
+      <xloc>265</xloc>
+      <yloc>790</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3928,66 +4046,6 @@ AND cd_uf = ?::INTEGER;</sql>
     <GUI>
       <xloc>1207</xloc>
       <yloc>909</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Set field value 1</name>
-    <type>SetValueField</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <name>cd_uf</name>
-        <replaceby>localidade</replaceby>
-      </field>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>904</xloc>
-      <yloc>389</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Set field value 2</name>
-    <type>SetValueField</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <name>cd_municipio</name>
-        <replaceby>localidade</replaceby>
-      </field>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>906</xloc>
-      <yloc>491</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -4369,558 +4427,6 @@ AND cd_uf = ?::INTEGER;</sql>
       <draw>Y</draw>
     </GUI>
   </step>
-  <step>
-    <name>Insert Projeto Município</name>
-    <type>ExecSQL</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>localhost</connection>
-    <execute_each_row>Y</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>Y</replace_variables>
-    <quoteString>N</quoteString>
-    <sql>SELECT * FROM portal.atualizar_projeto_municipio(
-	'?'::INTEGER, -- osc INTEGER
-	'?'::TEXT, -- identificadorexterno TEXT
-	'?'::INTEGER, -- municipio INTEGER
-	'?'::TEXT, -- nome TEXT
-	'?'::INTEGER, -- status INTEGER
-	'?'::DATE, -- datainicio DATE
-	'?'::DATE, -- datafim DATE
-	'?'::DOUBLE PRECISION, -- valortotal DOUBLE PRECISION
-	'?'::DOUBLE PRECISION, -- valorcaptado DOUBLE PRECISION
-	null::INTEGER, -- totalbeneficiarios INTEGER
-	null::INTEGER, -- abrangencia INTEGER
-	null::INTEGER, -- zonaatuacao INTEGER
-	'?'::TEXT, -- orgaoconcedente TEXT
-	'?'::TEXT, -- descricao TEXT
-	null::TEXT, -- metodologiamonitoramento TEXT
-	null::TEXT, -- link TEXT
-	'?'::TEXT, -- fonte TEXT
-	'?'::TIMESTAMP, -- dataatualizacao TIMESTAMP
-	false -- nullvalido BOOLEAN
-);</sql>
-    <set_params>N</set_params>
-    <insert_field />
-    <update_field />
-    <delete_field />
-    <read_field />
-    <arguments>
-      <argument>
-        <name>id_osc</name>
-      </argument>
-      <argument>
-        <name>numero_parceria</name>
-      </argument>
-      <argument>
-        <name>cd_municipio</name>
-      </argument>
-      <argument>
-        <name>nome_parceria</name>
-      </argument>
-      <argument>
-        <name>situacao_parceria_ajustado</name>
-      </argument>
-      <argument>
-        <name>data_inicio</name>
-      </argument>
-      <argument>
-        <name>data_conclusao</name>
-      </argument>
-      <argument>
-        <name>valor_total</name>
-      </argument>
-      <argument>
-        <name>valor_pago</name>
-      </argument>
-      <argument>
-        <name>orgao_concedente</name>
-      </argument>
-      <argument>
-        <name>objeto_parceria</name>
-      </argument>
-      <argument>
-        <name>usuario</name>
-      </argument>
-      <argument>
-        <name>data</name>
-      </argument>
-    </arguments>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>616</xloc>
-      <yloc>571</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Insert Projeto Estado</name>
-    <type>ExecSQL</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>localhost</connection>
-    <execute_each_row>Y</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>Y</replace_variables>
-    <quoteString>N</quoteString>
-    <sql>SELECT * FROM portal.atualizar_projeto_estado(
-	'?'::INTEGER, -- osc INTEGER
-	'?'::TEXT, -- identificadorexterno TEXT
-	'?'::INTEGER, -- uf INTEGER
-	'?'::TEXT, -- nome TEXT
-	'?'::INTEGER, -- status INTEGER
-	'?'::DATE, -- datainicio DATE
-	'?'::DATE, -- datafim DATE
-	'?'::DOUBLE PRECISION, -- valortotal DOUBLE PRECISION
-	'?'::DOUBLE PRECISION, -- valorcaptado DOUBLE PRECISION
-	null::INTEGER, -- totalbeneficiarios INTEGER
-	null::INTEGER, -- abrangencia INTEGER
-	null::INTEGER, -- zonaatuacao INTEGER
-	'?'::TEXT, -- orgaoconcedente TEXT
-	'?'::TEXT, -- descricao TEXT
-	null::TEXT, -- metodologiamonitoramento TEXT
-	null::TEXT, -- link TEXT
-	'?'::TEXT, -- fonte TEXT
-	'?'::TIMESTAMP, -- dataatualizacao TIMESTAMP
-	false -- nullvalido BOOLEAN
-);</sql>
-    <set_params>N</set_params>
-    <insert_field />
-    <update_field />
-    <delete_field />
-    <read_field />
-    <arguments>
-      <argument>
-        <name>id_osc</name>
-      </argument>
-      <argument>
-        <name>numero_parceria</name>
-      </argument>
-      <argument>
-        <name>cd_uf</name>
-      </argument>
-      <argument>
-        <name>nome_parceria</name>
-      </argument>
-      <argument>
-        <name>situacao_parceria_ajustado</name>
-      </argument>
-      <argument>
-        <name>data_inicio</name>
-      </argument>
-      <argument>
-        <name>data_conclusao</name>
-      </argument>
-      <argument>
-        <name>valor_total</name>
-      </argument>
-      <argument>
-        <name>valor_pago</name>
-      </argument>
-      <argument>
-        <name>orgao_concedente</name>
-      </argument>
-      <argument>
-        <name>objeto_parceria</name>
-      </argument>
-      <argument>
-        <name>usuario</name>
-      </argument>
-      <argument>
-        <name>data</name>
-      </argument>
-    </arguments>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>450</xloc>
-      <yloc>445</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Insert log_carga 1</name>
-    <type>ExecSQL</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>localhost</connection>
-    <execute_each_row>Y</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>Y</replace_variables>
-    <quoteString>N</quoteString>
-    <sql>INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-VALUES ('?'::INTEGER, '?'::TEXT, '?'::SMALLINT, '?'::TEXT, '?'::TIMESTAMP);</sql>
-    <set_params>N</set_params>
-    <insert_field />
-    <update_field />
-    <delete_field />
-    <read_field />
-    <arguments>
-      <argument>
-        <name>id_osc</name>
-      </argument>
-      <argument>
-        <name>id_fonte_dados_carga</name>
-      </argument>
-      <argument>
-        <name>cd_status_carga</name>
-      </argument>
-      <argument>
-        <name>tx_mensagem_carga</name>
-      </argument>
-      <argument>
-        <name>data_carregamento</name>
-      </argument>
-    </arguments>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>101</xloc>
-      <yloc>570</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Insert log_carga 2</name>
-    <type>ExecSQL</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>localhost</connection>
-    <execute_each_row>Y</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>Y</replace_variables>
-    <quoteString>N</quoteString>
-    <sql>INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-VALUES ('?'::INTEGER, '?'::TEXT, '?'::SMALLINT, '?'::TEXT, '?'::TIMESTAMP);</sql>
-    <set_params>N</set_params>
-    <insert_field />
-    <update_field />
-    <delete_field />
-    <read_field />
-    <arguments>
-      <argument>
-        <name>id_osc</name>
-      </argument>
-      <argument>
-        <name>id_fonte_dados_carga</name>
-      </argument>
-      <argument>
-        <name>cd_status_carga</name>
-      </argument>
-      <argument>
-        <name>tx_mensagem_carga</name>
-      </argument>
-      <argument>
-        <name>data_carregamento</name>
-      </argument>
-    </arguments>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>667</xloc>
-      <yloc>1167</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Insert log_carga 3</name>
-    <type>ExecSQL</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>localhost</connection>
-    <execute_each_row>Y</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>Y</replace_variables>
-    <quoteString>N</quoteString>
-    <sql>INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-VALUES ('?'::INTEGER, '?'::TEXT, '?'::SMALLINT, '?'::TEXT, '?'::TIMESTAMP);</sql>
-    <set_params>N</set_params>
-    <insert_field />
-    <update_field />
-    <delete_field />
-    <read_field />
-    <arguments>
-      <argument>
-        <name>id_osc</name>
-      </argument>
-      <argument>
-        <name>id_fonte_dados_carga</name>
-      </argument>
-      <argument>
-        <name>cd_status_carga</name>
-      </argument>
-      <argument>
-        <name>tx_mensagem_carga</name>
-      </argument>
-      <argument>
-        <name>data_carregamento</name>
-      </argument>
-    </arguments>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>767</xloc>
-      <yloc>1020</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Insert log_carga 4</name>
-    <type>ExecSQL</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>localhost</connection>
-    <execute_each_row>Y</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>Y</replace_variables>
-    <quoteString>N</quoteString>
-    <sql>INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-VALUES ('?'::INTEGER, '?'::TEXT, '?'::SMALLINT, '?'::TEXT, '?'::TIMESTAMP);</sql>
-    <set_params>N</set_params>
-    <insert_field />
-    <update_field />
-    <delete_field />
-    <read_field />
-    <arguments>
-      <argument>
-        <name>id_osc</name>
-      </argument>
-      <argument>
-        <name>id_fonte_dados_carga</name>
-      </argument>
-      <argument>
-        <name>cd_status_carga</name>
-      </argument>
-      <argument>
-        <name>tx_mensagem_carga</name>
-      </argument>
-      <argument>
-        <name>data_carregamento</name>
-      </argument>
-    </arguments>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1387</xloc>
-      <yloc>1033</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Replace quote 1</name>
-    <type>ReplaceString</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <in_stream_name>tx_mensagem_carga</in_stream_name>
-        <out_stream_name />
-        <use_regex>no</use_regex>
-        <replace_string>'</replace_string>
-        <replace_by_string>''</replace_by_string>
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string />
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-      </field>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>101</xloc>
-      <yloc>441</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Replace quote 2</name>
-    <type>ReplaceString</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <in_stream_name>tx_mensagem_carga</in_stream_name>
-        <out_stream_name />
-        <use_regex>no</use_regex>
-        <replace_string>'</replace_string>
-        <replace_by_string>''</replace_by_string>
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string />
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-      </field>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>516</xloc>
-      <yloc>1167</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Replace quote 3</name>
-    <type>ReplaceString</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <in_stream_name>tx_mensagem_carga</in_stream_name>
-        <out_stream_name />
-        <use_regex>no</use_regex>
-        <replace_string>'</replace_string>
-        <replace_by_string>''</replace_by_string>
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string />
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-      </field>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>765</xloc>
-      <yloc>905</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Replace quote 4</name>
-    <type>ReplaceString</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <in_stream_name>tx_mensagem_carga</in_stream_name>
-        <out_stream_name />
-        <use_regex>no</use_regex>
-        <replace_string>'</replace_string>
-        <replace_by_string>''</replace_by_string>
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string />
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-      </field>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1387</xloc>
-      <yloc>914</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
   <step_error_handling>
     <error>
       <source_step>Insert Dados Gerais</source_step>
@@ -4959,19 +4465,7 @@ VALUES ('?'::INTEGER, '?'::TEXT, '?'::SMALLINT, '?'::TEXT, '?'::TIMESTAMP);</sql
       <min_pct_rows />
     </error>
     <error>
-      <source_step>Insert Projeto Município</source_step>
-      <target_step>Add constants erro 1</target_step>
-      <is_enabled>Y</is_enabled>
-      <nr_valuename />
-      <descriptions_valuename>tx_mensagem_carga</descriptions_valuename>
-      <fields_valuename />
-      <codes_valuename />
-      <max_errors />
-      <max_pct_errors />
-      <min_pct_rows />
-    </error>
-    <error>
-      <source_step>Insert Projeto Estado</source_step>
+      <source_step>Insert Projeto</source_step>
       <target_step>Add constants erro 1</target_step>
       <is_enabled>Y</is_enabled>
       <nr_valuename />

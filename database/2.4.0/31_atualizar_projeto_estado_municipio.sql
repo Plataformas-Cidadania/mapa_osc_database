@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS portal.atualizar_projeto_estado(osc INTEGER, identificadorexterno TEXT, uf INTEGER, nome TEXT, status INTEGER, datainicio DATE, datafim DATE, valortotal DOUBLE PRECISION, valorcaptado DOUBLE PRECISION, totalbeneficiarios INTEGER, abrangencia INTEGER, zonaatuacao INTEGER, orgaoconcedente TEXT, descricao TEXT, metodologiamonitoramento TEXT, link TEXT, fonte TEXT, dataatualizacao TIMESTAMP, nullvalido BOOLEAN);
+DROP FUNCTION IF EXISTS portal.atualizar_projeto_estado_municipio(osc INTEGER, identificadorexterno TEXT, localidade INTEGER, nome TEXT, status INTEGER, datainicio DATE, datafim DATE, valortotal DOUBLE PRECISION, valorcaptado DOUBLE PRECISION, totalbeneficiarios INTEGER, abrangencia INTEGER, zonaatuacao INTEGER, orgaoconcedente TEXT, descricao TEXT, metodologiamonitoramento TEXT, link TEXT, fonte TEXT, dataatualizacao TIMESTAMP, nullvalido BOOLEAN);
 
-CREATE OR REPLACE FUNCTION portal.atualizar_projeto_estado(osc INTEGER, identificadorexterno TEXT, uf INTEGER, nome TEXT, status INTEGER, datainicio DATE, datafim DATE, valortotal DOUBLE PRECISION, valorcaptado DOUBLE PRECISION, totalbeneficiarios INTEGER, abrangencia INTEGER, zonaatuacao INTEGER, orgaoconcedente TEXT, descricao TEXT, metodologiamonitoramento TEXT, link TEXT, fonte TEXT, dataatualizacao TIMESTAMP, nullvalido BOOLEAN) RETURNS TABLE(
+CREATE OR REPLACE FUNCTION portal.atualizar_projeto_estado_municipio(osc INTEGER, identificadorexterno TEXT, localidade INTEGER, nome TEXT, status INTEGER, datainicio DATE, datafim DATE, valortotal DOUBLE PRECISION, valorcaptado DOUBLE PRECISION, totalbeneficiarios INTEGER, abrangencia INTEGER, zonaatuacao INTEGER, orgaoconcedente TEXT, descricao TEXT, metodologiamonitoramento TEXT, link TEXT, fonte TEXT, dataatualizacao TIMESTAMP, nullvalido BOOLEAN) RETURNS TABLE(
 	mensagem TEXT
 )AS $$
 
@@ -10,75 +10,149 @@ DECLARE
 	gravar_log BOOLEAN;
 	
 BEGIN 
-	SELECT INTO projeto_anterior * FROM osc.tb_projeto WHERE tx_identificador_projeto_externo = identificadorexterno AND cd_uf = uf AND cd_municipio is null;
+	SELECT INTO projeto_anterior * 
+	FROM osc.tb_projeto 
+	WHERE (tx_identificador_projeto_externo = identificadorexterno AND cd_uf = localidade AND cd_municipio is null) 
+	OR (tx_identificador_projeto_externo = identificadorexterno AND cd_uf is null AND cd_municipio = localidade);
+	
 	projeto_posterior := projeto_anterior;
 	
 	IF projeto_anterior.id_projeto IS null THEN 
-		INSERT INTO 
-			osc.tb_projeto (
-				id_osc, 
-				tx_identificador_projeto_externo, 
-				cd_uf, 
-				cd_municipio, 
-				tx_nome_projeto, 
-				ft_nome_projeto, 
-				cd_status_projeto, 
-				ft_status_projeto, 
-				dt_data_inicio_projeto, 
-				ft_data_inicio_projeto, 
-				dt_data_fim_projeto, 
-				ft_data_fim_projeto, 
-				nr_valor_total_projeto, 
-				ft_valor_total_projeto, 
-				nr_valor_captado_projeto, 
-				ft_valor_captado_projeto, 
-				nr_total_beneficiarios, 
-				ft_total_beneficiarios, 
-				cd_abrangencia_projeto, 
-				ft_abrangencia_projeto, 
-				cd_zona_atuacao_projeto, 
-				ft_zona_atuacao_projeto, 
-				tx_orgao_concedente, 
-				ft_orgao_concedente, 
-				tx_descricao_projeto, 
-				ft_descricao_projeto, 
-				tx_metodologia_monitoramento, 
-				ft_metodologia_monitoramento, 
-				tx_link_projeto, 
-				ft_link_projeto
-			) 
-		VALUES (
-			osc, 
-			identificadorexterno, 
-			uf, 
-			null, 
-			nome, 
-			fonte, 
-			status, 
-			fonte, 
-			datainicio, 
-			fonte, 
-			datafim, 
-			fonte, 
-			valortotal, 
-			fonte, 
-			valorcaptado, 
-			fonte, 
-			totalbeneficiarios, 
-			fonte, 
-			abrangencia, 
-			fonte, 
-			zonaatuacao, 
-			fonte, 
-			orgaoconcedente, 
-			fonte, 
-			descricao, 
-			fonte, 
-			metodologiamonitoramento, 
-			fonte, 
-			link, 
-			fonte
-		);
+		IF localidade > 99 THEN 
+			INSERT INTO 
+				osc.tb_projeto (
+					id_osc, 
+					tx_identificador_projeto_externo, 
+					cd_uf, 
+					cd_municipio, 
+					tx_nome_projeto, 
+					ft_nome_projeto, 
+					cd_status_projeto, 
+					ft_status_projeto, 
+					dt_data_inicio_projeto, 
+					ft_data_inicio_projeto, 
+					dt_data_fim_projeto, 
+					ft_data_fim_projeto, 
+					nr_valor_total_projeto, 
+					ft_valor_total_projeto, 
+					nr_valor_captado_projeto, 
+					ft_valor_captado_projeto, 
+					nr_total_beneficiarios, 
+					ft_total_beneficiarios, 
+					cd_abrangencia_projeto, 
+					ft_abrangencia_projeto, 
+					cd_zona_atuacao_projeto, 
+					ft_zona_atuacao_projeto, 
+					tx_orgao_concedente, 
+					ft_orgao_concedente, 
+					tx_descricao_projeto, 
+					ft_descricao_projeto, 
+					tx_metodologia_monitoramento, 
+					ft_metodologia_monitoramento, 
+					tx_link_projeto, 
+					ft_link_projeto
+				) 
+			VALUES (
+				osc, 
+				identificadorexterno, 
+				null, 
+				localidade, 
+				nome, 
+				fonte, 
+				status, 
+				fonte, 
+				datainicio, 
+				fonte, 
+				datafim, 
+				fonte, 
+				valortotal, 
+				fonte, 
+				valorcaptado, 
+				fonte, 
+				totalbeneficiarios, 
+				fonte, 
+				abrangencia, 
+				fonte, 
+				zonaatuacao, 
+				fonte, 
+				orgaoconcedente, 
+				fonte, 
+				descricao, 
+				fonte, 
+				metodologiamonitoramento, 
+				fonte, 
+				link, 
+				fonte
+			);
+			
+		ELSE 
+			INSERT INTO 
+				osc.tb_projeto (
+					id_osc, 
+					tx_identificador_projeto_externo, 
+					cd_uf, 
+					cd_municipio, 
+					tx_nome_projeto, 
+					ft_nome_projeto, 
+					cd_status_projeto, 
+					ft_status_projeto, 
+					dt_data_inicio_projeto, 
+					ft_data_inicio_projeto, 
+					dt_data_fim_projeto, 
+					ft_data_fim_projeto, 
+					nr_valor_total_projeto, 
+					ft_valor_total_projeto, 
+					nr_valor_captado_projeto, 
+					ft_valor_captado_projeto, 
+					nr_total_beneficiarios, 
+					ft_total_beneficiarios, 
+					cd_abrangencia_projeto, 
+					ft_abrangencia_projeto, 
+					cd_zona_atuacao_projeto, 
+					ft_zona_atuacao_projeto, 
+					tx_orgao_concedente, 
+					ft_orgao_concedente, 
+					tx_descricao_projeto, 
+					ft_descricao_projeto, 
+					tx_metodologia_monitoramento, 
+					ft_metodologia_monitoramento, 
+					tx_link_projeto, 
+					ft_link_projeto
+				) 
+			VALUES (
+				osc, 
+				identificadorexterno, 
+				localidade, 
+				null, 
+				nome, 
+				fonte, 
+				status, 
+				fonte, 
+				datainicio, 
+				fonte, 
+				datafim, 
+				fonte, 
+				valortotal, 
+				fonte, 
+				valorcaptado, 
+				fonte, 
+				totalbeneficiarios, 
+				fonte, 
+				abrangencia, 
+				fonte, 
+				zonaatuacao, 
+				fonte, 
+				orgaoconcedente, 
+				fonte, 
+				descricao, 
+				fonte, 
+				metodologiamonitoramento, 
+				fonte, 
+				link, 
+				fonte
+			);
+
+		END IF;
 		
 		INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
 		VALUES ('osc.tb_projeto', osc, fonte::INTEGER, dataatualizacao, null, row_to_json(projeto_posterior));
@@ -209,27 +283,3 @@ BEGIN
 	RETURN NEXT;
 END; 
 $$ LANGUAGE 'plpgsql';
-
-
-
-SELECT * FROM portal.atualizar_projeto_estado(
-	'1221345'::INTEGER, 
-	'000007'::TEXT, 
-	'35'::INTEGER, 
-	'Parceria 000007'::TEXT, 
-	'3'::INTEGER, 
-	'01-01-2010'::DATE, 
-	'31-12-2011'::DATE, 
-	'100000.0'::DOUBLE PRECISION, 
-	'100000.0'::DOUBLE PRECISION, 
-	null::INTEGER, 
-	null::INTEGER, 
-	null::INTEGER, 
-	''::TEXT, 
-	''::TEXT, 
-	null::TEXT, 
-	null::TEXT, 
-	'252'::TEXT, 
-	'19-10-2017 04:38:33'::TIMESTAMP, 
-	false 
-);
