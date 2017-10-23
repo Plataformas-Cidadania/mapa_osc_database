@@ -15,8 +15,8 @@ CREATE MATERIALIZED VIEW portal.vw_osc_fonte_recursos_projeto AS
            FROM syst.dc_tipo_parceria
           WHERE dc_tipo_parceria.cd_tipo_parceria = tb_fonte_recursos_projeto.cd_tipo_parceria) AS tx_nome_tipo_parceria,
 	tb_fonte_recursos_projeto.ft_tipo_parceria,
-	tb_projeto.tx_orgao_concedente,
-	tb_projeto.ft_orgao_concedente
+	tb_fonte_recursos_projeto.tx_orgao_concedente,
+	tb_fonte_recursos_projeto.ft_orgao_concedente
    FROM osc.tb_osc
      JOIN osc.tb_projeto ON tb_osc.id_osc = tb_projeto.id_osc
      JOIN osc.tb_fonte_recursos_projeto ON tb_fonte_recursos_projeto.id_projeto = tb_projeto.id_projeto
