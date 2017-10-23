@@ -5,12 +5,11 @@ CREATE OR REPLACE FUNCTION portal.buscar_osc(param TEXT, limit_result INTEGER, o
 ) AS $$ 
 
 DECLARE 
+	param_tsquery TEXT;
 	query_limit TEXT; 
 	query_where TEXT;
 
 BEGIN 
-	param := LOWER(param);
-	
 	IF offset_result > 0 THEN 
 		query_limit := 'LIMIT ' || limit_result || ' OFFSET ' || offset_result || ';'; 
 	ELSIF limit_result > 0 THEN 
@@ -19,12 +18,16 @@ BEGIN
 		query_limit := ';'; 
 	END IF; 
 	
+	param := LOWER(param);
+	param_tsquery := param;
+	param := TRANSLATE(param, '_', ' ');	
+	
 	/* BUSCA POR SIMILARIDADE */
 	IF tipo_busca = 0 THEN 
 		query_where := 'vw_busca_osc.cd_identificador_osc::TEXT ILIKE ''%'' || LTRIM(''' || param::TEXT || ''', ''0'') || ''%'' 
 						OR 
 						(
-							document @@ to_tsquery(''portuguese_unaccent'', ''' || param::TEXT || ''') 
+							document @@ to_tsquery(''portuguese_unaccent'', ''' || param_tsquery::TEXT || ''') 
 							AND 
 							(
 								similarity(vw_busca_osc.tx_razao_social_osc::TEXT, ''' || param::TEXT || ''') > 0.05 
