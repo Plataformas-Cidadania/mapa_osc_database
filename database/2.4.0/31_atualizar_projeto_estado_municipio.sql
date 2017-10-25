@@ -21,40 +21,38 @@ BEGIN
 	
 	IF registro_anterior.id_projeto IS null THEN 
 		IF localidade > 99 THEN 
-			INSERT INTO 
-				osc.tb_projeto (
-					id_osc, 
-					tx_identificador_projeto_externo, 
-					cd_uf, 
-					cd_municipio, 
-					tx_nome_projeto, 
-					ft_nome_projeto, 
-					cd_status_projeto, 
-					ft_status_projeto, 
-					dt_data_inicio_projeto, 
-					ft_data_inicio_projeto, 
-					dt_data_fim_projeto, 
-					ft_data_fim_projeto, 
-					nr_valor_total_projeto, 
-					ft_valor_total_projeto, 
-					nr_valor_captado_projeto, 
-					ft_valor_captado_projeto, 
-					nr_total_beneficiarios, 
-					ft_total_beneficiarios, 
-					cd_abrangencia_projeto, 
-					ft_abrangencia_projeto, 
-					cd_zona_atuacao_projeto, 
-					ft_zona_atuacao_projeto, 
-					tx_orgao_concedente, 
-					ft_orgao_concedente, 
-					tx_descricao_projeto, 
-					ft_descricao_projeto, 
-					tx_metodologia_monitoramento, 
-					ft_metodologia_monitoramento, 
-					tx_link_projeto, 
-					ft_link_projeto
-				) 
-			VALUES (
+			INSERT INTO osc.tb_projeto (
+				id_osc, 
+				tx_identificador_projeto_externo, 
+				cd_uf, 
+				cd_municipio, 
+				tx_nome_projeto, 
+				ft_nome_projeto, 
+				cd_status_projeto, 
+				ft_status_projeto, 
+				dt_data_inicio_projeto, 
+				ft_data_inicio_projeto, 
+				dt_data_fim_projeto, 
+				ft_data_fim_projeto, 
+				nr_valor_total_projeto, 
+				ft_valor_total_projeto, 
+				nr_valor_captado_projeto, 
+				ft_valor_captado_projeto, 
+				nr_total_beneficiarios, 
+				ft_total_beneficiarios, 
+				cd_abrangencia_projeto, 
+				ft_abrangencia_projeto, 
+				cd_zona_atuacao_projeto, 
+				ft_zona_atuacao_projeto, 
+				tx_orgao_concedente, 
+				ft_orgao_concedente, 
+				tx_descricao_projeto, 
+				ft_descricao_projeto, 
+				tx_metodologia_monitoramento, 
+				ft_metodologia_monitoramento, 
+				tx_link_projeto, 
+				ft_link_projeto
+			) VALUES (
 				osc, 
 				identificadorexterno, 
 				null, 
@@ -88,40 +86,38 @@ BEGIN
 			) RETURNING * INTO registro_posterior;
 			
 		ELSE 
-			INSERT INTO 
-				osc.tb_projeto (
-					id_osc, 
-					tx_identificador_projeto_externo, 
-					cd_uf, 
-					cd_municipio, 
-					tx_nome_projeto, 
-					ft_nome_projeto, 
-					cd_status_projeto, 
-					ft_status_projeto, 
-					dt_data_inicio_projeto, 
-					ft_data_inicio_projeto, 
-					dt_data_fim_projeto, 
-					ft_data_fim_projeto, 
-					nr_valor_total_projeto, 
-					ft_valor_total_projeto, 
-					nr_valor_captado_projeto, 
-					ft_valor_captado_projeto, 
-					nr_total_beneficiarios, 
-					ft_total_beneficiarios, 
-					cd_abrangencia_projeto, 
-					ft_abrangencia_projeto, 
-					cd_zona_atuacao_projeto, 
-					ft_zona_atuacao_projeto, 
-					tx_orgao_concedente, 
-					ft_orgao_concedente, 
-					tx_descricao_projeto, 
-					ft_descricao_projeto, 
-					tx_metodologia_monitoramento, 
-					ft_metodologia_monitoramento, 
-					tx_link_projeto, 
-					ft_link_projeto
-				) 
-			VALUES (
+			INSERT INTO osc.tb_projeto (
+				id_osc, 
+				tx_identificador_projeto_externo, 
+				cd_uf, 
+				cd_municipio, 
+				tx_nome_projeto, 
+				ft_nome_projeto, 
+				cd_status_projeto, 
+				ft_status_projeto, 
+				dt_data_inicio_projeto, 
+				ft_data_inicio_projeto, 
+				dt_data_fim_projeto, 
+				ft_data_fim_projeto, 
+				nr_valor_total_projeto, 
+				ft_valor_total_projeto, 
+				nr_valor_captado_projeto, 
+				ft_valor_captado_projeto, 
+				nr_total_beneficiarios, 
+				ft_total_beneficiarios, 
+				cd_abrangencia_projeto, 
+				ft_abrangencia_projeto, 
+				cd_zona_atuacao_projeto, 
+				ft_zona_atuacao_projeto, 
+				tx_orgao_concedente, 
+				ft_orgao_concedente, 
+				tx_descricao_projeto, 
+				ft_descricao_projeto, 
+				tx_metodologia_monitoramento, 
+				ft_metodologia_monitoramento, 
+				tx_link_projeto, 
+				ft_link_projeto
+			) VALUES (
 				osc, 
 				identificadorexterno, 
 				localidade, 
@@ -244,10 +240,8 @@ BEGIN
 			flag_log := true;
 		END IF;
 		
-		UPDATE 
-			osc.tb_projeto 
-		SET 
-			id_osc = registro_posterior.id_osc, 
+		UPDATE osc.tb_projeto 
+		SET id_osc = registro_posterior.id_osc, 
 			tx_nome_projeto = registro_posterior.tx_nome_projeto, 
 			ft_nome_projeto = registro_posterior.ft_nome_projeto, 
 			cd_status_projeto = registro_posterior.cd_status_projeto, 
@@ -274,8 +268,7 @@ BEGIN
 			ft_metodologia_monitoramento = registro_posterior.ft_metodologia_monitoramento, 
 			tx_link_projeto = registro_posterior.tx_link_projeto, 
 			ft_link_projeto = registro_posterior.ft_link_projeto 
-		WHERE 
-			id_projeto = registro_posterior.id_projeto; 
+		WHERE id_projeto = registro_posterior.id_projeto; 
 		
 		IF flag_log THEN 		
 			INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
