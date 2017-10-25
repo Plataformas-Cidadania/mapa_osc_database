@@ -15,8 +15,6 @@ BEGIN
 	WHERE (tx_identificador_projeto_externo = identificadorexterno AND cd_uf = localidade AND cd_municipio is null) 
 	OR (tx_identificador_projeto_externo = identificadorexterno AND cd_uf is null AND cd_municipio = localidade);
 	
-	projeto_posterior := projeto_anterior;
-	
 	IF projeto_anterior.id_projeto IS null THEN 
 		IF localidade > 99 THEN 
 			INSERT INTO 
@@ -83,7 +81,7 @@ BEGIN
 				fonte, 
 				link, 
 				fonte
-			);
+			) RETURNING * INTO projeto_posterior;
 			
 		ELSE 
 			INSERT INTO 
@@ -150,7 +148,7 @@ BEGIN
 				fonte, 
 				link, 
 				fonte
-			);
+			) RETURNING * INTO projeto_posterior;
 
 		END IF;
 		
@@ -158,6 +156,8 @@ BEGIN
 		VALUES ('osc.tb_projeto', osc, fonte::INTEGER, dataatualizacao, null, row_to_json(projeto_posterior));
 		
 	ELSE 
+		projeto_posterior := projeto_anterior;
+		
 		gravar_log := false;
 		projeto_posterior.id_osc = osc;
 		
