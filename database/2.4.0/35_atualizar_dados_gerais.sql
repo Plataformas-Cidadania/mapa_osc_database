@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS portal.atualizar_dados_gerais(registro JSONB, fonte TEXT, dataatualizacao TIMESTAMP, nullvalido BOOLEAN, errovalido BOOLEAN);
+--DROP FUNCTION IF EXISTS portal.atualizar_dados_gerais_osc(json JSONB, fonte TEXT, dataatualizacao TIMESTAMP, nullvalido BOOLEAN, errovalido BOOLEAN);
 
-CREATE OR REPLACE FUNCTION portal.atualizar_dados_gerais(registro JSONB, fonte TEXT, dataatualizacao TIMESTAMP, nullvalido BOOLEAN, errovalido BOOLEAN) RETURNS TABLE(
+CREATE OR REPLACE FUNCTION portal.atualizar_dados_gerais_osc(json JSONB, fonte TEXT, dataatualizacao TIMESTAMP, nullvalido BOOLEAN, errovalido BOOLEAN) RETURNS TABLE(
 	mensagem TEXT, 
 	flag BOOLEAN
 )AS $$
@@ -30,7 +30,7 @@ BEGIN
 	);
 	
 	SELECT INTO objeto * 
-	FROM json_populate_record(null::osc.tb_dados_gerais, registro::JSON);
+	FROM json_populate_record(null::osc.tb_dados_gerais, json::JSON);
 	
 	SELECT INTO registro_anterior * 
 	FROM osc.tb_dados_gerais 
@@ -412,24 +412,30 @@ $$ LANGUAGE 'plpgsql';
 
 
 
-SELECT * FROM portal.atualizar_dados_gerais('{
-	"id_osc": "789809", 
-	"cd_natureza_juridica_osc": 3999, 
-	"cd_subclasse_atividade_economica_osc": 8424800, 
-	"tx_razao_social_osc": "Organização da Sociedade Civil de Teste do Mapa das OSCs", 
-	"tx_nome_fantasia_osc": "Orgteste - Organização Tipiniquim de Teste", 
-	"im_logo": null, 
-	"tx_missao_osc": "Missão aquela para qual o Mapa das OSCs for projetado para desempenhar.", 
-	"tx_visao_osc": "Turva", 
-	"dt_fundacao_osc": "01-01-2017", 
-	"dt_ano_cadastro_cnpj": "01-01-1960", 
-	"tx_sigla_osc": "ORGIPEA", 
-	"tx_resumo_osc": "OSC utilizadao para testes do Mapa das OSCs.", 
-	"cd_situacao_imovel_osc": 2, 
-	"tx_link_estatuto_osc": "https://mapaosc.ipea.gov.br/editar-osc.html#/789809", 
-	"tx_historico": "A maior preocupação dos jovens é a qualidade da educação. Os adultos, no entanto, colocam a saúde em primeiro lugar. Essa é uma das conclusões do estudo Juventude que conta, apresentado no auditório do IPEA.", 
-	"tx_finalidades_estatutarias": "Não há finalidades definidas em estatuto definido.", 
-	"tx_link_relatorio_auditoria": null, 
-	"tx_link_demonstracao_contabil": null, 
-	"tx_nome_responsavel_legal": "Felix Lopez"
-}'::JSONB, '828'::TEXT, '2017-10-25'::TIMESTAMP, false, true);
+SELECT * FROM portal.atualizar_dados_gerais(
+	'{
+		"id_osc": 987654, 
+		"cd_natureza_juridica_osc": 3999, 
+		"cd_subclasse_atividade_economica_osc": 8424800, 
+		"tx_razao_social_osc": "Organização da Sociedade Civil de Teste do Mapa das OSCs", 
+		"tx_nome_fantasia_osc": "Orgteste - Organização Tipiniquim de Teste", 
+		"im_logo": null, 
+		"tx_missao_osc": "Missão aquela para qual o Mapa das OSCs for projetado para desempenhar.", 
+		"tx_visao_osc": "Turva", 
+		"dt_fundacao_osc": "01-01-2017", 
+		"dt_ano_cadastro_cnpj": "01-01-1960", 
+		"tx_sigla_osc": "ORGIPEA", 
+		"tx_resumo_osc": "OSC utilizadao para testes do Mapa das OSCs.", 
+		"cd_situacao_imovel_osc": 2, 
+		"tx_link_estatuto_osc": "https://mapaosc.ipea.gov.br/editar-osc.html#/789809", 
+		"tx_historico": "A maior preocupação dos jovens é a qualidade da educação. Os adultos, no entanto, colocam a saúde em primeiro lugar. Essa é uma das conclusões do estudo Juventude que conta, apresentado no auditório do IPEA.", 
+		"tx_finalidades_estatutarias": "Não há finalidades definidas em estatuto definido.", 
+		"tx_link_relatorio_auditoria": null, 
+		"tx_link_demonstracao_contabil": null, 
+		"tx_nome_responsavel_legal": "Felix Lopez"
+	}'::JSONB, 
+	'828'::TEXT, 
+	'2017-10-25'::TIMESTAMP, 
+	false, 
+	true
+);

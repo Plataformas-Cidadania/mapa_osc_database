@@ -1,6 +1,6 @@
---DROP FUNCTION IF EXISTS portal.atualizar_fonte_recursos_projeto(registro_json JSONB, osc INTEGER, fonte TEXT, dataatualizacao TIMESTAMP, nullvalido BOOLEAN, deletevalido BOOLEAN, errovalido BOOLEAN);
+--DROP FUNCTION IF EXISTS portal.atualizar_fonte_recursos_projeto(json JSONB, osc INTEGER, fonte TEXT, dataatualizacao TIMESTAMP, nullvalido BOOLEAN, deletevalido BOOLEAN, errovalido BOOLEAN, tipobusca INTEGER);
 
-CREATE OR REPLACE FUNCTION portal.atualizar_fonte_recursos_projeto(registro_json JSONB, osc INTEGER, fonte TEXT, dataatualizacao TIMESTAMP, nullvalido BOOLEAN, deletevalido BOOLEAN, errovalido BOOLEAN) RETURNS TABLE(
+CREATE OR REPLACE FUNCTION portal.atualizar_fonte_recursos_projeto(json JSONB, osc INTEGER, fonte TEXT, dataatualizacao TIMESTAMP, nullvalido BOOLEAN, deletevalido BOOLEAN, errovalido BOOLEAN, tipobusca INTEGER) RETURNS TABLE(
 	mensagem TEXT, 
 	flag BOOLEAN
 )AS $$
@@ -15,6 +15,10 @@ DECLARE
 	flag_log BOOLEAN;
 	
 BEGIN 
+	IF tipobusca IS null THEN 
+		tipobusca := 0;
+	END IF;
+	
 	SELECT INTO fonte_dados_nao_oficiais array_agg(tx_nome_tipo_usuario) 
 	FROM syst.dc_tipo_usuario;
 	
@@ -32,24 +36,31 @@ BEGIN
 	
 	registro_nao_delete := '{}';
 	
-	IF json_typeof(registro_json::JSON) = 'object' THEN 
-		registro_json := ('[' || registro_json || ']');
+	IF json_typeof(json::JSON) = 'object' THEN 
+		json := ('[' || json || ']');
 	END IF;
 	
-	FOR objeto IN (SELECT *FROM json_populate_recordset(null::osc.tb_fonte_recursos_projeto, registro_json::JSON)) 
+	FOR objeto IN (SELECT *FROM json_populate_recordset(null::osc.tb_fonte_recursos_projeto, json::JSON)) 
 	LOOP 
-		SELECT INTO registro_anterior * 
-		FROM osc.tb_fonte_recursos_projeto 
-		WHERE id_fonte_recursos_projeto = objeto.id_fonte_recursos_projeto 
-		OR (id_projeto = objeto.id_projeto 
+		registro_anterior := null;
+		
+		IF tipobusca = 0 THEN 
+			SELECT INTO registro_anterior * 
+			FROM osc.tb_fonte_recursos_projeto 
+			WHERE id_fonte_recursos_projeto = objeto.id_fonte_recursos_projeto;
+			
+		ELSIF tipobusca = 1 THEN 
+			SELECT INTO registro_anterior * 
+			FROM osc.tb_fonte_recursos_projeto 
+			WHERE id_projeto = objeto.id_projeto 
 			AND (
 				cd_fonte_recursos_projeto = objeto.cd_fonte_recursos_projeto 
 				OR cd_origem_fonte_recursos_projeto = objeto.cd_origem_fonte_recursos_projeto
 			) 
-			AND cd_tipo_parceria = objeto.cd_tipo_parceria
-		);
+			AND cd_tipo_parceria = objeto.cd_tipo_parceria;
+		END IF;
 		
-		IF COUNT(registro_anterior) = 0 THEN 
+		IF registro_anterior.id_fonte_recursos_projeto IS null THEN 
 			INSERT INTO osc.tb_fonte_recursos_projeto (
 				id_projeto, 
 				cd_fonte_recursos_projeto, 
@@ -73,7 +84,7 @@ BEGIN
 			registro_nao_delete := array_append(registro_nao_delete, registro_posterior.id_fonte_recursos_projeto);
 			
 			INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
-			VALUES ('osc.tb_fonte_recursos_projeto', osc, fonte, dataatualizacao, null, row_to_json(registro_posterior));
+			VALUES ('osc.tb_fonte_recursos_projeto', osc, fonte::INTEGER, dataatualizacao, null, row_to_json(registro_posterior));
 			
 		ELSE 
 			registro_posterior := registro_anterior;
@@ -136,7 +147,7 @@ BEGIN
 			
 			IF flag_log THEN 		
 				INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
-				VALUES ('osc.tb_fonte_recursos_projeto', osc, fonte, dataatualizacao, row_to_json(registro_anterior), row_to_json(registro_posterior));
+				VALUES ('osc.tb_fonte_recursos_projeto', osc, fonte::INTEGER, dataatualizacao, row_to_json(registro_anterior), row_to_json(registro_posterior));
 			END IF;
 		
 		END IF;
@@ -210,5 +221,6 @@ SELECT * FROM portal.atualizar_fonte_recursos_projeto(
 	'20-10-2017'::TIMESTAMP, 
 	true::BOOLEAN, 
 	true::BOOLEAN, 
-	true::BOOLEAN
+	true::BOOLEAN, 
+	'1'::INTEGER
 );

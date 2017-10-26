@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS portal.atualizar_localizacao_osc(registro JSONB, fonte TEXT, dataatualizacao TIMESTAMP, nullvalido BOOLEAN, errovalido BOOLEAN);
+--DROP FUNCTION IF EXISTS portal.atualizar_localizacao_osc(json JSONB, fonte TEXT, dataatualizacao TIMESTAMP, nullvalido BOOLEAN, errovalido BOOLEAN);
 
-CREATE OR REPLACE FUNCTION portal.atualizar_localizacao_osc(registro JSONB, fonte TEXT, dataatualizacao TIMESTAMP, nullvalido BOOLEAN, errovalido BOOLEAN) RETURNS TABLE(
+CREATE OR REPLACE FUNCTION portal.atualizar_localizacao_osc(json JSONB, fonte TEXT, dataatualizacao TIMESTAMP, nullvalido BOOLEAN, errovalido BOOLEAN) RETURNS TABLE(
 	mensagem TEXT, 
 	flag BOOLEAN
 )AS $$
@@ -30,7 +30,7 @@ BEGIN
 	);
 	
 	SELECT INTO objeto * 
-	FROM json_populate_record(null::osc.tb_localizacao, registro::JSON);
+	FROM json_populate_record(null::osc.tb_localizacao, json::JSON);
 	
 	SELECT INTO registro_anterior * 
 	FROM osc.tb_localizacao 
@@ -208,12 +208,18 @@ $$ LANGUAGE 'plpgsql';
 
 
 
-SELECT * FROM portal.atualizar_localizacao_osc('{
-	"id_osc": 789809, 
-	"tx_endereco": "RUA CAPITAO SILVIO GONCALVES DE FARIAS", 
-	"nr_localizacao": "981", 
-	"tx_endereco_complemento": "Lote 2", 
-	"tx_bairro": "BOSQUE", 
-	"cd_municipio": 1100155, 
-	"nr_cep": 76920000
-}'::JSONB, '828'::TEXT, '2017-10-25'::TIMESTAMP, false, true);
+SELECT * FROM portal.atualizar_localizacao_osc(
+	'{
+		"id_osc": 789809, 
+		"tx_endereco": "RUA CAPITAO SILVIO GONCALVES DE FARIAS", 
+		"nr_localizacao": "981", 
+		"tx_endereco_complemento": "Lote 2", 
+		"tx_bairro": "BOSQUE", 
+		"cd_municipio": 1100155, 
+		"nr_cep": 76920000
+	}'::JSONB, 
+	'828'::TEXT, 
+	'2017-10-25'::TIMESTAMP, 
+	false, 
+	true
+);
