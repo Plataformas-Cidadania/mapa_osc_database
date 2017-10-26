@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS portal.atualizar_fonte_recursos_projeto(osc INTEGER, registro JSONB, fonte INTEGER, dataatualizacao TIMESTAMP, nullvalido BOOLEAN, deletevalido BOOLEAN, errovalido BOOLEAN);
+--DROP FUNCTION IF EXISTS portal.atualizar_fonte_recursos_projeto(registro_json JSONB, osc INTEGER, fonte TEXT, dataatualizacao TIMESTAMP, nullvalido BOOLEAN, deletevalido BOOLEAN, errovalido BOOLEAN);
 
-CREATE OR REPLACE FUNCTION portal.atualizar_fonte_recursos_projeto(osc INTEGER, registro JSONB, fonte INTEGER, dataatualizacao TIMESTAMP, nullvalido BOOLEAN, deletevalido BOOLEAN, errovalido BOOLEAN) RETURNS TABLE(
+CREATE OR REPLACE FUNCTION portal.atualizar_fonte_recursos_projeto(registro_json JSONB, osc INTEGER, fonte TEXT, dataatualizacao TIMESTAMP, nullvalido BOOLEAN, deletevalido BOOLEAN, errovalido BOOLEAN) RETURNS TABLE(
 	mensagem TEXT, 
 	flag BOOLEAN
 )AS $$
@@ -32,7 +32,11 @@ BEGIN
 	
 	registro_nao_delete := '{}';
 	
-	FOR objeto IN (SELECT *FROM json_populate_recordset(null::osc.tb_fonte_recursos_projeto, registro::JSON))
+	IF json_typeof(registro_json::JSON) = 'object' THEN 
+		registro_json := ('[' || registro_json || ']');
+	END IF;
+	
+	FOR objeto IN (SELECT *FROM json_populate_recordset(null::osc.tb_fonte_recursos_projeto, registro_json::JSON)) 
 	LOOP 
 		SELECT INTO registro_anterior * 
 		FROM osc.tb_fonte_recursos_projeto 
@@ -47,14 +51,14 @@ BEGIN
 		
 		IF COUNT(registro_anterior) = 0 THEN 
 			INSERT INTO osc.tb_fonte_recursos_projeto (
-					id_projeto, 
-					cd_fonte_recursos_projeto, 
-					cd_origem_fonte_recursos_projeto, 
-					ft_fonte_recursos_projeto, 
-					cd_tipo_parceria, 
-					ft_tipo_parceria, 
-					tx_orgao_concedente, 
-					ft_orgao_concedente
+				id_projeto, 
+				cd_fonte_recursos_projeto, 
+				cd_origem_fonte_recursos_projeto, 
+				ft_fonte_recursos_projeto, 
+				cd_tipo_parceria, 
+				ft_tipo_parceria, 
+				tx_orgao_concedente, 
+				ft_orgao_concedente
 			) VALUES (
 				objeto.id_projeto, 
 				objeto.cd_fonte_recursos_projeto, 
@@ -190,7 +194,6 @@ $$ LANGUAGE 'plpgsql';
 
 
 SELECT * FROM portal.atualizar_fonte_recursos_projeto(
-	'987654'::INTEGER, 
 	'[
 		{
 			"id_projeto": 1, "id_fonte_recursos_projeto": 780, "id_projeto": 24213, "cd_fonte_recursos_projeto": 1, "cd_origem_fonte_recursos_projeto": null, "cd_tipo_parceria": 2, "tx_orgao_concedente": "Secretária Estadual de Educação"
@@ -202,7 +205,8 @@ SELECT * FROM portal.atualizar_fonte_recursos_projeto(
 			"id_projeto": 1, "id_fonte_recursos_projeto": 782, "id_projeto": 24213, "cd_fonte_recursos_projeto": 1, "cd_origem_fonte_recursos_projeto": null, "cd_tipo_parceria": 4, "tx_orgao_concedente": "Secretária Estadual de Educação"
 		}
 	]'::JSONB, 
-	'252'::INTEGER, 
+	'987654'::INTEGER, 
+	'252'::TEXT, 
 	'20-10-2017'::TIMESTAMP, 
 	true::BOOLEAN, 
 	true::BOOLEAN, 
