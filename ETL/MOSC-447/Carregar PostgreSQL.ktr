@@ -1174,6 +1174,231 @@
     </GUI>
   </step>
   <step>
+    <name>Atualizar dados gerais OSC</name>
+    <type>ExecSQL</type>
+    <description />
+    <distribute>N</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>localhost</connection>
+    <execute_each_row>Y</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>Y</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>SELECT * FROM portal.atualizar_dados_gerais_osc(
+	'?'::TEXT, 
+	'?'::INTEGER, 
+	'?'::TIMESTAMP, 
+	'{
+		"id_osc": ?, 
+		"cd_natureza_juridica_osc": null, 
+		"cd_subclasse_atividade_economica_osc": null, 
+		"tx_razao_social_osc": "?", 
+		"tx_nome_fantasia_osc": "?", 
+		"im_logo": null, 
+		"tx_missao_osc": null, 
+		"tx_visao_osc": null, 
+		"dt_fundacao_osc": null, 
+		"dt_ano_cadastro_cnpj": null, 
+		"tx_sigla_osc": null, 
+		"tx_resumo_osc": null, 
+		"cd_situacao_imovel_osc": null, 
+		"tx_link_estatuto_osc": null, 
+		"tx_historico": null, 
+		"tx_finalidades_estatutarias": null, 
+		"tx_link_relatorio_auditoria": null, 
+		"tx_link_demonstracao_contabil": null, 
+		"tx_nome_responsavel_legal": null
+	}'::JSONB, 
+	false, 
+	true
+);
+</sql>
+    <set_params>N</set_params>
+    <insert_field />
+    <update_field />
+    <delete_field />
+    <read_field />
+    <arguments>
+      <argument>
+        <name>usuario</name>
+      </argument>
+      <argument>
+        <name>id_osc</name>
+      </argument>
+      <argument>
+        <name>data_carregamento</name>
+      </argument>
+      <argument>
+        <name>id_osc</name>
+      </argument>
+      <argument>
+        <name>razao_social_proponente</name>
+      </argument>
+      <argument>
+        <name>nome_fantasia_proponente</name>
+      </argument>
+    </arguments>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>767</xloc>
+      <yloc>671</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Atualizar fonte recursos</name>
+    <type>ExecSQL</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>localhost</connection>
+    <execute_each_row>Y</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>Y</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>SELECT * FROM portal.atualizar_fonte_recursos_projeto(
+	'?'::TEXT, 
+	'?'::INTEGER, 
+	'?'::TIMESTAMP, 
+	'{"id_fonte_recursos_projeto": null, "id_projeto": "?", "cd_fonte_recursos_projeto": "?", "cd_origem_fonte_recursos_projeto": null, "cd_tipo_parceria": "?", "tx_tipo_parceria_outro": "?", "tx_orgao_concedente": "?"}'::JSONB, 
+	false::BOOLEAN, 
+	true::BOOLEAN, 
+	false::BOOLEAN, 
+	2
+);
+</sql>
+    <set_params>N</set_params>
+    <insert_field />
+    <update_field />
+    <delete_field />
+    <read_field />
+    <arguments>
+      <argument>
+        <name>usuario</name>
+      </argument>
+      <argument>
+        <name>id_osc</name>
+      </argument>
+      <argument>
+        <name>data_carregamento</name>
+      </argument>
+      <argument>
+        <name>id_projeto</name>
+      </argument>
+      <argument>
+        <name>fonte_recursos</name>
+      </argument>
+      <argument>
+        <name>tipo_parceria_ajustado</name>
+      </argument>
+      <argument>
+        <name>tipo_parceria_outro</name>
+      </argument>
+      <argument>
+        <name>orgao_concedente</name>
+      </argument>
+    </arguments>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>265</xloc>
+      <yloc>922</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Atualizar localização OSC</name>
+    <type>ExecSQL</type>
+    <description />
+    <distribute>N</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>localhost</connection>
+    <execute_each_row>Y</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>Y</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>SELECT * FROM portal.atualizar_localizacao_osc(
+	'?'::TEXT, 
+	'?'::INTEGER, 
+	'?'::TIMESTAMP, 
+	'{
+		"id_osc": "?", 
+		"tx_endereco": "?", 
+		"nr_localizacao": null, 
+		"tx_endereco_complemento": null, 
+		"tx_bairro": null, 
+		"cd_municipio": "?", 
+		"nr_cep": null
+	}'::JSONB, 
+	false, 
+	true
+);
+</sql>
+    <set_params>N</set_params>
+    <insert_field />
+    <update_field />
+    <delete_field />
+    <read_field />
+    <arguments>
+      <argument>
+        <name>usuario</name>
+      </argument>
+      <argument>
+        <name>id_osc</name>
+      </argument>
+      <argument>
+        <name>data_carregamento</name>
+      </argument>
+      <argument>
+        <name>id_osc</name>
+      </argument>
+      <argument>
+        <name>endereco_proponente</name>
+      </argument>
+      <argument>
+        <name>edmu_cd_municipio</name>
+      </argument>
+    </arguments>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1426</xloc>
+      <yloc>671</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>Concat Fields</name>
     <type>ConcatFields</type>
     <description />
@@ -2563,7 +2788,7 @@ VALUES ('?'::INTEGER, '?'::TEXT, '?'::SMALLINT, '?'::TEXT, '?'::TIMESTAMP);</sql
       <method>none</method>
       <schema_name />
     </partitioning>
-    <join_type>INNER</join_type>
+    <join_type>LEFT OUTER</join_type>
     <step1>Dummy 2</step1>
     <step2>Select edmu_cd_municipio </step2>
     <keys_1>
@@ -4211,238 +4436,13 @@ AND cd_uf = ?::INTEGER;</sql>
       <draw>Y</draw>
     </GUI>
   </step>
-  <step>
-    <name>Atualizar fonte recursos</name>
-    <type>ExecSQL</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>localhost</connection>
-    <execute_each_row>Y</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>Y</replace_variables>
-    <quoteString>N</quoteString>
-    <sql>SELECT * FROM portal.atualizar_fonte_recursos_projeto(
-	'?'::TEXT, 
-	'?'::INTEGER, 
-	'?'::TIMESTAMP, 
-	'{"id_fonte_recursos_projeto": null, "id_projeto": "?", "cd_fonte_recursos_projeto": "?", "cd_origem_fonte_recursos_projeto": null, "cd_tipo_parceria": "?", "tx_tipo_parceria_outro": "?", "tx_orgao_concedente": "?"}'::JSONB, 
-	false::BOOLEAN, 
-	true::BOOLEAN, 
-	false::BOOLEAN, 
-	2
-);
-</sql>
-    <set_params>N</set_params>
-    <insert_field />
-    <update_field />
-    <delete_field />
-    <read_field />
-    <arguments>
-      <argument>
-        <name>usuario</name>
-      </argument>
-      <argument>
-        <name>id_osc</name>
-      </argument>
-      <argument>
-        <name>data_carregamento</name>
-      </argument>
-      <argument>
-        <name>id_projeto</name>
-      </argument>
-      <argument>
-        <name>fonte_recursos</name>
-      </argument>
-      <argument>
-        <name>tipo_parceria_ajustado</name>
-      </argument>
-      <argument>
-        <name>tipo_parceria_outro</name>
-      </argument>
-      <argument>
-        <name>orgao_concedente</name>
-      </argument>
-    </arguments>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>265</xloc>
-      <yloc>922</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Atualizar dados gerais OSC</name>
-    <type>ExecSQL</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>localhost</connection>
-    <execute_each_row>Y</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>Y</replace_variables>
-    <quoteString>N</quoteString>
-    <sql>SELECT * FROM portal.atualizar_dados_gerais_osc(
-	'?'::TEXT, 
-	'?'::INTEGER, 
-	'?'::TIMESTAMP, 
-	'{
-		"id_osc": ?, 
-		"cd_natureza_juridica_osc": null, 
-		"cd_subclasse_atividade_economica_osc": null, 
-		"tx_razao_social_osc": "?", 
-		"tx_nome_fantasia_osc": "?", 
-		"im_logo": null, 
-		"tx_missao_osc": null, 
-		"tx_visao_osc": null, 
-		"dt_fundacao_osc": null, 
-		"dt_ano_cadastro_cnpj": null, 
-		"tx_sigla_osc": null, 
-		"tx_resumo_osc": null, 
-		"cd_situacao_imovel_osc": null, 
-		"tx_link_estatuto_osc": null, 
-		"tx_historico": null, 
-		"tx_finalidades_estatutarias": null, 
-		"tx_link_relatorio_auditoria": null, 
-		"tx_link_demonstracao_contabil": null, 
-		"tx_nome_responsavel_legal": null
-	}'::JSONB, 
-	false, 
-	true
-);
-</sql>
-    <set_params>N</set_params>
-    <insert_field />
-    <update_field />
-    <delete_field />
-    <read_field />
-    <arguments>
-      <argument>
-        <name>usuario</name>
-      </argument>
-      <argument>
-        <name>id_osc</name>
-      </argument>
-      <argument>
-        <name>data_carregamento</name>
-      </argument>
-      <argument>
-        <name>id_osc</name>
-      </argument>
-      <argument>
-        <name>razao_social_proponente</name>
-      </argument>
-      <argument>
-        <name>nome_fantasia_proponente</name>
-      </argument>
-    </arguments>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>767</xloc>
-      <yloc>671</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Atualizar localização OSC</name>
-    <type>ExecSQL</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>localhost</connection>
-    <execute_each_row>Y</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>Y</replace_variables>
-    <quoteString>N</quoteString>
-    <sql>SELECT * FROM portal.atualizar_localizacao_osc(
-	'?'::TEXT, 
-	'?'::INTEGER, 
-	'?'::TIMESTAMP, 
-	'{
-		"id_osc": "?", 
-		"tx_endereco": "?", 
-		"nr_localizacao": null, 
-		"tx_endereco_complemento": null, 
-		"tx_bairro": null, 
-		"cd_municipio": "?", 
-		"nr_cep": null
-	}'::JSONB, 
-	false, 
-	true
-);
-</sql>
-    <set_params>N</set_params>
-    <insert_field />
-    <update_field />
-    <delete_field />
-    <read_field />
-    <arguments>
-      <argument>
-        <name>usuario</name>
-      </argument>
-      <argument>
-        <name>id_osc</name>
-      </argument>
-      <argument>
-        <name>data_carregamento</name>
-      </argument>
-      <argument>
-        <name>id_osc</name>
-      </argument>
-      <argument>
-        <name>endereco_proponente</name>
-      </argument>
-      <argument>
-        <name>edmu_cd_municipio</name>
-      </argument>
-    </arguments>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1426</xloc>
-      <yloc>671</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
   <step_error_handling>
     <error>
-      <source_step>Insert Projeto</source_step>
-      <target_step>Add constants erro 1</target_step>
+      <source_step>Atualizar dados gerais OSC</source_step>
+      <target_step>Add constants erro 3</target_step>
       <is_enabled>Y</is_enabled>
       <nr_valuename />
-      <descriptions_valuename>tx_mensagem_carga</descriptions_valuename>
+      <descriptions_valuename />
       <fields_valuename />
       <codes_valuename />
       <max_errors />
@@ -4462,8 +4462,8 @@ AND cd_uf = ?::INTEGER;</sql>
       <min_pct_rows />
     </error>
     <error>
-      <source_step>Atualizar dados gerais OSC</source_step>
-      <target_step>Add constants erro 3</target_step>
+      <source_step>Atualizar localização OSC</source_step>
+      <target_step>Add constants erro 4</target_step>
       <is_enabled>Y</is_enabled>
       <nr_valuename />
       <descriptions_valuename />
@@ -4474,11 +4474,11 @@ AND cd_uf = ?::INTEGER;</sql>
       <min_pct_rows />
     </error>
     <error>
-      <source_step>Atualizar localização OSC</source_step>
-      <target_step>Add constants erro 4</target_step>
+      <source_step>Insert Projeto</source_step>
+      <target_step>Add constants erro 1</target_step>
       <is_enabled>Y</is_enabled>
       <nr_valuename />
-      <descriptions_valuename />
+      <descriptions_valuename>tx_mensagem_carga</descriptions_valuename>
       <fields_valuename />
       <codes_valuename />
       <max_errors />

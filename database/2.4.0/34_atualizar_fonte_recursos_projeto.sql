@@ -28,9 +28,13 @@ BEGIN
 	);
 	
 	IF tipo_usuario IS null THEN 
+		IF errovalido THEN 
+			RAISE EXCEPTION 'Fonte de dados inválida.';
+		END IF;
+		
 		flag := false;
 		mensagem := 'Fonte de dados inválida.';
-		
+	
 	ELSE 
 		IF tipobusca IS null THEN 
 			tipobusca := 1;
@@ -186,7 +190,7 @@ BEGIN
 EXCEPTION 
 	WHEN not_null_violation THEN 
 		IF errovalido THEN 
-			RAISE NOTICE '(%) %', SQLSTATE, SQLERRM;
+			RAISE EXCEPTION '(%) %', SQLSTATE, SQLERRM;
 		END IF;
 		
 		flag := false;
@@ -195,7 +199,7 @@ EXCEPTION
 		
 	WHEN unique_violation THEN 
 		IF errovalido THEN 
-			RAISE NOTICE '(%) %', SQLSTATE, SQLERRM;
+			RAISE EXCEPTION '(%) %', SQLSTATE, SQLERRM;
 		END IF;
 		
 		flag := false;
@@ -213,7 +217,7 @@ EXCEPTION
 		
 	WHEN others THEN 
 		IF errovalido THEN 
-			RAISE NOTICE '(%) %', SQLSTATE, SQLERRM;
+			RAISE EXCEPTION '(%) %', SQLSTATE, SQLERRM;
 		END IF;
 		
 		flag := false;
