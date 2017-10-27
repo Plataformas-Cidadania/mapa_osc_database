@@ -575,11 +575,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Select values 7</from>
-      <to>Insert Fonte Recursos</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Select id_projeto</from>
       <to>Merge Join 2</to>
       <enabled>Y</enabled>
@@ -607,11 +602,6 @@
     <hop>
       <from>Filter tipo</from>
       <to>Select values 4</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Insert Dados Gerais</from>
-      <to>Filter município</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -685,11 +675,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Merge Join</from>
-      <to>Insert Localização</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Dummy 2</from>
       <to>Execute SQL script</to>
       <enabled>Y</enabled>
@@ -732,21 +717,6 @@
     <hop>
       <from>Mapear tipo</from>
       <to>Concat Fields</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Insert Dados Gerais</from>
-      <to>Add constants erro 3</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Insert Localização</from>
-      <to>Add constants erro 4</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Insert Fonte Recursos</from>
-      <to>Add constants erro 2</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -830,14 +800,39 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Select values 4</from>
-      <to>Insert Dados Gerais</to>
+      <from>Select values 7</from>
+      <to>Atualizar fonte recursos</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Select values 7</from>
-      <to>Script</to>
-      <enabled>N</enabled>
+      <from>Atualizar fonte recursos</from>
+      <to>Add constants erro 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Select values 4</from>
+      <to>Atualizar dados gerais OSC</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Atualizar dados gerais OSC</from>
+      <to>Filter município</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Atualizar dados gerais OSC</from>
+      <to>Add constants erro 3</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Merge Join</from>
+      <to>Atualizar localização OSC</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Atualizar localização OSC</from>
+      <to>Add constants erro 4</to>
+      <enabled>Y</enabled>
     </hop>
   </order>
   <step>
@@ -1073,8 +1068,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>436</xloc>
-      <yloc>918</yloc>
+      <xloc>265</xloc>
+      <yloc>1045</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1173,7 +1168,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1385</xloc>
+      <xloc>1425</xloc>
       <yloc>798</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1419,7 +1414,7 @@ var situacao_parceria_ajustado = setSituacaoParceria(data_inicio, data_conclusao
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1042</xloc>
+      <xloc>1082</xloc>
       <yloc>671</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1475,7 +1470,7 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1042</xloc>
+      <xloc>1082</xloc>
       <yloc>803</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1509,7 +1504,7 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>900</xloc>
+      <xloc>940</xloc>
       <yloc>671</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1552,7 +1547,7 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1042</xloc>
+      <xloc>1082</xloc>
       <yloc>909</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1678,223 +1673,6 @@ OR (
     </GUI>
   </step>
   <step>
-    <name>Insert Dados Gerais</name>
-    <type>InsertUpdate</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>localhost</connection>
-    <commit>100</commit>
-    <update_bypassed>N</update_bypassed>
-    <lookup>
-      <schema>osc</schema>
-      <table>tb_dados_gerais</table>
-      <key>
-        <name>id_osc</name>
-        <field>id_osc</field>
-        <condition>=</condition>
-        <name2 />
-      </key>
-      <value>
-        <name>id_osc</name>
-        <rename>id_osc</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>tx_razao_social_osc</name>
-        <rename>razao_social_proponente</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>ft_razao_social_osc</name>
-        <rename>usuario</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>tx_nome_fantasia_osc</name>
-        <rename>nome_fantasia_proponente</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>ft_nome_fantasia_osc</name>
-        <rename>usuario</rename>
-        <update>N</update>
-      </value>
-    </lookup>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>764</xloc>
-      <yloc>671</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Insert Fonte Recursos</name>
-    <type>InsertUpdate</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>localhost</connection>
-    <commit>100</commit>
-    <update_bypassed>N</update_bypassed>
-    <lookup>
-      <schema>osc</schema>
-      <table>tb_fonte_recursos_projeto</table>
-      <key>
-        <name>id_projeto</name>
-        <field>id_projeto</field>
-        <condition>=</condition>
-        <name2 />
-      </key>
-      <key>
-        <name>fonte_recursos</name>
-        <field>cd_fonte_recursos_projeto</field>
-        <condition>=</condition>
-        <name2 />
-      </key>
-      <value>
-        <name>id_projeto</name>
-        <rename>id_projeto</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>cd_fonte_recursos_projeto</name>
-        <rename>fonte_recursos</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>ft_fonte_recursos_projeto</name>
-        <rename>usuario</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>cd_tipo_parceria</name>
-        <rename>tipo_parceria_ajustado</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>tx_tipo_parceria_outro</name>
-        <rename>tipo_parceria_outro</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>ft_tipo_parceria</name>
-        <rename>usuario</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>tx_orgao_concedente</name>
-        <rename>orgao_concedente</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>ft_orgao_concedente</name>
-        <rename>usuario</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>bo_oficial</name>
-        <rename>bo_oficial</rename>
-        <update>Y</update>
-      </value>
-    </lookup>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>433</xloc>
-      <yloc>790</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Insert Localização</name>
-    <type>InsertUpdate</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>localhost</connection>
-    <commit>100</commit>
-    <update_bypassed>N</update_bypassed>
-    <lookup>
-      <schema>osc</schema>
-      <table>tb_localizacao</table>
-      <key>
-        <name>id_osc</name>
-        <field>id_osc</field>
-        <condition>=</condition>
-        <name2 />
-      </key>
-      <value>
-        <name>id_osc</name>
-        <rename>id_osc</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>tx_endereco</name>
-        <rename>endereco_proponente</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>ft_endereco</name>
-        <rename>usuario</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>cd_municipio</name>
-        <rename>edmu_cd_municipio</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>ft_municipio</name>
-        <rename>usuario</rename>
-        <update>N</update>
-      </value>
-      <value>
-        <name>bo_oficial</name>
-        <rename>bo_oficial</rename>
-        <update>N</update>
-      </value>
-    </lookup>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1380</xloc>
-      <yloc>671</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
     <name>Insert Projeto</name>
     <type>ExecSQL</type>
     <description />
@@ -1929,7 +1707,8 @@ OR (
 	null::TEXT, -- link TEXT
 	'?'::TEXT, -- fonte TEXT
 	'?'::TIMESTAMP, -- dataatualizacao TIMESTAMP
-	false -- nullvalido BOOLEAN
+	false, -- nullvalido BOOLEAN
+	true -- errovalido BOOLEAN
 );</sql>
     <set_params>N</set_params>
     <insert_field />
@@ -2091,8 +1870,8 @@ VALUES ('?'::INTEGER, '?'::TEXT, '?'::SMALLINT, '?'::TEXT, '?'::TIMESTAMP);</sql
       </output>
     </remotesteps>
     <GUI>
-      <xloc>587</xloc>
-      <yloc>1043</yloc>
+      <xloc>576</xloc>
+      <yloc>1045</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2197,7 +1976,7 @@ VALUES ('?'::INTEGER, '?'::TEXT, '?'::SMALLINT, '?'::TEXT, '?'::TIMESTAMP);</sql
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1387</xloc>
+      <xloc>1427</xloc>
       <yloc>1033</yloc>
       <draw>Y</draw>
     </GUI>
@@ -2801,7 +2580,7 @@ VALUES ('?'::INTEGER, '?'::TEXT, '?'::SMALLINT, '?'::TEXT, '?'::TIMESTAMP);</sql
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1210</xloc>
+      <xloc>1250</xloc>
       <yloc>671</yloc>
       <draw>Y</draw>
     </GUI>
@@ -3404,8 +3183,8 @@ var municipio_proponente_ajustado = removeAccents(municipio_proponente);</jsScri
       </output>
     </remotesteps>
     <GUI>
-      <xloc>436</xloc>
-      <yloc>1043</yloc>
+      <xloc>425</xloc>
+      <yloc>1045</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3478,7 +3257,7 @@ var municipio_proponente_ajustado = removeAccents(municipio_proponente);</jsScri
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1387</xloc>
+      <xloc>1427</xloc>
       <yloc>914</yloc>
       <draw>Y</draw>
     </GUI>
@@ -3516,7 +3295,7 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1207</xloc>
+      <xloc>1247</xloc>
       <yloc>798</yloc>
       <draw>Y</draw>
     </GUI>
@@ -4049,7 +3828,7 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1207</xloc>
+      <xloc>1247</xloc>
       <yloc>909</yloc>
       <draw>Y</draw>
     </GUI>
@@ -4433,8 +4212,8 @@ AND cd_uf = ?::INTEGER;</sql>
     </GUI>
   </step>
   <step>
-    <name>Script</name>
-    <type>Script</type>
+    <name>Atualizar fonte recursos</name>
+    <type>ExecSQL</type>
     <description />
     <distribute>Y</distribute>
     <custom_distribution />
@@ -4443,32 +4222,53 @@ AND cd_uf = ?::INTEGER;</sql>
       <method>none</method>
       <schema_name />
     </partitioning>
-    <jsScripts>
-      <jsScript>
-        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>var json = [
-	{
-		id_fonte_recursos_projeto: null, 
-		id_projeto: id_projeto, 
-		cd_fonte_recursos_projeto: fonte_recursos, 
-		cd_origem_fonte_recursos_projeto: null, 
-		cd_tipo_parceria: tipo_parceria_ajustado, 
-		tx_orgao_concedente: orgao_concedente
-	}
-];</jsScript_script>
-      </jsScript>
-    </jsScripts>
-    <fields>
-      <field>
-        <name>json2</name>
-        <rename>json2</rename>
-        <type>None</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
-    </fields>
+    <connection>localhost</connection>
+    <execute_each_row>Y</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>Y</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>SELECT * FROM portal.atualizar_fonte_recursos_projeto(
+	'?'::TEXT, 
+	'?'::INTEGER, 
+	'?'::TIMESTAMP, 
+	'{"id_fonte_recursos_projeto": null, "id_projeto": "?", "cd_fonte_recursos_projeto": "?", "cd_origem_fonte_recursos_projeto": null, "cd_tipo_parceria": "?", "tx_tipo_parceria_outro": "?", "tx_orgao_concedente": "?"}'::JSONB, 
+	false::BOOLEAN, 
+	true::BOOLEAN, 
+	false::BOOLEAN, 
+	2
+);
+</sql>
+    <set_params>N</set_params>
+    <insert_field />
+    <update_field />
+    <delete_field />
+    <read_field />
+    <arguments>
+      <argument>
+        <name>usuario</name>
+      </argument>
+      <argument>
+        <name>id_osc</name>
+      </argument>
+      <argument>
+        <name>data_carregamento</name>
+      </argument>
+      <argument>
+        <name>id_projeto</name>
+      </argument>
+      <argument>
+        <name>fonte_recursos</name>
+      </argument>
+      <argument>
+        <name>tipo_parceria_ajustado</name>
+      </argument>
+      <argument>
+        <name>tipo_parceria_outro</name>
+      </argument>
+      <argument>
+        <name>orgao_concedente</name>
+      </argument>
+    </arguments>
     <cluster_schema />
     <remotesteps>
       <input>
@@ -4477,54 +4277,208 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>270</xloc>
-      <yloc>923</yloc>
+      <xloc>265</xloc>
+      <yloc>922</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Atualizar dados gerais OSC</name>
+    <type>ExecSQL</type>
+    <description />
+    <distribute>N</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>localhost</connection>
+    <execute_each_row>Y</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>Y</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>SELECT * FROM portal.atualizar_dados_gerais_osc(
+	'?'::TEXT, 
+	'?'::INTEGER, 
+	'?'::TIMESTAMP, 
+	'{
+		"id_osc": ?, 
+		"cd_natureza_juridica_osc": null, 
+		"cd_subclasse_atividade_economica_osc": null, 
+		"tx_razao_social_osc": "?", 
+		"tx_nome_fantasia_osc": "?", 
+		"im_logo": null, 
+		"tx_missao_osc": null, 
+		"tx_visao_osc": null, 
+		"dt_fundacao_osc": null, 
+		"dt_ano_cadastro_cnpj": null, 
+		"tx_sigla_osc": null, 
+		"tx_resumo_osc": null, 
+		"cd_situacao_imovel_osc": null, 
+		"tx_link_estatuto_osc": null, 
+		"tx_historico": null, 
+		"tx_finalidades_estatutarias": null, 
+		"tx_link_relatorio_auditoria": null, 
+		"tx_link_demonstracao_contabil": null, 
+		"tx_nome_responsavel_legal": null
+	}'::JSONB, 
+	false, 
+	true
+);
+</sql>
+    <set_params>N</set_params>
+    <insert_field />
+    <update_field />
+    <delete_field />
+    <read_field />
+    <arguments>
+      <argument>
+        <name>usuario</name>
+      </argument>
+      <argument>
+        <name>id_osc</name>
+      </argument>
+      <argument>
+        <name>data_carregamento</name>
+      </argument>
+      <argument>
+        <name>id_osc</name>
+      </argument>
+      <argument>
+        <name>razao_social_proponente</name>
+      </argument>
+      <argument>
+        <name>nome_fantasia_proponente</name>
+      </argument>
+    </arguments>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>767</xloc>
+      <yloc>671</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Atualizar localização OSC</name>
+    <type>ExecSQL</type>
+    <description />
+    <distribute>N</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>localhost</connection>
+    <execute_each_row>Y</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>Y</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>SELECT * FROM portal.atualizar_localizacao_osc(
+	'?'::TEXT, 
+	'?'::INTEGER, 
+	'?'::TIMESTAMP, 
+	'{
+		"id_osc": "?", 
+		"tx_endereco": "?", 
+		"nr_localizacao": null, 
+		"tx_endereco_complemento": null, 
+		"tx_bairro": null, 
+		"cd_municipio": "?", 
+		"nr_cep": null
+	}'::JSONB, 
+	false, 
+	true
+);
+</sql>
+    <set_params>N</set_params>
+    <insert_field />
+    <update_field />
+    <delete_field />
+    <read_field />
+    <arguments>
+      <argument>
+        <name>usuario</name>
+      </argument>
+      <argument>
+        <name>id_osc</name>
+      </argument>
+      <argument>
+        <name>data_carregamento</name>
+      </argument>
+      <argument>
+        <name>id_osc</name>
+      </argument>
+      <argument>
+        <name>endereco_proponente</name>
+      </argument>
+      <argument>
+        <name>edmu_cd_municipio</name>
+      </argument>
+    </arguments>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1426</xloc>
+      <yloc>671</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step_error_handling>
-    <error>
-      <source_step>Insert Dados Gerais</source_step>
-      <target_step>Add constants erro 3</target_step>
-      <is_enabled>Y</is_enabled>
-      <nr_valuename />
-      <descriptions_valuename>tx_mensagem_carga</descriptions_valuename>
-      <fields_valuename />
-      <codes_valuename />
-      <max_errors />
-      <max_pct_errors />
-      <min_pct_rows />
-    </error>
-    <error>
-      <source_step>Insert Fonte Recursos</source_step>
-      <target_step>Add constants erro 2</target_step>
-      <is_enabled>Y</is_enabled>
-      <nr_valuename />
-      <descriptions_valuename>tx_mensagem_carga</descriptions_valuename>
-      <fields_valuename />
-      <codes_valuename />
-      <max_errors />
-      <max_pct_errors />
-      <min_pct_rows />
-    </error>
-    <error>
-      <source_step>Insert Localização</source_step>
-      <target_step>Add constants erro 4</target_step>
-      <is_enabled>Y</is_enabled>
-      <nr_valuename />
-      <descriptions_valuename>tx_mensagem_carga</descriptions_valuename>
-      <fields_valuename />
-      <codes_valuename />
-      <max_errors />
-      <max_pct_errors />
-      <min_pct_rows />
-    </error>
     <error>
       <source_step>Insert Projeto</source_step>
       <target_step>Add constants erro 1</target_step>
       <is_enabled>Y</is_enabled>
       <nr_valuename />
       <descriptions_valuename>tx_mensagem_carga</descriptions_valuename>
+      <fields_valuename />
+      <codes_valuename />
+      <max_errors />
+      <max_pct_errors />
+      <min_pct_rows />
+    </error>
+    <error>
+      <source_step>Atualizar fonte recursos</source_step>
+      <target_step>Add constants erro 2</target_step>
+      <is_enabled>Y</is_enabled>
+      <nr_valuename />
+      <descriptions_valuename />
+      <fields_valuename />
+      <codes_valuename />
+      <max_errors />
+      <max_pct_errors />
+      <min_pct_rows />
+    </error>
+    <error>
+      <source_step>Atualizar dados gerais OSC</source_step>
+      <target_step>Add constants erro 3</target_step>
+      <is_enabled>Y</is_enabled>
+      <nr_valuename />
+      <descriptions_valuename />
+      <fields_valuename />
+      <codes_valuename />
+      <max_errors />
+      <max_pct_errors />
+      <min_pct_rows />
+    </error>
+    <error>
+      <source_step>Atualizar localização OSC</source_step>
+      <target_step>Add constants erro 4</target_step>
+      <is_enabled>Y</is_enabled>
+      <nr_valuename />
+      <descriptions_valuename />
       <fields_valuename />
       <codes_valuename />
       <max_errors />

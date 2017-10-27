@@ -1,6 +1,6 @@
---DROP FUNCTION IF EXISTS portal.atualizar_fonte_recursos_projeto(json JSONB, osc INTEGER, fonte TEXT, dataatualizacao TIMESTAMP, nullvalido BOOLEAN, deletevalido BOOLEAN, errovalido BOOLEAN, tipobusca INTEGER);
+--DROP FUNCTION IF EXISTS portal.atualizar_fonte_recursos_projeto(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, errovalido BOOLEAN, deletevalido BOOLEAN, tipobusca INTEGER);
 
-CREATE OR REPLACE FUNCTION portal.atualizar_fonte_recursos_projeto(json JSONB, osc INTEGER, fonte TEXT, dataatualizacao TIMESTAMP, nullvalido BOOLEAN, deletevalido BOOLEAN, errovalido BOOLEAN, tipobusca INTEGER) RETURNS TABLE(
+CREATE OR REPLACE FUNCTION portal.atualizar_fonte_recursos_projeto(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, errovalido BOOLEAN, deletevalido BOOLEAN, tipobusca INTEGER) RETURNS TABLE(
 	mensagem TEXT, 
 	flag BOOLEAN
 )AS $$
@@ -15,13 +15,6 @@ DECLARE
 	flag_log BOOLEAN;
 	
 BEGIN 
-	IF tipobusca IS null THEN 
-		tipobusca := 0;
-	END IF;
-	
-	SELECT INTO fonte_dados_nao_oficiais array_agg(tx_nome_tipo_usuario) 
-	FROM syst.dc_tipo_usuario;
-	
 	SELECT INTO tipo_usuario (
 		SELECT dc_tipo_usuario.tx_nome_tipo_usuario 
 		FROM portal.tb_usuario 
@@ -34,132 +27,160 @@ BEGIN
 		WHERE dc_fonte_dados.cd_sigla_fonte_dados::TEXT = fonte
 	);
 	
-	registro_nao_delete := '{}';
-	
-	IF json_typeof(json::JSON) = 'object' THEN 
-		json := ('[' || json || ']');
-	END IF;
-	
-	FOR objeto IN (SELECT *FROM json_populate_recordset(null::osc.tb_fonte_recursos_projeto, json::JSON)) 
-	LOOP 
-		registro_anterior := null;
+	IF tipo_usuario IS null THEN 
+		flag := false;
+		mensagem := 'Fonte de dados inválida.';
 		
-		IF tipobusca = 0 THEN 
-			SELECT INTO registro_anterior * 
-			FROM osc.tb_fonte_recursos_projeto 
-			WHERE id_fonte_recursos_projeto = objeto.id_fonte_recursos_projeto;
-			
-		ELSIF tipobusca = 1 THEN 
-			SELECT INTO registro_anterior * 
-			FROM osc.tb_fonte_recursos_projeto 
-			WHERE id_projeto = objeto.id_projeto 
-			AND (
-				cd_fonte_recursos_projeto = objeto.cd_fonte_recursos_projeto 
-				OR cd_origem_fonte_recursos_projeto = objeto.cd_origem_fonte_recursos_projeto
-			) 
-			AND cd_tipo_parceria = objeto.cd_tipo_parceria;
+	ELSE 
+		IF tipobusca IS null THEN 
+			tipobusca := 1;
 		END IF;
 		
-		IF registro_anterior.id_fonte_recursos_projeto IS null THEN 
-			INSERT INTO osc.tb_fonte_recursos_projeto (
-				id_projeto, 
-				cd_fonte_recursos_projeto, 
-				cd_origem_fonte_recursos_projeto, 
-				ft_fonte_recursos_projeto, 
-				cd_tipo_parceria, 
-				ft_tipo_parceria, 
-				tx_orgao_concedente, 
-				ft_orgao_concedente
-			) VALUES (
-				objeto.id_projeto, 
-				objeto.cd_fonte_recursos_projeto, 
-				objeto.cd_origem_fonte_recursos_projeto, 
-				fonte, 
-				objeto.cd_tipo_parceria, 
-				fonte, 
-				objeto.tx_orgao_concedente, 
-				fonte
-			) RETURNING * INTO registro_posterior;
+		SELECT INTO fonte_dados_nao_oficiais array_agg(tx_nome_tipo_usuario) 
+		FROM syst.dc_tipo_usuario;
+		
+		registro_nao_delete := '{}';
+		
+		IF json_typeof(json::JSON) = 'object' THEN 
+			json := ('[' || json || ']');
+		END IF;
+		
+		FOR objeto IN (SELECT *FROM json_populate_recordset(null::osc.tb_fonte_recursos_projeto, json::JSON)) 
+		LOOP 
+			registro_anterior := null;
 			
-			registro_nao_delete := array_append(registro_nao_delete, registro_posterior.id_fonte_recursos_projeto);
-			
-			INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
-			VALUES ('osc.tb_fonte_recursos_projeto', osc, fonte::INTEGER, dataatualizacao, null, row_to_json(registro_posterior));
-			
-		ELSE 
-			registro_posterior := registro_anterior;
-			registro_nao_delete := array_append(registro_nao_delete, registro_posterior.id_fonte_recursos_projeto);
-			flag_log := false;
-			
-			IF (
-				(nullvalido = true AND registro_anterior.cd_fonte_recursos_projeto <> objeto.cd_fonte_recursos_projeto) 
-				OR (nullvalido = false AND registro_anterior.cd_fonte_recursos_projeto <> objeto.cd_fonte_recursos_projeto AND objeto.cd_fonte_recursos_projeto IS NOT null)
-			) AND (
-				registro_anterior.ft_fonte_recursos_projeto IS null OR registro_anterior.ft_fonte_recursos_projeto = ANY(fonte_dados_nao_oficiais)
-			) THEN 
-				registro_posterior.cd_fonte_recursos_projeto := objeto.cd_fonte_recursos_projeto;
-				registro_posterior.ft_fonte_recursos_projeto := fonte;
-				flag_log := true;
+			IF tipobusca = 1 THEN 
+				SELECT INTO registro_anterior * 
+				FROM osc.tb_fonte_recursos_projeto 
+				WHERE id_fonte_recursos_projeto = objeto.id_fonte_recursos_projeto;
+				
+			ELSIF tipobusca = 2 THEN 
+				SELECT INTO registro_anterior * 
+				FROM osc.tb_fonte_recursos_projeto 
+				WHERE id_projeto = objeto.id_projeto 
+				AND (
+					cd_fonte_recursos_projeto = objeto.cd_fonte_recursos_projeto 
+					OR cd_origem_fonte_recursos_projeto = objeto.cd_origem_fonte_recursos_projeto
+				) 
+				AND cd_tipo_parceria = objeto.cd_tipo_parceria;
 			END IF;
 			
-			IF (
-				(nullvalido = true AND registro_anterior.cd_origem_fonte_recursos_projeto <> objeto.cd_origem_fonte_recursos_projeto) OR 
-				(nullvalido = false AND registro_anterior.cd_origem_fonte_recursos_projeto <> objeto.cd_origem_fonte_recursos_projeto AND objeto.cd_origem_fonte_recursos_projeto IS NOT null)
-			) AND (
-				registro_anterior.ft_fonte_recursos_projeto IS null OR registro_anterior.ft_fonte_recursos_projeto = ANY(fonte_dados_nao_oficiais)
-			) THEN 
-				registro_posterior.cd_origem_fonte_recursos_projeto := objeto.cd_origem_fonte_recursos_projeto;
-				registro_posterior.ft_fonte_recursos_projeto := fonte;
-				flag_log := true;
-			END IF;
-			
-			IF (
-				(nullvalido = true AND registro_anterior.cd_tipo_parceria <> objeto.cd_tipo_parceria) OR 
-				(nullvalido = false AND registro_anterior.cd_tipo_parceria <> objeto.cd_tipo_parceria AND objeto.cd_tipo_parceria IS NOT null)
-			) AND (
-				registro_anterior.ft_tipo_parceria IS null OR registro_anterior.ft_tipo_parceria = ANY(fonte_dados_nao_oficiais)
-			) THEN 
-				registro_posterior.cd_tipo_parceria := objeto.cd_tipo_parceria;
-				registro_posterior.ft_tipo_parceria := fonte;
-				flag_log := true;
-			END IF;
-			
-			IF (
-				(nullvalido = true AND registro_anterior.tx_orgao_concedente <> objeto.tx_orgao_concedente) OR 
-				(nullvalido = false AND registro_anterior.tx_orgao_concedente <> objeto.tx_orgao_concedente AND objeto.tx_orgao_concedente IS NOT null)
-			) AND (
-				registro_anterior.ft_orgao_concedente IS null OR registro_anterior.ft_orgao_concedente = ANY(fonte_dados_nao_oficiais)
-			) THEN 
-				registro_posterior.tx_orgao_concedente := objeto.tx_orgao_concedente;
-				registro_posterior.ft_orgao_concedente := fonte;
-				flag_log := true;
-			END IF;
-			
-			UPDATE osc.tb_fonte_recursos_projeto 
-			SET cd_fonte_recursos_projeto = registro_posterior.cd_fonte_recursos_projeto, 
-				cd_origem_fonte_recursos_projeto = registro_posterior.cd_origem_fonte_recursos_projeto, 
-				ft_fonte_recursos_projeto = registro_posterior.ft_fonte_recursos_projeto, 
-				cd_tipo_parceria = registro_posterior.cd_tipo_parceria, 
-				ft_tipo_parceria = registro_posterior.ft_tipo_parceria, 
-				tx_orgao_concedente = registro_posterior.tx_orgao_concedente, 
-				ft_orgao_concedente = registro_posterior.ft_orgao_concedente 
-			WHERE id_fonte_recursos_projeto = registro_posterior.id_fonte_recursos_projeto; 
-			
-			IF flag_log THEN 		
+			IF registro_anterior.id_fonte_recursos_projeto IS null THEN 
+				INSERT INTO osc.tb_fonte_recursos_projeto (
+					id_projeto, 
+					cd_fonte_recursos_projeto, 
+					cd_origem_fonte_recursos_projeto, 
+					ft_fonte_recursos_projeto, 
+					cd_tipo_parceria, 
+					tx_tipo_parceria_outro, 
+					ft_tipo_parceria, 
+					tx_orgao_concedente, 
+					ft_orgao_concedente
+				) VALUES (
+					objeto.id_projeto, 
+					objeto.cd_fonte_recursos_projeto, 
+					objeto.cd_origem_fonte_recursos_projeto, 
+					fonte, 
+					objeto.cd_tipo_parceria, 
+					objeto.tx_tipo_parceria_outro, 
+					fonte, 
+					objeto.tx_orgao_concedente, 
+					fonte
+				) RETURNING * INTO registro_posterior;
+				
+				registro_nao_delete := array_append(registro_nao_delete, registro_posterior.id_fonte_recursos_projeto);
+				
 				INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
-				VALUES ('osc.tb_fonte_recursos_projeto', osc, fonte::INTEGER, dataatualizacao, row_to_json(registro_anterior), row_to_json(registro_posterior));
+				VALUES ('osc.tb_fonte_recursos_projeto', osc, fonte::INTEGER, dataatualizacao, null, row_to_json(registro_posterior));
+				
+			ELSE 
+				registro_posterior := registro_anterior;
+				registro_nao_delete := array_append(registro_nao_delete, registro_posterior.id_fonte_recursos_projeto);
+				flag_log := false;
+				
+				IF (
+					(nullvalido = true AND registro_anterior.cd_fonte_recursos_projeto <> objeto.cd_fonte_recursos_projeto) 
+					OR (nullvalido = false AND registro_anterior.cd_fonte_recursos_projeto <> objeto.cd_fonte_recursos_projeto AND objeto.cd_fonte_recursos_projeto IS NOT null)
+				) AND (
+					registro_anterior.ft_fonte_recursos_projeto IS null OR registro_anterior.ft_fonte_recursos_projeto = ANY(fonte_dados_nao_oficiais)
+				) THEN 
+					registro_posterior.cd_fonte_recursos_projeto := objeto.cd_fonte_recursos_projeto;
+					registro_posterior.ft_fonte_recursos_projeto := fonte;
+					flag_log := true;
+				END IF;
+				
+				IF (
+					(nullvalido = true AND registro_anterior.cd_origem_fonte_recursos_projeto <> objeto.cd_origem_fonte_recursos_projeto) OR 
+					(nullvalido = false AND registro_anterior.cd_origem_fonte_recursos_projeto <> objeto.cd_origem_fonte_recursos_projeto AND objeto.cd_origem_fonte_recursos_projeto IS NOT null)
+				) AND (
+					registro_anterior.ft_fonte_recursos_projeto IS null OR registro_anterior.ft_fonte_recursos_projeto = ANY(fonte_dados_nao_oficiais)
+				) THEN 
+					registro_posterior.cd_origem_fonte_recursos_projeto := objeto.cd_origem_fonte_recursos_projeto;
+					registro_posterior.ft_fonte_recursos_projeto := fonte;
+					flag_log := true;
+				END IF;
+				
+				IF (
+					(nullvalido = true AND registro_anterior.cd_tipo_parceria <> objeto.cd_tipo_parceria) OR 
+					(nullvalido = false AND registro_anterior.cd_tipo_parceria <> objeto.cd_tipo_parceria AND objeto.cd_tipo_parceria IS NOT null)
+				) AND (
+					registro_anterior.ft_tipo_parceria IS null OR registro_anterior.ft_tipo_parceria = ANY(fonte_dados_nao_oficiais)
+				) THEN 
+					registro_posterior.cd_tipo_parceria := objeto.cd_tipo_parceria;
+					registro_posterior.ft_tipo_parceria := fonte;
+					flag_log := true;
+				END IF;
+				
+				IF (
+					(nullvalido = true AND registro_anterior.tx_tipo_parceria_outro <> objeto.tx_tipo_parceria_outro) OR 
+					(nullvalido = false AND registro_anterior.tx_tipo_parceria_outro <> objeto.tx_tipo_parceria_outro AND objeto.tx_tipo_parceria_outro IS NOT null)
+				) AND (
+					registro_anterior.ft_tipo_parceria IS null OR registro_anterior.ft_tipo_parceria = ANY(fonte_dados_nao_oficiais)
+				) THEN 
+					registro_posterior.tx_tipo_parceria_outro := objeto.tx_tipo_parceria_outro;
+					registro_posterior.ft_tipo_parceria := fonte;
+					flag_log := true;
+				END IF;
+				
+				IF (
+					(nullvalido = true AND registro_anterior.tx_orgao_concedente <> objeto.tx_orgao_concedente) OR 
+					(nullvalido = false AND registro_anterior.tx_orgao_concedente <> objeto.tx_orgao_concedente AND objeto.tx_orgao_concedente IS NOT null)
+				) AND (
+					registro_anterior.ft_orgao_concedente IS null OR registro_anterior.ft_orgao_concedente = ANY(fonte_dados_nao_oficiais)
+				) THEN 
+					registro_posterior.tx_orgao_concedente := objeto.tx_orgao_concedente;
+					registro_posterior.ft_orgao_concedente := fonte;
+					flag_log := true;
+				END IF;
+				
+				UPDATE osc.tb_fonte_recursos_projeto 
+				SET cd_fonte_recursos_projeto = registro_posterior.cd_fonte_recursos_projeto, 
+					cd_origem_fonte_recursos_projeto = registro_posterior.cd_origem_fonte_recursos_projeto, 
+					ft_fonte_recursos_projeto = registro_posterior.ft_fonte_recursos_projeto, 
+					cd_tipo_parceria = registro_posterior.cd_tipo_parceria, 
+					tx_tipo_parceria_outro = registro_posterior.tx_tipo_parceria_outro, 
+					ft_tipo_parceria = registro_posterior.ft_tipo_parceria, 
+					tx_orgao_concedente = registro_posterior.tx_orgao_concedente, 
+					ft_orgao_concedente = registro_posterior.ft_orgao_concedente 
+				WHERE id_fonte_recursos_projeto = registro_posterior.id_fonte_recursos_projeto; 
+				
+				IF flag_log THEN 		
+					INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
+					VALUES ('osc.tb_fonte_recursos_projeto', osc, fonte::INTEGER, dataatualizacao, row_to_json(registro_anterior), row_to_json(registro_posterior));
+				END IF;
+			
 			END IF;
+			
+		END LOOP;
 		
+		IF deletevalido THEN 
+			DELETE FROM osc.tb_fonte_recursos_projeto WHERE id_fonte_recursos_projeto != ALL(registro_nao_delete);
 		END IF;
 		
-	END LOOP;
-	
-	IF deletevalido THEN 
-		DELETE FROM osc.tb_fonte_recursos_projeto WHERE id_fonte_recursos_projeto != ALL(registro_nao_delete);
+		flag := true;
+		mensagem := 'Fonte de recursos de projeto atualizado.';
 	END IF;
 	
-	flag := true;
-	mensagem := 'Fonte de recursos de projeto atualizado.';
 	RETURN NEXT;
 
 EXCEPTION 
@@ -205,20 +226,20 @@ $$ LANGUAGE 'plpgsql';
 
 
 SELECT * FROM portal.atualizar_fonte_recursos_projeto(
+	'252'::TEXT, 
+	'987654'::INTEGER, 
+	'20-10-2017'::TIMESTAMP, 
 	'[
 		{
-			"id_projeto": 1, "id_fonte_recursos_projeto": 780, "id_projeto": 24213, "cd_fonte_recursos_projeto": 1, "cd_origem_fonte_recursos_projeto": null, "cd_tipo_parceria": 2, "tx_orgao_concedente": "Secretária Estadual de Educação"
+			"id_fonte_recursos_projeto": 780, "id_projeto": 24213, "cd_fonte_recursos_projeto": 1, "cd_origem_fonte_recursos_projeto": null, "cd_tipo_parceria": 2, "tx_tipo_parceria_outro": "Teste", "tx_orgao_concedente": "Secretária Estadual de Educação"
 		},
 		{
-			"id_projeto": 1, "id_fonte_recursos_projeto": 781, "id_projeto": 24213, "cd_fonte_recursos_projeto": 1, "cd_origem_fonte_recursos_projeto": null, "cd_tipo_parceria": 3, "tx_orgao_concedente": "Secretária Estadual de Educação"
+			"id_fonte_recursos_projeto": 781, "id_projeto": 24213, "cd_fonte_recursos_projeto": 1, "cd_origem_fonte_recursos_projeto": null, "cd_tipo_parceria": 3, "tx_tipo_parceria_outro": "Teste", "tx_orgao_concedente": "Secretária Estadual de Educação"
 		},
 		{
-			"id_projeto": 1, "id_fonte_recursos_projeto": 782, "id_projeto": 24213, "cd_fonte_recursos_projeto": 1, "cd_origem_fonte_recursos_projeto": null, "cd_tipo_parceria": 4, "tx_orgao_concedente": "Secretária Estadual de Educação"
+			"id_fonte_recursos_projeto": 782, "id_projeto": 24213, "cd_fonte_recursos_projeto": 1, "cd_origem_fonte_recursos_projeto": null, "cd_tipo_parceria": 4, "tx_tipo_parceria_outro": "Teste", "tx_orgao_concedente": "Secretária Estadual de Educação"
 		}
 	]'::JSONB, 
-	'987654'::INTEGER, 
-	'252'::TEXT, 
-	'20-10-2017'::TIMESTAMP, 
 	true::BOOLEAN, 
 	true::BOOLEAN, 
 	true::BOOLEAN, 

@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS portal.atualizar_projeto_estado_municipio(osc INTEGER, identificadorexterno TEXT, localidade INTEGER, nome TEXT, status INTEGER, datainicio DATE, datafim DATE, valortotal DOUBLE PRECISION, valorcaptado DOUBLE PRECISION, totalbeneficiarios INTEGER, abrangencia INTEGER, zonaatuacao INTEGER, orgaoconcedente TEXT, descricao TEXT, metodologiamonitoramento TEXT, link TEXT, fonte TEXT, dataatualizacao TIMESTAMP, nullvalido BOOLEAN, deletevalido BOOLEAN, errovalido BOOLEAN);
+--DROP FUNCTION IF EXISTS portal.atualizar_projeto_estado_municipio(osc INTEGER, identificadorexterno TEXT, localidade INTEGER, nome TEXT, status INTEGER, datainicio DATE, datafim DATE, valortotal DOUBLE PRECISION, valorcaptado DOUBLE PRECISION, totalbeneficiarios INTEGER, abrangencia INTEGER, zonaatuacao INTEGER, orgaoconcedente TEXT, descricao TEXT, metodologiamonitoramento TEXT, link TEXT, fonte TEXT, dataatualizacao TIMESTAMP, nullvalido BOOLEAN, errovalido BOOLEAN);
 
-CREATE OR REPLACE FUNCTION portal.atualizar_projeto_estado_municipio(osc INTEGER, identificadorexterno TEXT, localidade INTEGER, nome TEXT, status INTEGER, datainicio DATE, datafim DATE, valortotal DOUBLE PRECISION, valorcaptado DOUBLE PRECISION, totalbeneficiarios INTEGER, abrangencia INTEGER, zonaatuacao INTEGER, orgaoconcedente TEXT, descricao TEXT, metodologiamonitoramento TEXT, link TEXT, fonte TEXT, dataatualizacao TIMESTAMP, nullvalido BOOLEAN, deletevalido BOOLEAN, errovalido BOOLEAN) RETURNS TABLE(
+CREATE OR REPLACE FUNCTION portal.atualizar_projeto_estado_municipio(osc INTEGER, identificadorexterno TEXT, localidade INTEGER, nome TEXT, status INTEGER, datainicio DATE, datafim DATE, valortotal DOUBLE PRECISION, valorcaptado DOUBLE PRECISION, totalbeneficiarios INTEGER, abrangencia INTEGER, zonaatuacao INTEGER, orgaoconcedente TEXT, descricao TEXT, metodologiamonitoramento TEXT, link TEXT, fonte TEXT, dataatualizacao TIMESTAMP, nullvalido BOOLEAN, errovalido BOOLEAN) RETURNS TABLE(
 	mensagem TEXT, 
 	flag BOOLEAN
 )AS $$
@@ -275,10 +275,6 @@ BEGIN
 			VALUES ('osc.tb_projeto', osc, fonte::INTEGER, dataatualizacao, row_to_json(registro_anterior), row_to_json(registro_posterior));
 		END IF;
 	
-	END IF;
-	
-	IF deletevalido THEN 
-		DELETE FROM osc.tb_fonte_recursos_projeto WHERE id_fonte_recursos_projeto != ALL(registro_nao_delete);
 	END IF;
 	
 	flag := true;
