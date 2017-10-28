@@ -1,6 +1,6 @@
---DROP FUNCTION IF EXISTS portal.atualizar_localizacao_osc(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, errovalido BOOLEAN);
+DROP FUNCTION IF EXISTS portal.atualizar_localizacao_osc(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, errolog BOOLEAN);
 
-CREATE OR REPLACE FUNCTION portal.atualizar_localizacao_osc(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, errovalido BOOLEAN) RETURNS TABLE(
+CREATE OR REPLACE FUNCTION portal.atualizar_localizacao_osc(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, errolog BOOLEAN) RETURNS TABLE(
 	mensagem TEXT, 
 	flag BOOLEAN
 )AS $$
@@ -27,12 +27,13 @@ BEGIN
 	);
 	
 	IF tipo_usuario IS null THEN 
-		IF errovalido THEN 
-			RAISE EXCEPTION 'Fonte de dados inválida.';
-		END IF;
-		
 		flag := false;
 		mensagem := 'Fonte de dados inválida.';
+		
+		IF errolog THEN 
+			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
+			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT, dataatualizacao::TIMESTAMP);
+		END IF;
 		
 	ELSE 
 		SELECT INTO fonte_dados_nao_oficiais array_agg(tx_nome_tipo_usuario) 
@@ -179,46 +180,54 @@ BEGIN
 	
 EXCEPTION 
 	WHEN not_null_violation THEN 
-		IF errovalido THEN 
-			RAISE EXCEPTION '(%) %', SQLSTATE, SQLERRM;
-		END IF;
-		
 		flag := false;
 		mensagem := 'Dado(s) obrigatório(s) não enviado(s).';
+		
+		IF errolog THEN 
+			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
+			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT, dataatualizacao::TIMESTAMP);
+		END IF;
+		
 		RETURN NEXT;
 		
 	WHEN unique_violation THEN 
-		IF errovalido THEN 
-			RAISE EXCEPTION '(%) %', SQLSTATE, SQLERRM;
-		END IF;
-		
 		flag := false;
 		mensagem := 'Dado(s) único(s) violado(s).';
+		
+		IF errolog THEN 
+			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
+			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT, dataatualizacao::TIMESTAMP);
+		END IF;
+		
 		RETURN NEXT;
 		
 	WHEN foreign_key_violation THEN 
-		IF errovalido THEN 
-			RAISE EXCEPTION '(%) %', SQLSTATE, SQLERRM;
-		END IF;
-		
 		flag := false;
 		mensagem := 'Dado(s) com chave(s) estrangeira(s) violada(s).';
+		
+		IF errolog THEN 
+			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
+			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT, dataatualizacao::TIMESTAMP);
+		END IF;
+		
 		RETURN NEXT;
 		
 	WHEN others THEN 
-		IF errovalido THEN 
-			RAISE EXCEPTION '(%) %', SQLSTATE, SQLERRM;
-		END IF;
-		
 		flag := false;
 		mensagem := 'Ocorreu um erro.';
+		
+		IF errolog THEN 
+			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
+			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT, dataatualizacao::TIMESTAMP);
+		END IF;
+		
 		RETURN NEXT;
 		
 END; 
 $$ LANGUAGE 'plpgsql';
 
 
-
+/*
 SELECT * FROM portal.atualizar_localizacao_osc(
 	'828'::TEXT, 
 	'987654'::INTEGER, 
@@ -235,3 +244,4 @@ SELECT * FROM portal.atualizar_localizacao_osc(
 	false, 
 	true
 );
+*/

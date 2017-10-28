@@ -1,6 +1,6 @@
---DROP FUNCTION IF EXISTS portal.atualizar_fonte_recursos_projeto(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, errovalido BOOLEAN, deletevalido BOOLEAN, tipobusca INTEGER);
+DROP FUNCTION IF EXISTS portal.atualizar_fonte_recursos_projeto(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, errolog BOOLEAN, deletevalido BOOLEAN, tipobusca INTEGER);
 
-CREATE OR REPLACE FUNCTION portal.atualizar_fonte_recursos_projeto(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, errovalido BOOLEAN, deletevalido BOOLEAN, tipobusca INTEGER) RETURNS TABLE(
+CREATE OR REPLACE FUNCTION portal.atualizar_fonte_recursos_projeto(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, errolog BOOLEAN, deletevalido BOOLEAN, tipobusca INTEGER) RETURNS TABLE(
 	mensagem TEXT, 
 	flag BOOLEAN
 )AS $$
@@ -28,13 +28,14 @@ BEGIN
 	);
 	
 	IF tipo_usuario IS null THEN 
-		IF errovalido THEN 
-			RAISE EXCEPTION 'Fonte de dados inválida.';
-		END IF;
-		
 		flag := false;
 		mensagem := 'Fonte de dados inválida.';
-	
+		
+		IF errolog THEN 
+			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
+			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT, dataatualizacao::TIMESTAMP);
+		END IF;
+		
 	ELSE 
 		IF tipobusca IS null THEN 
 			tipobusca := 1;
@@ -84,12 +85,12 @@ BEGIN
 					objeto.id_projeto, 
 					objeto.cd_fonte_recursos_projeto, 
 					objeto.cd_origem_fonte_recursos_projeto, 
-					fonte, 
+					tipo_usuario, 
 					objeto.cd_tipo_parceria, 
 					objeto.tx_tipo_parceria_outro, 
-					fonte, 
+					tipo_usuario, 
 					objeto.tx_orgao_concedente, 
-					fonte
+					tipo_usuario
 				) RETURNING * INTO registro_posterior;
 				
 				registro_nao_delete := array_append(registro_nao_delete, registro_posterior.id_fonte_recursos_projeto);
@@ -109,7 +110,7 @@ BEGIN
 					registro_anterior.ft_fonte_recursos_projeto IS null OR registro_anterior.ft_fonte_recursos_projeto = ANY(fonte_dados_nao_oficiais)
 				) THEN 
 					registro_posterior.cd_fonte_recursos_projeto := objeto.cd_fonte_recursos_projeto;
-					registro_posterior.ft_fonte_recursos_projeto := fonte;
+					registro_posterior.ft_fonte_recursos_projeto := tipo_usuario;
 					flag_log := true;
 				END IF;
 				
@@ -120,7 +121,7 @@ BEGIN
 					registro_anterior.ft_fonte_recursos_projeto IS null OR registro_anterior.ft_fonte_recursos_projeto = ANY(fonte_dados_nao_oficiais)
 				) THEN 
 					registro_posterior.cd_origem_fonte_recursos_projeto := objeto.cd_origem_fonte_recursos_projeto;
-					registro_posterior.ft_fonte_recursos_projeto := fonte;
+					registro_posterior.ft_fonte_recursos_projeto := tipo_usuario;
 					flag_log := true;
 				END IF;
 				
@@ -131,7 +132,7 @@ BEGIN
 					registro_anterior.ft_tipo_parceria IS null OR registro_anterior.ft_tipo_parceria = ANY(fonte_dados_nao_oficiais)
 				) THEN 
 					registro_posterior.cd_tipo_parceria := objeto.cd_tipo_parceria;
-					registro_posterior.ft_tipo_parceria := fonte;
+					registro_posterior.ft_tipo_parceria := tipo_usuario;
 					flag_log := true;
 				END IF;
 				
@@ -142,7 +143,7 @@ BEGIN
 					registro_anterior.ft_tipo_parceria IS null OR registro_anterior.ft_tipo_parceria = ANY(fonte_dados_nao_oficiais)
 				) THEN 
 					registro_posterior.tx_tipo_parceria_outro := objeto.tx_tipo_parceria_outro;
-					registro_posterior.ft_tipo_parceria := fonte;
+					registro_posterior.ft_tipo_parceria := tipo_usuario;
 					flag_log := true;
 				END IF;
 				
@@ -153,7 +154,7 @@ BEGIN
 					registro_anterior.ft_orgao_concedente IS null OR registro_anterior.ft_orgao_concedente = ANY(fonte_dados_nao_oficiais)
 				) THEN 
 					registro_posterior.tx_orgao_concedente := objeto.tx_orgao_concedente;
-					registro_posterior.ft_orgao_concedente := fonte;
+					registro_posterior.ft_orgao_concedente := tipo_usuario;
 					flag_log := true;
 				END IF;
 				
@@ -189,39 +190,47 @@ BEGIN
 
 EXCEPTION 
 	WHEN not_null_violation THEN 
-		IF errovalido THEN 
-			RAISE EXCEPTION '(%) %', SQLSTATE, SQLERRM;
-		END IF;
-		
 		flag := false;
 		mensagem := 'Dado(s) obrigatório(s) não enviado(s).';
+		
+		IF errolog THEN 
+			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
+			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT, dataatualizacao::TIMESTAMP);
+		END IF;
+		
 		RETURN NEXT;
 		
 	WHEN unique_violation THEN 
-		IF errovalido THEN 
-			RAISE EXCEPTION '(%) %', SQLSTATE, SQLERRM;
-		END IF;
-		
 		flag := false;
 		mensagem := 'Dado(s) único(s) violado(s).';
+		
+		IF errolog THEN 
+			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
+			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT, dataatualizacao::TIMESTAMP);
+		END IF;
+		
 		RETURN NEXT;
 		
 	WHEN foreign_key_violation THEN 
-		IF errovalido THEN 
-			RAISE EXCEPTION '(%) %', SQLSTATE, SQLERRM;
-		END IF;
-		
 		flag := false;
 		mensagem := 'Dado(s) com chave(s) estrangeira(s) violada(s).';
+		
+		IF errolog THEN 
+			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
+			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT, dataatualizacao::TIMESTAMP);
+		END IF;
+		
 		RETURN NEXT;
 		
 	WHEN others THEN 
-		IF errovalido THEN 
-			RAISE EXCEPTION '(%) %', SQLSTATE, SQLERRM;
-		END IF;
-		
 		flag := false;
 		mensagem := 'Ocorreu um erro.';
+		
+		IF errolog THEN 
+			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
+			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT, dataatualizacao::TIMESTAMP);
+		END IF;
+		
 		RETURN NEXT;
 		
 END; 
@@ -229,6 +238,7 @@ $$ LANGUAGE 'plpgsql';
 
 
 
+/*
 SELECT * FROM portal.atualizar_fonte_recursos_projeto(
 	'252'::TEXT, 
 	'987654'::INTEGER, 
@@ -246,6 +256,18 @@ SELECT * FROM portal.atualizar_fonte_recursos_projeto(
 	]'::JSONB, 
 	true::BOOLEAN, 
 	true::BOOLEAN, 
-	true::BOOLEAN, 
 	'1'::INTEGER
 );
+*/
+/*
+SELECT * FROM portal.atualizar_fonte_recursos_projeto(
+	'252'::TEXT, 
+	'1221345'::INTEGER, 
+	'2017/10/27 23:10:03.318'::TIMESTAMP, 
+	'{"id_fonte_recursos_projeto": null, "id_projeto": null, "cd_fonte_recursos_projeto": "2", "cd_origem_fonte_recursos_projeto": null, "cd_tipo_parceria": "2", "tx_tipo_parceria_outro": null, "tx_orgao_concedente": null}'::JSONB, 
+	false::BOOLEAN, 
+	true::BOOLEAN, 
+	false::BOOLEAN, 
+	2
+);
+*/

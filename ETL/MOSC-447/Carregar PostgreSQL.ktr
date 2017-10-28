@@ -610,11 +610,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Dummy 1</from>
-      <to>Merge Join 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>String operations 2</from>
       <to>Mapear fonte recursos</to>
       <enabled>Y</enabled>
@@ -695,11 +690,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Dummy 1</from>
-      <to>Select values 6</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>String operations 1</from>
       <to>Replace in string 1</to>
       <enabled>Y</enabled>
@@ -745,73 +735,8 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Insert Projeto</from>
-      <to>Dummy 1</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Insert Projeto</from>
-      <to>Add constants erro 1</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Add constants erro 1</from>
-      <to>Replace quote 1</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Replace quote 1</from>
-      <to>Insert log_carga 1</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Add constants erro 2</from>
-      <to>Replace quote 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Replace quote 2</from>
-      <to>Insert log_carga 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Add constants erro 3</from>
-      <to>Replace quote 3</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Replace quote 3</from>
-      <to>Insert log_carga 3</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Add constants erro 4</from>
-      <to>Replace quote 4</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Replace quote 4</from>
-      <to>Insert log_carga 4</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Select values 4</from>
-      <to>Insert Projeto</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Select values 7</from>
       <to>Atualizar fonte recursos</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Atualizar fonte recursos</from>
-      <to>Add constants erro 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Select values 4</from>
-      <to>Atualizar dados gerais OSC</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -820,18 +745,33 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Atualizar dados gerais OSC</from>
-      <to>Add constants erro 3</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Merge Join</from>
       <to>Atualizar localização OSC</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Atualizar localização OSC</from>
-      <to>Add constants erro 4</to>
+      <from>Select values 4</from>
+      <to>Ajustar código localidade</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Ajustar código localidade</from>
+      <to>Insert Projeto</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Insert Projeto</from>
+      <to>Merge Join 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Insert Projeto</from>
+      <to>Select values 6</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Ajustar código localidade</from>
+      <to>Atualizar dados gerais OSC</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -847,30 +787,6 @@
       <schema_name />
     </partitioning>
     <fields>
-      <field>
-        <name>cd_uf</name>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>Y</set_empty_string>
-      </field>
-      <field>
-        <name>cd_municipio</name>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>Y</set_empty_string>
-      </field>
       <field>
         <name>bo_oficial</name>
         <type>Boolean</type>
@@ -930,8 +846,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1611</xloc>
-      <yloc>552</yloc>
+      <xloc>1291</xloc>
+      <yloc>533</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -968,208 +884,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1326</xloc>
-      <yloc>554</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Add constants erro 1</name>
-    <type>Constant</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <name>id_fonte_dados_carga</name>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif>Estado ou município</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-      <field>
-        <name>cd_status_carga</name>
-        <type>Integer</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif>2</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>252</xloc>
-      <yloc>447</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Add constants erro 2</name>
-    <type>Constant</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <name>id_fonte_dados_carga</name>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif>Estado ou município</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-      <field>
-        <name>cd_status_carga</name>
-        <type>Integer</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif>2</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>265</xloc>
-      <yloc>1045</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Add constants erro 3</name>
-    <type>Constant</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <name>id_fonte_dados_carga</name>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif>Estado ou município</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-      <field>
-        <name>cd_status_carga</name>
-        <type>Integer</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif>2</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>765</xloc>
-      <yloc>795</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Add constants erro 4</name>
-    <type>Constant</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <name>id_fonte_dados_carga</name>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif>Estado ou município</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-      <field>
-        <name>cd_status_carga</name>
-        <type>Integer</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif>2</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1425</xloc>
-      <yloc>798</yloc>
+      <xloc>1006</xloc>
+      <yloc>535</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1251,8 +967,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>767</xloc>
-      <yloc>671</yloc>
+      <xloc>692</xloc>
+      <yloc>650</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1260,7 +976,7 @@
     <name>Atualizar fonte recursos</name>
     <type>ExecSQL</type>
     <description />
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution />
     <copies>1</copies>
     <partitioning>
@@ -1322,8 +1038,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>265</xloc>
-      <yloc>922</yloc>
+      <xloc>485</xloc>
+      <yloc>811</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1393,8 +1109,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1426</xloc>
-      <yloc>671</yloc>
+      <xloc>1351</xloc>
+      <yloc>650</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1479,8 +1195,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1753</xloc>
-      <yloc>447</yloc>
+      <xloc>1433</xloc>
+      <yloc>428</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1597,30 +1313,6 @@ var situacao_parceria_ajustado = setSituacaoParceria(data_inicio, data_conclusao
     </GUI>
   </step>
   <step>
-    <name>Dummy 1</name>
-    <type>Dummy</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>265</xloc>
-      <yloc>549</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
     <name>Dummy 2</name>
     <type>Dummy</type>
     <description />
@@ -1639,8 +1331,8 @@ var situacao_parceria_ajustado = setSituacaoParceria(data_inicio, data_conclusao
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1082</xloc>
-      <yloc>671</yloc>
+      <xloc>1007</xloc>
+      <yloc>650</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1695,8 +1387,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1082</xloc>
-      <yloc>803</yloc>
+      <xloc>1007</xloc>
+      <yloc>782</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1729,8 +1421,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>940</xloc>
-      <yloc>671</yloc>
+      <xloc>865</xloc>
+      <yloc>650</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1772,8 +1464,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1082</xloc>
-      <yloc>909</yloc>
+      <xloc>1007</xloc>
+      <yloc>888</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1815,8 +1507,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1612</xloc>
-      <yloc>447</yloc>
+      <xloc>1292</xloc>
+      <yloc>428</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1858,8 +1550,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1326</xloc>
-      <yloc>447</yloc>
+      <xloc>1006</xloc>
+      <yloc>428</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1913,27 +1605,34 @@ OR (
     <single_statement>N</single_statement>
     <replace_variables>Y</replace_variables>
     <quoteString>N</quoteString>
-    <sql>SELECT * FROM portal.atualizar_projeto_estado_municipio(
-	'?'::INTEGER, -- osc INTEGER
-	'?'::TEXT, -- identificadorexterno TEXT
-	'?'::INTEGER, -- localidade INTEGER
-	'?'::TEXT, -- nome TEXT
-	'?'::INTEGER, -- status INTEGER
-	'?'::DATE, -- datainicio DATE
-	'?'::DATE, -- datafim DATE
-	'?'::DOUBLE PRECISION, -- valortotal DOUBLE PRECISION
-	'?'::DOUBLE PRECISION, -- valorcaptado DOUBLE PRECISION
-	null::INTEGER, -- totalbeneficiarios INTEGER
-	null::INTEGER, -- abrangencia INTEGER
-	null::INTEGER, -- zonaatuacao INTEGER
-	'?'::TEXT, -- orgaoconcedente TEXT
-	'?'::TEXT, -- descricao TEXT
-	null::TEXT, -- metodologiamonitoramento TEXT
-	null::TEXT, -- link TEXT
-	'?'::TEXT, -- fonte TEXT
-	'?'::TIMESTAMP, -- dataatualizacao TIMESTAMP
-	false, -- nullvalido BOOLEAN
-	true -- errovalido BOOLEAN
+    <sql>SELECT * FROM portal.atualizar_projeto(
+	'?'::TEXT, 
+	'?'::INTEGER, 
+	'?'::TIMESTAMP, 
+	'{
+		"id_osc": "?", 
+		"tx_identificador_projeto_externo": "?", 
+		"cd_municipio": "?", 
+		"cd_uf": "?", 
+		"tx_nome_projeto": "?", 
+		"cd_status_projeto": "?", 
+		"dt_data_inicio_projeto": "?", 
+		"dt_data_fim_projeto": "?", 
+		"nr_valor_captado_projeto": "?", 
+		"nr_valor_total_projeto": "?", 
+		"tx_orgao_concedente": "?", 
+		"tx_descricao_projeto": "?", 
+		"nr_total_beneficiarios": null, 
+		"tx_link_projeto": null, 
+		"cd_abrangencia_projeto": null, 
+		"cd_zona_atuacao_projeto": null, 
+		"tx_metodologia_monitoramento": null, 
+		"tx_status_projeto_outro": null
+	}'::JSONB, 
+	false::BOOLEAN, 
+	true::BOOLEAN, 
+	false::BOOLEAN, 
+	2
 );</sql>
     <set_params>N</set_params>
     <insert_field />
@@ -1942,13 +1641,25 @@ OR (
     <read_field />
     <arguments>
       <argument>
+        <name>usuario</name>
+      </argument>
+      <argument>
+        <name>id_osc</name>
+      </argument>
+      <argument>
+        <name>data_carregamento</name>
+      </argument>
+      <argument>
         <name>id_osc</name>
       </argument>
       <argument>
         <name>numero_parceria</name>
       </argument>
       <argument>
-        <name>localidade</name>
+        <name>cd_municipio</name>
+      </argument>
+      <argument>
+        <name>cd_uf</name>
       </argument>
       <argument>
         <name>nome_parceria</name>
@@ -1963,10 +1674,10 @@ OR (
         <name>data_conclusao</name>
       </argument>
       <argument>
-        <name>valor_total</name>
+        <name>valor_pago</name>
       </argument>
       <argument>
-        <name>valor_pago</name>
+        <name>valor_total</name>
       </argument>
       <argument>
         <name>orgao_concedente</name>
@@ -1974,12 +1685,6 @@ OR (
       <argument>
         <name>objeto_parceria</name>
       </argument>
-      <argument>
-        <name>usuario</name>
-      </argument>
-      <argument>
-        <name>data</name>
-      </argument>
     </arguments>
     <cluster_schema />
     <remotesteps>
@@ -1989,220 +1694,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>536</xloc>
-      <yloc>447</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Insert log_carga 1</name>
-    <type>ExecSQL</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>localhost</connection>
-    <execute_each_row>Y</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>Y</replace_variables>
-    <quoteString>N</quoteString>
-    <sql>INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-VALUES ('?'::INTEGER, '?'::TEXT, '?'::SMALLINT, '?'::TEXT, '?'::TIMESTAMP);</sql>
-    <set_params>N</set_params>
-    <insert_field />
-    <update_field />
-    <delete_field />
-    <read_field />
-    <arguments>
-      <argument>
-        <name>id_osc</name>
-      </argument>
-      <argument>
-        <name>id_fonte_dados_carga</name>
-      </argument>
-      <argument>
-        <name>cd_status_carga</name>
-      </argument>
-      <argument>
-        <name>tx_mensagem_carga</name>
-      </argument>
-      <argument>
-        <name>data_carregamento</name>
-      </argument>
-    </arguments>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>101</xloc>
-      <yloc>576</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Insert log_carga 2</name>
-    <type>ExecSQL</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>localhost</connection>
-    <execute_each_row>Y</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>Y</replace_variables>
-    <quoteString>N</quoteString>
-    <sql>INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-VALUES ('?'::INTEGER, '?'::TEXT, '?'::SMALLINT, '?'::TEXT, '?'::TIMESTAMP);</sql>
-    <set_params>N</set_params>
-    <insert_field />
-    <update_field />
-    <delete_field />
-    <read_field />
-    <arguments>
-      <argument>
-        <name>id_osc</name>
-      </argument>
-      <argument>
-        <name>id_fonte_dados_carga</name>
-      </argument>
-      <argument>
-        <name>cd_status_carga</name>
-      </argument>
-      <argument>
-        <name>tx_mensagem_carga</name>
-      </argument>
-      <argument>
-        <name>data_carregamento</name>
-      </argument>
-    </arguments>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>576</xloc>
-      <yloc>1045</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Insert log_carga 3</name>
-    <type>ExecSQL</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>localhost</connection>
-    <execute_each_row>Y</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>Y</replace_variables>
-    <quoteString>N</quoteString>
-    <sql>INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-VALUES ('?'::INTEGER, '?'::TEXT, '?'::SMALLINT, '?'::TEXT, '?'::TIMESTAMP);</sql>
-    <set_params>N</set_params>
-    <insert_field />
-    <update_field />
-    <delete_field />
-    <read_field />
-    <arguments>
-      <argument>
-        <name>id_osc</name>
-      </argument>
-      <argument>
-        <name>id_fonte_dados_carga</name>
-      </argument>
-      <argument>
-        <name>cd_status_carga</name>
-      </argument>
-      <argument>
-        <name>tx_mensagem_carga</name>
-      </argument>
-      <argument>
-        <name>data_carregamento</name>
-      </argument>
-    </arguments>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>767</xloc>
-      <yloc>1020</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Insert log_carga 4</name>
-    <type>ExecSQL</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>localhost</connection>
-    <execute_each_row>Y</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>Y</replace_variables>
-    <quoteString>N</quoteString>
-    <sql>INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-VALUES ('?'::INTEGER, '?'::TEXT, '?'::SMALLINT, '?'::TEXT, '?'::TIMESTAMP);</sql>
-    <set_params>N</set_params>
-    <insert_field />
-    <update_field />
-    <delete_field />
-    <read_field />
-    <arguments>
-      <argument>
-        <name>id_osc</name>
-      </argument>
-      <argument>
-        <name>id_fonte_dados_carga</name>
-      </argument>
-      <argument>
-        <name>cd_status_carga</name>
-      </argument>
-      <argument>
-        <name>tx_mensagem_carga</name>
-      </argument>
-      <argument>
-        <name>data_carregamento</name>
-      </argument>
-    </arguments>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1427</xloc>
-      <yloc>1033</yloc>
+      <xloc>485</xloc>
+      <yloc>425</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2772,8 +2265,8 @@ VALUES ('?'::INTEGER, '?'::TEXT, '?'::SMALLINT, '?'::TEXT, '?'::TIMESTAMP);</sql
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1752</xloc>
-      <yloc>271</yloc>
+      <xloc>1592</xloc>
+      <yloc>428</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2805,8 +2298,8 @@ VALUES ('?'::INTEGER, '?'::TEXT, '?'::SMALLINT, '?'::TEXT, '?'::TIMESTAMP);</sql
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1250</xloc>
-      <yloc>671</yloc>
+      <xloc>1175</xloc>
+      <yloc>650</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2875,8 +2368,65 @@ VALUES ('?'::INTEGER, '?'::TEXT, '?'::SMALLINT, '?'::TEXT, '?'::TIMESTAMP);</sql
       </output>
     </remotesteps>
     <GUI>
-      <xloc>265</xloc>
-      <yloc>674</yloc>
+      <xloc>485</xloc>
+      <yloc>550</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Ajustar código localidade</name>
+    <type>ScriptValueMod</type>
+    <description />
+    <distribute>N</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>if(localidade > 99){
+	var cd_municipio = localidade;
+	var cd_uf = 0;
+}else{
+	var cd_municipio = 0;
+	var cd_uf = localidade;
+}</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>cd_municipio</name>
+        <rename>cd_municipio</rename>
+        <type>Integer</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+      <field>
+        <name>cd_uf</name>
+        <rename>cd_uf</rename>
+        <type>Integer</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>692</xloc>
+      <yloc>425</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3030,8 +2580,8 @@ VALUES ('?'::INTEGER, '?'::TEXT, '?'::SMALLINT, '?'::TEXT, '?'::TIMESTAMP);</sql
       </output>
     </remotesteps>
     <GUI>
-      <xloc>87</xloc>
-      <yloc>272</yloc>
+      <xloc>88</xloc>
+      <yloc>271</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3340,154 +2890,6 @@ var municipio_proponente_ajustado = removeAccents(municipio_proponente);</jsScri
     </GUI>
   </step>
   <step>
-    <name>Replace quote 1</name>
-    <type>ReplaceString</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <in_stream_name>tx_mensagem_carga</in_stream_name>
-        <out_stream_name />
-        <use_regex>no</use_regex>
-        <replace_string>'</replace_string>
-        <replace_by_string>''</replace_by_string>
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string />
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-      </field>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>101</xloc>
-      <yloc>447</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Replace quote 2</name>
-    <type>ReplaceString</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <in_stream_name>tx_mensagem_carga</in_stream_name>
-        <out_stream_name />
-        <use_regex>no</use_regex>
-        <replace_string>'</replace_string>
-        <replace_by_string>''</replace_by_string>
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string />
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-      </field>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>425</xloc>
-      <yloc>1045</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Replace quote 3</name>
-    <type>ReplaceString</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <in_stream_name>tx_mensagem_carga</in_stream_name>
-        <out_stream_name />
-        <use_regex>no</use_regex>
-        <replace_string>'</replace_string>
-        <replace_by_string>''</replace_by_string>
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string />
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-      </field>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>765</xloc>
-      <yloc>905</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Replace quote 4</name>
-    <type>ReplaceString</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <in_stream_name>tx_mensagem_carga</in_stream_name>
-        <out_stream_name />
-        <use_regex>no</use_regex>
-        <replace_string>'</replace_string>
-        <replace_by_string>''</replace_by_string>
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string />
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-      </field>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1427</xloc>
-      <yloc>914</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
     <name>Select edmu_cd_municipio </name>
     <type>TableInput</type>
     <description />
@@ -3520,8 +2922,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1247</xloc>
-      <yloc>798</yloc>
+      <xloc>1172</xloc>
+      <yloc>777</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3589,8 +2991,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>483</xloc>
-      <yloc>675</yloc>
+      <xloc>290</xloc>
+      <yloc>553</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3861,8 +3263,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1469</xloc>
-      <yloc>447</yloc>
+      <xloc>1149</xloc>
+      <yloc>428</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3922,8 +3324,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1191</xloc>
-      <yloc>447</yloc>
+      <xloc>871</xloc>
+      <yloc>428</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3961,8 +3363,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>483</xloc>
-      <yloc>545</yloc>
+      <xloc>290</xloc>
+      <yloc>425</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -4011,8 +3413,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>265</xloc>
-      <yloc>790</yloc>
+      <xloc>485</xloc>
+      <yloc>679</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -4053,8 +3455,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1247</xloc>
-      <yloc>909</yloc>
+      <xloc>1172</xloc>
+      <yloc>888</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -4086,8 +3488,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1473</xloc>
-      <yloc>552</yloc>
+      <xloc>1153</xloc>
+      <yloc>533</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -4119,8 +3521,8 @@ AND cd_uf = ?::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1192</xloc>
-      <yloc>554</yloc>
+      <xloc>872</xloc>
+      <yloc>535</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -4439,8 +3841,8 @@ AND cd_uf = ?::INTEGER;</sql>
   <step_error_handling>
     <error>
       <source_step>Atualizar dados gerais OSC</source_step>
-      <target_step>Add constants erro 3</target_step>
-      <is_enabled>Y</is_enabled>
+      <target_step />
+      <is_enabled>N</is_enabled>
       <nr_valuename />
       <descriptions_valuename />
       <fields_valuename />
@@ -4451,8 +3853,8 @@ AND cd_uf = ?::INTEGER;</sql>
     </error>
     <error>
       <source_step>Atualizar fonte recursos</source_step>
-      <target_step>Add constants erro 2</target_step>
-      <is_enabled>Y</is_enabled>
+      <target_step />
+      <is_enabled>N</is_enabled>
       <nr_valuename />
       <descriptions_valuename />
       <fields_valuename />
@@ -4463,8 +3865,8 @@ AND cd_uf = ?::INTEGER;</sql>
     </error>
     <error>
       <source_step>Atualizar localização OSC</source_step>
-      <target_step>Add constants erro 4</target_step>
-      <is_enabled>Y</is_enabled>
+      <target_step />
+      <is_enabled>N</is_enabled>
       <nr_valuename />
       <descriptions_valuename />
       <fields_valuename />
@@ -4475,10 +3877,10 @@ AND cd_uf = ?::INTEGER;</sql>
     </error>
     <error>
       <source_step>Insert Projeto</source_step>
-      <target_step>Add constants erro 1</target_step>
-      <is_enabled>Y</is_enabled>
+      <target_step />
+      <is_enabled>N</is_enabled>
       <nr_valuename />
-      <descriptions_valuename>tx_mensagem_carga</descriptions_valuename>
+      <descriptions_valuename />
       <fields_valuename />
       <codes_valuename />
       <max_errors />
