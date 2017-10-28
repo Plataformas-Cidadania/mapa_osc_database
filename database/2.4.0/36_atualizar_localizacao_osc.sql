@@ -86,7 +86,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.tx_endereco <> objeto.tx_endereco) 
-				OR (nullvalido = false AND registro_anterior.tx_endereco <> objeto.tx_endereco AND objeto.tx_endereco IS NOT null)
+				OR (nullvalido = false AND registro_anterior.tx_endereco <> objeto.tx_endereco AND objeto.tx_endereco IS NOT null AND objeto.tx_endereco != '')
 			) AND (
 				registro_anterior.ft_endereco IS null OR registro_anterior.ft_endereco = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -97,7 +97,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.nr_localizacao <> objeto.nr_localizacao) 
-				OR (nullvalido = false AND registro_anterior.nr_localizacao <> objeto.nr_localizacao AND objeto.nr_localizacao IS NOT null) 
+				OR (nullvalido = false AND registro_anterior.nr_localizacao <> objeto.nr_localizacao AND objeto.nr_localizacao IS NOT null AND objeto.nr_localizacao != '') 
 			) AND (
 				registro_anterior.ft_localizacao IS null OR registro_anterior.ft_localizacao = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -108,7 +108,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.tx_endereco_complemento <> objeto.tx_endereco_complemento) 
-				OR (nullvalido = false AND registro_anterior.tx_endereco_complemento <> objeto.tx_endereco_complemento AND objeto.tx_endereco_complemento IS NOT null)
+				OR (nullvalido = false AND registro_anterior.tx_endereco_complemento <> objeto.tx_endereco_complemento AND objeto.tx_endereco_complemento IS NOT null AND objeto.tx_endereco_complemento != '')
 			) AND (
 				registro_anterior.ft_endereco_complemento IS null OR registro_anterior.ft_endereco_complemento = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -119,7 +119,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.tx_bairro <> objeto.tx_bairro) 
-				OR (nullvalido = false AND registro_anterior.tx_bairro <> objeto.tx_bairro AND objeto.tx_bairro IS NOT null)
+				OR (nullvalido = false AND registro_anterior.tx_bairro <> objeto.tx_bairro AND objeto.tx_bairro IS NOT null AND objeto.tx_bairro != '')
 			) AND (
 				registro_anterior.ft_bairro IS null OR registro_anterior.ft_bairro = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -130,7 +130,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.cd_municipio <> objeto.cd_municipio) 
-				OR (nullvalido = false AND registro_anterior.cd_municipio <> objeto.cd_municipio AND objeto.cd_municipio IS NOT null)
+				OR (nullvalido = false AND registro_anterior.cd_municipio <> objeto.cd_municipio AND objeto.cd_municipio IS NOT null AND objeto.cd_municipio != '')
 			) AND (
 				registro_anterior.ft_municipio IS null OR registro_anterior.ft_municipio = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -141,7 +141,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.nr_cep <> objeto.nr_cep) 
-				OR (nullvalido = false AND registro_anterior.nr_cep <> objeto.nr_cep AND objeto.nr_cep IS NOT null)
+				OR (nullvalido = false AND registro_anterior.nr_cep <> objeto.nr_cep AND objeto.nr_cep IS NOT null AND objeto.nr_cep != '')
 			) AND (
 				registro_anterior.ft_cep IS null OR registro_anterior.ft_cep = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -225,23 +225,3 @@ EXCEPTION
 		
 END; 
 $$ LANGUAGE 'plpgsql';
-
-
-/*
-SELECT * FROM portal.atualizar_localizacao_osc(
-	'828'::TEXT, 
-	'987654'::INTEGER, 
-	'2017-10-25'::TIMESTAMP, 
-	'{
-		"id_osc": 789809, 
-		"tx_endereco": "RUA CAPITAO SILVIO GONCALVES DE FARIAS", 
-		"nr_localizacao": "981", 
-		"tx_endereco_complemento": "Lote 2", 
-		"tx_bairro": "BOSQUE", 
-		"cd_municipio": 1100155, 
-		"nr_cep": 76920000
-	}'::JSONB, 
-	false, 
-	true
-);
-*/

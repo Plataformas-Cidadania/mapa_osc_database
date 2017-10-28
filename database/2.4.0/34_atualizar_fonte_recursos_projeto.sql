@@ -105,7 +105,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.cd_fonte_recursos_projeto <> objeto.cd_fonte_recursos_projeto) 
-					OR (nullvalido = false AND registro_anterior.cd_fonte_recursos_projeto <> objeto.cd_fonte_recursos_projeto AND objeto.cd_fonte_recursos_projeto IS NOT null)
+					OR (nullvalido = false AND registro_anterior.cd_fonte_recursos_projeto <> objeto.cd_fonte_recursos_projeto AND objeto.cd_fonte_recursos_projeto IS NOT null AND objeto.cd_fonte_recursos_projeto != '')
 				) AND (
 					registro_anterior.ft_fonte_recursos_projeto IS null OR registro_anterior.ft_fonte_recursos_projeto = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -116,7 +116,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.cd_origem_fonte_recursos_projeto <> objeto.cd_origem_fonte_recursos_projeto) OR 
-					(nullvalido = false AND registro_anterior.cd_origem_fonte_recursos_projeto <> objeto.cd_origem_fonte_recursos_projeto AND objeto.cd_origem_fonte_recursos_projeto IS NOT null)
+					(nullvalido = false AND registro_anterior.cd_origem_fonte_recursos_projeto <> objeto.cd_origem_fonte_recursos_projeto AND objeto.cd_origem_fonte_recursos_projeto IS NOT null AND objeto.cd_origem_fonte_recursos_projeto != '')
 				) AND (
 					registro_anterior.ft_fonte_recursos_projeto IS null OR registro_anterior.ft_fonte_recursos_projeto = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -127,7 +127,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.cd_tipo_parceria <> objeto.cd_tipo_parceria) OR 
-					(nullvalido = false AND registro_anterior.cd_tipo_parceria <> objeto.cd_tipo_parceria AND objeto.cd_tipo_parceria IS NOT null)
+					(nullvalido = false AND registro_anterior.cd_tipo_parceria <> objeto.cd_tipo_parceria AND objeto.cd_tipo_parceria IS NOT null AND objeto.cd_tipo_parceria != '')
 				) AND (
 					registro_anterior.ft_tipo_parceria IS null OR registro_anterior.ft_tipo_parceria = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -138,7 +138,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.tx_tipo_parceria_outro <> objeto.tx_tipo_parceria_outro) OR 
-					(nullvalido = false AND registro_anterior.tx_tipo_parceria_outro <> objeto.tx_tipo_parceria_outro AND objeto.tx_tipo_parceria_outro IS NOT null)
+					(nullvalido = false AND registro_anterior.tx_tipo_parceria_outro <> objeto.tx_tipo_parceria_outro AND objeto.tx_tipo_parceria_outro IS NOT null AND objeto.tx_tipo_parceria_outro != '')
 				) AND (
 					registro_anterior.ft_tipo_parceria IS null OR registro_anterior.ft_tipo_parceria = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -149,7 +149,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.tx_orgao_concedente <> objeto.tx_orgao_concedente) OR 
-					(nullvalido = false AND registro_anterior.tx_orgao_concedente <> objeto.tx_orgao_concedente AND objeto.tx_orgao_concedente IS NOT null)
+					(nullvalido = false AND registro_anterior.tx_orgao_concedente <> objeto.tx_orgao_concedente AND objeto.tx_orgao_concedente IS NOT null AND objeto.tx_orgao_concedente != '')
 				) AND (
 					registro_anterior.ft_orgao_concedente IS null OR registro_anterior.ft_orgao_concedente = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -235,39 +235,3 @@ EXCEPTION
 		
 END; 
 $$ LANGUAGE 'plpgsql';
-
-
-
-/*
-SELECT * FROM portal.atualizar_fonte_recursos_projeto(
-	'252'::TEXT, 
-	'987654'::INTEGER, 
-	'20-10-2017'::TIMESTAMP, 
-	'[
-		{
-			"id_fonte_recursos_projeto": 780, "id_projeto": 24213, "cd_fonte_recursos_projeto": 1, "cd_origem_fonte_recursos_projeto": null, "cd_tipo_parceria": 2, "tx_tipo_parceria_outro": "Teste", "tx_orgao_concedente": "Secretária Estadual de Educação"
-		},
-		{
-			"id_fonte_recursos_projeto": 781, "id_projeto": 24213, "cd_fonte_recursos_projeto": 1, "cd_origem_fonte_recursos_projeto": null, "cd_tipo_parceria": 3, "tx_tipo_parceria_outro": "Teste", "tx_orgao_concedente": "Secretária Estadual de Educação"
-		},
-		{
-			"id_fonte_recursos_projeto": 782, "id_projeto": 24213, "cd_fonte_recursos_projeto": 1, "cd_origem_fonte_recursos_projeto": null, "cd_tipo_parceria": 4, "tx_tipo_parceria_outro": "Teste", "tx_orgao_concedente": "Secretária Estadual de Educação"
-		}
-	]'::JSONB, 
-	true::BOOLEAN, 
-	true::BOOLEAN, 
-	'1'::INTEGER
-);
-*/
-/*
-SELECT * FROM portal.atualizar_fonte_recursos_projeto(
-	'252'::TEXT, 
-	'1221345'::INTEGER, 
-	'2017/10/27 23:10:03.318'::TIMESTAMP, 
-	'{"id_fonte_recursos_projeto": null, "id_projeto": null, "cd_fonte_recursos_projeto": "2", "cd_origem_fonte_recursos_projeto": null, "cd_tipo_parceria": "2", "tx_tipo_parceria_outro": null, "tx_orgao_concedente": null}'::JSONB, 
-	false::BOOLEAN, 
-	true::BOOLEAN, 
-	false::BOOLEAN, 
-	2
-);
-*/

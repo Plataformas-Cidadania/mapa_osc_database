@@ -27,7 +27,7 @@ BEGIN
 		WHERE dc_fonte_dados.cd_sigla_fonte_dados::TEXT = fonte
 	);
 	
-	IF tipo_usuario IS NOT null THEN 
+	IF tipo_usuario IS null THEN 
 		flag := false;
 		mensagem := 'Fonte de dados inválida.';
 		
@@ -49,7 +49,7 @@ BEGIN
 		IF json_typeof(json::JSON) = 'object' THEN 
 			json := ('[' || json || ']');
 		END IF;
-		RAISE NOTICE 'TESTE';
+		
 		FOR objeto IN (SELECT *FROM json_populate_recordset(null::osc.tb_projeto, json::JSON)) 
 		LOOP 
 			registro_anterior := null;
@@ -216,7 +216,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.tx_identificador_projeto_externo <> objeto.tx_identificador_projeto_externo) OR 
-					(nullvalido = false AND registro_anterior.tx_identificador_projeto_externo <> objeto.tx_identificador_projeto_externo AND objeto.tx_identificador_projeto_externo IS NOT null)
+					(nullvalido = false AND registro_anterior.tx_identificador_projeto_externo <> objeto.tx_identificador_projeto_externo AND objeto.tx_identificador_projeto_externo IS NOT null AND objeto.dt_data_fim_projeto != '')
 				) AND (
 					registro_anterior.ft_identificador_projeto_externo IS null OR registro_anterior.ft_identificador_projeto_externo = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -227,7 +227,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.cd_municipio <> objeto.cd_municipio) OR 
-					(nullvalido = false AND registro_anterior.cd_municipio <> objeto.cd_municipio AND objeto.cd_municipio IS NOT null)
+					(nullvalido = false AND registro_anterior.cd_municipio <> objeto.cd_municipio AND objeto.cd_municipio IS NOT null AND objeto.dt_data_fim_projeto != '')
 				) AND (
 					registro_anterior.ft_municipio IS null OR registro_anterior.ft_municipio = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -238,7 +238,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.cd_uf <> objeto.cd_uf) OR 
-					(nullvalido = false AND registro_anterior.cd_uf <> objeto.cd_uf AND objeto.cd_uf IS NOT null)
+					(nullvalido = false AND registro_anterior.cd_uf <> objeto.cd_uf AND objeto.cd_uf IS NOT null AND objeto.dt_data_fim_projeto != '')
 				) AND (
 					registro_anterior.ft_uf IS null OR registro_anterior.ft_uf = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -249,7 +249,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.tx_nome_projeto <> objeto.tx_nome_projeto) OR 
-					(nullvalido = false AND registro_anterior.tx_nome_projeto <> objeto.tx_nome_projeto AND objeto.tx_nome_projeto IS NOT null)
+					(nullvalido = false AND registro_anterior.tx_nome_projeto <> objeto.tx_nome_projeto AND objeto.tx_nome_projeto IS NOT null AND objeto.dt_data_fim_projeto != '')
 				) AND (
 					registro_anterior.ft_nome_projeto IS null OR registro_anterior.ft_nome_projeto = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -260,7 +260,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.cd_status_projeto <> objeto.cd_status_projeto) OR 
-					(nullvalido = false AND registro_anterior.cd_status_projeto <> objeto.cd_status_projeto AND objeto.cd_status_projeto IS NOT null)
+					(nullvalido = false AND registro_anterior.cd_status_projeto <> objeto.cd_status_projeto AND objeto.cd_status_projeto IS NOT null AND objeto.dt_data_fim_projeto != '')
 				) AND (
 					registro_anterior.ft_status_projeto IS null OR registro_anterior.ft_status_projeto = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -271,7 +271,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.dt_data_inicio_projeto <> objeto.dt_data_inicio_projeto) OR 
-					(nullvalido = false AND registro_anterior.dt_data_inicio_projeto <> objeto.dt_data_inicio_projeto AND objeto.dt_data_inicio_projeto IS NOT null)
+					(nullvalido = false AND registro_anterior.dt_data_inicio_projeto <> objeto.dt_data_inicio_projeto AND objeto.dt_data_inicio_projeto IS NOT null AND objeto.dt_data_fim_projeto != '')
 				) AND (
 					registro_anterior.ft_data_inicio_projeto IS null OR registro_anterior.ft_data_inicio_projeto = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -282,7 +282,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.dt_data_fim_projeto <> objeto.dt_data_fim_projeto) OR 
-					(nullvalido = false AND registro_anterior.dt_data_fim_projeto <> objeto.dt_data_fim_projeto AND objeto.dt_data_fim_projeto IS NOT null)
+					(nullvalido = false AND registro_anterior.dt_data_fim_projeto <> objeto.dt_data_fim_projeto AND objeto.dt_data_fim_projeto IS NOT null AND objeto.dt_data_fim_projeto != '')
 				) AND (
 					registro_anterior.ft_data_fim_projeto IS null OR registro_anterior.ft_data_fim_projeto = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -293,7 +293,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.nr_valor_total_projeto <> objeto.nr_valor_total_projeto) OR 
-					(nullvalido = false AND registro_anterior.nr_valor_total_projeto <> objeto.nr_valor_total_projeto AND objeto.nr_valor_total_projeto IS NOT null)
+					(nullvalido = false AND registro_anterior.nr_valor_total_projeto <> objeto.nr_valor_total_projeto AND objeto.nr_valor_total_projeto IS NOT null AND objeto.nr_valor_total_projeto != '')
 				) AND (
 					registro_anterior.ft_valor_total_projeto IS null OR registro_anterior.ft_valor_total_projeto = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -304,7 +304,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.nr_valor_captado_projeto <> objeto.nr_valor_captado_projeto) OR 
-					(nullvalido = false AND registro_anterior.nr_valor_captado_projeto <> objeto.nr_valor_captado_projeto AND objeto.nr_valor_captado_projeto IS NOT null)
+					(nullvalido = false AND registro_anterior.nr_valor_captado_projeto <> objeto.nr_valor_captado_projeto AND objeto.nr_valor_captado_projeto IS NOT null AND objeto.nr_valor_captado_projeto != '')
 				) AND (
 					registro_anterior.ft_valor_captado_projeto IS null OR registro_anterior.ft_valor_captado_projeto = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -315,7 +315,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.nr_total_beneficiarios <> objeto.nr_total_beneficiarios) OR 
-					(nullvalido = false AND registro_anterior.nr_total_beneficiarios <> objeto.nr_total_beneficiarios AND objeto.nr_total_beneficiarios IS NOT null)
+					(nullvalido = false AND registro_anterior.nr_total_beneficiarios <> objeto.nr_total_beneficiarios AND objeto.nr_total_beneficiarios IS NOT null AND objeto.nr_total_beneficiarios != '')
 				) AND (
 					registro_anterior.ft_total_beneficiarios IS null OR registro_anterior.ft_total_beneficiarios = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -326,7 +326,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.cd_abrangencia_projeto <> objeto.cd_abrangencia_projeto) OR 
-					(nullvalido = false AND registro_anterior.cd_abrangencia_projeto <> objeto.cd_abrangencia_projeto AND objeto.cd_abrangencia_projeto IS NOT null)
+					(nullvalido = false AND registro_anterior.cd_abrangencia_projeto <> objeto.cd_abrangencia_projeto AND objeto.cd_abrangencia_projeto IS NOT null AND objeto.cd_abrangencia_projeto != '')
 				) AND (
 					registro_anterior.ft_abrangencia_projeto IS null OR registro_anterior.ft_abrangencia_projeto = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -337,7 +337,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.cd_zona_atuacao_projeto <> objeto.cd_zona_atuacao_projeto) OR 
-					(nullvalido = false AND registro_anterior.cd_zona_atuacao_projeto <> objeto.cd_zona_atuacao_projeto AND objeto.cd_zona_atuacao_projeto IS NOT null)
+					(nullvalido = false AND registro_anterior.cd_zona_atuacao_projeto <> objeto.cd_zona_atuacao_projeto AND objeto.cd_zona_atuacao_projeto IS NOT null AND objeto.cd_zona_atuacao_projeto != '')
 				) AND (
 					registro_anterior.ft_zona_atuacao_projeto IS null OR registro_anterior.ft_zona_atuacao_projeto = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -348,7 +348,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.tx_orgao_concedente <> objeto.tx_orgao_concedente) OR 
-					(nullvalido = false AND registro_anterior.tx_orgao_concedente <> objeto.tx_orgao_concedente AND objeto.tx_orgao_concedente IS NOT null)
+					(nullvalido = false AND registro_anterior.tx_orgao_concedente <> objeto.tx_orgao_concedente AND objeto.tx_orgao_concedente IS NOT null AND objeto.tx_orgao_concedente != '')
 				) AND (
 					registro_anterior.ft_orgao_concedente IS null OR registro_anterior.ft_orgao_concedente = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -359,7 +359,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.tx_descricao_projeto <> objeto.tx_descricao_projeto) OR 
-					(nullvalido = false AND registro_anterior.tx_descricao_projeto <> objeto.tx_descricao_projeto AND objeto.tx_descricao_projeto IS NOT null)
+					(nullvalido = false AND registro_anterior.tx_descricao_projeto <> objeto.tx_descricao_projeto AND objeto.tx_descricao_projeto IS NOT null AND objeto.tx_descricao_projeto != '')
 				) AND (
 					registro_anterior.ft_descricao_projeto IS null OR registro_anterior.ft_descricao_projeto = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -370,7 +370,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.tx_metodologia_monitoramento <> objeto.tx_metodologia_monitoramento) OR 
-					(nullvalido = false AND registro_anterior.tx_metodologia_monitoramento <> objeto.tx_metodologia_monitoramento AND objeto.tx_metodologia_monitoramento IS NOT null)
+					(nullvalido = false AND registro_anterior.tx_metodologia_monitoramento <> objeto.tx_metodologia_monitoramento AND objeto.tx_metodologia_monitoramento IS NOT null AND objeto.tx_metodologia_monitoramento != '')
 				) AND (
 					registro_anterior.ft_metodologia_monitoramento IS null OR registro_anterior.ft_metodologia_monitoramento = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -381,7 +381,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.tx_link_projeto <> objeto.tx_link_projeto) OR 
-					(nullvalido = false AND registro_anterior.tx_link_projeto <> objeto.tx_link_projeto AND objeto.tx_link_projeto IS NOT null)
+					(nullvalido = false AND registro_anterior.tx_link_projeto <> objeto.tx_link_projeto AND objeto.tx_link_projeto IS NOT null AND objeto.tx_link_projeto != '')
 				) AND (
 					registro_anterior.ft_link_projeto IS null OR registro_anterior.ft_link_projeto = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -491,17 +491,3 @@ EXCEPTION
 		
 END; 
 $$ LANGUAGE 'plpgsql';
-
-
-/*
-SELECT * FROM portal.atualizar_projeto(
-	'2'::TEXT, 
-	'1221345'::INTEGER, 
-	'2017/10/28 04:23:09.647'::TIMESTAMP, 
-	'[{"cd_uf": "35", "id_osc": "1221345", "cd_municipio": "", "tx_link_projeto": null, "tx_nome_projeto": "Parceria 000007", "cd_status_projeto": "3", "dt_data_fim_projeto": "31-12-2011", "tx_orgao_concedente": "", "tx_descricao_projeto": "", "cd_abrangencia_projeto": null, "dt_data_inicio_projeto": "01-01-2010", "nr_total_beneficiarios": null, "nr_valor_total_projeto": "100000.0", "cd_zona_atuacao_projeto": null, "tx_status_projeto_outro": null, "nr_valor_captado_projeto": "100000.0", "tx_metodologia_monitoramento": null, "tx_identificador_projeto_externo": "000007"}]'::JSONB, 
-	false::BOOLEAN, 
-	true::BOOLEAN, 
-	false::BOOLEAN, 
-	2
-);
-*/

@@ -134,7 +134,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.cd_natureza_juridica_osc <> objeto.cd_natureza_juridica_osc) 
-				OR (nullvalido = false AND registro_anterior.cd_natureza_juridica_osc <> objeto.cd_natureza_juridica_osc AND objeto.cd_natureza_juridica_osc IS NOT null)
+				OR (nullvalido = false AND registro_anterior.cd_natureza_juridica_osc <> objeto.cd_natureza_juridica_osc AND objeto.cd_natureza_juridica_osc IS NOT null AND objeto.cd_natureza_juridica_osc != '')
 			) AND (
 				registro_anterior.ft_natureza_juridica_osc IS null OR registro_anterior.ft_natureza_juridica_osc = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -145,7 +145,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.cd_subclasse_atividade_economica_osc <> objeto.cd_subclasse_atividade_economica_osc) 
-				OR (nullvalido = false AND registro_anterior.cd_subclasse_atividade_economica_osc <> objeto.cd_subclasse_atividade_economica_osc AND objeto.cd_subclasse_atividade_economica_osc IS NOT null) 
+				OR (nullvalido = false AND registro_anterior.cd_subclasse_atividade_economica_osc <> objeto.cd_subclasse_atividade_economica_osc AND objeto.cd_subclasse_atividade_economica_osc IS NOT null AND objeto.cd_subclasse_atividade_economica_osc != '') 
 			) AND (
 				registro_anterior.ft_subclasse_atividade_economica_osc IS null OR registro_anterior.ft_subclasse_atividade_economica_osc = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -156,7 +156,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.tx_razao_social_osc <> objeto.tx_razao_social_osc) 
-				OR (nullvalido = false AND registro_anterior.tx_razao_social_osc <> objeto.tx_razao_social_osc AND objeto.tx_razao_social_osc IS NOT null)
+				OR (nullvalido = false AND registro_anterior.tx_razao_social_osc <> objeto.tx_razao_social_osc AND objeto.tx_razao_social_osc IS NOT null AND objeto.tx_razao_social_osc != '')
 			) AND (
 				registro_anterior.ft_razao_social_osc IS null OR registro_anterior.ft_razao_social_osc = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -167,7 +167,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.tx_nome_fantasia_osc <> objeto.tx_nome_fantasia_osc) 
-				OR (nullvalido = false AND registro_anterior.tx_nome_fantasia_osc <> objeto.tx_nome_fantasia_osc AND objeto.tx_nome_fantasia_osc IS NOT null)
+				OR (nullvalido = false AND registro_anterior.tx_nome_fantasia_osc <> objeto.tx_nome_fantasia_osc AND objeto.tx_nome_fantasia_osc IS NOT null AND objeto.tx_nome_fantasia_osc != '')
 			) AND (
 				registro_anterior.ft_nome_fantasia_osc IS null OR registro_anterior.ft_nome_fantasia_osc = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -178,7 +178,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.im_logo <> objeto.im_logo) 
-				OR (nullvalido = false AND registro_anterior.im_logo <> objeto.im_logo AND objeto.im_logo IS NOT null)
+				OR (nullvalido = false AND registro_anterior.im_logo <> objeto.im_logo AND objeto.im_logo IS NOT null AND objeto.im_logo != '')
 			) AND (
 				registro_anterior.ft_logo IS null OR registro_anterior.ft_logo = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -189,7 +189,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.tx_missao_osc <> objeto.tx_missao_osc) 
-				OR (nullvalido = false AND registro_anterior.tx_missao_osc <> objeto.tx_missao_osc AND objeto.tx_missao_osc IS NOT null)
+				OR (nullvalido = false AND registro_anterior.tx_missao_osc <> objeto.tx_missao_osc AND objeto.tx_missao_osc IS NOT null AND objeto.tx_missao_osc != '')
 			) AND (
 				registro_anterior.ft_missao_osc IS null OR registro_anterior.ft_missao_osc = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -200,7 +200,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.tx_visao_osc <> objeto.tx_visao_osc) 
-				OR (nullvalido = false AND registro_anterior.tx_visao_osc <> objeto.tx_visao_osc AND objeto.tx_visao_osc IS NOT null)
+				OR (nullvalido = false AND registro_anterior.tx_visao_osc <> objeto.tx_visao_osc AND objeto.tx_visao_osc IS NOT null AND objeto.tx_visao_osc != '')
 			) AND (
 				registro_anterior.ft_visao_osc IS null OR registro_anterior.ft_visao_osc = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -211,7 +211,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.dt_fundacao_osc <> objeto.dt_fundacao_osc) 
-				OR (nullvalido = false AND registro_anterior.dt_fundacao_osc <> objeto.dt_fundacao_osc AND objeto.dt_fundacao_osc IS NOT null)
+				OR (nullvalido = false AND registro_anterior.dt_fundacao_osc <> objeto.dt_fundacao_osc AND objeto.dt_fundacao_osc IS NOT null AND objeto.dt_fundacao_osc != '')
 			) AND (
 				registro_anterior.ft_fundacao_osc IS null OR registro_anterior.ft_fundacao_osc = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -222,7 +222,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.dt_ano_cadastro_cnpj <> objeto.dt_ano_cadastro_cnpj) 
-				OR (nullvalido = false AND registro_anterior.dt_ano_cadastro_cnpj <> objeto.dt_ano_cadastro_cnpj AND objeto.dt_ano_cadastro_cnpj IS NOT null)
+				OR (nullvalido = false AND registro_anterior.dt_ano_cadastro_cnpj <> objeto.dt_ano_cadastro_cnpj AND objeto.dt_ano_cadastro_cnpj IS NOT null AND objeto.dt_ano_cadastro_cnpj != '')
 			) AND (
 				registro_anterior.ft_ano_cadastro_cnpj IS null OR registro_anterior.ft_ano_cadastro_cnpj = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -233,7 +233,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.tx_sigla_osc <> objeto.tx_sigla_osc) 
-				OR (nullvalido = false AND registro_anterior.tx_sigla_osc <> objeto.tx_sigla_osc AND objeto.tx_sigla_osc IS NOT null)
+				OR (nullvalido = false AND registro_anterior.tx_sigla_osc <> objeto.tx_sigla_osc AND objeto.tx_sigla_osc IS NOT null AND objeto.tx_sigla_osc != '')
 			) AND (
 				registro_anterior.ft_sigla_osc IS null OR registro_anterior.ft_sigla_osc = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -244,7 +244,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.tx_resumo_osc <> objeto.tx_resumo_osc) 
-				OR (nullvalido = false AND registro_anterior.tx_resumo_osc <> objeto.tx_resumo_osc AND objeto.tx_resumo_osc IS NOT null)
+				OR (nullvalido = false AND registro_anterior.tx_resumo_osc <> objeto.tx_resumo_osc AND objeto.tx_resumo_osc IS NOT null AND objeto.tx_resumo_osc != '')
 			) AND (
 				registro_anterior.ft_resumo_osc IS null OR registro_anterior.ft_resumo_osc = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -255,7 +255,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.cd_situacao_imovel_osc <> objeto.cd_situacao_imovel_osc) 
-				OR (nullvalido = false AND registro_anterior.cd_situacao_imovel_osc <> objeto.cd_situacao_imovel_osc AND objeto.cd_situacao_imovel_osc IS NOT null)
+				OR (nullvalido = false AND registro_anterior.cd_situacao_imovel_osc <> objeto.cd_situacao_imovel_osc AND objeto.cd_situacao_imovel_osc IS NOT null AND objeto.cd_situacao_imovel_osc != '')
 			) AND (
 				registro_anterior.ft_situacao_imovel_osc IS null OR registro_anterior.ft_situacao_imovel_osc = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -266,7 +266,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.tx_link_estatuto_osc <> objeto.tx_link_estatuto_osc) 
-				OR (nullvalido = false AND registro_anterior.tx_link_estatuto_osc <> objeto.tx_link_estatuto_osc AND objeto.tx_link_estatuto_osc IS NOT null)
+				OR (nullvalido = false AND registro_anterior.tx_link_estatuto_osc <> objeto.tx_link_estatuto_osc AND objeto.tx_link_estatuto_osc IS NOT null AND objeto.tx_link_estatuto_osc != '')
 			) AND (
 				registro_anterior.ft_link_estatuto_osc IS null OR registro_anterior.ft_link_estatuto_osc = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -277,7 +277,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.tx_historico <> objeto.tx_historico) 
-				OR (nullvalido = false AND registro_anterior.tx_historico <> objeto.tx_historico AND objeto.tx_historico IS NOT null)
+				OR (nullvalido = false AND registro_anterior.tx_historico <> objeto.tx_historico AND objeto.tx_historico IS NOT null AND objeto.tx_historico != '')
 			) AND (
 				registro_anterior.ft_historico IS null OR registro_anterior.ft_historico = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -288,7 +288,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.tx_finalidades_estatutarias <> objeto.tx_finalidades_estatutarias) 
-				OR (nullvalido = false AND registro_anterior.tx_finalidades_estatutarias <> objeto.tx_finalidades_estatutarias AND objeto.tx_finalidades_estatutarias IS NOT null)
+				OR (nullvalido = false AND registro_anterior.tx_finalidades_estatutarias <> objeto.tx_finalidades_estatutarias AND objeto.tx_finalidades_estatutarias IS NOT null AND objeto.tx_finalidades_estatutarias != '')
 			) AND (
 				registro_anterior.ft_finalidades_estatutarias IS null OR registro_anterior.ft_finalidades_estatutarias = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -299,7 +299,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.tx_link_relatorio_auditoria <> objeto.tx_link_relatorio_auditoria) 
-				OR (nullvalido = false AND registro_anterior.tx_link_relatorio_auditoria <> objeto.tx_link_relatorio_auditoria AND objeto.tx_link_relatorio_auditoria IS NOT null)
+				OR (nullvalido = false AND registro_anterior.tx_link_relatorio_auditoria <> objeto.tx_link_relatorio_auditoria AND objeto.tx_link_relatorio_auditoria IS NOT null AND objeto.tx_link_relatorio_auditoria != '')
 			) AND (
 				registro_anterior.ft_link_relatorio_auditoria IS null OR registro_anterior.ft_link_relatorio_auditoria = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -310,7 +310,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.tx_link_demonstracao_contabil <> objeto.tx_link_demonstracao_contabil) 
-				OR (nullvalido = false AND registro_anterior.tx_link_demonstracao_contabil <> objeto.tx_link_demonstracao_contabil AND objeto.tx_link_demonstracao_contabil IS NOT null)
+				OR (nullvalido = false AND registro_anterior.tx_link_demonstracao_contabil <> objeto.tx_link_demonstracao_contabil AND objeto.tx_link_demonstracao_contabil IS NOT null AND objeto.tx_link_demonstracao_contabil != '')
 			) AND (
 				registro_anterior.ft_link_demonstracao_contabil IS null OR registro_anterior.ft_link_demonstracao_contabil = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -321,7 +321,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.tx_nome_responsavel_legal <> objeto.tx_nome_responsavel_legal) 
-				OR (nullvalido = false AND registro_anterior.tx_nome_responsavel_legal <> objeto.tx_nome_responsavel_legal AND objeto.tx_nome_responsavel_legal IS NOT null)
+				OR (nullvalido = false AND registro_anterior.tx_nome_responsavel_legal <> objeto.tx_nome_responsavel_legal AND objeto.tx_nome_responsavel_legal IS NOT null AND objeto.tx_nome_responsavel_legal != '')
 			) AND (
 				registro_anterior.ft_nome_responsavel_legal IS null OR registro_anterior.ft_nome_responsavel_legal = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -428,35 +428,3 @@ EXCEPTION
 		
 END; 
 $$ LANGUAGE 'plpgsql';
-
-
-/*
-SELECT * FROM portal.atualizar_dados_gerais_osc(
-	'828'::TEXT, 
-	'987654'::INTEGER, 
-	'2017-10-25'::TIMESTAMP, 
-	'{
-		"id_osc": 987654, 
-		"cd_natureza_juridica_osc": 3999, 
-		"cd_subclasse_atividade_economica_osc": 8424800, 
-		"tx_razao_social_osc": "Organização da Sociedade Civil de Teste do Mapa das OSCs", 
-		"tx_nome_fantasia_osc": "Orgteste - Organização Tipiniquim de Teste", 
-		"im_logo": null, 
-		"tx_missao_osc": "Missão aquela para qual o Mapa das OSCs for projetado para desempenhar.", 
-		"tx_visao_osc": "Turva", 
-		"dt_fundacao_osc": "01-01-2017", 
-		"dt_ano_cadastro_cnpj": "01-01-1960", 
-		"tx_sigla_osc": "ORGIPEA", 
-		"tx_resumo_osc": "OSC utilizadao para testes do Mapa das OSCs.", 
-		"cd_situacao_imovel_osc": 2, 
-		"tx_link_estatuto_osc": "https://mapaosc.ipea.gov.br/editar-osc.html#/789809", 
-		"tx_historico": "A maior preocupação dos jovens é a qualidade da educação. Os adultos, no entanto, colocam a saúde em primeiro lugar. Essa é uma das conclusões do estudo Juventude que conta, apresentado no auditório do IPEA.", 
-		"tx_finalidades_estatutarias": "Não há finalidades definidas em estatuto definido.", 
-		"tx_link_relatorio_auditoria": null, 
-		"tx_link_demonstracao_contabil": null, 
-		"tx_nome_responsavel_legal": "Felix Lopez"
-	}'::JSONB, 
-	false, 
-	true
-);
-*/
