@@ -6,6 +6,7 @@ CREATE OR REPLACE FUNCTION portal.atualizar_projeto(fonte TEXT, osc INTEGER, dat
 )AS $$
 
 DECLARE 
+	operacao TEXT;
 	fonte_dados_nao_oficiais TEXT[];
 	tipo_usuario TEXT;
 	objeto RECORD;
@@ -15,6 +16,8 @@ DECLARE
 	flag_log BOOLEAN;
 	
 BEGIN 
+	operacao := 'portal.atualizar_projeto(' || fonte::TEXT || ', ' || osc::TEXT || ', ' || dataatualizacao::TEXT || ', ' || json::TEXT || ', ' || nullvalido::TEXT || ', ' || errolog::TEXT || ', ' || deletevalido::TEXT || ', ' || tipobusca::TEXT || ')';
+	
 	SELECT INTO tipo_usuario (
 		SELECT dc_tipo_usuario.tx_nome_tipo_usuario 
 		FROM portal.tb_usuario 
@@ -33,7 +36,7 @@ BEGIN
 		
 		IF errolog THEN 
 			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT, dataatualizacao::TIMESTAMP);
+			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT || ' Operação: ' || operacao, dataatualizacao::TIMESTAMP);
 		END IF;
 		
 	ELSE 
@@ -216,7 +219,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.tx_identificador_projeto_externo <> objeto.tx_identificador_projeto_externo) OR 
-					(nullvalido = false AND registro_anterior.tx_identificador_projeto_externo <> objeto.tx_identificador_projeto_externo AND objeto.tx_identificador_projeto_externo IS NOT null AND objeto.dt_data_fim_projeto != '')
+					(nullvalido = false AND registro_anterior.tx_identificador_projeto_externo <> objeto.tx_identificador_projeto_externo AND (objeto.tx_identificador_projeto_externo::TEXT = '') IS FALSE)
 				) AND (
 					registro_anterior.ft_identificador_projeto_externo IS null OR registro_anterior.ft_identificador_projeto_externo = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -227,7 +230,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.cd_municipio <> objeto.cd_municipio) OR 
-					(nullvalido = false AND registro_anterior.cd_municipio <> objeto.cd_municipio AND objeto.cd_municipio IS NOT null AND objeto.dt_data_fim_projeto != '')
+					(nullvalido = false AND registro_anterior.cd_municipio <> objeto.cd_municipio AND (objeto.cd_municipio::TEXT = '') IS FALSE)
 				) AND (
 					registro_anterior.ft_municipio IS null OR registro_anterior.ft_municipio = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -238,7 +241,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.cd_uf <> objeto.cd_uf) OR 
-					(nullvalido = false AND registro_anterior.cd_uf <> objeto.cd_uf AND objeto.cd_uf IS NOT null AND objeto.dt_data_fim_projeto != '')
+					(nullvalido = false AND registro_anterior.cd_uf <> objeto.cd_uf AND (objeto.cd_uf::TEXT = '') IS FALSE)
 				) AND (
 					registro_anterior.ft_uf IS null OR registro_anterior.ft_uf = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -249,7 +252,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.tx_nome_projeto <> objeto.tx_nome_projeto) OR 
-					(nullvalido = false AND registro_anterior.tx_nome_projeto <> objeto.tx_nome_projeto AND objeto.tx_nome_projeto IS NOT null AND objeto.dt_data_fim_projeto != '')
+					(nullvalido = false AND registro_anterior.tx_nome_projeto <> objeto.tx_nome_projeto AND (objeto.tx_nome_projeto::TEXT = '') IS FALSE)
 				) AND (
 					registro_anterior.ft_nome_projeto IS null OR registro_anterior.ft_nome_projeto = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -260,7 +263,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.cd_status_projeto <> objeto.cd_status_projeto) OR 
-					(nullvalido = false AND registro_anterior.cd_status_projeto <> objeto.cd_status_projeto AND objeto.cd_status_projeto IS NOT null AND objeto.dt_data_fim_projeto != '')
+					(nullvalido = false AND registro_anterior.cd_status_projeto <> objeto.cd_status_projeto AND (objeto.cd_status_projeto::TEXT = '') IS FALSE)
 				) AND (
 					registro_anterior.ft_status_projeto IS null OR registro_anterior.ft_status_projeto = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -271,7 +274,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.dt_data_inicio_projeto <> objeto.dt_data_inicio_projeto) OR 
-					(nullvalido = false AND registro_anterior.dt_data_inicio_projeto <> objeto.dt_data_inicio_projeto AND objeto.dt_data_inicio_projeto IS NOT null AND objeto.dt_data_fim_projeto != '')
+					(nullvalido = false AND registro_anterior.dt_data_inicio_projeto <> objeto.dt_data_inicio_projeto AND (objeto.dt_data_inicio_projeto::TEXT = '') IS FALSE)
 				) AND (
 					registro_anterior.ft_data_inicio_projeto IS null OR registro_anterior.ft_data_inicio_projeto = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -282,7 +285,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.dt_data_fim_projeto <> objeto.dt_data_fim_projeto) OR 
-					(nullvalido = false AND registro_anterior.dt_data_fim_projeto <> objeto.dt_data_fim_projeto AND objeto.dt_data_fim_projeto IS NOT null AND objeto.dt_data_fim_projeto != '')
+					(nullvalido = false AND registro_anterior.dt_data_fim_projeto <> objeto.dt_data_fim_projeto AND (objeto.dt_data_fim_projeto::TEXT = '') IS FALSE)
 				) AND (
 					registro_anterior.ft_data_fim_projeto IS null OR registro_anterior.ft_data_fim_projeto = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -293,7 +296,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.nr_valor_total_projeto <> objeto.nr_valor_total_projeto) OR 
-					(nullvalido = false AND registro_anterior.nr_valor_total_projeto <> objeto.nr_valor_total_projeto AND objeto.nr_valor_total_projeto IS NOT null AND objeto.nr_valor_total_projeto != '')
+					(nullvalido = false AND registro_anterior.nr_valor_total_projeto <> objeto.nr_valor_total_projeto AND (objeto.nr_valor_total_projeto::TEXT = '') IS FALSE)
 				) AND (
 					registro_anterior.ft_valor_total_projeto IS null OR registro_anterior.ft_valor_total_projeto = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -304,7 +307,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.nr_valor_captado_projeto <> objeto.nr_valor_captado_projeto) OR 
-					(nullvalido = false AND registro_anterior.nr_valor_captado_projeto <> objeto.nr_valor_captado_projeto AND objeto.nr_valor_captado_projeto IS NOT null AND objeto.nr_valor_captado_projeto != '')
+					(nullvalido = false AND registro_anterior.nr_valor_captado_projeto <> objeto.nr_valor_captado_projeto AND (objeto.nr_valor_captado_projeto::TEXT = '') IS FALSE)
 				) AND (
 					registro_anterior.ft_valor_captado_projeto IS null OR registro_anterior.ft_valor_captado_projeto = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -315,7 +318,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.nr_total_beneficiarios <> objeto.nr_total_beneficiarios) OR 
-					(nullvalido = false AND registro_anterior.nr_total_beneficiarios <> objeto.nr_total_beneficiarios AND objeto.nr_total_beneficiarios IS NOT null AND objeto.nr_total_beneficiarios != '')
+					(nullvalido = false AND registro_anterior.nr_total_beneficiarios <> objeto.nr_total_beneficiarios AND (objeto.nr_total_beneficiarios::TEXT = '') IS FALSE)
 				) AND (
 					registro_anterior.ft_total_beneficiarios IS null OR registro_anterior.ft_total_beneficiarios = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -326,7 +329,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.cd_abrangencia_projeto <> objeto.cd_abrangencia_projeto) OR 
-					(nullvalido = false AND registro_anterior.cd_abrangencia_projeto <> objeto.cd_abrangencia_projeto AND objeto.cd_abrangencia_projeto IS NOT null AND objeto.cd_abrangencia_projeto != '')
+					(nullvalido = false AND registro_anterior.cd_abrangencia_projeto <> objeto.cd_abrangencia_projeto AND (objeto.cd_abrangencia_projeto::TEXT = '') IS FALSE)
 				) AND (
 					registro_anterior.ft_abrangencia_projeto IS null OR registro_anterior.ft_abrangencia_projeto = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -337,7 +340,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.cd_zona_atuacao_projeto <> objeto.cd_zona_atuacao_projeto) OR 
-					(nullvalido = false AND registro_anterior.cd_zona_atuacao_projeto <> objeto.cd_zona_atuacao_projeto AND objeto.cd_zona_atuacao_projeto IS NOT null AND objeto.cd_zona_atuacao_projeto != '')
+					(nullvalido = false AND registro_anterior.cd_zona_atuacao_projeto <> objeto.cd_zona_atuacao_projeto AND (objeto.cd_zona_atuacao_projeto::TEXT = '') IS FALSE)
 				) AND (
 					registro_anterior.ft_zona_atuacao_projeto IS null OR registro_anterior.ft_zona_atuacao_projeto = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -348,7 +351,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.tx_orgao_concedente <> objeto.tx_orgao_concedente) OR 
-					(nullvalido = false AND registro_anterior.tx_orgao_concedente <> objeto.tx_orgao_concedente AND objeto.tx_orgao_concedente IS NOT null AND objeto.tx_orgao_concedente != '')
+					(nullvalido = false AND registro_anterior.tx_orgao_concedente <> objeto.tx_orgao_concedente AND (objeto.tx_orgao_concedente::TEXT = '') IS FALSE)
 				) AND (
 					registro_anterior.ft_orgao_concedente IS null OR registro_anterior.ft_orgao_concedente = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -359,7 +362,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.tx_descricao_projeto <> objeto.tx_descricao_projeto) OR 
-					(nullvalido = false AND registro_anterior.tx_descricao_projeto <> objeto.tx_descricao_projeto AND objeto.tx_descricao_projeto IS NOT null AND objeto.tx_descricao_projeto != '')
+					(nullvalido = false AND registro_anterior.tx_descricao_projeto <> objeto.tx_descricao_projeto AND (objeto.tx_descricao_projeto::TEXT = '') IS FALSE)
 				) AND (
 					registro_anterior.ft_descricao_projeto IS null OR registro_anterior.ft_descricao_projeto = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -370,7 +373,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.tx_metodologia_monitoramento <> objeto.tx_metodologia_monitoramento) OR 
-					(nullvalido = false AND registro_anterior.tx_metodologia_monitoramento <> objeto.tx_metodologia_monitoramento AND objeto.tx_metodologia_monitoramento IS NOT null AND objeto.tx_metodologia_monitoramento != '')
+					(nullvalido = false AND registro_anterior.tx_metodologia_monitoramento <> objeto.tx_metodologia_monitoramento AND (objeto.tx_metodologia_monitoramento::TEXT = '') IS FALSE)
 				) AND (
 					registro_anterior.ft_metodologia_monitoramento IS null OR registro_anterior.ft_metodologia_monitoramento = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -381,7 +384,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.tx_link_projeto <> objeto.tx_link_projeto) OR 
-					(nullvalido = false AND registro_anterior.tx_link_projeto <> objeto.tx_link_projeto AND objeto.tx_link_projeto IS NOT null AND objeto.tx_link_projeto != '')
+					(nullvalido = false AND registro_anterior.tx_link_projeto <> objeto.tx_link_projeto AND (objeto.tx_link_projeto::TEXT = '') IS FALSE)
 				) AND (
 					registro_anterior.ft_link_projeto IS null OR registro_anterior.ft_link_projeto = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -451,7 +454,7 @@ EXCEPTION
 		
 		IF errolog THEN 
 			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT, dataatualizacao::TIMESTAMP);
+			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT || ' Operação: ' || operacao, dataatualizacao::TIMESTAMP);
 		END IF;
 		
 		RETURN NEXT;
@@ -462,7 +465,7 @@ EXCEPTION
 		
 		IF errolog THEN 
 			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT, dataatualizacao::TIMESTAMP);
+			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT || ' Operação: ' || operacao, dataatualizacao::TIMESTAMP);
 		END IF;
 		
 		RETURN NEXT;
@@ -473,7 +476,7 @@ EXCEPTION
 		
 		IF errolog THEN 
 			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT, dataatualizacao::TIMESTAMP);
+			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT || ' Operação: ' || operacao, dataatualizacao::TIMESTAMP);
 		END IF;
 		
 		RETURN NEXT;
@@ -484,7 +487,7 @@ EXCEPTION
 		
 		IF errolog THEN 
 			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT, dataatualizacao::TIMESTAMP);
+			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT || ' Operação: ' || operacao, dataatualizacao::TIMESTAMP);
 		END IF;
 		
 		RETURN NEXT;

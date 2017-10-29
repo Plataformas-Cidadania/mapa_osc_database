@@ -6,6 +6,7 @@ CREATE OR REPLACE FUNCTION portal.atualizar_dados_gerais_osc(fonte TEXT, osc INT
 )AS $$
 
 DECLARE 
+	operacao TEXT;
 	fonte_dados_nao_oficiais TEXT[];
 	tipo_usuario TEXT;
 	objeto RECORD;
@@ -14,6 +15,8 @@ DECLARE
 	flag_log BOOLEAN;
 	
 BEGIN 
+	operacao := 'portal.atualizar_dados_gerais_osc(' || fonte::TEXT || ', ' || osc::TEXT || ', ' || dataatualizacao::TEXT || ', ' || json::TEXT || ', ' || nullvalido::TEXT || ', ' || errolog::TEXT || ')';
+	
 	SELECT INTO tipo_usuario (
 		SELECT dc_tipo_usuario.tx_nome_tipo_usuario 
 		FROM portal.tb_usuario 
@@ -32,7 +35,7 @@ BEGIN
 		
 		IF errolog THEN 
 			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT, dataatualizacao::TIMESTAMP);
+			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT || ' Operação: ' || operacao, dataatualizacao::TIMESTAMP);
 		END IF;
 		
 	ELSE 
@@ -134,7 +137,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.cd_natureza_juridica_osc <> objeto.cd_natureza_juridica_osc) 
-				OR (nullvalido = false AND registro_anterior.cd_natureza_juridica_osc <> objeto.cd_natureza_juridica_osc AND objeto.cd_natureza_juridica_osc IS NOT null AND objeto.cd_natureza_juridica_osc != '')
+				OR (nullvalido = false AND registro_anterior.cd_natureza_juridica_osc <> objeto.cd_natureza_juridica_osc AND (objeto.cd_natureza_juridica_osc::TEXT = '') IS FALSE)
 			) AND (
 				registro_anterior.ft_natureza_juridica_osc IS null OR registro_anterior.ft_natureza_juridica_osc = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -145,7 +148,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.cd_subclasse_atividade_economica_osc <> objeto.cd_subclasse_atividade_economica_osc) 
-				OR (nullvalido = false AND registro_anterior.cd_subclasse_atividade_economica_osc <> objeto.cd_subclasse_atividade_economica_osc AND objeto.cd_subclasse_atividade_economica_osc IS NOT null AND objeto.cd_subclasse_atividade_economica_osc != '') 
+				OR (nullvalido = false AND registro_anterior.cd_subclasse_atividade_economica_osc <> objeto.cd_subclasse_atividade_economica_osc AND (objeto.cd_subclasse_atividade_economica_osc::TEXT = '') IS FALSE)
 			) AND (
 				registro_anterior.ft_subclasse_atividade_economica_osc IS null OR registro_anterior.ft_subclasse_atividade_economica_osc = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -156,7 +159,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.tx_razao_social_osc <> objeto.tx_razao_social_osc) 
-				OR (nullvalido = false AND registro_anterior.tx_razao_social_osc <> objeto.tx_razao_social_osc AND objeto.tx_razao_social_osc IS NOT null AND objeto.tx_razao_social_osc != '')
+				OR (nullvalido = false AND registro_anterior.tx_razao_social_osc <> objeto.tx_razao_social_osc AND (objeto.tx_razao_social_osc::TEXT = '') IS FALSE)
 			) AND (
 				registro_anterior.ft_razao_social_osc IS null OR registro_anterior.ft_razao_social_osc = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -167,7 +170,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.tx_nome_fantasia_osc <> objeto.tx_nome_fantasia_osc) 
-				OR (nullvalido = false AND registro_anterior.tx_nome_fantasia_osc <> objeto.tx_nome_fantasia_osc AND objeto.tx_nome_fantasia_osc IS NOT null AND objeto.tx_nome_fantasia_osc != '')
+				OR (nullvalido = false AND registro_anterior.tx_nome_fantasia_osc <> objeto.tx_nome_fantasia_osc AND (objeto.tx_nome_fantasia_osc::TEXT = '') IS FALSE)
 			) AND (
 				registro_anterior.ft_nome_fantasia_osc IS null OR registro_anterior.ft_nome_fantasia_osc = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -178,7 +181,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.im_logo <> objeto.im_logo) 
-				OR (nullvalido = false AND registro_anterior.im_logo <> objeto.im_logo AND objeto.im_logo IS NOT null AND objeto.im_logo != '')
+				OR (nullvalido = false AND registro_anterior.im_logo <> objeto.im_logo AND (objeto.im_logo::TEXT = '') IS FALSE)
 			) AND (
 				registro_anterior.ft_logo IS null OR registro_anterior.ft_logo = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -189,7 +192,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.tx_missao_osc <> objeto.tx_missao_osc) 
-				OR (nullvalido = false AND registro_anterior.tx_missao_osc <> objeto.tx_missao_osc AND objeto.tx_missao_osc IS NOT null AND objeto.tx_missao_osc != '')
+				OR (nullvalido = false AND registro_anterior.tx_missao_osc <> objeto.tx_missao_osc AND (objeto.tx_missao_osc::TEXT = '') IS FALSE)
 			) AND (
 				registro_anterior.ft_missao_osc IS null OR registro_anterior.ft_missao_osc = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -200,7 +203,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.tx_visao_osc <> objeto.tx_visao_osc) 
-				OR (nullvalido = false AND registro_anterior.tx_visao_osc <> objeto.tx_visao_osc AND objeto.tx_visao_osc IS NOT null AND objeto.tx_visao_osc != '')
+				OR (nullvalido = false AND registro_anterior.tx_visao_osc <> objeto.tx_visao_osc AND (objeto.tx_visao_osc::TEXT = '') IS FALSE)
 			) AND (
 				registro_anterior.ft_visao_osc IS null OR registro_anterior.ft_visao_osc = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -211,7 +214,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.dt_fundacao_osc <> objeto.dt_fundacao_osc) 
-				OR (nullvalido = false AND registro_anterior.dt_fundacao_osc <> objeto.dt_fundacao_osc AND objeto.dt_fundacao_osc IS NOT null AND objeto.dt_fundacao_osc != '')
+				OR (nullvalido = false AND registro_anterior.dt_fundacao_osc <> objeto.dt_fundacao_osc AND (objeto.dt_fundacao_osc::TEXT = '') IS FALSE)
 			) AND (
 				registro_anterior.ft_fundacao_osc IS null OR registro_anterior.ft_fundacao_osc = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -222,7 +225,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.dt_ano_cadastro_cnpj <> objeto.dt_ano_cadastro_cnpj) 
-				OR (nullvalido = false AND registro_anterior.dt_ano_cadastro_cnpj <> objeto.dt_ano_cadastro_cnpj AND objeto.dt_ano_cadastro_cnpj IS NOT null AND objeto.dt_ano_cadastro_cnpj != '')
+				OR (nullvalido = false AND registro_anterior.dt_ano_cadastro_cnpj <> objeto.dt_ano_cadastro_cnpj AND (objeto.dt_ano_cadastro_cnpj::TEXT = '') IS FALSE)
 			) AND (
 				registro_anterior.ft_ano_cadastro_cnpj IS null OR registro_anterior.ft_ano_cadastro_cnpj = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -233,7 +236,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.tx_sigla_osc <> objeto.tx_sigla_osc) 
-				OR (nullvalido = false AND registro_anterior.tx_sigla_osc <> objeto.tx_sigla_osc AND objeto.tx_sigla_osc IS NOT null AND objeto.tx_sigla_osc != '')
+				OR (nullvalido = false AND registro_anterior.tx_sigla_osc <> objeto.tx_sigla_osc AND (objeto.tx_sigla_osc::TEXT = '') IS FALSE)
 			) AND (
 				registro_anterior.ft_sigla_osc IS null OR registro_anterior.ft_sigla_osc = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -244,7 +247,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.tx_resumo_osc <> objeto.tx_resumo_osc) 
-				OR (nullvalido = false AND registro_anterior.tx_resumo_osc <> objeto.tx_resumo_osc AND objeto.tx_resumo_osc IS NOT null AND objeto.tx_resumo_osc != '')
+				OR (nullvalido = false AND registro_anterior.tx_resumo_osc <> objeto.tx_resumo_osc AND (objeto.tx_resumo_osc::TEXT = '') IS FALSE)
 			) AND (
 				registro_anterior.ft_resumo_osc IS null OR registro_anterior.ft_resumo_osc = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -255,7 +258,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.cd_situacao_imovel_osc <> objeto.cd_situacao_imovel_osc) 
-				OR (nullvalido = false AND registro_anterior.cd_situacao_imovel_osc <> objeto.cd_situacao_imovel_osc AND objeto.cd_situacao_imovel_osc IS NOT null AND objeto.cd_situacao_imovel_osc != '')
+				OR (nullvalido = false AND registro_anterior.cd_situacao_imovel_osc <> objeto.cd_situacao_imovel_osc AND (objeto.cd_situacao_imovel_osc::TEXT = '') IS FALSE)
 			) AND (
 				registro_anterior.ft_situacao_imovel_osc IS null OR registro_anterior.ft_situacao_imovel_osc = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -266,7 +269,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.tx_link_estatuto_osc <> objeto.tx_link_estatuto_osc) 
-				OR (nullvalido = false AND registro_anterior.tx_link_estatuto_osc <> objeto.tx_link_estatuto_osc AND objeto.tx_link_estatuto_osc IS NOT null AND objeto.tx_link_estatuto_osc != '')
+				OR (nullvalido = false AND registro_anterior.tx_link_estatuto_osc <> objeto.tx_link_estatuto_osc AND (objeto.tx_link_estatuto_osc::TEXT = '') IS FALSE)
 			) AND (
 				registro_anterior.ft_link_estatuto_osc IS null OR registro_anterior.ft_link_estatuto_osc = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -277,7 +280,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.tx_historico <> objeto.tx_historico) 
-				OR (nullvalido = false AND registro_anterior.tx_historico <> objeto.tx_historico AND objeto.tx_historico IS NOT null AND objeto.tx_historico != '')
+				OR (nullvalido = false AND registro_anterior.tx_historico <> objeto.tx_historico AND (objeto.tx_historico::TEXT = '') IS FALSE)
 			) AND (
 				registro_anterior.ft_historico IS null OR registro_anterior.ft_historico = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -288,7 +291,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.tx_finalidades_estatutarias <> objeto.tx_finalidades_estatutarias) 
-				OR (nullvalido = false AND registro_anterior.tx_finalidades_estatutarias <> objeto.tx_finalidades_estatutarias AND objeto.tx_finalidades_estatutarias IS NOT null AND objeto.tx_finalidades_estatutarias != '')
+				OR (nullvalido = false AND registro_anterior.tx_finalidades_estatutarias <> objeto.tx_finalidades_estatutarias AND (objeto.tx_finalidades_estatutarias::TEXT = '') IS FALSE)
 			) AND (
 				registro_anterior.ft_finalidades_estatutarias IS null OR registro_anterior.ft_finalidades_estatutarias = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -299,7 +302,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.tx_link_relatorio_auditoria <> objeto.tx_link_relatorio_auditoria) 
-				OR (nullvalido = false AND registro_anterior.tx_link_relatorio_auditoria <> objeto.tx_link_relatorio_auditoria AND objeto.tx_link_relatorio_auditoria IS NOT null AND objeto.tx_link_relatorio_auditoria != '')
+				OR (nullvalido = false AND registro_anterior.tx_link_relatorio_auditoria <> objeto.tx_link_relatorio_auditoria AND (objeto.tx_link_relatorio_auditoria::TEXT = '') IS FALSE)
 			) AND (
 				registro_anterior.ft_link_relatorio_auditoria IS null OR registro_anterior.ft_link_relatorio_auditoria = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -310,7 +313,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.tx_link_demonstracao_contabil <> objeto.tx_link_demonstracao_contabil) 
-				OR (nullvalido = false AND registro_anterior.tx_link_demonstracao_contabil <> objeto.tx_link_demonstracao_contabil AND objeto.tx_link_demonstracao_contabil IS NOT null AND objeto.tx_link_demonstracao_contabil != '')
+				OR (nullvalido = false AND registro_anterior.tx_link_demonstracao_contabil <> objeto.tx_link_demonstracao_contabil AND (objeto.tx_link_demonstracao_contabil::TEXT = '') IS FALSE)
 			) AND (
 				registro_anterior.ft_link_demonstracao_contabil IS null OR registro_anterior.ft_link_demonstracao_contabil = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -321,7 +324,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.tx_nome_responsavel_legal <> objeto.tx_nome_responsavel_legal) 
-				OR (nullvalido = false AND registro_anterior.tx_nome_responsavel_legal <> objeto.tx_nome_responsavel_legal AND objeto.tx_nome_responsavel_legal IS NOT null AND objeto.tx_nome_responsavel_legal != '')
+				OR (nullvalido = false AND registro_anterior.tx_nome_responsavel_legal <> objeto.tx_nome_responsavel_legal AND (objeto.tx_nome_responsavel_legal::TEXT = '') IS FALSE)
 			) AND (
 				registro_anterior.ft_nome_responsavel_legal IS null OR registro_anterior.ft_nome_responsavel_legal = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -388,7 +391,7 @@ EXCEPTION
 		
 		IF errolog THEN 
 			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT, dataatualizacao::TIMESTAMP);
+			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT || ' Operação: ' || operacao, dataatualizacao::TIMESTAMP);
 		END IF;
 		
 		RETURN NEXT;
@@ -399,7 +402,7 @@ EXCEPTION
 		
 		IF errolog THEN 
 			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT, dataatualizacao::TIMESTAMP);
+			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT || ' Operação: ' || operacao, dataatualizacao::TIMESTAMP);
 		END IF;
 		
 		RETURN NEXT;
@@ -410,7 +413,7 @@ EXCEPTION
 		
 		IF errolog THEN 
 			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT, dataatualizacao::TIMESTAMP);
+			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT || ' Operação: ' || operacao, dataatualizacao::TIMESTAMP);
 		END IF;
 		
 		RETURN NEXT;
@@ -421,7 +424,7 @@ EXCEPTION
 		
 		IF errolog THEN 
 			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT, dataatualizacao::TIMESTAMP);
+			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT || ' Operação: ' || operacao, dataatualizacao::TIMESTAMP);
 		END IF;
 		
 		RETURN NEXT;

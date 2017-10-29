@@ -868,7 +868,7 @@
     <addresultfilenames>N</addresultfilenames>
     <overwritetargetfile>N</overwritetargetfile>
     <createparentfolder>N</createparentfolder>
-    <simulate>Y</simulate>
+    <simulate>N</simulate>
     <cluster_schema />
     <remotesteps>
       <input>

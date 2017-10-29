@@ -6,6 +6,7 @@ CREATE OR REPLACE FUNCTION portal.atualizar_localizacao_osc(fonte TEXT, osc INTE
 )AS $$
 
 DECLARE 
+	operacao TEXT;
 	fonte_dados_nao_oficiais TEXT[];
 	tipo_usuario TEXT;
 	objeto RECORD;
@@ -14,6 +15,8 @@ DECLARE
 	flag_log BOOLEAN;
 	
 BEGIN 
+	operacao := 'portal.atualizar_localizacao_osc(' || fonte::TEXT || ', ' || osc::TEXT || ', ' || dataatualizacao::TEXT || ', ' || json::TEXT || ', ' || nullvalido::TEXT || ', ' || errolog::TEXT || ')';
+	
 	SELECT INTO tipo_usuario (
 		SELECT dc_tipo_usuario.tx_nome_tipo_usuario 
 		FROM portal.tb_usuario 
@@ -32,7 +35,7 @@ BEGIN
 		
 		IF errolog THEN 
 			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT, dataatualizacao::TIMESTAMP);
+			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT || ' Operação: ' || operacao, dataatualizacao::TIMESTAMP);
 		END IF;
 		
 	ELSE 
@@ -86,7 +89,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.tx_endereco <> objeto.tx_endereco) 
-				OR (nullvalido = false AND registro_anterior.tx_endereco <> objeto.tx_endereco AND objeto.tx_endereco IS NOT null AND objeto.tx_endereco != '')
+				OR (nullvalido = false AND registro_anterior.tx_endereco <> objeto.tx_endereco AND (objeto.tx_endereco::TEXT = '') IS FALSE)
 			) AND (
 				registro_anterior.ft_endereco IS null OR registro_anterior.ft_endereco = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -97,7 +100,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.nr_localizacao <> objeto.nr_localizacao) 
-				OR (nullvalido = false AND registro_anterior.nr_localizacao <> objeto.nr_localizacao AND objeto.nr_localizacao IS NOT null AND objeto.nr_localizacao != '') 
+				OR (nullvalido = false AND registro_anterior.nr_localizacao <> objeto.nr_localizacao AND (objeto.nr_localizacao::TEXT = '') IS FALSE)
 			) AND (
 				registro_anterior.ft_localizacao IS null OR registro_anterior.ft_localizacao = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -108,7 +111,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.tx_endereco_complemento <> objeto.tx_endereco_complemento) 
-				OR (nullvalido = false AND registro_anterior.tx_endereco_complemento <> objeto.tx_endereco_complemento AND objeto.tx_endereco_complemento IS NOT null AND objeto.tx_endereco_complemento != '')
+				OR (nullvalido = false AND registro_anterior.tx_endereco_complemento <> objeto.tx_endereco_complemento AND (objeto.tx_endereco_complemento::TEXT = '') IS FALSE)
 			) AND (
 				registro_anterior.ft_endereco_complemento IS null OR registro_anterior.ft_endereco_complemento = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -119,7 +122,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.tx_bairro <> objeto.tx_bairro) 
-				OR (nullvalido = false AND registro_anterior.tx_bairro <> objeto.tx_bairro AND objeto.tx_bairro IS NOT null AND objeto.tx_bairro != '')
+				OR (nullvalido = false AND registro_anterior.tx_bairro <> objeto.tx_bairro AND (objeto.tx_bairro::TEXT = '') IS FALSE)
 			) AND (
 				registro_anterior.ft_bairro IS null OR registro_anterior.ft_bairro = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -130,7 +133,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.cd_municipio <> objeto.cd_municipio) 
-				OR (nullvalido = false AND registro_anterior.cd_municipio <> objeto.cd_municipio AND objeto.cd_municipio IS NOT null AND objeto.cd_municipio != '')
+				OR (nullvalido = false AND registro_anterior.cd_municipio <> objeto.cd_municipio AND (objeto.cd_municipio::TEXT = '') IS FALSE)
 			) AND (
 				registro_anterior.ft_municipio IS null OR registro_anterior.ft_municipio = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -141,7 +144,7 @@ BEGIN
 			
 			IF (
 				(nullvalido = true AND registro_anterior.nr_cep <> objeto.nr_cep) 
-				OR (nullvalido = false AND registro_anterior.nr_cep <> objeto.nr_cep AND objeto.nr_cep IS NOT null AND objeto.nr_cep != '')
+				OR (nullvalido = false AND registro_anterior.nr_cep <> objeto.nr_cep AND (objeto.nr_cep::TEXT = '') IS FALSE)
 			) AND (
 				registro_anterior.ft_cep IS null OR registro_anterior.ft_cep = ANY(fonte_dados_nao_oficiais)
 			) THEN 
@@ -185,7 +188,7 @@ EXCEPTION
 		
 		IF errolog THEN 
 			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT, dataatualizacao::TIMESTAMP);
+			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT || ' Operação: ' || operacao, dataatualizacao::TIMESTAMP);
 		END IF;
 		
 		RETURN NEXT;
@@ -196,7 +199,7 @@ EXCEPTION
 		
 		IF errolog THEN 
 			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT, dataatualizacao::TIMESTAMP);
+			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT || ' Operação: ' || operacao, dataatualizacao::TIMESTAMP);
 		END IF;
 		
 		RETURN NEXT;
@@ -207,7 +210,7 @@ EXCEPTION
 		
 		IF errolog THEN 
 			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT, dataatualizacao::TIMESTAMP);
+			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT || ' Operação: ' || operacao, dataatualizacao::TIMESTAMP);
 		END IF;
 		
 		RETURN NEXT;
@@ -218,7 +221,7 @@ EXCEPTION
 		
 		IF errolog THEN 
 			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT, dataatualizacao::TIMESTAMP);
+			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT || ' Operação: ' || operacao, dataatualizacao::TIMESTAMP);
 		END IF;
 		
 		RETURN NEXT;

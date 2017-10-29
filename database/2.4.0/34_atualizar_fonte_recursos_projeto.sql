@@ -6,6 +6,7 @@ CREATE OR REPLACE FUNCTION portal.atualizar_fonte_recursos_projeto(fonte TEXT, o
 )AS $$
 
 DECLARE 
+	operacao TEXT;
 	fonte_dados_nao_oficiais TEXT[];
 	tipo_usuario TEXT;
 	objeto RECORD;
@@ -15,6 +16,8 @@ DECLARE
 	flag_log BOOLEAN;
 	
 BEGIN 
+	operacao := 'portal.atualizar_fonte_recursos_projeto(' || fonte::TEXT || ', ' || osc::TEXT || ', ' || dataatualizacao::TEXT || ', ' || json::TEXT || ', ' || nullvalido::TEXT || ', ' || errolog::TEXT || ', ' || deletevalido::TEXT || ', ' || tipobusca::TEXT || ')';
+	
 	SELECT INTO tipo_usuario (
 		SELECT dc_tipo_usuario.tx_nome_tipo_usuario 
 		FROM portal.tb_usuario 
@@ -33,7 +36,7 @@ BEGIN
 		
 		IF errolog THEN 
 			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT, dataatualizacao::TIMESTAMP);
+			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT || ' Operação: ' || operacao, dataatualizacao::TIMESTAMP);
 		END IF;
 		
 	ELSE 
@@ -105,7 +108,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.cd_fonte_recursos_projeto <> objeto.cd_fonte_recursos_projeto) 
-					OR (nullvalido = false AND registro_anterior.cd_fonte_recursos_projeto <> objeto.cd_fonte_recursos_projeto AND objeto.cd_fonte_recursos_projeto IS NOT null AND objeto.cd_fonte_recursos_projeto != '')
+					OR (nullvalido = false AND registro_anterior.cd_fonte_recursos_projeto <> objeto.cd_fonte_recursos_projeto AND (objeto.cd_fonte_recursos_projeto::TEXT = '') IS FALSE)
 				) AND (
 					registro_anterior.ft_fonte_recursos_projeto IS null OR registro_anterior.ft_fonte_recursos_projeto = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -116,7 +119,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.cd_origem_fonte_recursos_projeto <> objeto.cd_origem_fonte_recursos_projeto) OR 
-					(nullvalido = false AND registro_anterior.cd_origem_fonte_recursos_projeto <> objeto.cd_origem_fonte_recursos_projeto AND objeto.cd_origem_fonte_recursos_projeto IS NOT null AND objeto.cd_origem_fonte_recursos_projeto != '')
+					(nullvalido = false AND registro_anterior.cd_origem_fonte_recursos_projeto <> objeto.cd_origem_fonte_recursos_projeto AND (objeto.cd_origem_fonte_recursos_projeto::TEXT = '') IS FALSE)
 				) AND (
 					registro_anterior.ft_fonte_recursos_projeto IS null OR registro_anterior.ft_fonte_recursos_projeto = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -127,7 +130,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.cd_tipo_parceria <> objeto.cd_tipo_parceria) OR 
-					(nullvalido = false AND registro_anterior.cd_tipo_parceria <> objeto.cd_tipo_parceria AND objeto.cd_tipo_parceria IS NOT null AND objeto.cd_tipo_parceria != '')
+					(nullvalido = false AND registro_anterior.cd_tipo_parceria <> objeto.cd_tipo_parceria AND (objeto.cd_tipo_parceria::TEXT = '') IS FALSE)
 				) AND (
 					registro_anterior.ft_tipo_parceria IS null OR registro_anterior.ft_tipo_parceria = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -138,7 +141,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.tx_tipo_parceria_outro <> objeto.tx_tipo_parceria_outro) OR 
-					(nullvalido = false AND registro_anterior.tx_tipo_parceria_outro <> objeto.tx_tipo_parceria_outro AND objeto.tx_tipo_parceria_outro IS NOT null AND objeto.tx_tipo_parceria_outro != '')
+					(nullvalido = false AND registro_anterior.tx_tipo_parceria_outro <> objeto.tx_tipo_parceria_outro AND (objeto.tx_tipo_parceria_outro::TEXT = '') IS FALSE)
 				) AND (
 					registro_anterior.ft_tipo_parceria IS null OR registro_anterior.ft_tipo_parceria = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -149,7 +152,7 @@ BEGIN
 				
 				IF (
 					(nullvalido = true AND registro_anterior.tx_orgao_concedente <> objeto.tx_orgao_concedente) OR 
-					(nullvalido = false AND registro_anterior.tx_orgao_concedente <> objeto.tx_orgao_concedente AND objeto.tx_orgao_concedente IS NOT null AND objeto.tx_orgao_concedente != '')
+					(nullvalido = false AND registro_anterior.tx_orgao_concedente <> objeto.tx_orgao_concedente AND (objeto.tx_orgao_concedente::TEXT = '') IS FALSE)
 				) AND (
 					registro_anterior.ft_orgao_concedente IS null OR registro_anterior.ft_orgao_concedente = ANY(fonte_dados_nao_oficiais)
 				) THEN 
@@ -195,7 +198,7 @@ EXCEPTION
 		
 		IF errolog THEN 
 			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT, dataatualizacao::TIMESTAMP);
+			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT || ' Operação: ' || operacao, dataatualizacao::TIMESTAMP);
 		END IF;
 		
 		RETURN NEXT;
@@ -206,7 +209,7 @@ EXCEPTION
 		
 		IF errolog THEN 
 			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT, dataatualizacao::TIMESTAMP);
+			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT || ' Operação: ' || operacao, dataatualizacao::TIMESTAMP);
 		END IF;
 		
 		RETURN NEXT;
@@ -217,7 +220,7 @@ EXCEPTION
 		
 		IF errolog THEN 
 			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT, dataatualizacao::TIMESTAMP);
+			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT || ' Operação: ' || operacao, dataatualizacao::TIMESTAMP);
 		END IF;
 		
 		RETURN NEXT;
@@ -228,7 +231,7 @@ EXCEPTION
 		
 		IF errolog THEN 
 			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT, dataatualizacao::TIMESTAMP);
+			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT || ' Operação: ' || operacao, dataatualizacao::TIMESTAMP);
 		END IF;
 		
 		RETURN NEXT;
