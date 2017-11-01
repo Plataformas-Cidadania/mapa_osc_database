@@ -66,11 +66,6 @@ BEGIN
 	REFERENCES syst.dc_fonte_dados(cd_sigla_fonte_dados);
 
 	ALTER TABLE osc.tb_projeto 
-	ADD CONSTRAINT fk_ft_orgao_concedente 
-	FOREIGN KEY (ft_orgao_concedente) 
-	REFERENCES syst.dc_fonte_dados(cd_sigla_fonte_dados);
-
-	ALTER TABLE osc.tb_projeto 
 	ADD CONSTRAINT fk_ft_municipio 
 	FOREIGN KEY (ft_municipio) 
 	REFERENCES syst.dc_fonte_dados(cd_sigla_fonte_dados);
