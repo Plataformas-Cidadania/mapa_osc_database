@@ -6,6 +6,7 @@ CREATE OR REPLACE FUNCTION portal.atualizar_fonte_recursos_projeto(fonte TEXT, o
 )AS $$
 
 DECLARE 
+	nome_tabela TEXT;
 	operacao TEXT;
 	fonte_dados_nao_oficiais TEXT[];
 	tipo_usuario TEXT;
@@ -16,6 +17,7 @@ DECLARE
 	flag_log BOOLEAN;
 	
 BEGIN 
+	nome_tabela := 'osc.tb_fonte_recursos_projeto';
 	operacao := 'portal.atualizar_fonte_recursos_projeto(' || fonte::TEXT || ', ' || osc::TEXT || ', ' || dataatualizacao::TEXT || ', ' || json::TEXT || ', ' || nullvalido::TEXT || ', ' || errolog::TEXT || ', ' || deletevalido::TEXT || ', ' || tipobusca::TEXT || ')';
 	
 	SELECT INTO tipo_usuario (
@@ -99,7 +101,7 @@ BEGIN
 				registro_nao_delete := array_append(registro_nao_delete, registro_posterior.id_fonte_recursos_projeto);
 				
 				INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
-				VALUES ('osc.tb_fonte_recursos_projeto', osc, fonte::INTEGER, dataatualizacao, null, row_to_json(registro_posterior));
+				VALUES (nome_tabela, osc, fonte::INTEGER, dataatualizacao, null, row_to_json(registro_posterior));
 				
 			ELSE 
 				registro_posterior := registro_anterior;
@@ -161,20 +163,20 @@ BEGIN
 					flag_log := true;
 				END IF;
 				
-				UPDATE osc.tb_fonte_recursos_projeto 
-				SET cd_fonte_recursos_projeto = registro_posterior.cd_fonte_recursos_projeto, 
-					cd_origem_fonte_recursos_projeto = registro_posterior.cd_origem_fonte_recursos_projeto, 
-					ft_fonte_recursos_projeto = registro_posterior.ft_fonte_recursos_projeto, 
-					cd_tipo_parceria = registro_posterior.cd_tipo_parceria, 
-					tx_tipo_parceria_outro = registro_posterior.tx_tipo_parceria_outro, 
-					ft_tipo_parceria = registro_posterior.ft_tipo_parceria, 
-					tx_orgao_concedente = registro_posterior.tx_orgao_concedente, 
-					ft_orgao_concedente = registro_posterior.ft_orgao_concedente 
-				WHERE id_fonte_recursos_projeto = registro_posterior.id_fonte_recursos_projeto; 
-				
-				IF flag_log THEN 		
+				IF flag_log THEN 
+					UPDATE osc.tb_fonte_recursos_projeto 
+					SET cd_fonte_recursos_projeto = registro_posterior.cd_fonte_recursos_projeto, 
+						cd_origem_fonte_recursos_projeto = registro_posterior.cd_origem_fonte_recursos_projeto, 
+						ft_fonte_recursos_projeto = registro_posterior.ft_fonte_recursos_projeto, 
+						cd_tipo_parceria = registro_posterior.cd_tipo_parceria, 
+						tx_tipo_parceria_outro = registro_posterior.tx_tipo_parceria_outro, 
+						ft_tipo_parceria = registro_posterior.ft_tipo_parceria, 
+						tx_orgao_concedente = registro_posterior.tx_orgao_concedente, 
+						ft_orgao_concedente = registro_posterior.ft_orgao_concedente 
+					WHERE id_fonte_recursos_projeto = registro_posterior.id_fonte_recursos_projeto;
+					
 					INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
-					VALUES ('osc.tb_fonte_recursos_projeto', osc, fonte::INTEGER, dataatualizacao, row_to_json(registro_anterior), row_to_json(registro_posterior));
+					VALUES (nome_tabela, osc, fonte::INTEGER, dataatualizacao, row_to_json(registro_anterior), row_to_json(registro_posterior));
 				END IF;
 			
 			END IF;

@@ -6,6 +6,7 @@ CREATE OR REPLACE FUNCTION portal.atualizar_projeto(fonte TEXT, osc INTEGER, dat
 )AS $$
 
 DECLARE 
+	nome_tabela TEXT;
 	operacao TEXT;
 	fonte_dados_nao_oficiais TEXT[];
 	tipo_usuario TEXT;
@@ -16,6 +17,7 @@ DECLARE
 	flag_log BOOLEAN;
 	
 BEGIN 
+	nome_tabela := 'osc.tb_projeto';
 	operacao := 'portal.atualizar_projeto(' || fonte::TEXT || ', ' || osc::TEXT || ', ' || dataatualizacao::TEXT || ', ' || json::TEXT || ', ' || nullvalido::TEXT || ', ' || errolog::TEXT || ', ' || deletevalido::TEXT || ', ' || tipobusca::TEXT || ')';
 	
 	SELECT INTO tipo_usuario (
@@ -210,7 +212,7 @@ BEGIN
 				registro_nao_delete := array_append(registro_nao_delete, registro_posterior.id_projeto);
 				
 				INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
-				VALUES ('osc.tb_projeto', osc, fonte::INTEGER, dataatualizacao, null, row_to_json(registro_posterior));
+				VALUES (nome_tabela, osc, fonte::INTEGER, dataatualizacao, null, row_to_json(registro_posterior));
 				
 			ELSE 
 				registro_posterior := registro_anterior;
@@ -393,44 +395,44 @@ BEGIN
 					flag_log := true;
 				END IF;
 				
-				UPDATE osc.tb_projeto 
-				SET	tx_identificador_projeto_externo = registro_posterior.tx_identificador_projeto_externo, 
-					ft_identificador_projeto_externo = registro_posterior.ft_identificador_projeto_externo, 
-					cd_uf = registro_posterior.cd_uf, 
-					ft_uf = registro_posterior.ft_uf, 
-					cd_municipio = registro_posterior.cd_municipio, 
-					ft_municipio = registro_posterior.ft_municipio, 
-					tx_nome_projeto = registro_posterior.tx_nome_projeto, 
-					ft_nome_projeto = registro_posterior.ft_nome_projeto, 
-					cd_status_projeto = registro_posterior.cd_status_projeto, 
-					ft_status_projeto = registro_posterior.ft_status_projeto, 
-					dt_data_inicio_projeto = registro_posterior.dt_data_inicio_projeto, 
-					ft_data_inicio_projeto = registro_posterior.ft_data_inicio_projeto, 
-					dt_data_fim_projeto = registro_posterior.dt_data_fim_projeto, 
-					ft_data_fim_projeto = registro_posterior.ft_data_fim_projeto, 
-					nr_valor_total_projeto = registro_posterior.nr_valor_total_projeto, 
-					ft_valor_total_projeto = registro_posterior.ft_valor_total_projeto, 
-					nr_valor_captado_projeto = registro_posterior.nr_valor_captado_projeto, 
-					ft_valor_captado_projeto = registro_posterior.ft_valor_captado_projeto, 
-					nr_total_beneficiarios = registro_posterior.nr_total_beneficiarios, 
-					ft_total_beneficiarios = registro_posterior.ft_total_beneficiarios, 
-					cd_abrangencia_projeto = registro_posterior.cd_abrangencia_projeto, 
-					ft_abrangencia_projeto = registro_posterior.ft_abrangencia_projeto, 
-					cd_zona_atuacao_projeto = registro_posterior.cd_zona_atuacao_projeto, 
-					ft_zona_atuacao_projeto = registro_posterior.ft_zona_atuacao_projeto, 
-					tx_orgao_concedente = registro_posterior.tx_orgao_concedente, 
-					ft_orgao_concedente = registro_posterior.ft_orgao_concedente, 
-					tx_descricao_projeto = registro_posterior.tx_descricao_projeto, 
-					ft_descricao_projeto = registro_posterior.ft_descricao_projeto, 
-					tx_metodologia_monitoramento = registro_posterior.tx_metodologia_monitoramento, 
-					ft_metodologia_monitoramento = registro_posterior.ft_metodologia_monitoramento, 
-					tx_link_projeto = registro_posterior.tx_link_projeto, 
-					ft_link_projeto = registro_posterior.ft_link_projeto 
-				WHERE id_projeto = registro_posterior.id_projeto; 
-				
-				IF flag_log THEN 		
+				IF flag_log THEN 
+					UPDATE osc.tb_projeto 
+					SET	tx_identificador_projeto_externo = registro_posterior.tx_identificador_projeto_externo, 
+						ft_identificador_projeto_externo = registro_posterior.ft_identificador_projeto_externo, 
+						cd_uf = registro_posterior.cd_uf, 
+						ft_uf = registro_posterior.ft_uf, 
+						cd_municipio = registro_posterior.cd_municipio, 
+						ft_municipio = registro_posterior.ft_municipio, 
+						tx_nome_projeto = registro_posterior.tx_nome_projeto, 
+						ft_nome_projeto = registro_posterior.ft_nome_projeto, 
+						cd_status_projeto = registro_posterior.cd_status_projeto, 
+						ft_status_projeto = registro_posterior.ft_status_projeto, 
+						dt_data_inicio_projeto = registro_posterior.dt_data_inicio_projeto, 
+						ft_data_inicio_projeto = registro_posterior.ft_data_inicio_projeto, 
+						dt_data_fim_projeto = registro_posterior.dt_data_fim_projeto, 
+						ft_data_fim_projeto = registro_posterior.ft_data_fim_projeto, 
+						nr_valor_total_projeto = registro_posterior.nr_valor_total_projeto, 
+						ft_valor_total_projeto = registro_posterior.ft_valor_total_projeto, 
+						nr_valor_captado_projeto = registro_posterior.nr_valor_captado_projeto, 
+						ft_valor_captado_projeto = registro_posterior.ft_valor_captado_projeto, 
+						nr_total_beneficiarios = registro_posterior.nr_total_beneficiarios, 
+						ft_total_beneficiarios = registro_posterior.ft_total_beneficiarios, 
+						cd_abrangencia_projeto = registro_posterior.cd_abrangencia_projeto, 
+						ft_abrangencia_projeto = registro_posterior.ft_abrangencia_projeto, 
+						cd_zona_atuacao_projeto = registro_posterior.cd_zona_atuacao_projeto, 
+						ft_zona_atuacao_projeto = registro_posterior.ft_zona_atuacao_projeto, 
+						tx_orgao_concedente = registro_posterior.tx_orgao_concedente, 
+						ft_orgao_concedente = registro_posterior.ft_orgao_concedente, 
+						tx_descricao_projeto = registro_posterior.tx_descricao_projeto, 
+						ft_descricao_projeto = registro_posterior.ft_descricao_projeto, 
+						tx_metodologia_monitoramento = registro_posterior.tx_metodologia_monitoramento, 
+						ft_metodologia_monitoramento = registro_posterior.ft_metodologia_monitoramento, 
+						tx_link_projeto = registro_posterior.tx_link_projeto, 
+						ft_link_projeto = registro_posterior.ft_link_projeto 
+					WHERE id_projeto = registro_posterior.id_projeto;
+					
 					INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
-					VALUES ('osc.tb_projeto', osc, fonte::INTEGER, dataatualizacao, row_to_json(registro_anterior), row_to_json(registro_posterior));
+					VALUES (nome_tabela, osc, fonte::INTEGER, dataatualizacao, row_to_json(registro_anterior), row_to_json(registro_posterior));
 				END IF;
 			
 			END IF;

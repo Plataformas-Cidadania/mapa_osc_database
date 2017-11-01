@@ -6,6 +6,7 @@ CREATE OR REPLACE FUNCTION portal.atualizar_localizacao_osc(fonte TEXT, osc INTE
 )AS $$
 
 DECLARE 
+	nome_tabela TEXT;
 	operacao TEXT;
 	fonte_dados_nao_oficiais TEXT[];
 	tipo_usuario TEXT;
@@ -15,6 +16,7 @@ DECLARE
 	flag_log BOOLEAN;
 	
 BEGIN 
+	nome_tabela := 'osc.tb_localizacao';
 	operacao := 'portal.atualizar_localizacao_osc(' || fonte::TEXT || ', ' || osc::TEXT || ', ' || dataatualizacao::TEXT || ', ' || json::TEXT || ', ' || nullvalido::TEXT || ', ' || errolog::TEXT || ')';
 	
 	SELECT INTO tipo_usuario (
@@ -81,7 +83,7 @@ BEGIN
 			) RETURNING * INTO registro_posterior;
 			
 			INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
-			VALUES ('osc.tb_localizacao', registro_posterior.id_osc, fonte::INTEGER, dataatualizacao, null, row_to_json(registro_posterior));
+			VALUES (nome_tabela, registro_posterior.id_osc, fonte::INTEGER, dataatualizacao, null, row_to_json(registro_posterior));
 			
 		ELSE 
 			registro_posterior := registro_anterior;
@@ -153,24 +155,24 @@ BEGIN
 				flag_log := true;
 			END IF;
 			
-			UPDATE osc.tb_localizacao 
-			SET tx_endereco = registro_posterior.tx_endereco, 
-				ft_endereco = registro_posterior.ft_endereco, 
-				nr_localizacao = registro_posterior.nr_localizacao, 
-				ft_localizacao = registro_posterior.ft_localizacao, 
-				tx_endereco_complemento = registro_posterior.tx_endereco_complemento, 
-				ft_endereco_complemento = registro_posterior.ft_endereco_complemento, 
-				tx_bairro = registro_posterior.tx_bairro, 
-				ft_bairro = registro_posterior.ft_bairro, 
-				cd_municipio = registro_posterior.cd_municipio, 
-				ft_municipio = registro_posterior.ft_municipio, 
-				nr_cep = registro_posterior.nr_cep, 
-				ft_cep = registro_posterior.ft_cep 
-			WHERE id_osc = registro_posterior.id_osc; 
-			
-			IF flag_log THEN 		
+			IF flag_log THEN 
+				UPDATE osc.tb_localizacao 
+				SET tx_endereco = registro_posterior.tx_endereco, 
+					ft_endereco = registro_posterior.ft_endereco, 
+					nr_localizacao = registro_posterior.nr_localizacao, 
+					ft_localizacao = registro_posterior.ft_localizacao, 
+					tx_endereco_complemento = registro_posterior.tx_endereco_complemento, 
+					ft_endereco_complemento = registro_posterior.ft_endereco_complemento, 
+					tx_bairro = registro_posterior.tx_bairro, 
+					ft_bairro = registro_posterior.ft_bairro, 
+					cd_municipio = registro_posterior.cd_municipio, 
+					ft_municipio = registro_posterior.ft_municipio, 
+					nr_cep = registro_posterior.nr_cep, 
+					ft_cep = registro_posterior.ft_cep 
+				WHERE id_osc = registro_posterior.id_osc;
+				
 				INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
-				VALUES ('osc.tb_localizacao', registro_posterior.id_osc, fonte::INTEGER, dataatualizacao, row_to_json(registro_anterior), row_to_json(registro_posterior));
+				VALUES (nome_tabela, registro_posterior.id_osc, fonte::INTEGER, dataatualizacao, row_to_json(registro_anterior), row_to_json(registro_posterior));
 			END IF;
 			
 		END IF;

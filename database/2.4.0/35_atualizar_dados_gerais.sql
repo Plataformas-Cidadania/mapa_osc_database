@@ -6,6 +6,7 @@ CREATE OR REPLACE FUNCTION portal.atualizar_dados_gerais_osc(fonte TEXT, osc INT
 )AS $$
 
 DECLARE 
+	nome_tabela TEXT;
 	operacao TEXT;
 	fonte_dados_nao_oficiais TEXT[];
 	tipo_usuario TEXT;
@@ -15,6 +16,7 @@ DECLARE
 	flag_log BOOLEAN;
 	
 BEGIN 
+	nome_tabela := 'osc.atualizar_dados_gerais';
 	operacao := 'portal.atualizar_dados_gerais_osc(' || fonte::TEXT || ', ' || osc::TEXT || ', ' || dataatualizacao::TEXT || ', ' || json::TEXT || ', ' || nullvalido::TEXT || ', ' || errolog::TEXT || ')';
 	
 	SELECT INTO tipo_usuario (
@@ -129,7 +131,7 @@ BEGIN
 			) RETURNING * INTO registro_posterior;
 			
 			INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
-			VALUES ('osc.atualizar_dados_gerais', registro_posterior.id_osc, fonte::INTEGER, dataatualizacao, null, row_to_json(registro_posterior));
+			VALUES (nome_tabela, registro_posterior.id_osc, fonte::INTEGER, dataatualizacao, null, row_to_json(registro_posterior));
 			
 		ELSE 
 			registro_posterior := registro_anterior;
@@ -333,48 +335,48 @@ BEGIN
 				flag_log := true;
 			END IF;
 			
-			UPDATE osc.tb_dados_gerais 
-			SET cd_natureza_juridica_osc = registro_posterior.cd_natureza_juridica_osc, 
-				ft_natureza_juridica_osc = registro_posterior.ft_natureza_juridica_osc, 
-				cd_subclasse_atividade_economica_osc = registro_posterior.cd_subclasse_atividade_economica_osc, 
-				ft_subclasse_atividade_economica_osc = registro_posterior.ft_subclasse_atividade_economica_osc, 
-				tx_razao_social_osc = registro_posterior.tx_razao_social_osc, 
-				ft_razao_social_osc = registro_posterior.ft_razao_social_osc, 
-				tx_nome_fantasia_osc = registro_posterior.tx_nome_fantasia_osc, 
-				ft_nome_fantasia_osc = registro_posterior.ft_nome_fantasia_osc, 
-				im_logo = registro_posterior.im_logo, 
-				ft_logo = registro_posterior.ft_logo, 
-				tx_missao_osc = registro_posterior.tx_missao_osc, 
-				ft_missao_osc = registro_posterior.ft_missao_osc, 
-				tx_visao_osc = registro_posterior.tx_visao_osc, 
-				ft_visao_osc = registro_posterior.ft_visao_osc, 
-				dt_fundacao_osc = registro_posterior.dt_fundacao_osc, 
-				ft_fundacao_osc = registro_posterior.ft_fundacao_osc, 
-				dt_ano_cadastro_cnpj = registro_posterior.dt_ano_cadastro_cnpj, 
-				ft_ano_cadastro_cnpj = registro_posterior.ft_ano_cadastro_cnpj, 
-				tx_sigla_osc = registro_posterior.tx_sigla_osc, 
-				ft_sigla_osc = registro_posterior.ft_sigla_osc, 
-				tx_resumo_osc = registro_posterior.tx_resumo_osc, 
-				ft_resumo_osc = registro_posterior.ft_resumo_osc, 
-				cd_situacao_imovel_osc = registro_posterior.cd_situacao_imovel_osc, 
-				ft_situacao_imovel_osc = registro_posterior.ft_situacao_imovel_osc, 
-				tx_link_estatuto_osc = registro_posterior.tx_link_estatuto_osc, 
-				ft_link_estatuto_osc = registro_posterior.ft_link_estatuto_osc, 
-				tx_historico = registro_posterior.tx_historico, 
-				ft_historico = registro_posterior.ft_historico, 
-				tx_finalidades_estatutarias = registro_posterior.tx_finalidades_estatutarias, 
-				ft_finalidades_estatutarias = registro_posterior.ft_finalidades_estatutarias, 
-				tx_link_relatorio_auditoria = registro_posterior.tx_link_relatorio_auditoria, 
-				ft_link_relatorio_auditoria = registro_posterior.ft_link_relatorio_auditoria, 
-				tx_link_demonstracao_contabil = registro_posterior.tx_link_demonstracao_contabil, 
-				ft_link_demonstracao_contabil = registro_posterior.ft_link_demonstracao_contabil, 
-				tx_nome_responsavel_legal = registro_posterior.tx_nome_responsavel_legal, 
-				ft_nome_responsavel_legal = registro_posterior.ft_nome_responsavel_legal 
-			WHERE id_osc = registro_posterior.id_osc; 
-			
-			IF flag_log THEN 		
+			IF flag_log THEN 
+				UPDATE osc.tb_dados_gerais 
+				SET cd_natureza_juridica_osc = registro_posterior.cd_natureza_juridica_osc, 
+					ft_natureza_juridica_osc = registro_posterior.ft_natureza_juridica_osc, 
+					cd_subclasse_atividade_economica_osc = registro_posterior.cd_subclasse_atividade_economica_osc, 
+					ft_subclasse_atividade_economica_osc = registro_posterior.ft_subclasse_atividade_economica_osc, 
+					tx_razao_social_osc = registro_posterior.tx_razao_social_osc, 
+					ft_razao_social_osc = registro_posterior.ft_razao_social_osc, 
+					tx_nome_fantasia_osc = registro_posterior.tx_nome_fantasia_osc, 
+					ft_nome_fantasia_osc = registro_posterior.ft_nome_fantasia_osc, 
+					im_logo = registro_posterior.im_logo, 
+					ft_logo = registro_posterior.ft_logo, 
+					tx_missao_osc = registro_posterior.tx_missao_osc, 
+					ft_missao_osc = registro_posterior.ft_missao_osc, 
+					tx_visao_osc = registro_posterior.tx_visao_osc, 
+					ft_visao_osc = registro_posterior.ft_visao_osc, 
+					dt_fundacao_osc = registro_posterior.dt_fundacao_osc, 
+					ft_fundacao_osc = registro_posterior.ft_fundacao_osc, 
+					dt_ano_cadastro_cnpj = registro_posterior.dt_ano_cadastro_cnpj, 
+					ft_ano_cadastro_cnpj = registro_posterior.ft_ano_cadastro_cnpj, 
+					tx_sigla_osc = registro_posterior.tx_sigla_osc, 
+					ft_sigla_osc = registro_posterior.ft_sigla_osc, 
+					tx_resumo_osc = registro_posterior.tx_resumo_osc, 
+					ft_resumo_osc = registro_posterior.ft_resumo_osc, 
+					cd_situacao_imovel_osc = registro_posterior.cd_situacao_imovel_osc, 
+					ft_situacao_imovel_osc = registro_posterior.ft_situacao_imovel_osc, 
+					tx_link_estatuto_osc = registro_posterior.tx_link_estatuto_osc, 
+					ft_link_estatuto_osc = registro_posterior.ft_link_estatuto_osc, 
+					tx_historico = registro_posterior.tx_historico, 
+					ft_historico = registro_posterior.ft_historico, 
+					tx_finalidades_estatutarias = registro_posterior.tx_finalidades_estatutarias, 
+					ft_finalidades_estatutarias = registro_posterior.ft_finalidades_estatutarias, 
+					tx_link_relatorio_auditoria = registro_posterior.tx_link_relatorio_auditoria, 
+					ft_link_relatorio_auditoria = registro_posterior.ft_link_relatorio_auditoria, 
+					tx_link_demonstracao_contabil = registro_posterior.tx_link_demonstracao_contabil, 
+					ft_link_demonstracao_contabil = registro_posterior.ft_link_demonstracao_contabil, 
+					tx_nome_responsavel_legal = registro_posterior.tx_nome_responsavel_legal, 
+					ft_nome_responsavel_legal = registro_posterior.ft_nome_responsavel_legal 
+				WHERE id_osc = registro_posterior.id_osc;
+				
 				INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
-				VALUES ('osc.atualizar_dados_gerais', registro_posterior.id_osc, fonte::INTEGER, dataatualizacao, row_to_json(registro_anterior), row_to_json(registro_posterior));
+				VALUES (nome_tabela, registro_posterior.id_osc, fonte::INTEGER, dataatualizacao, row_to_json(registro_anterior), row_to_json(registro_posterior));
 			END IF;
 		END IF;
 		
