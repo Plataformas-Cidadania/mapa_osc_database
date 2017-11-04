@@ -63,9 +63,9 @@ BEGIN
 			END IF;
 			
 			IF dado_anterior.id_fonte_recursos_projeto IS null THEN 
-				IF objeto.id_projeto <> (SELECT id_osc FROM osc.tb_projeto WHERE tb_projeto.id_projeto = objeto.id_projeto) THEN 
+				IF osc <> (SELECT id_osc FROM osc.tb_projeto WHERE tb_projeto.id_projeto = objeto.id_projeto) THEN 
 					flag := false;
-					SELECT INTO mensagem a.mensagem FROM portal.verificar_erro('permissao_negada_usuario', operacao, fonte, osc, dataatualizacao::TIMESTAMP, errolog) AS a;
+					SELECT INTO mensagem a.mensagem FROM portal.verificar_erro('osc_nao_confere', operacao, fonte, osc, dataatualizacao::TIMESTAMP, errolog) AS a;
 				
 				ELSE 
 					INSERT INTO osc.tb_fonte_recursos_projeto (

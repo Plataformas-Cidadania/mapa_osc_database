@@ -17,6 +17,9 @@ BEGIN
 	ELSIF codigoerro = 'dado_invalido' THEN 
 		mensagem := 'Dado inválido.';
 		
+	ELSIF codigoerro = 'osc_nao_confere' THEN 
+		mensagem := 'ID de OSC informado não confere com os dados enviados.';
+		
 	ELSIF codigoerro = '23502' THEN -- not_null_violation
 		mensagem := 'Dado(s) obrigatório(s) não enviado(s).';
 		
