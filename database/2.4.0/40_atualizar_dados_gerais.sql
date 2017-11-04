@@ -22,7 +22,7 @@ BEGIN
 	
 	IF fonte_dados.nome_fonte IS null THEN 
 		flag := false;
-		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro('permissao_negada_usuario', operacao, fonte, osc, dataatualizacao::TIMESTAMP, errolog) AS a;
+		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro('fonte_invalida', operacao, fonte, osc, dataatualizacao::TIMESTAMP, errolog) AS a;
 	
 	ELSIF osc != ALL(fonte_dados.representacao) THEN 
 		flag := false;
@@ -285,10 +285,9 @@ BEGIN
 EXCEPTION 
 	WHEN others THEN 
 		flag := false;
-		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro('permissao_negada_usuario', operacao, fonte, osc, dataatualizacao::TIMESTAMP, errolog) AS a;
+		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, operacao, fonte, osc, dataatualizacao::TIMESTAMP, errolog) AS a;
 		
 		RETURN NEXT;
 		
-
 END; 
 $$ LANGUAGE 'plpgsql';

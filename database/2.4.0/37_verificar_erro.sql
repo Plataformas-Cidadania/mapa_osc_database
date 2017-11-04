@@ -5,7 +5,7 @@ CREATE OR REPLACE FUNCTION portal.verificar_erro(codigoerro TEXT, operacao TEXT,
 ) AS $$
 
 DECLARE 
-	identificador_osc INTEGER;
+	identificador_osc NUMERIC;
 
 BEGIN 
 	IF codigoerro = 'fonte_invalida' THEN 
@@ -31,7 +31,7 @@ BEGIN
 		
 	END IF;
 	
-	SELECT INTO identificador_osc cd_identificador_osc FROM osc.tb_osc WHERE cd_identificador_osc = osc OR id_osc = osc;
+	SELECT INTO identificador_osc cd_identificador_osc FROM osc.tb_osc WHERE cd_identificador_osc = osc OR id_osc::NUMERIC = osc;
 	
 	IF errolog AND identificador_osc IS NOT null THEN 
 		INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
