@@ -278,7 +278,7 @@ BEGIN
 EXCEPTION 
 	WHEN others THEN 
 		flag := false;
-		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLERRM, operacao, fonte, osc, dataatualizacao::TIMESTAMP, errolog) AS a;
+		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, operacao, fonte, osc, dataatualizacao::TIMESTAMP, errolog) AS a;
 		RETURN NEXT;
 		
 END; 
