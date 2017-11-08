@@ -50,7 +50,7 @@ BEGIN
 			
 		END IF;
 		
-		IF COUNT(dado_anterior) = 0 THEN 
+		IF dado_anterior.id_projeto IS null THEN 
 			INSERT INTO osc.tb_projeto (
 				id_osc, 
 				tx_identificador_projeto_externo, 

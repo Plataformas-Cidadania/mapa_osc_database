@@ -8,196 +8,119 @@ CREATE OR REPLACE FUNCTION portal.atualizar_area_atuacao_osc(fonte TEXT, osc INT
 DECLARE 
 	nome_tabela TEXT;
 	operacao TEXT;
-	fonte_dados_nao_oficiais TEXT[];
-	tipo_usuario TEXT;
+	fonte_dados RECORD;
 	objeto RECORD;
-	registro_anterior RECORD;
-	registro_posterior RECORD;
+	dado_anterior RECORD;
+	dado_posterior RECORD;
 	registro_nao_delete INTEGER[];
-	flag_log BOOLEAN;
+	flag_update BOOLEAN;
 	
 BEGIN 
 	nome_tabela := 'osc.tb_area_atuacao';
 	operacao := 'portal.atualizar_area_atuacao_osc(' || fonte::TEXT || ', ' || osc::TEXT || ', ' || dataatualizacao::TEXT || ', ' || json::TEXT || ', ' || nullvalido::TEXT || ', ' || errolog::TEXT || ', ' || deletevalido::TEXT || ', ' || tipobusca::TEXT || ')';
 	
-	SELECT INTO tipo_usuario (
-		SELECT dc_tipo_usuario.tx_nome_tipo_usuario 
-		FROM portal.tb_usuario 
-		INNER JOIN syst.dc_tipo_usuario 
-		ON tb_usuario.cd_tipo_usuario = dc_tipo_usuario.cd_tipo_usuario 
-		WHERE tb_usuario.id_usuario::TEXT = fonte 
-		UNION 
-		SELECT cd_sigla_fonte_dados 
-		FROM syst.dc_fonte_dados 
-		WHERE dc_fonte_dados.cd_sigla_fonte_dados::TEXT = fonte
-	);
+	SELECT INTO fonte_dados * FROM portal.verificar_fonte(fonte);
 	
-	IF tipo_usuario IS null THEN 
-		flag := false;
-		mensagem := 'Fonte de dados inválida.';
+	IF fonte_dados IS null THEN 
+		RAISE EXCEPTION 'fonte_invalida';
+	ELSIF osc != ALL(fonte_dados.representacao) THEN 
+		RAISE EXCEPTION 'permissao_negada_usuario';
+	END IF;
+	
+	registro_nao_delete := '{}';
+	
+	IF json_typeof(json::JSON) = 'object' THEN 
+		json := ('[' || json || ']');
+	END IF;
+	
+	FOR objeto IN (SELECT * FROM json_populate_recordset(null::osc.tb_area_atuacao, json::JSON)) 
+	LOOP 
+		dado_anterior := null;
 		
-		IF errolog THEN 
-			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT || ' Operação: ' || operacao, dataatualizacao::TIMESTAMP);
-		END IF;
-		
-	ELSE 
-		IF tipobusca IS null THEN 
-			tipobusca := 1;
-		END IF;
-		
-		SELECT INTO fonte_dados_nao_oficiais array_agg(tx_nome_tipo_usuario) 
-		FROM syst.dc_tipo_usuario;
-		
-		registro_nao_delete := '{}';
-		
-		IF json_typeof(json::JSON) = 'object' THEN 
-			json := ('[' || json || ']');
-		END IF;
-		
-		FOR objeto IN (SELECT *FROM json_populate_recordset(null::osc.tb_area_atuacao, json::JSON)) 
-		LOOP 
-			registro_anterior := null;
+		IF tipobusca = 1 THEN 
+			SELECT INTO dado_anterior * 
+			FROM osc.tb_area_atuacao 
+			WHERE id_area_atuacao = objeto.id_area_atuacao;
 			
-			IF tipobusca = 1 THEN 
-				SELECT INTO registro_anterior * 
-				FROM osc.tb_area_atuacao 
-				WHERE id_area_atuacao = objeto.id_area_atuacao;
-				
-			ELSIF tipobusca = 2 THEN 
-				SELECT INTO registro_anterior * 
-				FROM osc.tb_area_atuacao 
-				WHERE (id_osc = objeto.id_osc AND cd_area_atuacao = objeto.cd_area_atuacao AND cd_subarea_atuacao = objeto.cd_subarea_atuacao);
-				
+		ELSIF tipobusca = 2 THEN 
+			SELECT INTO dado_anterior * 
+			FROM osc.tb_area_atuacao 
+			WHERE (id_osc = osc AND cd_area_atuacao = objeto.cd_area_atuacao AND cd_subarea_atuacao = objeto.cd_subarea_atuacao);
+			
+		END IF;
+		
+		IF dado_anterior.id_area_atuacao IS null THEN 
+			INSERT INTO osc.tb_area_atuacao (
+				id_osc, 
+				cd_area_atuacao, 
+				cd_subarea_atuacao, 
+				tx_nome_outra, 
+				ft_area_atuacao
+			) VALUES (
+				osc, 
+				objeto.cd_area_atuacao, 
+				objeto.cd_subarea_atuacao, 
+				objeto.tx_nome_outra, 
+				fonte_dados.nome_fonte
+			) RETURNING * INTO dado_posterior;
+			
+			registro_nao_delete := array_append(registro_nao_delete, dado_posterior.id_area_atuacao);
+			
+			INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
+			VALUES (nome_tabela, osc, fonte::INTEGER, dataatualizacao, null, row_to_json(dado_posterior));
+			
+		ELSE 
+			dado_posterior := dado_anterior;
+			registro_nao_delete := array_append(registro_nao_delete, dado_posterior.id_area_atuacao);
+			flag_update := false;
+			
+			IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.cd_area_atuacao::TEXT, dado_anterior.ft_area_atuacao, objeto.cd_area_atuacao::TEXT, fonte_dados.prioridade, nullvalido) AS a) THEN 
+				dado_posterior.cd_area_atuacao := objeto.cd_area_atuacao;
+				dado_posterior.ft_area_atuacao := fonte_dados.nome_fonte;
+				flag_update := true;
 			END IF;
 			
-			IF count(registro_anterior.id_projeto) = 0 THEN 
-				INSERT INTO osc.tb_area_atuacao (
-					id_osc, 
-					cd_area_atuacao, 
-					cd_subarea_atuacao, 
-					tx_nome_outra, 
-					ft_area_atuacao
-				) VALUES (
-					objeto.id_osc, 
-					objeto.cd_area_atuacao, 
-					objeto.cd_subarea_atuacao, 
-					objeto.tx_nome_outra, 
-					tipo_usuario
-				) RETURNING * INTO registro_posterior;
-				
-				registro_nao_delete := array_append(registro_nao_delete, registro_posterior.id_projeto);
+			IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.cd_subarea_atuacao::TEXT, dado_anterior.ft_area_atuacao, objeto.cd_subarea_atuacao::TEXT, fonte_dados.prioridade, nullvalido) AS a) THEN 
+				dado_posterior.cd_subarea_atuacao := objeto.cd_subarea_atuacao;
+				dado_posterior.ft_area_atuacao := fonte_dados.nome_fonte;
+				flag_update := true;
+			END IF;
+			
+			IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_nome_outra::TEXT, dado_anterior.ft_area_atuacao, objeto.tx_nome_outra::TEXT, fonte_dados.prioridade, nullvalido) AS a) THEN 
+				dado_posterior.tx_nome_outra := objeto.tx_nome_outra;
+				dado_posterior.ft_area_atuacao := fonte_dados.nome_fonte;
+				flag_update := true;
+			END IF;
+			
+			IF flag_update THEN 
+				UPDATE osc.tb_area_atuacao 
+				SET	cd_area_atuacao = dado_posterior.cd_area_atuacao, 
+					cd_subarea_atuacao = dado_posterior.cd_subarea_atuacao, 
+					tx_nome_outra = dado_posterior.tx_nome_outra, 
+					ft_area_atuacao = dado_posterior.ft_area_atuacao 
+				WHERE id_area_atuacao = dado_posterior.id_area_atuacao;
 				
 				INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
-				VALUES (nome_tabela, osc, fonte::INTEGER, dataatualizacao, null, row_to_json(registro_posterior));
-				
-			ELSE 
-				registro_posterior := registro_anterior;
-				registro_nao_delete := array_append(registro_nao_delete, registro_posterior.id_projeto);
-				flag_log := false;
-				
-				IF (
-					(nullvalido = true AND registro_anterior.cd_area_atuacao <> objeto.cd_area_atuacao) OR 
-					(nullvalido = false AND registro_anterior.cd_area_atuacao <> objeto.cd_area_atuacao AND (objeto.cd_area_atuacao::TEXT = '') IS FALSE)
-				) AND (
-					registro_anterior.ft_area_atuacao IS null OR registro_anterior.ft_area_atuacao = ANY(fonte_dados_nao_oficiais)
-				) THEN 
-					registro_posterior.cd_area_atuacao := objeto.cd_area_atuacao;
-					registro_posterior.ft_area_atuacao := tipo_usuario;
-					flag_log := true;
-				END IF;
-				
-				IF (
-					(nullvalido = true AND registro_anterior.cd_subarea_atuacao <> objeto.cd_subarea_atuacao) OR 
-					(nullvalido = false AND registro_anterior.cd_subarea_atuacao <> objeto.cd_subarea_atuacao AND (objeto.cd_subarea_atuacao::TEXT = '') IS FALSE)
-				) AND (
-					registro_anterior.ft_area_atuacao IS null OR registro_anterior.ft_area_atuacao = ANY(fonte_dados_nao_oficiais)
-				) THEN 
-					registro_posterior.cd_subarea_atuacao := objeto.cd_subarea_atuacao;
-					registro_posterior.ft_area_atuacao := tipo_usuario;
-					flag_log := true;
-				END IF;
-				
-				IF (
-					(nullvalido = true AND registro_anterior.tx_nome_outra <> objeto.tx_nome_outra) OR 
-					(nullvalido = false AND registro_anterior.tx_nome_outra <> objeto.tx_nome_outra AND (objeto.tx_nome_outra::TEXT = '') IS FALSE)
-				) AND (
-					registro_anterior.ft_area_atuacao IS null OR registro_anterior.ft_area_atuacao = ANY(fonte_dados_nao_oficiais)
-				) THEN 
-					registro_posterior.tx_nome_outra := objeto.tx_nome_outra;
-					registro_posterior.ft_area_atuacao := tipo_usuario;
-					flag_log := true;
-				END IF;
-				
-				IF flag_log THEN 
-					UPDATE osc.tb_area_atuacao 
-					SET	cd_area_atuacao = registro_posterior.cd_area_atuacao, 
-						cd_subarea_atuacao = registro_posterior.cd_subarea_atuacao, 
-						tx_nome_outra = registro_posterior.tx_nome_outra, 
-						ft_area_atuacao = registro_posterior.ft_area_atuacao 
-					WHERE id_area_atuacao = registro_posterior.id_area_atuacao;
-					
-					INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
-					VALUES (nome_tabela, osc, fonte::INTEGER, dataatualizacao, row_to_json(registro_anterior), row_to_json(registro_posterior));
-				END IF;
-			
+				VALUES (nome_tabela, osc, fonte::INTEGER, dataatualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior));
 			END IF;
-			
-		END LOOP;
 		
-		IF deletevalido THEN 
-			DELETE FROM osc.tb_area_atuacao WHERE id_area_atuacao != ALL(registro_nao_delete);
 		END IF;
 		
-		flag := true;
-		mensagem := 'Área de atuação de OSC atualizado.';
+	END LOOP;
+	
+	IF deletevalido THEN 
+		DELETE FROM osc.tb_area_atuacao WHERE id_area_atuacao != ALL(registro_nao_delete);
 	END IF;
+	
+	flag := true;
+	mensagem := 'Área de atuação de OSC atualizado.';
 	
 	RETURN NEXT;
 
 EXCEPTION 
-	WHEN not_null_violation THEN 
-		flag := false;
-		mensagem := 'Dado(s) obrigatório(s) não enviado(s).';
-		
-		IF errolog THEN 
-			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT || ' Operação: ' || operacao, dataatualizacao::TIMESTAMP);
-		END IF;
-		
-		RETURN NEXT;
-		
-	WHEN unique_violation THEN 
-		flag := false;
-		mensagem := 'Dado(s) único(s) violado(s).';
-		
-		IF errolog THEN 
-			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT || ' Operação: ' || operacao, dataatualizacao::TIMESTAMP);
-		END IF;
-		
-		RETURN NEXT;
-		
-	WHEN foreign_key_violation THEN 
-		flag := false;
-		mensagem := 'Dado(s) com chave(s) estrangeira(s) violada(s).';
-		
-		IF errolog THEN 
-			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT || ' Operação: ' || operacao, dataatualizacao::TIMESTAMP);
-		END IF;
-		
-		RETURN NEXT;
-		
 	WHEN others THEN 
 		flag := false;
-		mensagem := 'Ocorreu um erro. ' || json;
-		
-		IF errolog THEN 
-			INSERT INTO log.tb_log_carga (cd_identificador_osc, id_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados) 
-			VALUES (osc::INTEGER, fonte::TEXT, '2'::SMALLINT, mensagem::TEXT || ' Operação: ' || operacao, dataatualizacao::TIMESTAMP);
-		END IF;
-		
+		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, operacao, fonte, osc, dataatualizacao::TIMESTAMP, errolog) AS a;
 		RETURN NEXT;
 		
 END; 
