@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS portal.verificar_erro(codigoerro TEXT, operacao TEXT, fonte TEXT, osc INTEGER, dataoperacao TIMESTAMP, errolog BOOLEAN);
+DROP FUNCTION IF EXISTS portal.verificar_erro(mensagemerro TEXT, operacao TEXT, fonte TEXT, osc INTEGER, dataoperacao TIMESTAMP, errolog BOOLEAN);
 
-CREATE OR REPLACE FUNCTION portal.verificar_erro(codigoerro TEXT, operacao TEXT, fonte TEXT, osc INTEGER, dataoperacao TIMESTAMP, errolog BOOLEAN) RETURNS TABLE(
+CREATE OR REPLACE FUNCTION portal.verificar_erro(mensagemerro TEXT, operacao TEXT, fonte TEXT, osc INTEGER, dataoperacao TIMESTAMP, errolog BOOLEAN) RETURNS TABLE(
 	mensagem TEXT
 ) AS $$
 
@@ -8,29 +8,20 @@ DECLARE
 	identificador_osc NUMERIC;
 
 BEGIN 
-	IF codigoerro = 'fonte_invalida' THEN 
+	IF mensagemerro = 'fonte_invalida' THEN 
 		mensagem := 'Fonte de dados inválida.';
 		
-	ELSIF codigoerro = 'permissao_negada_usuario' THEN 
-		mensagem := 'Usuário não tem permissão para acessar este conteúdo.';
+	ELSIF mensagemerro = 'permissao_negada_usuario' THEN 
+		mensagem := 'Usuário não tem permissão para acessar o conteúdo informado.';
 		
-	ELSIF codigoerro = 'dado_invalido' THEN 
+	ELSIF mensagemerro = 'dado_invalido' THEN 
 		mensagem := 'Dado inválido.';
 		
-	ELSIF codigoerro = 'osc_nao_confere' THEN 
+	ELSIF mensagemerro = 'osc_nao_confere' THEN 
 		mensagem := 'ID de OSC informado não confere com os dados enviados.';
 		
-	ELSIF codigoerro = '23502' THEN -- not_null_violation
-		mensagem := 'Dado(s) obrigatório(s) não enviado(s).';
-		
-	ELSIF codigoerro = '23505' THEN -- unique_violation
-		mensagem := 'Dado(s) único(s) violado(s).';
-		
-	ELSIF codigoerro = '23503' THEN -- foreign_key_violation
-		mensagem := 'Dado(s) com chave(s) estrangeira(s) violada(s).';
-		
 	ELSE 
-		mensagem := 'Ocorreu um erro.';
+		mensagem := mensagemerro;
 		
 	END IF;
 	

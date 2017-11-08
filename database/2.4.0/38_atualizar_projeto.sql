@@ -8,7 +8,7 @@ CREATE OR REPLACE FUNCTION portal.atualizar_projeto(fonte TEXT, osc INTEGER, dat
 DECLARE 
 	nome_tabela TEXT;
 	operacao TEXT;
-	fonte_dados TEXT;
+	fonte_dados RECORD;
 	objeto RECORD;
 	dado_anterior RECORD;
 	dado_posterior RECORD;
@@ -283,13 +283,7 @@ BEGIN
 EXCEPTION 
 	WHEN others THEN 
 		flag := false;
-		
-		IF SQLSTATE = P0001 THEN 
-			SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, operacao, fonte, osc, dataatualizacao::TIMESTAMP, errolog) AS a;
-		ELSE 
-			SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLERRM, operacao, fonte, osc, dataatualizacao::TIMESTAMP, errolog) AS a;
-		END IF;
-		
+		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLERRM, operacao, fonte, osc, dataatualizacao::TIMESTAMP, errolog) AS a;
 		RETURN NEXT;
 		
 END; 
