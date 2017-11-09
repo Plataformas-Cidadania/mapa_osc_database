@@ -556,26 +556,41 @@
     <hop>
       <from>Select id_osc</from>
       <to>Merge Join</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Select values</from>
-      <to>Select id_osc</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>Merge Join</from>
       <to>Execute SQL script</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Criar constantes</from>
-      <to>Select values</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>Criar constantes</from>
       <to>Merge Join</to>
+      <enabled>N</enabled>
+    </hop>
+    <hop>
+      <from>Criar constantes</from>
+      <to>Select values</to>
+      <enabled>N</enabled>
+    </hop>
+    <hop>
+      <from>Select values</from>
+      <to>Select id_osc</to>
+      <enabled>N</enabled>
+    </hop>
+    <hop>
+      <from>Criar constantes</from>
+      <to>Atualizar área de atuação</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Criar constantes</from>
+      <to>Atualizar localização</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Criar constantes</from>
+      <to>Atualizar contato</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -590,7 +605,7 @@
       <method>none</method>
       <schema_name />
     </partitioning>
-    <filename>/home/DLIPEA/b6519563/Downloads/extração de dados CNEAS - 07.07.2017 (mapa das OSCs)-tratado.csv</filename>
+    <filename>C:\Users\b215496233\Downloads\extração de dados CNEAS - 07.07.2017 (mapa das OSCs).csv</filename>
     <filename_field />
     <rownum_field />
     <include_filename>N</include_filename>
@@ -817,6 +832,79 @@
     </GUI>
   </step>
   <step>
+    <name>Criar constantes</name>
+    <type>ScriptValueMod</type>
+    <description />
+    <distribute>N</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>var fonte = 'CNEAS/MDS';
+
+var data_carregamento = Date.now();
+
+var area_atuacao = 5;
+
+var subarea_atuacao = 17;</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>data_carregamento</name>
+        <rename>data_carregamento</rename>
+        <type>Date</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+      <field>
+        <name>fonte</name>
+        <rename>fonte</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+      <field>
+        <name>area_atuacao</name>
+        <rename>area_atuacao</rename>
+        <type>Integer</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+      <field>
+        <name>subarea_atuacao</name>
+        <rename>subarea_atuacao</rename>
+        <type>Integer</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>653</xloc>
+      <yloc>234</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>Execute SQL script</name>
     <type>ExecSQL</type>
     <description />
@@ -974,79 +1062,6 @@ FROM portal.atualizar_localizacao_osc(
     </GUI>
   </step>
   <step>
-    <name>Criar constantes</name>
-    <type>ScriptValueMod</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <compatible>N</compatible>
-    <optimizationLevel>9</optimizationLevel>
-    <jsScripts>
-      <jsScript>
-        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>var fonte = 'CNEAS/MDS';
-
-var data_carregamento = Date.now();
-
-var area_atuacao = 5;
-
-var subarea_atuacao = 17;</jsScript_script>
-      </jsScript>
-    </jsScripts>
-    <fields>
-      <field>
-        <name>data_carregamento</name>
-        <rename>data_carregamento</rename>
-        <type>Date</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
-      <field>
-        <name>fonte</name>
-        <rename>fonte</rename>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
-      <field>
-        <name>area_atuacao</name>
-        <rename>area_atuacao</rename>
-        <type>Integer</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
-      <field>
-        <name>subarea_atuacao</name>
-        <rename>subarea_atuacao</rename>
-        <type>Integer</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>653</xloc>
-      <yloc>234</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
     <name>Select id_osc</name>
     <type>TableInput</type>
     <description />
@@ -1057,10 +1072,10 @@ var subarea_atuacao = 17;</jsScript_script>
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection>localhost</connection>
+    <connection>mapaosc-desenv</connection>
     <sql>SELECT id_osc, ? AS cd_identificador_osc 
 FROM osc.tb_osc 
-WHERE substring(cd_identificador_osc::TEXT from 0 for char_length(cd_identificador_osc::TEXT) - 1) = ltrim(substring(? from 0 for char_length(?) - 1), '0');</sql>
+WHERE substring(cd_identificador_osc::TEXT from 0 for char_length(cd_identificador_osc::TEXT) - 1) = ltrim(substring(?::TEXT from 0 for char_length(?::TEXT) - 1), '0');</sql>
     <limit>0</limit>
     <lookup>Select values</lookup>
     <execute_each_row>Y</execute_each_row>
@@ -1075,45 +1090,6 @@ WHERE substring(cd_identificador_osc::TEXT from 0 for char_length(cd_identificad
     </remotesteps>
     <GUI>
       <xloc>792</xloc>
-      <yloc>100</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Select values</name>
-    <type>SelectValues</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <name>numero_parceria</name>
-        <rename />
-      </field>
-      <field>
-        <name>cnpj_proponente</name>
-        <rename>cnpj_1</rename>
-      </field>
-      <field>
-        <name>cnpj_proponente</name>
-        <rename>cnpj_2</rename>
-      </field>
-      <select_unspecified>N</select_unspecified>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>653</xloc>
       <yloc>100</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1190,6 +1166,282 @@ WHERE substring(cd_identificador_osc::TEXT from 0 for char_length(cd_identificad
     <GUI>
       <xloc>509</xloc>
       <yloc>234</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Select values</name>
+    <type>SelectValues</type>
+    <description />
+    <distribute>N</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>NU_CNPJ</name>
+        <rename>cnpj1</rename>
+      </field>
+      <field>
+        <name>NU_CNPJ</name>
+        <rename>cnpj2</rename>
+      </field>
+      <field>
+        <name>NU_CNPJ</name>
+        <rename>cnpj3</rename>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>655</xloc>
+      <yloc>102</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Atualizar localização</name>
+    <type>ExecSQL</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>mapaosc-desenv</connection>
+    <execute_each_row>Y</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>Y</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>SELECT * 
+FROM portal.atualizar_localizacao_osc(
+	?::TEXT, 
+	(SELECT id_osc FROM osc.tb_osc WHERE substring(cd_identificador_osc::TEXT from 0 for char_length(cd_identificador_osc::TEXT) - 1) = ltrim(substring(?::TEXT from 0 for char_length(?::TEXT) - 1), '0'))::INTEGER, 
+	?::TIMESTAMP, 
+	'{
+		"tx_endereco": "?", 
+		"nr_localizacao": "?", 
+		"tx_endereco_complemento": "?", 
+		"tx_bairro": "?", 
+		"cd_municipio": "?", 
+		"nr_cep": "?"
+	}'::JSONB, 
+	false::BOOLEAN, 
+	true::BOOLEAN
+);
+</sql>
+    <set_params>N</set_params>
+    <insert_field />
+    <update_field />
+    <delete_field />
+    <read_field />
+    <arguments>
+      <argument>
+        <name>fonte</name>
+      </argument>
+      <argument>
+        <name>NU_CNPJ</name>
+      </argument>
+      <argument>
+        <name>NU_CNPJ</name>
+      </argument>
+      <argument>
+        <name>data_carregamento</name>
+      </argument>
+      <argument>
+        <name>DS_LOGRADOURO</name>
+      </argument>
+      <argument>
+        <name>NU_ENDERECO</name>
+      </argument>
+      <argument>
+        <name>DS_COMPLEMENTO</name>
+      </argument>
+      <argument>
+        <name>DS_BAIRRO</name>
+      </argument>
+      <argument>
+        <name>CO_IBGE</name>
+      </argument>
+      <argument>
+        <name>NU_CEP</name>
+      </argument>
+    </arguments>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>652</xloc>
+      <yloc>422</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Atualizar área de atuação</name>
+    <type>ExecSQL</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>mapaosc-desenv</connection>
+    <execute_each_row>Y</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>Y</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>SELECT * 
+FROM portal.atualizar_area_atuacao_osc(
+	?::TEXT, 
+	(SELECT id_osc FROM osc.tb_osc WHERE substring(cd_identificador_osc::TEXT from 0 for char_length(cd_identificador_osc::TEXT) - 1) = ltrim(substring(?::TEXT from 0 for char_length(?::TEXT) - 1), '0'))::INTEGER, 
+	?::TIMESTAMP, 
+	'{
+		"id_area_atuacao": null, 
+		"cd_area_atuacao": "?", 
+		"cd_subarea_atuacao": "?", 
+		"tx_nome_outra": null
+	}'::JSONB, 
+	false::BOOLEAN, 
+	true::BOOLEAN, 
+	false::BOOLEAN, 
+	2::INTEGER
+);
+</sql>
+    <set_params>N</set_params>
+    <insert_field />
+    <update_field />
+    <delete_field />
+    <read_field />
+    <arguments>
+      <argument>
+        <name>fonte</name>
+      </argument>
+      <argument>
+        <name>NU_CNPJ</name>
+      </argument>
+      <argument>
+        <name>NU_CNPJ</name>
+      </argument>
+      <argument>
+        <name>data_carregamento</name>
+      </argument>
+      <argument>
+        <name>area_atuacao</name>
+      </argument>
+      <argument>
+        <name>subarea_atuacao</name>
+      </argument>
+    </arguments>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>529</xloc>
+      <yloc>402</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Atualizar contato</name>
+    <type>ExecSQL</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>mapaosc-desenv</connection>
+    <execute_each_row>Y</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>Y</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>SELECT * 
+FROM portal.atualizar_contato_osc(
+	?::TEXT, 
+	(SELECT id_osc FROM osc.tb_osc WHERE substring(cd_identificador_osc::TEXT from 0 for char_length(cd_identificador_osc::TEXT) - 1) = ltrim(substring(?::TEXT from 0 for char_length(?::TEXT) - 1), '0'))::INTEGER, 
+	?::TIMESTAMP, 
+	'{
+		"tx_endereco": "?", 
+		"nr_localizacao": "?", 
+		"tx_endereco_complemento": "?", 
+		"tx_bairro": "?", 
+		"cd_municipio": "?", 
+		"nr_cep": "?"
+	}'::JSONB, 
+	false::BOOLEAN, 
+	true::BOOLEAN
+);
+</sql>
+    <set_params>N</set_params>
+    <insert_field />
+    <update_field />
+    <delete_field />
+    <read_field />
+    <arguments>
+      <argument>
+        <name>fonte</name>
+      </argument>
+      <argument>
+        <name>NU_CNPJ</name>
+      </argument>
+      <argument>
+        <name>NU_CNPJ</name>
+      </argument>
+      <argument>
+        <name>data_carregamento</name>
+      </argument>
+      <argument>
+        <name>DS_LOGRADOURO</name>
+      </argument>
+      <argument>
+        <name>NU_ENDERECO</name>
+      </argument>
+      <argument>
+        <name>DS_COMPLEMENTO</name>
+      </argument>
+      <argument>
+        <name>DS_BAIRRO</name>
+      </argument>
+      <argument>
+        <name>CO_IBGE</name>
+      </argument>
+      <argument>
+        <name>NU_CEP</name>
+      </argument>
+    </arguments>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>785</xloc>
+      <yloc>405</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

@@ -1,4 +1,4 @@
-DROP FUNCTION IF EXISTS portal.atualizar_area_atuacao_osc(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, errolog BOOLEAN, tipobusca INTEGER);
+DROP FUNCTION IF EXISTS portal.atualizar_area_atuacao_osc(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, errolog BOOLEAN, deletevalido BOOLEAN, tipobusca INTEGER);
 
 CREATE OR REPLACE FUNCTION portal.atualizar_area_atuacao_osc(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, errolog BOOLEAN, deletevalido BOOLEAN, tipobusca INTEGER) RETURNS TABLE(
 	mensagem TEXT, 
@@ -116,7 +116,7 @@ BEGIN
 	mensagem := 'Área de atuação de OSC atualizado.';
 	
 	RETURN NEXT;
-
+	
 EXCEPTION 
 	WHEN others THEN 
 		flag := false;

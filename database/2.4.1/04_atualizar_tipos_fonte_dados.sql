@@ -36,22 +36,13 @@ BEGIN
 		'Galileo',
 		'Dado originado pelo sistema de georreferenciamento Galileo',
 		null, 
-		9
-	);
-	/*
-	INSERT INTO syst.dc_fonte_dados (cd_sigla_fonte_dados, tx_nome_fonte_dados, tx_descricao_fonte_dados, tx_referencia_fonte_dados, nr_prioridade) 
-	VALUES (
-		'MS/AS',
-		'MS/AS',
-		null,
-		null, 
 		6
 	);
-	*/
+	
 	INSERT INTO syst.dc_fonte_dados (cd_sigla_fonte_dados, tx_nome_fonte_dados, tx_descricao_fonte_dados, tx_referencia_fonte_dados, nr_prioridade) 
 	VALUES (
-		'CNIS', 
-		'Cadastro Nacional de Informações Sociais', 
+		'CNPJ/SRF/MF', 
+		'Cadastro Nacional de Pessoas Jurídicas da Secretaria da Receita Federal', 
 		null, 
 		null, 
 		2
@@ -74,7 +65,7 @@ BEGIN
 	WHERE cd_sigla_fonte_dados = 'Representate' OR cd_sigla_fonte_dados = 'Representante';
 	
 	UPDATE syst.dc_fonte_dados 
-	SET	cd_sigla_fonte_dados = 'FINEP/FNDCT' 
+	SET	cd_sigla_fonte_dados = 'FINEP/FNDCT/MCTI' 
 	WHERE cd_sigla_fonte_dados = 'FNDCT/FINEP';
 	
 	UPDATE syst.dc_fonte_dados 
@@ -106,11 +97,11 @@ BEGIN
 	WHERE cd_sigla_fonte_dados = 'MINC/SALICWEB';
 	
 	UPDATE syst.dc_fonte_dados 
-	SET	cd_sigla_fonte_dados = 'OSCIP/CNES/MJ' 
+	SET	cd_sigla_fonte_dados = 'OSCIP/MJ' 
 	WHERE cd_sigla_fonte_dados = 'MJ/CNES/OSCIP';
 	
 	UPDATE syst.dc_fonte_dados 
-	SET	cd_sigla_fonte_dados = 'UPF/CNES/MJ' 
+	SET	cd_sigla_fonte_dados = 'UPF/MJ' 
 	WHERE cd_sigla_fonte_dados = 'MJ/CNES/UPF';
 	
 	UPDATE syst.dc_fonte_dados 
