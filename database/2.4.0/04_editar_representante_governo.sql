@@ -9,7 +9,24 @@ DECLARE
 	idosc INTEGER; 
 
 BEGIN 
-	IF senha IS NOT NULL THEN 
+	IF (senha = '') IS NOT false THEN 
+		UPDATE 
+			portal.tb_usuario 
+		SET 
+			tx_email_usuario = email, 
+			tx_nome_usuario = nome, 
+			tx_telefone_1 = telefone1, 
+			tx_telefone_2 = telefone2, 
+			tx_orgao_trabalha = orgao, 
+			tx_dado_institucional = dado_institucional, 
+			bo_lista_email = lista_email, 
+			bo_lista_atualizacao_trimestral = lista_atualizacao_trimestral, 
+			dt_atualizacao = NOW() 
+		WHERE 
+			tb_usuario.id_usuario = idusuario AND 
+			(tb_usuario.cd_tipo_usuario = 3 OR tb_usuario.cd_tipo_usuario = 4); 
+			
+	ELSE 
 		UPDATE 
 			portal.tb_usuario 
 		SET 
@@ -26,22 +43,7 @@ BEGIN
 		WHERE 
 			tb_usuario.id_usuario = idusuario AND 
 			(tb_usuario.cd_tipo_usuario = 3 OR tb_usuario.cd_tipo_usuario = 4); 
-	ELSE
-		UPDATE 
-			portal.tb_usuario 
-		SET 
-			tx_email_usuario = email, 
-			tx_nome_usuario = nome, 
-			tx_telefone_1 = telefone1, 
-			tx_telefone_2 = telefone2, 
-			tx_orgao_trabalha = orgao, 
-			tx_dado_institucional = dado_institucional, 
-			bo_lista_email = lista_email, 
-			bo_lista_atualizacao_trimestral = lista_atualizacao_trimestral, 
-			dt_atualizacao = NOW() 
-		WHERE 
-			tb_usuario.id_usuario = idusuario AND 
-			(tb_usuario.cd_tipo_usuario = 3 OR tb_usuario.cd_tipo_usuario = 4); 
+			
 	END IF; 
 	
 	flag := true; 

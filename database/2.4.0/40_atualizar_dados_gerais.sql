@@ -109,8 +109,8 @@ BEGIN
 			fonte_dados.nome_fonte
 		) RETURNING * INTO dado_posterior;
 		
-		INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
-		VALUES (nome_tabela, osc, fonte::INTEGER, dataatualizacao, null, row_to_json(dado_posterior));
+		INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, tx_fonte_dados, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
+		VALUES (nome_tabela, osc, fonte, dataatualizacao, null, row_to_json(dado_posterior));
 		
 	ELSE 
 		dado_posterior := dado_anterior;
@@ -264,8 +264,8 @@ BEGIN
 				ft_nome_responsavel_legal = dado_posterior.ft_nome_responsavel_legal 
 			WHERE id_osc = osc;
 			
-			INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
-			VALUES (nome_tabela, osc, fonte::INTEGER, dataatualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior));
+			INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, tx_fonte_dados, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
+			VALUES (nome_tabela, osc, fonte, dataatualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior));
 			
 		END IF;
 	END IF;
@@ -278,13 +278,7 @@ BEGIN
 EXCEPTION 
 	WHEN others THEN 
 		flag := false;
-		
-		IF SQLSTATE = P0001 THEN 
-			SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, operacao, fonte, osc, dataatualizacao::TIMESTAMP, errolog) AS a;
-		ELSE 
-			SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLERRM, operacao, fonte, osc, dataatualizacao::TIMESTAMP, errolog) AS a;
-		END IF;
-		
+		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, operacao, fonte, osc, dataatualizacao::TIMESTAMP, errolog) AS a;
 		RETURN NEXT;
 		
 END; 

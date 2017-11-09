@@ -9,7 +9,7 @@ CREATE OR REPLACE FUNCTION portal.verificar_fonte(fonte TEXT) RETURNS TABLE(
 
 DECLARE 
 	fonte_ajustada TEXT;
-
+	
 BEGIN 
 	IF (SELECT fonte ~ '^[0-9]+$') THEN 
 		SELECT INTO fonte_ajustada, ativo, representacao 
@@ -45,10 +45,10 @@ BEGIN
 			FROM (SELECT array_agg(tx_nome_tipo_usuario) AS tipos_usuario FROM syst.dc_tipo_usuario) AS dc_tipo_usuario 
 			WHERE fonte != ALL(tipos_usuario)
 		);
-	
+		
 	END IF;
 	
 	RETURN NEXT;
-
+	
 END;
 $$ LANGUAGE 'plpgsql';

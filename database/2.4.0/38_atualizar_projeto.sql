@@ -8,7 +8,7 @@ CREATE OR REPLACE FUNCTION portal.atualizar_projeto(fonte TEXT, osc INTEGER, dat
 DECLARE 
 	nome_tabela TEXT;
 	operacao TEXT;
-	fonte_dados TEXT;
+	fonte_dados RECORD;
 	objeto RECORD;
 	dado_anterior RECORD;
 	dado_posterior RECORD;
@@ -33,7 +33,7 @@ BEGIN
 		json := ('[' || json || ']');
 	END IF;
 	
-	FOR objeto IN (SELECT *FROM json_populate_recordset(null::osc.tb_projeto, json::JSON)) 
+	FOR objeto IN (SELECT * FROM json_populate_recordset(null::osc.tb_projeto, json::JSON)) 
 	LOOP 
 		dado_anterior := null;
 		
@@ -50,7 +50,7 @@ BEGIN
 			
 		END IF;
 		
-		IF COUNT(dado_anterior) = 0 THEN 
+		IF dado_anterior.id_projeto IS null THEN 
 			INSERT INTO osc.tb_projeto (
 				id_osc, 
 				tx_identificador_projeto_externo, 
@@ -123,8 +123,8 @@ BEGIN
 			
 			registro_nao_delete := array_append(registro_nao_delete, dado_posterior.id_projeto);
 			
-			INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
-			VALUES (nome_tabela, osc, fonte::INTEGER, dataatualizacao, null, row_to_json(dado_posterior));
+			INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, tx_fonte_dados, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
+			VALUES (nome_tabela, osc, fonte, dataatualizacao, null, row_to_json(dado_posterior));
 			
 		ELSE 
 			dado_posterior := dado_anterior;
@@ -263,8 +263,8 @@ BEGIN
 					ft_link_projeto = dado_posterior.ft_link_projeto 
 				WHERE id_projeto = dado_posterior.id_projeto;
 				
-				INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
-				VALUES (nome_tabela, osc, fonte::INTEGER, dataatualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior));
+				INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, tx_fonte_dados, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
+				VALUES (nome_tabela, osc, fonte, dataatualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior));
 			END IF;
 		
 		END IF;
@@ -283,13 +283,7 @@ BEGIN
 EXCEPTION 
 	WHEN others THEN 
 		flag := false;
-		
-		IF SQLSTATE = P0001 THEN 
-			SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, operacao, fonte, osc, dataatualizacao::TIMESTAMP, errolog) AS a;
-		ELSE 
-			SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLERRM, operacao, fonte, osc, dataatualizacao::TIMESTAMP, errolog) AS a;
-		END IF;
-		
+		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, operacao, fonte, osc, dataatualizacao::TIMESTAMP, errolog) AS a;
 		RETURN NEXT;
 		
 END; 
