@@ -61,8 +61,8 @@ BEGIN
 			tipo_usuario
 		) RETURNING * INTO dado_posterior;
 		
-		INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
-		VALUES (nome_tabela, dado_posterior.id_osc, fonte::INTEGER, dataatualizacao, null, row_to_json(dado_posterior));
+		INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, tx_fonte_dados, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
+		VALUES (nome_tabela, dado_posterior.id_osc, fonte, dataatualizacao, null, row_to_json(dado_posterior));
 		
 	ELSE 
 		dado_posterior := dado_anterior;
@@ -120,8 +120,8 @@ BEGIN
 				ft_cep = dado_posterior.ft_cep 
 			WHERE id_osc = osc;
 			
-			INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
-			VALUES (nome_tabela, dado_posterior.id_osc, fonte::INTEGER, dataatualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior));
+			INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, tx_fonte_dados, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
+			VALUES (nome_tabela, dado_posterior.id_osc, fonte, dataatualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior));
 		END IF;
 		
 	END IF;

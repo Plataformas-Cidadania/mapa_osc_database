@@ -1,6 +1,7 @@
 DROP FUNCTION IF EXISTS portal.atualizar_area_atuacao_osc(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, errolog BOOLEAN, deletevalido BOOLEAN, tipobusca INTEGER);
+DROP FUNCTION IF EXISTS portal.atualizar_area_atuacao_osc(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSON, nullvalido BOOLEAN, errolog BOOLEAN, deletevalido BOOLEAN, tipobusca INTEGER);
 
-CREATE OR REPLACE FUNCTION portal.atualizar_area_atuacao_osc(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, errolog BOOLEAN, deletevalido BOOLEAN, tipobusca INTEGER) RETURNS TABLE(
+CREATE OR REPLACE FUNCTION portal.atualizar_area_atuacao_osc(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSON, nullvalido BOOLEAN, errolog BOOLEAN, deletevalido BOOLEAN, tipobusca INTEGER) RETURNS TABLE(
 	mensagem TEXT, 
 	flag BOOLEAN
 )AS $$
@@ -66,8 +67,8 @@ BEGIN
 			
 			registro_nao_delete := array_append(registro_nao_delete, dado_posterior.id_area_atuacao);
 			
-			INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
-			VALUES (nome_tabela, osc, fonte::INTEGER, dataatualizacao, null, row_to_json(dado_posterior));
+			INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, tx_fonte_dados, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
+			VALUES (nome_tabela, osc, fonte, dataatualizacao, null, row_to_json(dado_posterior));
 			
 		ELSE 
 			dado_posterior := dado_anterior;
@@ -100,8 +101,8 @@ BEGIN
 					ft_area_atuacao = dado_posterior.ft_area_atuacao 
 				WHERE id_area_atuacao = dado_posterior.id_area_atuacao;
 				
-				INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
-				VALUES (nome_tabela, osc, fonte::INTEGER, dataatualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior));
+				INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, tx_fonte_dados, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
+				VALUES (nome_tabela, osc, fonte, dataatualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior));
 			END IF;
 		
 		END IF;

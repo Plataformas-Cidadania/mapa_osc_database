@@ -48,7 +48,16 @@ BEGIN
 		2
 	);
 	
-	INSERT INTO syst.dc_fonte_dados (cd_sigla_fonte_dados, tx_nome_fonte_dados, tx_descricao_fonte_dados, tx_referencia_fonte_dados) 
+	INSERT INTO syst.dc_fonte_dados (cd_sigla_fonte_dados, tx_nome_fonte_dados, tx_descricao_fonte_dados, tx_referencia_fonte_dados, nr_prioridade) 
+	VALUES (
+		'CNEAS/MDS', 
+		'Cadastro Nacional de Entidades de Assistência Social',  
+		null, 
+		null, 
+		6
+	);
+	
+	INSERT INTO syst.dc_fonte_dados (cd_sigla_fonte_dados, tx_nome_fonte_dados, tx_descricao_fonte_dados, tx_referencia_fonte_dados, nr_prioridade) 
 	VALUES (
 		'CADSOL/MTE', 
 		'Cadastro Nacional de Economia Solidária',  

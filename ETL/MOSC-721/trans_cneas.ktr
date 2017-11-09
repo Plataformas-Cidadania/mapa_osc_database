@@ -1236,7 +1236,7 @@ FROM portal.atualizar_localizacao_osc(
 		"tx_bairro": "?", 
 		"cd_municipio": "?", 
 		"nr_cep": "?"
-	}'::JSONB, 
+	}'::JSON, 
 	false::BOOLEAN, 
 	true::BOOLEAN
 );
@@ -1313,11 +1313,9 @@ FROM portal.atualizar_area_atuacao_osc(
 	(SELECT id_osc FROM osc.tb_osc WHERE substring(cd_identificador_osc::TEXT from 0 for char_length(cd_identificador_osc::TEXT) - 1) = ltrim(substring(?::TEXT from 0 for char_length(?::TEXT) - 1), '0'))::INTEGER, 
 	?::TIMESTAMP, 
 	'{
-		"id_area_atuacao": null, 
 		"cd_area_atuacao": "?", 
-		"cd_subarea_atuacao": "?", 
-		"tx_nome_outra": null
-	}'::JSONB, 
+		"cd_subarea_atuacao": "?"
+	}'::JSON, 
 	false::BOOLEAN, 
 	true::BOOLEAN, 
 	false::BOOLEAN, 
@@ -1384,13 +1382,10 @@ FROM portal.atualizar_contato_osc(
 	(SELECT id_osc FROM osc.tb_osc WHERE substring(cd_identificador_osc::TEXT from 0 for char_length(cd_identificador_osc::TEXT) - 1) = ltrim(substring(?::TEXT from 0 for char_length(?::TEXT) - 1), '0'))::INTEGER, 
 	?::TIMESTAMP, 
 	'{
-		"tx_endereco": "?", 
-		"nr_localizacao": "?", 
-		"tx_endereco_complemento": "?", 
-		"tx_bairro": "?", 
-		"cd_municipio": "?", 
-		"nr_cep": "?"
-	}'::JSONB, 
+		"tx_telefone": "?", 
+		"tx_email": "?", 
+		"tx_site": "?"
+	}'::JSON, 
 	false::BOOLEAN, 
 	true::BOOLEAN
 );
@@ -1414,22 +1409,13 @@ FROM portal.atualizar_contato_osc(
         <name>data_carregamento</name>
       </argument>
       <argument>
-        <name>DS_LOGRADOURO</name>
+        <name>NU_TELEFONE</name>
       </argument>
       <argument>
-        <name>NU_ENDERECO</name>
+        <name>DS_EMAIL</name>
       </argument>
       <argument>
-        <name>DS_COMPLEMENTO</name>
-      </argument>
-      <argument>
-        <name>DS_BAIRRO</name>
-      </argument>
-      <argument>
-        <name>CO_IBGE</name>
-      </argument>
-      <argument>
-        <name>NU_CEP</name>
+        <name>DS_SITE</name>
       </argument>
     </arguments>
     <cluster_schema />
@@ -1440,8 +1426,8 @@ FROM portal.atualizar_contato_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>785</xloc>
-      <yloc>405</yloc>
+      <xloc>768</xloc>
+      <yloc>403</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
