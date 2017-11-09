@@ -1,4 +1,4 @@
-DROP FUNCTION IF EXISTS portal.editar_representante_osc(id INTEGER, email TEXT, senha TEXT, nome TEXT, representacao_insert INTEGER[], representacao_delete INTEGER[]);
+DROP FUNCTION IF EXISTS portal.editar_representante_osc(idusuario INTEGER, email TEXT, senha TEXT, nome TEXT, representacao_insert INTEGER[], representacao_delete INTEGER[]);
 
 CREATE OR REPLACE FUNCTION portal.editar_representante_osc(idusuario INTEGER, email TEXT, senha TEXT, nome TEXT, representacao_insert INTEGER[], representacao_delete INTEGER[]) RETURNS TABLE(
 	flag BOOLEAN, 
@@ -9,7 +9,18 @@ DECLARE
 	idosc INTEGER; 
 
 BEGIN 
-	IF senha IS NOT NULL THEN 
+	IF (senha = '') IS NOT false THEN 
+		UPDATE 
+			portal.tb_usuario 
+		SET 
+			tx_email_usuario = email, 
+			tx_nome_usuario = nome, 
+			dt_atualizacao = NOW() 
+		WHERE 
+			tb_usuario.id_usuario = idusuario AND 
+			tb_usuario.cd_tipo_usuario = 2; 
+			
+	ELSE 
 		UPDATE 
 			portal.tb_usuario 
 		SET 
@@ -20,16 +31,7 @@ BEGIN
 		WHERE 
 			tb_usuario.id_usuario = idusuario AND 
 			tb_usuario.cd_tipo_usuario = 2; 
-	ELSE 
-		UPDATE 
-			portal.tb_usuario 
-		SET 
-			tx_email_usuario = email, 
-			tx_nome_usuario = nome, 
-			dt_atualizacao = NOW() 
-		WHERE 
-			tb_usuario.id_usuario = idusuario AND 
-			tb_usuario.cd_tipo_usuario = 2; 
+		
 	END IF; 
 	
 	FOREACH idosc IN ARRAY representacao_insert LOOP 
