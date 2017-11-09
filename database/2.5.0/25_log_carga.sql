@@ -1,6 +1,6 @@
 ALTER TABLE log.tb_log_carga
     RENAME TO tb_log_erro_carga;
-    
+
 -- Table: log.tb_log_carga
 
 DROP TABLE IF EXISTS log.tb_log_carga;
@@ -25,7 +25,7 @@ TABLESPACE pg_default;
 
 ALTER TABLE log.tb_log_carga
     OWNER to postgres;
-    
+
 -- Table: log.tb_log_erro_carga
 
 DROP TABLE IF EXISTS log.tb_log_erro_carga;
@@ -37,7 +37,7 @@ CREATE TABLE log.tb_log_erro_carga
     cd_status smallint NOT NULL,
     tx_mensagem text COLLATE pg_catalog."default" NOT NULL,
     dt_carregamento_dados timestamp without time zone,
-    id_carga integer NOT NULL,
+    id_carga integer,
     CONSTRAINT pk_tb_log_carga PRIMARY KEY (id_log_erro_carga),
     CONSTRAINT fk_cd_status FOREIGN KEY (cd_status)
         REFERENCES syst.dc_status_carga (cd_status) MATCH FULL
