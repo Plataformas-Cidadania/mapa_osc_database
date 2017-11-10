@@ -1,7 +1,7 @@
-DROP FUNCTION IF EXISTS portal.atualizar_area_atuacao_osc(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, errolog BOOLEAN, deletevalido BOOLEAN, tipobusca INTEGER);
-DROP FUNCTION IF EXISTS portal.atualizar_area_atuacao_osc(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSON, nullvalido BOOLEAN, errolog BOOLEAN, deletevalido BOOLEAN, tipobusca INTEGER);
+DROP FUNCTION IF EXISTS portal.atualizar_area_atuacao_osc(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, deletevalido BOOLEAN, errolog BOOLEAN, idcarga INTEGER, tipobusca INTEGER);
+DROP FUNCTION IF EXISTS portal.atualizar_area_atuacao_osc(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSON, nullvalido BOOLEAN, deletevalido BOOLEAN, errolog BOOLEAN, idcarga INTEGER, tipobusca INTEGER);
 
-CREATE OR REPLACE FUNCTION portal.atualizar_area_atuacao_osc(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSON, nullvalido BOOLEAN, errolog BOOLEAN, deletevalido BOOLEAN, tipobusca INTEGER) RETURNS TABLE(
+CREATE OR REPLACE FUNCTION portal.atualizar_area_atuacao_osc(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSON, nullvalido BOOLEAN, deletevalido BOOLEAN, errolog BOOLEAN, idcarga INTEGER, tipobusca INTEGER) RETURNS TABLE(
 	mensagem TEXT, 
 	flag BOOLEAN
 )AS $$
@@ -18,7 +18,7 @@ DECLARE
 	
 BEGIN 
 	nome_tabela := 'osc.tb_area_atuacao';
-	operacao := 'portal.atualizar_area_atuacao_osc(' || fonte::TEXT || ', ' || osc::TEXT || ', ' || dataatualizacao::TEXT || ', ' || json::TEXT || ', ' || nullvalido::TEXT || ', ' || errolog::TEXT || ', ' || deletevalido::TEXT || ', ' || tipobusca::TEXT || ')';
+	operacao := 'portal.atualizar_area_atuacao_osc(' || fonte::TEXT || ', ' || osc::TEXT || ', ' || dataatualizacao::TEXT || ', ' || json::TEXT || ', ' || nullvalido::TEXT || ', ' || deletevalido::TEXT || ', ' || errolog::TEXT || ', ' || idcarga::TEXT || ', ' || tipobusca::TEXT || ')';
 	
 	SELECT INTO fonte_dados * FROM portal.verificar_fonte(fonte);
 	
@@ -121,7 +121,7 @@ BEGIN
 EXCEPTION 
 	WHEN others THEN 
 		flag := false;
-		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, operacao, fonte, osc, dataatualizacao::TIMESTAMP, errolog) AS a;
+		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, operacao, fonte, osc, dataatualizacao::TIMESTAMP, errolog, idcarga) AS a;
 		RETURN NEXT;
 		
 END; 
