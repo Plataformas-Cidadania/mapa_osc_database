@@ -67,8 +67,7 @@ BEGIN
 			
 			registro_nao_delete := array_append(registro_nao_delete, dado_posterior.id_area_atuacao);
 			
-			INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, tx_fonte_dados, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
-			VALUES (nome_tabela, osc, fonte, dataatualizacao, null, row_to_json(dado_posterior));
+			PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, dataatualizacao, null, row_to_json(dado_posterior));
 			
 		ELSE 
 			dado_posterior := dado_anterior;
@@ -101,8 +100,7 @@ BEGIN
 					ft_area_atuacao = dado_posterior.ft_area_atuacao 
 				WHERE id_area_atuacao = dado_posterior.id_area_atuacao;
 				
-				INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, tx_fonte_dados, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
-				VALUES (nome_tabela, osc, fonte, dataatualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior));
+				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, dataatualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior));
 			END IF;
 		
 		END IF;
