@@ -1,13 +1,12 @@
-DROP FUNCTION IF EXISTS portal.atualizar_contato_osc(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, errolog BOOLEAN);
+DROP FUNCTION IF EXISTS portal.atualizar_contato_osc(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, errolog BOOLEAN, idcarga INTEGER);
 
-CREATE OR REPLACE FUNCTION portal.atualizar_contato_osc(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, errolog BOOLEAN) RETURNS TABLE(
+CREATE OR REPLACE FUNCTION portal.atualizar_contato_osc(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, errolog BOOLEAN, idcarga INTEGER) RETURNS TABLE(
 	mensagem TEXT, 
 	flag BOOLEAN
 )AS $$
 
 DECLARE 
 	nome_tabela TEXT;
-	operacao TEXT;
 	fonte_dados RECORD;
 	objeto RECORD;
 	dado_anterior RECORD;
@@ -16,7 +15,6 @@ DECLARE
 	
 BEGIN 
 	nome_tabela := 'osc.tb_contato';
-	operacao := 'portal.atualizar_contato_osc(' || fonte::TEXT || ', ' || osc::TEXT || ', ' || dataatualizacao::TEXT || ', ' || json::TEXT || ', ' || nullvalido::TEXT || ', ' || errolog::TEXT || ')';
 	
 	SELECT INTO fonte_dados * FROM portal.verificar_fonte(fonte);
 	
@@ -36,9 +34,9 @@ BEGIN
 		
 		SELECT INTO dado_anterior * 
 		FROM osc.tb_contato 
-		WHERE id_osc = objeto.id_osc;
+		WHERE id_osc = osc;
 		
-		IF dado_anterior.id_area_atuacao IS null THEN 
+		IF dado_anterior.id_osc IS null THEN 
 			INSERT INTO osc.tb_contato (
 				id_osc, 
 				tx_telefone, 
@@ -77,8 +75,7 @@ BEGIN
 				fonte_dados.nome_fonte
 			) RETURNING * INTO dado_posterior;
 			
-			INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, tx_fonte_dados, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
-			VALUES (nome_tabela, osc, fonte, dataatualizacao, null, row_to_json(dado_posterior));
+			PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, dataatualizacao, null, row_to_json(dado_posterior));
 			
 		ELSE 
 			dado_posterior := dado_anterior;
@@ -152,10 +149,9 @@ BEGIN
 					ft_twitter = dado_posterior.ft_twitter 
 				WHERE id_osc = dado_posterior.id_osc;
 				
-				INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, tx_fonte_dados, dt_alteracao, tx_dado_anterior, tx_dado_posterior) 
-				VALUES (nome_tabela, osc, fonte, dataatualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior));
+				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, dataatualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior));
 			END IF;
-		
+			
 		END IF;
 		
 	END LOOP;
@@ -168,7 +164,7 @@ BEGIN
 EXCEPTION 
 	WHEN others THEN 
 		flag := false;
-		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, operacao, fonte, osc, dataatualizacao::TIMESTAMP, errolog) AS a;
+		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, osc, dataatualizacao::TIMESTAMP, errolog, idcarga) AS a;
 		RETURN NEXT;
 		
 END; 

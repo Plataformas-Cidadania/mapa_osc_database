@@ -1,14 +1,12 @@
 DROP FUNCTION IF EXISTS portal.atualizar_area_atuacao_osc(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, deletevalido BOOLEAN, errolog BOOLEAN, idcarga INTEGER, tipobusca INTEGER);
-DROP FUNCTION IF EXISTS portal.atualizar_area_atuacao_osc(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSON, nullvalido BOOLEAN, deletevalido BOOLEAN, errolog BOOLEAN, idcarga INTEGER, tipobusca INTEGER);
 
-CREATE OR REPLACE FUNCTION portal.atualizar_area_atuacao_osc(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSON, nullvalido BOOLEAN, deletevalido BOOLEAN, errolog BOOLEAN, idcarga INTEGER, tipobusca INTEGER) RETURNS TABLE(
+CREATE OR REPLACE FUNCTION portal.atualizar_area_atuacao_osc(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, deletevalido BOOLEAN, errolog BOOLEAN, idcarga INTEGER, tipobusca INTEGER) RETURNS TABLE(
 	mensagem TEXT, 
 	flag BOOLEAN
 )AS $$
 
 DECLARE 
 	nome_tabela TEXT;
-	operacao TEXT;
 	fonte_dados RECORD;
 	objeto RECORD;
 	dado_anterior RECORD;
@@ -18,7 +16,6 @@ DECLARE
 	
 BEGIN 
 	nome_tabela := 'osc.tb_area_atuacao';
-	operacao := 'portal.atualizar_area_atuacao_osc(' || fonte::TEXT || ', ' || osc::TEXT || ', ' || dataatualizacao::TEXT || ', ' || json::TEXT || ', ' || nullvalido::TEXT || ', ' || deletevalido::TEXT || ', ' || errolog::TEXT || ', ' || idcarga::TEXT || ', ' || tipobusca::TEXT || ')';
 	
 	SELECT INTO fonte_dados * FROM portal.verificar_fonte(fonte);
 	
@@ -47,6 +44,9 @@ BEGIN
 			SELECT INTO dado_anterior * 
 			FROM osc.tb_area_atuacao 
 			WHERE (id_osc = osc AND cd_area_atuacao = objeto.cd_area_atuacao AND cd_subarea_atuacao = objeto.cd_subarea_atuacao);
+			
+		ELSE 
+			RAISE EXCEPTION 'dado_invalido';
 			
 		END IF;
 		
@@ -119,7 +119,7 @@ BEGIN
 EXCEPTION 
 	WHEN others THEN 
 		flag := false;
-		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, operacao, fonte, osc, dataatualizacao::TIMESTAMP, errolog, idcarga) AS a;
+		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, osc, dataatualizacao::TIMESTAMP, errolog, idcarga) AS a;
 		RETURN NEXT;
 		
 END; 

@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS portal.verificar_erro(codigoerro TEXT, mensagemerro TEXT, operacao TEXT, fonte TEXT, osc INTEGER, dataoperacao TIMESTAMP, errolog BOOLEAN, idcarga INTEGER);
+DROP FUNCTION IF EXISTS portal.verificar_erro(codigoerro TEXT, mensagemerro TEXT, fonte TEXT, osc INTEGER, dataoperacao TIMESTAMP, errolog BOOLEAN, idcarga INTEGER);
 
-CREATE OR REPLACE FUNCTION portal.verificar_erro(codigoerro TEXT, mensagemerro TEXT, operacao TEXT, fonte TEXT, osc INTEGER, dataoperacao TIMESTAMP, errolog BOOLEAN, idcarga INTEGER) RETURNS TABLE(
+CREATE OR REPLACE FUNCTION portal.verificar_erro(codigoerro TEXT, mensagemerro TEXT, fonte TEXT, osc INTEGER, dataoperacao TIMESTAMP, errolog BOOLEAN, idcarga INTEGER) RETURNS TABLE(
 	mensagem TEXT
 ) AS $$
 
@@ -50,7 +50,7 @@ BEGIN
 	
 	IF errolog AND identificador_osc IS NOT null THEN 
 		INSERT INTO log.tb_log_erro_carga (cd_identificador_osc, tx_fonte_dados, cd_status, tx_mensagem, dt_carregamento_dados, id_carga) 
-		VALUES (identificador_osc, fonte, 2, mensagem_log || ' Operação: ' || operacao, dataoperacao, idcarga);
+		VALUES (identificador_osc, fonte, 2, mensagem_log, dataoperacao, idcarga::INTEGER);
 	END IF;
 	
 	RETURN NEXT;
