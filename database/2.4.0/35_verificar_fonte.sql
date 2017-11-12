@@ -8,11 +8,12 @@ CREATE OR REPLACE FUNCTION portal.verificar_fonte(fonte TEXT) RETURNS TABLE(
 ) AS $$
 
 DECLARE 
+	fonte_usuario TEXT;
 	fonte_ajustada TEXT;
 	
 BEGIN 
 	IF (SELECT fonte ~ '^[0-9]+$') THEN 
-		SELECT INTO fonte_ajustada, ativo, representacao 
+		SELECT INTO fonte_usuario, ativo, representacao 
 			(
 				SELECT tx_nome_tipo_usuario 
 				FROM syst.dc_tipo_usuario 
@@ -28,22 +29,28 @@ BEGIN
 			WHERE tb_usuario.id_usuario = fonte::INTEGER;
 	END IF;
 	
-	IF fonte_ajustada IS NOT null THEN 
+	fonte_ajustada := SUBSTRING(fonte FROM 0 FOR char_length(fonte) - position(' ' in reverse(fonte)) + 1);
+	
+	IF fonte_usuario IS NOT null THEN 
 		SELECT INTO nome_fonte, prioridade cd_sigla_fonte_dados, nr_prioridade 
 		FROM syst.dc_fonte_dados 
-		WHERE dc_fonte_dados.cd_sigla_fonte_dados = fonte_ajustada;
+		WHERE dc_fonte_dados.cd_sigla_fonte_dados = fonte_usuario;
 		
 	ELSE 
 		ativo := null;
 		representacao := null;
+				
+		nome_fonte := fonte;
 		
-		SELECT INTO nome_fonte, prioridade cd_sigla_fonte_dados, nr_prioridade 
+		SELECT INTO prioridade nr_prioridade 
 		FROM syst.dc_fonte_dados 
 		WHERE dc_fonte_dados.cd_sigla_fonte_dados = fonte 
+		OR dc_fonte_dados.cd_sigla_fonte_dados = fonte_ajustada 
 		AND (
 			SELECT true 
 			FROM (SELECT array_agg(tx_nome_tipo_usuario) AS tipos_usuario FROM syst.dc_tipo_usuario) AS dc_tipo_usuario 
-			WHERE fonte != ALL(tipos_usuario)
+			WHERE fonte != ALL(tipos_usuario) 
+			AND fonte_ajustada != ALL(tipos_usuario)
 		);
 		
 	END IF;
