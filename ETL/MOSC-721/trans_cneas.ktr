@@ -550,77 +550,12 @@
     </hop>
     <hop>
       <from>Select id_osc</from>
-      <to>Merge Join</to>
+      <to>Merge Join 1</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Select values 2</from>
+      <from>Select values</from>
       <to>Select id_osc</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Merge Join</from>
-      <to>Atualizar área de atuação</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Criar linha</from>
-      <to>Criar constantes</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Criar constantes</from>
-      <to>Inserir log carga</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Inserir log carga</from>
-      <to>Select values 1</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Select values 1</from>
-      <to>Select id_carga</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Criar constantes</from>
-      <to>Merge Join 1</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Select id_carga</from>
-      <to>Merge Join 1</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Merge Join 1</from>
-      <to>Merge Join 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Unique rows</from>
-      <to>Merge Join 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Merge Join 2</from>
-      <to>Dummy</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Dummy</from>
-      <to>Select values 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Dummy</from>
-      <to>Merge Join</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Atualizar área de atuação</from>
-      <to>Update log carga erro</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -634,18 +569,33 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Atualizar localização</from>
-      <to>Update log carga erro</to>
+      <from>Merge Join 1</from>
+      <to>Add constants</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Atualizar contato</from>
-      <to>Update log carga erro</to>
+      <from>Unique rows</from>
+      <to>Merge Join 1</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Atualizar contato</from>
-      <to>Update log carga sucesso</to>
+      <from>Unique rows</from>
+      <to>Select values</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Add constants</from>
+      <to>Merge Join 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Merge Join 2</from>
+      <to>Atualizar área de atuação</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Select id_carga</from>
+      <to>Merge Join 2</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -667,9 +617,9 @@
     <quoteString>N</quoteString>
     <sql>SELECT * 
 FROM portal.atualizar_contato_osc(
-	'?'::TEXT, 
+	'${FONTE_CARGA}'::TEXT, 
 	'?'::INTEGER, 
-	'?'::TIMESTAMP, 
+	'${DATA_INICIO}'::TIMESTAMP, 
 	'{
 		"tx_telefone": "?", 
 		"tx_email": "?", 
@@ -687,13 +637,7 @@ FROM portal.atualizar_contato_osc(
     <read_field />
     <arguments>
       <argument>
-        <name>fonte</name>
-      </argument>
-      <argument>
         <name>id_osc</name>
-      </argument>
-      <argument>
-        <name>data_carregamento</name>
       </argument>
       <argument>
         <name>NU_TELEFONE</name>
@@ -716,8 +660,8 @@ FROM portal.atualizar_contato_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1256</xloc>
-      <yloc>558</yloc>
+      <xloc>1283</xloc>
+      <yloc>341</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -739,9 +683,9 @@ FROM portal.atualizar_contato_osc(
     <quoteString>N</quoteString>
     <sql>SELECT * 
 FROM portal.atualizar_localizacao_osc(
-	'?'::TEXT, 
+	'${FONTE_CARGA}'::TEXT, 
 	'?'::INTEGER, 
-	'?'::TIMESTAMP, 
+	'${DATA_INICIO}'::TIMESTAMP, 
 	'{
 		"tx_endereco": "?", 
 		"nr_localizacao": "?", 
@@ -762,13 +706,7 @@ FROM portal.atualizar_localizacao_osc(
     <read_field />
     <arguments>
       <argument>
-        <name>fonte</name>
-      </argument>
-      <argument>
         <name>id_osc</name>
-      </argument>
-      <argument>
-        <name>data_carregamento</name>
       </argument>
       <argument>
         <name>DS_LOGRADOURO</name>
@@ -800,8 +738,8 @@ FROM portal.atualizar_localizacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1094</xloc>
-      <yloc>558</yloc>
+      <xloc>1121</xloc>
+      <yloc>341</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -823,9 +761,9 @@ FROM portal.atualizar_localizacao_osc(
     <quoteString>N</quoteString>
     <sql>SELECT * 
 FROM portal.atualizar_area_atuacao_osc(
-	'?'::TEXT, 
+	'${FONTE_CARGA}'::TEXT, 
 	'?'::INTEGER, 
-	'?'::TIMESTAMP, 
+	'${DATA_INICIO}'::TIMESTAMP, 
 	'{
 		"cd_area_atuacao": "?", 
 		"cd_subarea_atuacao": "?"
@@ -844,13 +782,7 @@ FROM portal.atualizar_area_atuacao_osc(
     <read_field />
     <arguments>
       <argument>
-        <name>fonte</name>
-      </argument>
-      <argument>
         <name>id_osc</name>
-      </argument>
-      <argument>
-        <name>data_carregamento</name>
       </argument>
       <argument>
         <name>area_atuacao</name>
@@ -870,8 +802,8 @@ FROM portal.atualizar_area_atuacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>903</xloc>
-      <yloc>558</yloc>
+      <xloc>930</xloc>
+      <yloc>341</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -886,7 +818,7 @@ FROM portal.atualizar_area_atuacao_osc(
       <method>none</method>
       <schema_name />
     </partitioning>
-    <filename>D:\Users\vagnerpraia\Desktop\ETL\CNEAS - TESTE.csv</filename>
+    <filename>${ARQUIVO}</filename>
     <filename_field />
     <rownum_field />
     <include_filename>N</include_filename>
@@ -1107,56 +1039,13 @@ FROM portal.atualizar_area_atuacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>71</xloc>
-      <yloc>558</yloc>
+      <xloc>93</xloc>
+      <yloc>341</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Inserir log carga</name>
-    <type>ExecSQL</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>localhost</connection>
-    <execute_each_row>Y</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>Y</replace_variables>
-    <quoteString>N</quoteString>
-    <sql>INSERT INTO log.tb_log_carga (tx_carga, dt_inicio) VALUES ('?'::TEXT, '?'::TIMESTAMP);</sql>
-    <set_params>N</set_params>
-    <insert_field />
-    <update_field />
-    <delete_field />
-    <read_field />
-    <arguments>
-      <argument>
-        <name>fonte</name>
-      </argument>
-      <argument>
-        <name>data_carregamento</name>
-      </argument>
-    </arguments>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>283</xloc>
-      <yloc>183</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Merge Join</name>
+    <name>Merge Join 1</name>
     <type>MergeJoin</type>
     <description />
     <distribute>N</distribute>
@@ -1167,7 +1056,7 @@ FROM portal.atualizar_area_atuacao_osc(
       <schema_name />
     </partitioning>
     <join_type>INNER</join_type>
-    <step1>Dummy</step1>
+    <step1>Unique rows</step1>
     <step2>Select id_osc</step2>
     <keys_1>
       <key>NU_CNPJ</key>
@@ -1183,8 +1072,39 @@ FROM portal.atualizar_area_atuacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>730</xloc>
-      <yloc>558</yloc>
+      <xloc>491</xloc>
+      <yloc>341</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Select id_carga</name>
+    <type>TableInput</type>
+    <description />
+    <distribute>N</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>localhost</connection>
+    <sql>SELECT id_carga FROM log.tb_log_carga WHERE tx_carga = '${FONTE_CARGA}' AND dt_inicio = '${DATA_INICIO}';</sql>
+    <limit>0</limit>
+    <lookup />
+    <execute_each_row>N</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>767</xloc>
+      <yloc>209</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1204,7 +1124,7 @@ FROM portal.atualizar_area_atuacao_osc(
 FROM osc.tb_osc 
 WHERE substring(cd_identificador_osc::TEXT from 0 for char_length(cd_identificador_osc::TEXT) - 1) = ltrim(substring(?::TEXT from 0 for char_length(?::TEXT) - 1), '0');</sql>
     <limit>0</limit>
-    <lookup>Select values 2</lookup>
+    <lookup>Select values</lookup>
     <execute_each_row>Y</execute_each_row>
     <variables_active>Y</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
@@ -1216,13 +1136,13 @@ WHERE substring(cd_identificador_osc::TEXT from 0 for char_length(cd_identificad
       </output>
     </remotesteps>
     <GUI>
-      <xloc>730</xloc>
-      <yloc>424</yloc>
+      <xloc>491</xloc>
+      <yloc>207</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Select values 2</name>
+    <name>Select values</name>
     <type>SelectValues</type>
     <description />
     <distribute>N</distribute>
@@ -1255,8 +1175,8 @@ WHERE substring(cd_identificador_osc::TEXT from 0 for char_length(cd_identificad
       </output>
     </remotesteps>
     <GUI>
-      <xloc>588</xloc>
-      <yloc>424</yloc>
+      <xloc>349</xloc>
+      <yloc>207</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1296,8 +1216,8 @@ WHERE substring(cd_identificador_osc::TEXT from 0 for char_length(cd_identificad
       </output>
     </remotesteps>
     <GUI>
-      <xloc>206</xloc>
-      <yloc>558</yloc>
+      <xloc>228</xloc>
+      <yloc>341</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1305,7 +1225,7 @@ WHERE substring(cd_identificador_osc::TEXT from 0 for char_length(cd_identificad
     <name>Unique rows</name>
     <type>Unique</type>
     <description />
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution />
     <copies>1</copies>
     <partitioning>
@@ -1330,14 +1250,14 @@ WHERE substring(cd_identificador_osc::TEXT from 0 for char_length(cd_identificad
       </output>
     </remotesteps>
     <GUI>
-      <xloc>327</xloc>
-      <yloc>558</yloc>
+      <xloc>349</xloc>
+      <yloc>341</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Criar linha</name>
-    <type>RowGenerator</type>
+    <name>Add constants</name>
+    <type>Constant</type>
     <description />
     <distribute>Y</distribute>
     <custom_distribution />
@@ -1347,83 +1267,29 @@ WHERE substring(cd_identificador_osc::TEXT from 0 for char_length(cd_identificad
       <schema_name />
     </partitioning>
     <fields>
-    </fields>
-    <limit>1</limit>
-    <never_ending>N</never_ending>
-    <interval_in_ms>5000</interval_in_ms>
-    <row_time_field>now</row_time_field>
-    <last_time_field>FiveSecondsAgo</last_time_field>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>455</xloc>
-      <yloc>67</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Criar constantes</name>
-    <type>ScriptValueMod</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <compatible>N</compatible>
-    <optimizationLevel>9</optimizationLevel>
-    <jsScripts>
-      <jsScript>
-        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>var fonte = 'CNEAS/MDS';
-
-var data_carregamento = Date.now();
-
-var area_atuacao = 5;
-
-var subarea_atuacao = 17;</jsScript_script>
-      </jsScript>
-    </jsScripts>
-    <fields>
-      <field>
-        <name>fonte</name>
-        <rename>fonte</rename>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
-      <field>
-        <name>data_carregamento</name>
-        <rename>data_carregamento</rename>
-        <type>Date</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
       <field>
         <name>area_atuacao</name>
-        <rename>area_atuacao</rename>
         <type>Integer</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif>5</nullif>
         <length>-1</length>
         <precision>-1</precision>
-        <replace>N</replace>
+        <set_empty_string>N</set_empty_string>
       </field>
       <field>
         <name>subarea_atuacao</name>
-        <rename>subarea_atuacao</rename>
         <type>Integer</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif>17</nullif>
         <length>-1</length>
         <precision>-1</precision>
-        <replace>N</replace>
+        <set_empty_string>N</set_empty_string>
       </field>
     </fields>
     <cluster_schema />
@@ -1434,105 +1300,8 @@ var subarea_atuacao = 17;</jsScript_script>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>455</xloc>
-      <yloc>183</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Select id_carga</name>
-    <type>TableInput</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>localhost</connection>
-    <sql>SELECT id_carga FROM log.tb_log_carga WHERE tx_carga = ? AND dt_inicio = ?;</sql>
-    <limit>0</limit>
-    <lookup>Select values 1</lookup>
-    <execute_each_row>Y</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>283</xloc>
-      <yloc>423</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Select values 1</name>
-    <type>SelectValues</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <name>fonte</name>
-        <rename />
-      </field>
-      <field>
-        <name>data_carregamento</name>
-        <rename />
-      </field>
-      <select_unspecified>N</select_unspecified>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>283</xloc>
-      <yloc>315</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Merge Join 1</name>
-    <type>MergeJoin</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <join_type>INNER</join_type>
-    <step1>Criar constantes</step1>
-    <step2>Select id_carga</step2>
-    <keys_1>
-    </keys_1>
-    <keys_2>
-    </keys_2>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>455</xloc>
-      <yloc>423</yloc>
+      <xloc>636</xloc>
+      <yloc>341</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1548,8 +1317,8 @@ var subarea_atuacao = 17;</jsScript_script>
       <schema_name />
     </partitioning>
     <join_type>INNER</join_type>
-    <step1>Unique rows</step1>
-    <step2>Merge Join 1</step2>
+    <step1>Add constants</step1>
+    <step2>Select id_carga</step2>
     <keys_1>
     </keys_1>
     <keys_2>
@@ -1562,125 +1331,15 @@ var subarea_atuacao = 17;</jsScript_script>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>455</xloc>
-      <yloc>558</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Dummy</name>
-    <type>Dummy</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>588</xloc>
-      <yloc>558</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Update log carga sucesso</name>
-    <type>ExecSQL</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>localhost</connection>
-    <execute_each_row>Y</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>Y</replace_variables>
-    <quoteString>N</quoteString>
-    <sql>UPDATE log.tb_log_carga 
-SET dt_fim = NOW(), 
-cd_status = 0 
-WHERE id_carga = ?; </sql>
-    <set_params>N</set_params>
-    <insert_field />
-    <update_field />
-    <delete_field />
-    <read_field />
-    <arguments>
-      <argument>
-        <name>id_carga</name>
-      </argument>
-    </arguments>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1435</xloc>
-      <yloc>558</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Update log carga erro</name>
-    <type>ExecSQL</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>localhost</connection>
-    <execute_each_row>Y</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>Y</replace_variables>
-    <quoteString>N</quoteString>
-    <sql>UPDATE log.tb_log_carga 
-SET dt_fim = NOW(), 
-cd_status = 2 
-WHERE id_carga = ?;</sql>
-    <set_params>N</set_params>
-    <insert_field />
-    <update_field />
-    <delete_field />
-    <read_field />
-    <arguments>
-      <argument>
-        <name>id_carga</name>
-      </argument>
-    </arguments>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1101</xloc>
-      <yloc>748</yloc>
+      <xloc>767</xloc>
+      <yloc>341</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step_error_handling>
     <error>
       <source_step>Atualizar contato</source_step>
-      <target_step>Update log carga erro</target_step>
+      <target_step />
       <is_enabled>Y</is_enabled>
       <nr_valuename />
       <descriptions_valuename />
@@ -1692,7 +1351,7 @@ WHERE id_carga = ?;</sql>
     </error>
     <error>
       <source_step>Atualizar localização</source_step>
-      <target_step>Update log carga erro</target_step>
+      <target_step />
       <is_enabled>Y</is_enabled>
       <nr_valuename />
       <descriptions_valuename />
@@ -1704,7 +1363,7 @@ WHERE id_carga = ?;</sql>
     </error>
     <error>
       <source_step>Atualizar área de atuação</source_step>
-      <target_step>Update log carga erro</target_step>
+      <target_step />
       <is_enabled>Y</is_enabled>
       <nr_valuename />
       <descriptions_valuename />

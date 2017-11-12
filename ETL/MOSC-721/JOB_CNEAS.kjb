@@ -17,10 +17,10 @@
     <server>localhost</server>
     <type>POSTGRESQL</type>
     <access>Native</access>
-    <database>portalosc_producao</database>
+    <database>portalosc</database>
     <port>5432</port>
-    <username>postgres</username>
-    <password>Encrypted 2be98afc86aa7f2e4cb79a760db93bdd0</password>
+    <username>i3geo</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb79ce798d95aad5</password>
     <servername />
     <data_tablespace />
     <index_tablespace />
@@ -406,8 +406,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>119</xloc>
-      <yloc>304</yloc>
+      <xloc>86</xloc>
+      <yloc>136</yloc>
     </entry>
     <entry>
       <name>Transformation</name>
@@ -435,15 +435,27 @@
       <follow_abort_remote>N</follow_abort_remote>
       <create_parent_folder>N</create_parent_folder>
       <logging_remote_work>N</logging_remote_work>
-      <run_configuration />
+      <run_configuration>Pentaho local</run_configuration>
+      <argument0>${FONTE_CARGA}</argument0>
+      <argument1>${DATA_INICIO}</argument1>
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
+        <parameter>
+          <name>FONTE_CARGA</name>
+          <stream_name />
+          <value>${FONTE_CARGA}</value>
+        </parameter>
+        <parameter>
+          <name>DATA_INICIO</name>
+          <stream_name />
+          <value>${DATA_INICIO}</value>
+        </parameter>
       </parameters>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>292</xloc>
-      <yloc>304</yloc>
+      <xloc>654</xloc>
+      <yloc>136</yloc>
     </entry>
     <entry>
       <name>Success</name>
@@ -452,13 +464,153 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>457</xloc>
-      <yloc>304</yloc>
+      <xloc>824</xloc>
+      <yloc>275</yloc>
+    </entry>
+    <entry>
+      <name>Grava log início</name>
+      <description />
+      <type>SQL</type>
+      <sql>INSERT INTO log.tb_log_carga (tx_carga, dt_inicio) VALUES ('${FONTE_CARGA}'::TEXT, '${DATA_INICIO}'::TIMESTAMP);</sql>
+      <useVariableSubstitution>T</useVariableSubstitution>
+      <sqlfromfile>F</sqlfromfile>
+      <sqlfilename />
+      <sendOneStatement>F</sendOneStatement>
+      <connection>localhost</connection>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>507</xloc>
+      <yloc>136</yloc>
+    </entry>
+    <entry>
+      <name>Criação data início</name>
+      <description />
+      <type>EVAL</type>
+      <script>dataInicio = new java.util.Date();
+
+formatacao = new java.text.SimpleDateFormat("yyyy/MM/dd HH:mm:sss.SSS");
+dataInicio = formatacao.format(dataInicio);
+
+parent_job.setVariable("DATA_INICIO", dataInicio);
+
+true;</script>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>354</xloc>
+      <yloc>136</yloc>
+    </entry>
+    <entry>
+      <name>Grava log fim sucesso</name>
+      <description />
+      <type>SQL</type>
+      <sql>UPDATE log.tb_log_carga 
+SET dt_fim = NOW(), cd_status = 0 
+WHERE tx_carga = '${FONTE_CARGA}'::TEXT AND dt_inicio = '${DATA_INICIO}'::TIMESTAMP; </sql>
+      <useVariableSubstitution>T</useVariableSubstitution>
+      <sqlfromfile>F</sqlfromfile>
+      <sqlfilename />
+      <sendOneStatement>F</sendOneStatement>
+      <connection>localhost</connection>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>824</xloc>
+      <yloc>136</yloc>
+    </entry>
+    <entry>
+      <name>Grava log fim erro</name>
+      <description />
+      <type>SQL</type>
+      <sql>UPDATE log.tb_log_carga 
+SET dt_fim = NOW(), cd_status = 2 
+WHERE tx_carga = '${FONTE_CARGA}'::TEXT AND dt_inicio = '${DATA_INICIO}'::TIMESTAMP; </sql>
+      <useVariableSubstitution>T</useVariableSubstitution>
+      <sqlfromfile>F</sqlfromfile>
+      <sqlfilename />
+      <sendOneStatement>F</sendOneStatement>
+      <connection>localhost</connection>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>654</xloc>
+      <yloc>275</yloc>
+    </entry>
+    <entry>
+      <name>Set variables</name>
+      <description />
+      <type>SET_VARIABLES</type>
+      <replacevars>Y</replacevars>
+      <filename />
+      <file_variable_type>JVM</file_variable_type>
+      <fields>
+        <field>
+          <variable_name>ARQUIVO</variable_name>
+          <variable_value>C:\Users\vagnerpraia\ETL\CNEAS.csv</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>FONTE_CARGA</variable_name>
+          <variable_value>CNEAS/MDS</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+      </fields>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>201</xloc>
+      <yloc>136</yloc>
     </entry>
   </entries>
   <hops>
     <hop>
+      <from>Grava log início</from>
+      <to>Transformation</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Criação data início</from>
+      <to>Grava log início</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
       <from>Transformation</from>
+      <to>Grava log fim sucesso</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Transformation</from>
+      <to>Grava log fim erro</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Grava log fim sucesso</from>
+      <to>Success</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Grava log fim erro</from>
       <to>Success</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -468,7 +620,16 @@
     </hop>
     <hop>
       <from>START</from>
-      <to>Transformation</to>
+      <to>Set variables</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Set variables</from>
+      <to>Criação data início</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -478,4 +639,20 @@
   </hops>
   <notepads>
   </notepads>
+  <attributes>
+    <group>
+      <name>METASTORE.pentaho</name>
+      <attribute>
+        <key>Default Run Configuration</key>
+        <value>{"namespace":"pentaho","id":"Default Run Configuration","name":"Default Run Configuration","description":"Defines a default run configuration","metaStoreName":null}</value>
+      </attribute>
+    </group>
+    <group>
+      <name>{"_":"Embedded MetaStore Elements","namespace":"pentaho","type":"Default Run Configuration"}</name>
+      <attribute>
+        <key>Pentaho local</key>
+        <value>{"children":[{"children":[],"id":"server","value":null},{"children":[],"id":"clustered","value":"N"},{"children":[],"id":"name","value":"Pentaho local"},{"children":[],"id":"description","value":null},{"children":[],"id":"readOnly","value":"Y"},{"children":[],"id":"sendResources","value":"N"},{"children":[],"id":"logRemoteExecutionLocally","value":"N"},{"children":[],"id":"remote","value":"N"},{"children":[],"id":"local","value":"Y"},{"children":[],"id":"showTransformations","value":"N"}],"id":"Pentaho local","value":null,"name":"Pentaho local","owner":null,"ownerPermissionsList":[]}</value>
+      </attribute>
+    </group>
+  </attributes>
 </job>
