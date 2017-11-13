@@ -39,7 +39,7 @@ BEGIN
 	ELSE 
 		ativo := null;
 		representacao := null;
-				
+		
 		nome_fonte := fonte;
 		
 		SELECT INTO prioridade nr_prioridade 
