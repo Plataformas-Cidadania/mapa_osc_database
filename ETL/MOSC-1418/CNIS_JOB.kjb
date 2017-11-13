@@ -98,11 +98,11 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>102</xloc>
-      <yloc>212</yloc>
+      <xloc>34</xloc>
+      <yloc>217</yloc>
       </entry>
     <entry>
-      <name>Transformation</name>
+      <name>Transformation CNIS</name>
       <description/>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
@@ -110,7 +110,7 @@
       <filename>&#x2f;home&#x2f;DLIPEA&#x2f;b6519563&#x2f;workspace&#x2f;mapa_osc_database&#x2f;ETL&#x2f;MOSC-1418&#x2f;CNIS.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
-      <params_from_previous>N</params_from_previous>
+      <params_from_previous>Y</params_from_previous>
       <exec_per_row>N</exec_per_row>
       <clear_rows>N</clear_rows>
       <clear_files>N</clear_files>
@@ -131,8 +131,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>295</xloc>
-      <yloc>215</yloc>
+      <xloc>373</xloc>
+      <yloc>397</yloc>
       </entry>
     <entry>
       <name>Success</name>
@@ -141,14 +141,14 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>477</xloc>
-      <yloc>218</yloc>
+      <xloc>553</xloc>
+      <yloc>220</yloc>
       </entry>
     <entry>
       <name>SQL</name>
       <description/>
       <type>SQL</type>
-      <sql>ALTER TABLE osc.tb_osc DISABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_dados_gerais DISABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_contato DISABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_localizacao DISABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_area_atuacao DISABLE TRIGGER ALL&#x3b;&#xa;UPDATE osc.tb_osc SET bo_osc_ativa &#x3d; false&#x3b;</sql>
+      <sql>ALTER TABLE osc.tb_osc DISABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_dados_gerais DISABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_contato DISABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_localizacao DISABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_area_atuacao DISABLE TRIGGER ALL&#x3b;&#xa;&#xa;UPDATE osc.tb_osc SET bo_osc_ativa &#x3d; false&#x3b;</sql>
       <useVariableSubstitution>F</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename/>
@@ -157,8 +157,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>196</xloc>
-      <yloc>214</yloc>
+      <xloc>142</xloc>
+      <yloc>217</yloc>
       </entry>
     <entry>
       <name>SQL 2</name>
@@ -173,8 +173,60 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>398</xloc>
-      <yloc>216</yloc>
+      <xloc>377</xloc>
+      <yloc>219</yloc>
+      </entry>
+    <entry>
+      <name>Transformation ID_CARGA</name>
+      <description/>
+      <type>TRANS</type>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename/>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>142</xloc>
+      <yloc>398</yloc>
+      </entry>
+    <entry>
+      <name>Set variables</name>
+      <description/>
+      <type>SET_VARIABLES</type>
+      <replacevars>Y</replacevars>
+      <filename/>
+      <file_variable_type>JVM</file_variable_type>
+      <fields>
+        <field>
+          <variable_name>ELT</variable_name>
+          <variable_value>CNIS 2016</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+      </fields>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>144</xloc>
+      <yloc>299</yloc>
       </entry>
   </entries>
   <hops>
@@ -188,16 +240,7 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>SQL</from>
-      <to>Transformation</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Transformation</from>
+      <from>Transformation CNIS</from>
       <to>SQL 2</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -208,6 +251,33 @@
     <hop>
       <from>SQL 2</from>
       <to>Success</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Transformation ID_CARGA</from>
+      <to>Transformation CNIS</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>SQL</from>
+      <to>Set variables</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Set variables</from>
+      <to>Transformation ID_CARGA</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>

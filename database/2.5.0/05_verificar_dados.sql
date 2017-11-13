@@ -15,7 +15,7 @@ BEGIN
 		OR (nullvalido = false AND dado_anterior <> dado_posterior AND (dado_posterior::TEXT = '') IS FALSE)
 	) AND (
 		fonte_dado_anterior IS null
-		OR dado_posterior_prioridade <= (SELECT nr_prioridade FROM syst.dc_fonte_dados WHERE cd_sigla_fonte_dados = fonte_dado_anterior OR cd_sigla_fonte_dados = (select regexp_split_to_array(fonte_dado_anterior, ' '))[1])
+		OR dado_posterior_prioridade <= (SELECT nr_prioridade FROM syst.dc_fonte_dados WHERE cd_sigla_fonte_dados = fonte_dado_anterior OR cd_sigla_fonte_dados = (select SUBSTRING(fonte FROM 0 FOR char_length(fonte) - position(' ' in reverse(fonte)) + 1))
 	) THEN
 		flag := true;
 	END IF;
