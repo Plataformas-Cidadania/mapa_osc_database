@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS portal.atualizar_fonte_recursos_projeto(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, errolog BOOLEAN, deletevalido BOOLEAN, tipobusca INTEGER);
+DROP FUNCTION IF EXISTS portal.atualizar_fonte_recursos_projeto(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, deletevalido BOOLEAN, errolog BOOLEAN, idcarga INTEGER, tipobusca INTEGER);
 
-CREATE OR REPLACE FUNCTION portal.atualizar_fonte_recursos_projeto(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, errolog BOOLEAN, deletevalido BOOLEAN, tipobusca INTEGER) RETURNS TABLE(
+CREATE OR REPLACE FUNCTION portal.atualizar_fonte_recursos_projeto(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, deletevalido BOOLEAN, errolog BOOLEAN, idcarga INTEGER, tipobusca INTEGER) RETURNS TABLE(
 	mensagem TEXT, 
 	flag BOOLEAN
 )AS $$
@@ -23,6 +23,18 @@ BEGIN
 		RAISE EXCEPTION 'fonte_invalida';
 	ELSIF osc != ALL(fonte_dados.representacao) THEN 
 		RAISE EXCEPTION 'permissao_negada_usuario';
+	ELSIF tipo_identificador != 'cnpj' OR tipo_identificador != 'id_osc' THEN
+		RAISE EXCEPTION 'tipo_identificador_invalido';
+	END IF;
+	
+	IF tipo_identificador = 'cnpj' THEN
+		SELECT id_osc INTO osc FROM osc.tb_osc WHERE cd_identificador_osc = identificador;
+	ELSE
+		osc := identificador;
+	END IF;
+	
+	IF osc IS null THEN 
+		RAISE EXCEPTION 'identificador_invalido';
 	END IF;
 	
 	registro_nao_delete := '{}';
@@ -152,7 +164,7 @@ BEGIN
 EXCEPTION 
 	WHEN others THEN 
 		flag := false;
-		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, osc, dataatualizacao::TIMESTAMP, errolog) AS a;
+		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, osc, dataatualizacao::TIMESTAMP, errolog, idcarga) AS a;
 		RETURN NEXT;
 		
 END; 

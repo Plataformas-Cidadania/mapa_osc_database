@@ -1,7 +1,3 @@
-DROP FUNCTION IF EXISTS portal.atualizar_area_atuacao_osc(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, deletevalido BOOLEAN, errolog BOOLEAN, idcarga INTEGER, tipobusca INTEGER);
-
-DROP FUNCTION IF EXISTS portal.atualizar_area_atuacao_osc(fonte TEXT, cnpj INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, deletevalido BOOLEAN, errolog BOOLEAN, idcarga INTEGER, tipobusca INTEGER);
-
 DROP FUNCTION IF EXISTS portal.atualizar_area_atuacao_osc(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT , dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, deletevalido BOOLEAN, errolog BOOLEAN, idcarga INTEGER, tipobusca INTEGER);
 
 CREATE OR REPLACE FUNCTION portal.atualizar_area_atuacao_osc(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT , dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, deletevalido BOOLEAN, errolog BOOLEAN, idcarga INTEGER, tipobusca INTEGER) RETURNS TABLE(
@@ -30,15 +26,19 @@ BEGIN
 	ELSIF osc != ALL(fonte_dados.representacao) THEN
 		RAISE EXCEPTION 'permissao_negada_usuario';
 	ELSIF tipo_identificador != 'cnpj' OR tipo_identificador != 'id_osc' THEN
-		RAISE EXCEPTION 'tipo_identificador';
+		RAISE EXCEPTION 'tipo_identificador_invalido';
 	END IF;
 
 	IF tipo_identificador = 'cnpj' THEN
 		SELECT id_osc INTO osc FROM osc.tb_osc WHERE cd_identificador_osc = identificador;
 	ELSE
-		osc:=identificador;
+		osc := identificador;
 	END IF;
-
+	
+	IF osc IS null THEN 
+		RAISE EXCEPTION 'identificador_invalido';
+	END IF;
+	
 	registro_nao_delete := '{}';
 
 	IF json_typeof(json::JSON) = 'object' THEN

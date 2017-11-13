@@ -1,5 +1,3 @@
-DROP FUNCTION IF EXISTS portal.atualizar_localizacao(fonte TEXT, cnpj INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, errolog BOOLEAN, id_carga INTEGER);
-
 DROP FUNCTION IF EXISTS portal.atualizar_localizacao(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, errolog BOOLEAN, id_carga INTEGER);
 
 CREATE OR REPLACE FUNCTION portal.atualizar_localizacao(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, errolog BOOLEAN, id_carga INTEGER) RETURNS TABLE(
@@ -29,7 +27,7 @@ BEGIN
 	ELSIF osc != ALL(fonte_dados.representacao) THEN
 		RAISE EXCEPTION 'permissao_negada_usuario';
 	ELSIF tipo_identificador != 'cnpj' OR tipo_identificador != 'id_osc' THEN
-		RAISE EXCEPTION 'tipo_identificador';
+		RAISE EXCEPTION 'tipo_identificador_invalido';
 	END IF;
 
 	SELECT INTO objeto * FROM json_populate_record(null::osc.tb_osc, json::JSON);

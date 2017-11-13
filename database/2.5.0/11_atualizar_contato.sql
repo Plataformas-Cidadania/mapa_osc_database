@@ -29,16 +29,20 @@ BEGIN
 	ELSIF osc != ALL(fonte_dados.representacao) THEN
 		RAISE EXCEPTION 'permissao_negada_usuario';
 	ELSIF tipo_identificador != 'cnpj' OR tipo_identificador != 'id_osc' THEN
-		RAISE EXCEPTION 'tipo_identificador';
+		RAISE EXCEPTION 'tipo_identificador_invalido';
 	END IF;
-
-	SELECT INTO objeto * FROM json_populate_record(null::osc.tb_osc, json::JSON);
 
 	IF tipo_identificador = 'cnpj' THEN
 		SELECT id_osc INTO osc FROM osc.tb_osc WHERE cd_identificador_osc = identificador;
 	ELSE
-		osc:=identificador;
+		osc := identificador;
 	END IF;
+	
+	IF osc IS null THEN 
+		RAISE EXCEPTION 'identificador_invalido';
+	END IF;
+
+	SELECT INTO objeto * FROM json_populate_record(null::osc.tb_osc, json::JSON);
 
 	SELECT INTO dado_anterior * FROM osc.tb_contato WHERE id_osc = osc;
 
