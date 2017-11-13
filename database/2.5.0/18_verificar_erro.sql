@@ -9,6 +9,8 @@ DECLARE
 	mensagem_log TEXT;
 	
 BEGIN 
+	mensagem_log := mensagemerro;
+	
 	IF codigoerro = 'P0001' THEN 
 		IF mensagemerro = 'fonte_invalida' THEN 
 			mensagem := 'Fonte de dados inválida.';
@@ -46,6 +48,7 @@ BEGIN
 			mensagem := 'Ocorreu um erro.';
 			
 		END IF;
+		
 	END IF;
 	
 	SELECT INTO identificador_osc cd_identificador_osc FROM osc.tb_osc WHERE cd_identificador_osc = osc OR id_osc::NUMERIC = osc;
