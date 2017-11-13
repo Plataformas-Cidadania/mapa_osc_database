@@ -23,13 +23,13 @@ BEGIN
 	RETURN QUERY
 		EXECUTE 
 			'SELECT
-				tx_nome_subclasse_atividade_economica
+				tx_nome_classe_atividade_economica
 			FROM 
-				syst.dc_subclasse_atividade_economica
+				syst.dc_classe_atividade_economica
 			WHERE 
-				UNACCENT(tx_nome_subclasse_atividade_economica) ILIKE ''' || param::TEXT || '%'' 
+				UNACCENT(tx_nome_classe_atividade_economica) ILIKE ''' || param::TEXT || '%'' 
 			ORDER BY 
-				similarity(tx_nome_subclasse_atividade_economica, ''' || param::TEXT || ''') DESC ' || query_limit;
+				similarity(tx_nome_classe_atividade_economica, ''' || param::TEXT || ''') DESC ' || query_limit;
 	
 END;
 $BODY$
