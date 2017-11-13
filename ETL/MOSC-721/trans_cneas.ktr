@@ -658,8 +658,8 @@ FROM portal.atualizar_contato_osc(
 		"tx_email": "?", 
 		"tx_site": "?"
 	}'::JSONB, 
-	false::BOOLEAN, 
-	true::BOOLEAN, 
+	false::BOOLEAN, --nullvalido
+	true::BOOLEAN, --errolog
 	'${ID_CARGA}'::INTEGER
 );
 </sql>
@@ -728,8 +728,8 @@ FROM portal.atualizar_localizacao_osc(
 		"cd_municipio": "?", 
 		"nr_cep": "?"
 	}'::JSONB, 
-	false::BOOLEAN, 
-	true::BOOLEAN, 
+	false::BOOLEAN, --nullvalido
+	true::BOOLEAN, --errolog
 	'${ID_CARGA}'::INTEGER
 );
 </sql>
@@ -803,9 +803,9 @@ FROM portal.atualizar_area_atuacao_osc(
 		"cd_area_atuacao": "?", 
 		"cd_subarea_atuacao": "?"
 	}'::JSONB, 
-	false::BOOLEAN, 
-	false::BOOLEAN, 
-	true::BOOLEAN, 
+	false::BOOLEAN, --nullvalido
+	false::BOOLEAN, --deletevalido
+	true::BOOLEAN, --errolog
 	'${ID_CARGA}'::INTEGER, 
 	2::INTEGER
 );
