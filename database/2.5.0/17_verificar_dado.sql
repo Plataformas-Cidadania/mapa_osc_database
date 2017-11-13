@@ -10,6 +10,8 @@ DECLARE
 BEGIN 
 	flag := false;
 	
+	fonte_dado_anterior := SUBSTRING(fonte_dado_anterior FROM 0 FOR char_length(fonte_dado_anterior) - position(' ' in reverse(fonte_dado_anterior)) + 1);
+	
 	IF (
 		(nullvalido = true AND dado_anterior <> dado_posterior) 
 		OR (nullvalido = false AND dado_anterior <> dado_posterior AND (dado_posterior::TEXT = '') IS FALSE)
