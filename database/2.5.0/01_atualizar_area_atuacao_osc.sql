@@ -1,10 +1,6 @@
-DROP FUNCTION IF EXISTS portal.atualizar_area_atuacao_osc(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, deletevalido BOOLEAN, errolog BOOLEAN, idcarga INTEGER, tipobusca INTEGER);
+DROP FUNCTION IF EXISTS portal.atualizar_area_atuacao_osc(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, deletevalido BOOLEAN, errolog BOOLEAN, idcarga INTEGER, tipobusca INTEGER);
 
-DROP FUNCTION IF EXISTS portal.atualizar_area_atuacao_osc(fonte TEXT, cnpj INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, deletevalido BOOLEAN, errolog BOOLEAN, idcarga INTEGER, tipobusca INTEGER);
-
-DROP FUNCTION IF EXISTS portal.atualizar_area_atuacao_osc(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT , dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, deletevalido BOOLEAN, errolog BOOLEAN, idcarga INTEGER, tipobusca INTEGER);
-
-CREATE OR REPLACE FUNCTION portal.atualizar_area_atuacao_osc(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT , dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, deletevalido BOOLEAN, errolog BOOLEAN, idcarga INTEGER, tipobusca INTEGER) RETURNS TABLE(
+CREATE OR REPLACE FUNCTION portal.atualizar_area_atuacao_osc(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, deletevalido BOOLEAN, errolog BOOLEAN, idcarga INTEGER, tipobusca INTEGER) RETURNS TABLE(
 	mensagem TEXT,
 
 	flag BOOLEAN
@@ -23,22 +19,27 @@ DECLARE
 BEGIN
 	nome_tabela := 'osc.tb_area_atuacao';
 	tipo_identificador := lower(tipo_identificador);
+	
 	SELECT INTO fonte_dados * FROM portal.verificar_fonte(fonte);
-
+	
 	IF fonte_dados IS null THEN
 		RAISE EXCEPTION 'fonte_invalida';
 	ELSIF osc != ALL(fonte_dados.representacao) THEN
 		RAISE EXCEPTION 'permissao_negada_usuario';
-	ELSIF tipo_identificador != 'cnpj' OR tipo_identificador != 'id_osc' THEN
-		RAISE EXCEPTION 'tipo_identificador';
 	END IF;
-
-	IF tipo_identificador = 'cnpj' THEN
+	
+	IF tipo_identificador = 'cnpj' THEN 
 		SELECT id_osc INTO osc FROM osc.tb_osc WHERE cd_identificador_osc = identificador;
-	ELSE
-		osc:=identificador;
+	ELSIF tipo_identificador = 'id_osc' THEN 
+		osc := identificador;
 	END IF;
-
+	
+	IF tipo_identificador != 'cnpj' OR tipo_identificador != 'id_osc' THEN
+		RAISE EXCEPTION 'tipo_identificador_invalido';
+	ELSIF osc IS null THEN 
+		RAISE EXCEPTION 'identificador_invalido';
+	END IF;
+	
 	registro_nao_delete := '{}';
 
 	IF json_typeof(json::JSON) = 'object' THEN

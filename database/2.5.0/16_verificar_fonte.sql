@@ -12,6 +12,8 @@ DECLARE
 	fonte_ajustada TEXT;
 	
 BEGIN 
+	fonte_ajustada := SUBSTRING(fonte FROM 0 FOR char_length(fonte) - position(' ' in reverse(fonte)) + 1);
+	
 	IF (SELECT fonte ~ '^[0-9]+$') THEN 
 		SELECT INTO fonte_usuario, ativo, representacao 
 			(
@@ -28,8 +30,6 @@ BEGIN
 			FROM portal.tb_usuario 
 			WHERE tb_usuario.id_usuario = fonte::INTEGER;
 	END IF;
-	
-	fonte_ajustada := SUBSTRING(fonte FROM 0 FOR char_length(fonte) - position(' ' in reverse(fonte)) + 1);
 	
 	IF fonte_usuario IS NOT null THEN 
 		SELECT INTO nome_fonte, prioridade cd_sigla_fonte_dados, nr_prioridade 

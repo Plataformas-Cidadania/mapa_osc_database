@@ -1,9 +1,3 @@
-DROP FUNCTION IF EXISTS portal.atualizar_dados_gerais_osc(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, errolog BOOLEAN);
-
-DROP FUNCTION IF EXISTS portal.atualizar_dados_gerais_osc(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, errolog BOOLEAN, id_carga INTEGER);
-
-DROP FUNCTION IF EXISTS portal.atualizar_dados_gerais_osc(fonte TEXT, cnpj INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, errolog BOOLEAN, id_carga INTEGER);
-
 DROP FUNCTION IF EXISTS portal.atualizar_dados_gerais_osc(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, errolog BOOLEAN, id_carga INTEGER);
 
 CREATE OR REPLACE FUNCTION portal.atualizar_dados_gerais_osc(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, errolog BOOLEAN, id_carga INTEGER) RETURNS TABLE(
@@ -24,6 +18,7 @@ DECLARE
 BEGIN
 	nome_tabela := 'osc.atualizar_dados_gerais';
 	tipo_identificador := lower(tipo_identificador);
+	
 	operacao := 'portal.atualizar_dados_gerais_osc(' || fonte::TEXT || ', ' || cnpj::TEXT || ', ' || dataatualizacao::TEXT || ', ' || json::TEXT || ', ' || nullvalido::TEXT || ', ' || errolog::TEXT || ', ' || id_carga::TEXT || ')';
 
 	SELECT INTO fonte_dados * FROM portal.verificar_fonte(fonte);
@@ -32,18 +27,22 @@ BEGIN
 		RAISE EXCEPTION 'fonte_invalida';
 	ELSIF osc != ALL(fonte_dados.representacao) THEN
 		RAISE EXCEPTION 'permissao_negada_usuario';
-	ELSIF tipo_identificador != 'cnpj' OR tipo_identificador != 'id_osc' THEN
-		RAISE EXCEPTION 'tipo_identificador';
 	END IF;
 
-	SELECT INTO objeto * FROM json_populate_record(null::osc.tb_dados_gerais, json::JSON);
-
-	IF tipo_identificador = 'cnpj' THEN
+	IF tipo_identificador = 'cnpj' THEN 
 		SELECT id_osc INTO osc FROM osc.tb_osc WHERE cd_identificador_osc = identificador;
-	ELSE
-		osc:=identificador;
+	ELSIF tipo_identificador = 'id_osc' THEN 
+		osc := identificador;
 	END IF;
-
+	
+	IF tipo_identificador != 'cnpj' OR tipo_identificador != 'id_osc' THEN
+		RAISE EXCEPTION 'tipo_identificador_invalido';
+	ELSIF osc IS null THEN 
+		RAISE EXCEPTION 'identificador_invalido';
+	END IF;
+	
+	SELECT INTO objeto * FROM json_populate_record(null::osc.tb_dados_gerais, json::JSON);
+	
 	SELECT INTO dado_anterior * FROM osc.tb_dados_gerais WHERE id_osc = osc;
 
 	IF COUNT(dado_anterior) = 0 THEN

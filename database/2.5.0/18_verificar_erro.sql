@@ -9,28 +9,32 @@ DECLARE
 	mensagem_log TEXT;
 	
 BEGIN 
+	mensagem_log := mensagemerro;
+	
 	IF codigoerro = 'P0001' THEN 
 		IF mensagemerro = 'fonte_invalida' THEN 
 			mensagem := 'Fonte de dados inválida.';
-			mensagem_log := 'Fonte de dados inválida.';
 			
 		ELSIF mensagemerro = 'permissao_negada_usuario' THEN 
 			mensagem := 'Usuário não tem permissão para acessar o conteúdo informado.';
-			mensagem_log := 'Usuário não tem permissão para acessar o conteúdo informado.';
 			
 		ELSIF mensagemerro = 'dado_invalido' THEN 
 			mensagem := 'Dado inválido.';
-			mensagem_log := 'Dado inválido.';
 			
 		ELSIF mensagemerro = 'osc_nao_confere' THEN 
 			mensagem := 'ID de OSC informado não confere com os dados enviados.';
-			mensagem_log := 'ID de OSC informado não confere com os dados enviados.';
+			
+		ELSIF mensagemerro = 'tipo_identificador_invalido' THEN 
+			mensagem := 'Tipo de identificador inválido.';
+			
+		ELSIF mensagemerro = 'identificador_invalido' THEN 
+			mensagem := 'Identificador inválido.';
 			
 		END IF;
-	
-	ELSE 
-		mensagem_log := mensagemerro;
 		
+		mensagem_log := mensagem;
+		
+	ELSE 
 		IF codigoerro = '23502' THEN -- not_null_violation
 			mensagem := 'Dado(s) obrigatório(s) não enviado(s).';
 			
@@ -44,6 +48,7 @@ BEGIN
 			mensagem := 'Ocorreu um erro.';
 			
 		END IF;
+		
 	END IF;
 	
 	SELECT INTO identificador_osc cd_identificador_osc FROM osc.tb_osc WHERE cd_identificador_osc = osc OR id_osc::NUMERIC = osc;
