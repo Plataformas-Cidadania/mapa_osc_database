@@ -46,35 +46,34 @@ BEGIN
 	SELECT INTO dado_anterior * FROM osc.tb_localizacao WHERE id_osc = osc;
 
 	IF COUNT(dado_anterior) = 0 THEN
-	INSERT INTO osc.tb_localizacao(
-		id_osc,
-		tx_endereco,
-		ft_endereco,
-		nr_localizacao,
-		ft_localizacao,
-		tx_endereco_complemento,
-		ft_endereco_complemento,
-		tx_bairro,
-		ft_bairro,
-		cd_municipio,
-		ft_municipio,
-		geo_localizacao,
-		ft_geo_localizacao,
-		nr_cep,
-		ft_cep,
-		tx_endereco_corrigido,
-		ft_endereco_corrigido,
-		tx_bairro_encontrado,
-		ft_bairro_encontrado,
-		cd_fonte_geocodificacao,
-		ft_fonte_geocodificacao,
-		dt_geocodificacao,
-		ft_data_geocodificacao,
-		bo_oficial,
-		qualidade_classificacao
-	)
-	 VALUES (
-		 	osc,
+		INSERT INTO osc.tb_localizacao(
+			id_osc,
+			tx_endereco,
+			ft_endereco,
+			nr_localizacao,
+			ft_localizacao,
+			tx_endereco_complemento,
+			ft_endereco_complemento,
+			tx_bairro,
+			ft_bairro,
+			cd_municipio,
+			ft_municipio,
+			geo_localizacao,
+			ft_geo_localizacao,
+			nr_cep,
+			ft_cep,
+			tx_endereco_corrigido,
+			ft_endereco_corrigido,
+			tx_bairro_encontrado,
+			ft_bairro_encontrado,
+			cd_fonte_geocodificacao,
+			ft_fonte_geocodificacao,
+			dt_geocodificacao,
+			ft_data_geocodificacao,
+			qualidade_classificacao
+		)
+		VALUES (
+			osc,
 			objeto.tx_endereco,
 			fonte_dados.nome_fonte,
 			objeto.nr_localizacao,
@@ -97,13 +96,12 @@ BEGIN
 			fonte_dados.nome_fonte,
 			objeto.dt_geocodificacao,
 			fonte_dados.nome_fonte,
-			objeto.bo_oficial,
 			objeto.qualidade_classificacao
 		) RETURNING * INTO dado_posterior;
 
 		INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior)
 		VALUES (nome_tabela, osc, fonte::INTEGER, dataatualizacao, null, row_to_json(dado_posterior));
-
+		
 	ELSE
 		dado_posterior := dado_anterior;
 		flag_update := false;
@@ -168,6 +166,12 @@ BEGIN
 			flag_update := true;
 		END IF;
 
+		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.qualidade_classificacao::TEXT, dado_anterior.ft_fonte_geocodificacao, objeto.qualidade_classificacao::TEXT, fonte_dados.prioridade, nullvalido) AS a) THEN
+			dado_posterior.qualidade_classificacao := objeto.qualidade_classificacao;
+			dado_posterior.ft_fonte_geocodificacao := fonte_dados.nome_fonte;
+			flag_update := true;
+		END IF;
+
 		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.dt_geocodificacao::TEXT, dado_anterior.ft_data_geocodificacao, objeto.dt_geocodificacao::TEXT, fonte_dados.prioridade, nullvalido) AS a) THEN
 			dado_posterior.dt_geocodificacao := objeto.dt_geocodificacao;
 			dado_posterior.ft_data_geocodificacao := fonte_dados.nome_fonte;
@@ -198,7 +202,6 @@ BEGIN
 			ft_fonte_geocodificacao = dado_posterior.ft_fonte_geocodificacao,
 			dt_geocodificacao = dado_posterior.dt_geocodificacao,
 			ft_data_geocodificacao = dado_posterior.ft_data_geocodificacao,
-			bo_oficial = dado_posterior.bo_oficial,
 			qualidade_classificacao = dado_posterior.qualidade_classificacao
 			WHERE id_osc = osc;
 
