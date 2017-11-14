@@ -472,7 +472,7 @@
       <description />
       <type>SQL</type>
       <sql>UPDATE log.tb_log_carga 
-SET dt_fim = NOW(), cd_status = 0 
+SET dt_fim = NOW(), cd_status = 9 
 WHERE id_carga = '${ID_CARGA}';</sql>
       <useVariableSubstitution>T</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
@@ -590,14 +590,14 @@ ALTER TABLE osc.tb_contato DISABLE TRIGGER ALL;</sql>
 ALTER TABLE osc.tb_localizacao ENABLE TRIGGER ALL;
 ALTER TABLE osc.tb_contato ENABLE TRIGGER ALL;
 
-SELECT RefreshAllMaterializedViews('spat');
-SELECT RefreshAllMaterializedViews('osc');
-SELECT RefreshAllMaterializedViews('portal');</sql>
+--SELECT RefreshAllMaterializedViews('spat');
+--SELECT RefreshAllMaterializedViews('osc');
+--SELECT RefreshAllMaterializedViews('portal');</sql>
       <useVariableSubstitution>F</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename />
       <sendOneStatement>F</sendOneStatement>
-      <connection />
+      <connection>localhost</connection>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>

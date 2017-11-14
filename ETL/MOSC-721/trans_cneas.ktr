@@ -650,9 +650,9 @@
     <sql>SELECT * 
 FROM portal.atualizar_contato_osc(
 	'${FONTE_CARGA}'::TEXT, 
-	'?'::INTEGER, 
+	'?'::NUMERIC, 
 	'?'::TEXT, 
-	'${DATA_INICIO}'::TIMESTAMP, 
+	NOW()::TIMESTAMP, 
 	'{
 		"tx_telefone": "?", 
 		"tx_email": "?", 
@@ -693,7 +693,7 @@ FROM portal.atualizar_contato_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>990</xloc>
+      <xloc>1005</xloc>
       <yloc>341</yloc>
       <draw>Y</draw>
     </GUI>
@@ -717,9 +717,9 @@ FROM portal.atualizar_contato_osc(
     <sql>SELECT * 
 FROM portal.atualizar_localizacao_osc(
 	'${FONTE_CARGA}'::TEXT, 
-	'?'::INTEGER, 
+	'?'::NUMERIC, 
 	'?'::TEXT, 
-	'${DATA_INICIO}'::TIMESTAMP, 
+	NOW()::TIMESTAMP, 
 	'{
 		"tx_endereco": "?", 
 		"nr_localizacao": "?", 
@@ -772,7 +772,7 @@ FROM portal.atualizar_localizacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>816</xloc>
+      <xloc>831</xloc>
       <yloc>341</yloc>
       <draw>Y</draw>
     </GUI>
@@ -796,9 +796,9 @@ FROM portal.atualizar_localizacao_osc(
     <sql>SELECT * 
 FROM portal.atualizar_area_atuacao_osc(
 	'${FONTE_CARGA}'::TEXT, 
-	'?'::INTEGER, 
+	'?'::NUMERIC, 
 	'?'::TEXT, 
-	'${DATA_INICIO}'::TIMESTAMP, 
+	NOW()::TIMESTAMP, 
 	'{
 		"cd_area_atuacao": "?", 
 		"cd_subarea_atuacao": "?"
@@ -837,7 +837,7 @@ FROM portal.atualizar_area_atuacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>625</xloc>
+      <xloc>640</xloc>
       <yloc>341</yloc>
       <draw>Y</draw>
     </GUI>

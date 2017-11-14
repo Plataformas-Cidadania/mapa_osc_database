@@ -135,7 +135,7 @@ BEGIN
 EXCEPTION
 	WHEN others THEN
 		flag := false;
-		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, osc, dataatualizacao::TIMESTAMP, errolog, idcarga) AS a;
+		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, identificador, dataatualizacao::TIMESTAMP, errolog, idcarga) AS a;
 		RETURN NEXT;
 
 END;
