@@ -7,7 +7,6 @@ CREATE OR REPLACE FUNCTION portal.atualizar_localizacao_osc(fonte TEXT, identifi
 
 DECLARE
 	nome_tabela TEXT;
-	operacao TEXT;
 	fonte_dados RECORD;
 	objeto RECORD;
 	dado_anterior RECORD;
@@ -19,8 +18,6 @@ BEGIN
 	nome_tabela := 'osc.atualizar_localizacao';
 	tipo_identificador := lower(tipo_identificador);
 	
-	operacao := 'portal.atualizar_localizacao(' || fonte::TEXT || ', ' || cnpj::TEXT || ', ' || dataatualizacao::TEXT || ', ' || json::TEXT || ', ' || nullvalido::TEXT || ', ' || errolog::TEXT || ', ' || id_carga::TEXT || ')';
-
 	SELECT INTO fonte_dados * FROM portal.verificar_fonte(fonte);
 
 	IF fonte_dados IS null THEN
@@ -35,17 +32,17 @@ BEGIN
 		osc := identificador;
 	END IF;
 	
-	IF tipo_identificador != 'cnpj' OR tipo_identificador != 'id_osc' THEN
+	IF tipo_identificador != 'cnpj' AND tipo_identificador != 'id_osc' THEN
 		RAISE EXCEPTION 'tipo_identificador_invalido';
 	ELSIF osc IS null THEN 
 		RAISE EXCEPTION 'identificador_invalido';
 	END IF;
 	
-	SELECT INTO objeto * FROM json_populate_record(null::osc.tb_osc, json::JSON);
+	SELECT INTO objeto * FROM json_populate_record(null::osc.tb_localizacao, json::JSON);
 	
-	SELECT INTO dado_anterior * FROM osc.tb_localizacao WHERE id_osc = osc;
-
-	IF COUNT(dado_anterior) = 0 THEN
+	SELECT INTO dado_anterior * FROM osc.tb_localizacao WHERE id_osc::NUMERIC = osc;
+	
+	IF dado_anterior.id_osc IS null THEN
 		INSERT INTO osc.tb_localizacao(
 			id_osc,
 			tx_endereco,
@@ -98,9 +95,8 @@ BEGIN
 			fonte_dados.nome_fonte,
 			objeto.qualidade_classificacao
 		) RETURNING * INTO dado_posterior;
-
-		INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior)
-		VALUES (nome_tabela, osc, fonte::INTEGER, dataatualizacao, null, row_to_json(dado_posterior));
+		
+		PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, dataatualizacao, null, row_to_json(dado_posterior));
 		
 	ELSE
 		dado_posterior := dado_anterior;
@@ -204,10 +200,9 @@ BEGIN
 			ft_data_geocodificacao = dado_posterior.ft_data_geocodificacao,
 			qualidade_classificacao = dado_posterior.qualidade_classificacao
 			WHERE id_osc = osc;
-
-			INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior)
-			VALUES (nome_tabela, osc, fonte::INTEGER, dataatualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior));
-
+			
+			PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, dataatualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior));
+			
 		END IF;
 	END IF;
 

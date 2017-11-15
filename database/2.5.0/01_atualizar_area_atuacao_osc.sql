@@ -34,7 +34,7 @@ BEGIN
 		osc := identificador;
 	END IF;
 	
-	IF tipo_identificador != 'cnpj' OR tipo_identificador != 'id_osc' THEN
+	IF tipo_identificador != 'cnpj' AND tipo_identificador != 'id_osc' THEN
 		RAISE EXCEPTION 'tipo_identificador_invalido';
 	ELSIF osc IS null THEN 
 		RAISE EXCEPTION 'identificador_invalido';

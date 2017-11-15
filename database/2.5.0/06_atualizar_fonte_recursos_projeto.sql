@@ -13,6 +13,7 @@ DECLARE
 	dado_posterior RECORD;
 	registro_nao_delete INTEGER[];
 	flag_update BOOLEAN;
+	osc NUMERIC;
 	
 BEGIN 
 	nome_tabela := 'osc.tb_fonte_recursos_projeto';
@@ -32,7 +33,7 @@ BEGIN
 		osc := identificador;
 	END IF;
 	
-	IF tipo_identificador != 'cnpj' OR tipo_identificador != 'id_osc' THEN
+	IF tipo_identificador != 'cnpj' AND tipo_identificador != 'id_osc' THEN
 		RAISE EXCEPTION 'tipo_identificador_invalido';
 	ELSIF osc IS null THEN 
 		RAISE EXCEPTION 'identificador_invalido';

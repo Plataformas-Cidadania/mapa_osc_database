@@ -5,7 +5,6 @@ CREATE OR REPLACE FUNCTION portal.verificar_erro(codigoerro TEXT, mensagemerro T
 ) AS $$
 
 DECLARE 
-	identificador_osc NUMERIC;
 	mensagem_log TEXT;
 	
 BEGIN 
@@ -51,7 +50,7 @@ BEGIN
 		
 	END IF;
 	
-	IF errolog AND identificador_osc IS NOT null THEN 
+	IF errolog AND identificador IS NOT null THEN 
 		INSERT INTO log.tb_log_erro_carga (cd_identificador_osc, cd_status, tx_mensagem, dt_carregamento_dados, tx_fonte_dados, id_carga) 
 		VALUES (identificador, 2, mensagem_log, dataoperacao, fonte, idcarga);
 	END IF;

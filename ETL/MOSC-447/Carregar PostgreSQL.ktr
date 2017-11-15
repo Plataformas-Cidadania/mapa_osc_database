@@ -1858,8 +1858,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>86</xloc>
-      <yloc>64</yloc>
+      <xloc>89</xloc>
+      <yloc>63</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
