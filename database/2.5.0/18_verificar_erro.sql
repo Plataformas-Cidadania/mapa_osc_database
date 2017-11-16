@@ -17,18 +17,21 @@ BEGIN
 		ELSIF mensagemerro = 'permissao_negada_usuario' THEN 
 			mensagem := 'Usuário não tem permissão para acessar o conteúdo informado.';
 			
+		ELSIF mensagemerro = 'tipo_busca_invalido' THEN 
+			mensagem := 'Tipo de busca inválido.';
+			
 		ELSIF mensagemerro = 'dado_invalido' THEN 
 			mensagem := 'Dado inválido.';
-			
-		ELSIF mensagemerro = 'osc_nao_confere' THEN 
-			mensagem := 'ID de OSC informado não confere com os dados enviados.';
 			
 		ELSIF mensagemerro = 'tipo_identificador_invalido' THEN 
 			mensagem := 'Tipo de identificador inválido.';
 			
-		ELSIF mensagemerro = 'identificador_invalido' THEN 
-			mensagem := 'Identificador inválido.';
-			
+		ELSIF mensagemerro = 'osc_nao_encontrada' THEN 
+			mensagem := 'OSC não encontrada.';
+		
+		ELSIF mensagemerro = 'projeto_nao_encontrado' THEN 
+			mensagem := 'Projeto não encontrado.';
+					
 		END IF;
 		
 		mensagem_log := mensagem;

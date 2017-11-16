@@ -14,7 +14,7 @@ BEGIN
 	
 	IF (
 		(nullvalido = true AND dado_anterior <> dado_posterior) 
-		OR (nullvalido = false AND dado_anterior <> dado_posterior AND (dado_posterior::TEXT = '') IS FALSE)
+		OR (nullvalido = false AND dado_anterior <> dado_posterior AND (dado_posterior::TEXT = '') IS false)
 	) AND (
 		fonte_dado_anterior IS null 
 		OR dado_posterior_prioridade <= (SELECT nr_prioridade FROM syst.dc_fonte_dados WHERE cd_sigla_fonte_dados = fonte_dado_anterior)
