@@ -123,9 +123,9 @@ BEGIN
 	END LOOP;
 	
 	IF delete_valido THEN 
-		FOR objeto IN (SELECT * FROM osc.tb_area_atuacao WHERE id_osc = osc AND id_area_atuacao != ALL(dado_nao_delete))
-		LOOP
-			IF objeto.bo_oficial IS null OR objeto.bo_oficial = false THEN 
+		FOR objeto IN (SELECT * FROM osc.tb_area_atuacao WHERE id_osc = osc AND id_area_atuacao != ALL(dado_nao_delete)) 
+		LOOP 
+			IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_area_atuacao]) AS a) THEN 
 				DELETE FROM osc.tb_area_atuacao WHERE id_area_atuacao = objeto.id_area_atuacao;
 				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(objeto), null);
 			END IF;

@@ -142,9 +142,9 @@ BEGIN
 	END LOOP;
 	
 	IF delete_valido THEN 
-		FOR objeto IN (SELECT * FROM osc.tb_fonte_recursos_projeto WHERE id_projeto = identificador AND id_fonte_recursos_projeto != ALL(dado_nao_delete))
-		LOOP
-			IF objeto.bo_oficial IS null OR objeto.bo_oficial = false THEN 
+		FOR objeto IN (SELECT * FROM osc.tb_fonte_recursos_projeto WHERE id_projeto = identificador AND id_fonte_recursos_projeto != ALL(dado_nao_delete)) 
+		LOOP 
+			IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_area_atuacao]) AS a) THEN 
 				DELETE FROM osc.tb_fonte_recursos_projeto WHERE id_fonte_recursos_projeto = objeto.id_fonte_recursos_projeto;
 				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(objeto), null);
 			END IF;
