@@ -1,25 +1,25 @@
-DROP FUNCTION IF EXISTS portal.atualizar_dados_gerais_osc(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, errolog BOOLEAN, id_carga INTEGER);
+DROP FUNCTION IF EXISTS portal.atualizar_dados_gerais_osc(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT, data_atualizacao TIMESTAMP, json JSONB, null_valido BOOLEAN, erro_log BOOLEAN, id_carga INTEGER);
 
-CREATE OR REPLACE FUNCTION portal.atualizar_dados_gerais_osc(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, errolog BOOLEAN, id_carga INTEGER) RETURNS TABLE(
+CREATE OR REPLACE FUNCTION portal.atualizar_dados_gerais_osc(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT, data_atualizacao TIMESTAMP, json JSONB, null_valido BOOLEAN, erro_log BOOLEAN, id_carga INTEGER) RETURNS TABLE(
 	mensagem TEXT,
 	flag BOOLEAN
 )AS $$
 
 DECLARE
 	nome_tabela TEXT;
-	operacao TEXT;
 	fonte_dados RECORD;
 	objeto RECORD;
 	dado_anterior RECORD;
 	dado_posterior RECORD;
 	flag_update BOOLEAN;
-	osc NUMERIC;
+	osc INTEGER;
+	operacao TEXT;
 
 BEGIN
 	nome_tabela := 'osc.tb_dados_gerais';
 	tipo_identificador := lower(tipo_identificador);
 
-	operacao := 'portal.atualizar_dados_gerais_osc(' || fonte::TEXT || ', ' || identificador::TEXT ||', ' || tipo_identificador::TEXT || ', ' || dataatualizacao::TEXT || ', ' || json::TEXT || ', ' || nullvalido::TEXT || ', ' || errolog::TEXT || ', ' || id_carga::TEXT || ')';
+	operacao := 'portal.atualizar_dados_gerais_osc(' || fonte::TEXT || ', ' || identificador::TEXT ||', ' || tipo_identificador::TEXT || ', ' || data_atualizacao::TEXT || ', ' || json::TEXT || ', ' || null_valido::TEXT || ', ' || erro_log::TEXT || ', ' || id_carga::TEXT || ')';
 
 	SELECT INTO fonte_dados * FROM portal.verificar_fonte(fonte);
 
@@ -123,115 +123,115 @@ BEGIN
 		) RETURNING * INTO dado_posterior;
 
 		INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior, id_carga)
-		VALUES (nome_tabela, dado_posterior.id_osc, fonte, dataatualizacao, null, row_to_json(dado_posterior), id_carga);
+		VALUES (nome_tabela, dado_posterior.id_osc, fonte, data_atualizacao, null, row_to_json(dado_posterior), id_carga);
 
 	ELSE
 		dado_posterior := dado_anterior;
 		flag_update := false;
 
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.cd_natureza_juridica_osc::TEXT, dado_anterior.ft_natureza_juridica_osc, objeto.cd_natureza_juridica_osc::TEXT, fonte_dados.prioridade, nullvalido) AS a) THEN
+		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.cd_natureza_juridica_osc::TEXT, dado_anterior.ft_natureza_juridica_osc, objeto.cd_natureza_juridica_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.cd_natureza_juridica_osc := objeto.cd_natureza_juridica_osc;
 			dado_posterior.ft_natureza_juridica_osc := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
 
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.cd_classe_atividade_economica_osc::TEXT, dado_anterior.ft_classe_atividade_economica_osc, objeto.cd_classe_atividade_economica_osc::TEXT, fonte_dados.prioridade, nullvalido) AS a) THEN
+		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.cd_classe_atividade_economica_osc::TEXT, dado_anterior.ft_classe_atividade_economica_osc, objeto.cd_classe_atividade_economica_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.cd_classe_atividade_economica_osc := objeto.cd_classe_atividade_economica_osc;
 			dado_posterior.ft_classe_atividade_economica_osc := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
 
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_razao_social_osc::TEXT, dado_anterior.ft_razao_social_osc, objeto.tx_razao_social_osc::TEXT, fonte_dados.prioridade, nullvalido) AS a) THEN
+		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_razao_social_osc::TEXT, dado_anterior.ft_razao_social_osc, objeto.tx_razao_social_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.tx_razao_social_osc := objeto.tx_razao_social_osc;
 			dado_posterior.ft_razao_social_osc := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
 
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_nome_fantasia_osc::TEXT, dado_anterior.ft_nome_fantasia_osc, objeto.tx_nome_fantasia_osc::TEXT, fonte_dados.prioridade, nullvalido) AS a) THEN
+		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_nome_fantasia_osc::TEXT, dado_anterior.ft_nome_fantasia_osc, objeto.tx_nome_fantasia_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.tx_nome_fantasia_osc := objeto.tx_nome_fantasia_osc;
 			dado_posterior.ft_nome_fantasia_osc := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
 
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.im_logo::TEXT, dado_anterior.ft_logo, objeto.im_logo::TEXT, fonte_dados.prioridade, nullvalido) AS a) THEN
+		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.im_logo::TEXT, dado_anterior.ft_logo, objeto.im_logo::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.im_logo := objeto.im_logo;
 			dado_posterior.ft_logo := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
 
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_missao_osc::TEXT, dado_anterior.ft_missao_osc, objeto.tx_missao_osc::TEXT, fonte_dados.prioridade, nullvalido) AS a) THEN
+		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_missao_osc::TEXT, dado_anterior.ft_missao_osc, objeto.tx_missao_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.tx_missao_osc := objeto.tx_missao_osc;
 			dado_posterior.ft_missao_osc := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
 
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_visao_osc::TEXT, dado_anterior.ft_visao_osc, objeto.tx_visao_osc::TEXT, fonte_dados.prioridade, nullvalido) AS a) THEN
+		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_visao_osc::TEXT, dado_anterior.ft_visao_osc, objeto.tx_visao_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.tx_visao_osc := objeto.tx_visao_osc;
 			dado_posterior.ft_visao_osc := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
 
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.dt_fundacao_osc::TEXT, dado_anterior.ft_fundacao_osc, objeto.dt_fundacao_osc::TEXT, fonte_dados.prioridade, nullvalido) AS a) THEN
+		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.dt_fundacao_osc::TEXT, dado_anterior.ft_fundacao_osc, objeto.dt_fundacao_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.dt_fundacao_osc := objeto.dt_fundacao_osc;
 			dado_posterior.ft_fundacao_osc := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
 
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.dt_ano_cadastro_cnpj::TEXT, dado_anterior.ft_ano_cadastro_cnpj, objeto.dt_ano_cadastro_cnpj::TEXT, fonte_dados.prioridade, nullvalido) AS a) THEN
+		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.dt_ano_cadastro_cnpj::TEXT, dado_anterior.ft_ano_cadastro_cnpj, objeto.dt_ano_cadastro_cnpj::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.dt_ano_cadastro_cnpj := objeto.dt_ano_cadastro_cnpj;
 			dado_posterior.ft_ano_cadastro_cnpj := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
 
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_sigla_osc::TEXT, dado_anterior.ft_sigla_osc, objeto.tx_sigla_osc::TEXT, fonte_dados.prioridade, nullvalido) AS a) THEN
+		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_sigla_osc::TEXT, dado_anterior.ft_sigla_osc, objeto.tx_sigla_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.tx_sigla_osc := objeto.tx_sigla_osc;
 			dado_posterior.ft_sigla_osc := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
 
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_resumo_osc::TEXT, dado_anterior.ft_resumo_osc, objeto.tx_resumo_osc::TEXT, fonte_dados.prioridade, nullvalido) AS a) THEN
+		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_resumo_osc::TEXT, dado_anterior.ft_resumo_osc, objeto.tx_resumo_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.tx_resumo_osc := objeto.tx_resumo_osc;
 			dado_posterior.ft_resumo_osc := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
 
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.cd_situacao_imovel_osc::TEXT, dado_anterior.ft_situacao_imovel_osc, objeto.cd_situacao_imovel_osc::TEXT, fonte_dados.prioridade, nullvalido) AS a) THEN
+		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.cd_situacao_imovel_osc::TEXT, dado_anterior.ft_situacao_imovel_osc, objeto.cd_situacao_imovel_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.cd_situacao_imovel_osc := objeto.cd_situacao_imovel_osc;
 			dado_posterior.ft_situacao_imovel_osc := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
 
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_link_estatuto_osc::TEXT, dado_anterior.ft_link_estatuto_osc, objeto.tx_link_estatuto_osc::TEXT, fonte_dados.prioridade, nullvalido) AS a) THEN
+		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_link_estatuto_osc::TEXT, dado_anterior.ft_link_estatuto_osc, objeto.tx_link_estatuto_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.tx_link_estatuto_osc := objeto.tx_link_estatuto_osc;
 			dado_posterior.ft_link_estatuto_osc := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
 
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_historico::TEXT, dado_anterior.ft_historico, objeto.tx_historico::TEXT, fonte_dados.prioridade, nullvalido) AS a) THEN
+		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_historico::TEXT, dado_anterior.ft_historico, objeto.tx_historico::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.tx_historico := objeto.tx_historico;
 			dado_posterior.ft_historico := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
 
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_finalidades_estatutarias::TEXT, dado_anterior.ft_finalidades_estatutarias, objeto.tx_finalidades_estatutarias::TEXT, fonte_dados.prioridade, nullvalido) AS a) THEN
+		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_finalidades_estatutarias::TEXT, dado_anterior.ft_finalidades_estatutarias, objeto.tx_finalidades_estatutarias::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.tx_finalidades_estatutarias := objeto.tx_finalidades_estatutarias;
 			dado_posterior.ft_finalidades_estatutarias := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
 
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_link_relatorio_auditoria::TEXT, dado_anterior.ft_link_relatorio_auditoria, objeto.tx_link_relatorio_auditoria::TEXT, fonte_dados.prioridade, nullvalido) AS a) THEN
+		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_link_relatorio_auditoria::TEXT, dado_anterior.ft_link_relatorio_auditoria, objeto.tx_link_relatorio_auditoria::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.tx_link_relatorio_auditoria := objeto.tx_link_relatorio_auditoria;
 			dado_posterior.ft_link_relatorio_auditoria := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
 
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_link_demonstracao_contabil::TEXT, dado_anterior.ft_link_demonstracao_contabil, objeto.tx_link_demonstracao_contabil::TEXT, fonte_dados.prioridade, nullvalido) AS a) THEN
+		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_link_demonstracao_contabil::TEXT, dado_anterior.ft_link_demonstracao_contabil, objeto.tx_link_demonstracao_contabil::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.tx_link_demonstracao_contabil := objeto.tx_link_demonstracao_contabil;
 			dado_posterior.ft_link_demonstracao_contabil := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
 
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_nome_responsavel_legal::TEXT, dado_anterior.ft_nome_responsavel_legal, objeto.tx_nome_responsavel_legal::TEXT, fonte_dados.prioridade, nullvalido) AS a) THEN
+		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_nome_responsavel_legal::TEXT, dado_anterior.ft_nome_responsavel_legal, objeto.tx_nome_responsavel_legal::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.tx_nome_responsavel_legal := objeto.tx_nome_responsavel_legal;
 			dado_posterior.ft_nome_responsavel_legal := fonte_dados.nome_fonte;
 			flag_update := true;
@@ -278,7 +278,7 @@ BEGIN
 			WHERE id_osc = osc;
 
 			INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior, id_carga)
-			VALUES (nome_tabela, osc, fonte, dataatualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior), id_carga);
+			VALUES (nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior), id_carga);
 
 		END IF;
 	END IF;
@@ -291,7 +291,7 @@ BEGIN
 	EXCEPTION
 		WHEN others THEN
 			flag := false;
-			SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, identificador, dataatualizacao::TIMESTAMP, errolog, id_carga) AS a;
+			SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, identificador, data_atualizacao::TIMESTAMP, erro_log, id_carga) AS a;
 			RETURN NEXT;
 
 END;

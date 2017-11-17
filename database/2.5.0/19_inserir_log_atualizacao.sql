@@ -1,5 +1,3 @@
-DROP FUNCTION IF EXISTS portal.inserir_log_atualizacao(nometabela TEXT, osc INTEGER, fontedados TEXT, dataatualizacao TIMESTAMP, dadoanterior JSON, dadoposterior JSON);
-
 DROP FUNCTION IF EXISTS portal.inserir_log_atualizacao(nometabela TEXT, osc INTEGER, fontedados TEXT, dataatualizacao TIMESTAMP, dadoanterior JSON, dadoposterior JSON, id_carga INTEGER);
 
 CREATE OR REPLACE FUNCTION portal.inserir_log_atualizacao(nometabela TEXT, osc INTEGER, fontedados TEXT, dataatualizacao TIMESTAMP, dadoanterior JSON, dadoposterior JSON, id_carga INTEGER) RETURNS TABLE(
@@ -24,6 +22,7 @@ EXCEPTION
 	WHEN others THEN
 		flag := false;
 		mensagem := 'Ocorreu um erro.';
+
 		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, operacao, fonte, osc, dataatualizacao::TIMESTAMP, errolog, id_carga) AS a;
 		RETURN NEXT;
 

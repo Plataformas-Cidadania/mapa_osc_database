@@ -539,28 +539,8 @@
   </connection>
   <order>
     <hop>
-      <from>CSV file input</from>
-      <to>Sort rows</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Sort rows</from>
       <to>Unique rows</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Atualizar área de atuação</from>
-      <to>Atualizar localização</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Atualizar localização</from>
-      <to>Atualizar contato</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Add constants</from>
-      <to>Atualizar área de atuação</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -568,12 +548,67 @@
       <to>Add constants</to>
       <enabled>Y</enabled>
     </hop>
+    <hop>
+      <from>Add constants</from>
+      <to>Formatar JSON</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Formatar JSON</from>
+      <to>Select values área atuação</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Select values área atuação</from>
+      <to>Atualizar área atuação</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Select values localização</from>
+      <to>Atualizar localização</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Select values contato</from>
+      <to>Atualizar contato</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Atualizar área atuação</from>
+      <to>Set variable flag banco</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>CSV file input</from>
+      <to>Sort rows</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Atualizar localização</from>
+      <to>Set variable flag banco</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Atualizar contato</from>
+      <to>Set variable flag banco</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Formatar JSON</from>
+      <to>Select values localização</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Formatar JSON</from>
+      <to>Select values contato</to>
+      <enabled>Y</enabled>
+    </hop>
   </order>
   <step>
     <name>Add constants</name>
     <type>Constant</type>
     <description />
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution />
     <copies>1</copies>
     <partitioning>
@@ -626,16 +661,16 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>476</xloc>
-      <yloc>341</yloc>
+      <xloc>522</xloc>
+      <yloc>227</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
     <name>Atualizar contato</name>
-    <type>ExecSQL</type>
+    <type>TableInput</type>
     <description />
-    <distribute>N</distribute>
+    <distribute>Y</distribute>
     <custom_distribution />
     <copies>1</copies>
     <partitioning>
@@ -643,48 +678,23 @@
       <schema_name />
     </partitioning>
     <connection>localhost</connection>
-    <execute_each_row>Y</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>Y</replace_variables>
-    <quoteString>N</quoteString>
     <sql>SELECT * 
 FROM portal.atualizar_contato_osc(
 	'${FONTE_CARGA}'::TEXT, 
-	'?'::INTEGER, 
-	'?'::TEXT, 
-	'${DATA_INICIO}'::TIMESTAMP, 
-	'{
-		"tx_telefone": "?", 
-		"tx_email": "?", 
-		"tx_site": "?"
-	}'::JSONB, 
-	false::BOOLEAN, 
-	true::BOOLEAN, 
+	?::NUMERIC, 
+	?::TEXT, 
+	NOW()::TIMESTAMP, 
+	?::JSONB, 
+	false::BOOLEAN, --nullvalido
+	true::BOOLEAN, --errolog
 	'${ID_CARGA}'::INTEGER
 );
 </sql>
-    <set_params>N</set_params>
-    <insert_field />
-    <update_field />
-    <delete_field />
-    <read_field />
-    <arguments>
-      <argument>
-        <name>NU_CNPJ</name>
-      </argument>
-      <argument>
-        <name>tipo_identificador</name>
-      </argument>
-      <argument>
-        <name>NU_TELEFONE</name>
-      </argument>
-      <argument>
-        <name>DS_EMAIL</name>
-      </argument>
-      <argument>
-        <name>DS_SITE</name>
-      </argument>
-    </arguments>
+    <limit>0</limit>
+    <lookup>Select values contato</lookup>
+    <execute_each_row>Y</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
     <cluster_schema />
     <remotesteps>
       <input>
@@ -693,16 +703,16 @@ FROM portal.atualizar_contato_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>990</xloc>
-      <yloc>341</yloc>
+      <xloc>1052</xloc>
+      <yloc>367</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
     <name>Atualizar localização</name>
-    <type>ExecSQL</type>
+    <type>TableInput</type>
     <description />
-    <distribute>N</distribute>
+    <distribute>Y</distribute>
     <custom_distribution />
     <copies>1</copies>
     <partitioning>
@@ -710,60 +720,23 @@ FROM portal.atualizar_contato_osc(
       <schema_name />
     </partitioning>
     <connection>localhost</connection>
-    <execute_each_row>Y</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>Y</replace_variables>
-    <quoteString>N</quoteString>
     <sql>SELECT * 
 FROM portal.atualizar_localizacao_osc(
 	'${FONTE_CARGA}'::TEXT, 
-	'?'::INTEGER, 
-	'?'::TEXT, 
-	'${DATA_INICIO}'::TIMESTAMP, 
-	'{
-		"tx_endereco": "?", 
-		"nr_localizacao": "?", 
-		"tx_endereco_complemento": "?", 
-		"tx_bairro": "?", 
-		"cd_municipio": "?", 
-		"nr_cep": "?"
-	}'::JSONB, 
-	false::BOOLEAN, 
-	true::BOOLEAN, 
+	?::NUMERIC, 
+	?::TEXT, 
+	NOW()::TIMESTAMP, 
+	?::JSONB, 
+	false::BOOLEAN, --nullvalido
+	true::BOOLEAN, --errolog
 	'${ID_CARGA}'::INTEGER
 );
 </sql>
-    <set_params>N</set_params>
-    <insert_field />
-    <update_field />
-    <delete_field />
-    <read_field />
-    <arguments>
-      <argument>
-        <name>NU_CNPJ</name>
-      </argument>
-      <argument>
-        <name>tipo_identificador</name>
-      </argument>
-      <argument>
-        <name>DS_LOGRADOURO</name>
-      </argument>
-      <argument>
-        <name>NU_ENDERECO</name>
-      </argument>
-      <argument>
-        <name>DS_COMPLEMENTO</name>
-      </argument>
-      <argument>
-        <name>DS_BAIRRO</name>
-      </argument>
-      <argument>
-        <name>CO_IBGE</name>
-      </argument>
-      <argument>
-        <name>NU_CEP</name>
-      </argument>
-    </arguments>
+    <limit>0</limit>
+    <lookup>Select values localização</lookup>
+    <execute_each_row>Y</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
     <cluster_schema />
     <remotesteps>
       <input>
@@ -772,16 +745,16 @@ FROM portal.atualizar_localizacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>816</xloc>
-      <yloc>341</yloc>
+      <xloc>1052</xloc>
+      <yloc>227</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Atualizar área de atuação</name>
-    <type>ExecSQL</type>
+    <name>Atualizar área atuação</name>
+    <type>TableInput</type>
     <description />
-    <distribute>N</distribute>
+    <distribute>Y</distribute>
     <custom_distribution />
     <copies>1</copies>
     <partitioning>
@@ -789,46 +762,25 @@ FROM portal.atualizar_localizacao_osc(
       <schema_name />
     </partitioning>
     <connection>localhost</connection>
-    <execute_each_row>Y</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>Y</replace_variables>
-    <quoteString>N</quoteString>
     <sql>SELECT * 
 FROM portal.atualizar_area_atuacao_osc(
 	'${FONTE_CARGA}'::TEXT, 
-	'?'::INTEGER, 
-	'?'::TEXT, 
-	'${DATA_INICIO}'::TIMESTAMP, 
-	'{
-		"cd_area_atuacao": "?", 
-		"cd_subarea_atuacao": "?"
-	}'::JSONB, 
-	false::BOOLEAN, 
-	false::BOOLEAN, 
-	true::BOOLEAN, 
+	?::NUMERIC, 
+	?::TEXT, 
+	NOW()::TIMESTAMP, 
+	?::JSONB, 
+	false::BOOLEAN, --nullvalido
+	false::BOOLEAN, --deletevalido
+	true::BOOLEAN, --errolog
 	'${ID_CARGA}'::INTEGER, 
 	2::INTEGER
 );
 </sql>
-    <set_params>N</set_params>
-    <insert_field />
-    <update_field />
-    <delete_field />
-    <read_field />
-    <arguments>
-      <argument>
-        <name>NU_CNPJ</name>
-      </argument>
-      <argument>
-        <name>tipo_identificador</name>
-      </argument>
-      <argument>
-        <name>area_atuacao</name>
-      </argument>
-      <argument>
-        <name>subarea_atuacao</name>
-      </argument>
-    </arguments>
+    <limit>0</limit>
+    <lookup>Select values área atuação</lookup>
+    <execute_each_row>Y</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
     <cluster_schema />
     <remotesteps>
       <input>
@@ -837,8 +789,8 @@ FROM portal.atualizar_area_atuacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>625</xloc>
-      <yloc>341</yloc>
+      <xloc>1046</xloc>
+      <yloc>84</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1074,8 +1026,235 @@ FROM portal.atualizar_area_atuacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>93</xloc>
-      <yloc>341</yloc>
+      <xloc>117</xloc>
+      <yloc>227</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Formatar JSON</name>
+    <type>ScriptValueMod</type>
+    <description />
+    <distribute>N</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>function formatarDado(dado) {
+	var resultado = String(dado);
+	
+	resultado = resultado.replace(/'/g, '\'\'');
+	resultado =	JSON.stringify(resultado);
+	
+	return resultado;
+}
+
+if(DS_LOGRADOURO) DS_LOGRADOURO = formatarDado(DS_LOGRADOURO);
+if(NU_ENDERECO) NU_ENDERECO = formatarDado(NU_ENDERECO);
+if(DS_COMPLEMENTO) DS_COMPLEMENTO = formatarDado(DS_COMPLEMENTO);
+if(DS_BAIRRO) DS_BAIRRO = formatarDado(DS_BAIRRO);
+if(CO_IBGE) CO_IBGE = formatarDado(CO_IBGE);
+if(NU_CEP) NU_CEP = formatarDado(NU_CEP);
+if(NU_TELEFONE) NU_TELEFONE = formatarDado(NU_TELEFONE);
+if(DS_EMAIL) DS_EMAIL = formatarDado(DS_EMAIL);
+if(DS_SITE) DS_SITE = formatarDado(DS_SITE);
+
+var area_atuacao_json = '{"cd_area_atuacao": ' + area_atuacao + ', "cd_subarea_atuacao": ' + subarea_atuacao + '}';
+var localizacao_json = '{"tx_endereco": ' + DS_LOGRADOURO + ', "nr_localizacao": ' + NU_ENDERECO + ', "tx_endereco_complemento": ' + DS_COMPLEMENTO + ', "tx_bairro": ' + DS_BAIRRO + ', "cd_municipio": ' + CO_IBGE + ', "nr_cep": ' + NU_CEP + '}';
+var contato_json = '{"tx_telefone": ' + NU_TELEFONE + ', "tx_email": ' + DS_EMAIL + ', "tx_site": ' + DS_SITE + '}';</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>localizacao_json</name>
+        <rename>localizacao_json</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+      <field>
+        <name>contato_json</name>
+        <rename>contato_json</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+      <field>
+        <name>area_atuacao_json</name>
+        <rename>area_atuacao_json</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>665</xloc>
+      <yloc>227</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Select values contato</name>
+    <type>SelectValues</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>NU_CNPJ</name>
+      </field>
+      <field>
+        <name>tipo_identificador</name>
+      </field>
+      <field>
+        <name>contato_json</name>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>838</xloc>
+      <yloc>367</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Select values localização</name>
+    <type>SelectValues</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>NU_CNPJ</name>
+      </field>
+      <field>
+        <name>tipo_identificador</name>
+      </field>
+      <field>
+        <name>localizacao_json</name>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>838</xloc>
+      <yloc>227</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Select values área atuação</name>
+    <type>SelectValues</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>NU_CNPJ</name>
+      </field>
+      <field>
+        <name>tipo_identificador</name>
+      </field>
+      <field>
+        <name>area_atuacao_json</name>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>832</xloc>
+      <yloc>84</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Set variable flag banco</name>
+    <type>ScriptValueMod</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>var flag_variable = getVariable('FLAG_BANCO', true);
+
+if(flag_variable == true &amp;&amp; flag == false){
+	setVariable('FLAG_BANCO', false);
+}
+</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1272</xloc>
+      <yloc>227</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1115,8 +1294,8 @@ FROM portal.atualizar_area_atuacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>228</xloc>
-      <yloc>341</yloc>
+      <xloc>252</xloc>
+      <yloc>227</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1149,48 +1328,12 @@ FROM portal.atualizar_area_atuacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>349</xloc>
-      <yloc>341</yloc>
+      <xloc>373</xloc>
+      <yloc>227</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step_error_handling>
-    <error>
-      <source_step>Atualizar contato</source_step>
-      <target_step />
-      <is_enabled>Y</is_enabled>
-      <nr_valuename />
-      <descriptions_valuename />
-      <fields_valuename />
-      <codes_valuename />
-      <max_errors />
-      <max_pct_errors />
-      <min_pct_rows />
-    </error>
-    <error>
-      <source_step>Atualizar localização</source_step>
-      <target_step />
-      <is_enabled>Y</is_enabled>
-      <nr_valuename />
-      <descriptions_valuename />
-      <fields_valuename />
-      <codes_valuename />
-      <max_errors />
-      <max_pct_errors />
-      <min_pct_rows />
-    </error>
-    <error>
-      <source_step>Atualizar área de atuação</source_step>
-      <target_step />
-      <is_enabled>Y</is_enabled>
-      <nr_valuename />
-      <descriptions_valuename />
-      <fields_valuename />
-      <codes_valuename />
-      <max_errors />
-      <max_pct_errors />
-      <min_pct_rows />
-    </error>
   </step_error_handling>
   <slave-step-copy-partition-distribution>
   </slave-step-copy-partition-distribution>

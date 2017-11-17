@@ -1,8 +1,7 @@
-DROP FUNCTION IF EXISTS portal.atualizar_area_atuacao_osc(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, deletevalido BOOLEAN, errolog BOOLEAN, id_carga INTEGER, tipobusca INTEGER);
+DROP FUNCTION IF EXISTS portal.atualizar_area_atuacao_osc(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT, data_atualizacao TIMESTAMP, json JSONB, null_valido BOOLEAN, delete_valido BOOLEAN, erro_log BOOLEAN, id_carga INTEGER, tipo_busca INTEGER);
 
-CREATE OR REPLACE FUNCTION portal.atualizar_area_atuacao_osc(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, deletevalido BOOLEAN, errolog BOOLEAN, id_carga INTEGER, tipobusca INTEGER) RETURNS TABLE(
+CREATE OR REPLACE FUNCTION portal.atualizar_area_atuacao_osc(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT, data_atualizacao TIMESTAMP, json JSONB, null_valido BOOLEAN, delete_valido BOOLEAN, erro_log BOOLEAN, id_carga INTEGER, tipo_busca INTEGER) RETURNS TABLE(
 	mensagem TEXT,
-
 	flag BOOLEAN
 )AS $$
 
@@ -12,9 +11,10 @@ DECLARE
 	objeto RECORD;
 	dado_anterior RECORD;
 	dado_posterior RECORD;
-	registro_nao_delete INTEGER[];
+	dado_nao_delete INTEGER[];
 	flag_update BOOLEAN;
 	osc INTEGER;
+	registro_nao_delete TEXT;
 
 BEGIN
 	nome_tabela := 'osc.tb_area_atuacao';
@@ -45,21 +45,25 @@ BEGIN
 	END IF;
 
 	FOR objeto IN (SELECT * FROM jsonb_populate_recordset(null::osc.tb_area_atuacao, json))
+
 	LOOP
 		dado_anterior := null;
 
-		IF tipobusca = 1 THEN
+		IF tipo_busca = 1 THEN
 			SELECT INTO dado_anterior *
 			FROM osc.tb_area_atuacao
-			WHERE id_area_atuacao = objeto.id_area_atuacao;
+			WHERE id_area_atuacao = objeto.id_area_atuacao
+			AND id_osc = osc;
 
-		ELSIF tipobusca = 2 THEN
+		ELSIF tipo_busca = 2 THEN
 			SELECT INTO dado_anterior *
 			FROM osc.tb_area_atuacao
-			WHERE (id_osc = osc AND cd_area_atuacao = objeto.cd_area_atuacao AND cd_subarea_atuacao = objeto.cd_subarea_atuacao);
+			WHERE cd_area_atuacao = objeto.cd_area_atuacao
+			AND cd_subarea_atuacao = objeto.cd_subarea_atuacao
+			AND id_osc = osc;
 
 		ELSE
-			RAISE EXCEPTION 'dado_invalido';
+			RAISE EXCEPTION 'tipo_busca_invalido';
 
 		END IF;
 
@@ -80,27 +84,27 @@ BEGIN
 
 			registro_nao_delete := array_append(registro_nao_delete, dado_posterior.id_area_atuacao);
 
-			PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, dado_posterior.id_osc, fonte, dataatualizacao, null, row_to_json(dado_posterior),id_carga);
+			PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, dado_posterior.id_osc, fonte, data_atualizacao, null, row_to_json(dado_posterior),id_carga);
 
 		ELSE
 
 			dado_posterior := dado_anterior;
-			registro_nao_delete := array_append(registro_nao_delete, dado_posterior.id_area_atuacao);
+			dado_nao_delete := array_append(dado_nao_delete, dado_posterior.id_area_atuacao);
 			flag_update := false;
 
-			IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.cd_area_atuacao::TEXT, dado_anterior.ft_area_atuacao, objeto.cd_area_atuacao::TEXT, fonte_dados.prioridade, nullvalido) AS a) THEN
+			IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.cd_area_atuacao::TEXT, dado_anterior.ft_area_atuacao, objeto.cd_area_atuacao::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 				dado_posterior.cd_area_atuacao := objeto.cd_area_atuacao;
 				dado_posterior.ft_area_atuacao := fonte_dados.nome_fonte;
 				flag_update := true;
 			END IF;
 
-			IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.cd_subarea_atuacao::TEXT, dado_anterior.ft_area_atuacao, objeto.cd_subarea_atuacao::TEXT, fonte_dados.prioridade, nullvalido) AS a) THEN
+			IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.cd_subarea_atuacao::TEXT, dado_anterior.ft_area_atuacao, objeto.cd_subarea_atuacao::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 				dado_posterior.cd_subarea_atuacao := objeto.cd_subarea_atuacao;
 				dado_posterior.ft_area_atuacao := fonte_dados.nome_fonte;
 				flag_update := true;
 			END IF;
 
-			IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_nome_outra::TEXT, dado_anterior.ft_area_atuacao, objeto.tx_nome_outra::TEXT, fonte_dados.prioridade, nullvalido) AS a) THEN
+			IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_nome_outra::TEXT, dado_anterior.ft_area_atuacao, objeto.tx_nome_outra::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 				dado_posterior.tx_nome_outra := objeto.tx_nome_outra;
 				dado_posterior.ft_area_atuacao := fonte_dados.nome_fonte;
 				flag_update := true;
@@ -114,15 +118,23 @@ BEGIN
 					ft_area_atuacao = dado_posterior.ft_area_atuacao
 				WHERE id_area_atuacao = dado_posterior.id_area_atuacao;
 
-				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, dataatualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior),id_carga);
+
+				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior),id_carga);
+
 			END IF;
 
 		END IF;
 
 	END LOOP;
 
-	IF deletevalido THEN
-		DELETE FROM osc.tb_area_atuacao WHERE id_area_atuacao != ALL(registro_nao_delete);
+	IF delete_valido THEN
+		FOR objeto IN (SELECT * FROM osc.tb_area_atuacao WHERE id_osc = osc AND id_area_atuacao != ALL(dado_nao_delete))
+		LOOP
+			IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_area_atuacao]) AS a) THEN
+				DELETE FROM osc.tb_area_atuacao WHERE id_area_atuacao = objeto.id_area_atuacao;
+				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(objeto), null);
+			END IF;
+		END LOOP;
 	END IF;
 
 	flag := true;
@@ -133,7 +145,9 @@ BEGIN
 EXCEPTION
 	WHEN others THEN
 		flag := false;
-		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, identificador, dataatualizacao::TIMESTAMP, errolog, id_carga) AS a;
+
+		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, identificador, data_atualizacao::TIMESTAMP, erro_log, id_carga) AS a;
+
 		RETURN NEXT;
 
 END;
