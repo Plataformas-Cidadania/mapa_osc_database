@@ -6,9 +6,11 @@ CREATE OR REPLACE FUNCTION portal.verificar_erro(codigoerro TEXT, mensagemerro T
 
 DECLARE 
 	mensagem_log TEXT;
+	status_log INTEGER;
 	
 BEGIN 
 	mensagem_log := mensagemerro;
+	status_log := 2;
 	
 	IF codigoerro = 'P0001' THEN 
 		IF mensagemerro = 'fonte_invalida' THEN 
@@ -28,10 +30,12 @@ BEGIN
 			
 		ELSIF mensagemerro = 'osc_nao_encontrada' THEN 
 			mensagem := 'OSC não encontrada.';
-		
+			status_log := 1;
+			
 		ELSIF mensagemerro = 'projeto_nao_encontrado' THEN 
 			mensagem := 'Projeto não encontrado.';
-					
+			status_log := 1;
+			
 		END IF;
 		
 		mensagem_log := mensagem;
@@ -55,7 +59,7 @@ BEGIN
 	
 	IF errolog AND identificador IS NOT null THEN 
 		INSERT INTO log.tb_log_erro_carga (cd_identificador_osc, cd_status, tx_mensagem, dt_carregamento_dados, tx_fonte_dados, id_carga) 
-		VALUES (identificador, 2, mensagem_log, dataoperacao, fonte, idcarga);
+		VALUES (identificador, status_log, mensagem_log, dataoperacao, fonte, idcarga);
 	END IF;
 	
 	RETURN NEXT;
