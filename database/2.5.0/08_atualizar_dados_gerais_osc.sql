@@ -16,36 +16,34 @@ DECLARE
 	osc NUMERIC;
 
 BEGIN
-	nome_tabela := 'osc.atualizar_dados_gerais';
+	nome_tabela := 'osc.tb_dados_gerais';
 	tipo_identificador := lower(tipo_identificador);
-	
-	operacao := 'portal.atualizar_dados_gerais_osc(' || fonte::TEXT || ', ' || cnpj::TEXT || ', ' || dataatualizacao::TEXT || ', ' || json::TEXT || ', ' || nullvalido::TEXT || ', ' || errolog::TEXT || ', ' || id_carga::TEXT || ')';
+
+	operacao := 'portal.atualizar_dados_gerais_osc(' || fonte::TEXT || ', ' || identificador::TEXT ||', ' || tipo_identificador::TEXT || ', ' || dataatualizacao::TEXT || ', ' || json::TEXT || ', ' || nullvalido::TEXT || ', ' || errolog::TEXT || ', ' || id_carga::TEXT || ')';
 
 	SELECT INTO fonte_dados * FROM portal.verificar_fonte(fonte);
 
 	IF fonte_dados IS null THEN
 		RAISE EXCEPTION 'fonte_invalida';
-	ELSIF osc != ALL(fonte_dados.representacao) THEN
+	ELSIF identificador != ALL(fonte_dados.representacao) THEN
 		RAISE EXCEPTION 'permissao_negada_usuario';
-	END IF;
-
-	IF tipo_identificador = 'cnpj' THEN 
-		SELECT id_osc INTO osc FROM osc.tb_osc WHERE cd_identificador_osc = identificador;
-	ELSIF tipo_identificador = 'id_osc' THEN 
-		osc := identificador;
-	END IF;
-	
-	IF tipo_identificador != 'cnpj' OR tipo_identificador != 'id_osc' THEN
+	ELSIF tipo_identificador != 'cnpj' AND tipo_identificador != 'id_osc' THEN
 		RAISE EXCEPTION 'tipo_identificador_invalido';
-	ELSIF osc IS null THEN 
+	ELSIF identificador IS null THEN
 		RAISE EXCEPTION 'identificador_invalido';
 	END IF;
-	
-	SELECT INTO objeto * FROM json_populate_record(null::osc.tb_dados_gerais, json::JSON);
-	
+
+	IF tipo_identificador = 'cnpj' THEN
+		SELECT id_osc INTO osc FROM osc.tb_osc WHERE cd_identificador_osc = identificador;
+	ELSIF tipo_identificador = 'id_osc' THEN
+		osc := identificador;
+	END IF;
+
+	SELECT INTO objeto * FROM jsonb_populate_record(null::osc.tb_dados_gerais, json);
+
 	SELECT INTO dado_anterior * FROM osc.tb_dados_gerais WHERE id_osc = osc;
 
-	IF COUNT(dado_anterior) = 0 THEN
+    IF COUNT(dado_anterior.id_osc) = 0 THEN
 		INSERT INTO osc.tb_dados_gerais (
 			id_osc,
 			cd_natureza_juridica_osc,
@@ -120,12 +118,12 @@ BEGIN
 			fonte_dados.nome_fonte,
 			objeto.tx_link_demonstracao_contabil,
 			fonte_dados.nome_fonte,
-			tx_nome_responsavel_legal,
+			objeto.tx_nome_responsavel_legal,
 			fonte_dados.nome_fonte
 		) RETURNING * INTO dado_posterior;
 
-		INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior)
-		VALUES (nome_tabela, osc, fonte::INTEGER, dataatualizacao, null, row_to_json(dado_posterior));
+		INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior, id_carga)
+		VALUES (nome_tabela, dado_posterior.id_osc, fonte, dataatualizacao, null, row_to_json(dado_posterior), id_carga);
 
 	ELSE
 		dado_posterior := dado_anterior;
@@ -279,8 +277,8 @@ BEGIN
 				ft_nome_responsavel_legal = dado_posterior.ft_nome_responsavel_legal
 			WHERE id_osc = osc;
 
-			INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior)
-			VALUES (nome_tabela, osc, fonte::INTEGER, dataatualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior));
+			INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior, id_carga)
+			VALUES (nome_tabela, osc, fonte, dataatualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior), id_carga);
 
 		END IF;
 	END IF;
@@ -293,7 +291,7 @@ BEGIN
 	EXCEPTION
 		WHEN others THEN
 			flag := false;
-			SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, osc, dataatualizacao::TIMESTAMP, errolog, id_carga) AS a;
+			SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, identificador, dataatualizacao::TIMESTAMP, errolog, id_carga) AS a;
 			RETURN NEXT;
 
 END;

@@ -165,7 +165,7 @@
       <description/>
       <type>SQL</type>
       <sql>select RefreshAllMaterializedViews&#x28;&#x27;spat&#x27;&#x29;&#x3b;&#xa;select RefreshAllMaterializedViews&#x28;&#x27;osc&#x27;&#x29;&#x3b;&#xa;select RefreshAllMaterializedViews&#x28;&#x27;portal&#x27;&#x29;&#x3b;&#xa;&#xa;ALTER TABLE osc.tb_osc ENABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_dados_gerais ENABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_contato ENABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_localizacao ENABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_area_atuacao ENABLE TRIGGER ALL&#x3b;&#xa;&#xa;UPDATE TABLE log.tb_log_carga SET dt_fim &#x3d; NOW&#x28;&#x29;&#x3a;&#x3a;timestamp, cd_status &#x3d; 9&#xa;WHERE id_carga &#x3d; &#x24;&#x7b;ID_CARGA&#x7d;&#x3b;</sql>
-      <useVariableSubstitution>F</useVariableSubstitution>
+      <useVariableSubstitution>T</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename/>
       <sendOneStatement>F</sendOneStatement>
@@ -218,7 +218,7 @@
       <file_variable_type>JVM</file_variable_type>
       <fields>
         <field>
-          <variable_name>ELT</variable_name>
+          <variable_name>ETL</variable_name>
           <variable_value>CNPJ&#x2f;SRF&#x2f;MF 2016</variable_value>
           <variable_type>JVM</variable_type>
         </field>
@@ -233,8 +233,8 @@
       <name>SQL 2 2</name>
       <description/>
       <type>SQL</type>
-      <sql>select RefreshAllMaterializedViews&#x28;&#x27;spat&#x27;&#x29;&#x3b;&#xa;select RefreshAllMaterializedViews&#x28;&#x27;osc&#x27;&#x29;&#x3b;&#xa;select RefreshAllMaterializedViews&#x28;&#x27;portal&#x27;&#x29;&#x3b;&#xa;&#xa;ALTER TABLE osc.tb_osc ENABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_dados_gerais ENABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_contato ENABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_localizacao ENABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_area_atuacao ENABLE TRIGGER ALL&#x3b;&#xa;&#xa;UPDATE TABLE log.tb_log_carga SET dt_fim &#x3d; NOW&#x28;&#x29;&#x3a;&#x3a;timestamp, cd_status &#x3d; 2&#xa;WHERE id_carga &#x3d; &#x24;&#x7b;ID_CARGA&#x7d;&#x3b;</sql>
-      <useVariableSubstitution>F</useVariableSubstitution>
+      <sql>--select RefreshAllMaterializedViews&#x28;&#x27;spat&#x27;&#x29;&#x3b;&#xa;--select RefreshAllMaterializedViews&#x28;&#x27;osc&#x27;&#x29;&#x3b;&#xa;--select RefreshAllMaterializedViews&#x28;&#x27;portal&#x27;&#x29;&#x3b;&#xa;&#xa;ALTER TABLE osc.tb_osc ENABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_dados_gerais ENABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_contato ENABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_localizacao ENABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_area_atuacao ENABLE TRIGGER ALL&#x3b;&#xa;&#xa;UPDATE log.tb_log_carga SET dt_fim &#x3d; NOW&#x28;&#x29;&#x3a;&#x3a;timestamp, cd_status &#x3d; 2&#xa;WHERE id_carga &#x3d; &#x24;&#x7b;ID_CARGA&#x7d;&#x3b;</sql>
+      <useVariableSubstitution>T</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename/>
       <sendOneStatement>F</sendOneStatement>
@@ -244,6 +244,17 @@
       <nr>0</nr>
       <xloc>375</xloc>
       <yloc>518</yloc>
+      </entry>
+    <entry>
+      <name>Abort job</name>
+      <description/>
+      <type>ABORT</type>
+      <message/>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>558</xloc>
+      <yloc>522</yloc>
       </entry>
   </entries>
   <hops>
@@ -308,6 +319,15 @@
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
       <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>SQL 2 2</from>
+      <to>Abort job</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
   </hops>

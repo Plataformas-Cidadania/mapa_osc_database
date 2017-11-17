@@ -457,6 +457,17 @@
         <whole_word>no</whole_word>
         <case_sensitive>no</case_sensitive>
       </field>
+      <field>
+        <in_stream_name>nm_fantasia</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>&#x22;&#x22;</replace_string>
+        <replace_by_string/>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
@@ -806,8 +817,8 @@
       </field>
       <field>
         <name>dt_inicio_atividade</name>
-        <type>Date</type>
-        <format>dd&#x2f;MM&#x2f;yyyy</format>
+        <type>String</type>
+        <format/>
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -821,7 +832,7 @@
       </field>
       <field>
         <name>ano_fundacao</name>
-        <type>Integer</type>
+        <type>String</type>
         <format>&#x23;</format>
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
@@ -851,7 +862,7 @@
       </field>
       <field>
         <name>div_cnae</name>
-        <type>Integer</type>
+        <type>String</type>
         <format>&#x23;</format>
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
@@ -866,7 +877,7 @@
       </field>
       <field>
         <name>grp_cnae</name>
-        <type>Integer</type>
+        <type>String</type>
         <format>&#x23;</format>
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
@@ -1124,7 +1135,7 @@
     <single_statement>N</single_statement>
     <replace_variables>Y</replace_variables>
     <quoteString>N</quoteString>
-    <sql>SELECT portal.atualizar_osc&#x28;&#x27;&#x24;&#x7b;ETL&#x7d;&#x27;, &#x3f;&#x3a;&#x3a;NUMERIC, &#x28;select now&#x28;&#x29;&#x3a;&#x3a;timestamp&#x29;&#xa;&#xa;UPDATE osc.tb_osc SET bo_osc_ativa &#x3d; true, ft_identificador_osc &#x3d; &#x27;&#x3f;&#x27;, ft_osc_ativa &#x3d; &#x27;&#x3f;&#x27; WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x3b;&#xd;&#xa;&#xd;&#xa;INSERT INTO osc.tb_osc &#x28;cd_identificador_osc, ft_identificador_osc, bo_osc_ativa, ft_osc_ativa&#x29; &#xd;&#xa;SELECT &#x3f;, &#x27;&#x3f;&#x27;, true, &#x27;&#x3f;&#x27;&#xd;&#xa;WHERE NOT EXISTS&#x28;SELECT cd_identificador_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;UPDATE osc.tb_dados_gerais SET tx_razao_social_osc &#x3d; &#x27;&#x3f;&#x27;, ft_razao_social_osc &#x3d; &#x27;&#x3f;&#x27;,&#xa;tx_nome_fantasia_osc &#x3d; &#x27;&#x3f;&#x27;, ft_nome_fantasia_osc &#x3d; &#x27;&#x3f;&#x27;,&#xa;cd_classe_atividade_economica_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC, ft_classe_atividade_economica_osc &#x3d; &#x27;&#x3f;&#x27;&#xa;cd_natureza_juridica_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC, ft_natureza_juridica_osc &#x3d; &#x27;&#x3f;&#x27;, &#xa;dt_fundacao_osc &#x3d; to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29;, ft_fundacao_osc &#x3d; &#x27;&#x3f;&#x27;&#xd;&#xa;WHERE id_osc &#x3d; &#x28;SELECT id_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;INSERT INTO osc.tb_dados_gerais &#x28;id_osc,tx_razao_social_osc, ft_razao_social_osc,tx_nome_fantasia_osc,ft_nome_fantasia_osc, cd_classe_atividade_economica_osc,&#xa;ft_classe_atividade_economica_osc, cd_natureza_juridica_osc, ft_natureza_juridica_osc, dt_fundacao_osc, ft_fundacao_osc&#x29;&#xd;&#xa;SELECT a.id_osc, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;,&#x27;&#x3f;&#x27;,&#x27;&#x3f;&#x27;,&#x3f;&#x3a;&#x3a;NUMERIC, &#x27;&#x3f;&#x27;, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;&#x3f;&#x27;, to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29; as dt_inicial, &#x27;&#x3f;&#x27;&#xd;&#xa;FROM osc.tb_osc a &#xd;&#xa;WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#xd;&#xa;AND NOT EXISTS&#x28;SELECT &#x2a; FROM osc.tb_dados_gerais WHERE osc.tb_dados_gerais.id_osc &#x3d; a.id_osc&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;UPDATE osc.tb_contato SET tx_telefone &#x3d; &#x27;&#x3f;&#x27;, ft_telefone &#x3d; &#x27;&#x3f;&#x27;, tx_email &#x3d; &#x27;&#x3f;&#x27;, ft_email &#x3d; &#x27;&#x3f;&#x27;&#xd;&#xa;WHERE id_osc &#x3d; &#x28;SELECT id_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;INSERT INTO osc.tb_contato&#x28;id_osc, tx_telefone, ft_telefone, tx_email, ft_email&#x29;&#xd;&#xa;SELECT a.id_osc, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;&#xd;&#xa;FROM osc.tb_osc a &#xd;&#xa;WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#xd;&#xa;AND NOT EXISTS&#x28;SELECT &#x2a; FROM osc.tb_contato WHERE osc.tb_contato.id_osc &#x3d; a.id_osc&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;UPDATE osc.tb_localizacao SET tx_endereco_corrigido &#x3d; &#x27;&#x3f;&#x27;, ft_endereco_corrigido &#x3d; 3,  tx_endereco &#x3d; &#x27;&#x3f;&#x27;, ft_endereco &#x3d; &#x27;&#x3f;&#x27;, tx_bairro &#x3d; &#x27;&#x3f;&#x27;, ft_bairro &#x3d; &#x27;&#x3f;&#x27;, &#xa;cd_municipio &#x3d; edmu_cd_municipio, ft_municipio &#x3d; &#x27;&#x3f;&#x27;, nr_cep &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC, ft_cep &#x3d; &#x27;&#x3f;&#x27;, geo_localizacao &#x3d; ST_GeomFromText&#x28;concat&#x28;&#x27;POINT&#x28;&#x27;,CONCAT&#x28;&#x3f;&#x3a;&#x3a;NUMERIC,&#x27; &#x27;,&#x3f;&#x3a;&#x3a;NUMERIC&#x29;,&#x27;&#x29;&#x27;&#x29;,4674&#x29;, &#xa;ft_geo_localizacao &#x3d; 3, bo_oficial &#x3d;true, qualidade_classificacao &#x3d; &#x27;&#x3f;&#x27;&#xd;&#xa;FROM spat.ed_municipio &#xd;&#xa;WHERE edmu_cd_municipio &#x3d; &#x27;&#x3f;&#x27;&#x3a;&#x3a;TEXT&#xd;&#xa;AND osc.tb_localizacao.id_osc &#x3d; &#x28;SELECT id_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;INSERT INTO osc.tb_localizacao&#x28;id_osc, tx_endereco_corrigido, ft_endereco_corrigido, tx_endereco, ft_endereco, tx_bairro, ft_bairro, cd_municipio, ft_municipio, nr_cep, ft_cep,&#xa;geo_localizacao, ft_geo_localizacao, bo_oficial, qualidade_classificacao&#x29;&#xd;&#xa;SELECT a.id_osc, &#x27;&#x3f;&#x27;, 3, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;, edmu_cd_municipio, &#x27;&#x3f;&#x27;, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;&#x3f;&#x27;, ST_GeomFromText&#x28;concat&#x28;&#x27;POINT&#x28;&#x27;,CONCAT&#x28;&#x3f;&#x3a;&#x3a;NUMERIC,&#x27; &#x27;,&#x3f;&#x3a;&#x3a;NUMERIC&#x29;,&#x27;&#x29;&#x27;&#x29;,4674&#x29;, 3, true, &#x27;&#x3f;&#x27;&#xd;&#xa;FROM osc.tb_osc a&#xd;&#xa;INNER JOIN spat.ed_municipio ON edmu_cd_municipio &#x3d; &#x27;&#x3f;&#x27;&#x3a;&#x3a;TEXT&#xd;&#xa;WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#xd;&#xa;AND NOT EXISTS&#x28;SELECT &#x2a; FROM osc.tb_localizacao WHERE osc.tb_localizacao.id_osc &#x3d; a.id_osc&#x29;&#x3b;&#xa;&#xa;INSERT INTO osc.tb_area_atuacao&#x28;id_osc, cd_area_atuacao, cd_subarea_atuacao, ft_area_atuacao, bo_oficial&#x29;&#xa;SELECT a.id_osc, syst.dc_area_atuacao.cd_area_atuacao, &#x27;&#x3f;&#x27;,syst.dc_subarea_atuacao.cd_subarea_atuacao,&#x27;&#x3f;&#x27;, true&#xa;FROM osc.tb_osc a&#xa;INNER JOIN syst.dc_area_atuacao ON lower&#x28;tx_nome_area_atuacao&#x29; &#x3d; lower&#x28;&#x27;&#x3f;&#x27;&#x29;&#xa;LEFT JOIN syst.dc_subarea_atuacao ON syst.dc_area_atuacao.cd_area_atuacao &#x3d; syst.dc_subarea_atuacao.cd_area_atuacao &#xa;AND lower&#x28;syst.dc_subarea_atuacao.tx_nome_subarea_atuacao&#x29; &#x3d; lower&#x28;&#x27;&#x3f;&#x27;&#x29;&#xa;WHERE a.cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#xa;AND NOT EXISTS &#x28;SELECT &#x2a; FROM osc.tb_area_atuacao b WHERE a.id_osc &#x3d; b.id_osc AND b.cd_area_atuacao &#x3d; syst.dc_area_atuacao.cd_area_atuacao &#xa;				AND b.cd_subarea_atuacao &#x3d; syst.dc_subarea_atuacao.cd_subarea_atuacao&#x29;&#x3b;</sql>
+    <sql>SELECT portal.atualizar_osc&#x28;&#x27;&#x24;&#x7b;ETL&#x7d;&#x27;, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;CNPJ&#x27;, &#x28;SELECT NOW&#x28;&#x29;&#x3a;&#x3a;TIMESTAMP&#x29;, &#xa;&#x27;&#x7b;&#x22;bo_osc_ativa&#x22;&#x3a;&#x22;true&#x22;&#x7d;&#x27;, FALSE, TRUE, &#x27;&#x24;&#x7b;ID_CARGA&#x7d;&#x27;&#x29;&#x3b;&#xa;&#xa;SELECT portal.atualizar_dados_gerais_osc&#x28;&#x27;&#x24;&#x7b;ETL&#x7d;&#x27;, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;CNPJ&#x27;, &#x28;SELECT NOW&#x28;&#x29;&#x3a;&#x3a;TIMESTAMP&#x29;, &#xa;&#x27;&#x7b;&#x22;tx_razao_social_osc&#x22;&#x3a;&#x22;&#x3f;&#x22;, &#x22;tx_nome_fantasia_osc&#x22;&#x3a;&#x22;&#x3f;&#x22;, &#x22;cd_classe_atividade_economica_osc&#x22;&#x3a;&#x22;&#x3f;&#x22;, &#x22;cd_natureza_juridica_osc&#x22;&#x3a;&#x22;&#x3f;&#x22;&#x7d;&#x27;&#x3a;&#x3a;JSONB &#x7c;&#x7c; jsonb_build_object&#x28;&#x27;dt_fundacao_osc&#x27;,&#x28;SELECT to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29;&#x3a;&#x3a;TEXT&#x29;&#x29;,&#xa;FALSE, TRUE, &#x27;&#x24;&#x7b;ID_CARGA&#x7d;&#x27;&#x29;&#x3b;&#xa;&#xd;&#xa;SELECT portal.atualizar_contato_osc&#x28;&#x27;&#x24;&#x7b;ETL&#x7d;&#x27;, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;CNPJ&#x27;, &#x28;SELECT NOW&#x28;&#x29;&#x3a;&#x3a;TIMESTAMP&#x29;, &#xa;&#x27;&#x7b;&#x22;tx_telefone&#x22;&#x3a;&#x22;&#x3f;&#x22;, &#x22;tx_email&#x22;&#x3a;&#x22;&#x3f;&#x22;&#x7d;&#x27;, FALSE, TRUE, &#x27;&#x24;&#x7b;ID_CARGA&#x7d;&#x27;&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;SELECT portal.atualizar_localizacao_osc&#x28;&#x27;&#x24;&#x7b;ETL&#x7d;&#x27;, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;CNPJ&#x27;, &#x28;SELECT NOW&#x28;&#x29;&#x3a;&#x3a;TIMESTAMP&#x29;,&#xa;&#x27;&#x7b;&#x22;tx_endereco_corrigido&#x22;&#x3a;&#x22;&#x3f;&#x22;, &#x22;tx_endereco&#x22;&#x3a;&#x22;&#x3f;&#x22;, &#x22;tx_bairro&#x22;&#x3a;&#x22;&#x3f;&#x22;, &#x22;cd_municipio&#x22;&#x3a;&#x22;&#x3f;&#x22;, &#x22;nr_cep&#x22;&#x3a;&#x22;&#x3f;&#x22;, &#x22;bo_oficial&#x22;&#x3a;&#x22;true&#x22;, &#x22;qualidade_classificacao&#x22;&#x3a;&#x22;&#x3f;&#x22;&#x7d;&#x27;&#x3a;&#x3a;JSONB &#x7c;&#x7c; jsonb_build_object&#x28;&#x27;geo_localizacao&#x27;, &#x28;SELECT ST_GeomFromText&#x28;concat&#x28;&#x27;POINT&#x28;&#x27;,CONCAT&#x28;&#x3f;&#x3a;&#x3a;NUMERIC,&#x27; &#x27;,&#x3f;&#x3a;&#x3a;NUMERIC&#x29;,&#x27;&#x29;&#x27;&#x29;,4674&#x29;&#x3a;&#x3a;TEXT&#x29;&#x29;, &#xa;FALSE, TRUE, &#x27;&#x24;&#x7b;ID_CARGA&#x7d;&#x27;&#x29;&#x3b;&#xa;&#xd;&#xa;SELECT portal.atualizar_area_atuacao_osc&#x28;&#x27;&#x24;&#x7b;ETL&#x7d;&#x27;, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;CNPJ&#x27;,&#x28;SELECT NOW&#x28;&#x29;&#x3a;&#x3a;TIMESTAMP&#x29;,&#xa;&#x28;SELECT &#x27;&#x7b;&#x22;cd_area_atuacao&#x22;&#x3a;&#x22;&#x27;&#x7c;&#x7c; dc_area_atuacao.cd_area_atuacao&#x3a;&#x3a;TEXT &#x7c;&#x7c;&#x27;&#x22;, &#x22;cd_subarea_atuacao&#x22;&#x3a;&#x22;&#x27;&#x7c;&#x7c; COALESCE&#x28;dc_subarea_atuacao.cd_subarea_atuacao&#x3a;&#x3a;TEXT,&#x27;&#x5b;null&#x5d;&#x27;&#x29; &#x7c;&#x7c;&#x27;&#x22;&#x7d;&#x27;&#xa;FROM syst.dc_area_atuacao &#xa;LEFT JOIN syst.dc_subarea_atuacao ON syst.dc_area_atuacao.cd_area_atuacao &#x3d; syst.dc_subarea_atuacao.cd_area_atuacao &#xa;AND lower&#x28;syst.dc_subarea_atuacao.tx_nome_subarea_atuacao&#x29; &#x3d; lower&#x28;&#x27;&#x3f;&#x27;&#x29;&#xa;WHERE lower&#x28;tx_nome_area_atuacao&#x29; &#x3d; lower&#x28;&#x27;&#x3f;&#x27;&#x29;&#x29;, FALSE, FALSE, TRUE, &#x27;&#x24;&#x7b;ID_CARGA&#x7d;&#x27;, 2&#x29;&#x3b;</sql>
     <set_params>N</set_params>
     <insert_field/>
     <update_field/>
@@ -1133,72 +1144,26 @@
     <arguments>
        <argument><name>id_estab</name></argument>
        <argument><name>id_estab</name></argument>
-       <argument><name>fonte</name></argument>
-       <argument><name>fonte</name></argument>
-       <argument><name>id_estab</name></argument>
        <argument><name>razao_social</name></argument>
-       <argument><name>fonte</name></argument>
        <argument><name>nm_fantasia</name></argument>
-       <argument><name>fonte</name></argument>
        <argument><name>clas_nae</name></argument>
-       <argument><name>fonte</name></argument>
        <argument><name>nat_jur</name></argument>
-       <argument><name>fonte</name></argument>
        <argument><name>dt_inicio_atividade</name></argument>
-       <argument><name>fonte</name></argument>
-       <argument><name>id_estab</name></argument>
-       <argument><name>razao_social</name></argument>
-       <argument><name>fonte</name></argument>
-       <argument><name>nm_fantasia</name></argument>
-       <argument><name>fonte</name></argument>
-       <argument><name>clas_nae</name></argument>
-       <argument><name>fonte</name></argument>
-       <argument><name>nat_jur</name></argument>
-       <argument><name>fonte</name></argument>
-       <argument><name>dt_inicio_atividade</name></argument>
-       <argument><name>fonte</name></argument>
        <argument><name>id_estab</name></argument>
        <argument><name>telefone</name></argument>
-       <argument><name>fonte</name></argument>
        <argument><name>email</name></argument>
-       <argument><name>fonte</name></argument>
-       <argument><name>id_estab</name></argument>
-       <argument><name>telefone</name></argument>
-       <argument><name>fonte</name></argument>
-       <argument><name>email</name></argument>
-       <argument><name>fonte</name></argument>
        <argument><name>id_estab</name></argument>
        <argument><name>MatchedAddress</name></argument>
        <argument><name>logradouro</name></argument>
-       <argument><name>fonte</name></argument>
        <argument><name>bairro</name></argument>
-       <argument><name>fonte</name></argument>
-       <argument><name>fonte</name></argument>
+       <argument><name>codmun7</name></argument>
        <argument><name>cep</name></argument>
-       <argument><name>fonte</name></argument>
+       <argument><name>&#xfeff;PrecisionDepth</name></argument>
        <argument><name>Longitude</name></argument>
        <argument><name>Latitude</name></argument>
-       <argument><name>&#xfeff;PrecisionDepth</name></argument>
-       <argument><name>codmun7</name></argument>
        <argument><name>id_estab</name></argument>
-       <argument><name>MatchedAddress</name></argument>
-       <argument><name>logradouro</name></argument>
-       <argument><name>fonte</name></argument>
-       <argument><name>bairro</name></argument>
-       <argument><name>fonte</name></argument>
-       <argument><name>fonte</name></argument>
-       <argument><name>cep</name></argument>
-       <argument><name>fonte</name></argument>
-       <argument><name>Longitude</name></argument>
-       <argument><name>Latitude</name></argument>
-       <argument><name>&#xfeff;PrecisionDepth</name></argument>
-       <argument><name>codmun7</name></argument>
-       <argument><name>id_estab</name></argument>
-       <argument><name>fonte</name></argument>
-       <argument><name>fonte</name></argument>
-       <argument><name>macro_area_atuacao</name></argument>
        <argument><name>micro_area_atuacao</name></argument>
-       <argument><name>id_estab</name></argument>
+       <argument><name>macro_area_atuacao</name></argument>
     </arguments>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>

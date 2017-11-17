@@ -37,10 +37,6 @@ CREATE TABLE log.tb_log_erro_carga
     cd_status smallint NOT NULL,
     tx_mensagem text COLLATE pg_catalog."default" NOT NULL,
     dt_carregamento_dados timestamp without time zone,
-<<<<<<< HEAD
-	tx_fonte_dados text,
-=======
->>>>>>> MOSC-1418
     id_carga integer,
     CONSTRAINT pk_tb_log_carga PRIMARY KEY (id_log_erro_carga),
     CONSTRAINT fk_cd_status FOREIGN KEY (cd_status)
@@ -76,3 +72,9 @@ COMMENT ON COLUMN log.tb_log_erro_carga.tx_mensagem
 
 COMMENT ON COLUMN log.tb_log_erro_carga.dt_carregamento_dados
     IS 'Data de carregamento dos dados';
+
+ALTER TABLE log.tb_log_alteracao
+ADD COLUMN id_carga INTEGER,
+ADD CONSTRAINT fk_id_carga FOREIGN KEY (id_carga)
+    REFERENCES log.tb_log_carga (id_carga),
+ALTER COLUMN id_usuario TYPE TEXT;

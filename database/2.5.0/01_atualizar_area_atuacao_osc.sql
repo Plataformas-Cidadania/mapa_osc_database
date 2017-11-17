@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS portal.atualizar_area_atuacao_osc(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, deletevalido BOOLEAN, errolog BOOLEAN, idcarga INTEGER, tipobusca INTEGER);
+DROP FUNCTION IF EXISTS portal.atualizar_area_atuacao_osc(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, deletevalido BOOLEAN, errolog BOOLEAN, id_carga INTEGER, tipobusca INTEGER);
 
-CREATE OR REPLACE FUNCTION portal.atualizar_area_atuacao_osc(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, deletevalido BOOLEAN, errolog BOOLEAN, idcarga INTEGER, tipobusca INTEGER) RETURNS TABLE(
+CREATE OR REPLACE FUNCTION portal.atualizar_area_atuacao_osc(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, deletevalido BOOLEAN, errolog BOOLEAN, id_carga INTEGER, tipobusca INTEGER) RETURNS TABLE(
 	mensagem TEXT,
 
 	flag BOOLEAN
@@ -19,34 +19,32 @@ DECLARE
 BEGIN
 	nome_tabela := 'osc.tb_area_atuacao';
 	tipo_identificador := lower(tipo_identificador);
-	
+
 	SELECT INTO fonte_dados * FROM portal.verificar_fonte(fonte);
-	
+
 	IF fonte_dados IS null THEN
 		RAISE EXCEPTION 'fonte_invalida';
-	ELSIF osc != ALL(fonte_dados.representacao) THEN
+	ELSIF identificador != ALL(fonte_dados.representacao) THEN
 		RAISE EXCEPTION 'permissao_negada_usuario';
-	END IF;
-	
-	IF tipo_identificador = 'cnpj' THEN 
-		SELECT id_osc INTO osc FROM osc.tb_osc WHERE cd_identificador_osc = identificador;
-	ELSIF tipo_identificador = 'id_osc' THEN 
-		osc := identificador;
-	END IF;
-	
-	IF tipo_identificador != 'cnpj' OR tipo_identificador != 'id_osc' THEN
+	ELSIF tipo_identificador != 'cnpj' AND tipo_identificador != 'id_osc' THEN
 		RAISE EXCEPTION 'tipo_identificador_invalido';
-	ELSIF osc IS null THEN 
+	ELSIF identificador IS null THEN
 		RAISE EXCEPTION 'identificador_invalido';
 	END IF;
-	
+
+	IF tipo_identificador = 'cnpj' THEN
+		SELECT id_osc INTO osc FROM osc.tb_osc WHERE cd_identificador_osc = identificador;
+	ELSIF tipo_identificador = 'id_osc' THEN
+		osc := identificador;
+	END IF;
+
 	registro_nao_delete := '{}';
 
 	IF json_typeof(json::JSON) = 'object' THEN
 		json := ('[' || json || ']');
 	END IF;
 
-	FOR objeto IN (SELECT * FROM json_populate_recordset(null::osc.tb_area_atuacao, json::JSON))
+	FOR objeto IN (SELECT * FROM jsonb_populate_recordset(null::osc.tb_area_atuacao, json))
 	LOOP
 		dado_anterior := null;
 
@@ -82,7 +80,7 @@ BEGIN
 
 			registro_nao_delete := array_append(registro_nao_delete, dado_posterior.id_area_atuacao);
 
-			PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, dataatualizacao, null, row_to_json(dado_posterior));
+			PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, dado_posterior.id_osc, fonte, dataatualizacao, null, row_to_json(dado_posterior),id_carga);
 
 		ELSE
 
@@ -116,7 +114,7 @@ BEGIN
 					ft_area_atuacao = dado_posterior.ft_area_atuacao
 				WHERE id_area_atuacao = dado_posterior.id_area_atuacao;
 
-				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, dataatualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior));
+				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, dataatualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior),id_carga);
 			END IF;
 
 		END IF;
@@ -135,7 +133,7 @@ BEGIN
 EXCEPTION
 	WHEN others THEN
 		flag := false;
-		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, osc, dataatualizacao::TIMESTAMP, errolog, idcarga) AS a;
+		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, identificador, dataatualizacao::TIMESTAMP, errolog, id_carga) AS a;
 		RETURN NEXT;
 
 END;

@@ -1,4 +1,4 @@
-﻿-- object: portal.vw_osc_dados_gerais | type: MATERIALIZED VIEW --
+-- object: portal.vw_osc_dados_gerais | type: MATERIALIZED VIEW --
 DROP MATERIALIZED VIEW IF EXISTS portal.vw_osc_dados_gerais CASCADE;
 CREATE MATERIALIZED VIEW portal.vw_osc_dados_gerais
 AS
@@ -16,9 +16,9 @@ SELECT
 	COALESCE(NULLIF(TRIM(tb_dados_gerais.tx_nome_fantasia_osc), ''), tb_dados_gerais.tx_razao_social_osc) AS tx_nome_osc,
 	tb_dados_gerais.im_logo AS im_logo,
 	tb_dados_gerais.ft_logo,
-	tb_dados_gerais.cd_subclasse_atividade_economica_osc AS cd_atividade_economica_osc,
+	tb_dados_gerais.cd_classe_atividade_economica_osc AS cd_atividade_economica_osc,
 	tx_nome_subclasse_atividade_economica AS tx_nome_atividade_economica_osc,
-	tb_dados_gerais.ft_subclasse_atividade_economica_osc AS ft_atividade_economica_osc,
+	tb_dados_gerais.ft_classe_atividade_economica_osc AS ft_atividade_economica_osc,
 	tb_dados_gerais.cd_natureza_juridica_osc,
 	NULLIF(TRIM(tx_nome_natureza_juridica), '') AS tx_nome_natureza_juridica_osc,
 	tb_dados_gerais.ft_natureza_juridica_osc,
@@ -70,7 +70,7 @@ ON tb_osc.id_osc = tb_localizacao.id_osc
 LEFT JOIN osc.tb_contato
 ON tb_osc.id_osc = tb_contato.id_osc
 LEFT JOIN syst.dc_subclasse_atividade_economica
-ON cd_subclasse_atividade_economica = tb_dados_gerais.cd_subclasse_atividade_economica_osc
+ON cd_classe_atividade_economica = tb_dados_gerais.cd_classe_atividade_economica_osc
 LEFT JOIN syst.dc_natureza_juridica
 ON cd_natureza_juridica = tb_dados_gerais.cd_natureza_juridica_osc
 LEFT JOIN syst.dc_situacao_imovel
@@ -83,3 +83,18 @@ WHERE tb_osc.bo_osc_ativa;
 -- ddl-end --
 ALTER MATERIALIZED VIEW portal.vw_osc_dados_gerais OWNER TO postgres;
 -- ddl-end --
+
+CREATE UNIQUE INDEX ix_vw_osc_dados_gerais
+    ON portal.vw_osc_dados_gerais USING btree
+    (id_osc ASC NULLS LAST)
+    TABLESPACE pg_default;
+
+CREATE OR REPLACE FUNCTION dados_gerais()
+RETURNS TRIGGER AS $$
+BEGIN
+  REFRESH MATERIALIZED VIEW CONCURRENTLY portal.vw_osc_dados_gerais;
+  REFRESH MATERIALIZED VIEW CONCURRENTLY portal.vw_osc_descricao;
+  REFRESH MATERIALIZED VIEW CONCURRENTLY portal.vw_osc_recursos_projeto;
+  RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;

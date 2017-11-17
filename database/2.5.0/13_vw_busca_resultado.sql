@@ -22,9 +22,9 @@ SELECT
 	ST_Y(ST_TRANSFORM(tb_localizacao.geo_localizacao, 4674)) AS geo_lat,
 	ST_X(ST_TRANSFORM(tb_localizacao.geo_localizacao, 4674)) AS geo_lng,
 	(
-		SELECT dc_subclasse_atividade_economica.tx_nome_subclasse_atividade_economica
-        FROM syst.dc_subclasse_atividade_economica
-        WHERE dc_subclasse_atividade_economica.cd_subclasse_atividade_economica = tb_dados_gerais.cd_subclasse_atividade_economica_osc
+		SELECT dc_classe_atividade_economica.tx_nome_classe_atividade_economica
+        FROM syst.dc_classe_atividade_economica
+        WHERE dc_classe_atividade_economica.cd_classe_atividade_economica = tb_dados_gerais.cd_classe_atividade_economica_osc
 	) AS tx_nome_atividade_economica,
 	tb_dados_gerais.im_logo
 FROM osc.tb_osc

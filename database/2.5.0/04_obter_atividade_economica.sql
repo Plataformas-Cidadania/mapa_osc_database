@@ -1,6 +1,6 @@
 ﻿-- Function: portal.obter_atividade_economica(text, integer, integer)
 
-DROP FUNCTION portal.obter_atividade_economica(text, integer, integer);
+DROP FUNCTION IF EXISTS portal.obter_atividade_economica(text, integer, integer);
 
 CREATE OR REPLACE FUNCTION portal.obter_atividade_economica(IN param text, IN limit_result integer, IN offset_result integer)
   RETURNS TABLE(tx_atividade_economica text ) AS

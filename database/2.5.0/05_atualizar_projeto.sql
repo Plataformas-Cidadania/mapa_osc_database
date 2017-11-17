@@ -13,6 +13,7 @@ DECLARE
 	dado_posterior RECORD;
 	registro_nao_delete INTEGER[];
 	flag_update BOOLEAN;
+	osc INTEGER;
 	
 BEGIN 
 	nome_tabela := 'osc.tb_projeto';
