@@ -13,36 +13,36 @@ DECLARE
 	dado_posterior RECORD;
 	flag_update BOOLEAN;
 	osc INTEGER;
-	
+
 BEGIN
-	nome_tabela := 'osc.atualizar_contato';
+	nome_tabela := 'osc.tb_contato';
 	tipo_identificador := lower(tipo_identificador);
-	
+
 	SELECT INTO fonte_dados * FROM portal.verificar_fonte(fonte);
-	
+
 	IF fonte_dados IS null THEN
 		RAISE EXCEPTION 'fonte_invalida';
 	END IF;
-	
-	IF tipo_identificador = 'cnpj' THEN 
+
+	IF tipo_identificador = 'cnpj' THEN
 		SELECT id_osc INTO osc FROM osc.tb_osc WHERE cd_identificador_osc = identificador;
-	ELSIF tipo_identificador = 'id_osc' THEN 
+	ELSIF tipo_identificador = 'id_osc' THEN
 		SELECT id_osc INTO osc FROM osc.tb_osc WHERE id_osc = identificador;
 	ELSE
 		RAISE EXCEPTION 'tipo_identificador_invalido';
 	END IF;
-	
-	IF osc IS null THEN 
+
+	IF osc IS null THEN
 		RAISE EXCEPTION 'osc_nao_encontrada';
 	ELSIF osc != ALL(fonte_dados.representacao) THEN
 		RAISE EXCEPTION 'permissao_negada_usuario';
 	END IF;
-	
-	SELECT INTO objeto * FROM json_populate_record(null::osc.tb_contato, json::JSON);
+
+	SELECT INTO objeto * FROM jsonb_populate_record(null::osc.tb_contato, json);
 
 	SELECT INTO dado_anterior * FROM osc.tb_contato WHERE id_osc = osc;
 
-	IF dado_anterior.id_osc IS null THEN
+	IF COUNT(dado_anterior.id_osc) = 0 THEN
 		INSERT INTO osc.tb_contato(
 			id_osc,
 			tx_telefone,
@@ -80,63 +80,63 @@ BEGIN
 	 		objeto.tx_twitter,
 	 		fonte_dados.nome_fonte
 		) RETURNING * INTO dado_posterior;
-		
-		PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, null, row_to_json(dado_posterior));
-		
+
+		PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, null, row_to_json(dado_posterior), id_carga);
+
 	ELSE
 		dado_posterior := dado_anterior;
 		flag_update := false;
-		
+
 		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_telefone::TEXT, dado_anterior.ft_telefone, objeto.tx_telefone::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.tx_telefone := objeto.tx_telefone;
 			dado_posterior.ft_telefone := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
-		
+
 		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_email::TEXT, dado_anterior.ft_email, objeto.tx_email::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.tx_email := objeto.tx_email;
 			dado_posterior.ft_email := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
-		
+
 		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.nm_representante::TEXT, dado_anterior.ft_representante, objeto.nm_representante::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.nm_representante := objeto.nm_representante;
 			dado_posterior.ft_representante := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
-		
+
 		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_site::TEXT, dado_anterior.ft_site, objeto.tx_site::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.tx_site := objeto.tx_site;
 			dado_posterior.ft_site := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
-		
+
 		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_facebook::TEXT, dado_anterior.ft_facebook, objeto.tx_facebook::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.tx_facebook := objeto.tx_facebook;
 			dado_posterior.ft_facebook := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
-		
+
 		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_google::TEXT, dado_anterior.ft_google, objeto.tx_google::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.tx_google := objeto.tx_google;
 			dado_posterior.ft_google := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
-		
+
 		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_linkedin::TEXT, dado_anterior.ft_linkedin, objeto.tx_linkedin::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.tx_linkedin := objeto.tx_linkedin;
 			dado_posterior.ft_linkedin := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
-		
+
 		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_twitter::TEXT, dado_anterior.ft_twitter, objeto.tx_twitter::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.tx_twitter := objeto.tx_twitter;
 			dado_posterior.ft_twitter := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
-		
+
 		IF flag_update THEN
-			UPDATE osc.tb_contato 
+			UPDATE osc.tb_contato
 			SET	tx_telefone = dado_posterior.tx_telefone,
 				ft_telefone = dado_posterior.ft_telefone,
 				tx_email = dado_posterior.tx_email,
@@ -154,22 +154,22 @@ BEGIN
 				tx_twitter = dado_posterior.tx_twitter,
 				ft_twitter = dado_posterior.ft_twitter
 			WHERE id_osc = osc;
-			
-			PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior));
-			
+
+			PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior),id_carga);
+
 		END IF;
 	END IF;
-	
+
 	flag := true;
 	mensagem := 'Contato atualizado.';
-	
+
 	RETURN NEXT;
-	
+
 EXCEPTION
 	WHEN others THEN
 		flag := false;
 		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, osc, data_atualizacao::TIMESTAMP, erro_log, id_carga) AS a;
 		RETURN NEXT;
-		
+
 END;
 $$ LANGUAGE 'plpgsql';

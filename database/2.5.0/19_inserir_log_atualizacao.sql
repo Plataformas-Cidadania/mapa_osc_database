@@ -11,7 +11,7 @@ DECLARE
 BEGIN
 	operacao := 'portal.inserir_log_atualizacao(' || nometabela::TEXT || ', ' || osc::TEXT || ', ' || fontedados::TEXT || ', ' || dataatualizacao::TEXT || ', ' || dadoanterior::TEXT || ', ' || dadoposterior::TEXT ||', ' || id_carga::TEXT || ')';
 
-	INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, tx_fonte_dados, dt_alteracao, tx_dado_anterior, tx_dado_posterior, id_carga)
+	INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior, id_carga)
 	VALUES (nometabela, osc, fontedados, dataatualizacao, dadoanterior, dadoposterior, id_carga);
 
 	flag := true;

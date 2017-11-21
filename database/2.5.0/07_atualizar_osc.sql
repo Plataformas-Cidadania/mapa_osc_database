@@ -61,8 +61,7 @@ BEGIN
 			objeto.bo_osc_ativa
 		) RETURNING * INTO dado_posterior;
 
-		INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior, id_carga)
-		VALUES (nome_tabela, dado_posterior.id_osc, fonte, data_atualizacao, null, row_to_json(dado_posterior), id_carga);
+		PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, null, row_to_json(dado_posterior),id_carga);
 
 	ELSE
 		dado_posterior := dado_anterior;
@@ -97,8 +96,7 @@ BEGIN
 			bo_osc_ativa = dado_posterior.bo_osc_ativa
 			WHERE id_osc = osc;
 
-			INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, id_usuario, dt_alteracao, tx_dado_anterior, tx_dado_posterior, id_carga)
-			VALUES (nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior), id_carga);
+			PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior),id_carga);
 
 		END IF;
 	END IF;

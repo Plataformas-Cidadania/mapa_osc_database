@@ -15,34 +15,34 @@ DECLARE
 	osc INTEGER;
 
 BEGIN
-	nome_tabela := 'osc.atualizar_localizacao';
+	nome_tabela := 'osc.tb_localizacao';
 	tipo_identificador := lower(tipo_identificador);
-	
+
 	SELECT INTO fonte_dados * FROM portal.verificar_fonte(fonte);
 
 	IF fonte_dados IS null THEN
 		RAISE EXCEPTION 'fonte_invalida';
 	END IF;
-	
-	IF tipo_identificador = 'cnpj' THEN 
+
+	IF tipo_identificador = 'cnpj' THEN
 		SELECT id_osc INTO osc FROM osc.tb_osc WHERE cd_identificador_osc = identificador;
-	ELSIF tipo_identificador = 'id_osc' THEN 
+	ELSIF tipo_identificador = 'id_osc' THEN
 		SELECT id_osc INTO osc FROM osc.tb_osc WHERE id_osc = identificador;
 	ELSE
 		RAISE EXCEPTION 'tipo_identificador_invalido';
 	END IF;
-	
-	IF osc IS null THEN 
+
+	IF osc IS null THEN
 		RAISE EXCEPTION 'osc_nao_encontrada';
 	ELSIF osc != ALL(fonte_dados.representacao) THEN
 		RAISE EXCEPTION 'permissao_negada_usuario';
 	END IF;
-	
-	SELECT INTO objeto * FROM json_populate_record(null::osc.tb_localizacao, json::JSON);
-	
+
+	SELECT INTO objeto * FROM jsonb_populate_record(null::osc.tb_localizacao, json);
+
 	SELECT INTO dado_anterior * FROM osc.tb_localizacao WHERE id_osc = osc;
-	
-	IF dado_anterior.id_osc IS null THEN
+
+	IF COUNT(dado_anterior.id_osc) = 0 THEN
 		INSERT INTO osc.tb_localizacao(
 			id_osc,
 			tx_endereco,
@@ -95,9 +95,9 @@ BEGIN
 			fonte_dados.nome_fonte,
 			objeto.qualidade_classificacao
 		) RETURNING * INTO dado_posterior;
-		
-		PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, null, row_to_json(dado_posterior));
-		
+
+		PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, null, row_to_json(dado_posterior),id_carga);
+
 	ELSE
 		dado_posterior := dado_anterior;
 		flag_update := false;
@@ -175,7 +175,7 @@ BEGIN
 		END IF;
 
 		IF flag_update THEN
-			UPDATE osc.tb_localizacao 
+			UPDATE osc.tb_localizacao
 			SET	tx_endereco = dado_posterior.tx_endereco,
 				ft_endereco = dado_posterior.ft_endereco,
 				nr_localizacao = dado_posterior.nr_localizacao,
@@ -200,22 +200,22 @@ BEGIN
 				ft_data_geocodificacao = dado_posterior.ft_data_geocodificacao,
 				qualidade_classificacao = dado_posterior.qualidade_classificacao
 			WHERE id_osc = osc;
-			
-			PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior));
-			
+
+      PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior),id_carga);
+
 		END IF;
 	END IF;
-	
+
 	flag := true;
 	mensagem := 'Localização de OSC atualizada.';
-	
+
 	RETURN NEXT;
-	
+
 EXCEPTION
 	WHEN others THEN
 		flag := false;
 		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, identificador, data_atualizacao::TIMESTAMP, erro_log, id_carga) AS a;
 		RETURN NEXT;
-		
+
 END;
 $$ LANGUAGE 'plpgsql';
