@@ -555,16 +555,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Filtrar OSCs</from>
-      <to>Select values 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Merge Join 1</from>
-      <to>Filtrar OSCs</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Mapear fonte recursos</from>
       <to>Mapear tipo</to>
       <enabled>Y</enabled>
@@ -580,43 +570,13 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Filter situação</from>
-      <to>Select values 3</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Merge Join 2</from>
-      <to>Select values 7</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Select values 3</from>
-      <to>Filter tipo</to>
+      <to>Select fonte recursos</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Filter tipo</from>
-      <to>Select values 4</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Filter município</from>
-      <to>Dummy 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>String operations 2</from>
-      <to>Mapear fonte recursos</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Select values 2</from>
-      <to>Add constants 1</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Add constants 1</from>
-      <to>String operations 2</to>
+      <to>Ajustar dados</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -646,17 +606,7 @@
     </hop>
     <hop>
       <from>Set tipo outro</from>
-      <to>Select values 4</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Set situação outro</from>
-      <to>Select values 3</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Dummy 2</from>
-      <to>Merge Join</to>
+      <to>Ajustar dados</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -665,27 +615,12 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Dummy 2</from>
-      <to>Execute SQL script</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Execute SQL script</from>
-      <to>Filter município único</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Filter município único</from>
-      <to>Select values 8</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Select values 8</from>
+      <from>Select municipio</from>
       <to>Select edmu_cd_municipio </to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>String operations 1</from>
+      <from>String operations</from>
       <to>Replace in string 1</to>
       <enabled>Y</enabled>
     </hop>
@@ -696,7 +631,7 @@
     </hop>
     <hop>
       <from>Definir situação</from>
-      <to>String operations 1</to>
+      <to>String operations</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -730,48 +665,33 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Select values 7</from>
+      <from>Select fonte recursos</from>
       <to>Atualizar fonte recursos</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Atualizar fonte recursos</from>
-      <to>Set variable flag banco 2</to>
+      <to>Set flag fonte recursos</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Merge Join</from>
-      <to>Select values 9</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Select values 4</from>
+      <from>Ajustar dados</from>
       <to>Ajustar código localidade</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Ajustar código localidade</from>
-      <to>Formatar JSON</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Formatar JSON</from>
-      <to>Merge Join 2</to>
+      <to>Select projeto</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Formatar JSON</from>
-      <to>Select values 5</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Select values 5</from>
+      <from>Select projeto</from>
       <to>Insert Projeto</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Insert Projeto</from>
-      <to>Set variable flag banco 1</to>
+      <to>Set flag projeto</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -781,32 +701,82 @@
     </hop>
     <hop>
       <from>Block inserir projeto</from>
-      <to>Select values 6</to>
+      <to>Select id projeto</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Select values 6</from>
+      <from>Select id projeto</from>
       <to>Select id_projeto</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Formatar JSON</from>
-      <to>Filter município</to>
+      <to>Select dados gerais</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Formatar JSON</from>
-      <to>Select values</to>
+      <from>Atualizar dados gerais</from>
+      <to>Set flag dados gerais</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Select values</from>
+      <from>Select dados gerais</from>
       <to>Atualizar dados gerais</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Select values 9</from>
+      <from>Atualizar localização</from>
+      <to>Set flag localização</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Select localização</from>
       <to>Atualizar localização</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Block inserir projeto</from>
+      <to>Merge Join 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Merge Join 1</from>
+      <to>Add constants 1</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Filter situação</from>
+      <to>Filter tipo</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Set situação outro</from>
+      <to>Filter tipo</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Add constants 1</from>
+      <to>Mapear fonte recursos</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Ajustar código localidade</from>
+      <to>Merge Join</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Ajustar código localidade</from>
+      <to>Select municipio</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Merge Join</from>
+      <to>Formatar JSON</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Formatar JSON</from>
+      <to>Select localização</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -867,8 +837,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1282</xloc>
-      <yloc>271</yloc>
+      <xloc>1163</xloc>
+      <yloc>274</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -905,8 +875,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1291</xloc>
-      <yloc>533</yloc>
+      <xloc>1482</xloc>
+      <yloc>651</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -943,8 +913,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1006</xloc>
-      <yloc>535</yloc>
+      <xloc>1302</xloc>
+      <yloc>410</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -978,7 +948,7 @@
       <field>
         <name>cd_municipio</name>
         <rename>cd_municipio</rename>
-        <type>Integer</type>
+        <type>String</type>
         <length>-1</length>
         <precision>-1</precision>
         <replace>N</replace>
@@ -986,7 +956,7 @@
       <field>
         <name>cd_uf</name>
         <rename>cd_uf</rename>
-        <type>Integer</type>
+        <type>String</type>
         <length>-1</length>
         <precision>-1</precision>
         <replace>N</replace>
@@ -1000,16 +970,16 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>692</xloc>
-      <yloc>428</yloc>
+      <xloc>959</xloc>
+      <yloc>546</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Atualizar dados gerais 2</name>
-    <type>ExecSQL</type>
+    <name>Atualizar dados gerais</name>
+    <type>TableInput</type>
     <description />
-    <distribute>N</distribute>
+    <distribute>Y</distribute>
     <custom_distribution />
     <copies>1</copies>
     <partitioning>
@@ -1017,52 +987,22 @@
       <schema_name />
     </partitioning>
     <connection>localhost</connection>
-    <execute_each_row>Y</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>Y</replace_variables>
-    <quoteString>N</quoteString>
     <sql>SELECT * FROM portal.atualizar_dados_gerais_osc(
-	'?'::TEXT, 
-	'?'::INTEGER, 
+	?::TEXT, 
+	?::NUMERIC, 
 	'id_osc'::TEXT, 
-	'?'::TIMESTAMP, 
-	'{"id_osc": "?", "tx_razao_social_osc": "?", "tx_nome_fantasia_osc": "?"}'::JSONB, 
-	'?':: BOOLEAN, 
-	'?':: BOOLEAN, 
+	?::TIMESTAMP, 
+	?::JSONB, 
+	?:: BOOLEAN, 
+	?:: BOOLEAN, 
 	'${ID_CARGA}'::INTEGER
 );
 </sql>
-    <set_params>N</set_params>
-    <insert_field />
-    <update_field />
-    <delete_field />
-    <read_field />
-    <arguments>
-      <argument>
-        <name>usuario</name>
-      </argument>
-      <argument>
-        <name>id_osc</name>
-      </argument>
-      <argument>
-        <name>data_carregamento</name>
-      </argument>
-      <argument>
-        <name>id_osc</name>
-      </argument>
-      <argument>
-        <name>razao_social_proponente</name>
-      </argument>
-      <argument>
-        <name>nome_fantasia_proponente</name>
-      </argument>
-      <argument>
-        <name>null_valido</name>
-      </argument>
-      <argument>
-        <name>erro_log</name>
-      </argument>
-    </arguments>
+    <limit>0</limit>
+    <lookup>Select dados gerais</lookup>
+    <execute_each_row>Y</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
     <cluster_schema />
     <remotesteps>
       <input>
@@ -1071,8 +1011,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>523</xloc>
-      <yloc>814</yloc>
+      <xloc>259</xloc>
+      <yloc>482</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1101,7 +1041,7 @@
 );
 </sql>
     <limit>0</limit>
-    <lookup>Select values 7</lookup>
+    <lookup>Select fonte recursos</lookup>
     <execute_each_row>Y</execute_each_row>
     <variables_active>Y</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
@@ -1113,13 +1053,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>313</xloc>
-      <yloc>942</yloc>
+      <xloc>868</xloc>
+      <yloc>959</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Atualizar localização 2</name>
+    <name>Atualizar localização</name>
     <type>TableInput</type>
     <description />
     <distribute>Y</distribute>
@@ -1131,18 +1071,18 @@
     </partitioning>
     <connection>localhost</connection>
     <sql>SELECT * FROM portal.atualizar_localizacao_osc(
-	'?'::TEXT, 
-	'?'::INTEGER, 
-	'id_oc'::TEXT, 
-	'?'::TIMESTAMP, 
-	'{"tx_endereco": "?", "cd_municipio": "?"}'::JSONB, 
-	'?'::BOOLEAN, 
-	'?'::BOOLEAN, 
+	?::TEXT, 
+	?::NUMERIC, 
+	'id_osc'::TEXT, 
+	?::TIMESTAMP, 
+	?::JSONB, 
+	?::BOOLEAN, 
+	?::BOOLEAN, 
 	'${ID_CARGA}'::INTEGER
 );
 </sql>
     <limit>0</limit>
-    <lookup>Select values 9</lookup>
+    <lookup>Select localização</lookup>
     <execute_each_row>Y</execute_each_row>
     <variables_active>Y</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
@@ -1154,8 +1094,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1311</xloc>
-      <yloc>754</yloc>
+      <xloc>263</xloc>
+      <yloc>591</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1184,8 +1124,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>313</xloc>
-      <yloc>543</yloc>
+      <xloc>678</xloc>
+      <yloc>700</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1270,8 +1210,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1433</xloc>
-      <yloc>428</yloc>
+      <xloc>1483</xloc>
+      <yloc>405</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1313,8 +1253,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>242</xloc>
-      <yloc>271</yloc>
+      <xloc>353</xloc>
+      <yloc>274</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1382,165 +1322,8 @@ var situacao_parceria_ajustado = setSituacaoParceria(data_inicio, data_conclusao
       </output>
     </remotesteps>
     <GUI>
-      <xloc>496</xloc>
-      <yloc>271</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Dummy 2</name>
-    <type>Dummy</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>835</xloc>
-      <yloc>653</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Execute SQL script</name>
-    <type>ExecSQL</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>localhost</connection>
-    <execute_each_row>Y</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>Y</replace_variables>
-    <quoteString>Y</quoteString>
-    <sql>SELECT ? AS numero_parceria, edmu_cd_municipio 
-FROM spat.vw_spat_municipio 
-WHERE substring(edmu_cd_municipio::TEXT from 0 for 7) = substring(?::TEXT from 0 for 7) 
-OR (
-	vw_spat_municipio.edmu_nm_municipio_ajustado::TEXT = ?::TEXT 
-	OR 
-	vw_spat_municipio.edmu_nm_municipio_ajustado::TEXT || vw_spat_municipio.eduf_sg_uf_ajustado = ?::TEXT
-);</sql>
-    <set_params>N</set_params>
-    <insert_field />
-    <update_field />
-    <delete_field />
-    <read_field>count_municipio</read_field>
-    <arguments>
-      <argument>
-        <name>numero_parceria</name>
-      </argument>
-      <argument>
-        <name>municipio_proponente</name>
-      </argument>
-      <argument>
-        <name>municipio_proponente_ajustado</name>
-      </argument>
-      <argument>
-        <name>municipio_proponente_ajustado</name>
-      </argument>
-    </arguments>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>835</xloc>
-      <yloc>785</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Filter município</name>
-    <type>FilterRows</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <send_true_to>Dummy 2</send_true_to>
-    <send_false_to>Copy rows to result 3</send_false_to>
-    <compare>
-      <condition>
-        <negated>N</negated>
-        <leftvalue>municipio_proponente</leftvalue>
-        <function>IS NOT NULL</function>
-        <rightvalue />
-      </condition>
-    </compare>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>693</xloc>
-      <yloc>653</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Filter município único</name>
-    <type>FilterRows</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <send_true_to>Select values 8</send_true_to>
-    <send_false_to />
-    <compare>
-      <condition>
-        <negated>N</negated>
-        <leftvalue>count_municipio</leftvalue>
-        <function>&lt;=</function>
-        <rightvalue />
-        <value>
-          <name>constant</name>
-          <type>Integer</type>
-          <text>1</text>
-          <length>-1</length>
-          <precision>0</precision>
-          <isnull>N</isnull>
-          <mask>####0;-####0</mask>
-        </value>
-      </condition>
-    </compare>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>835</xloc>
-      <yloc>891</yloc>
+      <xloc>607</xloc>
+      <yloc>274</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1555,7 +1338,7 @@ OR (
       <method>none</method>
       <schema_name />
     </partitioning>
-    <send_true_to>Select values 3</send_true_to>
+    <send_true_to>Filter tipo</send_true_to>
     <send_false_to>Add constants 2</send_false_to>
     <compare>
       <condition>
@@ -1582,8 +1365,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1292</xloc>
-      <yloc>428</yloc>
+      <xloc>1483</xloc>
+      <yloc>546</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1598,7 +1381,7 @@ OR (
       <method>none</method>
       <schema_name />
     </partitioning>
-    <send_true_to>Select values 4</send_true_to>
+    <send_true_to>Ajustar dados</send_true_to>
     <send_false_to>Add constants 3</send_false_to>
     <compare>
       <condition>
@@ -1625,42 +1408,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1006</xloc>
-      <yloc>428</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Filtrar OSCs</name>
-    <type>FilterRows</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <send_true_to>Modified Java Script Value</send_true_to>
-    <send_false_to />
-    <compare>
-      <condition>
-        <negated>N</negated>
-        <leftvalue>id_osc</leftvalue>
-        <function>IS NOT NULL</function>
-        <rightvalue />
-      </condition>
-    </compare>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1036</xloc>
-      <yloc>271</yloc>
+      <xloc>1304</xloc>
+      <yloc>546</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1692,7 +1441,6 @@ OR (
 
 
 
-
 if(id_osc) id_osc = formatarDado(id_osc);
 if(numero_parceria) numero_parceria = formatarDado(numero_parceria);
 if(cd_municipio) cd_municipio = formatarDado(cd_municipio);
@@ -1709,9 +1457,17 @@ if(fonte_recursos) fonte_recursos = formatarDado(fonte_recursos);
 if(tipo_parceria_ajustado) tipo_parceria_ajustado = formatarDado(tipo_parceria_ajustado);
 if(tipo_parceria_outro) tipo_parceria_outro = formatarDado(tipo_parceria_outro);
 if(orgao_concedente) orgao_concedente = formatarDado(orgao_concedente);
+if(razao_social_proponente) razao_social_proponente = formatarDado(razao_social_proponente);
+if(nome_fantasia_proponente) nome_fantasia_proponente = formatarDado(nome_fantasia_proponente);
+if(endereco_proponente) endereco_proponente = formatarDado(endereco_proponente);
+if(edmu_cd_municipio) edmu_cd_municipio = formatarDado(edmu_cd_municipio);
+
+
 
 var projeto_json = '{"id_osc": ' + id_osc + ', "tx_identificador_projeto_externo": ' + numero_parceria + ', "cd_municipio": ' + cd_municipio + ', "cd_uf": ' + cd_uf + ', "tx_nome_projeto": ' + nome_parceria + ', "cd_status_projeto": ' + situacao_parceria_ajustado + ', "dt_data_inicio_projeto": ' + data_inicio + ', "dt_data_fim_projeto": ' + data_conclusao + ', "nr_valor_captado_projeto": ' + valor_pago + ', "nr_valor_total_projeto": ' + valor_total + ', "tx_orgao_concedente": ' + orgao_concedente + ', "tx_descricao_projeto": ' + objeto_parceria + '}';
 var fonte_recursos_projeto_json = '{"cd_fonte_recursos_projeto": ' + fonte_recursos + ', "cd_tipo_parceria": ' + tipo_parceria_ajustado + ', "tx_orgao_concedente": ' + orgao_concedente + '}';
+var dados_gerais_json = '{"tx_razao_social_osc": ' + razao_social_proponente + ', "tx_nome_fantasia_osc": ' + nome_fantasia_proponente + '}';
+var localizacao_json = '{"tx_endereco": ' + endereco_proponente + ', "cd_municipio": ' + edmu_cd_municipio + '}';
 </jsScript_script>
       </jsScript>
     </jsScripts>
@@ -1732,6 +1488,22 @@ var fonte_recursos_projeto_json = '{"cd_fonte_recursos_projeto": ' + fonte_recur
         <precision>-1</precision>
         <replace>N</replace>
       </field>
+      <field>
+        <name>dados_gerais_json</name>
+        <rename>dados_gerais_json</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+      <field>
+        <name>localizacao_json</name>
+        <rename>localizacao_json</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
     </fields>
     <cluster_schema />
     <remotesteps>
@@ -1741,8 +1513,8 @@ var fonte_recursos_projeto_json = '{"cd_fonte_recursos_projeto": ' + fonte_recur
       </output>
     </remotesteps>
     <GUI>
-      <xloc>520</xloc>
-      <yloc>428</yloc>
+      <xloc>589</xloc>
+      <yloc>546</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1760,7 +1532,7 @@ var fonte_recursos_projeto_json = '{"cd_fonte_recursos_projeto": ' + fonte_recur
     <connection>localhost</connection>
     <sql>SELECT * FROM portal.atualizar_projeto(
 	?::TEXT, 
-	?::INTEGER, 
+	?::NUMERIC, 
 	'id_osc'::TEXT, 
 	?::TIMESTAMP, 
 	?::JSONB, 
@@ -1771,7 +1543,7 @@ var fonte_recursos_projeto_json = '{"cd_fonte_recursos_projeto": ' + fonte_recur
 	2::INTEGER
 );</sql>
     <limit>0</limit>
-    <lookup>Select values 5</lookup>
+    <lookup>Select projeto</lookup>
     <execute_each_row>Y</execute_each_row>
     <variables_active>Y</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
@@ -1783,8 +1555,8 @@ var fonte_recursos_projeto_json = '{"cd_fonte_recursos_projeto": ' + fonte_recur
       </output>
     </remotesteps>
     <GUI>
-      <xloc>247</xloc>
-      <yloc>428</yloc>
+      <xloc>469</xloc>
+      <yloc>824</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1890,8 +1662,8 @@ var fonte_recursos_projeto_json = '{"cd_fonte_recursos_projeto": ' + fonte_recur
       </output>
     </remotesteps>
     <GUI>
-      <xloc>89</xloc>
-      <yloc>63</yloc>
+      <xloc>200</xloc>
+      <yloc>66</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2023,8 +1795,8 @@ var fonte_recursos_projeto_json = '{"cd_fonte_recursos_projeto": ' + fonte_recur
       </output>
     </remotesteps>
     <GUI>
-      <xloc>242</xloc>
-      <yloc>167</yloc>
+      <xloc>353</xloc>
+      <yloc>170</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2260,8 +2032,8 @@ var fonte_recursos_projeto_json = '{"cd_fonte_recursos_projeto": ' + fonte_recur
       </output>
     </remotesteps>
     <GUI>
-      <xloc>241</xloc>
-      <yloc>63</yloc>
+      <xloc>352</xloc>
+      <yloc>66</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2297,8 +2069,8 @@ var fonte_recursos_projeto_json = '{"cd_fonte_recursos_projeto": ' + fonte_recur
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1592</xloc>
-      <yloc>271</yloc>
+      <xloc>1327</xloc>
+      <yloc>274</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2354,8 +2126,8 @@ var fonte_recursos_projeto_json = '{"cd_fonte_recursos_projeto": ' + fonte_recur
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1592</xloc>
-      <yloc>428</yloc>
+      <xloc>1483</xloc>
+      <yloc>274</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2370,8 +2142,8 @@ var fonte_recursos_projeto_json = '{"cd_fonte_recursos_projeto": ' + fonte_recur
       <method>none</method>
       <schema_name />
     </partitioning>
-    <join_type>INNER</join_type>
-    <step1>Dummy 2</step1>
+    <join_type>LEFT OUTER</join_type>
+    <step1>Ajustar código localidade</step1>
     <step2>Select edmu_cd_municipio </step2>
     <keys_1>
       <key>numero_parceria</key>
@@ -2387,8 +2159,8 @@ var fonte_recursos_projeto_json = '{"cd_fonte_recursos_projeto": ' + fonte_recur
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1003</xloc>
-      <yloc>653</yloc>
+      <xloc>794</xloc>
+      <yloc>546</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2422,8 +2194,8 @@ var fonte_recursos_projeto_json = '{"cd_fonte_recursos_projeto": ' + fonte_recur
       </output>
     </remotesteps>
     <GUI>
-      <xloc>916</xloc>
-      <yloc>271</yloc>
+      <xloc>1027</xloc>
+      <yloc>274</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2439,7 +2211,7 @@ var fonte_recursos_projeto_json = '{"cd_fonte_recursos_projeto": ' + fonte_recur
       <schema_name />
     </partitioning>
     <join_type>INNER</join_type>
-    <step1>Formatar JSON</step1>
+    <step1>Block inserir projeto</step1>
     <step2>Select id_projeto</step2>
     <keys_1>
       <key>id_osc</key>
@@ -2457,8 +2229,8 @@ var fonte_recursos_projeto_json = '{"cd_fonte_recursos_projeto": ' + fonte_recur
       </output>
     </remotesteps>
     <GUI>
-      <xloc>313</xloc>
-      <yloc>685</yloc>
+      <xloc>678</xloc>
+      <yloc>842</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2612,8 +2384,8 @@ var fonte_recursos_projeto_json = '{"cd_fonte_recursos_projeto": ' + fonte_recur
       </output>
     </remotesteps>
     <GUI>
-      <xloc>88</xloc>
-      <yloc>271</yloc>
+      <xloc>199</xloc>
+      <yloc>274</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2681,8 +2453,8 @@ var municipio_proponente_ajustado = removeAccents(municipio_proponente);</jsScri
       </output>
     </remotesteps>
     <GUI>
-      <xloc>359</xloc>
-      <yloc>271</yloc>
+      <xloc>470</xloc>
+      <yloc>274</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2916,8 +2688,8 @@ var municipio_proponente_ajustado = removeAccents(municipio_proponente);</jsScri
       </output>
     </remotesteps>
     <GUI>
-      <xloc>779</xloc>
-      <yloc>271</yloc>
+      <xloc>890</xloc>
+      <yloc>274</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2933,7 +2705,7 @@ var municipio_proponente_ajustado = removeAccents(municipio_proponente);</jsScri
       <schema_name />
     </partitioning>
     <connection>localhost</connection>
-    <sql>SELECT ? AS numero_parceria, edmu_cd_municipio 
+    <sql>SELECT ?::TEXT AS numero_parceria, edmu_cd_municipio 
 FROM spat.vw_spat_municipio 
 WHERE substring(edmu_cd_municipio::TEXT from 0 for 7) = substring(?::TEXT from 0 for 7) 
 OR (
@@ -2942,7 +2714,7 @@ OR (
 	vw_spat_municipio.edmu_nm_municipio_ajustado::TEXT || vw_spat_municipio.eduf_sg_uf_ajustado = ?::TEXT
 );</sql>
     <limit>0</limit>
-    <lookup>Select values 8</lookup>
+    <lookup>Select municipio</lookup>
     <execute_each_row>Y</execute_each_row>
     <variables_active>Y</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
@@ -2954,8 +2726,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1000</xloc>
-      <yloc>780</yloc>
+      <xloc>794</xloc>
+      <yloc>404</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2987,8 +2759,8 @@ WHERE substring(cd_identificador_osc::TEXT from 0 for char_length(cd_identificad
       </output>
     </remotesteps>
     <GUI>
-      <xloc>915</xloc>
-      <yloc>137</yloc>
+      <xloc>1026</xloc>
+      <yloc>140</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3010,7 +2782,7 @@ WHERE id_osc = ?::INTEGER
 AND tx_identificador_projeto_externo = ?::TEXT 
 AND (cd_municipio  = ?::INTEGER OR cd_uf = ?::INTEGER);</sql>
     <limit>0</limit>
-    <lookup>Select values 6</lookup>
+    <lookup>Select id projeto</lookup>
     <execute_each_row>Y</execute_each_row>
     <variables_active>Y</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
@@ -3022,8 +2794,59 @@ AND (cd_municipio  = ?::INTEGER OR cd_uf = ?::INTEGER);</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>162</xloc>
-      <yloc>685</yloc>
+      <xloc>843</xloc>
+      <yloc>842</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Select dados gerais</name>
+    <type>SelectValues</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>usuario</name>
+        <rename />
+      </field>
+      <field>
+        <name>id_osc</name>
+        <rename />
+      </field>
+      <field>
+        <name>data_carregamento</name>
+        <rename />
+      </field>
+      <field>
+        <name>dados_gerais_json</name>
+        <rename />
+      </field>
+      <field>
+        <name>null_valido</name>
+        <rename />
+      </field>
+      <field>
+        <name>erro_log</name>
+        <rename />
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>426</xloc>
+      <yloc>482</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3060,186 +2883,13 @@ AND (cd_municipio  = ?::INTEGER OR cd_uf = ?::INTEGER);</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>778</xloc>
-      <yloc>137</yloc>
+      <xloc>889</xloc>
+      <yloc>140</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Select values 2</name>
-    <type>SelectValues</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <name>numero_parceria</name>
-      </field>
-      <field>
-        <name>cnpj_proponente</name>
-      </field>
-      <field>
-        <name>data_inicio</name>
-      </field>
-      <field>
-        <name>data_conclusao</name>
-      </field>
-      <field>
-        <name>situacao_parceria</name>
-      </field>
-      <field>
-        <name>tipo_parceria</name>
-      </field>
-      <field>
-        <name>valor_total</name>
-      </field>
-      <field>
-        <name>valor_pago</name>
-      </field>
-      <field>
-        <name>nome_arquivo</name>
-      </field>
-      <field>
-        <name>data</name>
-      </field>
-      <field>
-        <name>localidade</name>
-      </field>
-      <field>
-        <name>fonte_recursos</name>
-      </field>
-      <field>
-        <name>usuario</name>
-      </field>
-      <field>
-        <name>hash</name>
-      </field>
-      <field>
-        <name>orgao_concedente</name>
-      </field>
-      <field>
-        <name>razao_social_proponente</name>
-      </field>
-      <field>
-        <name>nome_fantasia_proponente</name>
-      </field>
-      <field>
-        <name>municipio_proponente</name>
-      </field>
-      <field>
-        <name>endereco_proponente</name>
-      </field>
-      <field>
-        <name>objeto_parceria</name>
-      </field>
-      <field>
-        <name>municipio_proponente_ajustado</name>
-      </field>
-      <field>
-        <name>id_osc</name>
-      </field>
-      <field>
-        <name>cd_identificador_osc</name>
-      </field>
-      <field>
-        <name>tipo_parceria_ajustado</name>
-      </field>
-      <field>
-        <name>situacao_parceria_ajustado</name>
-      </field>
-      <field>
-        <name>data_carregamento</name>
-      </field>
-      <select_unspecified>N</select_unspecified>
-      <meta>
-        <name>data_conclusao</name>
-        <rename>data_conclusao</rename>
-        <type>Date</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask>dd-MM-yyyy</conversion_mask>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>data_inicio</name>
-        <rename>data_inicio</rename>
-        <type>Date</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask>dd-MM-yyyy</conversion_mask>
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>valor_pago</name>
-        <rename>valor_pago</rename>
-        <type>Number</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>valor_total</name>
-        <rename>valor_total</rename>
-        <type>Number</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol>.</decimal_symbol>
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1161</xloc>
-      <yloc>271</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Select values 3</name>
+    <name>Ajustar dados</name>
     <type>SelectValues</type>
     <description />
     <distribute>N</distribute>
@@ -3285,33 +2935,6 @@ AND (cd_municipio  = ?::INTEGER OR cd_uf = ?::INTEGER);</sql>
         <currency_symbol />
         <storage_type />
       </meta>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1149</xloc>
-      <yloc>428</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Select values 4</name>
-    <type>SelectValues</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <select_unspecified>N</select_unspecified>
       <meta>
         <name>tipo_parceria</name>
         <rename>tipo_parceria_outro</rename>
@@ -3346,6 +2969,23 @@ AND (cd_municipio  = ?::INTEGER OR cd_uf = ?::INTEGER);</sql>
         <currency_symbol />
         <storage_type />
       </meta>
+      <meta>
+        <name>data_carregamento</name>
+        <rename>data_carregamento</rename>
+        <type>Timestamp</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask>yyyy-MM-dd HH:mm:ss.SSS</conversion_mask>
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale />
+        <date_format_timezone />
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding />
+        <decimal_symbol />
+        <grouping_symbol />
+        <currency_symbol />
+        <storage_type />
+      </meta>
     </fields>
     <cluster_schema />
     <remotesteps>
@@ -3355,13 +2995,13 @@ AND (cd_municipio  = ?::INTEGER OR cd_uf = ?::INTEGER);</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>871</xloc>
-      <yloc>428</yloc>
+      <xloc>1137</xloc>
+      <yloc>546</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Select values 5</name>
+    <name>Select projeto</name>
     <type>SelectValues</type>
     <description />
     <distribute>Y</distribute>
@@ -3374,24 +3014,31 @@ AND (cd_municipio  = ?::INTEGER OR cd_uf = ?::INTEGER);</sql>
     <fields>
       <field>
         <name>usuario</name>
+        <rename />
       </field>
       <field>
         <name>id_osc</name>
+        <rename />
       </field>
       <field>
         <name>data_carregamento</name>
+        <rename />
       </field>
       <field>
         <name>projeto_json</name>
+        <rename />
       </field>
       <field>
         <name>null_valido</name>
+        <rename />
       </field>
       <field>
         <name>delete_valido</name>
+        <rename />
       </field>
       <field>
         <name>erro_log</name>
+        <rename />
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -3403,13 +3050,13 @@ AND (cd_municipio  = ?::INTEGER OR cd_uf = ?::INTEGER);</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>378</xloc>
-      <yloc>428</yloc>
+      <xloc>469</xloc>
+      <yloc>702</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Select values 6</name>
+    <name>Select id projeto</name>
     <type>SelectValues</type>
     <description />
     <distribute>Y</distribute>
@@ -3422,15 +3069,19 @@ AND (cd_municipio  = ?::INTEGER OR cd_uf = ?::INTEGER);</sql>
     <fields>
       <field>
         <name>id_osc</name>
+        <rename />
       </field>
       <field>
         <name>numero_parceria</name>
+        <rename />
       </field>
       <field>
         <name>cd_municipio</name>
+        <rename />
       </field>
       <field>
         <name>cd_uf</name>
+        <rename />
       </field>
       <select_unspecified>N</select_unspecified>
       <meta>
@@ -3510,13 +3161,13 @@ AND (cd_municipio  = ?::INTEGER OR cd_uf = ?::INTEGER);</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>162</xloc>
-      <yloc>543</yloc>
+      <xloc>843</xloc>
+      <yloc>700</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Select values 7</name>
+    <name>Select fonte recursos</name>
     <type>SelectValues</type>
     <description />
     <distribute>N</distribute>
@@ -3529,24 +3180,31 @@ AND (cd_municipio  = ?::INTEGER OR cd_uf = ?::INTEGER);</sql>
     <fields>
       <field>
         <name>usuario</name>
+        <rename />
       </field>
       <field>
         <name>id_projeto</name>
+        <rename />
       </field>
       <field>
         <name>data_carregamento</name>
+        <rename />
       </field>
       <field>
         <name>fonte_recursos_projeto_json</name>
+        <rename />
       </field>
       <field>
         <name>null_valido</name>
+        <rename />
       </field>
       <field>
         <name>delete_valido</name>
+        <rename />
       </field>
       <field>
         <name>erro_log</name>
+        <rename />
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -3558,13 +3216,13 @@ AND (cd_municipio  = ?::INTEGER OR cd_uf = ?::INTEGER);</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>313</xloc>
-      <yloc>802</yloc>
+      <xloc>678</xloc>
+      <yloc>959</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Select values 8</name>
+    <name>Select municipio</name>
     <type>SelectValues</type>
     <description />
     <distribute>N</distribute>
@@ -3577,6 +3235,7 @@ AND (cd_municipio  = ?::INTEGER OR cd_uf = ?::INTEGER);</sql>
     <fields>
       <field>
         <name>numero_parceria</name>
+        <rename />
       </field>
       <field>
         <name>municipio_proponente</name>
@@ -3600,56 +3259,8 @@ AND (cd_municipio  = ?::INTEGER OR cd_uf = ?::INTEGER);</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1000</xloc>
-      <yloc>891</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Select values 9</name>
-    <type>SelectValues</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <name>usuario</name>
-      </field>
-      <field>
-        <name>id_osc</name>
-      </field>
-      <field>
-        <name>data_carregamento</name>
-      </field>
-      <field>
-        <name>endereco_proponente</name>
-      </field>
-      <field>
-        <name>edmu_cd_municipio</name>
-      </field>
-      <field>
-        <name>null_valido</name>
-      </field>
-      <field>
-        <name>erro_log</name>
-      </field>
-      <select_unspecified>N</select_unspecified>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1135</xloc>
-      <yloc>653</yloc>
+      <xloc>959</xloc>
+      <yloc>404</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3681,8 +3292,8 @@ AND (cd_municipio  = ?::INTEGER OR cd_uf = ?::INTEGER);</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1153</xloc>
-      <yloc>533</yloc>
+      <xloc>1304</xloc>
+      <yloc>651</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3690,7 +3301,7 @@ AND (cd_municipio  = ?::INTEGER OR cd_uf = ?::INTEGER);</sql>
     <name>Set tipo outro</name>
     <type>SetValueConstant</type>
     <description />
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution />
     <copies>1</copies>
     <partitioning>
@@ -3714,13 +3325,13 @@ AND (cd_municipio  = ?::INTEGER OR cd_uf = ?::INTEGER);</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>872</xloc>
-      <yloc>535</yloc>
+      <xloc>1137</xloc>
+      <yloc>410</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Set variable flag banco 1</name>
+    <name>Set flag projeto</name>
     <type>ScriptValueMod</type>
     <description />
     <distribute>Y</distribute>
@@ -3753,13 +3364,13 @@ if(flag_variable == true &amp;&amp; flag == false){
       </output>
     </remotesteps>
     <GUI>
-      <xloc>81</xloc>
-      <yloc>428</yloc>
+      <xloc>469</xloc>
+      <yloc>968</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Set variable flag banco 2</name>
+    <name>Set flag fonte recursos</name>
     <type>ScriptValueMod</type>
     <description />
     <distribute>Y</distribute>
@@ -3792,13 +3403,13 @@ if(flag_variable == true &amp;&amp; flag == false){
       </output>
     </remotesteps>
     <GUI>
-      <xloc>313</xloc>
-      <yloc>1072</yloc>
+      <xloc>1064</xloc>
+      <yloc>959</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>String operations 1</name>
+    <name>String operations</name>
     <type>StringOperations</type>
     <description />
     <distribute>N</distribute>
@@ -4017,36 +3628,10 @@ if(flag_variable == true &amp;&amp; flag == false){
         <digits>none</digits>
         <remove_special_characters>none</remove_special_characters>
       </field>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>635</xloc>
-      <yloc>271</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>String operations 2</name>
-    <type>StringOperations</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
       <field>
         <in_stream_name>tipo_parceria_ajustado</in_stream_name>
         <out_stream_name />
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
         <lower_upper>lower</lower_upper>
         <padding_type>none</padding_type>
         <pad_char />
@@ -4059,7 +3644,7 @@ if(flag_variable == true &amp;&amp; flag == false){
       <field>
         <in_stream_name>situacao_parceria_ajustado</in_stream_name>
         <out_stream_name />
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
         <lower_upper>lower</lower_upper>
         <padding_type>none</padding_type>
         <pad_char />
@@ -4072,20 +3657,7 @@ if(flag_variable == true &amp;&amp; flag == false){
       <field>
         <in_stream_name>fonte_recursos</in_stream_name>
         <out_stream_name />
-        <trim_type>none</trim_type>
-        <lower_upper>lower</lower_upper>
-        <padding_type>none</padding_type>
-        <pad_char />
-        <pad_len />
-        <init_cap>no</init_cap>
-        <mask_xml>none</mask_xml>
-        <digits>none</digits>
-        <remove_special_characters>none</remove_special_characters>
-      </field>
-      <field>
-        <in_stream_name>municipio_proponente_ajustado</in_stream_name>
-        <out_stream_name />
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
         <lower_upper>lower</lower_upper>
         <padding_type>none</padding_type>
         <pad_char />
@@ -4104,14 +3676,14 @@ if(flag_variable == true &amp;&amp; flag == false){
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1428</xloc>
-      <yloc>271</yloc>
+      <xloc>746</xloc>
+      <yloc>274</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Atualizar dados gerais</name>
-    <type>TableInput</type>
+    <name>Set flag dados gerais</name>
+    <type>ScriptValueMod</type>
     <description />
     <distribute>Y</distribute>
     <custom_distribution />
@@ -4120,23 +3692,21 @@ if(flag_variable == true &amp;&amp; flag == false){
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection>localhost</connection>
-    <sql>SELECT * FROM portal.atualizar_dados_gerais_osc(
-	?::TEXT, 
-	?::INTEGER, 
-	'id_osc'::TEXT, 
-	?::TIMESTAMP, 
-	'{"id_osc": "?", "tx_razao_social_osc": "?", "tx_nome_fantasia_osc": "?"}'::JSONB, 
-	?:: BOOLEAN, 
-	?:: BOOLEAN, 
-	'${ID_CARGA}'::INTEGER
-);
-</sql>
-    <limit>0</limit>
-    <lookup />
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>var flag_variable = getVariable('FLAG_BANCO', true);
+
+if(flag_variable == true &amp;&amp; flag == false){
+	setVariable('FLAG_BANCO', false);
+}
+</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>    </fields>
     <cluster_schema />
     <remotesteps>
       <input>
@@ -4145,14 +3715,14 @@ if(flag_variable == true &amp;&amp; flag == false){
       </output>
     </remotesteps>
     <GUI>
-      <xloc>520</xloc>
-      <yloc>717</yloc>
+      <xloc>83</xloc>
+      <yloc>482</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Atualizar localização</name>
-    <type>TableInput</type>
+    <name>Set flag localização</name>
+    <type>ScriptValueMod</type>
     <description />
     <distribute>Y</distribute>
     <custom_distribution />
@@ -4161,23 +3731,21 @@ if(flag_variable == true &amp;&amp; flag == false){
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection>localhost</connection>
-    <sql>SELECT * FROM portal.atualizar_localizacao_osc(
-	?::TEXT, 
-	?::INTEGER, 
-	'id_oc'::TEXT, 
-	?::TIMESTAMP, 
-	'{"tx_endereco": "?", "cd_municipio": "?"}'::JSONB, 
-	?::BOOLEAN, 
-	?::BOOLEAN, 
-	'${ID_CARGA}'::INTEGER
-);
-</sql>
-    <limit>0</limit>
-    <lookup />
-    <execute_each_row>N</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>var flag_variable = getVariable('FLAG_BANCO', true);
+
+if(flag_variable == true &amp;&amp; flag == false){
+	setVariable('FLAG_BANCO', false);
+}
+</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>    </fields>
     <cluster_schema />
     <remotesteps>
       <input>
@@ -4186,13 +3754,13 @@ if(flag_variable == true &amp;&amp; flag == false){
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1308</xloc>
-      <yloc>653</yloc>
+      <xloc>120</xloc>
+      <yloc>591</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Select values</name>
+    <name>Select localização</name>
     <type>SelectValues</type>
     <description />
     <distribute>Y</distribute>
@@ -4203,6 +3771,30 @@ if(flag_variable == true &amp;&amp; flag == false){
       <schema_name />
     </partitioning>
     <fields>
+      <field>
+        <name>usuario</name>
+        <rename />
+      </field>
+      <field>
+        <name>id_osc</name>
+        <rename />
+      </field>
+      <field>
+        <name>data_carregamento</name>
+        <rename />
+      </field>
+      <field>
+        <name>localizacao_json</name>
+        <rename />
+      </field>
+      <field>
+        <name>null_valido</name>
+        <rename />
+      </field>
+      <field>
+        <name>erro_log</name>
+        <rename />
+      </field>
       <select_unspecified>N</select_unspecified>
     </fields>
     <cluster_schema />
@@ -4213,24 +3805,12 @@ if(flag_variable == true &amp;&amp; flag == false){
       </output>
     </remotesteps>
     <GUI>
-      <xloc>520</xloc>
-      <yloc>587</yloc>
+      <xloc>404</xloc>
+      <yloc>591</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step_error_handling>
-    <error>
-      <source_step>Atualizar dados gerais 2</source_step>
-      <target_step />
-      <is_enabled>N</is_enabled>
-      <nr_valuename />
-      <descriptions_valuename />
-      <fields_valuename />
-      <codes_valuename />
-      <max_errors />
-      <max_pct_errors />
-      <min_pct_rows />
-    </error>
   </step_error_handling>
   <slave-step-copy-partition-distribution>
   </slave-step-copy-partition-distribution>
