@@ -1,6 +1,3 @@
-ALTER TABLE log.tb_log_carga
-    RENAME TO tb_log_erro_carga;
-
 -- Table: log.tb_log_carga
 
 DROP TABLE IF EXISTS log.tb_log_carga;
@@ -76,5 +73,4 @@ COMMENT ON COLUMN log.tb_log_erro_carga.dt_carregamento_dados
 ALTER TABLE log.tb_log_alteracao
 ADD COLUMN id_carga INTEGER,
 ADD CONSTRAINT fk_id_carga FOREIGN KEY (id_carga)
-    REFERENCES log.tb_log_carga (id_carga),
-ALTER COLUMN id_usuario TYPE TEXT;
+    REFERENCES log.tb_log_carga (id_carga);
