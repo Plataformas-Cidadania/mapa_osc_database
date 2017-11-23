@@ -71,7 +71,7 @@ BEGIN
 			
 			registro_nao_delete := array_append(registro_nao_delete, dado_posterior.id_certificado);
 			
-			PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, dataatualizacao, null, row_to_json(dado_posterior),id_carga);
+			PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, dataatualizacao, null, row_to_json(dado_posterior),idcarga);
 			
 		ELSE 
 			dado_posterior := dado_anterior;
@@ -107,7 +107,7 @@ BEGIN
 					ft_certificado = dado_posterior.ft_certificado 
 				WHERE id_certificado = dado_posterior.id_certificado;
 				
-				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, dataatualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior),id_carga);
+				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, dataatualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior),idcarga);
 			END IF;
 		
 		END IF;
