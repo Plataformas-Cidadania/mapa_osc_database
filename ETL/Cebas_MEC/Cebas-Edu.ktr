@@ -75,7 +75,7 @@
   <notepads>
   </notepads>
   <connection>
-    <name>desenv</name>
+    <name>portalosc</name>
     <server>localhost</server>
     <type>POSTGRESQL</type>
     <access>Native</access>
@@ -98,50 +98,23 @@
       <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
     </attributes>
   </connection>
-  <connection>
-    <name>desenv2</name>
-    <server>mapaosc-desenv</server>
-    <type>POSTGRESQL</type>
-    <access>Native</access>
-    <database>portalosc</database>
-    <port>5434</port>
-    <username>i3geo</username>
-    <password>Encrypted 2be98afc86aa7f2e4cb10be75dfc2ff8b</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>5434</attribute></attribute>
-      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>N</attribute></attribute>
-      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
-      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
-      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>Y</attribute></attribute>
-      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
-    </attributes>
-  </connection>
   <order>
-  <hop> <from>ft_Certificado</from><to>Seleciona novos</to><enabled>Y</enabled> </hop>
   <hop> <from>CSV</from><to>Seleciona_Dados</to><enabled>Y</enabled> </hop>
   <hop> <from>Seleciona_Dados</from><to>Filtro</to><enabled>Y</enabled> </hop>
-  <hop> <from>Select values</from><to>Table input1</to><enabled>Y</enabled> </hop>
-  <hop> <from>Table input1</from><to>Select values 2</to><enabled>Y</enabled> </hop>
-  <hop> <from>Select values 2</from><to>DELETE antigos</to><enabled>Y</enabled> </hop>
   <hop> <from>Tabela_id-exclui</from><to>DELETE antigos 2</to><enabled>Y</enabled> </hop>
   <hop> <from>Filtro</from><to>Seleciona_Exclusao</to><enabled>Y</enabled> </hop>
   <hop> <from>Seleciona_Exclusao</from><to>Tabela_id-exclui</to><enabled>Y</enabled> </hop>
-  <hop> <from>ft_Certificado</from><to>Select_cnpj</to><enabled>Y</enabled> </hop>
   <hop> <from>Select_cnpj</from><to>Tabela_id-cnpj</to><enabled>Y</enabled> </hop>
   <hop> <from>Tabela_id-cnpj</from><to>Ordena</to><enabled>Y</enabled> </hop>
   <hop> <from>Ordena</from><to>Junta_id-novos</to><enabled>Y</enabled> </hop>
   <hop> <from>Seleciona novos</from><to>Ordena&#xe7;&#xe3;o</to><enabled>Y</enabled> </hop>
   <hop> <from>Ordena&#xe7;&#xe3;o</from><to>Junta_id-novos</to><enabled>Y</enabled> </hop>
-  <hop> <from>Filtro</from><to>ft_Certificado</to><enabled>Y</enabled> </hop>
   <hop> <from>Junta_id-novos</from><to>UPDATE</to><enabled>Y</enabled> </hop>
   <hop> <from>Junta_id-novos</from><to>INSERT</to><enabled>Y</enabled> </hop>
-  <hop> <from>CSV</from><to>Select values</to><enabled>N</enabled> </hop>
+  <hop> <from>Filtro</from><to>Dummy &#x28;do nothing&#x29;</to><enabled>Y</enabled> </hop>
+  <hop> <from>Dummy &#x28;do nothing&#x29;</from><to>Select_cnpj</to><enabled>Y</enabled> </hop>
+  <hop> <from>Dummy &#x28;do nothing&#x29;</from><to>Seleciona novos</to><enabled>Y</enabled> </hop>
+  <hop> <from>CSV</from><to>DELETE antigos</to><enabled>Y</enabled> </hop>
   </order>
   <step>
     <name>CSV</name>
@@ -298,24 +271,23 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>desenv</connection>
-    <execute_each_row>Y</execute_each_row>
+    <connection>portalosc</connection>
+    <execute_each_row>N</execute_each_row>
     <single_statement>N</single_statement>
-    <replace_variables>Y</replace_variables>
+    <replace_variables>N</replace_variables>
     <quoteString>N</quoteString>
-    <sql>DELETE FROM osc.tb_certificado&#xa;    where cd_certificado&#x3d;2 and id_osc &#x3d; &#x3f;&#x3b;</sql>
+    <sql>DELETE FROM OSC.tb_certificado&#xa;where ft_certificado &#x3d; &#x27;&#x25;MEC&#x25;&#x27; &#x3b;</sql>
     <set_params>N</set_params>
     <insert_field/>
     <update_field/>
     <delete_field/>
     <read_field/>
     <arguments>
-       <argument><name>id_osc</name></argument>
     </arguments>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>463</xloc>
-      <yloc>459</yloc>
+      <xloc>75</xloc>
+      <yloc>435</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -331,12 +303,12 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>desenv</connection>
+    <connection>portalosc</connection>
     <execute_each_row>Y</execute_each_row>
     <single_statement>N</single_statement>
     <replace_variables>Y</replace_variables>
     <quoteString>N</quoteString>
-    <sql>DELETE FROM osc.tb_certificado&#xa;    where cd_certificado&#x3d;2 and id_osc &#x3d; &#x28;SELECT id_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC &#x29; &#x3b;&#xa;SELECT portal.atualizar_certificado_osc&#x28;&#x27;CEBAS&#x2f;MEC 10&#x2f;2017&#x27;,&#x3f;,&#x27;01&#x2f;10&#x2f;2017&#x27;&#x3a;&#x3a;TIMESTAMP,&#x27;&#x27;,true,true,true,null,2&#x29; &#x3b;&#xa;&#xa;-- portal.atualizar_certificado_osc&#x28;&#xa;--	fonte text,&#xa;--	osc integer,&#xa;--	dataatualizacao timestamp without time zone,&#xa;--	json jsonb,&#xa;--	nullvalido boolean,&#xa;--	deletevalido boolean,&#xa;--	errolog boolean,&#xa;--	idcarga integer,&#xa;--	tipobusca integer&#x29;</sql>
+    <sql>DELETE FROM osc.tb_certificado&#xa;    where cd_certificado&#x3d;2 and id_osc &#x3d; &#x28;SELECT id_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC &#x29; &#x3b;&#xa;SELECT portal.atualizar_certificado_osc&#x28;&#x27;&#x24;&#x7b;ETL&#x7d;&#x27;&#x3a;&#x3a;TEXT,&#x3f;&#x3a;&#x3a;INTEGER,&#x28;SELECT NOW&#x28;&#x29;&#x3a;&#x3a;TIMESTAMP&#x29;,&#x28;select row_to_json&#x28;j&#x29;&#x3a;&#x3a;JSONB&#xa;from &#x28;&#xa;  SELECT cd_certificado, tx_nome_certificado&#xa;    FROM syst.dc_certificado &#xa;	WHERE cd_certificado &#x3d; 2&#x29; j&#x29;&#x3a;&#x3a;JSONB,false,false,false,&#x27;&#x24;&#x7b;ID_CARGA&#x7d;&#x27;&#x3a;&#x3a;INTEGER,2&#x3a;&#x3a;INTEGER&#x29; &#x3b;&#xa;&#xa;SELECT portal.atualizar_area_atuacao_osc&#x28;&#x27;&#x24;&#x7b;ETL&#x7d;&#x27;&#x3a;&#x3a;TEXT, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;id_osc&#x27;&#x3a;&#x3a;TEXT, &#x28;SELECT NOW&#x28;&#x29;&#x3a;&#x3a;TIMESTAMP&#x29;, &#xa;&#x28;select row_to_json&#x28;t&#x29;&#x3a;&#x3a;JSONB&#xa;from &#x28;&#xa; SELECT cd_area_atuacao, tx_nome_area_atuacao&#xa;   FROM syst.dc_area_atuacao&#xa;    WHERE cd_area_atuacao &#x3d; 4&#x29; t&#x29;, FALSE, FALSE, TRUE, &#x27;&#x24;&#x7b;ID_CARGA&#x7d;&#x27;, 2&#x29;</sql>
     <set_params>N</set_params>
     <insert_field/>
     <update_field/>
@@ -344,6 +316,7 @@
     <read_field/>
     <arguments>
        <argument><name>cnpj</name></argument>
+       <argument><name>id_osc</name></argument>
        <argument><name>id_osc</name></argument>
     </arguments>
      <cluster_schema/>
@@ -365,7 +338,7 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-<send_true_to>ft_Certificado</send_true_to>
+<send_true_to>Dummy &#x28;do nothing&#x29;</send_true_to>
 <send_false_to>Seleciona_Exclusao</send_false_to>
     <compare>
 <condition>
@@ -399,30 +372,160 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>desenv</connection>
+    <connection>portalosc</connection>
     <execute_each_row>Y</execute_each_row>
     <single_statement>N</single_statement>
     <replace_variables>Y</replace_variables>
     <quoteString>N</quoteString>
-    <sql>INSERT INTO osc.tb_certificado&#x28;id_osc, cd_certificado, ft_certificado, dt_inicio_certificado, ft_inicio_certificado, dt_fim_certificado, ft_fim_certificado,bo_oficial&#x29;&#xa;SELECT id_osc, 2, &#x27;&#x3f;&#x27;, to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29; as dt_inicial, &#x27;&#x3f;&#x27;,to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29; as dt_fim, &#x27;&#x3f;&#x27;,true&#xa;FROM osc.tb_osc a &#xa;WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#xa;AND NOT EXISTS &#x28;SELECT &#x2a; FROM osc.tb_certificado WHERE osc.tb_certificado.id_osc &#x3d; a.id_osc AND cd_certificado &#x3d; 2&#x29;&#x3b; &#xa;SELECT portal.atualizar_certificado_osc&#x28;&#x27;CEBAS&#x2f;MEC 10&#x2f;2017&#x27;,&#x3f;,&#x27;01&#x2f;10&#x2f;2017&#x27;&#x3a;&#x3a;TIMESTAMP,&#x27;&#x27;,true,true,true,null,2&#x29; &#x3b;</sql>
+    <sql>INSERT INTO osc.tb_certificado&#x28;id_osc, cd_certificado, ft_certificado, dt_inicio_certificado, ft_inicio_certificado, dt_fim_certificado, ft_fim_certificado,bo_oficial&#x29;&#xa;SELECT id_osc, 2, &#x27;&#x24;&#x7b;ETL&#x7d;&#x27;, to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29; as dt_inicial, &#x27;&#x24;&#x7b;ETL&#x7d;&#x27;,to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29; as dt_fim, &#x27;&#x24;&#x7b;ETL&#x7d;&#x27;,true&#xa;FROM osc.tb_osc a &#xa;WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#xa;AND NOT EXISTS &#x28;SELECT &#x2a; FROM osc.tb_certificado WHERE osc.tb_certificado.id_osc &#x3d; a.id_osc AND cd_certificado &#x3d; 2&#x29;&#x3b; &#xa;SELECT portal.atualizar_certificado_osc&#x28;&#x27;&#x24;&#x7b;ETL&#x7d;&#x27;&#x3a;&#x3a;TEXT,&#x3f;&#x3a;&#x3a;INTEGER,&#x28;SELECT NOW&#x28;&#x29;&#x3a;&#x3a;TIMESTAMP&#x29;,&#x28;select row_to_json&#x28;j&#x29;&#x3a;&#x3a;JSONB&#xa;from &#x28;&#xa;  SELECT cd_certificado, tx_nome_certificado&#xa;    FROM syst.dc_certificado &#xa;	WHERE cd_certificado &#x3d; 2&#x29; j&#x29;,false,false,false,&#x27;&#x24;&#x7b;ID_CARGA&#x7d;&#x27;&#x3a;&#x3a;INTEGER,2&#x3a;&#x3a;INTEGER&#x29; &#x3b;&#xa;&#xa;SELECT portal.atualizar_area_atuacao_osc&#x28;&#x27;&#x24;&#x7b;ETL&#x7d;&#x27;&#x3a;&#x3a;TEXT, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;id_osc&#x27;&#x3a;&#x3a;TEXT, &#x28;SELECT NOW&#x28;&#x29;&#x3a;&#x3a;TIMESTAMP&#x29;, &#xa;&#x28;select row_to_json&#x28;t&#x29;&#x3a;&#x3a;JSONB&#xa;from &#x28;&#xa; SELECT cd_area_atuacao, tx_nome_area_atuacao&#xa;   FROM syst.dc_area_atuacao&#xa;    WHERE cd_area_atuacao &#x3d; 4&#x29; t&#x29;, FALSE, FALSE, TRUE, &#x27;&#x24;&#x7b;ID_CARGA&#x7d;&#x27;, 2&#x29;</sql>
     <set_params>N</set_params>
     <insert_field/>
     <update_field/>
     <delete_field/>
     <read_field/>
     <arguments>
-       <argument><name>ft_certificado</name></argument>
        <argument><name>Data Inicio Validade</name></argument>
-       <argument><name>ft_certificado</name></argument>
        <argument><name>Data Fim Validade</name></argument>
-       <argument><name>ft_certificado</name></argument>
        <argument><name>cnpj</name></argument>
+       <argument><name>id_osc</name></argument>
        <argument><name>id_osc</name></argument>
     </arguments>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>1185</xloc>
       <yloc>134</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Junta_id-novos</name>
+    <type>MergeJoin</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<join_type>INNER</join_type>
+<step1>Ordena</step1>
+<step2>Ordena&#xe7;&#xe3;o</step2>
+    <keys_1>
+      <key>cnpj</key>
+    </keys_1>
+    <keys_2>
+      <key>CNPJ</key>
+    </keys_2>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1021</xloc>
+      <yloc>56</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Ordena</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <directory>&#x25;&#x25;java.io.tmpdir&#x25;&#x25;</directory>
+      <prefix>out</prefix>
+      <sort_size>1000000</sort_size>
+      <free_memory/>
+      <compress>N</compress>
+      <compress_variable/>
+      <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>cnpj</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>836</xloc>
+      <yloc>61</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Ordena&#xe7;&#xe3;o</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <directory>&#x25;&#x25;java.io.tmpdir&#x25;&#x25;</directory>
+      <prefix>out</prefix>
+      <sort_size>1000000</sort_size>
+      <free_memory/>
+      <compress>N</compress>
+      <compress_variable/>
+      <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>CNPJ</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1026</xloc>
+      <yloc>241</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Seleciona novos</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>      <field>        <name>CNPJ</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>Data Inicio Validade</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>Data Fim Validade</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>Status da Certifica&#xe7;&#xe3;o</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>        <select_unspecified>N</select_unspecified>
+    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>868</xloc>
+      <yloc>243</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -464,218 +567,6 @@
     </step>
 
   <step>
-    <name>Seleciona novos</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>      <field>        <name>CNPJ</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>Data Inicio Validade</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>Data Fim Validade</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>Status da Certifica&#xe7;&#xe3;o</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>ft_certificado</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>        <select_unspecified>N</select_unspecified>
-    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>868</xloc>
-      <yloc>243</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Select values</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>      <field>        <name>CNPJ</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>        <select_unspecified>N</select_unspecified>
-    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>34</xloc>
-      <yloc>456</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Select values 2</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>      <field>        <name>id_osc</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>        <select_unspecified>N</select_unspecified>
-    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>336</xloc>
-      <yloc>460</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Table input1</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>desenv</connection>
-    <sql>SELECT id_osc,cd_identificador_osc FROM OSC.tb_osc&#xa;where cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC  and &#xa;id_osc IN &#x28;SELECT id_osc FROM osc.tb_certificado WHERE  cd_certificado&#x3d;2 &#x29; &#x3b;</sql>
-    <limit>0</limit>
-    <lookup>Select values</lookup>
-    <execute_each_row>Y</execute_each_row>
-    <variables_active>N</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>210</xloc>
-      <yloc>458</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>UPDATE</name>
-    <type>ExecSQL</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>desenv</connection>
-    <execute_each_row>Y</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>Y</replace_variables>
-    <quoteString>N</quoteString>
-    <sql>UPDATE osc.tb_certificado SET ft_certificado &#x3d; &#x27;&#x3f;&#x27;, dt_inicio_certificado &#x3d; to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29;, ft_inicio_certificado &#x3d; &#x27;&#x3f;&#x27;, dt_fim_certificado &#x3d; to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29;, ft_fim_certificado &#x3d; &#x27;&#x3f;&#x27;&#xa;WHERE id_osc &#x3d; &#x28;SELECT id_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x29; AND cd_certificado &#x3d; 2&#x3b;&#xa;&#xa;SELECT portal.atualizar_certificado_osc&#x28;&#x27;CEBAS&#x2f;MEC 10&#x2f;2017&#x27;,&#x3f;,&#x27;01&#x2f;10&#x2f;2017&#x27;&#x3a;&#x3a;TIMESTAMP,&#x27;&#x27;,true,true,true,null,2&#x29; &#x3b;</sql>
-    <set_params>N</set_params>
-    <insert_field/>
-    <update_field/>
-    <delete_field/>
-    <read_field/>
-    <arguments>
-       <argument><name>ft_certificado</name></argument>
-       <argument><name>Data Inicio Validade</name></argument>
-       <argument><name>ft_certificado</name></argument>
-       <argument><name>Data Fim Validade</name></argument>
-       <argument><name>ft_certificado</name></argument>
-       <argument><name>cnpj</name></argument>
-       <argument><name>id_osc</name></argument>
-    </arguments>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>1189</xloc>
-      <yloc>65</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>ft_Certificado</name>
-    <type>Constant</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>
-      <field>
-        <name>ft_certificado</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <nullif>CEBAS&#x2f;MEC 10&#x2f;2017</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>556</xloc>
-      <yloc>246</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Tabela_id-exclui</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>desenv</connection>
-    <sql>SELECT id_osc,&#x3f; as CNPJ FROM osc.tb_certificado&#xa;    where cd_certificado&#x3d;2 and id_osc &#x3d; &#x28;SELECT id_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC &#x29; &#x3b;</sql>
-    <limit>0</limit>
-    <lookup>Seleciona_Exclusao</lookup>
-    <execute_each_row>Y</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>532</xloc>
-      <yloc>360</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
     <name>Seleciona_Exclusao</name>
     <type>SelectValues</type>
     <description/>
@@ -699,32 +590,6 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>379</xloc>
       <yloc>363</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Tabela_id-cnpj</name>
-    <type>TableInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>desenv</connection>
-    <sql>SELECT id_osc, &#x3f; as CNPJ FROM osc.tb_certificado&#xa;    where cd_certificado&#x3d;2 and id_osc &#x3d; &#x28;SELECT id_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC &#x29; &#x3b;</sql>
-    <limit>0</limit>
-    <lookup>Select_cnpj</lookup>
-    <execute_each_row>Y</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>674</xloc>
-      <yloc>57</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -758,8 +623,97 @@
     </step>
 
   <step>
-    <name>Junta_id-novos</name>
-    <type>MergeJoin</type>
+    <name>Tabela_id-cnpj</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>portalosc</connection>
+    <sql>SELECT id_osc, &#x3f; as CNPJ FROM osc.tb_certificado&#xa;    where cd_certificado&#x3d;2 and id_osc &#x3d; &#x28;SELECT id_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC &#x29; &#x3b;</sql>
+    <limit>0</limit>
+    <lookup>Select_cnpj</lookup>
+    <execute_each_row>Y</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>736</xloc>
+      <yloc>59</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Tabela_id-exclui</name>
+    <type>TableInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>portalosc</connection>
+    <sql>SELECT id_osc,&#x3f; as CNPJ FROM osc.tb_certificado&#xa;    where cd_certificado&#x3d;2 and id_osc &#x3d; &#x28;SELECT id_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC &#x29; &#x3b;</sql>
+    <limit>0</limit>
+    <lookup>Seleciona_Exclusao</lookup>
+    <execute_each_row>Y</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>532</xloc>
+      <yloc>360</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>UPDATE</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>portalosc</connection>
+    <execute_each_row>Y</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>Y</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>UPDATE osc.tb_certificado SET ft_certificado &#x3d; &#x27;&#x24;&#x7b;ETL&#x7d;&#x27;, dt_inicio_certificado &#x3d; to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29;, ft_inicio_certificado &#x3d; &#x27;&#x24;&#x7b;ETL&#x7d;&#x27;, dt_fim_certificado &#x3d; to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29;, ft_fim_certificado &#x3d; &#x27;&#x24;&#x7b;ETL&#x7d;&#x27;&#xa;WHERE id_osc &#x3d; &#x28;SELECT id_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x29; AND cd_certificado &#x3d; 2&#x3b;&#xa;&#xa;SELECT portal.atualizar_certificado_osc&#x28;&#x27;&#x24;&#x7b;ETL&#x7d;&#x27;&#x3a;&#x3a;TEXT,&#x3f;&#x3a;&#x3a;INTEGER,&#x28;SELECT NOW&#x28;&#x29;&#x3a;&#x3a;TIMESTAMP&#x29;,&#xa;&#x28;select row_to_json&#x28;j&#x29;&#x3a;&#x3a;JSONB&#xa;from &#x28;&#xa;  SELECT cd_certificado, tx_nome_certificado&#xa;    FROM syst.dc_certificado &#xa;	WHERE cd_certificado &#x3d; 2&#x29; j&#x29;, false,false,false,&#x27;&#x24;&#x7b;ID_CARGA&#x7d;&#x27;&#x3a;&#x3a;INTEGER,2&#x3a;&#x3a;INTEGER&#x29; &#x3b;&#xa;&#xa;SELECT portal.atualizar_area_atuacao_osc&#x28;&#x27;&#x24;&#x7b;ETL&#x7d;&#x27;&#x3a;&#x3a;TEXT, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;id_osc&#x27;&#x3a;&#x3a;TEXT, &#x28;SELECT NOW&#x28;&#x29;&#x3a;&#x3a;TIMESTAMP&#x29;, &#xa;&#x28;select row_to_json&#x28;t&#x29;&#x3a;&#x3a;JSONB&#xa;from &#x28;&#xa; SELECT cd_area_atuacao, tx_nome_area_atuacao&#xa;   FROM syst.dc_area_atuacao&#xa;    WHERE cd_area_atuacao &#x3d; 4&#x29; t&#x29;, FALSE, FALSE, TRUE, &#x27;&#x24;&#x7b;ID_CARGA&#x7d;&#x27;, 2&#x29;</sql>
+    <set_params>N</set_params>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+       <argument><name>Data Inicio Validade</name></argument>
+       <argument><name>Data Fim Validade</name></argument>
+       <argument><name>cnpj</name></argument>
+       <argument><name>id_osc</name></argument>
+       <argument><name>id_osc</name></argument>
+    </arguments>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>1189</xloc>
+      <yloc>65</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Dummy &#x28;do nothing&#x29;</name>
+    <type>Dummy</type>
     <description/>
     <distribute>N</distribute>
     <custom_distribution/>
@@ -768,87 +722,10 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-<join_type>INNER</join_type>
-<step1>Ordena</step1>
-<step2>Ordena&#xe7;&#xe3;o</step2>
-    <keys_1>
-      <key>cnpj</key>
-    </keys_1>
-    <keys_2>
-      <key>CNPJ</key>
-    </keys_2>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>877</xloc>
-      <yloc>57</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Ordena</name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-      <directory>&#x25;&#x25;java.io.tmpdir&#x25;&#x25;</directory>
-      <prefix>out</prefix>
-      <sort_size>1000000</sort_size>
-      <free_memory/>
-      <compress>N</compress>
-      <compress_variable/>
-      <unique_rows>N</unique_rows>
-    <fields>
-      <field>
-        <name>cnpj</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <presorted>N</presorted>
-      </field>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>774</xloc>
-      <yloc>59</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Ordena&#xe7;&#xe3;o</name>
-    <type>SortRows</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-      <directory>&#x25;&#x25;java.io.tmpdir&#x25;&#x25;</directory>
-      <prefix>out</prefix>
-      <sort_size>1000000</sort_size>
-      <free_memory/>
-      <compress>N</compress>
-      <compress_variable/>
-      <unique_rows>N</unique_rows>
-    <fields>
-      <field>
-        <name>CNPJ</name>
-        <ascending>Y</ascending>
-        <case_sensitive>N</case_sensitive>
-        <presorted>N</presorted>
-      </field>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>1020</xloc>
-      <yloc>126</yloc>
+      <xloc>552</xloc>
+      <yloc>245</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
