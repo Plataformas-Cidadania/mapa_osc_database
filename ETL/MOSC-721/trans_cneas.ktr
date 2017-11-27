@@ -488,11 +488,11 @@
   </connection>
   <connection>
     <name>mapaosc-desenv</name>
-    <server>10.1.4.110</server>
+    <server>mapaosc-desenv</server>
     <type>POSTGRESQL</type>
     <access>Native</access>
     <database>portalosc</database>
-    <port>5434</port>
+    <port>5432</port>
     <username>i3geo</username>
     <password>Encrypted 2be98afc86aa7f2e4cb10be75dfc2ff8b</password>
     <servername />
@@ -513,7 +513,7 @@
       </attribute>
       <attribute>
         <code>PORT_NUMBER</code>
-        <attribute>5434</attribute>
+        <attribute>5432</attribute>
       </attribute>
       <attribute>
         <code>PRESERVE_RESERVED_WORD_CASE</code>
@@ -561,12 +561,12 @@
     <hop>
       <from>Select values localização</from>
       <to>Atualizar localização</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>Select values contato</from>
       <to>Atualizar contato</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>Atualizar área atuação</from>
@@ -581,22 +581,22 @@
     <hop>
       <from>Atualizar localização</from>
       <to>Set variable flag banco</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>Atualizar contato</from>
       <to>Set variable flag banco</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>Formatar JSON</from>
       <to>Select values localização</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>Formatar JSON</from>
       <to>Select values contato</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>Select id_osc</from>
@@ -621,6 +621,21 @@
     <hop>
       <from>Merge Join</from>
       <to>Add constants</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Select values dados gerais</from>
+      <to>Atualizar dados gerais</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Atualizar dados gerais</from>
+      <to>Set variable flag banco</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Formatar JSON</from>
+      <to>Select values dados gerais</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -672,6 +687,42 @@
         <precision>-1</precision>
         <set_empty_string>N</set_empty_string>
       </field>
+      <field>
+        <name>null_valido</name>
+        <type>Boolean</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif>false</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>delete_valido</name>
+        <type>Boolean</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif>false</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>erro_log</name>
+        <type>Boolean</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif>true</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
     </fields>
     <cluster_schema />
     <remotesteps>
@@ -697,7 +748,7 @@
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection>localhost</connection>
+    <connection>mapaosc-desenv</connection>
     <sql>SELECT * 
 FROM portal.atualizar_contato_osc(
 	'${FONTE_CARGA}'::TEXT, 
@@ -705,8 +756,8 @@ FROM portal.atualizar_contato_osc(
 	?::TEXT, 
 	NOW()::TIMESTAMP, 
 	?::JSONB, 
-	false::BOOLEAN, --nullvalido
-	true::BOOLEAN, --errolog
+	?::BOOLEAN, 
+	?::BOOLEAN, 
 	'${ID_CARGA}'::INTEGER
 );
 </sql>
@@ -723,8 +774,50 @@ FROM portal.atualizar_contato_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1158</xloc>
-      <yloc>387</yloc>
+      <xloc>1160</xloc>
+      <yloc>325</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Atualizar dados gerais</name>
+    <type>TableInput</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>mapaosc-desenv</connection>
+    <sql>SELECT * 
+FROM portal.atualizar_dados_gerais_osc(
+	'${FONTE_CARGA}'::TEXT, 
+	?::NUMERIC, 
+	?::TEXT, 
+	NOW()::TIMESTAMP, 
+	?::JSONB, 
+	?::BOOLEAN, 
+	?::BOOLEAN, 
+	'${ID_CARGA}'::INTEGER
+);
+</sql>
+    <limit>0</limit>
+    <lookup>Select values dados gerais</lookup>
+    <execute_each_row>Y</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1163</xloc>
+      <yloc>453</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -739,7 +832,7 @@ FROM portal.atualizar_contato_osc(
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection>localhost</connection>
+    <connection>mapaosc-desenv</connection>
     <sql>SELECT * 
 FROM portal.atualizar_localizacao_osc(
 	'${FONTE_CARGA}'::TEXT, 
@@ -747,8 +840,8 @@ FROM portal.atualizar_localizacao_osc(
 	?::TEXT, 
 	NOW()::TIMESTAMP, 
 	?::JSONB, 
-	false::BOOLEAN, --nullvalido
-	true::BOOLEAN, --errolog
+	?::BOOLEAN, 
+	?::BOOLEAN, 
 	'${ID_CARGA}'::INTEGER
 );
 </sql>
@@ -765,8 +858,8 @@ FROM portal.atualizar_localizacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1158</xloc>
-      <yloc>247</yloc>
+      <xloc>1160</xloc>
+      <yloc>185</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -781,7 +874,7 @@ FROM portal.atualizar_localizacao_osc(
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection>localhost</connection>
+    <connection>mapaosc-desenv</connection>
     <sql>SELECT * 
 FROM portal.atualizar_area_atuacao_osc(
 	'${FONTE_CARGA}'::TEXT, 
@@ -789,9 +882,9 @@ FROM portal.atualizar_area_atuacao_osc(
 	?::TEXT, 
 	NOW()::TIMESTAMP, 
 	?::JSONB, 
-	false::BOOLEAN, --nullvalido
-	false::BOOLEAN, --deletevalido
-	true::BOOLEAN, --errolog
+	?::BOOLEAN, 
+	?::BOOLEAN, 
+	?::BOOLEAN, 
 	'${ID_CARGA}'::INTEGER, 
 	2::INTEGER
 );
@@ -809,8 +902,8 @@ FROM portal.atualizar_area_atuacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1152</xloc>
-      <yloc>104</yloc>
+      <xloc>1154</xloc>
+      <yloc>42</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -825,7 +918,7 @@ FROM portal.atualizar_area_atuacao_osc(
       <method>none</method>
       <schema_name />
     </partitioning>
-    <filename>${ARQUIVO}</filename>
+    <filename>C:\Users\b215496233\Downloads\CNEAS.csv</filename>
     <filename_field />
     <rownum_field />
     <include_filename>N</include_filename>
@@ -1077,6 +1170,8 @@ FROM portal.atualizar_area_atuacao_osc(
 	return resultado;
 }
 
+if(NO_EMPRESARIAL) NO_EMPRESARIAL = formatarDado(NO_EMPRESARIAL);
+if(NO_FANTASIA) NO_FANTASIA = formatarDado(NO_FANTASIA);
 if(DS_LOGRADOURO) DS_LOGRADOURO = formatarDado(DS_LOGRADOURO);
 if(NU_ENDERECO) NU_ENDERECO = formatarDado(NU_ENDERECO);
 if(DS_COMPLEMENTO) DS_COMPLEMENTO = formatarDado(DS_COMPLEMENTO);
@@ -1087,12 +1182,21 @@ if(NU_TELEFONE) NU_TELEFONE = formatarDado(NU_TELEFONE);
 if(DS_EMAIL) DS_EMAIL = formatarDado(DS_EMAIL);
 if(DS_SITE) DS_SITE = formatarDado(DS_SITE);
 
+var dados_gerais_json = '{"tx_razao_social": ' + NO_EMPRESARIAL + ', "tx_nome_fantasia": ' + NO_FANTASIA + '}';
 var area_atuacao_json = '{"cd_area_atuacao": ' + area_atuacao + ', "cd_subarea_atuacao": ' + subarea_atuacao + '}';
 var localizacao_json = '{"tx_endereco": ' + DS_LOGRADOURO + ', "nr_localizacao": ' + NU_ENDERECO + ', "tx_endereco_complemento": ' + DS_COMPLEMENTO + ', "tx_bairro": ' + DS_BAIRRO + ', "cd_municipio": ' + CO_IBGE + ', "nr_cep": ' + NU_CEP + '}';
 var contato_json = '{"tx_telefone": ' + NU_TELEFONE + ', "tx_email": ' + DS_EMAIL + ', "tx_site": ' + DS_SITE + '}';</jsScript_script>
       </jsScript>
     </jsScripts>
     <fields>
+      <field>
+        <name>dados_gerais_json</name>
+        <rename>dados_gerais_json</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
       <field>
         <name>localizacao_json</name>
         <rename>localizacao_json</rename>
@@ -1132,6 +1236,152 @@ var contato_json = '{"tx_telefone": ' + NU_TELEFONE + ', "tx_email": ' + DS_EMAI
     </GUI>
   </step>
   <step>
+    <name>Merge Join</name>
+    <type>MergeJoin</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <join_type>INNER</join_type>
+    <step1>Unique rows</step1>
+    <step2>Select id_osc</step2>
+    <keys_1>
+      <key>NU_CNPJ</key>
+    </keys_1>
+    <keys_2>
+      <key>cnpj</key>
+    </keys_2>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>500</xloc>
+      <yloc>247</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Select values dados gerais</name>
+    <type>SelectValues</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>id_osc</name>
+        <rename />
+      </field>
+      <field>
+        <name>tipo_identificador</name>
+        <rename />
+      </field>
+      <field>
+        <name>dados_gerais_json</name>
+        <rename />
+      </field>
+      <field>
+        <name>null_valido</name>
+        <rename />
+      </field>
+      <field>
+        <name>erro_log</name>
+        <rename />
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>949</xloc>
+      <yloc>453</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Select id_osc</name>
+    <type>TableInput</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>mapaosc-desenv</connection>
+    <sql>SELECT id_osc, ? AS cnpj FROM osc.tb_osc WHERE cd_identificador_osc = ?::NUMERIC;</sql>
+    <limit>0</limit>
+    <lookup>Select values</lookup>
+    <execute_each_row>Y</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>500</xloc>
+      <yloc>111</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Select values</name>
+    <type>SelectValues</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>NU_CNPJ</name>
+        <rename>cnpj_1</rename>
+      </field>
+      <field>
+        <name>NU_CNPJ</name>
+        <rename>cnpj_2</rename>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>369</xloc>
+      <yloc>111</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>Select values contato</name>
     <type>SelectValues</type>
     <description />
@@ -1145,12 +1395,23 @@ var contato_json = '{"tx_telefone": ' + NU_TELEFONE + ', "tx_email": ' + DS_EMAI
     <fields>
       <field>
         <name>NU_CNPJ</name>
+        <rename />
       </field>
       <field>
         <name>tipo_identificador</name>
+        <rename />
       </field>
       <field>
         <name>contato_json</name>
+        <rename />
+      </field>
+      <field>
+        <name>null_valido</name>
+        <rename />
+      </field>
+      <field>
+        <name>erro_log</name>
+        <rename />
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -1162,8 +1423,8 @@ var contato_json = '{"tx_telefone": ' + NU_TELEFONE + ', "tx_email": ' + DS_EMAI
       </output>
     </remotesteps>
     <GUI>
-      <xloc>944</xloc>
-      <yloc>387</yloc>
+      <xloc>946</xloc>
+      <yloc>325</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1181,12 +1442,23 @@ var contato_json = '{"tx_telefone": ' + NU_TELEFONE + ', "tx_email": ' + DS_EMAI
     <fields>
       <field>
         <name>NU_CNPJ</name>
+        <rename />
       </field>
       <field>
         <name>tipo_identificador</name>
+        <rename />
       </field>
       <field>
         <name>localizacao_json</name>
+        <rename />
+      </field>
+      <field>
+        <name>null_valido</name>
+        <rename />
+      </field>
+      <field>
+        <name>erro_log</name>
+        <rename />
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -1198,8 +1470,8 @@ var contato_json = '{"tx_telefone": ' + NU_TELEFONE + ', "tx_email": ' + DS_EMAI
       </output>
     </remotesteps>
     <GUI>
-      <xloc>944</xloc>
-      <yloc>247</yloc>
+      <xloc>946</xloc>
+      <yloc>185</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1216,13 +1488,28 @@ var contato_json = '{"tx_telefone": ' + NU_TELEFONE + ', "tx_email": ' + DS_EMAI
     </partitioning>
     <fields>
       <field>
-        <name>NU_CNPJ</name>
+        <name>id_osc</name>
+        <rename />
       </field>
       <field>
         <name>tipo_identificador</name>
+        <rename />
       </field>
       <field>
         <name>area_atuacao_json</name>
+        <rename />
+      </field>
+      <field>
+        <name>null_valido</name>
+        <rename />
+      </field>
+      <field>
+        <name>delete_valido</name>
+        <rename />
+      </field>
+      <field>
+        <name>erro_log</name>
+        <rename />
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -1234,8 +1521,8 @@ var contato_json = '{"tx_telefone": ' + NU_TELEFONE + ', "tx_email": ' + DS_EMAI
       </output>
     </remotesteps>
     <GUI>
-      <xloc>938</xloc>
-      <yloc>104</yloc>
+      <xloc>940</xloc>
+      <yloc>42</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1273,7 +1560,7 @@ if(flag_variable == true &amp;&amp; flag == false){
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1378</xloc>
+      <xloc>1368</xloc>
       <yloc>247</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1350,105 +1637,6 @@ if(flag_variable == true &amp;&amp; flag == false){
     <GUI>
       <xloc>369</xloc>
       <yloc>247</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Merge Join</name>
-    <type>MergeJoin</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <join_type>INNER</join_type>
-    <step1>Unique rows</step1>
-    <step2>Select id_osc</step2>
-    <keys_1>
-      <key>NU_CNPJ</key>
-    </keys_1>
-    <keys_2>
-      <key>cnpj</key>
-    </keys_2>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>500</xloc>
-      <yloc>247</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Select id_osc</name>
-    <type>TableInput</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>localhost</connection>
-    <sql>SELECT id_osc, ? AS cnpj FROM osc.tb_osc WHERE cd_identificador_osc = ?::NUMERIC;</sql>
-    <limit>0</limit>
-    <lookup>Select values</lookup>
-    <execute_each_row>Y</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>500</xloc>
-      <yloc>111</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Select values</name>
-    <type>SelectValues</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <name>NU_CNPJ</name>
-        <rename>cnpj_1</rename>
-      </field>
-      <field>
-        <name>NU_CNPJ</name>
-        <rename>cnpj_2</rename>
-      </field>
-      <select_unspecified>N</select_unspecified>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>369</xloc>
-      <yloc>111</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

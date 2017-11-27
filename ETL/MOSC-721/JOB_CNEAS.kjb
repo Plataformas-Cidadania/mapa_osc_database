@@ -65,11 +65,11 @@
   </connection>
   <connection>
     <name>mapaosc-desenv</name>
-    <server>10.1.4.110</server>
+    <server>mapaosc-desenv</server>
     <type>POSTGRESQL</type>
     <access>Native</access>
     <database>portalosc</database>
-    <port>5434</port>
+    <port>5432</port>
     <username>i3geo</username>
     <password>Encrypted 2be98afc86aa7f2e4cb10be75dfc2ff8b</password>
     <servername />
@@ -90,7 +90,7 @@
       </attribute>
       <attribute>
         <code>PORT_NUMBER</code>
-        <attribute>5434</attribute>
+        <attribute>5432</attribute>
       </attribute>
       <attribute>
         <code>PRESERVE_RESERVED_WORD_CASE</code>
@@ -477,7 +477,7 @@
       <fields>
         <field>
           <variable_name>ARQUIVO</variable_name>
-          <variable_value>C:\vagnerpraia\CNEAS.csv</variable_value>
+          <variable_value>C:\Users\b215496233\Downloads\CNEAS.csv</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
@@ -549,7 +549,7 @@ ALTER TABLE osc.tb_contato DISABLE TRIGGER ALL;</sql>
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename />
       <sendOneStatement>F</sendOneStatement>
-      <connection>localhost</connection>
+      <connection>mapaosc-desenv</connection>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
@@ -571,7 +571,7 @@ ALTER TABLE osc.tb_contato ENABLE TRIGGER ALL;
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename />
       <sendOneStatement>F</sendOneStatement>
-      <connection>localhost</connection>
+      <connection>mapaosc-desenv</connection>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>

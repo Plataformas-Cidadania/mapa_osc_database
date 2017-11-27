@@ -39,11 +39,11 @@ BEGIN
 		RAISE EXCEPTION 'permissao_negada_usuario';
 	END IF;
 	
-	IF json_typeof(json::JSON) = 'object' THEN 
-		json := ('[' || json || ']');
+	IF jsonb_typeof(json) = 'object' THEN 
+		json := jsonb_build_array(json);
 	END IF;
 	
-	FOR objeto IN (SELECT * FROM json_populate_recordset(null::osc.tb_certificado, json::JSON)) 
+	FOR objeto IN (SELECT * FROM jsonb_populate_recordset(null::osc.tb_certificado, json)) 
 	LOOP 
 		dado_anterior := null;
 		
