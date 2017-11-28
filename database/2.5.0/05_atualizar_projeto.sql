@@ -39,11 +39,11 @@ BEGIN
 		RAISE EXCEPTION 'osc_nao_encontrada';
 	END IF;
 	
-	IF json_typeof(json::JSON) = 'object' THEN 
-		json := ('[' || json || ']');
+	IF jsonb_typeof(json) = 'object' THEN 
+		json := jsonb_build_array(json);
 	END IF;
 	
-	FOR objeto IN (SELECT * FROM json_populate_recordset(null::osc.tb_projeto, json::JSON)) 
+	FOR objeto IN (SELECT * FROM jsonb_populate_recordset(null::osc.tb_projeto, json)) 
 	LOOP 
 		dado_anterior := null;
 		
@@ -57,6 +57,11 @@ BEGIN
 			SELECT INTO dado_anterior * FROM osc.tb_projeto 
 			WHERE (tx_identificador_projeto_externo = objeto.tx_identificador_projeto_externo AND cd_uf = objeto.cd_uf AND cd_municipio is null) 
 			OR (tx_identificador_projeto_externo = objeto.tx_identificador_projeto_externo AND cd_uf is null AND cd_municipio = objeto.cd_municipio) 
+			AND id_osc = osc;
+			
+		ELSIF tipo_busca = 3 THEN 
+			SELECT INTO dado_anterior * FROM osc.tb_projeto 
+			WHERE tx_identificador_projeto_externo = objeto.tx_identificador_projeto_externo 
 			AND id_osc = osc;
 			
 		ELSE 

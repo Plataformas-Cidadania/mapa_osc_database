@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>trans_cnes</name>
+    <name>trans_finep</name>
     <description />
     <extended_description />
     <trans_version />
@@ -552,26 +552,11 @@
     <hop>
       <from>Atualizar dados gerais</from>
       <to>Set variable flag banco</to>
-      <enabled>N</enabled>
-    </hop>
-    <hop>
-      <from>Atualizar área atuação</from>
-      <to>Set variable flag banco</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Select values dados gerais</from>
       <to>Atualizar dados gerais</to>
-      <enabled>N</enabled>
-    </hop>
-    <hop>
-      <from>Select values área atuação</from>
-      <to>Atualizar área atuação</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Formatar JSON</from>
-      <to>Select values área atuação</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -590,68 +575,38 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Acertar nomenclatura</from>
-      <to>Replace in string</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Replace in string</from>
-      <to>Acertar CNPJ</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Acertar CNPJ</from>
-      <to>Merge Join 1</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Acertar CNPJ</from>
-      <to>Select values 1</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Select values localização</from>
       <to>Atualizar localização</to>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Select values contato</from>
-      <to>Atualizar contato</to>
-      <enabled>N</enabled>
-    </hop>
-    <hop>
-      <from>Formatar JSON</from>
-      <to>Select values contato</to>
-      <enabled>N</enabled>
+      <from>Select values projeto</from>
+      <to>Atualizar projeto</to>
+      <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Atualizar localização</from>
       <to>Set variable flag banco</to>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Atualizar contato</from>
+      <from>Atualizar projeto</from>
       <to>Set variable flag banco</to>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Replace in string</from>
+      <to>Select values 1</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Replace in string</from>
+      <to>Merge Join 1</to>
+      <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Select values 2</from>
       <to>Select cd_municipio</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Merge Join 1</from>
-      <to>Dummy</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Dummy</from>
-      <to>Select values 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Dummy</from>
-      <to>Merge Join 2</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -665,6 +620,21 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
+      <from>Merge Join 1</from>
+      <to>Dummy</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Dummy</from>
+      <to>Merge Join 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Dummy</from>
+      <to>Select values 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
       <from>Formatar JSON</from>
       <to>Filter rows</to>
       <enabled>N</enabled>
@@ -672,56 +642,24 @@
     <hop>
       <from>Filter rows</from>
       <to>Select values localização</to>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Formatar JSON</from>
+      <to>Select values projeto</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Acertar nomenclatura</from>
+      <to>Ajustar valores</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Ajustar valores</from>
+      <to>Replace in string</to>
+      <enabled>Y</enabled>
     </hop>
   </order>
-  <step>
-    <name>Acertar CNPJ</name>
-    <type>ScriptValueMod</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <compatible>N</compatible>
-    <optimizationLevel>9</optimizationLevel>
-    <jsScripts>
-      <jsScript>
-        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>if(NU_CNPJ_REQUERENTE === null){
-	var cnpj = Number(NU_CNPJ_MANTENEDORA);
-}else{
-	var cnpj = Number(NU_CNPJ_REQUERENTE);
-}</jsScript_script>
-      </jsScript>
-    </jsScripts>
-    <fields>
-      <field>
-        <name>cnpj</name>
-        <rename>cnpj</rename>
-        <type>Number</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>592</xloc>
-      <yloc>270</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
   <step>
     <name>Acertar nomenclatura</name>
     <type>SelectValues</type>
@@ -736,8 +674,8 @@
     <fields>
       <select_unspecified>N</select_unspecified>
       <meta>
-        <name>CEBAS</name>
-        <rename>CEBAS</rename>
+        <name>Instrumento</name>
+        <rename>Instrumento</rename>
         <type>None</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -753,8 +691,8 @@
         <storage_type />
       </meta>
       <meta>
-        <name>CO CEP</name>
-        <rename>CO_CEP</rename>
+        <name>Demanda</name>
+        <rename>Demanda</rename>
         <type>None</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -770,8 +708,8 @@
         <storage_type />
       </meta>
       <meta>
-        <name>CO CNES</name>
-        <rename>CO_CNES</rename>
+        <name>Contrato</name>
+        <rename>Contrato</rename>
         <type>None</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -787,8 +725,8 @@
         <storage_type />
       </meta>
       <meta>
-        <name>CO ESFERA ADMINISTRATIVA</name>
-        <rename>CO_ESFERA_ADMINISTRATIVA</rename>
+        <name>Data Assinatura</name>
+        <rename>Data_Assinatura</rename>
         <type>None</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -804,8 +742,8 @@
         <storage_type />
       </meta>
       <meta>
-        <name>CO MOTIVO DESAB</name>
-        <rename>CO_MOTIVO_DESAB</rename>
+        <name>Data Término</name>
+        <rename>Data_Termino</rename>
         <type>None</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -821,8 +759,8 @@
         <storage_type />
       </meta>
       <meta>
-        <name>CO MUNICIPIO GESTOR</name>
-        <rename>CO_MUNICIPIO_GESTOR</rename>
+        <name>Título</name>
+        <rename>Titulo</rename>
         <type>None</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -838,8 +776,8 @@
         <storage_type />
       </meta>
       <meta>
-        <name>CO NATUREZA JUR</name>
-        <rename>CO_NATUREZA_JUR</rename>
+        <name>Proponente</name>
+        <rename>Proponente</rename>
         <type>None</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -855,552 +793,8 @@
         <storage_type />
       </meta>
       <meta>
-        <name>CO NATUREZA ORGANIZACAO</name>
-        <rename>CO_NATUREZA_ORGANIZACAO</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>CO NIVEL HIERARQUIA</name>
-        <rename>CO_NIVEL_HIERARQUIA</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>CO RETENCAO TRIBUTARIA</name>
-        <rename>CO_RETENCAO_TRIBUTARIA</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>DS ESFERA ADMINISTRATIVA</name>
-        <rename>DS_ESFERA_ADMINISTRATIVA</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>DS MOTIVO DESAB</name>
-        <rename>DS_MOTIVO_DESAB</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>DS NATUREZA JURIDICA</name>
-        <rename>DS_NATUREZA_JURIDICA</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>DS NATUREZA ORGANIZACAO</name>
-        <rename>DS_NATUREZA_ORGANIZACAO</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>DS NIVEL HIERARQUIA</name>
-        <rename>DS_NIVEL_HIERARQUIA</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>DS RETENCAO TRIBUTO</name>
-        <rename>DS_RETENCAO_TRIBUTO</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>DS SUB TIPO UNIDADE</name>
-        <rename>DS_SUB_TIPO_UNIDADE</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>DS TIPO UNIDADE</name>
-        <rename>DS_TIPO_UNIDADE</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>DS TP GESTAO</name>
-        <rename>DS_TP_GESTAO</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>DT ATUALIZACAO ORIGEM</name>
-        <rename>DT_ATUALIZACAO_ORIGEM</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>DT ULTIMA ATUALIZACAO</name>
-        <rename>DT_ULTIMA_ATUALIZACAO</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>NO BAIRRO</name>
-        <rename>NO_BAIRRO</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>NO EMAIL</name>
-        <rename>NO_EMAIL</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>NO FANTASIA</name>
-        <rename>NO_FANTASIA</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>NO LOGRADOURO</name>
-        <rename>NO_LOGRADOURO</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>NO MUNICIPIO</name>
-        <rename>NO_MUNICIPIO</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>NO RAZAO SOCIAL</name>
-        <rename>NO_RAZAO_SOCIAL</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>NO RAZAO SOCIAL MANTENEDORA</name>
-        <rename>NO_RAZAO_SOCIAL_MANTENEDORA</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>NO REGIAO</name>
-        <rename>NO_REGIAO</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>NU CNPJ MANTENEDORA</name>
-        <rename>NU_CNPJ_MANTENEDORA</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>NU CNPJ REQUERENTE</name>
-        <rename>NU_CNPJ_REQUERENTE</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>NU COMP</name>
-        <rename>NU_COMP</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>NU CPF CNPJ</name>
-        <rename>NU_CPF_CNPJ</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>NU ENDERECO</name>
-        <rename>NU_ENDERECO</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>NU FAX</name>
-        <rename>NU_FAX</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>NU TELEFONE</name>
-        <rename>NU_TELEFONE</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>QT EXIT</name>
-        <rename>QT_EXIT</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>QT SUS</name>
-        <rename>QT_SUS</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>TP GESTAO</name>
-        <rename>TP_GESTAO</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>TP UNIDADE</name>
-        <rename>TP_UNIDADE</rename>
+        <name>CNPJ Proponente</name>
+        <rename>CNPJ_Proponente</rename>
         <type>None</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -1432,6 +826,74 @@
         <currency_symbol />
         <storage_type />
       </meta>
+      <meta>
+        <name>Município</name>
+        <rename>Municipio</rename>
+        <type>None</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask />
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale />
+        <date_format_timezone />
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding />
+        <decimal_symbol />
+        <grouping_symbol />
+        <currency_symbol />
+        <storage_type />
+      </meta>
+      <meta>
+        <name>Valor Finep</name>
+        <rename>Valor_Finep</rename>
+        <type>None</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask />
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale />
+        <date_format_timezone />
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding />
+        <decimal_symbol />
+        <grouping_symbol />
+        <currency_symbol />
+        <storage_type />
+      </meta>
+      <meta>
+        <name>Contrapartida Financeira</name>
+        <rename>Contrapartida_Financeira</rename>
+        <type>None</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask />
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale />
+        <date_format_timezone />
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding />
+        <decimal_symbol />
+        <grouping_symbol />
+        <currency_symbol />
+        <storage_type />
+      </meta>
+      <meta>
+        <name>Pago até Hoje</name>
+        <rename>Pago_ate_Hoje</rename>
+        <type>None</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask />
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale />
+        <date_format_timezone />
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding />
+        <decimal_symbol />
+        <grouping_symbol />
+        <currency_symbol />
+        <storage_type />
+      </meta>
     </fields>
     <cluster_schema />
     <remotesteps>
@@ -1441,8 +903,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>307</xloc>
-      <yloc>270</yloc>
+      <xloc>237</xloc>
+      <yloc>252</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1459,13 +921,25 @@
     </partitioning>
     <fields>
       <field>
-        <name>area_atuacao</name>
+        <name>cd_fonte_recursos_projeto</name>
         <type>Integer</type>
         <format />
         <currency />
         <decimal />
         <group />
-        <nullif>2</nullif>
+        <nullif>1</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>cd_origem_fonte_recursos_projeto</name>
+        <type>Integer</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif>1</nullif>
         <length>-1</length>
         <precision>-1</precision>
         <set_empty_string>N</set_empty_string>
@@ -1527,13 +1001,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1113</xloc>
-      <yloc>270</yloc>
+      <xloc>1049</xloc>
+      <yloc>252</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Atualizar contato</name>
+    <name>Atualizar projeto</name>
     <type>TableInput</type>
     <description />
     <distribute>Y</distribute>
@@ -1545,7 +1019,7 @@
     </partitioning>
     <connection>localhost</connection>
     <sql>SELECT * 
-FROM portal.atualizar_contato_osc(
+FROM portal.atualizar_projeto(
 	'${FONTE_CARGA}'::TEXT, 
 	?::NUMERIC, 
 	?::TEXT, 
@@ -1553,11 +1027,13 @@ FROM portal.atualizar_contato_osc(
 	?::JSONB, 
 	?::BOOLEAN, 
 	?::BOOLEAN, 
-	'${ID_CARGA}'::INTEGER
+	?::BOOLEAN, 
+	'${ID_CARGA}'::INTEGER, 
+	3::INTEGER
 );
 </sql>
     <limit>0</limit>
-    <lookup>Select values contato</lookup>
+    <lookup>Select values projeto</lookup>
     <execute_each_row>Y</execute_each_row>
     <variables_active>Y</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
@@ -1569,8 +1045,8 @@ FROM portal.atualizar_contato_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1633</xloc>
-      <yloc>337</yloc>
+      <xloc>1555</xloc>
+      <yloc>325</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1611,8 +1087,8 @@ FROM portal.atualizar_dados_gerais_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1629</xloc>
-      <yloc>222</yloc>
+      <xloc>1553</xloc>
+      <yloc>204</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1653,52 +1129,8 @@ FROM portal.atualizar_localizacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1632</xloc>
-      <yloc>442</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Atualizar área atuação</name>
-    <type>TableInput</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>localhost</connection>
-    <sql>SELECT * 
-FROM portal.atualizar_area_atuacao_osc(
-	'${FONTE_CARGA}'::TEXT, 
-	?::NUMERIC, 
-	?::TEXT, 
-	NOW()::TIMESTAMP, 
-	?::JSONB, 
-	?::BOOLEAN, 
-	?::BOOLEAN, 
-	?::BOOLEAN, 
-	'${ID_CARGA}'::INTEGER, 
-	2::INTEGER
-);
-</sql>
-    <limit>0</limit>
-    <lookup>Select values área atuação</lookup>
-    <execute_each_row>Y</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1629</xloc>
-      <yloc>108</yloc>
+      <xloc>1552</xloc>
+      <yloc>430</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1728,103 +1160,92 @@ FROM portal.atualizar_area_atuacao_osc(
     <encoding>ISO-8859-9</encoding>
     <fields>
       <field>
-        <name>NU COMP</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CO CNES</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>NU CPF CNPJ</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>NO RAZAO SOCIAL</name>
+        <name>Instrumento</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>53</length>
+        <length>16</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
-        <name>NO FANTASIA</name>
+        <name>Demanda</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>32</length>
+        <length>100</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
-        <name>NU CNPJ MANTENEDORA</name>
-        <type>Integer</type>
-        <format>#</format>
+        <name>Contrato</name>
+        <type>Number</type>
+        <format>#,###,###.#</format>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <length>15</length>
         <precision>0</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
-        <name>NO RAZAO SOCIAL MANTENEDORA</name>
+        <name>Data Assinatura</name>
+        <type>Date</type>
+        <format>dd/MM/yyyy</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>Data Término</name>
+        <type>Date</type>
+        <format>dd/MM/yyyy</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>Título</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>43</length>
+        <length>150</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
-        <name>CO MUNICIPIO GESTOR</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>NO REGIAO</name>
+        <name>Proponente</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>8</length>
+        <length>117</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>CNPJ Proponente</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>18</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>UF</name>
@@ -1835,43 +1256,32 @@ FROM portal.atualizar_area_atuacao_osc(
         <group>.</group>
         <length>2</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
-        <name>NO MUNICIPIO</name>
+        <name>Município</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>7</length>
+        <length>21</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
-        <name>NO LOGRADOURO</name>
+        <name>Valor Finep</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>32</length>
+        <length>14</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
-        <name>NU ENDERECO</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>NO BAIRRO</name>
+        <name>Contrapartida Financeira</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
@@ -1879,304 +1289,18 @@ FROM portal.atualizar_area_atuacao_osc(
         <group>.</group>
         <length>13</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
-        <name>CO CEP</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>NU TELEFONE</name>
+        <name>Pago até Hoje</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>17</length>
+        <length>14</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>NU FAX</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>12</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>NO EMAIL</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>35</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>TP GESTAO</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>DS TP GESTAO</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>9</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CO NATUREZA ORGANIZACAO</name>
-        <type>Boolean</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>DS NATUREZA ORGANIZACAO</name>
-        <type>Boolean</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CO NIVEL HIERARQUIA</name>
-        <type>Boolean</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>DS NIVEL HIERARQUIA</name>
-        <type>Boolean</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CO ESFERA ADMINISTRATIVA</name>
-        <type>Boolean</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>DS ESFERA ADMINISTRATIVA</name>
-        <type>Boolean</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>TP UNIDADE</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>DS TIPO UNIDADE</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>31</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>DS SUB TIPO UNIDADE</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>9</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CO RETENCAO TRIBUTARIA</name>
-        <type>Boolean</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>DS RETENCAO TRIBUTO</name>
-        <type>Boolean</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CO NATUREZA JUR</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>DS NATUREZA JURIDICA</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>18</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CO MOTIVO DESAB</name>
-        <type>Boolean</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>DS MOTIVO DESAB</name>
-        <type>Boolean</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>DT ULTIMA ATUALIZACAO</name>
-        <type>Date</type>
-        <format>dd/MM/yyyy</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>DT ATUALIZACAO ORIGEM</name>
-        <type>Date</type>
-        <format>dd/MM/yyyy</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>QT EXIT</name>
-        <type>Boolean</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>QT SUS</name>
-        <type>Boolean</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>NU CNPJ REQUERENTE</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>CEBAS</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>7</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
     </fields>
     <cluster_schema />
@@ -2187,8 +1311,8 @@ FROM portal.atualizar_area_atuacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>154</xloc>
-      <yloc>270</yloc>
+      <xloc>84</xloc>
+      <yloc>252</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2218,35 +1342,20 @@ FROM portal.atualizar_area_atuacao_osc(
 	return resultado;
 }
 
-if(NO_RAZAO_SOCIAL) NO_RAZAO_SOCIAL = formatarDado(NO_RAZAO_SOCIAL);
-if(NO_FANTASIA) NO_FANTASIA = formatarDado(NO_FANTASIA);
-if(TP_GESTAO) TP_GESTAO = formatarDado(TP_GESTAO);
-if(TP_UNIDADE) TP_UNIDADE = formatarDado(TP_UNIDADE);
-if(DS_SUB_TIPO_UNIDADE) DS_SUB_TIPO_UNIDADE = formatarDado(DS_SUB_TIPO_UNIDADE);
-if(CO_NATUREZA_JUR) CO_NATUREZA_JUR = formatarDado(CO_NATUREZA_JUR);
-if(CO_MUNICIPIO_GESTOR) CO_MUNICIPIO_GESTOR = formatarDado(CO_MUNICIPIO_GESTOR);
-if(NO_LOGRADOURO) NO_LOGRADOURO = formatarDado(NO_LOGRADOURO);
-if(NU_ENDERECO) NU_ENDERECO = formatarDado(NU_ENDERECO);
-if(NO_BAIRRO) NO_BAIRRO = formatarDado(NO_BAIRRO);
-if(CO_CEP) CO_CEP = formatarDado(CO_CEP);
-if(NU_TELEFONE) NU_TELEFONE = formatarDado(NU_TELEFONE);
-if(NO_EMAIL) NO_EMAIL = formatarDado(NO_EMAIL);
+if(Proponente) Proponente = formatarDado(Proponente);
+if(Titulo) Titulo = formatarDado(Titulo);
+if(Data_Assinatura) Data_Assinatura = formatarDado(Data_Assinatura);
+if(Data_Termino) Data_Termino = formatarDado(Data_Termino);
+if(Valor_Finep) Valor_Finep = formatarDado(Valor_Finep);
+if(Pago_ate_Hoje) Pago_ate_Hoje = formatarDado(Pago_ate_Hoje);
+if(Contrato) Contrato = formatarDado(Contrato);
 
-var area_atuacao_json = '{"cd_area_atuacao": ' + area_atuacao + '}';
-var dados_gerais_json = '{"tx_razao_social_osc": ' + NO_RAZAO_SOCIAL + ', "tx_nome_fantasia_osc": ' + NO_FANTASIA + ', "cd_natureza_juridica_osc": ' + CO_NATUREZA_JUR + '}';
-var localizacao_json = '{"cd_municipio": ' + CO_MUNICIPIO_GESTOR + ', "tx_endereco": ' + NO_LOGRADOURO + ', "nr_localizacao": ' + NU_ENDERECO + ', "tx_bairro": ' + NO_BAIRRO + ', "nr_cep": ' + CO_CEP + '}';
-var contato_json = '{"tx_telefone": ' + NU_TELEFONE + ', "tx_email": ' + NO_EMAIL + '}';</jsScript_script>
+var dados_gerais_json = '{"tx_razao_social_osc": ' + Proponente + '}';
+var localizacao_json = '{"cd_municipio": ' + edmu_cd_municipio + '}';
+var projeto_json = '{"tx_nome_projeto": ' + Titulo + ', "dt_data_inicio_projeto": ' + Data_Assinatura + ', "dt_data_fim_projeto": ' + Data_Termino + ', "nr_valor_total_projeto": ' + Valor_Finep + ', "nr_valor_captado_projeto": ' + Pago_ate_Hoje + ', "tx_identificador_projeto_externo": ' + Contrato + '}';</jsScript_script>
       </jsScript>
     </jsScripts>
     <fields>
-      <field>
-        <name>area_atuacao_json</name>
-        <rename>area_atuacao_json</rename>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
       <field>
         <name>dados_gerais_json</name>
         <rename>dados_gerais_json</rename>
@@ -2264,8 +1373,8 @@ var contato_json = '{"tx_telefone": ' + NU_TELEFONE + ', "tx_email": ' + NO_EMAI
         <replace>N</replace>
       </field>
       <field>
-        <name>contato_json</name>
-        <rename>contato_json</rename>
+        <name>projeto_json</name>
+        <rename>projeto_json</rename>
         <type>String</type>
         <length>-1</length>
         <precision>-1</precision>
@@ -2280,8 +1389,8 @@ var contato_json = '{"tx_telefone": ' + NU_TELEFONE + ', "tx_email": ' + NO_EMAI
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1243</xloc>
-      <yloc>270</yloc>
+      <xloc>1167</xloc>
+      <yloc>252</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2297,10 +1406,10 @@ var contato_json = '{"tx_telefone": ' + NU_TELEFONE + ', "tx_email": ' + NO_EMAI
       <schema_name />
     </partitioning>
     <join_type>INNER</join_type>
-    <step1>Acertar CNPJ</step1>
+    <step1>Replace in string</step1>
     <step2>Select id_osc</step2>
     <keys_1>
-      <key>cnpj</key>
+      <key>CNPJ_Proponente</key>
     </keys_1>
     <keys_2>
       <key>cnpj</key>
@@ -2313,8 +1422,8 @@ var contato_json = '{"tx_telefone": ' + NU_TELEFONE + ', "tx_email": ' + NO_EMAI
       </output>
     </remotesteps>
     <GUI>
-      <xloc>728</xloc>
-      <yloc>270</yloc>
+      <xloc>656</xloc>
+      <yloc>252</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2331,7 +1440,7 @@ var contato_json = '{"tx_telefone": ' + NU_TELEFONE + ', "tx_email": ' + NO_EMAI
     </partitioning>
     <fields>
       <field>
-        <in_stream_name>NU_CNPJ_REQUERENTE</in_stream_name>
+        <in_stream_name>CNPJ_Proponente</in_stream_name>
         <out_stream_name />
         <use_regex>yes</use_regex>
         <replace_string>\.|\/|\-</replace_string>
@@ -2350,8 +1459,8 @@ var contato_json = '{"tx_telefone": ' + NU_TELEFONE + ', "tx_email": ' + NO_EMAI
       </output>
     </remotesteps>
     <GUI>
-      <xloc>460</xloc>
-      <yloc>270</yloc>
+      <xloc>520</xloc>
+      <yloc>252</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2366,7 +1475,7 @@ var contato_json = '{"tx_telefone": ' + NU_TELEFONE + ', "tx_email": ' + NO_EMAI
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection>localhost</connection>
+    <connection>desenv</connection>
     <sql>SELECT id_osc, ? AS cnpj FROM osc.tb_osc WHERE cd_identificador_osc = ?::NUMERIC;</sql>
     <limit>0</limit>
     <lookup>Select values 1</lookup>
@@ -2381,8 +1490,8 @@ var contato_json = '{"tx_telefone": ' + NU_TELEFONE + ', "tx_email": ' + NO_EMAI
       </output>
     </remotesteps>
     <GUI>
-      <xloc>728</xloc>
-      <yloc>154</yloc>
+      <xloc>656</xloc>
+      <yloc>132</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2399,11 +1508,11 @@ var contato_json = '{"tx_telefone": ' + NU_TELEFONE + ', "tx_email": ' + NO_EMAI
     </partitioning>
     <fields>
       <field>
-        <name>cnpj</name>
+        <name>CNPJ_Proponente</name>
         <rename>cnpj_1</rename>
       </field>
       <field>
-        <name>cnpj</name>
+        <name>CNPJ_Proponente</name>
         <rename>cnpj_2</rename>
       </field>
       <select_unspecified>N</select_unspecified>
@@ -2416,13 +1525,13 @@ var contato_json = '{"tx_telefone": ' + NU_TELEFONE + ', "tx_email": ' + NO_EMAI
       </output>
     </remotesteps>
     <GUI>
-      <xloc>588</xloc>
-      <yloc>154</yloc>
+      <xloc>516</xloc>
+      <yloc>132</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Select values contato</name>
+    <name>Select values projeto</name>
     <type>SelectValues</type>
     <description />
     <distribute>N</distribute>
@@ -2435,18 +1544,27 @@ var contato_json = '{"tx_telefone": ' + NU_TELEFONE + ', "tx_email": ' + NO_EMAI
     <fields>
       <field>
         <name>id_osc</name>
+        <rename />
       </field>
       <field>
         <name>tipo_identificador</name>
+        <rename />
       </field>
       <field>
-        <name>contato_json</name>
+        <name>projeto_json</name>
+        <rename />
       </field>
       <field>
         <name>null_valido</name>
+        <rename />
+      </field>
+      <field>
+        <name>delete_valido</name>
+        <rename />
       </field>
       <field>
         <name>erro_log</name>
+        <rename />
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -2458,8 +1576,8 @@ var contato_json = '{"tx_telefone": ' + NU_TELEFONE + ', "tx_email": ' + NO_EMAI
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1419</xloc>
-      <yloc>337</yloc>
+      <xloc>1341</xloc>
+      <yloc>325</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2500,8 +1618,8 @@ var contato_json = '{"tx_telefone": ' + NU_TELEFONE + ', "tx_email": ' + NO_EMAI
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1415</xloc>
-      <yloc>222</yloc>
+      <xloc>1339</xloc>
+      <yloc>204</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2542,53 +1660,8 @@ var contato_json = '{"tx_telefone": ' + NU_TELEFONE + ', "tx_email": ' + NO_EMAI
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1418</xloc>
-      <yloc>442</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Select values área atuação</name>
-    <type>SelectValues</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <name>id_osc</name>
-      </field>
-      <field>
-        <name>tipo_identificador</name>
-      </field>
-      <field>
-        <name>area_atuacao_json</name>
-      </field>
-      <field>
-        <name>null_valido</name>
-      </field>
-      <field>
-        <name>delete_valido</name>
-      </field>
-      <field>
-        <name>erro_log</name>
-      </field>
-      <select_unspecified>N</select_unspecified>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1415</xloc>
-      <yloc>108</yloc>
+      <xloc>1338</xloc>
+      <yloc>430</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2626,8 +1699,8 @@ if(flag_variable == true &amp;&amp; flag == false){
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1807</xloc>
-      <yloc>270</yloc>
+      <xloc>1731</xloc>
+      <yloc>252</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2647,11 +1720,8 @@ if(flag_variable == true &amp;&amp; flag == false){
 FROM spat.ed_municipio 
 INNER JOIN spat.ed_uf 
 ON ed_municipio.eduf_cd_uf = ed_uf.eduf_cd_uf 
-WHERE SUBSTRING(ed_municipio.edmu_cd_municipio::TEXT from 0 for 7) = ?::TEXT 
-OR (
-	LOWER(ed_municipio.edmu_nm_municipio) = LOWER(?) 
-	AND LOWER(ed_uf.eduf_sg_uf) = LOWER(?)
-);</sql>
+WHERE LOWER(ed_municipio.edmu_nm_municipio) = LOWER(?) 
+AND LOWER(ed_uf.eduf_sg_uf) = LOWER(?);</sql>
     <limit>0</limit>
     <lookup>Select values 2</lookup>
     <execute_each_row>Y</execute_each_row>
@@ -2665,8 +1735,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>992</xloc>
-      <yloc>156</yloc>
+      <xloc>925</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2687,11 +1757,7 @@ OR (
         <rename />
       </field>
       <field>
-        <name>CO_MUNICIPIO_GESTOR</name>
-        <rename />
-      </field>
-      <field>
-        <name>NO_MUNICIPIO</name>
+        <name>Municipio</name>
         <rename />
       </field>
       <field>
@@ -2708,32 +1774,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>844</xloc>
-      <yloc>156</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Dummy</name>
-    <type>Dummy</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>843</xloc>
-      <yloc>270</yloc>
+      <xloc>777</xloc>
+      <yloc>128</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2765,8 +1807,32 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>992</xloc>
-      <yloc>270</yloc>
+      <xloc>925</xloc>
+      <yloc>252</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Dummy</name>
+    <type>Dummy</type>
+    <description />
+    <distribute>N</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>777</xloc>
+      <yloc>252</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2782,7 +1848,7 @@ OR (
       <schema_name />
     </partitioning>
     <send_true_to>Select values localização</send_true_to>
-    <send_false_to />
+    <send_false_to>Select values localização</send_false_to>
     <compare>
       <condition>
         <negated>N</negated>
@@ -2799,8 +1865,58 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1243</xloc>
-      <yloc>442</yloc>
+      <xloc>1167</xloc>
+      <yloc>430</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Ajustar valores</name>
+    <type>ScriptValueMod</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>if(Valor_Finep === '-'){
+	Valor_Finep = null;
+}else{
+	Valor_Finep = Number(Valor_Finep);
+}
+
+if(Contrapartida_Financeira === '-'){
+	Contrapartida_Financeira = null;
+}else{
+	Contrapartida_Financeira = Number(Contrapartida_Financeira);
+}
+
+if(Pago_ate_Hoje === '-'){
+	Pago_ate_Hoje = null;
+}else{
+	Pago_ate_Hoje = Number(Pago_ate_Hoje);
+}</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>386</xloc>
+      <yloc>252</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
