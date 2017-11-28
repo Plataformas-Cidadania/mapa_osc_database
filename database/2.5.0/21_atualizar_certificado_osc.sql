@@ -84,7 +84,7 @@ BEGIN
 			
 			dado_nao_delete := array_append(dado_nao_delete, dado_posterior.id_certificado);
 			
-			PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, dataatualizacao, null, row_to_json(dado_posterior),id_carga);
+			PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, null, row_to_json(dado_posterior),id_carga);
 			
 		ELSE 
 			dado_posterior := dado_anterior;
@@ -120,7 +120,7 @@ BEGIN
 					ft_certificado = dado_posterior.ft_certificado 
 				WHERE id_certificado = dado_posterior.id_certificado;
 				
-				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, dataatualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior),id_carga);
+				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior),id_carga);
 			END IF;
 		
 		END IF;
@@ -149,7 +149,7 @@ BEGIN
 EXCEPTION 
 	WHEN others THEN 
 		flag := false;
-		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, osc, dataatualizacao::TIMESTAMP, erro_log, id_carga) AS a;
+		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, osc, data_atualizacao::TIMESTAMP, erro_log, id_carga) AS a;
 		RETURN NEXT;
 		
 END; 
