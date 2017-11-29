@@ -437,7 +437,7 @@
   <notepads>
   </notepads>
   <connection>
-    <name>desenv</name>
+    <name>localhost</name>
     <server>localhost</server>
     <type>POSTGRESQL</type>
     <access>Native</access>
@@ -488,14 +488,14 @@
     </attributes>
   </connection>
   <connection>
-    <name>localhost</name>
-    <server>localhost</server>
+    <name>mapaosc-desenv</name>
+    <server>mapaosc-desenv</server>
     <type>POSTGRESQL</type>
     <access>Native</access>
     <database>portalosc</database>
     <port>5432</port>
     <username>i3geo</username>
-    <password>Encrypted 2be98afc86aa7f2e4cb79ce798d95aad5</password>
+    <password>Encrypted 2be98afc86aa7f2e4cb10be75dfc2ff8b</password>
     <servername />
     <data_tablespace />
     <index_tablespace />
@@ -637,12 +637,12 @@
     <hop>
       <from>Formatar JSON</from>
       <to>Select values certificado</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>Formatar JSON</from>
       <to>Select values área atuação</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>Formatar JSON</from>
@@ -669,8 +669,8 @@
     <fields>
       <select_unspecified>N</select_unspecified>
       <meta>
-        <name>CÓD. IBGE (6 DÍGITOS)</name>
-        <rename>COD_IBGE_REDUZIDA</rename>
+        <name>CNPJ</name>
+        <rename>CNPJ</rename>
         <type>None</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -686,8 +686,8 @@
         <storage_type />
       </meta>
       <meta>
-        <name>CÓD. IBGE (7 DÍGITOS)</name>
-        <rename>COD_IBGE</rename>
+        <name>ENTIDADE</name>
+        <rename>ENTIDADE</rename>
         <type>None</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -703,8 +703,8 @@
         <storage_type />
       </meta>
       <meta>
-        <name>INÍCIO ÚLTIMA CERTIFICAÇÃO</name>
-        <rename>INICIO_ULTIMA_CERTIFICACAO</rename>
+        <name>MUNICÍPIO</name>
+        <rename>MUNICIPIO</rename>
         <type>None</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -720,8 +720,8 @@
         <storage_type />
       </meta>
       <meta>
-        <name>FIM ÚLTIMA CERTIFICAÇÃO</name>
-        <rename>FIM_ULTIMA_CERTIFICACAO</rename>
+        <name>UF</name>
+        <rename>UF</rename>
         <type>None</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -754,8 +754,42 @@
         <storage_type />
       </meta>
       <meta>
-        <name>MUNICÍPIO</name>
-        <rename>MUNICIPIO</rename>
+        <name>VALIDADE INICIO</name>
+        <rename>VALIDADE_INICIO</rename>
+        <type>None</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask />
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale />
+        <date_format_timezone />
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding />
+        <decimal_symbol />
+        <grouping_symbol />
+        <currency_symbol />
+        <storage_type />
+      </meta>
+      <meta>
+        <name>VALIDADE FIM</name>
+        <rename>VALIDADE_FIM</rename>
+        <type>None</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask />
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale />
+        <date_format_timezone />
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding />
+        <decimal_symbol />
+        <grouping_symbol />
+        <currency_symbol />
+        <storage_type />
+      </meta>
+      <meta>
+        <name>cód. IBGE (7 dígitos)</name>
+        <rename>COD_IBGE</rename>
         <type>None</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -905,7 +939,7 @@
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection>localhost</connection>
+    <connection>mapaosc-desenv</connection>
     <sql>SELECT * 
 FROM portal.atualizar_certificado_osc(
 	'${FONTE_CARGA}'::TEXT, 
@@ -949,7 +983,7 @@ FROM portal.atualizar_certificado_osc(
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection>localhost</connection>
+    <connection>mapaosc-desenv</connection>
     <sql>SELECT * 
 FROM portal.atualizar_dados_gerais_osc(
 	'${FONTE_CARGA}'::TEXT, 
@@ -991,7 +1025,7 @@ FROM portal.atualizar_dados_gerais_osc(
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection>localhost</connection>
+    <connection>mapaosc-desenv</connection>
     <sql>SELECT * 
 FROM portal.atualizar_localizacao_osc(
 	'${FONTE_CARGA}'::TEXT, 
@@ -1033,7 +1067,7 @@ FROM portal.atualizar_localizacao_osc(
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection>localhost</connection>
+    <connection>mapaosc-desenv</connection>
     <sql>SELECT * 
 FROM portal.atualizar_area_atuacao_osc(
 	'${FONTE_CARGA}'::TEXT, 
@@ -1109,30 +1143,8 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>43</length>
+        <length>91</length>
         <precision>-1</precision>
-        <trim_type>both</trim_type>
-      </field>
-      <field>
-        <name>CÓD. IBGE (6 DÍGITOS)</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>both</trim_type>
-      </field>
-      <field>
-        <name>CÓD. IBGE (7 DÍGITOS)</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
@@ -1142,7 +1154,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>14</length>
+        <length>24</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1164,12 +1176,12 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>6</length>
+        <length>7</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
-        <name>INÍCIO ÚLTIMA CERTIFICAÇÃO</name>
+        <name>VALIDADE INICIO</name>
         <type>Date</type>
         <format>dd/MM/yyyy</format>
         <currency>R$</currency>
@@ -1180,7 +1192,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <trim_type>both</trim_type>
       </field>
       <field>
-        <name>FIM ÚLTIMA CERTIFICAÇÃO</name>
+        <name>VALIDADE FIM</name>
         <type>Date</type>
         <format>dd/MM/yyyy</format>
         <currency>R$</currency>
@@ -1188,6 +1200,17 @@ FROM portal.atualizar_area_atuacao_osc(
         <group>.</group>
         <length>-1</length>
         <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>cód. IBGE (7 dígitos)</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
         <trim_type>both</trim_type>
       </field>
     </fields>
@@ -1433,7 +1456,7 @@ var dados_gerais_json = '{"tx_razao_social_osc": ' + ENTIDADE + '}';</jsScript_s
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection>desenv</connection>
+    <connection>mapaosc-desenv</connection>
     <sql>SELECT row_to_json(array_certificado) AS json_certificado FROM (
 	SELECT array_agg(tb_certificado) AS certificado FROM (
 		SELECT * FROM osc.tb_certificado WHERE id_osc = ? AND NOT cd_certificado = 6
@@ -1469,7 +1492,7 @@ var dados_gerais_json = '{"tx_razao_social_osc": ' + ENTIDADE + '}';</jsScript_s
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection>desenv</connection>
+    <connection>mapaosc-desenv</connection>
     <sql>SELECT id_osc, ? AS cnpj FROM osc.tb_osc WHERE cd_identificador_osc = ?::NUMERIC;</sql>
     <limit>0</limit>
     <lookup>Select values</lookup>
