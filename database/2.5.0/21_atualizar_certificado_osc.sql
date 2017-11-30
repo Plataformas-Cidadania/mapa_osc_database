@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS portal.atualizar_certificado_osc(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, deletevalido BOOLEAN, errolog BOOLEAN, idcarga INTEGER, tipobusca INTEGER);
+DROP FUNCTION IF EXISTS portal.atualizar_certificado_osc(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT, data_atualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, delete_valido BOOLEAN, erro_log BOOLEAN, id_carga INTEGER, tipo_busca INTEGER);
 
-CREATE OR REPLACE FUNCTION portal.atualizar_certificado_osc(fonte TEXT, osc INTEGER, dataatualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, deletevalido BOOLEAN, errolog BOOLEAN, idcarga INTEGER, tipobusca INTEGER) RETURNS TABLE(
+CREATE OR REPLACE FUNCTION portal.atualizar_certificado_osc(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT, data_atualizacao TIMESTAMP, json JSONB, nullvalido BOOLEAN, delete_valido BOOLEAN, erro_log BOOLEAN, id_carga INTEGER, tipo_busca INTEGER) RETURNS TABLE(
 	mensagem TEXT, 
 	flag BOOLEAN
 )AS $$
@@ -11,42 +11,55 @@ DECLARE
 	objeto RECORD;
 	dado_anterior RECORD;
 	dado_posterior RECORD;
-	registro_nao_delete INTEGER[];
+	dado_nao_delete INTEGER[];
 	flag_update BOOLEAN;
+	osc INTEGER;
 	
 BEGIN 
 	nome_tabela := 'osc.tb_certificado';
+	tipo_identificador := lower(tipo_identificador);
 	
 	SELECT INTO fonte_dados * FROM portal.verificar_fonte(fonte);
-	
-	IF fonte_dados IS null THEN 
+
+	IF fonte_dados IS null THEN
 		RAISE EXCEPTION 'fonte_invalida';
-	ELSIF osc != ALL(fonte_dados.representacao) THEN 
+	END IF;
+
+	IF tipo_identificador = 'cnpj' THEN
+		SELECT id_osc INTO osc FROM osc.tb_osc WHERE cd_identificador_osc = identificador;
+	ELSIF tipo_identificador = 'id_osc' THEN
+		SELECT id_osc INTO osc FROM osc.tb_osc WHERE id_osc = identificador;
+	ELSE
+		RAISE EXCEPTION 'tipo_identificador_invalido';
+	END IF;
+
+	IF osc IS null THEN
+		RAISE EXCEPTION 'osc_nao_encontrada';
+	ELSIF osc != ALL(fonte_dados.representacao) THEN
 		RAISE EXCEPTION 'permissao_negada_usuario';
 	END IF;
 	
-	registro_nao_delete := '{}';
-	
-	IF json_typeof(json::JSON) = 'object' THEN 
-		json := ('[' || json || ']');
+	IF jsonb_typeof(json) = 'object' THEN 
+		json := jsonb_build_array(json);
 	END IF;
 	
-	FOR objeto IN (SELECT * FROM json_populate_recordset(null::osc.tb_certificado, json::JSON)) 
+	FOR objeto IN (SELECT * FROM jsonb_populate_recordset(null::osc.tb_certificado, json)) 
 	LOOP 
 		dado_anterior := null;
 		
-		IF tipobusca = 1 THEN 
+		IF tipo_busca = 1 THEN 
 			SELECT INTO dado_anterior * 
 			FROM osc.tb_certificado 
 			WHERE id_certificado = objeto.id_certificado;
 			
-		ELSIF tipobusca = 2 THEN 
+		ELSIF tipo_busca = 2 THEN 
 			SELECT INTO dado_anterior * 
 			FROM osc.tb_certificado 
-			WHERE (id_osc = osc AND cd_certificado = objeto.cd_certificado);
+			WHERE cd_certificado = objeto.cd_certificado 
+			AND id_osc = osc;
 			
 		ELSE 
-			RAISE EXCEPTION 'dado_invalido';
+			RAISE EXCEPTION 'tipo_busca_invalido';
 			
 		END IF;
 		
@@ -69,13 +82,13 @@ BEGIN
 				fonte_dados.nome_fonte
 			) RETURNING * INTO dado_posterior;
 			
-			registro_nao_delete := array_append(registro_nao_delete, dado_posterior.id_certificado);
+			dado_nao_delete := array_append(dado_nao_delete, dado_posterior.id_certificado);
 			
-			PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, dataatualizacao, null, row_to_json(dado_posterior));
+			PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, null, row_to_json(dado_posterior),id_carga);
 			
 		ELSE 
 			dado_posterior := dado_anterior;
-			registro_nao_delete := array_append(registro_nao_delete, dado_posterior.id_certificado);
+			dado_nao_delete := array_append(dado_nao_delete, dado_posterior.id_certificado);
 			flag_update := false;
 			
 			IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.cd_certificado::TEXT, dado_anterior.ft_certificado, objeto.cd_certificado::TEXT, fonte_dados.prioridade, nullvalido) AS a) THEN 
@@ -107,15 +120,25 @@ BEGIN
 					ft_certificado = dado_posterior.ft_certificado 
 				WHERE id_certificado = dado_posterior.id_certificado;
 				
-				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, dataatualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior));
+				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior),id_carga);
 			END IF;
 		
 		END IF;
 		
 	END LOOP;
 	
-	IF deletevalido THEN 
-		DELETE FROM osc.tb_certificado WHERE id_certificado != ALL(registro_nao_delete);
+	IF delete_valido THEN 
+		DELETE FROM osc.tb_certificado WHERE id_certificado != ALL(dado_nao_delete);
+	END IF;
+	
+	IF delete_valido THEN
+		FOR objeto IN (SELECT * FROM osc.tb_certificado WHERE id_osc = osc AND id_certificado != ALL(dado_nao_delete))
+		LOOP
+			IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_area_atuacao]) AS a) THEN
+				DELETE FROM osc.tb_certificado WHERE id_certificado = objeto.id_certificado;
+				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(objeto), null);
+			END IF;
+		END LOOP;
 	END IF;
 	
 	flag := true;
@@ -126,7 +149,7 @@ BEGIN
 EXCEPTION 
 	WHEN others THEN 
 		flag := false;
-		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, osc, dataatualizacao::TIMESTAMP, errolog, idcarga) AS a;
+		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, osc, data_atualizacao::TIMESTAMP, erro_log, id_carga) AS a;
 		RETURN NEXT;
 		
 END; 

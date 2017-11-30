@@ -1,49 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <job>
-  <name>job_cebas-ms</name>
+  <name>Main -SUAS</name>
     <description/>
     <extended_description/>
     <job_version/>
   <directory>&#x2f;</directory>
   <created_user>-</created_user>
-  <created_date>2017&#x2f;08&#x2f;08 11&#x3a;25&#x3a;25.475</created_date>
+  <created_date>2017&#x2f;11&#x2f;24 13&#x3a;50&#x3a;26.456</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2017&#x2f;08&#x2f;08 11&#x3a;25&#x3a;25.475</modified_date>
+  <modified_date>2017&#x2f;11&#x2f;24 13&#x3a;50&#x3a;26.456</modified_date>
     <parameters>
     </parameters>
   <connection>
-    <name>desenv</name>
-    <server>10.1.4.110</server>
+    <name>portalosc</name>
+    <server>localhost</server>
     <type>POSTGRESQL</type>
     <access>Native</access>
     <database>portalosc</database>
     <port>5432</port>
     <username>i3geo</username>
     <password>Encrypted 2be98afc86aa7f2e4cb10be75dfc2ff8b</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>5432</attribute></attribute>
-      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>N</attribute></attribute>
-      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
-      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
-      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>Y</attribute></attribute>
-      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
-    </attributes>
-  </connection>
-  <connection>
-    <name>localhost</name>
-    <server>localhost</server>
-    <type>POSTGRESQL</type>
-    <access>Native</access>
-    <database>portalosc_producao</database>
-    <port>5432</port>
-    <username>postgres</username>
-    <password>Encrypted 2be98afc86aa7f2e4cb79a760db93bdd0</password>
     <servername/>
     <data_tablespace/>
     <index_tablespace/>
@@ -98,16 +74,37 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>134</xloc>
-      <yloc>314</yloc>
+      <xloc>70</xloc>
+      <yloc>171</yloc>
       </entry>
     <entry>
-      <name>Transformation</name>
+      <name>Success</name>
+      <description/>
+      <type>SUCCESS</type>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>899</xloc>
+      <yloc>169</yloc>
+      </entry>
+    <entry>
+      <name>Abort job</name>
+      <description/>
+      <type>ABORT</type>
+      <message/>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>901</xloc>
+      <yloc>273</yloc>
+      </entry>
+    <entry>
+      <name>Carga</name>
       <description/>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>&#x2f;home&#x2f;DLIPEA&#x2f;b6519563&#x2f;workspace&#x2f;mapa_osc_database&#x2f;ETL&#x2f;MOSC-1347&#x2f;trans_cebas-ms.ktr</filename>
+      <filename>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;Carga.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -131,39 +128,121 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>259</xloc>
-      <yloc>314</yloc>
+      <xloc>307</xloc>
+      <yloc>174</yloc>
       </entry>
     <entry>
-      <name>Success</name>
+      <name>Censo SUAS</name>
       <description/>
-      <type>SUCCESS</type>
-      <parallel>N</parallel>
+      <type>TRANS</type>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;Censo_SUAS.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <parameters>        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>464</xloc>
-      <yloc>313</yloc>
+      <xloc>445</xloc>
+      <yloc>175</yloc>
       </entry>
     <entry>
-      <name>SQL</name>
+      <name>SQL Sucesso</name>
       <description/>
       <type>SQL</type>
-      <sql>REFRESH MATERIALIZED VIEW portal.vw_osc_area_atuacao&#x3b;</sql>
-      <useVariableSubstitution>F</useVariableSubstitution>
+      <sql>UPDATE log.tb_log_carga &#xa;SET dt_fim &#x3d; NOW&#x28;&#x29;&#x3a;&#x3a;timestamp, &#xa;cd_status &#x3d; 9&#xa;WHERE id_carga &#x3d;  &#x24;&#x7b;ID_CARGA&#x7d;</sql>
+      <useVariableSubstitution>T</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename/>
       <sendOneStatement>F</sendOneStatement>
-      <connection>desenv</connection>
+      <connection>portalosc</connection>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>374</xloc>
-      <yloc>312</yloc>
+      <xloc>758</xloc>
+      <yloc>175</yloc>
+      </entry>
+    <entry>
+      <name>SQL Falha</name>
+      <description/>
+      <type>SQL</type>
+      <sql>UPDATE log.tb_log_carga SET dt_fim &#x3d; NOW&#x28;&#x29;&#x3a;&#x3a;timestamp, cd_status &#x3d; 2&#xa;WHERE id_carga &#x3d; &#x24;&#x7b;ID_CARGA&#x7d;&#x3b;</sql>
+      <useVariableSubstitution>T</useVariableSubstitution>
+      <sqlfromfile>F</sqlfromfile>
+      <sqlfilename/>
+      <sendOneStatement>F</sendOneStatement>
+      <connection/>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>760</xloc>
+      <yloc>277</yloc>
+      </entry>
+    <entry>
+      <name>Set variables</name>
+      <description/>
+      <type>SET_VARIABLES</type>
+      <replacevars>Y</replacevars>
+      <filename/>
+      <file_variable_type>JVM</file_variable_type>
+      <fields>
+        <field>
+          <variable_name>ETL</variable_name>
+          <variable_value>Censo SUAS 08&#x2f;2017</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>DIR</variable_name>
+          <variable_value>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+      </fields>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>188</xloc>
+      <yloc>173</yloc>
       </entry>
   </entries>
   <hops>
     <hop>
-      <from>SQL</from>
+      <from>Carga</from>
+      <to>Censo SUAS</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Censo SUAS</from>
+      <to>SQL Sucesso</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>SQL Sucesso</from>
       <to>Success</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -172,8 +251,17 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Transformation</from>
-      <to>SQL</to>
+      <from>Censo SUAS</from>
+      <to>SQL Falha</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>SQL Falha</from>
+      <to>Abort job</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -182,12 +270,21 @@
     </hop>
     <hop>
       <from>START</from>
-      <to>Transformation</to>
+      <to>Set variables</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
       <evaluation>Y</evaluation>
       <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Set variables</from>
+      <to>Carga</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
     </hop>
   </hops>
   <notepads>

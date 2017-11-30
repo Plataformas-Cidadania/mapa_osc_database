@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>trans_cnes</name>
+    <name>trans_cebas_ms</name>
     <description />
     <extended_description />
     <trans_version />
@@ -540,19 +540,24 @@
   </connection>
   <order>
     <hop>
-      <from>Select values 1</from>
+      <from>Select values</from>
       <to>Select id_osc</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Select id_osc</from>
-      <to>Merge Join 1</to>
+      <to>Merge Join</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Atualizar certificado</from>
+      <to>Set variable flag banco</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Atualizar dados gerais</from>
       <to>Set variable flag banco</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>Atualizar área atuação</from>
@@ -560,13 +565,23 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
+      <from>Select values certificado</from>
+      <to>Atualizar certificado</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
       <from>Select values dados gerais</from>
       <to>Atualizar dados gerais</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>Select values área atuação</from>
       <to>Atualizar área atuação</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Formatar JSON</from>
+      <to>Select values certificado</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -577,46 +592,11 @@
     <hop>
       <from>Formatar JSON</from>
       <to>Select values dados gerais</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Add constants</from>
-      <to>Formatar JSON</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Replace in string</from>
-      <to>Acertar CNPJ</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Acertar CNPJ</from>
-      <to>Merge Join 1</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Acertar CNPJ</from>
-      <to>Select values 1</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Select values localização</from>
-      <to>Atualizar localização</to>
       <enabled>N</enabled>
     </hop>
     <hop>
-      <from>Atualizar localização</from>
-      <to>Set variable flag banco</to>
-      <enabled>N</enabled>
-    </hop>
-    <hop>
-      <from>Select values 2</from>
-      <to>Select cd_municipio</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Merge Join 1</from>
-      <to>Dummy</to>
+      <from>Dummy</from>
+      <to>Merge Join 2</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -625,8 +605,53 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Dummy</from>
+      <from>Select cd_municipio</from>
       <to>Merge Join 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Select values 2</from>
+      <to>Select cd_municipio</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Merge Join</from>
+      <to>Dummy</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Filter município</from>
+      <to>Select values localização</to>
+      <enabled>N</enabled>
+    </hop>
+    <hop>
+      <from>Select values localização</from>
+      <to>Atualizar localização</to>
+      <enabled>N</enabled>
+    </hop>
+    <hop>
+      <from>Formatar JSON</from>
+      <to>Filter município</to>
+      <enabled>N</enabled>
+    </hop>
+    <hop>
+      <from>Atualizar localização</from>
+      <to>Set variable flag banco</to>
+      <enabled>N</enabled>
+    </hop>
+    <hop>
+      <from>CSV file input</from>
+      <to>Replace in string</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Replace in string</from>
+      <to>Merge Join</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Replace in string</from>
+      <to>Select values</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -635,73 +660,41 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Select cd_municipio</from>
-      <to>Merge Join 2</to>
+      <from>Add constants</from>
+      <to>Filter certificado</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Formatar JSON</from>
+      <from>Filter certificado</from>
+      <to>Formatar JSON</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Filter certificado</from>
+      <to>Select values 3</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Select values 3</from>
+      <to>Select id_certificado</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Select id_certificado</from>
       <to>Filter rows</to>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Select values 4</from>
+      <to>Delete certificado</to>
+      <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Filter rows</from>
-      <to>Select values localização</to>
-      <enabled>N</enabled>
-    </hop>
-    <hop>
-      <from>CSV file input</from>
-      <to>Replace in string</to>
+      <to>Select values 4</to>
       <enabled>Y</enabled>
     </hop>
   </order>
-  <step>
-    <name>Acertar CNPJ</name>
-    <type>ScriptValueMod</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <compatible>N</compatible>
-    <optimizationLevel>9</optimizationLevel>
-    <jsScripts>
-      <jsScript>
-        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>if(NU_CNPJ_REQUERENTE === null){
-	var cnpj = Number(NU_CNPJ_MANTENEDORA);
-}else{
-	var cnpj = Number(NU_CNPJ_REQUERENTE);
-}</jsScript_script>
-      </jsScript>
-    </jsScripts>
-    <fields>
-      <field>
-        <name>cnpj</name>
-        <rename>cnpj</rename>
-        <type>Number</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>359</xloc>
-      <yloc>254</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
   <step>
     <name>Add constants</name>
     <type>Constant</type>
@@ -714,6 +707,18 @@
       <schema_name />
     </partitioning>
     <fields>
+      <field>
+        <name>certificado</name>
+        <type>Integer</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif>3</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
       <field>
         <name>area_atuacao</name>
         <type>Integer</type>
@@ -783,8 +788,52 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>891</xloc>
-      <yloc>254</yloc>
+      <xloc>749</xloc>
+      <yloc>286</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Atualizar certificado</name>
+    <type>TableInput</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>localhost</connection>
+    <sql>SELECT * 
+FROM portal.atualizar_certificado_osc(
+	'${FONTE_CARGA}'::TEXT, 
+	?::NUMERIC, 
+	?::TEXT, 
+	NOW()::TIMESTAMP, 
+	?::JSONB, 
+	?::BOOLEAN, 
+	?::BOOLEAN, 
+	?::BOOLEAN, 
+	'${ID_CARGA}'::INTEGER, 
+	2::INTEGER
+);
+</sql>
+    <limit>0</limit>
+    <lookup>Select values certificado</lookup>
+    <execute_each_row>Y</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1425</xloc>
+      <yloc>183</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -825,8 +874,8 @@ FROM portal.atualizar_dados_gerais_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1402</xloc>
-      <yloc>254</yloc>
+      <xloc>1434</xloc>
+      <yloc>401</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -867,8 +916,8 @@ FROM portal.atualizar_localizacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1410</xloc>
-      <yloc>374</yloc>
+      <xloc>1439</xloc>
+      <yloc>510</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -876,7 +925,7 @@ FROM portal.atualizar_localizacao_osc(
     <name>Atualizar área atuação</name>
     <type>TableInput</type>
     <description />
-    <distribute>N</distribute>
+    <distribute>Y</distribute>
     <custom_distribution />
     <copies>1</copies>
     <partitioning>
@@ -911,8 +960,8 @@ FROM portal.atualizar_area_atuacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1402</xloc>
-      <yloc>140</yloc>
+      <xloc>1426</xloc>
+      <yloc>285</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -942,7 +991,7 @@ FROM portal.atualizar_area_atuacao_osc(
     <encoding>ISO-8859-1</encoding>
     <fields>
       <field>
-        <name>NU_CNPJ_REQUERENTE</name>
+        <name>NU_CNPJ</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
@@ -954,6 +1003,17 @@ FROM portal.atualizar_area_atuacao_osc(
       </field>
       <field>
         <name>NO_PESSOA</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>NO_FANTASIA</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
@@ -997,28 +1057,6 @@ FROM portal.atualizar_area_atuacao_osc(
         <trim_type>both</trim_type>
       </field>
       <field>
-        <name>A_LEI</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-      </field>
-      <field>
-        <name>TEMPESTIVIDADE</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-      </field>
-      <field>
         <name>NU_SIPAR</name>
         <type>String</type>
         <format />
@@ -1031,6 +1069,39 @@ FROM portal.atualizar_area_atuacao_osc(
       </field>
       <field>
         <name>DT_PROTOCOLO</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>DT_PROTOCOLO_ORIGEM</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>DT_CORREIO</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>DT_INCLUSAO</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
@@ -1063,7 +1134,161 @@ FROM portal.atualizar_area_atuacao_osc(
         <trim_type>both</trim_type>
       </field>
       <field>
-        <name>CEBAS_ATUAL</name>
+        <name>DS_AREA_ATUACAO_PREP</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>DS_SUB_UNIDADE</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>DS_ARQUIVO</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>DS_TIPO_DECISAO</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>NU_PORTARIA</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>DT_PORTARIA</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>DT_PUBLICACAO_VIGENCIA</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>DT_INICIO_VIGENCIA</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>DT_FIM_VIGENCIA</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>NU_PERIODO_VIGENCIA</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>VIGENCIA</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>RECURSO</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>DT_RECURSO</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>DS_SITUACAO_ATUAL</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>CEBAS</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
@@ -1095,292 +1320,6 @@ FROM portal.atualizar_area_atuacao_osc(
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
-      <field>
-        <name>CNES</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-      </field>
-      <field>
-        <name>CO_CNES</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-      </field>
-      <field>
-        <name>NU_CNPJ</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-      </field>
-      <field>
-        <name>NU_CNPJ_MANTENEDORA</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-      </field>
-      <field>
-        <name>NO_RAZAO_SOCIAL</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-      </field>
-      <field>
-        <name>NO_FANTASIA</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-      </field>
-      <field>
-        <name>NO_REGIAO</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-      </field>
-      <field>
-        <name>UF</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-      </field>
-      <field>
-        <name>CO_MUNICIPIO</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-      </field>
-      <field>
-        <name>NO_MUNICIPIO</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-      </field>
-      <field>
-        <name>NO_LOGRADOURO</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-      </field>
-      <field>
-        <name>NU_ENDERECO</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-      </field>
-      <field>
-        <name>NO_COMPLEMENTO</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-      </field>
-      <field>
-        <name>NO_BAIRRO</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-      </field>
-      <field>
-        <name>CO_CEP</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-      </field>
-      <field>
-        <name>CO_NATUREZA_JUR</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-      </field>
-      <field>
-        <name>DS_NATUREZA_JURIDICA</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-      </field>
-      <field>
-        <name>DS_RETENCAO_TRIBUTO</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-      </field>
-      <field>
-        <name>DS_MOTIVO_DESAB</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-      </field>
-      <field>
-        <name>CO_NATUREZA_ORGANIZACAO</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-      </field>
-      <field>
-        <name>DS_NATUREZA_ORGANIZACAO</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-      </field>
-      <field>
-        <name>CO_ESFERA_ADMINISTRATIVA</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-      </field>
-      <field>
-        <name>DS_ESFERA_ADMINISTRATIVA</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-      </field>
-      <field>
-        <name>DS_TIPO_UNIDADE</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-      </field>
-      <field>
-        <name>DS_GESTAO</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-      </field>
-      <field>
-        <name>ST_REGISTRO_ATIVO</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-      </field>
     </fields>
     <cluster_schema />
     <remotesteps>
@@ -1390,8 +1329,50 @@ FROM portal.atualizar_area_atuacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>92</xloc>
-      <yloc>254</yloc>
+      <xloc>64</xloc>
+      <yloc>283</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Delete certificado</name>
+    <type>TableInput</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>localhost</connection>
+    <sql>SELECT * FROM portal.inserir_log_atualizacao(
+	'osc.tb_certificado', 
+	?::INTEGER, 
+	'${FONTE_CARGA}'::TEXT, 
+	NOW()::TIMESTAMP,
+	(SELECT row_to_json(a) FROM (SELECT * FROM osc.tb_certificado WHERE id_certificado = ?::INTEGER) AS a), 
+	null, 
+	'${ID_CARGA}'::INTEGER
+);
+
+DELETE FROM osc.tb_certificado 
+WHERE id_certificado = ?::INTEGER;</sql>
+    <limit>0</limit>
+    <lookup>Select values 4</lookup>
+    <execute_each_row>Y</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>463</xloc>
+      <yloc>510</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1414,13 +1395,56 @@ FROM portal.atualizar_area_atuacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>621</xloc>
-      <yloc>254</yloc>
+      <xloc>474</xloc>
+      <yloc>285</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Filter rows</name>
+    <name>Filter certificado</name>
+    <type>FilterRows</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <send_true_to>Formatar JSON</send_true_to>
+    <send_false_to>Select values 3</send_false_to>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>CEBAS</leftvalue>
+        <function>=</function>
+        <rightvalue />
+        <value>
+          <name>constant</name>
+          <type>String</type>
+          <text>SIM</text>
+          <length>-1</length>
+          <precision>-1</precision>
+          <isnull>N</isnull>
+          <mask />
+        </value>
+      </condition>
+    </compare>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>894</xloc>
+      <yloc>286</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Filter município</name>
     <type>FilterRows</type>
     <description />
     <distribute>Y</distribute>
@@ -1448,8 +1472,42 @@ FROM portal.atualizar_area_atuacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1021</xloc>
-      <yloc>374</yloc>
+      <xloc>1050</xloc>
+      <yloc>510</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Filter rows</name>
+    <type>FilterRows</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <send_true_to>Select values 4</send_true_to>
+    <send_false_to />
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>id_certificado</leftvalue>
+        <function>IS NOT NULL</function>
+        <rightvalue />
+      </condition>
+    </compare>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>756</xloc>
+      <yloc>510</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1479,29 +1537,29 @@ FROM portal.atualizar_area_atuacao_osc(
 	return resultado;
 }
 
-if(NO_RAZAO_SOCIAL) NO_RAZAO_SOCIAL = formatarDado(NO_RAZAO_SOCIAL);
+if(NO_PESSOA) NO_PESSOA = formatarDado(NO_PESSOA);
 if(NO_FANTASIA) NO_FANTASIA = formatarDado(NO_FANTASIA);
-if(CO_NATUREZA_JUR) CO_NATUREZA_JUR = formatarDado(CO_NATUREZA_JUR);
-if(DS_TIPO_UNIDADE) DS_TIPO_UNIDADE = formatarDado(DS_TIPO_UNIDADE);
-if(DS_GESTAO) DS_GESTAO = formatarDado(DS_GESTAO);
-
-if(NO_LOGRADOURO) NO_LOGRADOURO = formatarDado(NO_LOGRADOURO);
-if(NO_COMPLEMENTO) NO_COMPLEMENTO = formatarDado(NO_COMPLEMENTO);
-if(NU_ENDERECO) NU_ENDERECO = formatarDado(NU_ENDERECO);
-if(NO_BAIRRO) NO_BAIRRO = formatarDado(NO_BAIRRO);
-if(CO_CEP) CO_CEP = formatarDado(CO_CEP);
+if(INICIO_VALIDADE_ANTERIOR) INICIO_VALIDADE_ANTERIOR = formatarDado(INICIO_VALIDADE_ANTERIOR);
+if(FIM_VALIDADE_ANTERIOR) FIM_VALIDADE_ANTERIOR = formatarDado(FIM_VALIDADE_ANTERIOR);
 
 var area_atuacao_json = '{"cd_area_atuacao": ' + area_atuacao + '}';
-//var dados_gerais_json = '{"tx_razao_social_osc": ' + NO_RAZAO_SOCIAL + ', "tx_nome_fantasia_osc": ' + NO_FANTASIA + ', "cd_natureza_juridica_osc": ' + CO_NATUREZA_JUR + ', "tx_tipo_unidade_saude": ' + DS_TIPO_UNIDADE + ', "tx_tipo_gestao": ' + DS_GESTAO + '}';
-var localizacao_json = '{"cd_municipio": ' + edmu_cd_municipio + ', "tx_endereco": ' + NO_LOGRADOURO + ', "nr_localizacao": ' + NU_ENDERECO + ', "tx_bairro": ' + NO_BAIRRO + ', "nr_cep": ' + CO_CEP + '}';
-
-var dados_gerais_json = '{"tx_tipo_unidade_saude": ' + DS_TIPO_UNIDADE + ', "tx_tipo_gestao": ' + DS_GESTAO + '}';</jsScript_script>
+var certificado_json = '{"cd_certificado": ' + certificado + ', "dt_data_inicio": ' + INICIO_VALIDADE_ANTERIOR + ', "dt_data_inicio": ' + FIM_VALIDADE_ANTERIOR + '}';
+var dados_gerais_json = '{"tx_razao_social_osc": ' + NO_PESSOA + ' "tx_nome_fantasia_osc": ' + NO_FANTASIA + '}';
+var localizacao_json = '{"cd_municipio": ' + edmu_cd_municipio + '}';</jsScript_script>
       </jsScript>
     </jsScripts>
     <fields>
       <field>
         <name>area_atuacao_json</name>
         <rename>area_atuacao_json</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+      <field>
+        <name>certificado_json</name>
+        <rename>certificado_json</rename>
         <type>String</type>
         <length>-1</length>
         <precision>-1</precision>
@@ -1523,14 +1581,6 @@ var dados_gerais_json = '{"tx_tipo_unidade_saude": ' + DS_TIPO_UNIDADE + ', "tx_
         <precision>-1</precision>
         <replace>N</replace>
       </field>
-      <field>
-        <name>contato_json</name>
-        <rename>contato_json</rename>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
     </fields>
     <cluster_schema />
     <remotesteps>
@@ -1540,13 +1590,13 @@ var dados_gerais_json = '{"tx_tipo_unidade_saude": ' + DS_TIPO_UNIDADE + ', "tx_
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1021</xloc>
-      <yloc>254</yloc>
+      <xloc>1050</xloc>
+      <yloc>285</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Merge Join 1</name>
+    <name>Merge Join</name>
     <type>MergeJoin</type>
     <description />
     <distribute>Y</distribute>
@@ -1557,10 +1607,10 @@ var dados_gerais_json = '{"tx_tipo_unidade_saude": ' + DS_TIPO_UNIDADE + ', "tx_
       <schema_name />
     </partitioning>
     <join_type>INNER</join_type>
-    <step1>Acertar CNPJ</step1>
+    <step1>Replace in string</step1>
     <step2>Select id_osc</step2>
     <keys_1>
-      <key>cnpj</key>
+      <key>NU_CNPJ</key>
     </keys_1>
     <keys_2>
       <key>cnpj</key>
@@ -1573,8 +1623,8 @@ var dados_gerais_json = '{"tx_tipo_unidade_saude": ' + DS_TIPO_UNIDADE + ', "tx_
       </output>
     </remotesteps>
     <GUI>
-      <xloc>495</xloc>
-      <yloc>254</yloc>
+      <xloc>350</xloc>
+      <yloc>285</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1606,8 +1656,8 @@ var dados_gerais_json = '{"tx_tipo_unidade_saude": ' + DS_TIPO_UNIDADE + ', "tx_
       </output>
     </remotesteps>
     <GUI>
-      <xloc>770</xloc>
-      <yloc>254</yloc>
+      <xloc>621</xloc>
+      <yloc>286</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1624,7 +1674,7 @@ var dados_gerais_json = '{"tx_tipo_unidade_saude": ' + DS_TIPO_UNIDADE + ', "tx_
     </partitioning>
     <fields>
       <field>
-        <in_stream_name>NU_CNPJ_REQUERENTE</in_stream_name>
+        <in_stream_name>NU_CNPJ</in_stream_name>
         <out_stream_name />
         <use_regex>yes</use_regex>
         <replace_string>\.|\/|\-</replace_string>
@@ -1643,8 +1693,8 @@ var dados_gerais_json = '{"tx_tipo_unidade_saude": ' + DS_TIPO_UNIDADE + ', "tx_
       </output>
     </remotesteps>
     <GUI>
-      <xloc>228</xloc>
-      <yloc>254</yloc>
+      <xloc>203</xloc>
+      <yloc>283</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1664,11 +1714,8 @@ var dados_gerais_json = '{"tx_tipo_unidade_saude": ' + DS_TIPO_UNIDADE + ', "tx_
 FROM spat.ed_municipio 
 INNER JOIN spat.ed_uf 
 ON ed_municipio.eduf_cd_uf = ed_uf.eduf_cd_uf 
-WHERE SUBSTRING(ed_municipio.edmu_cd_municipio::TEXT from 0 for 7) = ?::TEXT 
-OR (
-	LOWER(ed_municipio.edmu_nm_municipio) = LOWER(?) 
-	AND LOWER(ed_uf.eduf_sg_uf) = LOWER(?)
-);</sql>
+WHERE LOWER(ed_municipio.edmu_nm_municipio) = LOWER(?) 
+AND LOWER(ed_uf.eduf_sg_uf) = LOWER(?);</sql>
     <limit>0</limit>
     <lookup>Select values 2</lookup>
     <execute_each_row>Y</execute_each_row>
@@ -1682,8 +1729,42 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>770</xloc>
-      <yloc>125</yloc>
+      <xloc>621</xloc>
+      <yloc>172</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Select id_certificado</name>
+    <type>TableInput</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>localhost</connection>
+    <sql>SELECT id_osc, id_certificado 
+FROM osc.tb_certificado 
+WHERE id_osc = ?::INTEGER 
+AND cd_certificado = ?::INTEGER;</sql>
+    <limit>0</limit>
+    <lookup>Select values 3</lookup>
+    <execute_each_row>Y</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>894</xloc>
+      <yloc>510</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1701,7 +1782,7 @@ OR (
     <connection>localhost</connection>
     <sql>SELECT id_osc, ? AS cnpj FROM osc.tb_osc WHERE cd_identificador_osc::TEXT = ?;</sql>
     <limit>0</limit>
-    <lookup>Select values 1</lookup>
+    <lookup>Select values</lookup>
     <execute_each_row>Y</execute_each_row>
     <variables_active>Y</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
@@ -1713,13 +1794,13 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>495</xloc>
-      <yloc>123</yloc>
+      <xloc>350</xloc>
+      <yloc>169</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Select values 1</name>
+    <name>Select values</name>
     <type>SelectValues</type>
     <description />
     <distribute>Y</distribute>
@@ -1731,11 +1812,11 @@ OR (
     </partitioning>
     <fields>
       <field>
-        <name>cnpj</name>
+        <name>NU_CNPJ</name>
         <rename>cnpj_1</rename>
       </field>
       <field>
-        <name>cnpj</name>
+        <name>NU_CNPJ</name>
         <rename>cnpj_2</rename>
       </field>
       <select_unspecified>N</select_unspecified>
@@ -1748,8 +1829,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>355</xloc>
-      <yloc>123</yloc>
+      <xloc>203</xloc>
+      <yloc>167</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1769,13 +1850,10 @@ OR (
         <name>id_osc</name>
       </field>
       <field>
-        <name>CO_MUNICIPIO</name>
-      </field>
-      <field>
         <name>NO_MUNICIPIO</name>
       </field>
       <field>
-        <name>UF</name>
+        <name>SG_UF</name>
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -1787,8 +1865,124 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>622</xloc>
-      <yloc>125</yloc>
+      <xloc>475</xloc>
+      <yloc>171</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Select values 3</name>
+    <type>SelectValues</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>id_osc</name>
+      </field>
+      <field>
+        <name>certificado</name>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>894</xloc>
+      <yloc>395</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Select values 4</name>
+    <type>SelectValues</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>id_osc</name>
+      </field>
+      <field>
+        <name>id_certificado</name>
+        <rename>certificado_1</rename>
+      </field>
+      <field>
+        <name>id_certificado</name>
+        <rename>certificado_2</rename>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>626</xloc>
+      <yloc>510</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Select values certificado</name>
+    <type>SelectValues</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>id_osc</name>
+      </field>
+      <field>
+        <name>tipo_identificador</name>
+      </field>
+      <field>
+        <name>certificado_json</name>
+      </field>
+      <field>
+        <name>null_valido</name>
+      </field>
+      <field>
+        <name>delete_valido</name>
+      </field>
+      <field>
+        <name>erro_log</name>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1211</xloc>
+      <yloc>183</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1829,8 +2023,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1188</xloc>
-      <yloc>254</yloc>
+      <xloc>1220</xloc>
+      <yloc>401</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1871,8 +2065,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1196</xloc>
-      <yloc>374</yloc>
+      <xloc>1225</xloc>
+      <yloc>510</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1880,7 +2074,7 @@ OR (
     <name>Select values área atuação</name>
     <type>SelectValues</type>
     <description />
-    <distribute>N</distribute>
+    <distribute>Y</distribute>
     <custom_distribution />
     <copies>1</copies>
     <partitioning>
@@ -1916,8 +2110,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1188</xloc>
-      <yloc>140</yloc>
+      <xloc>1212</xloc>
+      <yloc>285</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1955,8 +2149,8 @@ if(flag_variable == true &amp;&amp; flag == false){
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1585</xloc>
-      <yloc>254</yloc>
+      <xloc>1614</xloc>
+      <yloc>285</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

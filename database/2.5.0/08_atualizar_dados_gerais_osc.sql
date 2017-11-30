@@ -31,7 +31,7 @@ BEGIN
 	ELSE
 		RAISE EXCEPTION 'tipo_identificador_invalido';
 	END IF;
-
+	
 	IF osc IS null THEN
 		RAISE EXCEPTION 'osc_nao_encontrada';
 	ELSIF osc != ALL(fonte_dados.representacao) THEN
@@ -41,8 +41,8 @@ BEGIN
 	SELECT INTO objeto * FROM jsonb_populate_record(null::osc.tb_dados_gerais, json);
 
 	SELECT INTO dado_anterior * FROM osc.tb_dados_gerais WHERE id_osc = osc;
-
-	IF COUNT(dado_anterior.id_osc) = 0 THEN
+	
+	IF dado_anterior.id_osc IS null THEN
 		INSERT INTO osc.tb_dados_gerais (
 			id_osc,
 			cd_natureza_juridica_osc,
@@ -274,21 +274,24 @@ BEGIN
 				tx_nome_responsavel_legal = dado_posterior.tx_nome_responsavel_legal,
 				ft_nome_responsavel_legal = dado_posterior.ft_nome_responsavel_legal
 			WHERE id_osc = osc;
-
+			
 			PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior),id_carga);
-
+			
 		END IF;
 	END IF;
-
+	
 	flag := true;
 	mensagem := 'Dados gerais de OSC atualizado.';
-
+	
 	RETURN NEXT;
 
 EXCEPTION
 	WHEN others THEN
 		flag := false;
 		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, osc, data_atualizacao::TIMESTAMP, erro_log, id_carga) AS a;
+		
+		RAISE NOTICE 'mensagem: %', mensagem;
+		
 		RETURN NEXT;
 
 END;

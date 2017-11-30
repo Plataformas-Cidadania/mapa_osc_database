@@ -60,7 +60,7 @@ BEGIN
 			
 		END IF;
 		
-		IF dado_anterior.id_fonte_recursos_projeto IS null THEN 			
+		IF dado_anterior.id_fonte_recursos_projeto IS null THEN 
 			INSERT INTO osc.tb_fonte_recursos_projeto (
 				id_projeto, 
 				cd_fonte_recursos_projeto, 

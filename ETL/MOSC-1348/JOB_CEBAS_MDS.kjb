@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <job>
-  <name>JOB_CNEAS</name>
+  <name>JOB_CEBAS_MDS</name>
   <description />
   <extended_description />
   <job_version />
   <job_status>0</job_status>
   <directory>/</directory>
   <created_user>-</created_user>
-  <created_date>2017/07/25 10:29:20.118</created_date>
+  <created_date>2017/08/07 18:47:20.697</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2017/07/25 10:29:20.118</modified_date>
+  <modified_date>2017/08/07 18:47:20.697</modified_date>
   <parameters>
     </parameters>
   <connection>
-    <name>localhost</name>
-    <server>localhost</server>
+    <name>desenv</name>
+    <server>10.1.4.110</server>
     <type>POSTGRESQL</type>
     <access>Native</access>
     <database>portalosc</database>
     <port>5432</port>
     <username>i3geo</username>
-    <password>Encrypted 2be98afc86aa7f2e4cb79ce798d95aad5</password>
+    <password>Encrypted 2be98afc86aa7f2e4cb10be75dfc2ff8b</password>
     <servername />
     <data_tablespace />
     <index_tablespace />
@@ -64,14 +64,14 @@
     </attributes>
   </connection>
   <connection>
-    <name>mapaosc-desenv</name>
-    <server>mapaosc-desenv</server>
+    <name>localhost</name>
+    <server>localhost</server>
     <type>POSTGRESQL</type>
     <access>Native</access>
     <database>portalosc</database>
     <port>5432</port>
     <username>i3geo</username>
-    <password>Encrypted 2be98afc86aa7f2e4cb10be75dfc2ff8b</password>
+    <password>Encrypted 2be98afc86aa7f2e4cb79ce798d95aad5</password>
     <servername />
     <data_tablespace />
     <index_tablespace />
@@ -406,8 +406,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>86</xloc>
-      <yloc>136</yloc>
+      <xloc>56</xloc>
+      <yloc>181</yloc>
     </entry>
     <entry>
       <name>Gravar dados</name>
@@ -415,7 +415,7 @@
       <type>TRANS</type>
       <specification_method>filename</specification_method>
       <trans_object_id />
-      <filename>${Internal.Job.Filename.Directory}/trans_cneas.ktr</filename>
+      <filename>${Internal.Entry.Current.Directory}/trans_cebas_mds.ktr</filename>
       <transname />
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -436,26 +436,14 @@
       <create_parent_folder>N</create_parent_folder>
       <logging_remote_work>N</logging_remote_work>
       <run_configuration>Pentaho local</run_configuration>
-      <argument0>${FONTE_CARGA}</argument0>
-      <argument1>${DATA_INICIO}</argument1>
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
-        <parameter>
-          <name>FONTE_CARGA</name>
-          <stream_name />
-          <value>${FONTE_CARGA}</value>
-        </parameter>
-        <parameter>
-          <name>DATA_INICIO</name>
-          <stream_name />
-          <value>${DATA_INICIO}</value>
-        </parameter>
       </parameters>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>581</xloc>
-      <yloc>136</yloc>
+      <xloc>534</xloc>
+      <yloc>181</yloc>
     </entry>
     <entry>
       <name>Success</name>
@@ -464,8 +452,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>982</xloc>
-      <yloc>136</yloc>
+      <xloc>916</xloc>
+      <yloc>181</yloc>
     </entry>
     <entry>
       <name>Set variables</name>
@@ -477,12 +465,12 @@
       <fields>
         <field>
           <variable_name>ARQUIVO</variable_name>
-          <variable_value>C:\Users\b215496233\Downloads\CNEAS.csv</variable_value>
+          <variable_value>C:\Users\vagnerpraia\ETL\CEBAS Assistência Social.csv</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>FONTE_CARGA</variable_name>
-          <variable_value>CNEAS/MDS 2017</variable_value>
+          <variable_value>CEBAS/MDS 2017</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
@@ -499,8 +487,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>201</xloc>
-      <yloc>136</yloc>
+      <xloc>165</xloc>
+      <yloc>181</yloc>
     </entry>
     <entry>
       <name>Gravar log início</name>
@@ -535,8 +523,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>452</xloc>
-      <yloc>136</yloc>
+      <xloc>416</xloc>
+      <yloc>181</yloc>
     </entry>
     <entry>
       <name>Desativar triggers</name>
@@ -549,12 +537,12 @@ ALTER TABLE osc.tb_contato DISABLE TRIGGER ALL;</sql>
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename />
       <sendOneStatement>F</sendOneStatement>
-      <connection>mapaosc-desenv</connection>
+      <connection>localhost</connection>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>327</xloc>
-      <yloc>136</yloc>
+      <xloc>291</xloc>
+      <yloc>181</yloc>
     </entry>
     <entry>
       <name>Ativar triggers</name>
@@ -571,12 +559,12 @@ ALTER TABLE osc.tb_contato ENABLE TRIGGER ALL;
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename />
       <sendOneStatement>F</sendOneStatement>
-      <connection>mapaosc-desenv</connection>
+      <connection>localhost</connection>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>854</xloc>
-      <yloc>136</yloc>
+      <xloc>806</xloc>
+      <yloc>181</yloc>
     </entry>
     <entry>
       <name>Set variables carga erro</name>
@@ -595,8 +583,8 @@ ALTER TABLE osc.tb_contato ENABLE TRIGGER ALL;
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>581</xloc>
-      <yloc>277</yloc>
+      <xloc>533</xloc>
+      <yloc>322</yloc>
     </entry>
     <entry>
       <name>Gravar log fim</name>
@@ -631,8 +619,8 @@ ALTER TABLE osc.tb_contato ENABLE TRIGGER ALL;
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>715</xloc>
-      <yloc>136</yloc>
+      <xloc>667</xloc>
+      <yloc>181</yloc>
     </entry>
   </entries>
   <hops>
@@ -644,15 +632,6 @@ ALTER TABLE osc.tb_contato ENABLE TRIGGER ALL;
       <enabled>Y</enabled>
       <evaluation>Y</evaluation>
       <unconditional>Y</unconditional>
-    </hop>
-    <hop>
-      <from>Gravar log início</from>
-      <to>Gravar dados</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
     </hop>
     <hop>
       <from>Set variables</from>
@@ -673,8 +652,26 @@ ALTER TABLE osc.tb_contato ENABLE TRIGGER ALL;
       <unconditional>N</unconditional>
     </hop>
     <hop>
+      <from>Gravar log início</from>
+      <to>Gravar dados</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
       <from>Ativar triggers</from>
       <to>Success</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Gravar dados</from>
+      <to>Gravar log fim</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -702,15 +699,6 @@ ALTER TABLE osc.tb_contato ENABLE TRIGGER ALL;
     <hop>
       <from>Gravar log fim</from>
       <to>Ativar triggers</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Gravar dados</from>
-      <to>Gravar log fim</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>

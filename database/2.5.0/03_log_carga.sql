@@ -1,6 +1,3 @@
-ALTER TABLE log.tb_log_carga
-    RENAME TO tb_log_erro_carga;
-
 -- Table: log.tb_log_carga
 
 DROP TABLE IF EXISTS log.tb_log_carga;
