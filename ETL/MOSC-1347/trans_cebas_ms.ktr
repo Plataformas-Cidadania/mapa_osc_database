@@ -685,8 +685,13 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
+      <from>Select values 4</from>
+      <to>Delete certificado</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
       <from>Filter rows</from>
-      <to>Execute SQL script</to>
+      <to>Select values 4</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -1354,63 +1359,6 @@ FROM portal.atualizar_area_atuacao_osc(
     </GUI>
   </step>
   <step>
-    <name>Execute SQL script</name>
-    <type>ExecSQL</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>localhost</connection>
-    <execute_each_row>Y</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>Y</replace_variables>
-    <quoteString>N</quoteString>
-    <sql>SELECT * FROM portal.inserir_log_atualizacao(
-	'osc.tb_certificado', 
-	'?'::INTEGER, 
-	'${FONTE_CARGA}'::TEXT, 
-	NOW()::TIMESTAMP,
-	(SELECT row_to_json(a) FROM (SELECT * FROM osc.tb_certificado WHERE id_certificado = '?'::INTEGER) AS a), 
-	null, 
-	'${ID_CARGA}'::INTEGER
-);
-
-DELETE FROM osc.tb_certificado 
-WHERE id_certificado = '?'::INTEGER;</sql>
-    <set_params>N</set_params>
-    <insert_field />
-    <update_field />
-    <delete_field />
-    <read_field>certificado_exist</read_field>
-    <arguments>
-      <argument>
-        <name>id_osc</name>
-      </argument>
-      <argument>
-        <name>id_certificado</name>
-      </argument>
-      <argument>
-        <name>id_certificado</name>
-      </argument>
-    </arguments>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>895</xloc>
-      <yloc>758</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
     <name>Filter certificado</name>
     <type>FilterRows</type>
     <description />
@@ -1498,7 +1446,7 @@ WHERE id_certificado = '?'::INTEGER;</sql>
       <method>none</method>
       <schema_name />
     </partitioning>
-    <send_true_to>Execute SQL script</send_true_to>
+    <send_true_to>Select values 4</send_true_to>
     <send_false_to />
     <compare>
       <condition>
@@ -1516,8 +1464,8 @@ WHERE id_certificado = '?'::INTEGER;</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>895</xloc>
-      <yloc>627</yloc>
+      <xloc>756</xloc>
+      <yloc>510</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1774,7 +1722,7 @@ AND cd_certificado = ?::INTEGER;</sql>
     </remotesteps>
     <GUI>
       <xloc>894</xloc>
-      <yloc>521</yloc>
+      <yloc>510</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1909,7 +1857,7 @@ AND cd_certificado = ?::INTEGER;</sql>
     </remotesteps>
     <GUI>
       <xloc>894</xloc>
-      <yloc>406</yloc>
+      <yloc>395</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2123,6 +2071,87 @@ if(flag_variable == true &amp;&amp; flag == false){
     <GUI>
       <xloc>1614</xloc>
       <yloc>285</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Delete certificado</name>
+    <type>TableInput</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>localhost</connection>
+    <sql>SELECT * FROM portal.inserir_log_atualizacao(
+	'osc.tb_certificado', 
+	?::INTEGER, 
+	'${FONTE_CARGA}'::TEXT, 
+	NOW()::TIMESTAMP,
+	(SELECT row_to_json(a) FROM (SELECT * FROM osc.tb_certificado WHERE id_certificado = ?::INTEGER) AS a), 
+	null, 
+	'${ID_CARGA}'::INTEGER
+);
+
+DELETE FROM osc.tb_certificado 
+WHERE id_certificado = ?::INTEGER;</sql>
+    <limit>0</limit>
+    <lookup>Select values 4</lookup>
+    <execute_each_row>Y</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>463</xloc>
+      <yloc>510</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Select values 4</name>
+    <type>SelectValues</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>id_osc</name>
+        <rename />
+      </field>
+      <field>
+        <name>id_certificado</name>
+        <rename>certificado_1</rename>
+      </field>
+      <field>
+        <name>id_certificado</name>
+        <rename>certificado_2</rename>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>626</xloc>
+      <yloc>510</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
