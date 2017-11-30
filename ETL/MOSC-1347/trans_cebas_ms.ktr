@@ -595,11 +595,6 @@
       <enabled>N</enabled>
     </hop>
     <hop>
-      <from>Add constants</from>
-      <to>Formatar JSON</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Dummy</from>
       <to>Merge Join 2</to>
       <enabled>Y</enabled>
@@ -625,12 +620,7 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Merge Join 2</from>
-      <to>Add constants</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Filter rows</from>
+      <from>Filter município</from>
       <to>Select values localização</to>
       <enabled>N</enabled>
     </hop>
@@ -641,7 +631,7 @@
     </hop>
     <hop>
       <from>Formatar JSON</from>
-      <to>Filter rows</to>
+      <to>Filter município</to>
       <enabled>N</enabled>
     </hop>
     <hop>
@@ -662,6 +652,41 @@
     <hop>
       <from>Replace in string</from>
       <to>Select values</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Merge Join 2</from>
+      <to>Add constants</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Add constants</from>
+      <to>Filter certificado</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Filter certificado</from>
+      <to>Formatar JSON</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Filter certificado</from>
+      <to>Select values 3</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Select values 3</from>
+      <to>Select id_certificado</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Select id_certificado</from>
+      <to>Filter rows</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Filter rows</from>
+      <to>Execute SQL script</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -758,8 +783,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>610</xloc>
-      <yloc>264</yloc>
+      <xloc>749</xloc>
+      <yloc>286</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -774,7 +799,7 @@
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection>mapaosc-desenv</connection>
+    <connection>localhost</connection>
     <sql>SELECT * 
 FROM portal.atualizar_certificado_osc(
 	'${FONTE_CARGA}'::TEXT, 
@@ -802,8 +827,8 @@ FROM portal.atualizar_certificado_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1103</xloc>
-      <yloc>162</yloc>
+      <xloc>1425</xloc>
+      <yloc>183</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -818,7 +843,7 @@ FROM portal.atualizar_certificado_osc(
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection>mapaosc-desenv</connection>
+    <connection>localhost</connection>
     <sql>SELECT * 
 FROM portal.atualizar_dados_gerais_osc(
 	'${FONTE_CARGA}'::TEXT, 
@@ -844,8 +869,50 @@ FROM portal.atualizar_dados_gerais_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1112</xloc>
-      <yloc>380</yloc>
+      <xloc>1434</xloc>
+      <yloc>401</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Atualizar localização</name>
+    <type>TableInput</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>localhost</connection>
+    <sql>SELECT * 
+FROM portal.atualizar_localizacao_osc(
+	'${FONTE_CARGA}'::TEXT, 
+	?::NUMERIC, 
+	?::TEXT, 
+	NOW()::TIMESTAMP, 
+	?::JSONB, 
+	?::BOOLEAN, 
+	?::BOOLEAN, 
+	'${ID_CARGA}'::INTEGER
+);
+</sql>
+    <limit>0</limit>
+    <lookup>Select values localização</lookup>
+    <execute_each_row>Y</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1439</xloc>
+      <yloc>510</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -860,7 +927,7 @@ FROM portal.atualizar_dados_gerais_osc(
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection>mapaosc-desenv</connection>
+    <connection>localhost</connection>
     <sql>SELECT * 
 FROM portal.atualizar_area_atuacao_osc(
 	'${FONTE_CARGA}'::TEXT, 
@@ -888,8 +955,8 @@ FROM portal.atualizar_area_atuacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1104</xloc>
-      <yloc>264</yloc>
+      <xloc>1426</xloc>
+      <yloc>285</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1257,8 +1324,66 @@ FROM portal.atualizar_area_atuacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>17</xloc>
-      <yloc>264</yloc>
+      <xloc>64</xloc>
+      <yloc>283</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Dummy</name>
+    <type>Dummy</type>
+    <description />
+    <distribute>N</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>474</xloc>
+      <yloc>285</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Filter município</name>
+    <type>FilterRows</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <send_true_to>Select values localização</send_true_to>
+    <send_false_to />
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>edmu_cd_municipio</leftvalue>
+        <function>IS NOT NULL</function>
+        <rightvalue />
+      </condition>
+    </compare>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1050</xloc>
+      <yloc>510</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1341,8 +1466,8 @@ var localizacao_json = '{"cd_municipio": ' + edmu_cd_municipio + '}';</jsScript_
       </output>
     </remotesteps>
     <GUI>
-      <xloc>728</xloc>
-      <yloc>264</yloc>
+      <xloc>1050</xloc>
+      <yloc>285</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1374,8 +1499,114 @@ var localizacao_json = '{"cd_municipio": ' + edmu_cd_municipio + '}';</jsScript_
       </output>
     </remotesteps>
     <GUI>
-      <xloc>283</xloc>
-      <yloc>264</yloc>
+      <xloc>350</xloc>
+      <yloc>285</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Merge Join 2</name>
+    <type>MergeJoin</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <join_type>LEFT OUTER</join_type>
+    <step1>Dummy</step1>
+    <step2>Select cd_municipio</step2>
+    <keys_1>
+      <key>id_osc</key>
+    </keys_1>
+    <keys_2>
+      <key>id_osc</key>
+    </keys_2>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>621</xloc>
+      <yloc>286</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Replace in string</name>
+    <type>ReplaceString</type>
+    <description />
+    <distribute>N</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <in_stream_name>NU_CNPJ</in_stream_name>
+        <out_stream_name />
+        <use_regex>yes</use_regex>
+        <replace_string>\.|\/|\-</replace_string>
+        <replace_by_string />
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string />
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>203</xloc>
+      <yloc>283</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Select cd_municipio</name>
+    <type>TableInput</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>localhost</connection>
+    <sql>SELECT ? AS id_osc, ed_municipio.edmu_cd_municipio 
+FROM spat.ed_municipio 
+INNER JOIN spat.ed_uf 
+ON ed_municipio.eduf_cd_uf = ed_uf.eduf_cd_uf 
+WHERE LOWER(ed_municipio.edmu_nm_municipio) = LOWER(?) 
+AND LOWER(ed_uf.eduf_sg_uf) = LOWER(?);</sql>
+    <limit>0</limit>
+    <lookup>Select values 2</lookup>
+    <execute_each_row>Y</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>621</xloc>
+      <yloc>172</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1390,7 +1621,7 @@ var localizacao_json = '{"cd_municipio": ' + edmu_cd_municipio + '}';</jsScript_
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection>mapaosc-desenv</connection>
+    <connection>localhost</connection>
     <sql>SELECT id_osc, ? AS cnpj FROM osc.tb_osc WHERE cd_identificador_osc = ?::NUMERIC;</sql>
     <limit>0</limit>
     <lookup>Select values</lookup>
@@ -1405,8 +1636,8 @@ var localizacao_json = '{"cd_municipio": ' + edmu_cd_municipio + '}';</jsScript_
       </output>
     </remotesteps>
     <GUI>
-      <xloc>283</xloc>
-      <yloc>148</yloc>
+      <xloc>350</xloc>
+      <yloc>169</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1440,8 +1671,44 @@ var localizacao_json = '{"cd_municipio": ' + edmu_cd_municipio + '}';</jsScript_
       </output>
     </remotesteps>
     <GUI>
-      <xloc>156</xloc>
-      <yloc>148</yloc>
+      <xloc>203</xloc>
+      <yloc>167</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Select values 2</name>
+    <type>SelectValues</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>id_osc</name>
+      </field>
+      <field>
+        <name>NO_MUNICIPIO</name>
+      </field>
+      <field>
+        <name>SG_UF</name>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>475</xloc>
+      <yloc>171</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1485,8 +1752,8 @@ var localizacao_json = '{"cd_municipio": ' + edmu_cd_municipio + '}';</jsScript_
       </output>
     </remotesteps>
     <GUI>
-      <xloc>889</xloc>
-      <yloc>162</yloc>
+      <xloc>1211</xloc>
+      <yloc>183</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1527,8 +1794,50 @@ var localizacao_json = '{"cd_municipio": ' + edmu_cd_municipio + '}';</jsScript_
       </output>
     </remotesteps>
     <GUI>
-      <xloc>898</xloc>
-      <yloc>380</yloc>
+      <xloc>1220</xloc>
+      <yloc>401</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Select values localização</name>
+    <type>SelectValues</type>
+    <description />
+    <distribute>N</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>id_osc</name>
+      </field>
+      <field>
+        <name>tipo_identificador</name>
+      </field>
+      <field>
+        <name>localizacao_json</name>
+      </field>
+      <field>
+        <name>null_valido</name>
+      </field>
+      <field>
+        <name>erro_log</name>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1225</xloc>
+      <yloc>510</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1546,27 +1855,21 @@ var localizacao_json = '{"cd_municipio": ' + edmu_cd_municipio + '}';</jsScript_
     <fields>
       <field>
         <name>id_osc</name>
-        <rename />
       </field>
       <field>
         <name>tipo_identificador</name>
-        <rename />
       </field>
       <field>
         <name>area_atuacao_json</name>
-        <rename />
       </field>
       <field>
         <name>null_valido</name>
-        <rename />
       </field>
       <field>
         <name>delete_valido</name>
-        <rename />
       </field>
       <field>
         <name>erro_log</name>
-        <rename />
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -1578,8 +1881,8 @@ var localizacao_json = '{"cd_municipio": ' + edmu_cd_municipio + '}';</jsScript_
       </output>
     </remotesteps>
     <GUI>
-      <xloc>890</xloc>
-      <yloc>264</yloc>
+      <xloc>1212</xloc>
+      <yloc>285</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1617,38 +1920,14 @@ if(flag_variable == true &amp;&amp; flag == false){
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1292</xloc>
-      <yloc>264</yloc>
+      <xloc>1614</xloc>
+      <yloc>285</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Dummy</name>
-    <type>Dummy</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>368</xloc>
-      <yloc>264</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Merge Join 2</name>
-    <type>MergeJoin</type>
+    <name>Filter certificado</name>
+    <type>FilterRows</type>
     <description />
     <distribute>Y</distribute>
     <custom_distribution />
@@ -1657,15 +1936,25 @@ if(flag_variable == true &amp;&amp; flag == false){
       <method>none</method>
       <schema_name />
     </partitioning>
-    <join_type>LEFT OUTER</join_type>
-    <step1>Dummy</step1>
-    <step2>Select cd_municipio</step2>
-    <keys_1>
-      <key>id_osc</key>
-    </keys_1>
-    <keys_2>
-      <key>id_osc</key>
-    </keys_2>
+    <send_true_to>Formatar JSON</send_true_to>
+    <send_false_to>Select values 3</send_false_to>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>CEBAS</leftvalue>
+        <function>=</function>
+        <rightvalue />
+        <value>
+          <name>constant</name>
+          <type>String</type>
+          <text>SIM</text>
+          <length>-1</length>
+          <precision>-1</precision>
+          <isnull>N</isnull>
+          <mask />
+        </value>
+      </condition>
+    </compare>
     <cluster_schema />
     <remotesteps>
       <input>
@@ -1674,14 +1963,14 @@ if(flag_variable == true &amp;&amp; flag == false){
       </output>
     </remotesteps>
     <GUI>
-      <xloc>492</xloc>
-      <yloc>264</yloc>
+      <xloc>894</xloc>
+      <yloc>286</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Select cd_municipio</name>
-    <type>TableInput</type>
+    <name>Execute SQL script</name>
+    <type>ExecSQL</type>
     <description />
     <distribute>Y</distribute>
     <custom_distribution />
@@ -1690,18 +1979,39 @@ if(flag_variable == true &amp;&amp; flag == false){
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection>mapaosc-desenv</connection>
-    <sql>SELECT ? AS id_osc, ed_municipio.edmu_cd_municipio 
-FROM spat.ed_municipio 
-INNER JOIN spat.ed_uf 
-ON ed_municipio.eduf_cd_uf = ed_uf.eduf_cd_uf 
-WHERE LOWER(ed_municipio.edmu_nm_municipio) = LOWER(?) 
-AND LOWER(ed_uf.eduf_sg_uf) = LOWER(?);</sql>
-    <limit>0</limit>
-    <lookup>Select values 2</lookup>
+    <connection>localhost</connection>
     <execute_each_row>Y</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
+    <single_statement>N</single_statement>
+    <replace_variables>Y</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>SELECT * FROM portal.inserir_log_atualizacao(
+	'osc.tb_certificado', 
+	'?'::INTEGER, 
+	'${FONTE_CARGA}'::TEXT, 
+	NOW()::TIMESTAMP,
+	(SELECT row_to_json(a) FROM (SELECT * FROM osc.tb_certificado WHERE id_certificado = '?'::INTEGER) AS a), 
+	null, 
+	'${ID_CARGA}'::INTEGER
+);
+
+DELETE FROM osc.tb_certificado 
+WHERE id_certificado = '?'::INTEGER;</sql>
+    <set_params>N</set_params>
+    <insert_field />
+    <update_field />
+    <delete_field />
+    <read_field>certificado_exist</read_field>
+    <arguments>
+      <argument>
+        <name>id_osc</name>
+      </argument>
+      <argument>
+        <name>id_certificado</name>
+      </argument>
+      <argument>
+        <name>id_certificado</name>
+      </argument>
+    </arguments>
     <cluster_schema />
     <remotesteps>
       <input>
@@ -1710,13 +2020,13 @@ AND LOWER(ed_uf.eduf_sg_uf) = LOWER(?);</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>492</xloc>
-      <yloc>150</yloc>
+      <xloc>895</xloc>
+      <yloc>758</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Select values 2</name>
+    <name>Select values 3</name>
     <type>SelectValues</type>
     <description />
     <distribute>Y</distribute>
@@ -1732,11 +2042,7 @@ AND LOWER(ed_uf.eduf_sg_uf) = LOWER(?);</sql>
         <rename />
       </field>
       <field>
-        <name>NO_MUNICIPIO</name>
-        <rename />
-      </field>
-      <field>
-        <name>SG_UF</name>
+        <name>certificado</name>
         <rename />
       </field>
       <select_unspecified>N</select_unspecified>
@@ -1749,13 +2055,13 @@ AND LOWER(ed_uf.eduf_sg_uf) = LOWER(?);</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>369</xloc>
-      <yloc>150</yloc>
+      <xloc>894</xloc>
+      <yloc>406</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Atualizar localização</name>
+    <name>Select id_certificado</name>
     <type>TableInput</type>
     <description />
     <distribute>Y</distribute>
@@ -1765,21 +2071,13 @@ AND LOWER(ed_uf.eduf_sg_uf) = LOWER(?);</sql>
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection>mapaosc-desenv</connection>
-    <sql>SELECT * 
-FROM portal.atualizar_localizacao_osc(
-	'${FONTE_CARGA}'::TEXT, 
-	?::NUMERIC, 
-	?::TEXT, 
-	NOW()::TIMESTAMP, 
-	?::JSONB, 
-	?::BOOLEAN, 
-	?::BOOLEAN, 
-	'${ID_CARGA}'::INTEGER
-);
-</sql>
+    <connection>localhost</connection>
+    <sql>SELECT id_osc, id_certificado 
+FROM osc.tb_certificado 
+WHERE id_osc = ?::INTEGER 
+AND cd_certificado = ?::INTEGER;</sql>
     <limit>0</limit>
-    <lookup>Select values localização</lookup>
+    <lookup>Select values 3</lookup>
     <execute_each_row>Y</execute_each_row>
     <variables_active>Y</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
@@ -1791,8 +2089,8 @@ FROM portal.atualizar_localizacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1117</xloc>
-      <yloc>489</yloc>
+      <xloc>894</xloc>
+      <yloc>521</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1807,12 +2105,12 @@ FROM portal.atualizar_localizacao_osc(
       <method>none</method>
       <schema_name />
     </partitioning>
-    <send_true_to>Select values localização</send_true_to>
+    <send_true_to>Execute SQL script</send_true_to>
     <send_false_to />
     <compare>
       <condition>
         <negated>N</negated>
-        <leftvalue>edmu_cd_municipio</leftvalue>
+        <leftvalue>id_certificado</leftvalue>
         <function>IS NOT NULL</function>
         <rightvalue />
       </condition>
@@ -1825,92 +2123,8 @@ FROM portal.atualizar_localizacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>728</xloc>
-      <yloc>489</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Select values localização</name>
-    <type>SelectValues</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <name>id_osc</name>
-        <rename />
-      </field>
-      <field>
-        <name>tipo_identificador</name>
-        <rename />
-      </field>
-      <field>
-        <name>localizacao_json</name>
-        <rename />
-      </field>
-      <field>
-        <name>null_valido</name>
-        <rename />
-      </field>
-      <field>
-        <name>erro_log</name>
-        <rename />
-      </field>
-      <select_unspecified>N</select_unspecified>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>903</xloc>
-      <yloc>489</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Replace in string</name>
-    <type>ReplaceString</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <in_stream_name>NU_CNPJ</in_stream_name>
-        <out_stream_name />
-        <use_regex>yes</use_regex>
-        <replace_string>\.|\/|\-</replace_string>
-        <replace_by_string />
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string />
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-      </field>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>156</xloc>
-      <yloc>264</yloc>
+      <xloc>895</xloc>
+      <yloc>627</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

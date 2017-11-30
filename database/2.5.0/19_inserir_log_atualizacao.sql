@@ -6,8 +6,8 @@ CREATE OR REPLACE FUNCTION portal.inserir_log_atualizacao(nome_tabela TEXT, osc 
 )AS $$
 
 BEGIN 
-	INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, tx_fonte_dados, dt_alteracao, tx_dado_anterior, tx_dado_posterior, id_carga)
-	VALUES (nome_tabela, osc, fonte_dados, data_atualizacao, dado_anterior, dado_posterior, id_carga);
+	INSERT INTO log.tb_log_alteracao(tx_nome_tabela, id_osc, tx_fonte_dados, dt_alteracao, tx_dado_anterior, tx_dado_posterior)
+	VALUES (nome_tabela, osc, fonte_dados, data_atualizacao, dado_anterior, dado_posterior);
 	
 	flag := true;
 	mensagem := 'Log de alteração de dados inserido.';
