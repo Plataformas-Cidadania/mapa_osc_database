@@ -572,12 +572,12 @@
     <hop>
       <from>Formatar JSON</from>
       <to>Select values área atuação</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>Formatar JSON</from>
       <to>Select values dados gerais</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>Add constants</from>
@@ -799,7 +799,7 @@
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection>mapaosc-desenv</connection>
+    <connection>localhost</connection>
     <sql>SELECT * 
 FROM portal.atualizar_dados_gerais_osc(
 	'${FONTE_CARGA}'::TEXT, 
@@ -841,7 +841,7 @@ FROM portal.atualizar_dados_gerais_osc(
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection>mapaosc-desenv</connection>
+    <connection>localhost</connection>
     <sql>SELECT * 
 FROM portal.atualizar_localizacao_osc(
 	'${FONTE_CARGA}'::TEXT, 
@@ -883,7 +883,7 @@ FROM portal.atualizar_localizacao_osc(
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection>mapaosc-desenv</connection>
+    <connection>localhost</connection>
     <sql>SELECT * 
 FROM portal.atualizar_area_atuacao_osc(
 	'${FONTE_CARGA}'::TEXT, 
@@ -939,7 +939,7 @@ FROM portal.atualizar_area_atuacao_osc(
     <add_filename_result>N</add_filename_result>
     <parallel>N</parallel>
     <newline_possible>N</newline_possible>
-    <encoding>ISO-8859-9</encoding>
+    <encoding>UTF-8</encoding>
     <fields>
       <field>
         <name>NU_CNPJ_REQUERENTE</name>
@@ -1659,7 +1659,7 @@ var dados_gerais_json = '{"tx_tipo_unidade_saude": ' + DS_TIPO_UNIDADE + ', "tx_
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection>mapaosc-desenv</connection>
+    <connection>localhost</connection>
     <sql>SELECT ? AS id_osc, ed_municipio.edmu_cd_municipio 
 FROM spat.ed_municipio 
 INNER JOIN spat.ed_uf 
@@ -1698,7 +1698,7 @@ OR (
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection>mapaosc-desenv</connection>
+    <connection>localhost</connection>
     <sql>SELECT id_osc, ? AS cnpj FROM osc.tb_osc WHERE cd_identificador_osc = ?::NUMERIC;</sql>
     <limit>0</limit>
     <lookup>Select values 1</lookup>
@@ -1767,19 +1767,15 @@ OR (
     <fields>
       <field>
         <name>id_osc</name>
-        <rename />
       </field>
       <field>
         <name>CO_MUNICIPIO</name>
-        <rename />
       </field>
       <field>
         <name>NO_MUNICIPIO</name>
-        <rename />
       </field>
       <field>
         <name>UF</name>
-        <rename />
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
