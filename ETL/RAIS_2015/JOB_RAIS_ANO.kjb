@@ -1,43 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <job>
-  <name>CNIS_JOB</name>
+  <name>JOB_RAIS_ANO</name>
     <description/>
     <extended_description/>
     <job_version/>
   <directory>&#x2f;</directory>
   <created_user>-</created_user>
-  <created_date>2017&#x2f;10&#x2f;31 09&#x3a;58&#x3a;49.511</created_date>
+  <created_date>2017&#x2f;11&#x2f;30 17&#x3a;11&#x3a;08.546</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2017&#x2f;10&#x2f;31 09&#x3a;58&#x3a;49.511</modified_date>
+  <modified_date>2017&#x2f;11&#x2f;30 17&#x3a;11&#x3a;08.546</modified_date>
     <parameters>
     </parameters>
   <connection>
-    <name>desenv</name>
-    <server>10.1.4.110</server>
-    <type>POSTGRESQL</type>
-    <access>Native</access>
-    <database>portalosc</database>
-    <port>5434</port>
-    <username>i3geo</username>
-    <password>Encrypted 2be98afc86aa7f2e4cb10be75dfc2ff8b</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>5434</attribute></attribute>
-      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>N</attribute></attribute>
-      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
-      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
-      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>Y</attribute></attribute>
-      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
-    </attributes>
-  </connection>
-  <connection>
     <name>etl</name>
-    <server>mapaosc-etl</server>
+    <server>10.11.113.10</server>
     <type>POSTGRESQL</type>
     <access>Native</access>
     <database>portalosc_producao</database>
@@ -122,16 +98,16 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>34</xloc>
-      <yloc>217</yloc>
+      <xloc>86</xloc>
+      <yloc>202</yloc>
       </entry>
     <entry>
-      <name>Transformation CNIS</name>
+      <name>Transformation RAIS ANO</name>
       <description/>
       <type>TRANS</type>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>&#x2f;home&#x2f;DLIPEA&#x2f;b6519563&#x2f;workspace&#x2f;mapa_osc_database&#x2f;ETL&#x2f;MOSC-1418&#x2f;CNIS.ktr</filename>
+      <filename>&#x2f;home&#x2f;DLIPEA&#x2f;b6519563&#x2f;workspace&#x2f;mapa_osc_database&#x2f;ETL&#x2f;RAIS_2015&#x2f;TRANS_RAIS_ANO.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>Y</params_from_previous>
@@ -155,8 +131,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>373</xloc>
-      <yloc>397</yloc>
+      <xloc>425</xloc>
+      <yloc>382</yloc>
       </entry>
     <entry>
       <name>Success</name>
@@ -165,40 +141,40 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>553</xloc>
-      <yloc>220</yloc>
+      <xloc>605</xloc>
+      <yloc>205</yloc>
       </entry>
     <entry>
       <name>SQL</name>
       <description/>
       <type>SQL</type>
-      <sql>ALTER TABLE osc.tb_osc DISABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_dados_gerais DISABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_contato DISABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_localizacao DISABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_area_atuacao DISABLE TRIGGER ALL&#x3b;&#xa;&#xa;UPDATE osc.tb_osc SET bo_osc_ativa &#x3d; false&#x3b;</sql>
+      <sql>ALTER TABLE osc.tb_relacoes_trabalho DISABLE TRIGGER ALL&#x3b;&#xa;</sql>
       <useVariableSubstitution>F</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename/>
       <sendOneStatement>F</sendOneStatement>
-      <connection>localhost</connection>
+      <connection>etl</connection>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>142</xloc>
-      <yloc>217</yloc>
+      <xloc>194</xloc>
+      <yloc>202</yloc>
       </entry>
     <entry>
       <name>SQL 2</name>
       <description/>
       <type>SQL</type>
-      <sql>select RefreshAllMaterializedViews&#x28;&#x27;spat&#x27;&#x29;&#x3b;&#xa;select RefreshAllMaterializedViews&#x28;&#x27;osc&#x27;&#x29;&#x3b;&#xa;select RefreshAllMaterializedViews&#x28;&#x27;portal&#x27;&#x29;&#x3b;&#xa;&#xa;ALTER TABLE osc.tb_osc ENABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_dados_gerais ENABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_contato ENABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_localizacao ENABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_area_atuacao ENABLE TRIGGER ALL&#x3b;&#xa;&#xa;UPDATE TABLE log.tb_log_carga SET dt_fim &#x3d; NOW&#x28;&#x29;&#x3a;&#x3a;timestamp, cd_status &#x3d; 9&#xa;WHERE id_carga &#x3d; &#x24;&#x7b;ID_CARGA&#x7d;&#x3b;</sql>
+      <sql>select RefreshAllMaterializedViews&#x28;&#x27;portal&#x27;&#x29;&#x3b;&#xa;&#xa;ALTER TABLE osc.tb_relacoes_trabalho ENABLE TRIGGER ALL&#x3b;&#xa;&#xa;UPDATE TABLE log.tb_log_carga SET dt_fim &#x3d; NOW&#x28;&#x29;&#x3a;&#x3a;timestamp, cd_status &#x3d; 9&#xa;WHERE id_carga &#x3d; &#x24;&#x7b;ID_CARGA&#x7d;&#x3b;</sql>
       <useVariableSubstitution>T</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename/>
       <sendOneStatement>F</sendOneStatement>
-      <connection>localhost</connection>
+      <connection>etl</connection>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>377</xloc>
-      <yloc>219</yloc>
+      <xloc>429</xloc>
+      <yloc>204</yloc>
       </entry>
     <entry>
       <name>Transformation ID_CARGA</name>
@@ -206,7 +182,7 @@
       <type>TRANS</type>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;CARGA.ktr</filename>
+      <filename>&#x2f;home&#x2f;DLIPEA&#x2f;b6519563&#x2f;workspace&#x2f;mapa_osc_database&#x2f;ETL&#x2f;MOSC-1418&#x2f;CARGA.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>Y</params_from_previous>
@@ -230,8 +206,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>142</xloc>
-      <yloc>398</yloc>
+      <xloc>194</xloc>
+      <yloc>383</yloc>
       </entry>
     <entry>
       <name>Set variables</name>
@@ -243,31 +219,31 @@
       <fields>
         <field>
           <variable_name>ETL</variable_name>
-          <variable_value>CNPJ&#x2f;SRF&#x2f;MF 2016</variable_value>
+          <variable_value>RAIS 2015</variable_value>
           <variable_type>JVM</variable_type>
         </field>
       </fields>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>144</xloc>
-      <yloc>299</yloc>
+      <xloc>196</xloc>
+      <yloc>284</yloc>
       </entry>
     <entry>
       <name>SQL 2 2</name>
       <description/>
       <type>SQL</type>
-      <sql>--select RefreshAllMaterializedViews&#x28;&#x27;spat&#x27;&#x29;&#x3b;&#xa;--select RefreshAllMaterializedViews&#x28;&#x27;osc&#x27;&#x29;&#x3b;&#xa;--select RefreshAllMaterializedViews&#x28;&#x27;portal&#x27;&#x29;&#x3b;&#xa;&#xa;ALTER TABLE osc.tb_osc ENABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_dados_gerais ENABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_contato ENABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_localizacao ENABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_area_atuacao ENABLE TRIGGER ALL&#x3b;&#xa;&#xa;UPDATE log.tb_log_carga SET dt_fim &#x3d; NOW&#x28;&#x29;&#x3a;&#x3a;timestamp, cd_status &#x3d; 2&#xa;WHERE id_carga &#x3d; &#x24;&#x7b;ID_CARGA&#x7d;&#x3b;</sql>
+      <sql>--select RefreshAllMaterializedViews&#x28;&#x27;portal&#x27;&#x29;&#x3b;&#xa;ALTER TABLE osc.tb_relacoes_trabalho ENABLE TRIGGER ALL&#x3b;&#xa;&#xa;UPDATE log.tb_log_carga SET dt_fim &#x3d; NOW&#x28;&#x29;&#x3a;&#x3a;timestamp, cd_status &#x3d; 2&#xa;WHERE id_carga &#x3d; &#x24;&#x7b;ID_CARGA&#x7d;&#x3b;</sql>
       <useVariableSubstitution>T</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename/>
       <sendOneStatement>F</sendOneStatement>
-      <connection>localhost</connection>
+      <connection>etl</connection>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>375</xloc>
-      <yloc>518</yloc>
+      <xloc>427</xloc>
+      <yloc>503</yloc>
       </entry>
     <entry>
       <name>Abort job</name>
@@ -277,8 +253,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>558</xloc>
-      <yloc>522</yloc>
+      <xloc>610</xloc>
+      <yloc>507</yloc>
       </entry>
   </entries>
   <hops>
@@ -290,33 +266,6 @@
       <enabled>Y</enabled>
       <evaluation>Y</evaluation>
       <unconditional>Y</unconditional>
-    </hop>
-    <hop>
-      <from>Transformation CNIS</from>
-      <to>SQL 2</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>SQL 2</from>
-      <to>Success</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Transformation ID_CARGA</from>
-      <to>Transformation CNIS</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
     </hop>
     <hop>
       <from>SQL</from>
@@ -337,7 +286,34 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Transformation CNIS</from>
+      <from>Transformation ID_CARGA</from>
+      <to>Transformation RAIS ANO</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Transformation RAIS ANO</from>
+      <to>SQL 2</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>SQL 2</from>
+      <to>Success</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Transformation RAIS ANO</from>
       <to>SQL 2 2</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>

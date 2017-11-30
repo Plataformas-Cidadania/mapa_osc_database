@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>ReadFiles</name>
+    <name>TRANS_RAIS_GRAPH</name>
     <description/>
     <extended_description/>
     <trans_version/>
     <trans_type>Normal</trans_type>
+    <trans_status>0</trans_status>
     <directory>&#x2f;</directory>
     <parameters>
     </parameters>
@@ -76,11 +77,11 @@
   </notepads>
   <connection>
     <name>desenv</name>
-    <server>mapaosc-desenv</server>
+    <server>10.1.4.110</server>
     <type>POSTGRESQL</type>
     <access>Native</access>
     <database>portalosc</database>
-    <port>5432</port>
+    <port>5434</port>
     <username>i3geo</username>
     <password>Encrypted 2be98afc86aa7f2e4cb10be75dfc2ff8b</password>
     <servername/>
@@ -90,7 +91,7 @@
       <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
       <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
       <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>5432</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>5434</attribute></attribute>
       <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>N</attribute></attribute>
       <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
       <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
@@ -103,7 +104,7 @@
     <server>localhost</server>
     <type>POSTGRESQL</type>
     <access>Native</access>
-    <database>portalosc</database>
+    <database>portalosc_producao</database>
     <port>5432</port>
     <username>postgres</username>
     <password>Encrypted 2be98afc86aa7f2e4cb79a760db93bdd0</password>
@@ -138,12 +139,12 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>desenv</connection>
+    <connection>localhost</connection>
     <execute_each_row>N</execute_each_row>
     <single_statement>N</single_statement>
     <replace_variables>N</replace_variables>
     <quoteString>N</quoteString>
-    <sql>DROP TABLE IF EXISTS graph.tb_rais&#x3b;&#xd;&#xa;CREATE TABLE graph.tb_rais&#x28;&#xd;&#xa;	id_tb_rais SERIAL NOT NULL,&#xd;&#xa;	id_estab bigint NOT NULL,&#xd;&#xa;	codemun	INTEGER,&#xd;&#xa;	nm_mun	TEXT,&#xd;&#xa;	uf	INTEGER,&#xd;&#xa;	nm_uf	TEXT,&#xd;&#xa;	regiao	INTEGER,&#xd;&#xa;	secao_cnae	TEXT,&#xd;&#xa;	div_cnae	INTEGER,&#xd;&#xa;	grp_cnae	INTEGER,&#xd;&#xa;	clas_cnae	INTEGER,&#xd;&#xa;	sbcl_cnae	INTEGER,&#xd;&#xa;	nat_jur	bigint,&#xd;&#xa;	razao_social	TEXT,&#xd;&#xa;	tamestab	INTEGER,&#xd;&#xa;	tamestab2	INTEGER,&#xd;&#xa;	qtd_vinc_ativos	INTEGER,&#xd;&#xa;	endereco	TEXT,&#xd;&#xa;	cep_estab	TEXT,&#xd;&#xa;	email_estab	TEXT,&#xd;&#xa;	data_abertura	DATE,&#xd;&#xa;	data_encerramento	DATE,&#xd;&#xa;	num_telefone	TEXT,&#xd;&#xa;	ind_osc	INTEGER,&#xd;&#xa;	ano_rais INTEGER,&#xd;&#xa;	CONSTRAINT CNPJ UNIQUE &#x28;id_estab,ano_rais&#x29;,&#xd;&#xa;	CONSTRAINT ID PRIMARY KEY &#x28;id_tb_rais&#x29;&#xd;&#xa;&#x29;&#x3b;</sql>
+    <sql>DROP TABLE IF EXISTS graph.tb_rais&#x3b;&#xd;&#xa;CREATE TABLE graph.tb_rais&#x28;&#xd;&#xa;	id_tb_rais SERIAL NOT NULL,&#xa;	id_estab bigint NOT NULL,&#xa;	codemun Integer,&#xa;	nm_mun Text,&#xa;	uf Integer,&#xa;	nm_uf Text,&#xa;	regiao Integer,&#xa;	nm_regiao Text,&#xa;	secao_cnae20 Text,&#xa;	div_cnae20 Integer,&#xa;	grp_cnae20 Integer,&#xa;	clas_cnae20 Integer,&#xa;	sbcl_cnae20 Integer,&#xa;	nat_jur Integer,&#xa;	razao_social Text,&#xa;	tamestab Integer,&#xa;	tamestab2 Integer,&#xa;	qtd_vinc_ativos Integer,&#xa;	qtd_portador_defic Integer,&#xa;	data_abertura Text,&#xa;	data_encerramento Text,&#xa;	data_baixa Text,&#xa;	ind_atividade Integer,&#xa;	ind_rais_neg Integer,&#xa;	ind_osc Integer,&#xa;	ano_abertura Integer,&#xa;	ano_rais Integer,&#xa;	nat_jur_corrigido Text,&#xa;	sbcl_cnae_corrigido Text,&#xa;	in_cnis16 Integer,&#xa;	ano_true Integer,&#xa;	div_cnae20_corrigido Text,&#xa;	grp_cnae20_corrigido Text,&#xa;	clas_cnae20_corrigido Text,&#xa;	secao_cnae20_corrigido Text,&#xa;	micro_area_atuacao Text,&#xa;	macro_area_atuacao Text,&#xa;	CONSTRAINT CNPJ UNIQUE &#x28;id_estab,ano_rais&#x29;,&#xd;&#xa;	CONSTRAINT ID PRIMARY KEY &#x28;id_tb_rais&#x29;&#xd;&#xa;&#x29;&#x3b;&#xa;&#xa;</sql>
     <set_params>N</set_params>
     <insert_field/>
     <update_field/>
@@ -170,12 +171,12 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>desenv</connection>
+    <connection>localhost</connection>
     <execute_each_row>Y</execute_each_row>
     <single_statement>N</single_statement>
     <replace_variables>Y</replace_variables>
     <quoteString>N</quoteString>
-    <sql>INSERT INTO graph.tb_rais &#x28;id_estab,codemun,nm_mun,uf,nm_uf,regiao,secao_cnae,div_cnae,grp_cnae,clas_cnae,sbcl_cnae,nat_jur,razao_social,tamestab,tamestab2,qtd_vinc_ativos,endereco,&#xd;&#xa;	cep_estab,email_estab,data_abertura,data_encerramento,num_telefone,ind_osc,ano_rais&#x29;&#xd;&#xa;SELECT &#x3f;, &#x3f;, &#x27;&#x3f;&#x27;, &#x3f;, &#x27;&#x3f;&#x27;, &#x3f;, &#x27;&#x3f;&#x27;, &#x3f;, &#x3f;, &#x3f;, &#x3f;, &#x3f;, &#x27;&#x3f;&#x27;, &#x3f;, &#x3f;, &#x3f;, &#x27;&#x3f;&#x27;, CASE WHEN LENGTH&#x28;&#x27;&#x3f;&#x27;&#x29; &#x3d; 0 THEN NULL ELSE &#x27;&#x3f;&#x27; END, &#x27;&#x3f;&#x27;, CASE WHEN &#x27;&#x3f;&#x27; &#x3d; &#x27;&#x27; THEN NULL ELSE to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29; END,&#xd;&#xa;     CASE WHEN &#x27;&#x3f;&#x27; &#x3d; &#x27;&#x27; THEN NULL ELSE to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29; END,CASE WHEN LENGTH&#x28;&#x27;&#x3f;&#x27;&#x29; &#x3d; 0 THEN NULL ELSE &#x27;&#x3f;&#x27; END,&#x3f;,&#x3f;&#xd;&#xa;WHERE NOT EXISTS &#x28;SELECT &#x2a; FROM graph.tb_rais WHERE id_estab &#x3d; &#x3f; AND ano_rais &#x3d; &#x3f;&#x29;&#x3b;&#xd;&#xa;</sql>
+    <sql>INSERT INTO graph.tb_rais &#x28;id_estab, codemun, nm_mun, uf, nm_uf, regiao, nm_regiao, secao_cnae20, div_cnae20, grp_cnae20, clas_cnae20, sbcl_cnae20,	nat_jur, razao_social,&#xa;						   tamestab, tamestab2, qtd_vinc_ativos, qtd_portador_defic, data_abertura, data_encerramento, data_baixa, ind_atividade, ind_rais_neg, ind_osc,&#xa;					       ano_abertura, ano_rais, nat_jur_corrigido, sbcl_cnae_corrigido, in_cnis16, ano_true, div_cnae20_corrigido, grp_cnae20_corrigido, clas_cnae20_corrigido,&#xa;						   secao_cnae20_corrigido, micro_area_atuacao, macro_area_atuacao&#x29;&#xd;&#xa;SELECT &#x3f;, &#x3f;, &#x27;&#x3f;&#x27;, &#x3f;, &#x27;&#x3f;&#x27;, &#x3f;, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;, &#x3f;, &#x3f;, &#x3f;, &#x3f;, &#x3f;, &#x27;&#x3f;&#x27;, &#xa;	   &#x3f;, &#x3f;, &#x3f;, &#x3f;, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;,&#x27;&#x3f;&#x27;, &#x3f;, &#x3f;, &#x3f;,&#xa;	   &#x3f;, &#x3f;, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;, &#x3f;, &#x3f;, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;,&#xa;	   &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;, &#x27;&#x3f;&#x27;&#xd;&#xa;WHERE NOT EXISTS &#x28;SELECT &#x2a; FROM graph.tb_rais WHERE id_estab &#x3d; &#x3f; AND ano_rais &#x3d; &#x3f;&#x29;&#x3b;</sql>
     <set_params>N</set_params>
     <insert_field/>
     <update_field/>
@@ -188,35 +189,43 @@
        <argument><name>uf</name></argument>
        <argument><name>nm_uf</name></argument>
        <argument><name>regiao</name></argument>
+       <argument><name>nm_regiao</name></argument>
        <argument><name>secao_cnae20</name></argument>
        <argument><name>div_cnae20</name></argument>
        <argument><name>grp_cnae20</name></argument>
        <argument><name>clas_cnae20</name></argument>
        <argument><name>sbcl_cnae20</name></argument>
-       <argument><name>nat_jur2003</name></argument>
+       <argument><name>nat_jur</name></argument>
        <argument><name>razao_social</name></argument>
        <argument><name>tamestab</name></argument>
        <argument><name>tamestab2</name></argument>
        <argument><name>qtd_vinc_ativos</name></argument>
-       <argument><name>endereco</name></argument>
-       <argument><name>cep_estab</name></argument>
-       <argument><name>cep_estab</name></argument>
-       <argument><name>email_estab</name></argument>
-       <argument><name>data_abertura</name></argument>
+       <argument><name>qtd_portador_defic</name></argument>
        <argument><name>data_abertura</name></argument>
        <argument><name>data_encerramento</name></argument>
-       <argument><name>data_encerramento</name></argument>
-       <argument><name>num_telefone</name></argument>
-       <argument><name>num_telefone</name></argument>
+       <argument><name>data_baixa</name></argument>
+       <argument><name>ind_atividade</name></argument>
+       <argument><name>ind_rais_neg</name></argument>
        <argument><name>ind_osc</name></argument>
-       <argument><name>Rais_09-13.kjb</name></argument>
+       <argument><name>ano_abertura</name></argument>
+       <argument><name>ano_rais</name></argument>
+       <argument><name>nat_jur_corrigido</name></argument>
+       <argument><name>sbcl_cnae_corrigido</name></argument>
+       <argument><name>in_cnis16</name></argument>
+       <argument><name>ano_true</name></argument>
+       <argument><name>div_cnae20_corrigido</name></argument>
+       <argument><name>grp_cnae20_corrigido</name></argument>
+       <argument><name>clas_cnae20_corrigido</name></argument>
+       <argument><name>secao_cnae20_corrigido</name></argument>
+       <argument><name>micro_area_atuacao</name></argument>
+       <argument><name>macro_area_atuacao</name></argument>
        <argument><name>id_estab</name></argument>
-       <argument><name>Rais_09-13.kjb</name></argument>
+       <argument><name>ano_rais</name></argument>
     </arguments>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>525</xloc>
-      <yloc>181</yloc>
+      <xloc>548</xloc>
+      <yloc>179</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -233,17 +242,6 @@
            <schema_name/>
            </partitioning>
     <fields>
-      <field>
-        <in_stream_name>Rais_09-13.kjb</in_stream_name>
-        <out_stream_name/>
-        <use_regex>no</use_regex>
-        <replace_string>.csv</replace_string>
-        <replace_by_string/>
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string/>
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-      </field>
       <field>
         <in_stream_name>nm_mun</in_stream_name>
         <out_stream_name/>
@@ -267,11 +265,44 @@
         <case_sensitive>no</case_sensitive>
       </field>
       <field>
-        <in_stream_name>endereco</in_stream_name>
+        <in_stream_name>data_abertura</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
-        <replace_string>&#x27;</replace_string>
-        <replace_by_string>&#x27;&#x27;</replace_by_string>
+        <replace_string>NA</replace_string>
+        <replace_by_string/>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
+      <field>
+        <in_stream_name>data_baixa</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>NA</replace_string>
+        <replace_by_string/>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
+      <field>
+        <in_stream_name>data_encerramento</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>NA</replace_string>
+        <replace_by_string/>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
+      <field>
+        <in_stream_name>ano_abertura</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>NA</replace_string>
+        <replace_by_string>0</replace_by_string>
         <set_empty_string>N</set_empty_string>
         <replace_field_by_string/>
         <whole_word>no</whole_word>
@@ -280,8 +311,8 @@
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>397</xloc>
-      <yloc>180</yloc>
+      <xloc>402</xloc>
+      <yloc>179</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -320,11 +351,11 @@
     <rownum>N</rownum>
     <rownumByFile>N</rownumByFile>
     <rownum_field/>
-    <format>DOS</format>
+    <format>Unix</format>
     <encoding>UTF-8</encoding>
     <add_to_result_filenames>Y</add_to_result_filenames>
     <file>
-      <name>C&#x3a;&#x5c;Users&#x5c;b6519563&#x5c;Downloads&#x5c;Rais09-13</name>
+      <name>&#x2f;home&#x2f;DLIPEA&#x2f;b6519563&#x2f;Downloads&#x2f;rais_serie&#x2f;</name>
       <filemask>.&#x2a;&#x5c;.csv</filemask>
       <exclude_filemask/>
       <file_required>N</file_required>
@@ -337,7 +368,7 @@
     <fields>
       <field>
         <name>id_estab</name>
-        <type>BigNumber</type>
+        <type>Integer</type>
         <format>&#x23;</format>
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
@@ -375,7 +406,7 @@
         <nullif>-</nullif>
         <ifnull/>
         <position>-1</position>
-        <length>23</length>
+        <length>21</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
         <repeat>N</repeat>
@@ -405,7 +436,7 @@
         <nullif>-</nullif>
         <ifnull/>
         <position>-1</position>
-        <length>17</length>
+        <length>9</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
         <repeat>N</repeat>
@@ -422,6 +453,21 @@
         <position>-1</position>
         <length>15</length>
         <precision>0</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>nm_regiao</name>
+        <type>String</type>
+        <format/>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif>-</nullif>
+        <ifnull/>
+        <position>-1</position>
+        <length>12</length>
+        <precision>-1</precision>
         <trim_type>none</trim_type>
         <repeat>N</repeat>
       </field>
@@ -501,7 +547,7 @@
         <repeat>N</repeat>
       </field>
       <field>
-        <name>nat_jur2003</name>
+        <name>nat_jur</name>
         <type>Integer</type>
         <format>&#x23;</format>
         <currency>R&#x24;</currency>
@@ -525,7 +571,7 @@
         <nullif>-</nullif>
         <ifnull/>
         <position>-1</position>
-        <length>52</length>
+        <length>50</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
         <repeat>N</repeat>
@@ -547,52 +593,7 @@
       </field>
       <field>
         <name>tamestab2</name>
-        <type>Number</type>
-        <format>&#x23;.&#x23;</format>
-        <currency>R&#x24;</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <nullif>-</nullif>
-        <ifnull/>
-        <position>-1</position>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>qtd_vinc_ativos</name>
-        <type>Number</type>
-        <format>&#x23;.&#x23;</format>
-        <currency>R&#x24;</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <nullif>-</nullif>
-        <ifnull/>
-        <position>-1</position>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>endereco</name>
-        <type>String</type>
-        <format/>
-        <currency>R&#x24;</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull/>
-        <position>-1</position>
-        <length>52</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>cep_estab</name>
-        <type>String</type>
+        <type>Integer</type>
         <format>&#x23;</format>
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
@@ -606,7 +607,37 @@
         <repeat>N</repeat>
       </field>
       <field>
-        <name>email_estab</name>
+        <name>qtd_vinc_ativos</name>
+        <type>Integer</type>
+        <format>&#x23;</format>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif>-</nullif>
+        <ifnull/>
+        <position>-1</position>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>qtd_portador_defic</name>
+        <type>Integer</type>
+        <format>&#x23;</format>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif>-</nullif>
+        <ifnull/>
+        <position>-1</position>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>data_abertura</name>
         <type>String</type>
         <format/>
         <currency>R&#x24;</currency>
@@ -615,30 +646,30 @@
         <nullif>-</nullif>
         <ifnull/>
         <position>-1</position>
-        <length>36</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>data_abertura</name>
-        <type>Date</type>
-        <format>dd&#x2f;MM&#x2f;yyyy</format>
-        <currency>R&#x24;</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull/>
-        <position>-1</position>
-        <length>-1</length>
+        <length>2</length>
         <precision>-1</precision>
         <trim_type>none</trim_type>
         <repeat>N</repeat>
       </field>
       <field>
         <name>data_encerramento</name>
-        <type>Date</type>
-        <format>dd&#x2f;MM&#x2f;yyyy</format>
+        <type>String</type>
+        <format/>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif>-</nullif>
+        <ifnull/>
+        <position>-1</position>
+        <length>2</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>data_baixa</name>
+        <type>String</type>
+        <format/>
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -651,8 +682,23 @@
         <repeat>N</repeat>
       </field>
       <field>
-        <name>num_telefone</name>
-        <type>String</type>
+        <name>ind_atividade</name>
+        <type>Integer</type>
+        <format>&#x23;</format>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif>-</nullif>
+        <ifnull/>
+        <position>-1</position>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>ind_rais_neg</name>
+        <type>Integer</type>
         <format>&#x23;</format>
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
@@ -680,6 +726,186 @@
         <trim_type>none</trim_type>
         <repeat>N</repeat>
       </field>
+      <field>
+        <name>ano_abertura</name>
+        <type>String</type>
+        <format/>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif>-</nullif>
+        <ifnull/>
+        <position>-1</position>
+        <length>2</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>ano_rais</name>
+        <type>Integer</type>
+        <format>&#x23;</format>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif>-</nullif>
+        <ifnull/>
+        <position>-1</position>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>nat_jur_corrigido</name>
+        <type>String</type>
+        <format>&#x23;</format>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif>-</nullif>
+        <ifnull/>
+        <position>-1</position>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>sbcl_cnae_corrigido</name>
+        <type>String</type>
+        <format>&#x23;</format>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif>-</nullif>
+        <ifnull/>
+        <position>-1</position>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>in_cnis16</name>
+        <type>Integer</type>
+        <format>&#x23;</format>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif>-</nullif>
+        <ifnull/>
+        <position>-1</position>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>ano_true</name>
+        <type>Integer</type>
+        <format>&#x23;</format>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif>-</nullif>
+        <ifnull/>
+        <position>-1</position>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>div_cnae20_corrigido</name>
+        <type>String</type>
+        <format>&#x23;</format>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif>-</nullif>
+        <ifnull/>
+        <position>-1</position>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>grp_cnae20_corrigido</name>
+        <type>String</type>
+        <format>&#x23;</format>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif>-</nullif>
+        <ifnull/>
+        <position>-1</position>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>clas_cnae20_corrigido</name>
+        <type>String</type>
+        <format>&#x23;</format>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif>-</nullif>
+        <ifnull/>
+        <position>-1</position>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>secao_cnae20_corrigido</name>
+        <type>String</type>
+        <format/>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif>-</nullif>
+        <ifnull/>
+        <position>-1</position>
+        <length>1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>micro_area_atuacao</name>
+        <type>String</type>
+        <format/>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif>-</nullif>
+        <ifnull/>
+        <position>-1</position>
+        <length>57</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
+      <field>
+        <name>macro_area_atuacao</name>
+        <type>String</type>
+        <format/>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif>-</nullif>
+        <ifnull/>
+        <position>-1</position>
+        <length>57</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+        <repeat>N</repeat>
+      </field>
     </fields>
     <limit>0</limit>
     <error_ignored>N</error_ignored>
@@ -698,7 +924,7 @@
     <line_number_files_extension>line</line_number_files_extension>
     <date_format_lenient>Y</date_format_lenient>
     <date_format_locale>pt_BR</date_format_locale>
-    <shortFileFieldName>&#x24;&#x7b;Internal.Job.Filename.Name&#x7d;</shortFileFieldName>
+    <shortFileFieldName/>
     <pathFieldName/>
     <hiddenFieldName/>
     <lastModificationTimeFieldName/>
