@@ -572,12 +572,12 @@
     <hop>
       <from>Formatar JSON</from>
       <to>Select values área atuação</to>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Formatar JSON</from>
       <to>Select values dados gerais</to>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Add constants</from>
@@ -697,7 +697,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>254</xloc>
+      <xloc>359</xloc>
       <yloc>254</yloc>
       <draw>Y</draw>
     </GUI>
@@ -783,7 +783,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>775</xloc>
+      <xloc>891</xloc>
       <yloc>254</yloc>
       <draw>Y</draw>
     </GUI>
@@ -825,7 +825,7 @@ FROM portal.atualizar_dados_gerais_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1286</xloc>
+      <xloc>1402</xloc>
       <yloc>254</yloc>
       <draw>Y</draw>
     </GUI>
@@ -867,7 +867,7 @@ FROM portal.atualizar_localizacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1294</xloc>
+      <xloc>1410</xloc>
       <yloc>374</yloc>
       <draw>Y</draw>
     </GUI>
@@ -911,7 +911,7 @@ FROM portal.atualizar_area_atuacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1286</xloc>
+      <xloc>1402</xloc>
       <yloc>140</yloc>
       <draw>Y</draw>
     </GUI>
@@ -939,7 +939,7 @@ FROM portal.atualizar_area_atuacao_osc(
     <add_filename_result>N</add_filename_result>
     <parallel>N</parallel>
     <newline_possible>N</newline_possible>
-    <encoding>UTF-8</encoding>
+    <encoding>ISO-8859-1</encoding>
     <fields>
       <field>
         <name>NU_CNPJ_REQUERENTE</name>
@@ -948,7 +948,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -959,7 +959,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>118</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -970,7 +970,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>12</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -981,7 +981,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>2</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -992,7 +992,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>22</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1003,7 +1003,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>13</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1014,7 +1014,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>12</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1025,14 +1025,14 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>20</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
         <name>DT_PROTOCOLO</name>
-        <type>Date</type>
-        <format>dd/MM/yyyy</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1042,8 +1042,8 @@ FROM portal.atualizar_area_atuacao_osc(
       </field>
       <field>
         <name>DT_PROTOCOLO_MENOR</name>
-        <type>Date</type>
-        <format>dd/MM/yyyy</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1058,7 +1058,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>23</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1069,14 +1069,14 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>3</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
         <name>INICIO_VALIDADE_ANTERIOR</name>
-        <type>Date</type>
-        <format>dd/MM/yyyy</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1086,8 +1086,8 @@ FROM portal.atualizar_area_atuacao_osc(
       </field>
       <field>
         <name>FIM_VALIDADE_ANTERIOR</name>
-        <type>Date</type>
-        <format>dd/MM/yyyy</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1102,41 +1102,41 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>9</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
         <name>CO_CNES</name>
-        <type>Integer</type>
-        <format>#</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
+        <length>-1</length>
+        <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
         <name>NU_CNPJ</name>
-        <type>Integer</type>
-        <format>#</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
+        <length>-1</length>
+        <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
         <name>NU_CNPJ_MANTENEDORA</name>
-        <type>Integer</type>
-        <format>#</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
+        <length>-1</length>
+        <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
@@ -1146,7 +1146,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>60</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1157,7 +1157,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>54</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1168,7 +1168,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>12</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1179,19 +1179,19 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>2</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
         <name>CO_MUNICIPIO</name>
-        <type>Integer</type>
-        <format>#</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
+        <length>-1</length>
+        <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
@@ -1201,7 +1201,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>25</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1212,7 +1212,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>32</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1223,7 +1223,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1234,7 +1234,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>8</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1245,30 +1245,30 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>20</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
         <name>CO_CEP</name>
-        <type>Integer</type>
-        <format>#</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
+        <length>-1</length>
+        <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
         <name>CO_NATUREZA_JUR</name>
-        <type>Integer</type>
-        <format>#</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
+        <length>-1</length>
+        <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
@@ -1278,7 +1278,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>23</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1289,7 +1289,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>29</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1300,19 +1300,19 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>47</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
         <name>CO_NATUREZA_ORGANIZACAO</name>
-        <type>Integer</type>
-        <format>#</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
+        <length>-1</length>
+        <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
@@ -1322,19 +1322,19 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>40</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
         <name>CO_ESFERA_ADMINISTRATIVA</name>
-        <type>Integer</type>
-        <format>#</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
+        <length>-1</length>
+        <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
@@ -1344,7 +1344,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>7</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1355,7 +1355,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>58</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1366,7 +1366,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>9</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1377,7 +1377,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>3</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1390,7 +1390,7 @@ FROM portal.atualizar_area_atuacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>41</xloc>
+      <xloc>92</xloc>
       <yloc>254</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1414,7 +1414,7 @@ FROM portal.atualizar_area_atuacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>505</xloc>
+      <xloc>621</xloc>
       <yloc>254</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1448,7 +1448,7 @@ FROM portal.atualizar_area_atuacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>905</xloc>
+      <xloc>1021</xloc>
       <yloc>374</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1540,7 +1540,7 @@ var dados_gerais_json = '{"tx_tipo_unidade_saude": ' + DS_TIPO_UNIDADE + ', "tx_
       </output>
     </remotesteps>
     <GUI>
-      <xloc>905</xloc>
+      <xloc>1021</xloc>
       <yloc>254</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1573,7 +1573,7 @@ var dados_gerais_json = '{"tx_tipo_unidade_saude": ' + DS_TIPO_UNIDADE + ', "tx_
       </output>
     </remotesteps>
     <GUI>
-      <xloc>390</xloc>
+      <xloc>495</xloc>
       <yloc>254</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1606,7 +1606,7 @@ var dados_gerais_json = '{"tx_tipo_unidade_saude": ' + DS_TIPO_UNIDADE + ', "tx_
       </output>
     </remotesteps>
     <GUI>
-      <xloc>654</xloc>
+      <xloc>770</xloc>
       <yloc>254</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1643,7 +1643,7 @@ var dados_gerais_json = '{"tx_tipo_unidade_saude": ' + DS_TIPO_UNIDADE + ', "tx_
       </output>
     </remotesteps>
     <GUI>
-      <xloc>151</xloc>
+      <xloc>228</xloc>
       <yloc>254</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1682,8 +1682,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>654</xloc>
-      <yloc>140</yloc>
+      <xloc>770</xloc>
+      <yloc>125</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1699,7 +1699,7 @@ OR (
       <schema_name />
     </partitioning>
     <connection>localhost</connection>
-    <sql>SELECT id_osc, ? AS cnpj FROM osc.tb_osc WHERE cd_identificador_osc = ?::NUMERIC;</sql>
+    <sql>SELECT id_osc, ? AS cnpj FROM osc.tb_osc WHERE cd_identificador_osc::TEXT = ?;</sql>
     <limit>0</limit>
     <lookup>Select values 1</lookup>
     <execute_each_row>Y</execute_each_row>
@@ -1713,8 +1713,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>390</xloc>
-      <yloc>138</yloc>
+      <xloc>495</xloc>
+      <yloc>123</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1748,8 +1748,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>250</xloc>
-      <yloc>138</yloc>
+      <xloc>355</xloc>
+      <yloc>123</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1787,8 +1787,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>506</xloc>
-      <yloc>140</yloc>
+      <xloc>622</xloc>
+      <yloc>125</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1829,7 +1829,7 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1072</xloc>
+      <xloc>1188</xloc>
       <yloc>254</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1871,7 +1871,7 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1080</xloc>
+      <xloc>1196</xloc>
       <yloc>374</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1916,7 +1916,7 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1072</xloc>
+      <xloc>1188</xloc>
       <yloc>140</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1955,7 +1955,7 @@ if(flag_variable == true &amp;&amp; flag == false){
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1469</xloc>
+      <xloc>1585</xloc>
       <yloc>254</yloc>
       <draw>Y</draw>
     </GUI>

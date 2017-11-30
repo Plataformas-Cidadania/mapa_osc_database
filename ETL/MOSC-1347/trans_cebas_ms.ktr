@@ -988,7 +988,7 @@ FROM portal.atualizar_area_atuacao_osc(
     <add_filename_result>N</add_filename_result>
     <parallel>N</parallel>
     <newline_possible>N</newline_possible>
-    <encoding>UTF-8</encoding>
+    <encoding>ISO-8859-1</encoding>
     <fields>
       <field>
         <name>NU_CNPJ</name>
@@ -997,7 +997,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1008,7 +1008,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>82</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1019,7 +1019,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>52</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1030,7 +1030,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>12</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1041,7 +1041,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>2</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1052,7 +1052,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>23</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1063,14 +1063,14 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>28</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
         <name>DT_PROTOCOLO</name>
-        <type>Date</type>
-        <format>dd/MM/yyyy</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1080,8 +1080,8 @@ FROM portal.atualizar_area_atuacao_osc(
       </field>
       <field>
         <name>DT_PROTOCOLO_ORIGEM</name>
-        <type>Date</type>
-        <format>dd/MM/yyyy</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1091,8 +1091,8 @@ FROM portal.atualizar_area_atuacao_osc(
       </field>
       <field>
         <name>DT_CORREIO</name>
-        <type>Date</type>
-        <format>dd/MM/yyyy</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1102,8 +1102,8 @@ FROM portal.atualizar_area_atuacao_osc(
       </field>
       <field>
         <name>DT_INCLUSAO</name>
-        <type>Date</type>
-        <format>dd/MM/yyyy</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1113,8 +1113,8 @@ FROM portal.atualizar_area_atuacao_osc(
       </field>
       <field>
         <name>DT_PROTOCOLO_MENOR</name>
-        <type>Date</type>
-        <format>dd/MM/yyyy</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1129,7 +1129,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>23</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1140,7 +1140,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>18</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1151,7 +1151,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>14</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1162,7 +1162,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>33</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1173,25 +1173,25 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>10</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
         <name>NU_PORTARIA</name>
-        <type>Integer</type>
-        <format>#</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
+        <length>-1</length>
+        <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
         <name>DT_PORTARIA</name>
-        <type>Date</type>
-        <format>dd/MM/yyyy</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1201,8 +1201,8 @@ FROM portal.atualizar_area_atuacao_osc(
       </field>
       <field>
         <name>DT_PUBLICACAO_VIGENCIA</name>
-        <type>Date</type>
-        <format>dd/MM/yyyy</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1212,8 +1212,8 @@ FROM portal.atualizar_area_atuacao_osc(
       </field>
       <field>
         <name>DT_INICIO_VIGENCIA</name>
-        <type>Date</type>
-        <format>dd/MM/yyyy</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1223,8 +1223,8 @@ FROM portal.atualizar_area_atuacao_osc(
       </field>
       <field>
         <name>DT_FIM_VIGENCIA</name>
-        <type>Date</type>
-        <format>dd/MM/yyyy</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1234,13 +1234,13 @@ FROM portal.atualizar_area_atuacao_osc(
       </field>
       <field>
         <name>NU_PERIODO_VIGENCIA</name>
-        <type>Integer</type>
-        <format>#</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
+        <length>-1</length>
+        <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
@@ -1250,7 +1250,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>11</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1261,14 +1261,14 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>11</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
         <name>DT_RECURSO</name>
-        <type>Date</type>
-        <format>dd/MM/yyyy</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1283,7 +1283,7 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>56</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1294,14 +1294,14 @@ FROM portal.atualizar_area_atuacao_osc(
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>3</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
         <name>INICIO_VALIDADE_ANTERIOR</name>
-        <type>Date</type>
-        <format>dd/MM/yyyy</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1311,8 +1311,8 @@ FROM portal.atualizar_area_atuacao_osc(
       </field>
       <field>
         <name>FIM_VALIDADE_ANTERIOR</name>
-        <type>Date</type>
-        <format>dd/MM/yyyy</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1331,6 +1331,48 @@ FROM portal.atualizar_area_atuacao_osc(
     <GUI>
       <xloc>64</xloc>
       <yloc>283</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Delete certificado</name>
+    <type>TableInput</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>localhost</connection>
+    <sql>SELECT * FROM portal.inserir_log_atualizacao(
+	'osc.tb_certificado', 
+	?::INTEGER, 
+	'${FONTE_CARGA}'::TEXT, 
+	NOW()::TIMESTAMP,
+	(SELECT row_to_json(a) FROM (SELECT * FROM osc.tb_certificado WHERE id_certificado = ?::INTEGER) AS a), 
+	null, 
+	'${ID_CARGA}'::INTEGER
+);
+
+DELETE FROM osc.tb_certificado 
+WHERE id_certificado = ?::INTEGER;</sql>
+    <limit>0</limit>
+    <lookup>Select values 4</lookup>
+    <execute_each_row>Y</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>463</xloc>
+      <yloc>510</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1738,7 +1780,7 @@ AND cd_certificado = ?::INTEGER;</sql>
       <schema_name />
     </partitioning>
     <connection>localhost</connection>
-    <sql>SELECT id_osc, ? AS cnpj FROM osc.tb_osc WHERE cd_identificador_osc = ?::NUMERIC;</sql>
+    <sql>SELECT id_osc, ? AS cnpj FROM osc.tb_osc WHERE cd_identificador_osc::TEXT = ?;</sql>
     <limit>0</limit>
     <lookup>Select values</lookup>
     <execute_each_row>Y</execute_each_row>
@@ -1858,6 +1900,44 @@ AND cd_certificado = ?::INTEGER;</sql>
     <GUI>
       <xloc>894</xloc>
       <yloc>395</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Select values 4</name>
+    <type>SelectValues</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>id_osc</name>
+      </field>
+      <field>
+        <name>id_certificado</name>
+        <rename>certificado_1</rename>
+      </field>
+      <field>
+        <name>id_certificado</name>
+        <rename>certificado_2</rename>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>626</xloc>
+      <yloc>510</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2071,87 +2151,6 @@ if(flag_variable == true &amp;&amp; flag == false){
     <GUI>
       <xloc>1614</xloc>
       <yloc>285</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Delete certificado</name>
-    <type>TableInput</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>localhost</connection>
-    <sql>SELECT * FROM portal.inserir_log_atualizacao(
-	'osc.tb_certificado', 
-	?::INTEGER, 
-	'${FONTE_CARGA}'::TEXT, 
-	NOW()::TIMESTAMP,
-	(SELECT row_to_json(a) FROM (SELECT * FROM osc.tb_certificado WHERE id_certificado = ?::INTEGER) AS a), 
-	null, 
-	'${ID_CARGA}'::INTEGER
-);
-
-DELETE FROM osc.tb_certificado 
-WHERE id_certificado = ?::INTEGER;</sql>
-    <limit>0</limit>
-    <lookup>Select values 4</lookup>
-    <execute_each_row>Y</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>463</xloc>
-      <yloc>510</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Select values 4</name>
-    <type>SelectValues</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <name>id_osc</name>
-        <rename />
-      </field>
-      <field>
-        <name>id_certificado</name>
-        <rename>certificado_1</rename>
-      </field>
-      <field>
-        <name>id_certificado</name>
-        <rename>certificado_2</rename>
-      </field>
-      <select_unspecified>N</select_unspecified>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>626</xloc>
-      <yloc>510</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
