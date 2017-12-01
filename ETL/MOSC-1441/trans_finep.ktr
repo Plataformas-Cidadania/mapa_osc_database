@@ -571,7 +571,7 @@
     </hop>
     <hop>
       <from>CSV file input</from>
-      <to>Acertar nomenclatura</to>
+      <to>Acertar nomes</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -642,7 +642,7 @@
     <hop>
       <from>Filter rows</from>
       <to>Select values localização</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>Formatar JSON</from>
@@ -650,7 +650,7 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Acertar nomenclatura</from>
+      <from>Acertar nomes</from>
       <to>Ajustar valores</to>
       <enabled>Y</enabled>
     </hop>
@@ -661,7 +661,7 @@
     </hop>
   </order>
   <step>
-    <name>Acertar nomenclatura</name>
+    <name>Acertar nomes</name>
     <type>SelectValues</type>
     <description />
     <distribute>N</distribute>
@@ -674,60 +674,9 @@
     <fields>
       <select_unspecified>N</select_unspecified>
       <meta>
-        <name>Instrumento</name>
-        <rename>Instrumento</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>Demanda</name>
-        <rename>Demanda</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>Contrato</name>
-        <rename>Contrato</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
         <name>Data Assinatura</name>
         <rename>Data_Assinatura</rename>
-        <type>None</type>
+        <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
         <conversion_mask />
@@ -744,7 +693,7 @@
       <meta>
         <name>Data Término</name>
         <rename>Data_Termino</rename>
-        <type>None</type>
+        <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
         <conversion_mask />
@@ -761,24 +710,7 @@
       <meta>
         <name>Título</name>
         <rename>Titulo</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>Proponente</name>
-        <rename>Proponente</rename>
-        <type>None</type>
+        <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
         <conversion_mask />
@@ -795,24 +727,7 @@
       <meta>
         <name>CNPJ Proponente</name>
         <rename>CNPJ_Proponente</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>UF</name>
-        <rename>UF</rename>
-        <type>None</type>
+        <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
         <conversion_mask />
@@ -829,7 +744,7 @@
       <meta>
         <name>Município</name>
         <rename>Municipio</rename>
-        <type>None</type>
+        <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
         <conversion_mask />
@@ -846,7 +761,7 @@
       <meta>
         <name>Valor Finep</name>
         <rename>Valor_Finep</rename>
-        <type>None</type>
+        <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
         <conversion_mask />
@@ -863,7 +778,7 @@
       <meta>
         <name>Contrapartida Financeira</name>
         <rename>Contrapartida_Financeira</rename>
-        <type>None</type>
+        <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
         <conversion_mask />
@@ -880,7 +795,7 @@
       <meta>
         <name>Pago até Hoje</name>
         <rename>Pago_ate_Hoje</rename>
-        <type>None</type>
+        <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
         <conversion_mask />
@@ -903,8 +818,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>237</xloc>
-      <yloc>252</yloc>
+      <xloc>201</xloc>
+      <yloc>260</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1001,8 +916,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1049</xloc>
-      <yloc>252</yloc>
+      <xloc>990</xloc>
+      <yloc>260</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1051,8 +966,8 @@ if(Pago_ate_Hoje === '-'){
       </output>
     </remotesteps>
     <GUI>
-      <xloc>386</xloc>
-      <yloc>252</yloc>
+      <xloc>327</xloc>
+      <yloc>260</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1093,8 +1008,8 @@ FROM portal.atualizar_dados_gerais_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1553</xloc>
-      <yloc>204</yloc>
+      <xloc>1494</xloc>
+      <yloc>212</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1135,8 +1050,8 @@ FROM portal.atualizar_localizacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1552</xloc>
-      <yloc>430</yloc>
+      <xloc>1493</xloc>
+      <yloc>438</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1179,8 +1094,8 @@ FROM portal.atualizar_projeto(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1555</xloc>
-      <yloc>325</yloc>
+      <xloc>1496</xloc>
+      <yloc>333</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1361,8 +1276,8 @@ FROM portal.atualizar_projeto(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>84</xloc>
-      <yloc>252</yloc>
+      <xloc>74</xloc>
+      <yloc>260</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1385,8 +1300,8 @@ FROM portal.atualizar_projeto(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>777</xloc>
-      <yloc>252</yloc>
+      <xloc>718</xloc>
+      <yloc>260</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1419,8 +1334,8 @@ FROM portal.atualizar_projeto(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1167</xloc>
-      <yloc>430</yloc>
+      <xloc>1108</xloc>
+      <yloc>438</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1497,8 +1412,8 @@ var projeto_json = '{"tx_nome_projeto": ' + Titulo + ', "dt_data_inicio_projeto"
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1167</xloc>
-      <yloc>252</yloc>
+      <xloc>1108</xloc>
+      <yloc>260</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1530,8 +1445,8 @@ var projeto_json = '{"tx_nome_projeto": ' + Titulo + ', "dt_data_inicio_projeto"
       </output>
     </remotesteps>
     <GUI>
-      <xloc>656</xloc>
-      <yloc>252</yloc>
+      <xloc>597</xloc>
+      <yloc>260</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1563,8 +1478,8 @@ var projeto_json = '{"tx_nome_projeto": ' + Titulo + ', "dt_data_inicio_projeto"
       </output>
     </remotesteps>
     <GUI>
-      <xloc>925</xloc>
-      <yloc>252</yloc>
+      <xloc>866</xloc>
+      <yloc>260</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1600,8 +1515,8 @@ var projeto_json = '{"tx_nome_projeto": ' + Titulo + ', "dt_data_inicio_projeto"
       </output>
     </remotesteps>
     <GUI>
-      <xloc>520</xloc>
-      <yloc>252</yloc>
+      <xloc>461</xloc>
+      <yloc>260</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1636,8 +1551,8 @@ AND LOWER(ed_uf.eduf_sg_uf) = LOWER(?);</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>925</xloc>
-      <yloc>128</yloc>
+      <xloc>866</xloc>
+      <yloc>136</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1667,8 +1582,8 @@ AND LOWER(ed_uf.eduf_sg_uf) = LOWER(?);</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>656</xloc>
-      <yloc>132</yloc>
+      <xloc>597</xloc>
+      <yloc>140</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1702,8 +1617,8 @@ AND LOWER(ed_uf.eduf_sg_uf) = LOWER(?);</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>516</xloc>
-      <yloc>132</yloc>
+      <xloc>457</xloc>
+      <yloc>140</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1738,8 +1653,8 @@ AND LOWER(ed_uf.eduf_sg_uf) = LOWER(?);</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>777</xloc>
-      <yloc>128</yloc>
+      <xloc>718</xloc>
+      <yloc>136</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1780,8 +1695,8 @@ AND LOWER(ed_uf.eduf_sg_uf) = LOWER(?);</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1339</xloc>
-      <yloc>204</yloc>
+      <xloc>1280</xloc>
+      <yloc>212</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1822,8 +1737,8 @@ AND LOWER(ed_uf.eduf_sg_uf) = LOWER(?);</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1338</xloc>
-      <yloc>430</yloc>
+      <xloc>1279</xloc>
+      <yloc>438</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1867,8 +1782,8 @@ AND LOWER(ed_uf.eduf_sg_uf) = LOWER(?);</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1341</xloc>
-      <yloc>325</yloc>
+      <xloc>1282</xloc>
+      <yloc>333</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1906,8 +1821,8 @@ if(flag_variable == true &amp;&amp; flag == false){
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1731</xloc>
-      <yloc>252</yloc>
+      <xloc>1672</xloc>
+      <yloc>260</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

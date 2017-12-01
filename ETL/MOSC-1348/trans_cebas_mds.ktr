@@ -576,11 +576,11 @@
     </hop>
     <hop>
       <from>CSV file input</from>
-      <to>Acertar nomenclatura</to>
+      <to>Acertar nomes</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Acertar nomenclatura</from>
+      <from>Acertar nomes</from>
       <to>Replace in string</to>
       <enabled>Y</enabled>
     </hop>
@@ -646,7 +646,7 @@
     </hop>
   </order>
   <step>
-    <name>Acertar nomenclatura</name>
+    <name>Acertar nomes</name>
     <type>SelectValues</type>
     <description />
     <distribute>Y</distribute>
@@ -659,60 +659,9 @@
     <fields>
       <select_unspecified>N</select_unspecified>
       <meta>
-        <name>CNPJ</name>
-        <rename>CNPJ</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>ENTIDADE</name>
-        <rename>ENTIDADE</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
         <name>MUNICÍPIO</name>
         <rename>MUNICIPIO</rename>
-        <type>None</type>
-        <length>-2</length>
-        <precision>-2</precision>
-        <conversion_mask />
-        <date_format_lenient>false</date_format_lenient>
-        <date_format_locale />
-        <date_format_timezone />
-        <lenient_string_to_number>false</lenient_string_to_number>
-        <encoding />
-        <decimal_symbol />
-        <grouping_symbol />
-        <currency_symbol />
-        <storage_type />
-      </meta>
-      <meta>
-        <name>UF</name>
-        <rename>UF</rename>
-        <type>None</type>
+        <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
         <conversion_mask />
@@ -729,7 +678,7 @@
       <meta>
         <name>STATUS DE CERTIFICAÇÃO</name>
         <rename>STATUS_CERTIFICACAO</rename>
-        <type>None</type>
+        <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
         <conversion_mask />
@@ -746,7 +695,7 @@
       <meta>
         <name>VALIDADE INICIO</name>
         <rename>VALIDADE_INICIO</rename>
-        <type>None</type>
+        <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
         <conversion_mask />
@@ -763,7 +712,7 @@
       <meta>
         <name>VALIDADE FIM</name>
         <rename>VALIDADE_FIM</rename>
-        <type>None</type>
+        <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
         <conversion_mask />
@@ -780,7 +729,7 @@
       <meta>
         <name>cód. IBGE (7 dígitos)</name>
         <rename>COD_IBGE</rename>
-        <type>None</type>
+        <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
         <conversion_mask />
@@ -803,7 +752,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>206</xloc>
+      <xloc>183</xloc>
       <yloc>310</yloc>
       <draw>Y</draw>
     </GUI>
@@ -913,7 +862,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>604</xloc>
+      <xloc>553</xloc>
       <yloc>310</yloc>
       <draw>Y</draw>
     </GUI>
@@ -957,7 +906,7 @@ FROM portal.atualizar_certificado_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1281</xloc>
+      <xloc>1230</xloc>
       <yloc>91</yloc>
       <draw>Y</draw>
     </GUI>
@@ -999,7 +948,7 @@ FROM portal.atualizar_dados_gerais_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1288</xloc>
+      <xloc>1237</xloc>
       <yloc>505</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1041,7 +990,7 @@ FROM portal.atualizar_localizacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1288</xloc>
+      <xloc>1237</xloc>
       <yloc>365</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1085,7 +1034,7 @@ FROM portal.atualizar_area_atuacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1282</xloc>
+      <xloc>1231</xloc>
       <yloc>222</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1212,7 +1161,7 @@ FROM portal.atualizar_area_atuacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>63</xloc>
+      <xloc>67</xloc>
       <yloc>310</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1276,7 +1225,7 @@ FROM portal.atualizar_area_atuacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>752</xloc>
+      <xloc>701</xloc>
       <yloc>310</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1360,7 +1309,7 @@ var dados_gerais_json = '{"tx_razao_social_osc": ' + ENTIDADE + '}';</jsScript_s
       </output>
     </remotesteps>
     <GUI>
-      <xloc>904</xloc>
+      <xloc>853</xloc>
       <yloc>310</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1393,7 +1342,7 @@ var dados_gerais_json = '{"tx_razao_social_osc": ' + ENTIDADE + '}';</jsScript_s
       </output>
     </remotesteps>
     <GUI>
-      <xloc>486</xloc>
+      <xloc>435</xloc>
       <yloc>310</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1430,7 +1379,7 @@ var dados_gerais_json = '{"tx_razao_social_osc": ' + ENTIDADE + '}';</jsScript_s
       </output>
     </remotesteps>
     <GUI>
-      <xloc>359</xloc>
+      <xloc>308</xloc>
       <yloc>310</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1461,7 +1410,7 @@ var dados_gerais_json = '{"tx_razao_social_osc": ' + ENTIDADE + '}';</jsScript_s
       </output>
     </remotesteps>
     <GUI>
-      <xloc>486</xloc>
+      <xloc>435</xloc>
       <yloc>194</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1496,7 +1445,7 @@ var dados_gerais_json = '{"tx_razao_social_osc": ' + ENTIDADE + '}';</jsScript_s
       </output>
     </remotesteps>
     <GUI>
-      <xloc>359</xloc>
+      <xloc>308</xloc>
       <yloc>194</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1541,7 +1490,7 @@ var dados_gerais_json = '{"tx_razao_social_osc": ' + ENTIDADE + '}';</jsScript_s
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1067</xloc>
+      <xloc>1016</xloc>
       <yloc>91</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1583,7 +1532,7 @@ var dados_gerais_json = '{"tx_razao_social_osc": ' + ENTIDADE + '}';</jsScript_s
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1074</xloc>
+      <xloc>1023</xloc>
       <yloc>505</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1625,7 +1574,7 @@ var dados_gerais_json = '{"tx_razao_social_osc": ' + ENTIDADE + '}';</jsScript_s
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1074</xloc>
+      <xloc>1023</xloc>
       <yloc>365</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1670,7 +1619,7 @@ var dados_gerais_json = '{"tx_razao_social_osc": ' + ENTIDADE + '}';</jsScript_s
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1068</xloc>
+      <xloc>1017</xloc>
       <yloc>222</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1709,7 +1658,7 @@ if(flag_variable == true &amp;&amp; flag == false){
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1505</xloc>
+      <xloc>1454</xloc>
       <yloc>296</yloc>
       <draw>Y</draw>
     </GUI>
