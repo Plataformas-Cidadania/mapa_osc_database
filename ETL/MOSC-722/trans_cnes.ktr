@@ -1699,7 +1699,7 @@ OR (
       <schema_name />
     </partitioning>
     <connection>localhost</connection>
-    <sql>SELECT id_osc, ? AS cnpj FROM osc.tb_osc WHERE cd_identificador_osc::TEXT = ?;</sql>
+    <sql>SELECT id_osc, ? AS cnpj FROM osc.tb_osc WHERE cd_identificador_osc = ?::NUMERIC;</sql>
     <limit>0</limit>
     <lookup>Select values 1</lookup>
     <execute_each_row>Y</execute_each_row>

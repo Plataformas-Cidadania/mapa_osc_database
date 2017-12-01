@@ -1068,7 +1068,7 @@ FROM portal.atualizar_localizacao_osc(
     </partitioning>
     <connection>localhost</connection>
     <sql>SELECT * 
-FROM portal.atualizar_projeto(
+FROM portal.atualizar_projeto_osc(
 	'${FONTE_CARGA}'::TEXT, 
 	?::NUMERIC, 
 	?::TEXT, 

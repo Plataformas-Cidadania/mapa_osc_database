@@ -629,11 +629,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Acertar nomes</from>
-      <to>Sort rows</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Dummy</from>
       <to>Merge Join 2</to>
       <enabled>Y</enabled>
@@ -672,6 +667,16 @@
       <from>Filter rows</from>
       <to>Select values localização</to>
       <enabled>N</enabled>
+    </hop>
+    <hop>
+      <from>Acertar nomes</from>
+      <to>Filter CNPJ</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Filter CNPJ</from>
+      <to>Sort rows</to>
+      <enabled>Y</enabled>
     </hop>
   </order>
   <step>
@@ -781,8 +786,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>229</xloc>
-      <yloc>295</yloc>
+      <xloc>201</xloc>
+      <yloc>287</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -879,8 +884,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>989</xloc>
-      <yloc>295</yloc>
+      <xloc>1081</xloc>
+      <yloc>287</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -921,8 +926,8 @@ FROM portal.atualizar_contato_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1515</xloc>
-      <yloc>350</yloc>
+      <xloc>1607</xloc>
+      <yloc>342</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -963,8 +968,8 @@ FROM portal.atualizar_dados_gerais_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1519</xloc>
-      <yloc>207</yloc>
+      <xloc>1611</xloc>
+      <yloc>199</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1005,8 +1010,8 @@ FROM portal.atualizar_localizacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1521</xloc>
-      <yloc>465</yloc>
+      <xloc>1613</xloc>
+      <yloc>457</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1049,8 +1054,8 @@ FROM portal.atualizar_area_atuacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1515</xloc>
-      <yloc>90</yloc>
+      <xloc>1607</xloc>
+      <yloc>82</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1253,8 +1258,8 @@ FROM portal.atualizar_area_atuacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>98</xloc>
-      <yloc>295</yloc>
+      <xloc>70</xloc>
+      <yloc>287</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1277,8 +1282,8 @@ FROM portal.atualizar_area_atuacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>724</xloc>
-      <yloc>295</yloc>
+      <xloc>816</xloc>
+      <yloc>287</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1311,8 +1316,8 @@ FROM portal.atualizar_area_atuacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1132</xloc>
-      <yloc>465</yloc>
+      <xloc>1224</xloc>
+      <yloc>457</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1402,8 +1407,8 @@ var contato_json = '{"tx_telefone": ' + Telefone + ', "tx_email": ' + Email + '}
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1132</xloc>
-      <yloc>295</yloc>
+      <xloc>1224</xloc>
+      <yloc>287</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1435,8 +1440,8 @@ var contato_json = '{"tx_telefone": ' + Telefone + ', "tx_email": ' + Email + '}
       </output>
     </remotesteps>
     <GUI>
-      <xloc>600</xloc>
-      <yloc>295</yloc>
+      <xloc>692</xloc>
+      <yloc>287</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1468,8 +1473,8 @@ var contato_json = '{"tx_telefone": ' + Telefone + ', "tx_email": ' + Email + '}
       </output>
     </remotesteps>
     <GUI>
-      <xloc>873</xloc>
-      <yloc>295</yloc>
+      <xloc>965</xloc>
+      <yloc>287</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1507,8 +1512,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>873</xloc>
-      <yloc>161</yloc>
+      <xloc>965</xloc>
+      <yloc>153</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1524,7 +1529,7 @@ OR (
       <schema_name />
     </partitioning>
     <connection>localhost</connection>
-    <sql>SELECT id_osc, ? AS cnpj FROM osc.tb_osc WHERE cd_identificador_osc::TEXT = ?;</sql>
+    <sql>SELECT id_osc, ? AS cnpj FROM osc.tb_osc WHERE cd_identificador_osc = ?::NUMERIC;</sql>
     <limit>0</limit>
     <lookup>Select values 1</lookup>
     <execute_each_row>Y</execute_each_row>
@@ -1538,8 +1543,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>600</xloc>
-      <yloc>159</yloc>
+      <xloc>692</xloc>
+      <yloc>151</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1573,8 +1578,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>469</xloc>
-      <yloc>159</yloc>
+      <xloc>561</xloc>
+      <yloc>151</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1612,8 +1617,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>725</xloc>
-      <yloc>161</yloc>
+      <xloc>817</xloc>
+      <yloc>153</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1654,8 +1659,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1301</xloc>
-      <yloc>350</yloc>
+      <xloc>1393</xloc>
+      <yloc>342</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1696,8 +1701,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1305</xloc>
-      <yloc>207</yloc>
+      <xloc>1397</xloc>
+      <yloc>199</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1738,8 +1743,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1307</xloc>
-      <yloc>465</yloc>
+      <xloc>1399</xloc>
+      <yloc>457</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1783,8 +1788,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1301</xloc>
-      <yloc>90</yloc>
+      <xloc>1393</xloc>
+      <yloc>82</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1822,8 +1827,8 @@ if(flag_variable == true &amp;&amp; flag == false){
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1729</xloc>
-      <yloc>295</yloc>
+      <xloc>1821</xloc>
+      <yloc>287</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1863,8 +1868,8 @@ if(flag_variable == true &amp;&amp; flag == false){
       </output>
     </remotesteps>
     <GUI>
-      <xloc>348</xloc>
-      <yloc>295</yloc>
+      <xloc>440</xloc>
+      <yloc>287</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1897,8 +1902,51 @@ if(flag_variable == true &amp;&amp; flag == false){
       </output>
     </remotesteps>
     <GUI>
-      <xloc>469</xloc>
-      <yloc>295</yloc>
+      <xloc>561</xloc>
+      <yloc>287</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Filter CNPJ</name>
+    <type>FilterRows</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <send_true_to>Sort rows</send_true_to>
+    <send_false_to />
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>CNPJ</leftvalue>
+        <function>REGEXP</function>
+        <rightvalue />
+        <value>
+          <name>constant</name>
+          <type>String</type>
+          <text>[0-9]*</text>
+          <length>-1</length>
+          <precision>-1</precision>
+          <isnull>N</isnull>
+          <mask />
+        </value>
+      </condition>
+    </compare>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>325</xloc>
+      <yloc>287</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
