@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>trans_finep</name>
+    <name>trans_lie</name>
     <description />
     <extended_description />
     <trans_version />
@@ -550,19 +550,19 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Atualizar dados gerais</from>
+      <from>Atualizar área de atuação</from>
       <to>Set variable flag banco</to>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Select values dados gerais</from>
-      <to>Atualizar dados gerais</to>
-      <enabled>N</enabled>
+      <from>Select values área de atuação</from>
+      <to>Atualizar área de atuação</to>
+      <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Formatar JSON</from>
-      <to>Select values dados gerais</to>
-      <enabled>N</enabled>
+      <to>Select values área de atuação</to>
+      <enabled>Y</enabled>
     </hop>
     <hop>
       <from>Add constants</from>
@@ -610,11 +610,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Merge Join 2</from>
-      <to>Add constants</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Select cd_municipio</from>
       <to>Merge Join 2</to>
       <enabled>Y</enabled>
@@ -651,53 +646,33 @@
     </hop>
     <hop>
       <from>Acertar nomes</from>
-      <to>Ajustar valores</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Ajustar valores</from>
       <to>Replace in string</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Select values fonte recursos projeto</from>
-      <to>Atualizar fonte recursos projeto</to>
+      <from>Merge Join 2</from>
+      <to>Ajustar variáres</to>
       <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Ajustar variáres</from>
+      <to>Add constants</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Select values dados gerais</from>
+      <to>Atualizar dados gerais</to>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>Formatar JSON</from>
-      <to>Block</to>
-      <enabled>Y</enabled>
+      <to>Select values dados gerais</to>
+      <enabled>N</enabled>
     </hop>
     <hop>
-      <from>Block</from>
-      <to>Select values</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Select values</from>
-      <to>Select id_projeto</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Block</from>
-      <to>Merge Join</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Merge Join</from>
-      <to>Select values fonte recursos projeto</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Select id_projeto</from>
-      <to>Merge Join</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Atualizar fonte recursos projeto</from>
+      <from>Atualizar dados gerais</from>
       <to>Set variable flag banco</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
   </order>
   <step>
@@ -714,8 +689,8 @@
     <fields>
       <select_unspecified>N</select_unspecified>
       <meta>
-        <name>Data Assinatura</name>
-        <rename>Data_Assinatura</rename>
+        <name>Nome do Proponente</name>
+        <rename>Nome_Proponente</rename>
         <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -731,8 +706,8 @@
         <storage_type />
       </meta>
       <meta>
-        <name>Data Término</name>
-        <rename>Data_Termino</rename>
+        <name>Nome do Projeto</name>
+        <rename>Nome_Projeto</rename>
         <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -748,8 +723,8 @@
         <storage_type />
       </meta>
       <meta>
-        <name>Título</name>
-        <rename>Titulo</rename>
+        <name>Municipio do Proponente</name>
+        <rename>Municipio_Proponente</rename>
         <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -765,8 +740,8 @@
         <storage_type />
       </meta>
       <meta>
-        <name>CNPJ Proponente</name>
-        <rename>CNPJ_Proponente</rename>
+        <name>UF do Proponente</name>
+        <rename>UF_Proponente</rename>
         <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -782,8 +757,8 @@
         <storage_type />
       </meta>
       <meta>
-        <name>Município</name>
-        <rename>Municipio</rename>
+        <name>Descrição ou Objeto</name>
+        <rename>Descricao_Objeto</rename>
         <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -799,8 +774,8 @@
         <storage_type />
       </meta>
       <meta>
-        <name>Valor Finep</name>
-        <rename>Valor_Finep</rename>
+        <name>Situação do Projeto</name>
+        <rename>Situacao_Projeto</rename>
         <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -816,8 +791,8 @@
         <storage_type />
       </meta>
       <meta>
-        <name>Contrapartida Financeira</name>
-        <rename>Contrapartida_Financeira</rename>
+        <name>Data de Publicação</name>
+        <rename>Data_Publicacao</rename>
         <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -833,8 +808,161 @@
         <storage_type />
       </meta>
       <meta>
-        <name>Pago até Hoje</name>
-        <rename>Pago_ate_Hoje</rename>
+        <name>Prazo para Captação</name>
+        <rename>Prazo_Captacao</rename>
+        <type>String</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask />
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale />
+        <date_format_timezone />
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding />
+        <decimal_symbol />
+        <grouping_symbol />
+        <currency_symbol />
+        <storage_type />
+      </meta>
+      <meta>
+        <name>Data de Inicio do Projeto</name>
+        <rename>Data_Inicio_Projeto</rename>
+        <type>String</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask />
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale />
+        <date_format_timezone />
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding />
+        <decimal_symbol />
+        <grouping_symbol />
+        <currency_symbol />
+        <storage_type />
+      </meta>
+      <meta>
+        <name>Data de Encerramento do Projeto</name>
+        <rename>Data_Encerramento_Projeto</rename>
+        <type>String</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask />
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale />
+        <date_format_timezone />
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding />
+        <decimal_symbol />
+        <grouping_symbol />
+        <currency_symbol />
+        <storage_type />
+      </meta>
+      <meta>
+        <name>Valor Solicitado</name>
+        <rename>Valor_Solicitado</rename>
+        <type>String</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask />
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale />
+        <date_format_timezone />
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding />
+        <decimal_symbol />
+        <grouping_symbol />
+        <currency_symbol />
+        <storage_type />
+      </meta>
+      <meta>
+        <name>Valor Autorizado</name>
+        <rename>Valor_Autorizado</rename>
+        <type>String</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask />
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale />
+        <date_format_timezone />
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding />
+        <decimal_symbol />
+        <grouping_symbol />
+        <currency_symbol />
+        <storage_type />
+      </meta>
+      <meta>
+        <name>Valor Captado</name>
+        <rename>Valor_Captado</rename>
+        <type>String</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask />
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale />
+        <date_format_timezone />
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding />
+        <decimal_symbol />
+        <grouping_symbol />
+        <currency_symbol />
+        <storage_type />
+      </meta>
+      <meta>
+        <name>Número de Beneficiários Diretos</name>
+        <rename>Numero_Beneficiarios_Diretos</rename>
+        <type>String</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask />
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale />
+        <date_format_timezone />
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding />
+        <decimal_symbol />
+        <grouping_symbol />
+        <currency_symbol />
+        <storage_type />
+      </meta>
+      <meta>
+        <name>Número de Beneficiários Indiretos</name>
+        <rename>Numero_Beneficiarios_Indiretos</rename>
+        <type>String</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask />
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale />
+        <date_format_timezone />
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding />
+        <decimal_symbol />
+        <grouping_symbol />
+        <currency_symbol />
+        <storage_type />
+      </meta>
+      <meta>
+        <name>Patrocinador / Doador</name>
+        <rename>Patrocinador_Doador</rename>
+        <type>String</type>
+        <length>-2</length>
+        <precision>-2</precision>
+        <conversion_mask />
+        <date_format_lenient>false</date_format_lenient>
+        <date_format_locale />
+        <date_format_timezone />
+        <lenient_string_to_number>false</lenient_string_to_number>
+        <encoding />
+        <decimal_symbol />
+        <grouping_symbol />
+        <currency_symbol />
+        <storage_type />
+      </meta>
+      <meta>
+        <name>Quantidade de Patrocinador</name>
+        <rename>Quantidade_Patrocinador</rename>
         <type>String</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -858,7 +986,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>201</xloc>
+      <xloc>332</xloc>
       <yloc>260</yloc>
       <draw>Y</draw>
     </GUI>
@@ -875,6 +1003,18 @@
       <schema_name />
     </partitioning>
     <fields>
+      <field>
+        <name>area_atuacao</name>
+        <type>Integer</type>
+        <format />
+        <currency />
+        <decimal />
+        <group />
+        <nullif>3</nullif>
+        <length>-1</length>
+        <precision>-1</precision>
+        <set_empty_string>N</set_empty_string>
+      </field>
       <field>
         <name>fonte_recursos_projeto</name>
         <type>Integer</type>
@@ -956,63 +1096,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>990</xloc>
+      <xloc>1101</xloc>
       <yloc>260</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Ajustar valores</name>
-    <type>ScriptValueMod</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <compatible>N</compatible>
-    <optimizationLevel>9</optimizationLevel>
-    <jsScripts>
-      <jsScript>
-        <jsScript_type>0</jsScript_type>
-        <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>if(Valor_Finep === '-'){
-	Valor_Finep = null;
-}else{
-	Valor_Finep = Number(Valor_Finep);
-}
-
-if(Contrapartida_Financeira === '-'){
-	Contrapartida_Financeira = null;
-}else{
-	Contrapartida_Financeira = Number(Contrapartida_Financeira);
-}
-
-if(Pago_ate_Hoje === '-'){
-	Pago_ate_Hoje = null;
-}else{
-	Pago_ate_Hoje = Number(Pago_ate_Hoje);
-}</jsScript_script>
-      </jsScript>
-    </jsScripts>
-    <fields>    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>327</xloc>
-      <yloc>260</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Atualizar dados gerais</name>
+    <name>Atualizar área de atuação</name>
     <type>TableInput</type>
     <description />
     <distribute>Y</distribute>
@@ -1024,7 +1114,7 @@ if(Pago_ate_Hoje === '-'){
     </partitioning>
     <connection>localhost</connection>
     <sql>SELECT * 
-FROM portal.atualizar_dados_gerais_osc(
+FROM portal.atualizar_area_atuacao_osc(
 	'${FONTE_CARGA}'::TEXT, 
 	?::NUMERIC, 
 	?::TEXT, 
@@ -1032,11 +1122,13 @@ FROM portal.atualizar_dados_gerais_osc(
 	?::JSONB, 
 	?::BOOLEAN, 
 	?::BOOLEAN, 
-	'${ID_CARGA}'::INTEGER
+	?::BOOLEAN, 
+	'${ID_CARGA}'::INTEGER, 
+	2::INTEGER
 );
 </sql>
     <limit>0</limit>
-    <lookup>Select values dados gerais</lookup>
+    <lookup>Select values área de atuação</lookup>
     <execute_each_row>Y</execute_each_row>
     <variables_active>Y</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
@@ -1048,7 +1140,7 @@ FROM portal.atualizar_dados_gerais_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1494</xloc>
+      <xloc>1605</xloc>
       <yloc>212</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1090,7 +1182,7 @@ FROM portal.atualizar_localizacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1493</xloc>
+      <xloc>1604</xloc>
       <yloc>438</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1134,7 +1226,7 @@ FROM portal.atualizar_projeto_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1496</xloc>
+      <xloc>1607</xloc>
       <yloc>333</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1165,7 +1257,7 @@ FROM portal.atualizar_projeto_osc(
     <encoding>ISO-8859-1</encoding>
     <fields>
       <field>
-        <name>Instrumento</name>
+        <name>Data</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
@@ -1176,7 +1268,7 @@ FROM portal.atualizar_projeto_osc(
         <trim_type>both</trim_type>
       </field>
       <field>
-        <name>Demanda</name>
+        <name>SLIE</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
@@ -1187,7 +1279,7 @@ FROM portal.atualizar_projeto_osc(
         <trim_type>both</trim_type>
       </field>
       <field>
-        <name>Contrato</name>
+        <name>Nome do Proponente</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
@@ -1198,7 +1290,7 @@ FROM portal.atualizar_projeto_osc(
         <trim_type>both</trim_type>
       </field>
       <field>
-        <name>Data Assinatura</name>
+        <name>Nome do Projeto</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
@@ -1209,7 +1301,7 @@ FROM portal.atualizar_projeto_osc(
         <trim_type>both</trim_type>
       </field>
       <field>
-        <name>Data Término</name>
+        <name>CNPJ</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
@@ -1220,7 +1312,7 @@ FROM portal.atualizar_projeto_osc(
         <trim_type>both</trim_type>
       </field>
       <field>
-        <name>Título</name>
+        <name>Municipio do Proponente</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
@@ -1231,7 +1323,7 @@ FROM portal.atualizar_projeto_osc(
         <trim_type>both</trim_type>
       </field>
       <field>
-        <name>Proponente</name>
+        <name>UF do Proponente</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
@@ -1242,7 +1334,7 @@ FROM portal.atualizar_projeto_osc(
         <trim_type>both</trim_type>
       </field>
       <field>
-        <name>CNPJ Proponente</name>
+        <name>Descrição ou Objeto</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
@@ -1253,7 +1345,7 @@ FROM portal.atualizar_projeto_osc(
         <trim_type>both</trim_type>
       </field>
       <field>
-        <name>UF</name>
+        <name>Situação do Projeto</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
@@ -1264,7 +1356,7 @@ FROM portal.atualizar_projeto_osc(
         <trim_type>both</trim_type>
       </field>
       <field>
-        <name>Município</name>
+        <name>Data de Publicação</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
@@ -1275,7 +1367,7 @@ FROM portal.atualizar_projeto_osc(
         <trim_type>both</trim_type>
       </field>
       <field>
-        <name>Valor Finep</name>
+        <name>Prazo para Captação</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
@@ -1286,7 +1378,7 @@ FROM portal.atualizar_projeto_osc(
         <trim_type>both</trim_type>
       </field>
       <field>
-        <name>Contrapartida Financeira</name>
+        <name>Data de Inicio do Projeto</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
@@ -1297,7 +1389,84 @@ FROM portal.atualizar_projeto_osc(
         <trim_type>both</trim_type>
       </field>
       <field>
-        <name>Pago até Hoje</name>
+        <name>Data de Encerramento do Projeto</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>Valor Solicitado</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>Valor Autorizado</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>Valor Captado</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>Número de Beneficiários Diretos</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>Número de Beneficiários Indiretos</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>Patrocinador / Doador</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>Quantidade de Patrocinador</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
@@ -1316,7 +1485,7 @@ FROM portal.atualizar_projeto_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>74</xloc>
+      <xloc>205</xloc>
       <yloc>260</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1374,7 +1543,7 @@ FROM portal.atualizar_projeto_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1108</xloc>
+      <xloc>1219</xloc>
       <yloc>438</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1405,18 +1574,22 @@ FROM portal.atualizar_projeto_osc(
 	return resultado;
 }
 
-if(Proponente) Proponente = formatarDado(Proponente);
-if(Titulo) Titulo = formatarDado(Titulo);
-if(Data_Assinatura) Data_Assinatura = formatarDado(Data_Assinatura);
-if(Data_Termino) Data_Termino = formatarDado(Data_Termino);
-if(Valor_Finep) Valor_Finep = formatarDado(Valor_Finep);
-if(Pago_ate_Hoje) Pago_ate_Hoje = formatarDado(Pago_ate_Hoje);
-if(Contrato) Contrato = formatarDado(Contrato);
+if(Nome_Proponente) Nome_Proponente = formatarDado(Nome_Proponente);
 
-var dados_gerais_json = '{"tx_razao_social_osc": ' + Proponente + '}';
+if(SLIE) SLIE = formatarDado(SLIE);
+if(Nome_Projeto) Nome_Projeto = formatarDado(Nome_Projeto);
+if(Descricao_Objeto) Descricao_Objeto = formatarDado(Descricao_Objeto);
+if(Data_Inicio_Projeto) Data_Inicio_Projeto = formatarDado(Data_Inicio_Projeto);
+if(Data_Encerramento_Projeto) Data_Encerramento_Projeto = formatarDado(Data_Encerramento_Projeto);
+if(Valor_Autorizado) Valor_Autorizado = formatarDado(Valor_Autorizado);
+if(Valor_Captado) Valor_Captado = formatarDado(Valor_Captado);
+
+
+
+var area_atuacao_json = '{"cd_area_atuacao": ' + area_atuacao + '}';
+var dados_gerais_json = '{"tx_razao_social_osc": ' + Nome_Proponente + '}';
 var localizacao_json = '{"cd_municipio": ' + edmu_cd_municipio + '}';
-var projeto_json = '{"tx_nome_projeto": ' + Titulo + ', "dt_data_inicio_projeto": ' + Data_Assinatura + ', "dt_data_fim_projeto": ' + Data_Termino + ', "nr_valor_total_projeto": ' + Valor_Finep + ', "nr_valor_captado_projeto": ' + Pago_ate_Hoje + ', "tx_identificador_projeto_externo": ' + Contrato + '}';
-var fonte_recursos_projeto_json = '{"cd_fonte_recursos_projeto": ' + fonte_recursos_projeto + ', "cd_origem_fonte_recursos_projeto": ' + origem_fonte_recursos_projeto + '}';</jsScript_script>
+var projeto_json = '{"tx_nome_projeto": ' + Nome_Projeto + ', "dt_data_inicio_projeto": ' + Data_Inicio_Projeto + ', "dt_data_fim_projeto": ' + Data_Encerramento_Projeto + ', "nr_valor_total_projeto": ' + Valor_Autorizado + ', "nr_valor_captado_projeto": ' + Valor_Captado + ', "tx_identificador_projeto_externo": ' + SLIE + ', "tx_descricao_projeto": ' + Descricao_Objeto + ', "cd_status_projeto": ' + status_projeto + ', "nr_total_beneficiarios": ' + beneficiarios_projeto + '}';</jsScript_script>
       </jsScript>
     </jsScripts>
     <fields>
@@ -1444,14 +1617,6 @@ var fonte_recursos_projeto_json = '{"cd_fonte_recursos_projeto": ' + fonte_recur
         <precision>-1</precision>
         <replace>N</replace>
       </field>
-      <field>
-        <name>fonte_recursos_projeto_json</name>
-        <rename>fonte_recursos_projeto_json</rename>
-        <type>String</type>
-        <length>-1</length>
-        <precision>-1</precision>
-        <replace>N</replace>
-      </field>
     </fields>
     <cluster_schema />
     <remotesteps>
@@ -1461,7 +1626,7 @@ var fonte_recursos_projeto_json = '{"cd_fonte_recursos_projeto": ' + fonte_recur
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1108</xloc>
+      <xloc>1219</xloc>
       <yloc>260</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1481,7 +1646,7 @@ var fonte_recursos_projeto_json = '{"cd_fonte_recursos_projeto": ' + fonte_recur
     <step1>Replace in string</step1>
     <step2>Select id_osc</step2>
     <keys_1>
-      <key>CNPJ_Proponente</key>
+      <key>CNPJ</key>
     </keys_1>
     <keys_2>
       <key>cnpj</key>
@@ -1545,10 +1710,32 @@ var fonte_recursos_projeto_json = '{"cd_fonte_recursos_projeto": ' + fonte_recur
     </partitioning>
     <fields>
       <field>
-        <in_stream_name>CNPJ_Proponente</in_stream_name>
+        <in_stream_name>CNPJ</in_stream_name>
         <out_stream_name />
         <use_regex>yes</use_regex>
         <replace_string>\.|\/|\-</replace_string>
+        <replace_by_string />
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string />
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
+      <field>
+        <in_stream_name>Valor_Autorizado</in_stream_name>
+        <out_stream_name />
+        <use_regex>yes</use_regex>
+        <replace_string>R$ .</replace_string>
+        <replace_by_string />
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string />
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+      </field>
+      <field>
+        <in_stream_name>Valor_Captado</in_stream_name>
+        <out_stream_name />
+        <use_regex>yes</use_regex>
+        <replace_string>R$ .</replace_string>
         <replace_by_string />
         <set_empty_string>N</set_empty_string>
         <replace_field_by_string />
@@ -1649,11 +1836,11 @@ AND LOWER(ed_uf.eduf_sg_uf) = LOWER(?);</sql>
     </partitioning>
     <fields>
       <field>
-        <name>CNPJ_Proponente</name>
+        <name>CNPJ</name>
         <rename>cnpj_1</rename>
       </field>
       <field>
-        <name>CNPJ_Proponente</name>
+        <name>CNPJ</name>
         <rename>cnpj_2</rename>
       </field>
       <select_unspecified>N</select_unspecified>
@@ -1685,12 +1872,15 @@ AND LOWER(ed_uf.eduf_sg_uf) = LOWER(?);</sql>
     <fields>
       <field>
         <name>id_osc</name>
+        <rename />
       </field>
       <field>
-        <name>Municipio</name>
+        <name>Municipio_Proponente</name>
+        <rename />
       </field>
       <field>
-        <name>UF</name>
+        <name>UF_Proponente</name>
+        <rename />
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -1708,7 +1898,7 @@ AND LOWER(ed_uf.eduf_sg_uf) = LOWER(?);</sql>
     </GUI>
   </step>
   <step>
-    <name>Select values dados gerais</name>
+    <name>Select values área de atuação</name>
     <type>SelectValues</type>
     <description />
     <distribute>Y</distribute>
@@ -1721,18 +1911,27 @@ AND LOWER(ed_uf.eduf_sg_uf) = LOWER(?);</sql>
     <fields>
       <field>
         <name>id_osc</name>
+        <rename />
       </field>
       <field>
         <name>tipo_identificador</name>
+        <rename />
       </field>
       <field>
         <name>dados_gerais_json</name>
+        <rename />
       </field>
       <field>
         <name>null_valido</name>
+        <rename />
+      </field>
+      <field>
+        <name>delete_valido</name>
+        <rename />
       </field>
       <field>
         <name>erro_log</name>
+        <rename />
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -1744,7 +1943,7 @@ AND LOWER(ed_uf.eduf_sg_uf) = LOWER(?);</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1280</xloc>
+      <xloc>1391</xloc>
       <yloc>212</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1786,7 +1985,7 @@ AND LOWER(ed_uf.eduf_sg_uf) = LOWER(?);</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1279</xloc>
+      <xloc>1390</xloc>
       <yloc>438</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1831,7 +2030,7 @@ AND LOWER(ed_uf.eduf_sg_uf) = LOWER(?);</sql>
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1282</xloc>
+      <xloc>1393</xloc>
       <yloc>333</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1870,13 +2069,72 @@ if(flag_variable == true &amp;&amp; flag == false){
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1672</xloc>
+      <xloc>1783</xloc>
       <yloc>260</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Atualizar fonte recursos projeto</name>
+    <name>Ajustar variáres</name>
+    <type>ScriptValueMod</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>if(Situacao_Projeto === 'Assinado'){
+	var status_projeto = 1;
+}else if(Situacao_Projeto === 'Em execução'){
+	var status_projeto = 2;
+}else{
+	var status_projeto = 3;
+}
+
+var beneficiarios_projeto = parseInt(Numero_Beneficiarios_Diretos) + parseInt(Numero_Beneficiarios_Indiretos);</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>status_projeto</name>
+        <rename>status_projeto</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+      <field>
+        <name>beneficiarios_projeto</name>
+        <rename>beneficiarios_projeto</rename>
+        <type>Integer</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>982</xloc>
+      <yloc>260</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Atualizar dados gerais</name>
     <type>TableInput</type>
     <description />
     <distribute>Y</distribute>
@@ -1888,20 +2146,19 @@ if(flag_variable == true &amp;&amp; flag == false){
     </partitioning>
     <connection>localhost</connection>
     <sql>SELECT * 
-FROM portal.atualizar_fonte_recursos_projeto(
+FROM portal.atualizar_dados_gerais_osc(
 	'${FONTE_CARGA}'::TEXT, 
 	?::NUMERIC, 
+	?::TEXT, 
 	NOW()::TIMESTAMP, 
 	?::JSONB, 
 	?::BOOLEAN, 
 	?::BOOLEAN, 
-	?::BOOLEAN, 
-	'${ID_CARGA}'::INTEGER, 
-	3::INTEGER
+	'${ID_CARGA}'::INTEGER
 );
 </sql>
     <limit>0</limit>
-    <lookup>Select values fonte recursos projeto</lookup>
+    <lookup>Select values dados gerais</lookup>
     <execute_each_row>Y</execute_each_row>
     <variables_active>Y</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
@@ -1913,16 +2170,16 @@ FROM portal.atualizar_fonte_recursos_projeto(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1547</xloc>
-      <yloc>556</yloc>
+      <xloc>1601</xloc>
+      <yloc>113</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Select values fonte recursos projeto</name>
+    <name>Select values dados gerais</name>
     <type>SelectValues</type>
     <description />
-    <distribute>N</distribute>
+    <distribute>Y</distribute>
     <custom_distribution />
     <copies>1</copies>
     <partitioning>
@@ -1931,7 +2188,7 @@ FROM portal.atualizar_fonte_recursos_projeto(
     </partitioning>
     <fields>
       <field>
-        <name>id_projeto</name>
+        <name>id_osc</name>
         <rename />
       </field>
       <field>
@@ -1939,15 +2196,11 @@ FROM portal.atualizar_fonte_recursos_projeto(
         <rename />
       </field>
       <field>
-        <name>fonte_recursos_projeto_json</name>
+        <name>dados_gerais_json</name>
         <rename />
       </field>
       <field>
         <name>null_valido</name>
-        <rename />
-      </field>
-      <field>
-        <name>delete_valido</name>
         <rename />
       </field>
       <field>
@@ -1964,140 +2217,8 @@ FROM portal.atualizar_fonte_recursos_projeto(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1278</xloc>
-      <yloc>556</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Block</name>
-    <type>BlockUntilStepsFinish</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <steps>
-      <step>
-        <name>Atualizar projeto</name>
-        <CopyNr>0</CopyNr>
-      </step>
-    </steps>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>932</xloc>
-      <yloc>556</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Select values</name>
-    <type>SelectValues</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <name>id_osc</name>
-        <rename />
-      </field>
-      <field>
-        <name>Contrato</name>
-        <rename />
-      </field>
-      <select_unspecified>N</select_unspecified>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>932</xloc>
-      <yloc>682</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Select id_projeto</name>
-    <type>TableInput</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>localhost</connection>
-    <sql>SELECT ? AS id_osc, id_projeto 
-FROM osc.tb_projeto 
-WHERE tx_identificador_projeto_externo = ?::TEXT 
-AND ft_identificador_projeto_externo = '${FONTE_CARGA}'::TEXT;</sql>
-    <limit>0</limit>
-    <lookup>Select values</lookup>
-    <execute_each_row>Y</execute_each_row>
-    <variables_active>Y</variables_active>
-    <lazy_conversion_active>N</lazy_conversion_active>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1081</xloc>
-      <yloc>682</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Merge Join</name>
-    <type>MergeJoin</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <join_type>INNER</join_type>
-    <step1>Block</step1>
-    <step2>Select id_projeto</step2>
-    <keys_1>
-      <key>id_osc</key>
-    </keys_1>
-    <keys_2>
-      <key>id_osc</key>
-    </keys_2>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>1081</xloc>
-      <yloc>556</yloc>
+      <xloc>1387</xloc>
+      <yloc>113</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
