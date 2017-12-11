@@ -682,7 +682,7 @@
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection>localhost</connection>
+    <connection>mapaosc-desenv</connection>
     <sql>SELECT * 
 FROM portal.atualizar_area_atuacao_osc(
 	'${FONTE_CARGA}'::TEXT, 
@@ -872,7 +872,7 @@ var area_atuacao_json = '{"cd_area_atuacao": ' + area_atuacao + '}';</jsScript_s
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection>localhost</connection>
+    <connection>mapaosc-desenv</connection>
     <sql>SELECT id_osc, ? AS cnpj FROM osc.tb_osc WHERE cd_identificador_osc = ?::NUMERIC;</sql>
     <limit>0</limit>
     <lookup>Select values 1</lookup>
