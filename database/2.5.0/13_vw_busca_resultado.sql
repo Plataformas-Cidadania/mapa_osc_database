@@ -3,7 +3,7 @@ DROP MATERIALIZED VIEW IF EXISTS osc.vw_busca_resultado CASCADE;
 CREATE MATERIALIZED VIEW osc.vw_busca_resultado AS
 SELECT
 	tb_osc.id_osc,
-	TRIM(COALESCE(NULLIF(tb_dados_gerais.tx_nome_fantasia_osc, ''), tb_dados_gerais.tx_razao_social_osc)) AS tx_nome_osc,
+	COALESCE(NULLIF(TRIM(tb_dados_gerais.tx_nome_fantasia_osc), ''), tb_dados_gerais.tx_razao_social_osc) AS tx_nome_osc,
 	LPAD(tb_osc.cd_identificador_osc::TEXT, 14, '0'::TEXT) AS cd_identificador_osc,
 	(SELECT dc_natureza_juridica.tx_nome_natureza_juridica FROM syst.dc_natureza_juridica WHERE dc_natureza_juridica.cd_natureza_juridica = tb_dados_gerais.cd_natureza_juridica_osc) AS tx_natureza_juridica_osc,
 	(
