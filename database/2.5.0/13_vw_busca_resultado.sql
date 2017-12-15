@@ -7,8 +7,8 @@ SELECT
 	LPAD(tb_osc.cd_identificador_osc::TEXT, 14, '0'::TEXT) AS cd_identificador_osc,
 	(SELECT dc_natureza_juridica.tx_nome_natureza_juridica FROM syst.dc_natureza_juridica WHERE dc_natureza_juridica.cd_natureza_juridica = tb_dados_gerais.cd_natureza_juridica_osc) AS tx_natureza_juridica_osc,
 	(
-		rtrim(
-			replace(
+		RTRIM(
+			REPLACE(
 				COALESCE(tb_localizacao.tx_endereco::TEXT, '|') || ', ' ||
 				COALESCE(tb_localizacao.nr_localizacao::TEXT, '|') || ', ' ||
 				COALESCE(tb_localizacao.tx_endereco_complemento::TEXT, '|') || ', ' ||

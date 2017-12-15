@@ -5,11 +5,11 @@ DROP MATERIALIZED VIEW osc.vw_busca_osc;
 CREATE MATERIALIZED VIEW osc.vw_busca_osc AS 
 	SELECT tb_osc.id_osc,
 		tb_osc.cd_identificador_osc,
-		translate(btrim(trim(tb_dados_gerais.tx_razao_social_osc)), '.,/,\,|,:,#,@,$,&,!,?,(,),[,],_'::text, ''::text) AS tx_razao_social_osc,
-		NULLIF(translate(btrim(trim(tb_dados_gerais.tx_nome_fantasia_osc)), '.,/,\,|,:,#,@,$,&,!,?,(,),[,],_'::text, ''::text), ''::text) AS tx_nome_fantasia_osc,
+		TRIM(TRANSLATE(tb_dados_gerais.tx_razao_social_osc, '.,/,\,|,:,#,@,$,&,!,?,(,),[,],_'::TEXT, ''::TEXT)) AS tx_razao_social_osc,
+		NULLIF(TRIM(TRANSLATE(tb_dados_gerais.tx_nome_fantasia_osc, '.,/,\,|,:,#,@,$,&,!,?,(,),[,],_'::TEXT, ''::TEXT)), ''::TEXT) AS tx_nome_fantasia_osc,
 		(
-			setweight(to_tsvector('portuguese_unaccent'::regconfig, COALESCE(translate(btrim(tb_dados_gerais.tx_razao_social_osc), '.,/,\,|,:,#,@,$,&,!,?,(,),[,],_'::text, ''::text), ''::text)), 'A'::"char") || 
-			setweight(to_tsvector('portuguese_unaccent'::regconfig, COALESCE(translate(btrim(tb_dados_gerais.tx_nome_fantasia_osc), '.,/,\,|,:,#,@,$,&,!,?,(,),[,],_'::text, ''::text), ''::text)), 'B'::"char")
+			setweight(to_tsvector('portuguese_unaccent'::regconfig, COALESCE(TRANSLATE(TRIM(tb_dados_gerais.tx_razao_social_osc), '.,/,\,|,:,#,@,$,&,!,?,(,),[,],_'::TEXT, ''::TEXT), ''::TEXT)), 'A'::"char") || 
+			setweight(to_tsvector('portuguese_unaccent'::regconfig, COALESCE(TRANSLATE(TRIM(tb_dados_gerais.tx_nome_fantasia_osc), '.,/,\,|,:,#,@,$,&,!,?,(,),[,],_'::TEXT, ''::TEXT), ''::TEXT)), 'B'::"char")
 		) AS document,
 		(
 			SELECT dc_natureza_juridica.tx_nome_natureza_juridica
@@ -24,22 +24,22 @@ CREATE MATERIALIZED VIEW osc.vw_busca_osc AS
 			FROM spat.ed_municipio
 			WHERE ed_municipio.edmu_cd_municipio = tb_localizacao.cd_municipio
 		) AS tx_nome_municipio,
-		substr(tb_localizacao.cd_municipio::text, 0, 3)::numeric(2,0) AS cd_uf,
+		SUBSTR(tb_localizacao.cd_municipio::TEXT, 0, 3)::NUMERIC(2,0) AS cd_uf,
 		(
 			SELECT ed_uf.eduf_sg_uf
 			FROM spat.ed_uf
-			WHERE ed_uf.eduf_cd_uf = substr(tb_localizacao.cd_municipio::text, 0, 3)::numeric(2,0)
+			WHERE ed_uf.eduf_cd_uf = SUBSTR(tb_localizacao.cd_municipio::TEXT, 0, 3)::NUMERIC(2,0)
 		) AS tx_sigla_uf,
 		(
 			SELECT ed_uf.eduf_nm_uf
 			FROM spat.ed_uf
-			WHERE ed_uf.eduf_cd_uf = substr(tb_localizacao.cd_municipio::text, 0, 3)::numeric(2,0)
+			WHERE ed_uf.eduf_cd_uf = SUBSTR(tb_localizacao.cd_municipio::TEXT, 0, 3)::NUMERIC(2,0)
 		) AS tx_nome_uf,
-		substr(tb_localizacao.cd_municipio::text, 0, 2)::numeric(1,0)::numeric AS cd_regiao,
+		SUBSTR(tb_localizacao.cd_municipio::TEXT, 0, 2)::NUMERIC(1,0) AS cd_regiao,
 		(
 			SELECT ed_regiao.edre_nm_regiao
 			FROM spat.ed_regiao
-			WHERE ed_regiao.edre_cd_regiao = substr(tb_localizacao.cd_municipio::text, 0, 2)::numeric(1,0)::numeric
+			WHERE ed_regiao.edre_cd_regiao = SUBSTR(tb_localizacao.cd_municipio::TEXT, 0, 2)::NUMERIC(1,0)
 		) AS tx_nome_regiao,
 		(
 			COALESCE(tb_relacoes_trabalho.nr_trabalhadores_vinculo, 0) + 
