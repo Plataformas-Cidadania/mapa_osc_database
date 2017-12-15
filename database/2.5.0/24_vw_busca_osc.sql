@@ -5,6 +5,7 @@ DROP MATERIALIZED VIEW osc.vw_busca_osc;
 CREATE MATERIALIZED VIEW osc.vw_busca_osc AS 
 	SELECT tb_osc.id_osc,
 		tb_osc.cd_identificador_osc,
+		COALESCE(NULLIF(TRIM(tb_dados_gerais.tx_nome_fantasia_osc), ''), tb_dados_gerais.tx_razao_social_osc) AS tx_nome_osc,
 		TRIM(TRANSLATE(tb_dados_gerais.tx_razao_social_osc, '.,/,\,|,:,#,@,$,&,!,?,(,),[,],_'::TEXT, ''::TEXT)) AS tx_razao_social_osc,
 		NULLIF(TRIM(TRANSLATE(tb_dados_gerais.tx_nome_fantasia_osc, '.,/,\,|,:,#,@,$,&,!,?,(,),[,],_'::TEXT, ''::TEXT)), ''::TEXT) AS tx_nome_fantasia_osc,
 		(
