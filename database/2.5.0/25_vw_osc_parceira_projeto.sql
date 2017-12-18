@@ -22,3 +22,16 @@ WHERE tb_osc.bo_osc_ativa;
 -- ddl-end --
 ALTER MATERIALIZED VIEW portal.vw_osc_parceira_projeto OWNER TO postgres;
 -- ddl-end --
+
+CREATE UNIQUE INDEX ix_vw_osc_parceira_projeto
+    ON portal.vw_osc_parceira_projeto USING btree
+    (id_projeto,id_osc ASC NULLS LAST)
+    TABLESPACE pg_default;
+
+CREATE OR REPLACE FUNCTION parceira_projeto()
+RETURNS TRIGGER AS $$
+BEGIN
+  REFRESH MATERIALIZED VIEW CONCURRENTLY portal.vw_osc_parceira_projeto;
+  RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;

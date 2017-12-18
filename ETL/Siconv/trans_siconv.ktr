@@ -546,22 +546,12 @@
     </hop>
     <hop>
       <from>Replace in string</from>
-      <to>Excluir linhas duplicadas</to>
+      <to>Excluir duplicadas</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
       <from>CSV file input</from>
       <to>Filtrar por situação</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Adicionar fonte 2</from>
-      <to>Switch / Case 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Excluir linhas duplicadas</from>
-      <to>Adicionar fonte 2</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -581,32 +571,52 @@
     </hop>
     <hop>
       <from>Add constants 2</from>
-      <to>Concat Fields 2</to>
+      <to>Concat Fields</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Concat Fields 2</from>
-      <to>Replace in string 2</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Replace in string 2</from>
-      <to>Execute SQL script</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Switch / Case 2</from>
+      <from>Switch / Case</from>
       <to>Adicionar status projeto 1</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Switch / Case 2</from>
+      <from>Switch / Case</from>
       <to>Adicionar status projeto 2</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Switch / Case 2</from>
+      <from>Switch / Case</from>
       <to>Adicionar status projeto 3</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Select id_osc</from>
+      <to>Merge Join 1</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Select values 1</from>
+      <to>Select id_osc</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Excluir duplicadas</from>
+      <to>Merge Join 1</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Excluir duplicadas</from>
+      <to>Select values 1</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Merge Join 1</from>
+      <to>Switch / Case</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Concat Fields</from>
+      <to>Formatar JSON</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -655,46 +665,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>436</xloc>
-      <yloc>386</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Adicionar fonte 2</name>
-    <type>Constant</type>
-    <description />
-    <distribute>N</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <name>fonte</name>
-        <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif>MPOG/SICONV</nullif>
-        <length>-1</length>
-        <precision>-1</precision>
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>434</xloc>
-      <yloc>152</yloc>
+      <xloc>985</xloc>
+      <yloc>207</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -731,8 +703,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>312</xloc>
-      <yloc>232</yloc>
+      <xloc>820</xloc>
+      <yloc>122</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -769,8 +741,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>435</xloc>
-      <yloc>309</yloc>
+      <xloc>821</xloc>
+      <yloc>207</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -807,8 +779,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>559</xloc>
-      <yloc>228</yloc>
+      <xloc>822</xloc>
+      <yloc>297</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -839,13 +811,13 @@
     <fields>
       <field>
         <name>ID_PROPOSTA</name>
-        <type>Integer</type>
+        <type>String</type>
         <format />
         <currency>R$</currency>
         <decimal>.</decimal>
         <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
+        <length>-1</length>
+        <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
@@ -855,9 +827,9 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>108</length>
+        <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>MUNIC_PROPONENTE</name>
@@ -866,30 +838,30 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>339</length>
+        <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>COD_MUNIC_IBGE</name>
-        <type>Integer</type>
+        <type>String</type>
         <format />
         <currency>R$</currency>
         <decimal>.</decimal>
         <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
+        <length>-1</length>
+        <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
         <name>COD_ORGAO_SUP</name>
-        <type>Integer</type>
+        <type>String</type>
         <format />
         <currency>R$</currency>
         <decimal>.</decimal>
         <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
+        <length>-1</length>
+        <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
@@ -899,9 +871,9 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>51</length>
+        <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>NATUREZA_JURIDICA</name>
@@ -910,9 +882,9 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>56</length>
+        <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>NR_PROPOSTA</name>
@@ -921,64 +893,64 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>10</length>
+        <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>DIA_PROP</name>
-        <type>Integer</type>
+        <type>String</type>
         <format />
         <currency>R$</currency>
         <decimal>.</decimal>
         <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
+        <length>-1</length>
+        <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
         <name>MES_PROP</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>ANO_PROP</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>DIA_PROPOSTA</name>
-        <type>Date</type>
-        <format>dd/MM/yyyy</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
-        <name>COD_ORGAO</name>
-        <type>Integer</type>
-        <format>#</format>
+        <name>ANO_PROP</name>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>DIA_PROPOSTA</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>COD_ORGAO</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>DESC_ORGAO</name>
@@ -987,9 +959,9 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>51</length>
+        <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>MODALIDADE</name>
@@ -998,20 +970,20 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>19</length>
+        <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>IDENTIF_PROPONENTE</name>
-        <type>Integer</type>
-        <format>#</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>NM_PROPONENTE</name>
@@ -1020,9 +992,9 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>101</length>
+        <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>CEP_PROPONENTE</name>
@@ -1031,9 +1003,9 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>9</length>
+        <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>ENDERECO_PROPONENTE</name>
@@ -1042,9 +1014,9 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>46</length>
+        <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>BAIRRO_PROPONENTE</name>
@@ -1053,9 +1025,9 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>17</length>
+        <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>NM_BANCO</name>
@@ -1064,9 +1036,9 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>23</length>
+        <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>SITUACAO_CONTA</name>
@@ -1075,9 +1047,9 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>11</length>
+        <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>SITUACAO_PROJETO_BASICO</name>
@@ -1086,9 +1058,9 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
+        <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>SIT_PROPOSTA</name>
@@ -1097,31 +1069,31 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>38</length>
+        <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>DIA_INIC_VIGENCIA_PROPOSTA</name>
-        <type>Date</type>
-        <format>dd/MM/yyyy</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>DIA_FIM_VIGENCIA_PROPOSTA</name>
-        <type>Date</type>
-        <format>dd/MM/yyyy</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>OBJETO_PROPOSTA</name>
@@ -1130,108 +1102,108 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>1352</length>
+        <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>VL_GLOBAL_PROP</name>
-        <type>Number</type>
-        <format>#.#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>VL_REPASSE_PROP</name>
-        <type>Number</type>
-        <format>#.#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>VL_CONTRAPARTIDA_PROP</name>
-        <type>Number</type>
-        <format>#.#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>NR_CONVENIO</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>ID_PROPOSTA</name>
-        <type>Number</type>
-        <format>#.#</format>
-        <currency>R$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
-        <name>DIA</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>MES</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>ANO</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>DIA_ASSIN_CONV</name>
-        <type>Date</type>
-        <format>dd/MM/yyyy</format>
+        <name>VL_GLOBAL_PROP</name>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>VL_REPASSE_PROP</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>VL_CONTRAPARTIDA_PROP</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>NR_CONVENIO</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>ID_PROPOSTA</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>.</decimal>
+        <group>,</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>DIA</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>MES</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>ANO</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>DIA_ASSIN_CONV</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>SIT_CONVENIO</name>
@@ -1240,9 +1212,9 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>46</length>
+        <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>SUBSITUACAO_CONV</name>
@@ -1251,9 +1223,9 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>34</length>
+        <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>SITUACAO_PUBLICACAO</name>
@@ -1262,9 +1234,9 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>9</length>
+        <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>INSTRUMENTO_ATIVO</name>
@@ -1273,9 +1245,9 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>IND_OPERA_OBTV</name>
@@ -1284,9 +1256,9 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>NR_PROCESSO</name>
@@ -1295,184 +1267,184 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>20</length>
+        <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>DIA_PUBL_CONV</name>
-        <type>Date</type>
-        <format>dd/MM/yyyy</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>DIA_INIC_VIGENC_CONV</name>
-        <type>Date</type>
-        <format>dd/MM/yyyy</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>DIA_FIM_VIGENC_CONV</name>
-        <type>Date</type>
-        <format>dd/MM/yyyy</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>DIAS_PREST_CONTAS</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>DIA_LIMITE_PREST_CONTAS</name>
-        <type>Date</type>
-        <format>dd/MM/yyyy</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <length>-1</length>
         <precision>-1</precision>
-        <trim_type>none</trim_type>
+        <trim_type>both</trim_type>
       </field>
       <field>
-        <name>QTDE_CONVENIOS</name>
-        <type>Integer</type>
-        <format>#</format>
+        <name>DIA_LIMITE_PREST_CONTAS</name>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>QTDE_CONVENIOS</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>QTD_TA</name>
-        <type>Number</type>
-        <format>#.#</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>.</decimal>
         <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
+        <length>-1</length>
+        <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
         <name>QTD_PRORROGA</name>
-        <type>Number</type>
-        <format>#.#</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>.</decimal>
         <group>,</group>
-        <length>15</length>
-        <precision>0</precision>
+        <length>-1</length>
+        <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
         <name>VL_GLOBAL_CONV</name>
-        <type>Number</type>
-        <format>#.#</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>1</precision>
-        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>VL_REPASSE_CONV</name>
-        <type>Number</type>
-        <format>#.#</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>1</precision>
-        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>VL_CONTRAPARTIDA_CONV</name>
-        <type>Number</type>
-        <format>#.#</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>1</precision>
-        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>VL_EMPENHADO_CONV</name>
-        <type>Number</type>
-        <format>#.#</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>1</precision>
-        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
       </field>
       <field>
         <name>VL_DESEMBOLSADO_CONV</name>
-        <type>Number</type>
-        <format>#.#</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>1</precision>
+        <length>-1</length>
+        <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
         <name>VL_SALDO_REMAN_TESOURO</name>
-        <type>Number</type>
-        <format>#.#</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>1</precision>
+        <length>-1</length>
+        <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
         <name>VL_SALDO_REMAN_CONVENENTE</name>
-        <type>Number</type>
-        <format>#.#</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>1</precision>
+        <length>-1</length>
+        <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
         <name>VL_INGRESSO_CONTRAPARTIDA</name>
-        <type>Number</type>
-        <format>#.#</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>1</precision>
+        <length>-1</length>
+        <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
     </fields>
@@ -1484,13 +1456,13 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>70</xloc>
-      <yloc>75</yloc>
+      <xloc>75</xloc>
+      <yloc>207</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Concat Fields 2</name>
+    <name>Concat Fields</name>
     <type>ConcatFields</type>
     <description />
     <distribute>Y</distribute>
@@ -1570,16 +1542,16 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>437</xloc>
-      <yloc>466</yloc>
+      <xloc>985</xloc>
+      <yloc>398</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Excluir linhas duplicadas</name>
+    <name>Excluir duplicadas</name>
     <type>UniqueRowsByHashSet</type>
     <description />
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution />
     <copies>1</copies>
     <partitioning>
@@ -1602,8 +1574,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>437</xloc>
-      <yloc>75</yloc>
+      <xloc>423</xloc>
+      <yloc>207</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1766,8 +1738,8 @@ AND NOT EXISTS (SELECT * FROM osc.tb_projeto WHERE osc.tb_projeto.tx_identificad
       </output>
     </remotesteps>
     <GUI>
-      <xloc>436</xloc>
-      <yloc>621</yloc>
+      <xloc>595</xloc>
+      <yloc>397</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1846,8 +1818,92 @@ AND NOT EXISTS (SELECT * FROM osc.tb_projeto WHERE osc.tb_projeto.tx_identificad
       </output>
     </remotesteps>
     <GUI>
-      <xloc>195</xloc>
-      <yloc>75</yloc>
+      <xloc>191</xloc>
+      <yloc>207</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Formatar JSON</name>
+    <type>ScriptValueMod</type>
+    <description />
+    <distribute>N</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>function formatarDado(dado) {
+	var resultado = String(dado);
+	
+	resultado = resultado.replace(/'/g, '\'\'');
+	resultado =	JSON.stringify(resultado);
+	
+	return resultado;
+}
+
+if(NM_PROPONENTE) NM_PROPONENTE = formatarDado(NM_PROPONENTE);
+
+if(ENDERECO_PROPONENTE) ENDERECO_PROPONENTE = formatarDado(ENDERECO_PROPONENTE);
+if(BAIRRO_PROPONENTE) BAIRRO_PROPONENTE = formatarDado(BAIRRO_PROPONENTE);
+if(COD_MUNIC_IBGE) COD_MUNIC_IBGE = formatarDado(COD_MUNIC_IBGE);
+if(CEP_PROPONENTE) CEP_PROPONENTE = formatarDado(CEP_PROPONENTE);
+
+if(DIA_INIC_VIGENC_CONV) DIA_INIC_VIGENC_CONV = formatarDado(DIA_INIC_VIGENC_CONV);
+if(DIA_FIM_VIGENC_CONV) DIA_FIM_VIGENC_CONV = formatarDado(DIA_FIM_VIGENC_CONV);
+if(VL_GLOBAL_CONV) VL_GLOBAL_CONV = formatarDado(VL_GLOBAL_CONV);
+if(VL_REPASSE_CONV) VL_REPASSE_CONV = formatarDado(VL_REPASSE_CONV);
+if(NR_CONVENIO) NR_CONVENIO = formatarDado(NR_CONVENIO);
+if(OBJETO_PROPOSTA) OBJETO_PROPOSTA = formatarDado(OBJETO_PROPOSTA);
+
+var dados_gerais_json = '{"tx_razao_social_osc": ' + PROPONENTE + '}';
+var localizacao_json = '{"tx_endereco": ' + ENDERECO_PROPONENTE + ', "tx_bairro": ' + BAIRRO_PROPONENTE + ', "cd_municipio": ' + COD_MUNIC_IBGE + ', "nr_cep": ' + CEP_PROPONENTE + '}';
+var projeto_json = '{"tx_nome_projeto": ' + nome_projeto_final + ', "dt_data_inicio_projeto": ' + DIA_INIC_VIGENC_CONV + ', "dt_data_fim_projeto": ' + DIA_FIM_VIGENC_CONV + ', "nr_valor_total_projeto": ' + VL_GLOBAL_CONV + ', "nr_valor_captado_projeto": ' + VL_REPASSE_CONV + ', "tx_descricao_projeto": ' + OBJETO_PROPOSTA + ', "tx_identificador_projeto_externo": ' + NR_CONVENIO + ', "cd_status_projeto": ' + cd_status_projeto + '}';</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>dados_gerais_json</name>
+        <rename>dados_gerais_json</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+      <field>
+        <name>localizacao_json</name>
+        <rename>localizacao_json</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+      <field>
+        <name>projeto_json</name>
+        <rename>projeto_json</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>827</xloc>
+      <yloc>398</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1884,60 +1940,12 @@ AND NOT EXISTS (SELECT * FROM osc.tb_projeto WHERE osc.tb_projeto.tx_identificad
     </remotesteps>
     <GUI>
       <xloc>312</xloc>
-      <yloc>75</yloc>
+      <yloc>207</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
-    <name>Replace in string 2</name>
-    <type>ReplaceString</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fields>
-      <field>
-        <in_stream_name>NM_PROPONENTE</in_stream_name>
-        <out_stream_name />
-        <use_regex>no</use_regex>
-        <replace_string>'</replace_string>
-        <replace_by_string>´</replace_by_string>
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string />
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-      </field>
-      <field>
-        <in_stream_name>OBJETO_PROPOSTA</in_stream_name>
-        <out_stream_name />
-        <use_regex>no</use_regex>
-        <replace_string>'</replace_string>
-        <replace_by_string>´</replace_by_string>
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string />
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-      </field>
-    </fields>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>438</xloc>
-      <yloc>553</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Switch / Case 2</name>
+    <name>Switch / Case</name>
     <type>SwitchCase</type>
     <description />
     <distribute>Y</distribute>
@@ -1972,8 +1980,107 @@ AND NOT EXISTS (SELECT * FROM osc.tb_projeto WHERE osc.tb_projeto.tx_identificad
       </output>
     </remotesteps>
     <GUI>
-      <xloc>433</xloc>
-      <yloc>227</yloc>
+      <xloc>669</xloc>
+      <yloc>207</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Merge Join 1</name>
+    <type>MergeJoin</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <join_type>INNER</join_type>
+    <step1>Replace in string</step1>
+    <step2>Select id_osc</step2>
+    <keys_1>
+      <key>CNPJ_Proponente</key>
+    </keys_1>
+    <keys_2>
+      <key>cnpj</key>
+    </keys_2>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>563</xloc>
+      <yloc>207</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Select id_osc</name>
+    <type>TableInput</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection />
+    <sql>SELECT id_osc, ? AS cnpj FROM osc.tb_osc WHERE cd_identificador_osc = ?::NUMERIC;</sql>
+    <limit>0</limit>
+    <lookup>Select values 1</lookup>
+    <execute_each_row>Y</execute_each_row>
+    <variables_active>Y</variables_active>
+    <lazy_conversion_active>N</lazy_conversion_active>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>563</xloc>
+      <yloc>87</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Select values 1</name>
+    <type>SelectValues</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>IDENTIF_PROPONENTE</name>
+        <rename>cnpj_1</rename>
+      </field>
+      <field>
+        <name>IDENTIF_PROPONENTE</name>
+        <rename>cnpj_2</rename>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>423</xloc>
+      <yloc>87</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

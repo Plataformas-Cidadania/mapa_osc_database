@@ -13,14 +13,14 @@
   <parameters>
     </parameters>
   <connection>
-    <name>mapa_osc</name>
-    <server>localhost</server>
+    <name>mapaosc-desenv</name>
+    <server>mapaosc-desenv</server>
     <type>POSTGRESQL</type>
     <access>Native</access>
     <database>portalosc</database>
     <port>5432</port>
-    <username>postgres</username>
-    <password>Encrypted 2be98afc86aa7f2e4cb79a760db93bdd0</password>
+    <username>i3geo</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb10be75dfc2ff8b</password>
     <servername />
     <data_tablespace />
     <index_tablespace />
@@ -355,8 +355,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>55</xloc>
-      <yloc>242</yloc>
+      <xloc>76</xloc>
+      <yloc>224</yloc>
     </entry>
     <entry>
       <name>Criar diretório</name>
@@ -367,8 +367,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>658</xloc>
-      <yloc>242</yloc>
+      <xloc>679</xloc>
+      <yloc>224</yloc>
     </entry>
     <entry>
       <name>Verificar se convênios existe</name>
@@ -378,8 +378,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>1193</xloc>
-      <yloc>242</yloc>
+      <xloc>828</xloc>
+      <yloc>477</yloc>
     </entry>
     <entry>
       <name>Criar variáveis</name>
@@ -405,14 +405,14 @@ parent_job.setVariable("CONVENIOS_URL", "http://portal.convenios.gov.br/images/d
 parent_job.setVariable("CONVENIOS_ZIP", diretorio_download + "/siconv_convenio.csv.zip");
 parent_job.setVariable("CONVENIOS_CSV", diretorio_download + "/siconv_convenio.csv");
 
-parent_job.setVariable("FONTE_CARGA", "SICONV/MPOG " + ano + "/" + mes + "/" + dia);
+parent_job.setVariable("FONTE_CARGA", "SICONV/MPOG " + dia + "-" + mes + "-" + ano);
 
 true;</script>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>159</xloc>
-      <yloc>242</yloc>
+      <xloc>180</xloc>
+      <yloc>224</yloc>
     </entry>
     <entry>
       <name>Baixar convênios</name>
@@ -439,8 +439,8 @@ true;</script>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>1193</xloc>
-      <yloc>106</yloc>
+      <xloc>976</xloc>
+      <yloc>477</yloc>
     </entry>
     <entry>
       <name>Verificar se propostas existe</name>
@@ -450,8 +450,8 @@ true;</script>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>807</xloc>
-      <yloc>242</yloc>
+      <xloc>828</xloc>
+      <yloc>224</yloc>
     </entry>
     <entry>
       <name>Baixar propostas</name>
@@ -478,8 +478,8 @@ true;</script>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>807</xloc>
-      <yloc>107</yloc>
+      <xloc>974</xloc>
+      <yloc>224</yloc>
     </entry>
     <entry>
       <name>Deszipar propostas</name>
@@ -509,8 +509,8 @@ true;</script>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>1007</xloc>
-      <yloc>242</yloc>
+      <xloc>828</xloc>
+      <yloc>354</yloc>
     </entry>
     <entry>
       <name>Deszipar convênios</name>
@@ -540,8 +540,8 @@ true;</script>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>1405</xloc>
-      <yloc>242</yloc>
+      <xloc>828</xloc>
+      <yloc>597</yloc>
     </entry>
     <entry>
       <name>Delete files 1</name>
@@ -558,8 +558,8 @@ true;</script>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>1089</xloc>
-      <yloc>408</yloc>
+      <xloc>512</xloc>
+      <yloc>708</yloc>
     </entry>
     <entry>
       <name>Agrupar Arquivos</name>
@@ -594,8 +594,8 @@ true;</script>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>1405</xloc>
-      <yloc>408</yloc>
+      <xloc>828</xloc>
+      <yloc>708</yloc>
     </entry>
     <entry>
       <name>Success</name>
@@ -604,8 +604,8 @@ true;</script>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>717</xloc>
-      <yloc>408</yloc>
+      <xloc>140</xloc>
+      <yloc>708</yloc>
     </entry>
     <entry>
       <name>Delete files 2</name>
@@ -622,8 +622,8 @@ true;</script>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>1405</xloc>
-      <yloc>547</yloc>
+      <xloc>828</xloc>
+      <yloc>837</yloc>
     </entry>
     <entry>
       <name>Set variables</name>
@@ -662,8 +662,8 @@ true;</script>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>289</xloc>
-      <yloc>242</yloc>
+      <xloc>310</xloc>
+      <yloc>224</yloc>
     </entry>
     <entry>
       <name>Carregar dados</name>
@@ -698,8 +698,8 @@ true;</script>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>1249</xloc>
-      <yloc>408</yloc>
+      <xloc>672</xloc>
+      <yloc>708</yloc>
     </entry>
     <entry>
       <name>Gravar log início</name>
@@ -734,8 +734,8 @@ true;</script>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>528</xloc>
-      <yloc>242</yloc>
+      <xloc>549</xloc>
+      <yloc>224</yloc>
     </entry>
     <entry>
       <name>Desativar triggers</name>
@@ -750,12 +750,12 @@ ALTER TABLE osc.tb_fonte_recursos_projeto DISABLE TRIGGER ALL;</sql>
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename />
       <sendOneStatement>F</sendOneStatement>
-      <connection />
+      <connection>mapaosc-desenv</connection>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>402</xloc>
-      <yloc>242</yloc>
+      <xloc>423</xloc>
+      <yloc>224</yloc>
     </entry>
     <entry>
       <name>Set variables carga erro</name>
@@ -774,8 +774,8 @@ ALTER TABLE osc.tb_fonte_recursos_projeto DISABLE TRIGGER ALL;</sql>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>1087</xloc>
-      <yloc>537</yloc>
+      <xloc>510</xloc>
+      <yloc>837</yloc>
     </entry>
     <entry>
       <name>Gravar log fim</name>
@@ -810,8 +810,8 @@ ALTER TABLE osc.tb_fonte_recursos_projeto DISABLE TRIGGER ALL;</sql>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>962</xloc>
-      <yloc>408</yloc>
+      <xloc>385</xloc>
+      <yloc>708</yloc>
     </entry>
     <entry>
       <name>Ativar triggers</name>
@@ -834,8 +834,8 @@ ALTER TABLE osc.tb_fonte_recursos_projeto ENABLE TRIGGER ALL;
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>843</xloc>
-      <yloc>408</yloc>
+      <xloc>266</xloc>
+      <yloc>708</yloc>
     </entry>
   </entries>
   <hops>
@@ -876,33 +876,6 @@ ALTER TABLE osc.tb_fonte_recursos_projeto ENABLE TRIGGER ALL;
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Verificar se propostas existe</from>
-      <to>Deszipar propostas</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>Y</unconditional>
-    </hop>
-    <hop>
-      <from>Deszipar propostas</from>
-      <to>Verificar se convênios existe</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
-    </hop>
-    <hop>
-      <from>Baixar propostas</from>
-      <to>Deszipar propostas</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
       <from>Verificar se convênios existe</from>
       <to>Deszipar convênios</to>
       <from_nr>0</from_nr>
@@ -925,7 +898,7 @@ ALTER TABLE osc.tb_fonte_recursos_projeto ENABLE TRIGGER ALL;
       <to>Agrupar Arquivos</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
@@ -948,8 +921,8 @@ ALTER TABLE osc.tb_fonte_recursos_projeto ENABLE TRIGGER ALL;
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Agrupar Arquivos</from>
-      <to>Carregar dados</to>
+      <from>Deszipar convênios</from>
+      <to>Agrupar Arquivos</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1011,8 +984,8 @@ ALTER TABLE osc.tb_fonte_recursos_projeto ENABLE TRIGGER ALL;
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Delete files 1</from>
-      <to>Gravar log fim</to>
+      <from>Desativar triggers</from>
+      <to>Gravar log início</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1036,6 +1009,60 @@ ALTER TABLE osc.tb_fonte_recursos_projeto ENABLE TRIGGER ALL;
       <enabled>Y</enabled>
       <evaluation>Y</evaluation>
       <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Delete files 2</from>
+      <to>Set variables carga erro</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Verificar se propostas existe</from>
+      <to>Deszipar propostas</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Baixar propostas</from>
+      <to>Deszipar propostas</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Deszipar propostas</from>
+      <to>Verificar se convênios existe</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Agrupar Arquivos</from>
+      <to>Carregar dados</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Delete files 1</from>
+      <to>Gravar log fim</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
     </hop>
   </hops>
   <notepads>

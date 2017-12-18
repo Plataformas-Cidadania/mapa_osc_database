@@ -555,7 +555,7 @@
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection>localhost</connection>
+    <connection>mapaosc-desenv</connection>
     <sql>INSERT INTO log.tb_log_carga (tx_carga, cd_status, dt_inicio) VALUES ('${FONTE_CARGA}'::TEXT, 8, NOW()) RETURNING id_carga;</sql>
     <limit>0</limit>
     <lookup />
