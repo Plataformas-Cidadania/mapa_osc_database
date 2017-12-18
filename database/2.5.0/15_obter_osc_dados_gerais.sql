@@ -9,7 +9,7 @@ CREATE OR REPLACE FUNCTION portal.obter_osc_dados_gerais(param TEXT) RETURNS TAB
 	ft_nome_fantasia_osc TEXT, 
 	im_logo TEXT, 
 	ft_logo TEXT, 
-	cd_atividade_economica_osc NUMERIC(8, 0), 
+	cd_atividade_economica_osc CHARACTER VARYING, 
 	tx_nome_atividade_economica_osc TEXT, 
 	ft_atividade_economica_osc TEXT, 
 	cd_natureza_juridica_osc NUMERIC(4, 0), 
