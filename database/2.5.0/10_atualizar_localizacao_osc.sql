@@ -67,7 +67,8 @@ BEGIN
 			ft_fonte_geocodificacao,
 			dt_geocodificacao,
 			ft_data_geocodificacao,
-			qualidade_classificacao
+			qualidade_classificacao,
+			bo_oficial
 		)
 		VALUES (
 			osc,
@@ -93,7 +94,8 @@ BEGIN
 			fonte_dados.nome_fonte,
 			objeto.dt_geocodificacao,
 			fonte_dados.nome_fonte,
-			objeto.qualidade_classificacao
+			objeto.qualidade_classificacao,
+			objeto.bo_oficial
 		) RETURNING * INTO dado_posterior;
 
 		PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, null, row_to_json(dado_posterior),id_carga);
@@ -174,6 +176,11 @@ BEGIN
 			flag_update := true;
 		END IF;
 
+		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.bo_oficial::TEXT, dado_anterior.ft_endereco, objeto.bo_oficial::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+			dado_posterior.bo_oficial := objeto.bo_oficial;
+			flag_update := true;
+		END IF;
+
 		IF flag_update THEN
 			UPDATE osc.tb_localizacao
 			SET	tx_endereco = dado_posterior.tx_endereco,
@@ -198,7 +205,8 @@ BEGIN
 				ft_fonte_geocodificacao = dado_posterior.ft_fonte_geocodificacao,
 				dt_geocodificacao = dado_posterior.dt_geocodificacao,
 				ft_data_geocodificacao = dado_posterior.ft_data_geocodificacao,
-				qualidade_classificacao = dado_posterior.qualidade_classificacao
+				qualidade_classificacao = dado_posterior.qualidade_classificacao,
+				bo_oficial = dado_posterior.bo_oficial
 			WHERE id_osc = osc;
 
       PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior),id_carga);

@@ -15,7 +15,7 @@ DECLARE
 	dado_anterior RECORD;
 	dado_posterior RECORD;
 	flag_update BOOLEAN;
-	osc NUMERIC;
+	osc INTEGER;
 
 BEGIN
 	nome_tabela := 'osc.tb_osc';

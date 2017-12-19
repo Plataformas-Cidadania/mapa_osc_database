@@ -13,7 +13,7 @@ DECLARE
 	dado_anterior RECORD;
 	dado_posterior RECORD;
 	flag_update BOOLEAN;
-	osc NUMERIC;
+	osc INTEGER;
 
 BEGIN
 	nome_tabela := 'osc.tb_relacoes_trabalho';
@@ -67,19 +67,19 @@ BEGIN
 		dado_posterior := dado_anterior;
 		flag_update := false;
 
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.nr_trabalhadores_vinculo::TEXT, dado_anterior.ft_trabalhadores_vinculo, objeto.nr_trabalhadores_vinculo::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.nr_trabalhadores_vinculo::TEXT, dado_anterior.ft_trabalhadores_vinculo::TEXT, objeto.nr_trabalhadores_vinculo::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.nr_trabalhadores_vinculo := objeto.nr_trabalhadores_vinculo;
 			dado_posterior.ft_trabalhadores_vinculo := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
 
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.nr_trabalhadores_deficiencia::TEXT, dado_anterior.nr_trabalhadores_deficiencia, objeto.nr_trabalhadores_deficiencia::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.nr_trabalhadores_deficiencia::TEXT, dado_anterior.nr_trabalhadores_deficiencia::TEXT, objeto.nr_trabalhadores_deficiencia::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.nr_trabalhadores_deficiencia := objeto.nr_trabalhadores_deficiencia;
 			dado_posterior.ft_trabalhadores_deficiencia := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
 
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.nr_trabalhadores_voluntarios::TEXT, dado_anterior.ft_trabalhadores_voluntarios, objeto.nr_trabalhadores_voluntarios::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.nr_trabalhadores_voluntarios::TEXT, dado_anterior.ft_trabalhadores_voluntarios::TEXT, objeto.nr_trabalhadores_voluntarios::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.nr_trabalhadores_voluntarios := objeto.nr_trabalhadores_voluntarios;
 			dado_posterior.ft_trabalhadores_voluntarios := fonte_dados.nome_fonte;
 			flag_update := true;

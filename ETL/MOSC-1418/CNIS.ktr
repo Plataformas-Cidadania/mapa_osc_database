@@ -151,6 +151,12 @@
   <hop> <from>Replace in string</from><to>Strings cut</to><enabled>Y</enabled> </hop>
   <hop> <from>Add constants</from><to>Execute SQL script</to><enabled>N</enabled> </hop>
   <hop> <from>Strings cut</from><to>Execute SQL script 2</to><enabled>Y</enabled> </hop>
+  <hop> <from>CSV file input</from><to>Replace in string</to><enabled>N</enabled> </hop>
+  <hop> <from>Execute SQL script 2</from><to>Write to log</to><enabled>N</enabled> </hop>
+  <hop> <from>Execute SQL script 2</from><to>Execute SQL script 3</to><enabled>Y</enabled> </hop>
+  <hop> <from>Execute SQL script 3</from><to>Execute SQL script 4</to><enabled>Y</enabled> </hop>
+  <hop> <from>Execute SQL script 4</from><to>Execute SQL script 5</to><enabled>Y</enabled> </hop>
+  <hop> <from>Execute SQL script 5</from><to>Execute SQL script 6</to><enabled>Y</enabled> </hop>
   </order>
   <step>
     <name>Add constants</name>
@@ -181,6 +187,326 @@
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
       <xloc>442</xloc>
       <yloc>261</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>CSV file input</name>
+    <type>CsvInput</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <filename>&#x2f;home&#x2f;DLIPEA&#x2f;b6519563&#x2f;Downloads&#x2f;CNIS&#x2f;cnis04 &#x28;1&#x29;.csv</filename>
+    <filename_field/>
+    <rownum_field/>
+    <include_filename>N</include_filename>
+    <separator>&#x3b;</separator>
+    <enclosure>&#x22;</enclosure>
+    <header>Y</header>
+    <buffer_size>50000</buffer_size>
+    <lazy_conversion>Y</lazy_conversion>
+    <add_filename_result>N</add_filename_result>
+    <parallel>N</parallel>
+    <newline_possible>N</newline_possible>
+    <encoding/>
+    <fields>
+      <field>
+        <name>&#xfeff;PrecisionDepth</name>
+        <type>String</type>
+        <format/>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>10</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>MatchedAddress</name>
+        <type>String</type>
+        <format/>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>79</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Longitude</name>
+        <type>String</type>
+        <format>&#x23;.&#x23;</format>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>13</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Latitude</name>
+        <type>String</type>
+        <format>&#x23;.&#x23;</format>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>14</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>id_estab</name>
+        <type>Integer</type>
+        <format>&#x23;</format>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>razao_social</name>
+        <type>String</type>
+        <format/>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>99</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>nm_fantasia</name>
+        <type>String</type>
+        <format/>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>55</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>nat_jur</name>
+        <type>Integer</type>
+        <format>&#x23;</format>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>dt_inicio_atividade</name>
+        <type>String</type>
+        <format>dd&#x2f;MM&#x2f;yyyy</format>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>ano_fundacao</name>
+        <type>String</type>
+        <format>&#x23;</format>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>secao_cnae</name>
+        <type>String</type>
+        <format/>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>div_cnae</name>
+        <type>String</type>
+        <format>&#x23;</format>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>grp_cnae</name>
+        <type>String</type>
+        <format>&#x23;</format>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>clas_nae</name>
+        <type>String</type>
+        <format>&#x23;</format>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>micro_area_atuacao</name>
+        <type>String</type>
+        <format/>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>57</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>macro_area_atuacao</name>
+        <type>String</type>
+        <format/>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>38</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>nm_regiao</name>
+        <type>String</type>
+        <format/>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>12</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>nm_uf</name>
+        <type>String</type>
+        <format/>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>18</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>nm_munic</name>
+        <type>String</type>
+        <format/>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>23</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>codmun6</name>
+        <type>String</type>
+        <format/>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>6</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>codmun7</name>
+        <type>String</type>
+        <format/>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>7</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>logradouro</name>
+        <type>String</type>
+        <format/>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>57</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>bairro</name>
+        <type>String</type>
+        <format/>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>20</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>cep</name>
+        <type>String</type>
+        <format>&#x23;</format>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>telefone</name>
+        <type>String</type>
+        <format/>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>11</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>email</name>
+        <type>String</type>
+        <format/>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>36</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>124</xloc>
+      <yloc>208</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -297,7 +623,7 @@
     <single_statement>N</single_statement>
     <replace_variables>Y</replace_variables>
     <quoteString>N</quoteString>
-    <sql>SELECT portal.atualizar_osc&#x28;&#x27;&#x24;&#x7b;ETL&#x7d;&#x27;, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;CNPJ&#x27;, &#x28;SELECT NOW&#x28;&#x29;&#x3a;&#x3a;TIMESTAMP&#x29;, &#xa;&#x27;&#x7b;&#x22;bo_osc_ativa&#x22;&#x3a;&#x22;true&#x22;&#x7d;&#x27;, FALSE, TRUE, &#x27;&#x24;&#x7b;ID_CARGA&#x7d;&#x27;&#x29;&#x3b;&#xa;&#xa;SELECT portal.atualizar_dados_gerais_osc&#x28;&#x27;&#x24;&#x7b;ETL&#x7d;&#x27;, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;CNPJ&#x27;, &#x28;SELECT NOW&#x28;&#x29;&#x3a;&#x3a;TIMESTAMP&#x29;, &#xa;&#x27;&#x7b;&#x22;tx_razao_social_osc&#x22;&#x3a;&#x22;&#x3f;&#x22;, &#x22;tx_nome_fantasia_osc&#x22;&#x3a;&#x22;&#x3f;&#x22;, &#x22;cd_classe_atividade_economica_osc&#x22;&#x3a;&#x22;&#x3f;&#x22;, &#x22;cd_natureza_juridica_osc&#x22;&#x3a;&#x22;&#x3f;&#x22;&#x7d;&#x27;&#x3a;&#x3a;JSONB &#x7c;&#x7c; jsonb_build_object&#x28;&#x27;dt_fundacao_osc&#x27;,&#x28;SELECT to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29;&#x3a;&#x3a;TEXT&#x29;&#x29;,&#xa;FALSE, TRUE, &#x27;&#x24;&#x7b;ID_CARGA&#x7d;&#x27;&#x29;&#x3b;&#xa;&#xd;&#xa;SELECT portal.atualizar_contato_osc&#x28;&#x27;&#x24;&#x7b;ETL&#x7d;&#x27;, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;CNPJ&#x27;, &#x28;SELECT NOW&#x28;&#x29;&#x3a;&#x3a;TIMESTAMP&#x29;, &#xa;&#x27;&#x7b;&#x22;tx_telefone&#x22;&#x3a;&#x22;&#x3f;&#x22;, &#x22;tx_email&#x22;&#x3a;&#x22;&#x3f;&#x22;&#x7d;&#x27;, FALSE, TRUE, &#x27;&#x24;&#x7b;ID_CARGA&#x7d;&#x27;&#x29;&#x3b;&#xd;&#xa;&#xd;&#xa;SELECT portal.atualizar_localizacao_osc&#x28;&#x27;&#x24;&#x7b;ETL&#x7d;&#x27;, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;CNPJ&#x27;, &#x28;SELECT NOW&#x28;&#x29;&#x3a;&#x3a;TIMESTAMP&#x29;,&#xa;&#x27;&#x7b;&#x22;tx_endereco_corrigido&#x22;&#x3a;&#x22;&#x3f;&#x22;, &#x22;tx_endereco&#x22;&#x3a;&#x22;&#x3f;&#x22;, &#x22;tx_bairro&#x22;&#x3a;&#x22;&#x3f;&#x22;, &#x22;cd_municipio&#x22;&#x3a;&#x22;&#x3f;&#x22;, &#x22;nr_cep&#x22;&#x3a;&#x22;&#x3f;&#x22;, &#x22;bo_oficial&#x22;&#x3a;&#x22;true&#x22;, &#x22;qualidade_classificacao&#x22;&#x3a;&#x22;&#x3f;&#x22;&#x7d;&#x27;&#x3a;&#x3a;JSONB &#x7c;&#x7c; jsonb_build_object&#x28;&#x27;geo_localizacao&#x27;, &#x28;SELECT ST_GeomFromText&#x28;concat&#x28;&#x27;POINT&#x28;&#x27;,CONCAT&#x28;&#x3f;&#x3a;&#x3a;NUMERIC,&#x27; &#x27;,&#x3f;&#x3a;&#x3a;NUMERIC&#x29;,&#x27;&#x29;&#x27;&#x29;,4674&#x29;&#x3a;&#x3a;TEXT&#x29;&#x29;, &#xa;FALSE, TRUE, &#x27;&#x24;&#x7b;ID_CARGA&#x7d;&#x27;&#x29;&#x3b;&#xa;&#xd;&#xa;SELECT portal.atualizar_area_atuacao_osc&#x28;&#x27;&#x24;&#x7b;ETL&#x7d;&#x27;, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;CNPJ&#x27;,&#x28;SELECT NOW&#x28;&#x29;&#x3a;&#x3a;TIMESTAMP&#x29;,&#xa;&#x28;select row_to_json&#x28;t&#x29;&#x3a;&#x3a;JSONB&#xa;from &#x28;&#xa;  SELECT dc_area_atuacao.cd_area_atuacao, dc_subarea_atuacao.cd_subarea_atuacao as cd_subarea_atuacao&#xa;    FROM syst.dc_area_atuacao &#xa;	LEFT JOIN syst.dc_subarea_atuacao ON syst.dc_area_atuacao.cd_area_atuacao &#x3d; syst.dc_subarea_atuacao.cd_area_atuacao &#xa;	AND lower&#x28;syst.dc_subarea_atuacao.tx_nome_subarea_atuacao&#x29; &#x3d; lower&#x28;&#x27;&#x3f;&#x27;&#x29;&#xa;	WHERE lower&#x28;tx_nome_area_atuacao&#x29; &#x3d; lower&#x28;&#x27;&#x3f;&#x27;&#x29;&#xa;&#x29; t&#x29;, FALSE, FALSE, TRUE, &#x27;&#x24;&#x7b;ID_CARGA&#x7d;&#x27;, 2&#x29;&#x3b;</sql>
+    <sql>SELECT portal.atualizar_osc&#x28;&#x27;&#x24;&#x7b;ETL&#x7d;&#x27;, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;CNPJ&#x27;, &#x28;SELECT NOW&#x28;&#x29;&#x3a;&#x3a;TIMESTAMP&#x29;, &#xa;&#x27;&#x7b;&#x22;bo_osc_ativa&#x22;&#x3a;&#x22;true&#x22;,&#x22;cd_identificador_osc&#x22;&#x3a;&#x22;&#x3f;&#x22;&#x7d;&#x27;, FALSE, TRUE, &#x27;&#x24;&#x7b;ID_CARGA&#x7d;&#x27;&#x29;&#x3b;&#xa;</sql>
     <set_params>N</set_params>
     <insert_field/>
     <update_field/>
@@ -306,14 +632,111 @@
     <arguments>
        <argument><name>id_estab</name></argument>
        <argument><name>id_estab</name></argument>
+    </arguments>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>525</xloc>
+      <yloc>138</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Execute SQL script 3</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>localhost</connection>
+    <execute_each_row>Y</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>Y</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>SELECT portal.atualizar_dados_gerais_osc&#x28;&#x27;&#x24;&#x7b;ETL&#x7d;&#x27;, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;CNPJ&#x27;, &#x28;SELECT NOW&#x28;&#x29;&#x3a;&#x3a;TIMESTAMP&#x29;, &#xa;&#x27;&#x7b;&#x22;tx_razao_social_osc&#x22;&#x3a;&#x22;&#x3f;&#x22;, &#x22;tx_nome_fantasia_osc&#x22;&#x3a;&#x22;&#x3f;&#x22;, &#x22;cd_classe_atividade_economica_osc&#x22;&#x3a;&#x22;&#x3f;&#x22;, &#x22;cd_natureza_juridica_osc&#x22;&#x3a;&#x22;&#x3f;&#x22;&#x7d;&#x27;&#x3a;&#x3a;JSONB &#x7c;&#x7c; jsonb_build_object&#x28;&#x27;dt_fundacao_osc&#x27;,&#x28;SELECT to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29;&#x3a;&#x3a;TEXT&#x29;&#x29;,&#xa;FALSE, TRUE, &#x27;&#x24;&#x7b;ID_CARGA&#x7d;&#x27;&#x29;&#x3b;&#xa;</sql>
+    <set_params>N</set_params>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
+       <argument><name>id_estab</name></argument>
        <argument><name>razao_social</name></argument>
        <argument><name>nm_fantasia</name></argument>
        <argument><name>clas_nae</name></argument>
        <argument><name>nat_jur</name></argument>
        <argument><name>dt_inicio_atividade</name></argument>
+    </arguments>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>674</xloc>
+      <yloc>139</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Execute SQL script 4</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>localhost</connection>
+    <execute_each_row>Y</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>Y</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>SELECT portal.atualizar_contato_osc&#x28;&#x27;&#x24;&#x7b;ETL&#x7d;&#x27;, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;CNPJ&#x27;, &#x28;SELECT NOW&#x28;&#x29;&#x3a;&#x3a;TIMESTAMP&#x29;, &#xa;&#x27;&#x7b;&#x22;tx_telefone&#x22;&#x3a;&#x22;&#x3f;&#x22;, &#x22;tx_email&#x22;&#x3a;&#x22;&#x3f;&#x22;&#x7d;&#x27;, FALSE, TRUE, &#x27;&#x24;&#x7b;ID_CARGA&#x7d;&#x27;&#x29;&#x3b;&#xa;</sql>
+    <set_params>N</set_params>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
        <argument><name>id_estab</name></argument>
        <argument><name>telefone</name></argument>
        <argument><name>email</name></argument>
+    </arguments>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>820</xloc>
+      <yloc>139</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Execute SQL script 5</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>localhost</connection>
+    <execute_each_row>Y</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>Y</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>SELECT portal.atualizar_localizacao_osc&#x28;&#x27;&#x24;&#x7b;ETL&#x7d;&#x27;, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;CNPJ&#x27;, &#x28;SELECT NOW&#x28;&#x29;&#x3a;&#x3a;TIMESTAMP&#x29;,&#xa;&#x27;&#x7b;&#x22;tx_endereco_corrigido&#x22;&#x3a;&#x22;&#x3f;&#x22;, &#x22;tx_endereco&#x22;&#x3a;&#x22;&#x3f;&#x22;, &#x22;tx_bairro&#x22;&#x3a;&#x22;&#x3f;&#x22;, &#x22;cd_municipio&#x22;&#x3a;&#x22;&#x3f;&#x22;, &#x22;nr_cep&#x22;&#x3a;&#x22;&#x3f;&#x22;, &#x22;bo_oficial&#x22;&#x3a;&#x22;true&#x22;, &#x22;qualidade_classificacao&#x22;&#x3a;&#x22;&#x3f;&#x22;&#x7d;&#x27;&#x3a;&#x3a;JSONB &#x7c;&#x7c; jsonb_build_object&#x28;&#x27;geo_localizacao&#x27;, &#x28;SELECT ST_GeomFromText&#x28;concat&#x28;&#x27;POINT&#x28;&#x27;,CONCAT&#x28;&#x3f;&#x3a;&#x3a;NUMERIC,&#x27; &#x27;,&#x3f;&#x3a;&#x3a;NUMERIC&#x29;,&#x27;&#x29;&#x27;&#x29;,4674&#x29;&#x3a;&#x3a;TEXT&#x29;&#x29;, &#xa;FALSE, TRUE, &#x27;&#x24;&#x7b;ID_CARGA&#x7d;&#x27;&#x29;&#x3b;&#xa;</sql>
+    <set_params>N</set_params>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
        <argument><name>id_estab</name></argument>
        <argument><name>MatchedAddress</name></argument>
        <argument><name>logradouro</name></argument>
@@ -323,14 +746,46 @@
        <argument><name>&#xfeff;PrecisionDepth</name></argument>
        <argument><name>Longitude</name></argument>
        <argument><name>Latitude</name></argument>
+    </arguments>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>973</xloc>
+      <yloc>141</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Execute SQL script 6</name>
+    <type>ExecSQL</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <connection>localhost</connection>
+    <execute_each_row>Y</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>Y</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>SELECT portal.atualizar_area_atuacao_osc&#x28;&#x27;&#x24;&#x7b;ETL&#x7d;&#x27;, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;CNPJ&#x27;,&#x28;SELECT NOW&#x28;&#x29;&#x3a;&#x3a;TIMESTAMP&#x29;,&#xa;&#x28;select row_to_json&#x28;t&#x29;&#x3a;&#x3a;JSONB&#xa;from &#x28;&#xa;  SELECT dc_area_atuacao.cd_area_atuacao, dc_subarea_atuacao.cd_subarea_atuacao as cd_subarea_atuacao, true as bo_oficial&#xa;    FROM syst.dc_area_atuacao &#xa;	LEFT JOIN syst.dc_subarea_atuacao ON syst.dc_area_atuacao.cd_area_atuacao &#x3d; syst.dc_subarea_atuacao.cd_area_atuacao &#xa;	AND lower&#x28;syst.dc_subarea_atuacao.tx_nome_subarea_atuacao&#x29; &#x3d; lower&#x28;&#x27;&#x3f;&#x27;&#x29;&#xa;	WHERE lower&#x28;tx_nome_area_atuacao&#x29; &#x3d; lower&#x28;&#x27;&#x3f;&#x27;&#x29;&#xa;&#x29; t&#x29;, FALSE, FALSE, TRUE, &#x27;&#x24;&#x7b;ID_CARGA&#x7d;&#x27;, 2&#x29;&#x3b;</sql>
+    <set_params>N</set_params>
+    <insert_field/>
+    <update_field/>
+    <delete_field/>
+    <read_field/>
+    <arguments>
        <argument><name>id_estab</name></argument>
        <argument><name>micro_area_atuacao</name></argument>
        <argument><name>macro_area_atuacao</name></argument>
     </arguments>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>525</xloc>
-      <yloc>138</yloc>
+      <xloc>1113</xloc>
+      <yloc>141</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -734,8 +1189,8 @@
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>274</xloc>
-      <yloc>253</yloc>
+      <xloc>463</xloc>
+      <yloc>504</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -1240,10 +1695,138 @@
       </GUI>
     </step>
 
+  <step>
+    <name>Write to log</name>
+    <type>WriteToLog</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <loglevel>log_level_basic</loglevel>
+      <displayHeader>Y</displayHeader>
+      <limitRows>N</limitRows>
+      <limitRowsNumber>0</limitRowsNumber>
+      <logmessage/>
+    <fields>
+      <field>
+        <name>&#xfeff;PrecisionDepth</name>
+        </field>
+      <field>
+        <name>MatchedAddress</name>
+        </field>
+      <field>
+        <name>Longitude</name>
+        </field>
+      <field>
+        <name>Latitude</name>
+        </field>
+      <field>
+        <name>id_estab</name>
+        </field>
+      <field>
+        <name>razao_social</name>
+        </field>
+      <field>
+        <name>nm_fantasia</name>
+        </field>
+      <field>
+        <name>nat_jur</name>
+        </field>
+      <field>
+        <name>dt_inicio_atividade</name>
+        </field>
+      <field>
+        <name>ano_fundacao</name>
+        </field>
+      <field>
+        <name>secao_cnae</name>
+        </field>
+      <field>
+        <name>div_cnae</name>
+        </field>
+      <field>
+        <name>grp_cnae</name>
+        </field>
+      <field>
+        <name>clas_nae</name>
+        </field>
+      <field>
+        <name>micro_area_atuacao</name>
+        </field>
+      <field>
+        <name>macro_area_atuacao</name>
+        </field>
+      <field>
+        <name>nm_regiao</name>
+        </field>
+      <field>
+        <name>nm_uf</name>
+        </field>
+      <field>
+        <name>nm_munic</name>
+        </field>
+      <field>
+        <name>codmun6</name>
+        </field>
+      <field>
+        <name>codmun7</name>
+        </field>
+      <field>
+        <name>logradouro</name>
+        </field>
+      <field>
+        <name>bairro</name>
+        </field>
+      <field>
+        <name>cep</name>
+        </field>
+      <field>
+        <name>telefone</name>
+        </field>
+      <field>
+        <name>email</name>
+        </field>
+      </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>527</xloc>
+      <yloc>235</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
   <step_error_handling>
+      <error>
+        <source_step>CSV file input</source_step>
+        <target_step>Write to log</target_step>
+        <is_enabled>Y</is_enabled>
+        <nr_valuename/>
+        <descriptions_valuename/>
+        <fields_valuename/>
+        <codes_valuename/>
+        <max_errors/>
+        <max_pct_errors/>
+        <min_pct_rows/>
+      </error>
       <error>
         <source_step>Execute SQL script</source_step>
         <target_step>Execute SQL script 2</target_step>
+        <is_enabled>Y</is_enabled>
+        <nr_valuename/>
+        <descriptions_valuename/>
+        <fields_valuename/>
+        <codes_valuename/>
+        <max_errors/>
+        <max_pct_errors/>
+        <min_pct_rows/>
+      </error>
+      <error>
+        <source_step>Execute SQL script 2</source_step>
+        <target_step>Write to log</target_step>
         <is_enabled>Y</is_enabled>
         <nr_valuename/>
         <descriptions_valuename/>
