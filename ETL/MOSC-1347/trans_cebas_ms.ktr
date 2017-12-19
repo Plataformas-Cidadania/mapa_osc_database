@@ -540,7 +540,7 @@
   </connection>
   <order>
     <hop>
-      <from>Select values</from>
+      <from>Select values 1</from>
       <to>Select id_osc</to>
       <enabled>Y</enabled>
     </hop>
@@ -651,7 +651,7 @@
     </hop>
     <hop>
       <from>Replace in string</from>
-      <to>Select values</to>
+      <to>Select values 1</to>
       <enabled>Y</enabled>
     </hop>
     <hop>
@@ -1780,9 +1780,9 @@ AND cd_certificado = ?::INTEGER;</sql>
       <schema_name />
     </partitioning>
     <connection>localhost</connection>
-    <sql>SELECT id_osc, ? AS cnpj FROM osc.tb_osc WHERE cd_identificador_osc::TEXT = ?;</sql>
+    <sql>SELECT id_osc, ? AS cnpj FROM osc.tb_osc WHERE cd_identificador_osc = ?::NUMERIC;</sql>
     <limit>0</limit>
-    <lookup>Select values</lookup>
+    <lookup>Select values 1</lookup>
     <execute_each_row>Y</execute_each_row>
     <variables_active>Y</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
@@ -1800,7 +1800,7 @@ AND cd_certificado = ?::INTEGER;</sql>
     </GUI>
   </step>
   <step>
-    <name>Select values</name>
+    <name>Select values 1</name>
     <type>SelectValues</type>
     <description />
     <distribute>Y</distribute>

@@ -62,6 +62,7 @@ BEGIN
 		ELSIF tipo_busca = 3 THEN 
 			SELECT INTO dado_anterior * FROM osc.tb_projeto 
 			WHERE tx_identificador_projeto_externo = objeto.tx_identificador_projeto_externo 
+			AND ft_identificador_projeto_externo = fonte_dados.nome_fonte 
 			AND id_osc = osc;
 			
 		ELSE 

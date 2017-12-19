@@ -1,68 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <job>
-  <name>JOB_CNEAS</name>
+  <name>JOB_SICONV</name>
   <description />
   <extended_description />
   <job_version />
   <job_status>0</job_status>
   <directory>/</directory>
   <created_user>-</created_user>
-  <created_date>2017/07/25 10:29:20.118</created_date>
+  <created_date>2013/06/28 22:06:13.288</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2017/07/25 10:29:20.118</modified_date>
+  <modified_date>2015/12/21 15:14:01.822</modified_date>
   <parameters>
     </parameters>
-  <connection>
-    <name>localhost</name>
-    <server>localhost</server>
-    <type>POSTGRESQL</type>
-    <access>Native</access>
-    <database>portalosc</database>
-    <port>5432</port>
-    <username>i3geo</username>
-    <password>Encrypted 2be98afc86aa7f2e4cb79ce798d95aad5</password>
-    <servername />
-    <data_tablespace />
-    <index_tablespace />
-    <attributes>
-      <attribute>
-        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>IS_CLUSTERED</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>PORT_NUMBER</code>
-        <attribute>5432</attribute>
-      </attribute>
-      <attribute>
-        <code>PRESERVE_RESERVED_WORD_CASE</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>QUOTE_ALL_FIELDS</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>USE_POOLING</code>
-        <attribute>N</attribute>
-      </attribute>
-    </attributes>
-  </connection>
   <connection>
     <name>mapaosc-desenv</name>
     <server>mapaosc-desenv</server>
@@ -406,16 +355,219 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>86</xloc>
-      <yloc>136</yloc>
+      <xloc>76</xloc>
+      <yloc>224</yloc>
     </entry>
     <entry>
-      <name>Gravar dados</name>
+      <name>Criar diretório</name>
+      <description />
+      <type>CREATE_FOLDER</type>
+      <foldername>${DIRETORIO_DOWNLOAD}</foldername>
+      <fail_of_folder_exists>N</fail_of_folder_exists>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>679</xloc>
+      <yloc>224</yloc>
+    </entry>
+    <entry>
+      <name>Verificar se convênios existe</name>
+      <description />
+      <type>FILE_EXISTS</type>
+      <filename>${CONVENIOS_ZIP}</filename>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>828</xloc>
+      <yloc>477</yloc>
+    </entry>
+    <entry>
+      <name>Criar variáveis</name>
+      <description />
+      <type>EVAL</type>
+      <script>date = new java.util.Date();
+date.setDate(date.getDate());
+
+var ano = new java.text.SimpleDateFormat("yyyy").format(date);
+var mes = new java.text.SimpleDateFormat("MM").format(date);
+var dia = new java.text.SimpleDateFormat("dd").format(date);
+
+var diretorio_base = parent_job.getVariable("Internal.Job.Filename.Directory", "").split(":///")[1];
+var diretorio_download = diretorio_base.concat("/Download/") + ano + "/" + mes + "/" + dia;
+
+parent_job.setVariable("DIRETORIO_DOWNLOAD", diretorio_download);
+
+parent_job.setVariable("PROPOSTAS_URL", "http://portal.convenios.gov.br/images/docs/CGSIS/csv/siconv_proposta.csv.zip");
+parent_job.setVariable("PROPOSTAS_ZIP", diretorio_download + "/siconv_proposta.csv.zip");
+parent_job.setVariable("PROPOSTAS_CSV", diretorio_download + "/siconv_proposta.csv");
+
+parent_job.setVariable("CONVENIOS_URL", "http://portal.convenios.gov.br/images/docs/CGSIS/csv/siconv_convenio.csv.zip");
+parent_job.setVariable("CONVENIOS_ZIP", diretorio_download + "/siconv_convenio.csv.zip");
+parent_job.setVariable("CONVENIOS_CSV", diretorio_download + "/siconv_convenio.csv");
+
+parent_job.setVariable("FONTE_CARGA", "SICONV/MPOG " + dia + "-" + mes + "-" + ano);
+
+true;</script>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>180</xloc>
+      <yloc>224</yloc>
+    </entry>
+    <entry>
+      <name>Baixar convênios</name>
+      <description />
+      <type>HTTP</type>
+      <url>${CONVENIOS_URL}</url>
+      <targetfilename>${CONVENIOS_ZIP}</targetfilename>
+      <file_appended>N</file_appended>
+      <date_time_added>N</date_time_added>
+      <targetfilename_extension />
+      <uploadfilename />
+      <run_every_row>N</run_every_row>
+      <url_fieldname />
+      <upload_fieldname />
+      <dest_fieldname />
+      <username />
+      <password>Encrypted </password>
+      <proxy_host />
+      <proxy_port />
+      <non_proxy_hosts />
+      <addfilenameresult>Y</addfilenameresult>
+      <headers>
+      </headers>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>976</xloc>
+      <yloc>477</yloc>
+    </entry>
+    <entry>
+      <name>Verificar se propostas existe</name>
+      <description />
+      <type>FILE_EXISTS</type>
+      <filename>${PROPOSTAS_ZIP}</filename>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>828</xloc>
+      <yloc>224</yloc>
+    </entry>
+    <entry>
+      <name>Baixar propostas</name>
+      <description />
+      <type>HTTP</type>
+      <url>${PROPOSTAS_URL}</url>
+      <targetfilename>${PROPOSTAS_ZIP}</targetfilename>
+      <file_appended>N</file_appended>
+      <date_time_added>N</date_time_added>
+      <targetfilename_extension />
+      <uploadfilename />
+      <run_every_row>N</run_every_row>
+      <url_fieldname />
+      <upload_fieldname />
+      <dest_fieldname />
+      <username />
+      <password>Encrypted </password>
+      <proxy_host />
+      <proxy_port />
+      <non_proxy_hosts />
+      <addfilenameresult>Y</addfilenameresult>
+      <headers>
+      </headers>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>974</xloc>
+      <yloc>224</yloc>
+    </entry>
+    <entry>
+      <name>Deszipar propostas</name>
+      <description />
+      <type>UNZIP</type>
+      <zipfilename>${PROPOSTAS_ZIP}</zipfilename>
+      <wildcard />
+      <wildcardexclude />
+      <targetdirectory>${DIRETORIO_DOWNLOAD}</targetdirectory>
+      <movetodirectory />
+      <afterunzip>0</afterunzip>
+      <addfiletoresult>N</addfiletoresult>
+      <isfromprevious>N</isfromprevious>
+      <adddate>N</adddate>
+      <addtime>N</addtime>
+      <addOriginalTimestamp>N</addOriginalTimestamp>
+      <SpecifyFormat>N</SpecifyFormat>
+      <date_time_format />
+      <rootzip>N</rootzip>
+      <createfolder>N</createfolder>
+      <nr_limit>10</nr_limit>
+      <wildcardSource />
+      <success_condition>success_if_no_errors</success_condition>
+      <iffileexists>SKIP</iffileexists>
+      <create_move_to_directory>N</create_move_to_directory>
+      <setOriginalModificationDate>N</setOriginalModificationDate>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>828</xloc>
+      <yloc>354</yloc>
+    </entry>
+    <entry>
+      <name>Deszipar convênios</name>
+      <description />
+      <type>UNZIP</type>
+      <zipfilename>${CONVENIOS_ZIP}</zipfilename>
+      <wildcard />
+      <wildcardexclude />
+      <targetdirectory>${DIRETORIO_DOWNLOAD}</targetdirectory>
+      <movetodirectory />
+      <afterunzip>0</afterunzip>
+      <addfiletoresult>N</addfiletoresult>
+      <isfromprevious>N</isfromprevious>
+      <adddate>N</adddate>
+      <addtime>N</addtime>
+      <addOriginalTimestamp>N</addOriginalTimestamp>
+      <SpecifyFormat>N</SpecifyFormat>
+      <date_time_format />
+      <rootzip>N</rootzip>
+      <createfolder>N</createfolder>
+      <nr_limit>10</nr_limit>
+      <wildcardSource />
+      <success_condition>success_if_no_errors</success_condition>
+      <iffileexists>SKIP</iffileexists>
+      <create_move_to_directory>N</create_move_to_directory>
+      <setOriginalModificationDate>N</setOriginalModificationDate>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>828</xloc>
+      <yloc>597</yloc>
+    </entry>
+    <entry>
+      <name>Delete files 1</name>
+      <description />
+      <type>DELETE_FILES</type>
+      <arg_from_previous>N</arg_from_previous>
+      <include_subfolders>N</include_subfolders>
+      <fields>
+        <field>
+          <name>${DIRETORIO_DOWNLOAD}</name>
+          <filemask>.+(\.csv)$</filemask>
+        </field>
+      </fields>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>512</xloc>
+      <yloc>708</yloc>
+    </entry>
+    <entry>
+      <name>Agrupar Arquivos</name>
       <description />
       <type>TRANS</type>
       <specification_method>filename</specification_method>
       <trans_object_id />
-      <filename>${Internal.Job.Filename.Directory}/trans_cneas.ktr</filename>
+      <filename>${Internal.Job.Filename.Directory}/trans_agrupar_arquivos.ktr</filename>
       <transname />
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -436,26 +588,14 @@
       <create_parent_folder>N</create_parent_folder>
       <logging_remote_work>N</logging_remote_work>
       <run_configuration>Pentaho local</run_configuration>
-      <argument0>${FONTE_CARGA}</argument0>
-      <argument1>${DATA_INICIO}</argument1>
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
-        <parameter>
-          <name>FONTE_CARGA</name>
-          <stream_name />
-          <value>${FONTE_CARGA}</value>
-        </parameter>
-        <parameter>
-          <name>DATA_INICIO</name>
-          <stream_name />
-          <value>${DATA_INICIO}</value>
-        </parameter>
       </parameters>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>581</xloc>
-      <yloc>136</yloc>
+      <xloc>828</xloc>
+      <yloc>708</yloc>
     </entry>
     <entry>
       <name>Success</name>
@@ -464,8 +604,26 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>982</xloc>
-      <yloc>136</yloc>
+      <xloc>140</xloc>
+      <yloc>708</yloc>
+    </entry>
+    <entry>
+      <name>Delete files 2</name>
+      <description />
+      <type>DELETE_FILES</type>
+      <arg_from_previous>N</arg_from_previous>
+      <include_subfolders>N</include_subfolders>
+      <fields>
+        <field>
+          <name>${DIRETORIO_DOWNLOAD}</name>
+          <filemask>.+(\.csv)$</filemask>
+        </field>
+      </fields>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>828</xloc>
+      <yloc>837</yloc>
     </entry>
     <entry>
       <name>Set variables</name>
@@ -476,13 +634,18 @@
       <file_variable_type>JVM</file_variable_type>
       <fields>
         <field>
-          <variable_name>ARQUIVO</variable_name>
-          <variable_value>C:\Users\vagnerpraia\ETL\CNEAS.csv</variable_value>
+          <variable_name>DIRETORIO_DOWNLOAD</variable_name>
+          <variable_value>${DIRETORIO_DOWNLOAD}</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
-          <variable_name>FONTE_CARGA</variable_name>
-          <variable_value>CNEAS/MDS 2017</variable_value>
+          <variable_name>CONVENIOS_CSV</variable_name>
+          <variable_value>${CONVENIOS_CSV}</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>PROPOSTAS_CSV</variable_name>
+          <variable_value>${PROPOSTAS_CSV}</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
@@ -499,8 +662,44 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>201</xloc>
-      <yloc>136</yloc>
+      <xloc>310</xloc>
+      <yloc>224</yloc>
+    </entry>
+    <entry>
+      <name>Carregar dados</name>
+      <description />
+      <type>TRANS</type>
+      <specification_method>filename</specification_method>
+      <trans_object_id />
+      <filename>${Internal.Job.Filename.Directory}/trans_siconv.ktr</filename>
+      <transname />
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile />
+      <logext />
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name />
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>672</xloc>
+      <yloc>708</yloc>
     </entry>
     <entry>
       <name>Gravar log início</name>
@@ -535,16 +734,18 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>452</xloc>
-      <yloc>136</yloc>
+      <xloc>549</xloc>
+      <yloc>224</yloc>
     </entry>
     <entry>
       <name>Desativar triggers</name>
       <description />
       <type>SQL</type>
-      <sql>ALTER TABLE osc.tb_area_atuacao DISABLE TRIGGER ALL;
+      <sql>ALTER TABLE osc.tb_dados_gerais DISABLE TRIGGER ALL;
 ALTER TABLE osc.tb_localizacao DISABLE TRIGGER ALL;
-ALTER TABLE osc.tb_contato DISABLE TRIGGER ALL;</sql>
+ALTER TABLE osc.tb_contato DISABLE TRIGGER ALL;
+ALTER TABLE osc.tb_projeto DISABLE TRIGGER ALL;
+ALTER TABLE osc.tb_fonte_recursos_projeto DISABLE TRIGGER ALL;</sql>
       <useVariableSubstitution>F</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename />
@@ -553,30 +754,8 @@ ALTER TABLE osc.tb_contato DISABLE TRIGGER ALL;</sql>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>327</xloc>
-      <yloc>136</yloc>
-    </entry>
-    <entry>
-      <name>Ativar triggers</name>
-      <description />
-      <type>SQL</type>
-      <sql>ALTER TABLE osc.tb_area_atuacao ENABLE TRIGGER ALL;
-ALTER TABLE osc.tb_localizacao ENABLE TRIGGER ALL;
-ALTER TABLE osc.tb_contato ENABLE TRIGGER ALL;
-
---SELECT RefreshAllMaterializedViews('spat');
---SELECT RefreshAllMaterializedViews('osc');
---SELECT RefreshAllMaterializedViews('portal');</sql>
-      <useVariableSubstitution>F</useVariableSubstitution>
-      <sqlfromfile>F</sqlfromfile>
-      <sqlfilename />
-      <sendOneStatement>F</sendOneStatement>
-      <connection>mapaosc-desenv</connection>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>854</xloc>
-      <yloc>136</yloc>
+      <xloc>423</xloc>
+      <yloc>224</yloc>
     </entry>
     <entry>
       <name>Set variables carga erro</name>
@@ -595,8 +774,8 @@ ALTER TABLE osc.tb_contato ENABLE TRIGGER ALL;
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>581</xloc>
-      <yloc>277</yloc>
+      <xloc>510</xloc>
+      <yloc>837</yloc>
     </entry>
     <entry>
       <name>Gravar log fim</name>
@@ -631,14 +810,38 @@ ALTER TABLE osc.tb_contato ENABLE TRIGGER ALL;
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>715</xloc>
-      <yloc>136</yloc>
+      <xloc>385</xloc>
+      <yloc>708</yloc>
+    </entry>
+    <entry>
+      <name>Ativar triggers</name>
+      <description />
+      <type>SQL</type>
+      <sql>ALTER TABLE osc.tb_dados_gerais ENABLE TRIGGER ALL;
+ALTER TABLE osc.tb_localizacao ENABLE TRIGGER ALL;
+ALTER TABLE osc.tb_contato ENABLE TRIGGER ALL;
+ALTER TABLE osc.tb_projeto ENABLE TRIGGER ALL;
+ALTER TABLE osc.tb_fonte_recursos_projeto ENABLE TRIGGER ALL;
+
+--SELECT RefreshAllMaterializedViews('spat');
+--SELECT RefreshAllMaterializedViews('osc');
+--SELECT RefreshAllMaterializedViews('portal');</sql>
+      <useVariableSubstitution>F</useVariableSubstitution>
+      <sqlfromfile>F</sqlfromfile>
+      <sqlfilename />
+      <sendOneStatement>F</sendOneStatement>
+      <connection />
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>266</xloc>
+      <yloc>708</yloc>
     </entry>
   </entries>
   <hops>
     <hop>
       <from>START</from>
-      <to>Set variables</to>
+      <to>Criar variáveis</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -646,8 +849,98 @@ ALTER TABLE osc.tb_contato ENABLE TRIGGER ALL;
       <unconditional>Y</unconditional>
     </hop>
     <hop>
+      <from>Verificar se convênios existe</from>
+      <to>Baixar convênios</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Criar diretório</from>
+      <to>Verificar se propostas existe</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Verificar se propostas existe</from>
+      <to>Baixar propostas</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Verificar se convênios existe</from>
+      <to>Deszipar convênios</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Baixar convênios</from>
+      <to>Deszipar convênios</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Deszipar convênios</from>
+      <to>Agrupar Arquivos</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>N</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Agrupar Arquivos</from>
+      <to>Delete files 2</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Criar variáveis</from>
+      <to>Set variables</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Deszipar convênios</from>
+      <to>Agrupar Arquivos</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Carregar dados</from>
+      <to>Delete files 1</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
       <from>Gravar log início</from>
-      <to>Gravar dados</to>
+      <to>Criar diretório</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -661,7 +954,7 @@ ALTER TABLE osc.tb_contato ENABLE TRIGGER ALL;
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
       <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
+      <unconditional>Y</unconditional>
     </hop>
     <hop>
       <from>Desativar triggers</from>
@@ -670,19 +963,10 @@ ALTER TABLE osc.tb_contato ENABLE TRIGGER ALL;
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
       <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
+      <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>Ativar triggers</from>
-      <to>Success</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Gravar dados</from>
+      <from>Carregar dados</from>
       <to>Set variables carga erro</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -700,8 +984,35 @@ ALTER TABLE osc.tb_contato ENABLE TRIGGER ALL;
       <unconditional>N</unconditional>
     </hop>
     <hop>
+      <from>Desativar triggers</from>
+      <to>Gravar log início</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
       <from>Gravar log fim</from>
       <to>Ativar triggers</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Ativar triggers</from>
+      <to>Success</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Delete files 2</from>
+      <to>Set variables carga erro</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -709,7 +1020,43 @@ ALTER TABLE osc.tb_contato ENABLE TRIGGER ALL;
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Gravar dados</from>
+      <from>Verificar se propostas existe</from>
+      <to>Deszipar propostas</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Baixar propostas</from>
+      <to>Deszipar propostas</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Deszipar propostas</from>
+      <to>Verificar se convênios existe</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Agrupar Arquivos</from>
+      <to>Carregar dados</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Delete files 1</from>
       <to>Gravar log fim</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>

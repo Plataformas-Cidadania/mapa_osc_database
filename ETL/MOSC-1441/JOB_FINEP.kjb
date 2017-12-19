@@ -530,9 +530,10 @@
       <name>Desativar triggers</name>
       <description />
       <type>SQL</type>
-      <sql>ALTER TABLE osc.tb_area_atuacao DISABLE TRIGGER ALL;
+      <sql>ALTER TABLE osc.tb_dados_gerais DISABLE TRIGGER ALL;
+ALTER TABLE osc.tb_projeto DISABLE TRIGGER ALL;
 ALTER TABLE osc.tb_localizacao DISABLE TRIGGER ALL;
-ALTER TABLE osc.tb_contato DISABLE TRIGGER ALL;</sql>
+ALTER TABLE osc.tb_fonte_recursos_projeto DISABLE TRIGGER ALL;</sql>
       <useVariableSubstitution>F</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename />
@@ -548,9 +549,10 @@ ALTER TABLE osc.tb_contato DISABLE TRIGGER ALL;</sql>
       <name>Ativar triggers</name>
       <description />
       <type>SQL</type>
-      <sql>ALTER TABLE osc.tb_area_atuacao ENABLE TRIGGER ALL;
+      <sql>ALTER TABLE osc.tb_dados_gerais ENABLE TRIGGER ALL;
+ALTER TABLE osc.tb_projeto ENABLE TRIGGER ALL;
 ALTER TABLE osc.tb_localizacao ENABLE TRIGGER ALL;
-ALTER TABLE osc.tb_contato ENABLE TRIGGER ALL;
+ALTER TABLE osc.tb_fonte_recursos_projeto ENABLE TRIGGER ALL;
 
 --SELECT RefreshAllMaterializedViews('spat');
 --SELECT RefreshAllMaterializedViews('osc');
