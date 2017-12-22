@@ -13,6 +13,57 @@
   <parameters>
     </parameters>
   <connection>
+    <name>localhost</name>
+    <server>localhost</server>
+    <type>POSTGRESQL</type>
+    <access>Native</access>
+    <database>portalosc</database>
+    <port>5432</port>
+    <username>i3geo</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb79ce798d95aad5</password>
+    <servername />
+    <data_tablespace />
+    <index_tablespace />
+    <attributes>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>IS_CLUSTERED</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>PORT_NUMBER</code>
+        <attribute>5432</attribute>
+      </attribute>
+      <attribute>
+        <code>PRESERVE_RESERVED_WORD_CASE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>QUOTE_ALL_FIELDS</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>USE_POOLING</code>
+        <attribute>N</attribute>
+      </attribute>
+    </attributes>
+  </connection>
+  <connection>
     <name>mapaosc-desenv</name>
     <server>mapaosc-desenv</server>
     <type>POSTGRESQL</type>
@@ -371,7 +422,7 @@
       <yloc>224</yloc>
     </entry>
     <entry>
-      <name>Verificar se convênios existe</name>
+      <name>Verificar se Zip convênios existe</name>
       <description />
       <type>FILE_EXISTS</type>
       <filename>${CONVENIOS_ZIP}</filename>
@@ -404,6 +455,7 @@ parent_job.setVariable("PROPOSTAS_CSV", diretorio_download + "/siconv_proposta.c
 parent_job.setVariable("CONVENIOS_URL", "http://portal.convenios.gov.br/images/docs/CGSIS/csv/siconv_convenio.csv.zip");
 parent_job.setVariable("CONVENIOS_ZIP", diretorio_download + "/siconv_convenio.csv.zip");
 parent_job.setVariable("CONVENIOS_CSV", diretorio_download + "/siconv_convenio.csv");
+parent_job.setVariable("SICONV_CSV", diretorio_download + "/siconv.csv");
 
 parent_job.setVariable("FONTE_CARGA", "SICONV/MPOG " + dia + "-" + mes + "-" + ano);
 
@@ -443,7 +495,7 @@ true;</script>
       <yloc>477</yloc>
     </entry>
     <entry>
-      <name>Verificar se propostas existe</name>
+      <name>Verificar se ZIP propostas existe</name>
       <description />
       <type>FILE_EXISTS</type>
       <filename>${PROPOSTAS_ZIP}</filename>
@@ -544,7 +596,7 @@ true;</script>
       <yloc>597</yloc>
     </entry>
     <entry>
-      <name>Delete files 1</name>
+      <name>Delete files</name>
       <description />
       <type>DELETE_FILES</type>
       <arg_from_previous>N</arg_from_previous>
@@ -558,8 +610,8 @@ true;</script>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>512</xloc>
-      <yloc>708</yloc>
+      <xloc>215</xloc>
+      <yloc>846</yloc>
     </entry>
     <entry>
       <name>Agrupar Arquivos</name>
@@ -595,7 +647,7 @@ true;</script>
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>828</xloc>
-      <yloc>708</yloc>
+      <yloc>846</yloc>
     </entry>
     <entry>
       <name>Success</name>
@@ -604,26 +656,8 @@ true;</script>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>140</xloc>
-      <yloc>708</yloc>
-    </entry>
-    <entry>
-      <name>Delete files 2</name>
-      <description />
-      <type>DELETE_FILES</type>
-      <arg_from_previous>N</arg_from_previous>
-      <include_subfolders>N</include_subfolders>
-      <fields>
-        <field>
-          <name>${DIRETORIO_DOWNLOAD}</name>
-          <filemask>.+(\.csv)$</filemask>
-        </field>
-      </fields>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>828</xloc>
-      <yloc>837</yloc>
+      <xloc>85</xloc>
+      <yloc>846</yloc>
     </entry>
     <entry>
       <name>Set variables</name>
@@ -636,6 +670,11 @@ true;</script>
         <field>
           <variable_name>DIRETORIO_DOWNLOAD</variable_name>
           <variable_value>${DIRETORIO_DOWNLOAD}</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>SICONV_CSV</variable_name>
+          <variable_value>${SICONV_CSV}</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
@@ -698,8 +737,8 @@ true;</script>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>672</xloc>
-      <yloc>708</yloc>
+      <xloc>652</xloc>
+      <yloc>846</yloc>
     </entry>
     <entry>
       <name>Gravar log início</name>
@@ -750,7 +789,7 @@ ALTER TABLE osc.tb_fonte_recursos_projeto DISABLE TRIGGER ALL;</sql>
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename />
       <sendOneStatement>F</sendOneStatement>
-      <connection>mapaosc-desenv</connection>
+      <connection>localhost</connection>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
@@ -774,8 +813,8 @@ ALTER TABLE osc.tb_fonte_recursos_projeto DISABLE TRIGGER ALL;</sql>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>510</xloc>
-      <yloc>837</yloc>
+      <xloc>493</xloc>
+      <yloc>591</yloc>
     </entry>
     <entry>
       <name>Gravar log fim</name>
@@ -810,8 +849,8 @@ ALTER TABLE osc.tb_fonte_recursos_projeto DISABLE TRIGGER ALL;</sql>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>385</xloc>
-      <yloc>708</yloc>
+      <xloc>498</xloc>
+      <yloc>846</yloc>
     </entry>
     <entry>
       <name>Ativar triggers</name>
@@ -830,12 +869,59 @@ ALTER TABLE osc.tb_fonte_recursos_projeto ENABLE TRIGGER ALL;
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename />
       <sendOneStatement>F</sendOneStatement>
-      <connection />
+      <connection>localhost</connection>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>266</xloc>
-      <yloc>708</yloc>
+      <xloc>352</xloc>
+      <yloc>846</yloc>
+    </entry>
+    <entry>
+      <name>Delete propostas</name>
+      <description />
+      <type>DELETE_FILES</type>
+      <arg_from_previous>N</arg_from_previous>
+      <include_subfolders>N</include_subfolders>
+      <fields>
+        <field>
+          <name>${PROPOSTAS_ZIP}</name>
+          <filemask />
+        </field>
+      </fields>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>493</xloc>
+      <yloc>354</yloc>
+    </entry>
+    <entry>
+      <name>Delete convênios</name>
+      <description />
+      <type>DELETE_FILES</type>
+      <arg_from_previous>N</arg_from_previous>
+      <include_subfolders>N</include_subfolders>
+      <fields>
+        <field>
+          <name>${CONVENIOS_ZIP}</name>
+          <filemask />
+        </field>
+      </fields>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>668</xloc>
+      <yloc>594</yloc>
+    </entry>
+    <entry>
+      <name>Verificar se CSV Siconv existe</name>
+      <description />
+      <type>FILE_EXISTS</type>
+      <filename>${SICONV_CSV}</filename>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>828</xloc>
+      <yloc>718</yloc>
     </entry>
   </entries>
   <hops>
@@ -849,7 +935,7 @@ ALTER TABLE osc.tb_fonte_recursos_projeto ENABLE TRIGGER ALL;
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>Verificar se convênios existe</from>
+      <from>Verificar se Zip convênios existe</from>
       <to>Baixar convênios</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -859,7 +945,7 @@ ALTER TABLE osc.tb_fonte_recursos_projeto ENABLE TRIGGER ALL;
     </hop>
     <hop>
       <from>Criar diretório</from>
-      <to>Verificar se propostas existe</to>
+      <to>Verificar se ZIP propostas existe</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -867,7 +953,7 @@ ALTER TABLE osc.tb_fonte_recursos_projeto ENABLE TRIGGER ALL;
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Verificar se propostas existe</from>
+      <from>Verificar se ZIP propostas existe</from>
       <to>Baixar propostas</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -876,13 +962,13 @@ ALTER TABLE osc.tb_fonte_recursos_projeto ENABLE TRIGGER ALL;
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Verificar se convênios existe</from>
+      <from>Verificar se Zip convênios existe</from>
       <to>Deszipar convênios</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
       <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
+      <unconditional>N</unconditional>
     </hop>
     <hop>
       <from>Baixar convênios</from>
@@ -894,44 +980,8 @@ ALTER TABLE osc.tb_fonte_recursos_projeto ENABLE TRIGGER ALL;
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Deszipar convênios</from>
-      <to>Agrupar Arquivos</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>N</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Agrupar Arquivos</from>
-      <to>Delete files 2</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
       <from>Criar variáveis</from>
       <to>Set variables</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Deszipar convênios</from>
-      <to>Agrupar Arquivos</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Carregar dados</from>
-      <to>Delete files 1</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1002,31 +1052,13 @@ ALTER TABLE osc.tb_fonte_recursos_projeto ENABLE TRIGGER ALL;
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>Ativar triggers</from>
-      <to>Success</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
-    </hop>
-    <hop>
-      <from>Delete files 2</from>
-      <to>Set variables carga erro</to>
+      <from>Verificar se ZIP propostas existe</from>
+      <to>Deszipar propostas</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Verificar se propostas existe</from>
-      <to>Deszipar propostas</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>Y</unconditional>
     </hop>
     <hop>
       <from>Baixar propostas</from>
@@ -1039,7 +1071,7 @@ ALTER TABLE osc.tb_fonte_recursos_projeto ENABLE TRIGGER ALL;
     </hop>
     <hop>
       <from>Deszipar propostas</from>
-      <to>Verificar se convênios existe</to>
+      <to>Verificar se Zip convênios existe</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1052,12 +1084,93 @@ ALTER TABLE osc.tb_fonte_recursos_projeto ENABLE TRIGGER ALL;
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Deszipar propostas</from>
+      <to>Delete propostas</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Delete propostas</from>
+      <to>Set variables carga erro</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Delete files 1</from>
+      <from>Deszipar convênios</from>
+      <to>Delete convênios</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Delete convênios</from>
+      <to>Set variables carga erro</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Ativar triggers</from>
+      <to>Delete files</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Delete files</from>
+      <to>Success</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Carregar dados</from>
       <to>Gravar log fim</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Deszipar convênios</from>
+      <to>Verificar se CSV Siconv existe</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Verificar se CSV Siconv existe</from>
+      <to>Agrupar Arquivos</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Verificar se CSV Siconv existe</from>
+      <to>Carregar dados</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
