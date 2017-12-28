@@ -443,8 +443,8 @@
     <access>Native</access>
     <database>portalosc</database>
     <port>5432</port>
-    <username>postgres</username>
-    <password>Encrypted 2be98afc86aa7f2e4cb79a760db93bdd0</password>
+    <username>i3geo</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb79ce798d95aad5</password>
     <servername />
     <data_tablespace />
     <index_tablespace />
@@ -612,7 +612,7 @@
     <hop>
       <from>Merge Join 1</from>
       <to>Switch / Case</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>Concat Fields</from>
@@ -795,7 +795,7 @@
       <method>none</method>
       <schema_name />
     </partitioning>
-    <filename>${DIRETORIO_DOWNLOAD}\new_file.csv</filename>
+    <filename>${SICONV_CSV}</filename>
     <filename_field />
     <rownum_field />
     <include_filename>N</include_filename>
@@ -810,12 +810,12 @@
     <encoding>UTF-8</encoding>
     <fields>
       <field>
-        <name>ID_PROPOSTA</name>
+        <name>﻿ID_PROPOSTA</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
+        <decimal>,</decimal>
+        <group>.</group>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
@@ -847,8 +847,8 @@
         <type>String</type>
         <format />
         <currency>R$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
+        <decimal>,</decimal>
+        <group>.</group>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
@@ -858,8 +858,8 @@
         <type>String</type>
         <format />
         <currency>R$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
+        <decimal>,</decimal>
+        <group>.</group>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
@@ -902,8 +902,8 @@
         <type>String</type>
         <format />
         <currency>R$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
+        <decimal>,</decimal>
+        <group>.</group>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
@@ -1140,23 +1140,12 @@
         <trim_type>both</trim_type>
       </field>
       <field>
-        <name>NR_CONVENIO</name>
+        <name>﻿NR_CONVENIO</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-      </field>
-      <field>
-        <name>ID_PROPOSTA</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
@@ -1272,6 +1261,17 @@
         <trim_type>both</trim_type>
       </field>
       <field>
+        <name>UG_EMITENTE</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
         <name>DIA_PUBL_CONV</name>
         <type>String</type>
         <format />
@@ -1327,6 +1327,17 @@
         <trim_type>both</trim_type>
       </field>
       <field>
+        <name>SITUACAO_CONTRATACAO</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
         <name>QTDE_CONVENIOS</name>
         <type>String</type>
         <format />
@@ -1342,8 +1353,8 @@
         <type>String</type>
         <format />
         <currency>R$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
+        <decimal>,</decimal>
+        <group>.</group>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
@@ -1353,8 +1364,8 @@
         <type>String</type>
         <format />
         <currency>R$</currency>
-        <decimal>.</decimal>
-        <group>,</group>
+        <decimal>,</decimal>
+        <group>.</group>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
@@ -1427,6 +1438,17 @@
       </field>
       <field>
         <name>VL_SALDO_REMAN_CONVENENTE</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>VL_RENDIMENTO_APLICACAO</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
@@ -1563,7 +1585,7 @@
     <error_description />
     <fields>
       <field>
-        <name>NR_CONVENIO</name>
+        <name>﻿NR_CONVENIO</name>
       </field>
     </fields>
     <cluster_schema />
@@ -1908,6 +1930,39 @@ var projeto_json = '{"tx_nome_projeto": ' + nome_projeto_final + ', "dt_data_ini
     </GUI>
   </step>
   <step>
+    <name>Merge Join 1</name>
+    <type>MergeJoin</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <join_type>INNER</join_type>
+    <step1>Excluir duplicadas</step1>
+    <step2>Select id_osc</step2>
+    <keys_1>
+      <key>IDENTIF_PROPONENTE</key>
+    </keys_1>
+    <keys_2>
+      <key>cnpj</key>
+    </keys_2>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>563</xloc>
+      <yloc>207</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>Replace in string</name>
     <type>ReplaceString</type>
     <description />
@@ -1945,80 +2000,6 @@ var projeto_json = '{"tx_nome_projeto": ' + nome_projeto_final + ', "dt_data_ini
     </GUI>
   </step>
   <step>
-    <name>Switch / Case</name>
-    <type>SwitchCase</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <fieldname>SIT_CONVENIO</fieldname>
-    <use_contains>Y</use_contains>
-    <case_value_type>String</case_value_type>
-    <case_value_format />
-    <case_value_decimal />
-    <case_value_group />
-    <default_target_step>Adicionar status projeto 3</default_target_step>
-    <cases>
-      <case>
-        <value>Assinado</value>
-        <target_step>Adicionar status projeto 1</target_step>
-      </case>
-      <case>
-        <value>Em execução</value>
-        <target_step>Adicionar status projeto 2</target_step>
-      </case>
-    </cases>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>669</xloc>
-      <yloc>207</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Merge Join 1</name>
-    <type>MergeJoin</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <join_type>INNER</join_type>
-    <step1>Replace in string</step1>
-    <step2>Select id_osc</step2>
-    <keys_1>
-      <key>CNPJ_Proponente</key>
-    </keys_1>
-    <keys_2>
-      <key>cnpj</key>
-    </keys_2>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>563</xloc>
-      <yloc>207</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
     <name>Select id_osc</name>
     <type>TableInput</type>
     <description />
@@ -2029,7 +2010,7 @@ var projeto_json = '{"tx_nome_projeto": ' + nome_projeto_final + ', "dt_data_ini
       <method>none</method>
       <schema_name />
     </partitioning>
-    <connection />
+    <connection>localhost</connection>
     <sql>SELECT id_osc, ? AS cnpj FROM osc.tb_osc WHERE cd_identificador_osc = ?::NUMERIC;</sql>
     <limit>0</limit>
     <lookup>Select values 1</lookup>
@@ -2081,6 +2062,47 @@ var projeto_json = '{"tx_nome_projeto": ' + nome_projeto_final + ', "dt_data_ini
     <GUI>
       <xloc>423</xloc>
       <yloc>87</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Switch / Case</name>
+    <type>SwitchCase</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fieldname>SIT_CONVENIO</fieldname>
+    <use_contains>Y</use_contains>
+    <case_value_type>String</case_value_type>
+    <case_value_format />
+    <case_value_decimal />
+    <case_value_group />
+    <default_target_step>Adicionar status projeto 3</default_target_step>
+    <cases>
+      <case>
+        <value>Assinado</value>
+        <target_step>Adicionar status projeto 1</target_step>
+      </case>
+      <case>
+        <value>Em execução</value>
+        <target_step>Adicionar status projeto 2</target_step>
+      </case>
+    </cases>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>669</xloc>
+      <yloc>207</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
