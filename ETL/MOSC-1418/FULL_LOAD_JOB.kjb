@@ -438,12 +438,12 @@
       <yloc>385</yloc>
       </entry>
     <entry>
-      <name>FINEP</name>
+      <name>SICONV</name>
       <description/>
       <type>JOB</type>
       <specification_method>filename</specification_method>
       <job_object_id/>
-      <filename>&#x2f;home&#x2f;DLIPEA&#x2f;b6519563&#x2f;workspace&#x2f;mapa_osc_database&#x2f;ETL&#x2f;Finep&#x2f;FINEP.kjb</filename>
+      <filename>&#x2f;home&#x2f;DLIPEA&#x2f;b6519563&#x2f;workspace&#x2f;mapa_osc_database&#x2f;ETL&#x2f;Siconv&#x2f;JOB_SICONV.kjb</filename>
       <jobname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -705,10 +705,10 @@
     </hop>
     <hop>
       <from>SLIE</from>
-      <to>FINEP</to>
+      <to>SICONV</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
