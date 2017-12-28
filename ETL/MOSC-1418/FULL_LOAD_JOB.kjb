@@ -466,16 +466,16 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>497</xloc>
-      <yloc>385</yloc>
+      <xloc>648</xloc>
+      <yloc>394</yloc>
       </entry>
     <entry>
-      <name>Job 14</name>
+      <name>FINEP</name>
       <description/>
       <type>JOB</type>
       <specification_method>filename</specification_method>
       <job_object_id/>
-      <filename/>
+      <filename>&#x2f;home&#x2f;DLIPEA&#x2f;b6519563&#x2f;workspace&#x2f;mapa_osc_database&#x2f;ETL&#x2f;MOSC-1441&#x2f;JOB_FINEP.kjb</filename>
       <jobname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
@@ -498,8 +498,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>607</xloc>
-      <yloc>392</yloc>
+      <xloc>498</xloc>
+      <yloc>388</yloc>
       </entry>
     <entry>
       <name>Job 15</name>
@@ -705,7 +705,7 @@
     </hop>
     <hop>
       <from>SLIE</from>
-      <to>SICONV</to>
+      <to>FINEP</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
