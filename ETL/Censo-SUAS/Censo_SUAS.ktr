@@ -79,10 +79,10 @@
     <server>localhost</server>
     <type>POSTGRESQL</type>
     <access>Native</access>
-    <database>portalosc</database>
+    <database>portalosc_producao</database>
     <port>5432</port>
-    <username>i3geo</username>
-    <password>Encrypted 2be98afc86aa7f2e4cb10be75dfc2ff8b</password>
+    <username>postgres</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb79a760db93bdd0</password>
     <servername/>
     <data_tablespace/>
     <index_tablespace/>
@@ -129,7 +129,7 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <filename>&#x24;&#x7b;DIR&#x7d;&#x2f;Acolh.csv</filename>
+    <filename>&#x2f;home&#x2f;DLIPEA&#x2f;b6519563&#x2f;Downloads&#x2f;dados_2017&#x2f;CensoSUAS2016_Acolhimento_DG_DIVULGA&#xc7;&#xc3;O.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -570,7 +570,7 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <filename>&#x24;&#x7b;DIR&#x7d;&#x2f;Convivencia.csv</filename>
+    <filename>&#x2f;home&#x2f;DLIPEA&#x2f;b6519563&#x2f;Downloads&#x2f;dados_2017&#x2f;CensoSUAS_2016_Convivencia_DadosGerais_divulgacao.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -923,7 +923,7 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <filename>&#x24;&#x7b;DIR&#x7d;&#x2f;CentroDIA.csv</filename>
+    <filename>&#x2f;home&#x2f;DLIPEA&#x2f;b6519563&#x2f;Downloads&#x2f;dados_2017&#x2f;Censo_SUAS_2016_CentroDIA_DadosGerais_Divulgacao.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>

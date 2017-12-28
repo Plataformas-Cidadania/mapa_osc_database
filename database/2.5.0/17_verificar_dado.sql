@@ -4,24 +4,26 @@ CREATE OR REPLACE FUNCTION portal.verificar_dado(dado_anterior TEXT, fonte_dado_
 	flag BOOLEAN
 ) AS $$
 
-DECLARE 
+DECLARE
 	fonte_ajustada TEXT;
 
-BEGIN 
+BEGIN
 	flag := false;
-	
+
 	fonte_dado_anterior := SUBSTRING(fonte_dado_anterior FROM 0 FOR char_length(fonte_dado_anterior) - position(' ' in reverse(fonte_dado_anterior)) + 1);
-	
+
+	IF (dado_anterior IS null) THEN dado_anterior = ''; END IF;
+
 	IF (
-		(nullvalido = true AND dado_anterior <> dado_posterior) 
+		(nullvalido = true AND dado_anterior <> dado_posterior)
 		OR (nullvalido = false AND dado_anterior <> dado_posterior AND (dado_posterior::TEXT = '') IS false)
 	) AND (
-		fonte_dado_anterior IS null 
+		fonte_dado_anterior IS null
 		OR dado_posterior_prioridade <= (SELECT nr_prioridade FROM syst.dc_fonte_dados WHERE cd_sigla_fonte_dados = fonte_dado_anterior)
-	) THEN 
+	) THEN
 		flag := true;
 	END IF;
-	
+
 	RETURN NEXT;
 
 END;

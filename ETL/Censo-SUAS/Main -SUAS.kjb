@@ -16,10 +16,10 @@
     <server>localhost</server>
     <type>POSTGRESQL</type>
     <access>Native</access>
-    <database>portalosc</database>
+    <database>portalosc_producao</database>
     <port>5432</port>
-    <username>i3geo</username>
-    <password>Encrypted 2be98afc86aa7f2e4cb10be75dfc2ff8b</password>
+    <username>postgres</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb79a760db93bdd0</password>
     <servername/>
     <data_tablespace/>
     <index_tablespace/>
@@ -128,8 +128,8 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>307</xloc>
-      <yloc>174</yloc>
+      <xloc>346</xloc>
+      <yloc>173</yloc>
       </entry>
     <entry>
       <name>Censo SUAS</name>
@@ -168,7 +168,7 @@
       <name>SQL Sucesso</name>
       <description/>
       <type>SQL</type>
-      <sql>UPDATE log.tb_log_carga &#xa;SET dt_fim &#x3d; NOW&#x28;&#x29;&#x3a;&#x3a;timestamp, &#xa;cd_status &#x3d; 9&#xa;WHERE id_carga &#x3d;  &#x24;&#x7b;ID_CARGA&#x7d;</sql>
+      <sql>UPDATE log.tb_log_carga &#xa;SET dt_fim &#x3d; NOW&#x28;&#x29;&#x3a;&#x3a;timestamp, &#xa;cd_status &#x3d; 9&#xa;WHERE id_carga &#x3d;  &#x24;&#x7b;ID_CARGA&#x7d;&#x3b;&#xa;&#xa;REFRESH MATERIALIZED VIEW portal.vw_osc_area_atuacao&#x3b;&#xa;ALTER TABLE osc.tb_area_atuacao ENABLE TRIGGER ALL&#x3b;</sql>
       <useVariableSubstitution>T</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename/>
@@ -184,7 +184,7 @@
       <name>SQL Falha</name>
       <description/>
       <type>SQL</type>
-      <sql>UPDATE log.tb_log_carga SET dt_fim &#x3d; NOW&#x28;&#x29;&#x3a;&#x3a;timestamp, cd_status &#x3d; 2&#xa;WHERE id_carga &#x3d; &#x24;&#x7b;ID_CARGA&#x7d;&#x3b;</sql>
+      <sql>UPDATE log.tb_log_carga SET dt_fim &#x3d; NOW&#x28;&#x29;&#x3a;&#x3a;timestamp, cd_status &#x3d; 2&#xa;WHERE id_carga &#x3d; &#x24;&#x7b;ID_CARGA&#x7d;&#x3b;&#xa;&#xa;ALTER TABLE osc.tb_area_atuacao ENABLE TRIGGER ALL&#x3b;</sql>
       <useVariableSubstitution>T</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename/>
@@ -220,6 +220,22 @@
       <nr>0</nr>
       <xloc>188</xloc>
       <yloc>173</yloc>
+      </entry>
+    <entry>
+      <name>SQL </name>
+      <description/>
+      <type>SQL</type>
+      <sql>ALTER TABLE osc.tb_area_atuacao DISABLE TRIGGER ALL&#x3b;</sql>
+      <useVariableSubstitution>T</useVariableSubstitution>
+      <sqlfromfile>F</sqlfromfile>
+      <sqlfilename/>
+      <sendOneStatement>F</sendOneStatement>
+      <connection>portalosc</connection>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>276</xloc>
+      <yloc>176</yloc>
       </entry>
   </entries>
   <hops>
@@ -279,6 +295,15 @@
     </hop>
     <hop>
       <from>Set variables</from>
+      <to>SQL </to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>SQL </from>
       <to>Carga</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>

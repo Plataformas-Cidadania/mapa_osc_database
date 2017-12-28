@@ -233,7 +233,7 @@
       <name>SQL 2 2</name>
       <description/>
       <type>SQL</type>
-      <sql>--select RefreshAllMaterializedViews&#x28;&#x27;portal&#x27;&#x29;&#x3b;&#xa;ALTER TABLE osc.tb_relacoes_trabalho ENABLE TRIGGER ALL&#x3b;&#xa;&#xa;UPDATE log.tb_log_carga SET dt_fim &#x3d; NOW&#x28;&#x29;&#x3a;&#x3a;timestamp, cd_status &#x3d; 2&#xa;WHERE id_carga &#x3d; &#x24;&#x7b;ID_CARGA&#x7d;&#x3b;</sql>
+      <sql>select RefreshAllMaterializedViews&#x28;&#x27;portal&#x27;&#x29;&#x3b;&#xa;ALTER TABLE osc.tb_relacoes_trabalho ENABLE TRIGGER ALL&#x3b;&#xa;&#xa;UPDATE log.tb_log_carga SET dt_fim &#x3d; NOW&#x28;&#x29;&#x3a;&#x3a;timestamp, cd_status &#x3d; 2&#xa;WHERE id_carga &#x3d; &#x24;&#x7b;ID_CARGA&#x7d;&#x3b;</sql>
       <useVariableSubstitution>T</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename/>

@@ -79,10 +79,10 @@
     <server>localhost</server>
     <type>POSTGRESQL</type>
     <access>Native</access>
-    <database>portalosc</database>
+    <database>portalosc_producao</database>
     <port>5432</port>
-    <username>i3geo</username>
-    <password>Encrypted 2be98afc86aa7f2e4cb10be75dfc2ff8b</password>
+    <username>postgres</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb79a760db93bdd0</password>
     <servername/>
     <data_tablespace/>
     <index_tablespace/>
@@ -127,7 +127,7 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <filename>&#x2f;home&#x2f;DLIPEA&#x2f;b0134356435&#x2f;Downloads&#x2f;dados-31_10_2017_17_46.csv</filename>
+    <filename>&#x2f;home&#x2f;DLIPEA&#x2f;b6519563&#x2f;Downloads&#x2f;dados-31_10_2017_17_46.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -708,7 +708,7 @@
     <single_statement>N</single_statement>
     <replace_variables>Y</replace_variables>
     <quoteString>N</quoteString>
-    <sql>SELECT portal.atualizar_certificado_osc&#x28;&#x27;&#x24;&#x7b;ETL&#x7d;&#x27;&#x3a;&#x3a;TEXT,&#x3f;&#x3a;&#x3a;NUMERIC, &#x27;id_osc&#x27;&#x3a;&#x3a;TEXT,&#x28;SELECT NOW&#x28;&#x29;&#x3a;&#x3a;TIMESTAMP&#x29;,&#xa;&#x27;&#x7b;&#x22;cd_certificado&#x22;&#x3a;2,&#x22;tx_nome_certificado&#x22;&#x3a;&#x22;CEBAS - Educa&#xe7;&#xe3;o&#x22;, &#x22;dt_inicio_certificado&#x22;&#x3a;&#x22;&#x3f;&#x22;, &#x22;dt_fim_certificado&#x22;&#x3a;&#x22;&#x3f;&#x22;&#x7d;&#x27;, TRUE, TRUE, TRUE,&#x27;&#x24;&#x7b;ID_CARGA&#x7d;&#x27;&#x3a;&#x3a;INTEGER,2&#x3a;&#x3a;INTEGER&#x29; &#x3b;&#xa;&#xa;SELECT portal.atualizar_area_atuacao_osc&#x28;&#x27;&#x24;&#x7b;ETL&#x7d;&#x27;&#x3a;&#x3a;TEXT, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;id_osc&#x27;&#x3a;&#x3a;TEXT, &#x28;SELECT NOW&#x28;&#x29;&#x3a;&#x3a;TIMESTAMP&#x29;, &#xa;&#x27;&#x7b;&#x22;cd_area_atuacao&#x22;&#x3a;4,&#x22;tx_nome_area_atuacao&#x22;&#x3a;&#x22;Educa&#xe7;&#xe3;o e pesquisa&#x22;&#x7d;&#x27;, FALSE, FALSE, TRUE, &#x27;&#x24;&#x7b;ID_CARGA&#x7d;&#x27;, 2&#x29;</sql>
+    <sql>SELECT portal.atualizar_certificado_osc&#x28;&#x27;&#x24;&#x7b;ETL&#x7d;&#x27;&#x3a;&#x3a;TEXT,&#x3f;&#x3a;&#x3a;NUMERIC, &#x27;id_osc&#x27;&#x3a;&#x3a;TEXT,&#x28;SELECT NOW&#x28;&#x29;&#x3a;&#x3a;TIMESTAMP&#x29;,&#xa;&#x27;&#x7b;&#x22;cd_certificado&#x22;&#x3a;&#x22;2&#x22;&#x7d;&#x27;&#x7c;&#x7c; jsonb_build_object&#x28;&#x27;dt_inicio_certificado&#x27;,&#x28;SELECT to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29;&#x3a;&#x3a;TEXT&#x29;&#x29; &#x7c;&#x7c; jsonb_build_object&#x28;&#x27;dt_fim_certificado&#x27;,&#x28;SELECT to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29;&#x3a;&#x3a;TEXT&#x29;&#x29;&#xa;, TRUE, TRUE, TRUE,&#x27;&#x24;&#x7b;ID_CARGA&#x7d;&#x27;&#x3a;&#x3a;INTEGER,2&#x3a;&#x3a;INTEGER&#x29; &#x3b;&#xa;&#xa;SELECT portal.atualizar_area_atuacao_osc&#x28;&#x27;&#x24;&#x7b;ETL&#x7d;&#x27;&#x3a;&#x3a;TEXT, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;id_osc&#x27;&#x3a;&#x3a;TEXT, &#x28;SELECT NOW&#x28;&#x29;&#x3a;&#x3a;TIMESTAMP&#x29;, &#xa;&#x27;&#x7b;&#x22;cd_area_atuacao&#x22;&#x3a;&#x22;4&#x22;&#x7d;&#x27;, FALSE, FALSE, TRUE, &#x27;&#x24;&#x7b;ID_CARGA&#x7d;&#x27;, 2&#x29;</sql>
     <set_params>N</set_params>
     <insert_field/>
     <update_field/>
