@@ -58,16 +58,9 @@ BEGIN
 
 	END IF;
 
-	SELECT INTO identificador_osc cd_identificador_osc FROM osc.tb_osc WHERE cd_identificador_osc = osc OR id_osc = osc;
-
 	IF erro_log THEN 
-		IF identificador_osc IS NOT null THEN
-			INSERT INTO log.tb_log_erro_carga (cd_identificador_osc, cd_status, tx_mensagem, dt_carregamento_dados, id_carga)
-			VALUES (identificador_osc, 2, mensagem_log, data_operacao, id_carga);
-		ELSE 
-			INSERT INTO log.tb_log_erro_carga (cd_identificador_osc, cd_status, tx_mensagem, dt_carregamento_dados, id_carga)
-			VALUES (osc, 2, mensagem_log, data_operacao, id_carga);
-		END IF;
+		INSERT INTO log.tb_log_erro_carga (cd_identificador_osc, cd_status, tx_mensagem, dt_carregamento_dados, id_carga)
+		VALUES (osc, 2, mensagem_log, data_operacao, id_carga);
 	END IF;
 
 	RETURN NEXT;
