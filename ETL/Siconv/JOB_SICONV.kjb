@@ -705,7 +705,7 @@ true;</script>
       <yloc>119</yloc>
     </entry>
     <entry>
-      <name>Carregar dados</name>
+      <name>Gravar dados</name>
       <description />
       <type>TRANS</type>
       <specification_method>filename</specification_method>
@@ -730,7 +730,7 @@ true;</script>
       <follow_abort_remote>N</follow_abort_remote>
       <create_parent_folder>N</create_parent_folder>
       <logging_remote_work>N</logging_remote_work>
-      <run_configuration />
+      <run_configuration>Pentaho local</run_configuration>
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
       </parameters>
@@ -853,6 +853,42 @@ ALTER TABLE osc.tb_fonte_recursos_projeto DISABLE TRIGGER ALL;</sql>
       <yloc>741</yloc>
     </entry>
     <entry>
+      <name>Delete convênios</name>
+      <description />
+      <type>DELETE_FILES</type>
+      <arg_from_previous>N</arg_from_previous>
+      <include_subfolders>N</include_subfolders>
+      <fields>
+        <field>
+          <name>${CONVENIOS_ZIP}</name>
+          <filemask />
+        </field>
+      </fields>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>708</xloc>
+      <yloc>489</yloc>
+    </entry>
+    <entry>
+      <name>Delete propostas</name>
+      <description />
+      <type>DELETE_FILES</type>
+      <arg_from_previous>N</arg_from_previous>
+      <include_subfolders>N</include_subfolders>
+      <fields>
+        <field>
+          <name>${PROPOSTAS_ZIP}</name>
+          <filemask />
+        </field>
+      </fields>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>533</xloc>
+      <yloc>249</yloc>
+    </entry>
+    <entry>
       <name>Ativar triggers</name>
       <description />
       <type>SQL</type>
@@ -875,42 +911,6 @@ ALTER TABLE osc.tb_fonte_recursos_projeto ENABLE TRIGGER ALL;
       <nr>0</nr>
       <xloc>392</xloc>
       <yloc>741</yloc>
-    </entry>
-    <entry>
-      <name>Delete propostas</name>
-      <description />
-      <type>DELETE_FILES</type>
-      <arg_from_previous>N</arg_from_previous>
-      <include_subfolders>N</include_subfolders>
-      <fields>
-        <field>
-          <name>${PROPOSTAS_ZIP}</name>
-          <filemask />
-        </field>
-      </fields>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>533</xloc>
-      <yloc>249</yloc>
-    </entry>
-    <entry>
-      <name>Delete convênios</name>
-      <description />
-      <type>DELETE_FILES</type>
-      <arg_from_previous>N</arg_from_previous>
-      <include_subfolders>N</include_subfolders>
-      <fields>
-        <field>
-          <name>${CONVENIOS_ZIP}</name>
-          <filemask />
-        </field>
-      </fields>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>708</xloc>
-      <yloc>489</yloc>
     </entry>
     <entry>
       <name>Verificar se CSV Siconv existe</name>
@@ -953,6 +953,15 @@ ALTER TABLE osc.tb_fonte_recursos_projeto ENABLE TRIGGER ALL;
       <unconditional>N</unconditional>
     </hop>
     <hop>
+      <from>Baixar convênios</from>
+      <to>Deszipar convênios</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
       <from>Verificar se ZIP propostas existe</from>
       <to>Baixar propostas</to>
       <from_nr>0</from_nr>
@@ -963,15 +972,6 @@ ALTER TABLE osc.tb_fonte_recursos_projeto ENABLE TRIGGER ALL;
     </hop>
     <hop>
       <from>Verificar se Zip convênios existe</from>
-      <to>Deszipar convênios</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Baixar convênios</from>
       <to>Deszipar convênios</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -1016,7 +1016,7 @@ ALTER TABLE osc.tb_fonte_recursos_projeto ENABLE TRIGGER ALL;
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>Carregar dados</from>
+      <from>Gravar dados</from>
       <to>Set variables carga erro</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -1025,8 +1025,8 @@ ALTER TABLE osc.tb_fonte_recursos_projeto ENABLE TRIGGER ALL;
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Set variables carga erro</from>
-      <to>Gravar log fim</to>
+      <from>Desativar triggers</from>
+      <to>Gravar log início</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1034,8 +1034,8 @@ ALTER TABLE osc.tb_fonte_recursos_projeto ENABLE TRIGGER ALL;
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Desativar triggers</from>
-      <to>Gravar log início</to>
+      <from>Set variables carga erro</from>
+      <to>Gravar log fim</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1052,15 +1052,6 @@ ALTER TABLE osc.tb_fonte_recursos_projeto ENABLE TRIGGER ALL;
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Verificar se ZIP propostas existe</from>
-      <to>Deszipar propostas</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
       <from>Baixar propostas</from>
       <to>Deszipar propostas</to>
       <from_nr>0</from_nr>
@@ -1070,17 +1061,8 @@ ALTER TABLE osc.tb_fonte_recursos_projeto ENABLE TRIGGER ALL;
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Deszipar propostas</from>
-      <to>Verificar se Zip convênios existe</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
       <from>Agrupar Arquivos</from>
-      <to>Carregar dados</to>
+      <to>Gravar dados</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1088,35 +1070,8 @@ ALTER TABLE osc.tb_fonte_recursos_projeto ENABLE TRIGGER ALL;
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Deszipar propostas</from>
-      <to>Delete propostas</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Delete propostas</from>
-      <to>Set variables carga erro</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Deszipar convênios</from>
-      <to>Delete convênios</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Delete convênios</from>
-      <to>Set variables carga erro</to>
+      <from>Verificar se ZIP propostas existe</from>
+      <to>Deszipar propostas</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1133,6 +1088,15 @@ ALTER TABLE osc.tb_fonte_recursos_projeto ENABLE TRIGGER ALL;
       <unconditional>N</unconditional>
     </hop>
     <hop>
+      <from>Deszipar propostas</from>
+      <to>Verificar se Zip convênios existe</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
       <from>Delete files</from>
       <to>Success</to>
       <from_nr>0</from_nr>
@@ -1142,8 +1106,26 @@ ALTER TABLE osc.tb_fonte_recursos_projeto ENABLE TRIGGER ALL;
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Carregar dados</from>
+      <from>Deszipar propostas</from>
+      <to>Delete propostas</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Gravar dados</from>
       <to>Gravar log fim</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Delete propostas</from>
+      <to>Set variables carga erro</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1160,8 +1142,8 @@ ALTER TABLE osc.tb_fonte_recursos_projeto ENABLE TRIGGER ALL;
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Verificar se CSV Siconv existe</from>
-      <to>Agrupar Arquivos</to>
+      <from>Deszipar convênios</from>
+      <to>Delete convênios</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -1170,11 +1152,29 @@ ALTER TABLE osc.tb_fonte_recursos_projeto ENABLE TRIGGER ALL;
     </hop>
     <hop>
       <from>Verificar se CSV Siconv existe</from>
-      <to>Carregar dados</to>
+      <to>Gravar dados</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
       <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Delete convênios</from>
+      <to>Set variables carga erro</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Verificar se CSV Siconv existe</from>
+      <to>Agrupar Arquivos</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>N</evaluation>
       <unconditional>N</unconditional>
     </hop>
   </hops>
