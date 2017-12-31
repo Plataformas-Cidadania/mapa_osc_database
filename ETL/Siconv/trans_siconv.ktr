@@ -650,21 +650,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Renomeando campos</from>
-      <to>Formatar JSON</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Add constants</from>
-      <to>Concat Fields</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Concat Fields</from>
-      <to>Renomeando campos</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Replace in string</from>
       <to>Excluir duplicadas</to>
       <enabled>N</enabled>
@@ -717,6 +702,26 @@
     <hop>
       <from>Dummy 2</from>
       <to>Dummy 3</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Add constants</from>
+      <to>Renomeando campos</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Renomeando campos</from>
+      <to>Concat Fields</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Montar link</from>
+      <to>Formatar JSON</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Concat Fields</from>
+      <to>Montar link</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -811,7 +816,7 @@
         <currency />
         <decimal />
         <group />
-        <nullif>Parceria </nullif>
+        <nullif>Parceria</nullif>
         <length>-1</length>
         <precision>-1</precision>
         <set_empty_string>N</set_empty_string>
@@ -981,8 +986,8 @@ FROM portal.atualizar_dados_gerais_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>943</xloc>
-      <yloc>791</yloc>
+      <xloc>813</xloc>
+      <yloc>822</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1023,8 +1028,8 @@ FROM portal.atualizar_localizacao_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>932</xloc>
-      <yloc>910</yloc>
+      <xloc>802</xloc>
+      <yloc>941</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1067,8 +1072,8 @@ FROM portal.atualizar_projeto_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>934</xloc>
-      <yloc>653</yloc>
+      <xloc>804</xloc>
+      <yloc>684</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1827,7 +1832,7 @@ FROM portal.atualizar_projeto_osc(
         <precision>-1</precision>
       </field>
       <field>
-        <name>﻿NR_CONVENIO</name>
+        <name>convenio</name>
         <type>String</type>
         <format />
         <currency />
@@ -1853,7 +1858,7 @@ FROM portal.atualizar_projeto_osc(
     </remotesteps>
     <GUI>
       <xloc>1456</xloc>
-      <yloc>542</yloc>
+      <yloc>684</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1990,8 +1995,8 @@ FROM portal.atualizar_projeto_osc(
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1289</xloc>
-      <yloc>910</yloc>
+      <xloc>1159</xloc>
+      <yloc>941</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2115,10 +2120,11 @@ if(VL_REPASSE_CONV) VL_REPASSE_CONV = formatarDado(VL_REPASSE_CONV);
 if(OBJETO_PROPOSTA) OBJETO_PROPOSTA = formatarDado(OBJETO_PROPOSTA);
 if(﻿convenio) ﻿convenio = formatarDado(﻿convenio);
 if(﻿nome_projeto_final) ﻿nome_projeto_final = formatarDado(﻿nome_projeto_final);
+if(﻿link) link = formatarDado(﻿link);
 
 var dados_gerais_json = '{"tx_razao_social_osc": ' + NM_PROPONENTE + '}';
 var localizacao_json = '{"tx_endereco": ' + ENDERECO_PROPONENTE + ', "tx_bairro": ' + BAIRRO_PROPONENTE + ', "cd_municipio": ' + COD_MUNIC_IBGE + ', "nr_cep": ' + CEP_PROPONENTE + '}';
-var projeto_json = '{"tx_nome_projeto": ' + nome_projeto_final + ', "dt_data_inicio_projeto": ' + DIA_INIC_VIGENC_CONV + ', "dt_data_fim_projeto": ' + DIA_FIM_VIGENC_CONV + ', "nr_valor_total_projeto": ' + VL_GLOBAL_CONV + ', "nr_valor_captado_projeto": ' + VL_REPASSE_CONV + ', "tx_descricao_projeto": ' + OBJETO_PROPOSTA + ', "tx_identificador_projeto_externo": ' + ﻿convenio + ', "cd_status_projeto": ' + cd_status_projeto + '}';</jsScript_script>
+var projeto_json = '{"tx_nome_projeto": ' + nome_projeto_final + ', "dt_data_inicio_projeto": ' + DIA_INIC_VIGENC_CONV + ', "dt_data_fim_projeto": ' + DIA_FIM_VIGENC_CONV + ', "nr_valor_total_projeto": ' + VL_GLOBAL_CONV + ', "nr_valor_captado_projeto": ' + VL_REPASSE_CONV + ', "tx_descricao_projeto": ' + OBJETO_PROPOSTA + ', "tx_identificador_projeto_externo": ' + ﻿convenio + ', "cd_status_projeto": ' + cd_status_projeto + ', "tx_link_projeto": ' + link + '}';</jsScript_script>
       </jsScript>
     </jsScripts>
     <fields>
@@ -2155,8 +2161,8 @@ var projeto_json = '{"tx_nome_projeto": ' + nome_projeto_final + ', "dt_data_ini
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1289</xloc>
-      <yloc>653</yloc>
+      <xloc>1159</xloc>
+      <yloc>684</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2227,6 +2233,49 @@ var projeto_json = '{"tx_nome_projeto": ' + nome_projeto_final + ', "dt_data_ini
     </GUI>
   </step>
   <step>
+    <name>Montar link</name>
+    <type>ScriptValueMod</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>
+      <jsScript>
+        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>var link = 'https://www.convenios.gov.br/siconv/ConsultarProposta/ResultadoDaConsultaDeConvenioSelecionarConvenio.do?sequencialConvenio=' + convenio + '&amp;Usr=guest&amp;Pwd=guest';</jsScript_script>
+      </jsScript>
+    </jsScripts>
+    <fields>
+      <field>
+        <name>link</name>
+        <rename>link</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1313</xloc>
+      <yloc>684</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
     <name>Renomeando campos</name>
     <type>SelectValues</type>
     <description />
@@ -2266,7 +2315,7 @@ var projeto_json = '{"tx_nome_projeto": ' + nome_projeto_final + ', "dt_data_ini
     </remotesteps>
     <GUI>
       <xloc>1456</xloc>
-      <yloc>653</yloc>
+      <yloc>560</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2620,8 +2669,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1128</xloc>
-      <yloc>791</yloc>
+      <xloc>998</xloc>
+      <yloc>822</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2662,8 +2711,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1129</xloc>
-      <yloc>910</yloc>
+      <xloc>999</xloc>
+      <yloc>941</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2707,8 +2756,8 @@ OR (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1091</xloc>
-      <yloc>653</yloc>
+      <xloc>961</xloc>
+      <yloc>684</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2746,8 +2795,8 @@ if(flag_variable == true &amp;&amp; flag == false){
       </output>
     </remotesteps>
     <GUI>
-      <xloc>749</xloc>
-      <yloc>791</yloc>
+      <xloc>619</xloc>
+      <yloc>822</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
