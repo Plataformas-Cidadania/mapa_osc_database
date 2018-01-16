@@ -62,7 +62,7 @@ BEGIN
 		ELSIF tipo_busca = 3 THEN
 			SELECT INTO dado_anterior * FROM osc.tb_projeto
 			WHERE tx_identificador_projeto_externo = objeto.tx_identificador_projeto_externo
-			AND ft_identificador_projeto_externo = fonte_dados.nome_fonte
+			AND SUBSTRING(ft_identificador_projeto_externo FROM 0 FOR char_length(ft_identificador_projeto_externo) - position(' ' in reverse(ft_identificador_projeto_externo)) + 1) = SUBSTRING(fonte_dados.nome_fonte FROM 0 FOR char_length(fonte_dados.nome_fonte) - position(' ' in reverse(fonte_dados.nome_fonte)) + 1)
 			AND id_osc = osc;
 
 		ELSE
@@ -139,7 +139,7 @@ BEGIN
 
 			dado_nao_delete := array_append(dado_nao_delete, dado_posterior.id_projeto);
 
-			PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, null, row_to_json(dado_posterior), id_carga);
+			PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, null, row_to_json(dado_posterior),id_carga);
 
 		ELSE
 			dado_posterior := dado_anterior;
@@ -262,7 +262,7 @@ BEGIN
 					ft_abrangencia_projeto = dado_posterior.ft_abrangencia_projeto,
 					cd_zona_atuacao_projeto = dado_posterior.cd_zona_atuacao_projeto,
 					ft_zona_atuacao_projeto = dado_posterior.ft_zona_atuacao_projeto,
-					tx_descricao_projeto = dado_posterior.tx_descricao_projeto, 
+					tx_descricao_projeto = dado_posterior.tx_descricao_projeto,
 					ft_descricao_projeto = dado_posterior.ft_descricao_projeto,
 					tx_metodologia_monitoramento = dado_posterior.tx_metodologia_monitoramento,
 					ft_metodologia_monitoramento = dado_posterior.ft_metodologia_monitoramento,
@@ -270,7 +270,7 @@ BEGIN
 					ft_link_projeto = dado_posterior.ft_link_projeto
 				WHERE id_projeto = dado_posterior.id_projeto;
 
-				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior), id_carga);
+								PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior),id_carga);
 			END IF;
 
 		END IF;
@@ -282,7 +282,7 @@ BEGIN
 		LOOP
 			IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_area_atuacao]) AS a) THEN
 				DELETE FROM osc.tb_projeto WHERE id_projeto = objeto.id_projeto;
-				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(objeto), null);
+				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(objeto), null,id_carga);
 			END IF;
 		END LOOP;
 	END IF;

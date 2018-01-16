@@ -11,6 +11,30 @@
   <modified_date>2017&#x2f;12&#x2f;21 11&#x3a;55&#x3a;07.774</modified_date>
     <parameters>
     </parameters>
+  <connection>
+    <name>etl</name>
+    <server>&#x24;&#x7b;db_host&#x7d;</server>
+    <type>POSTGRESQL</type>
+    <access>Native</access>
+    <database>&#x24;&#x7b;db_name&#x7d;</database>
+    <port>&#x24;&#x7b;db_port&#x7d;</port>
+    <username>&#x24;&#x7b;db_user&#x7d;</username>
+    <password>&#x24;&#x7b;db_pass&#x7d;</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>&#x24;&#x7b;db_port&#x7d;</attribute></attribute>
+      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>N</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
     <slaveservers>
     </slaveservers>
 <job-log-table><connection/>
@@ -466,8 +490,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>648</xloc>
-      <yloc>394</yloc>
+      <xloc>607</xloc>
+      <yloc>389</yloc>
       </entry>
     <entry>
       <name>FINEP</name>
@@ -498,40 +522,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>498</xloc>
-      <yloc>388</yloc>
-      </entry>
-    <entry>
-      <name>Job 15</name>
-      <description/>
-      <type>JOB</type>
-      <specification_method>filename</specification_method>
-      <job_object_id/>
-      <filename/>
-      <jobname/>
-      <arg_from_previous>N</arg_from_previous>
-      <params_from_previous>N</params_from_previous>
-      <exec_per_row>N</exec_per_row>
-      <set_logfile>N</set_logfile>
-      <logfile/>
-      <logext/>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <loglevel>Nothing</loglevel>
-      <slave_server_name/>
-      <wait_until_finished>Y</wait_until_finished>
-      <follow_abort_remote>N</follow_abort_remote>
-      <expand_remote_job>N</expand_remote_job>
-      <create_parent_folder>N</create_parent_folder>
-      <pass_export>N</pass_export>
-      <force_separate_logging>N</force_separate_logging>
-      <parameters>        <pass_all_parameters>Y</pass_all_parameters>
-      </parameters>      <set_append_logfile>N</set_append_logfile>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>722</xloc>
-      <yloc>395</yloc>
+      <xloc>507</xloc>
+      <yloc>387</yloc>
       </entry>
     <entry>
       <name>Success</name>
@@ -540,11 +532,56 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>819</xloc>
-      <yloc>400</yloc>
+      <xloc>775</xloc>
+      <yloc>390</yloc>
       </entry>
     <entry>
-      <name>Job</name>
+      <name>Set variables</name>
+      <description/>
+      <type>SET_VARIABLES</type>
+      <replacevars>Y</replacevars>
+      <filename/>
+      <file_variable_type>JVM</file_variable_type>
+      <fields>
+        <field>
+          <variable_name>db_host</variable_name>
+          <variable_value>10.1.4.110</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>db_name</variable_name>
+          <variable_value>portalosc</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>db_port</variable_name>
+          <variable_value>5434</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>db_user</variable_name>
+          <variable_value>i3geo</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>db_pass</variable_name>
+          <variable_value>ipea001</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>folder_path</variable_name>
+          <variable_value>&#x2f;home&#x2f;DLIPEA&#x2f;b6519563&#x2f;Downloads&#x2f;dados_2017&#x2f;</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+      </fields>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>110</xloc>
+      <yloc>178</yloc>
+      </entry>
+    <entry>
+      <name>GRAPH</name>
       <description/>
       <type>JOB</type>
       <specification_method>filename</specification_method>
@@ -572,20 +609,27 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>118</xloc>
-      <yloc>177</yloc>
+      <xloc>209</xloc>
+      <yloc>178</yloc>
+      </entry>
+    <entry>
+      <name>SQL</name>
+      <description/>
+      <type>SQL</type>
+      <sql>ALTER TABLE osc.tb_dados_gerais DISABLE TRIGGER ALL&#x3b; &#xa;&#xa;UPDATE osc.tb_dados_gerais SET tx_nome_fantasia_osc &#x3d; tb.nome&#xa;FROM&#xa;&#x28;select id_osc,convert_to&#x28;unaccent&#x28;regexp_replace&#x28;tx_nome_fantasia_osc, &#x27;&#x5b;&#x5e;a-zA-Z&#xe0;-&#xfa;&#xc0;-&#xda;0-9&#x2b;&#x3f;&#x2f;&#x3a;&#x28;&#x29;.,&#x22;&#x27;&#x27;&#x26;&#x40; -&#x5d;&#x27;,&#x27;&#x27;,&#x27;g&#x27;&#x29;&#x29;,&#x27;utf8&#x27;&#x29; as nome, tx_nome_fantasia_osc&#xa;from osc.tb_dados_gerais where tx_nome_fantasia_osc &#x7e; &#x27;&#x5b;&#x5e;a-zA-Z&#xe0;-&#xfa;&#xc0;-&#xda;0-9&#x2b;&#x3f;&#x2f;&#x3a;&#x28;&#x29;.,&#x22;&#x27;&#x27;&#x26;&#x40; -&#x5d;&#x27;&#xa;union all&#xa;select id_osc,convert_to&#x28;unaccent&#x28;regexp_replace&#x28;tx_nome_fantasia_osc, &#x27;&#x5b;&#x5e;a-zA-Z0-9&#x2b;&#x3f;&#x2f;&#x3a;&#x28;&#x29;,&#x22;&#x27;&#x27;&#x26;&#x40; -&#x5d;&#x27;,&#x27;&#x27;,&#x27;g&#x27;&#x29;&#x29;,&#x27;utf8&#x27;&#x29; as nome, tx_nome_fantasia_osc&#xa;from osc.tb_dados_gerais where tx_nome_fantasia_osc &#x3d; &#x27;.&#x27;&#xa;union all&#xa;select id_osc,convert_to&#x28;unaccent&#x28;regexp_replace&#x28;tx_nome_fantasia_osc, &#x27;&#x5b;&#x5e;a-zA-Z0-9&#x2b;&#x3f;&#x2f;&#x3a;&#x28;&#x29;,&#x22;&#x27;&#x27;&#x26;&#x40; -&#x5d;&#x27;,&#x27; &#x27;,&#x27;g&#x27;&#x29;&#x29;,&#x27;utf8&#x27;&#x29; as nome, tx_nome_fantasia_osc&#xa;from osc.tb_dados_gerais where tx_nome_fantasia_osc like &#x27;&#x25;...&#x25;&#x27;&#xa;union all&#xa;select id_osc,convert_to&#x28;unaccent&#x28;regexp_replace&#x28;tx_nome_fantasia_osc, &#x27;&#x5b;&#x5e;a-zA-Z0-9&#x2b;&#x3f;&#x2f;&#x3a;&#x28;&#x29;,&#x22;&#x27;&#x27;&#x26;&#x40; &#x5d;&#x27;,&#x27;&#x27;,&#x27;g&#x27;&#x29;&#x29;,&#x27;utf8&#x27;&#x29; as nome, tx_nome_fantasia_osc&#xa;from osc.tb_dados_gerais where tx_nome_fantasia_osc &#x3d; &#x27;-&#x27;&#xa;union all&#xa;select id_osc,convert_to&#x28;unaccent&#x28;regexp_replace&#x28;tx_nome_fantasia_osc, &#x27;&#x5b;&#x5e;a-zA-Z0-9&#x2b;&#x3f;&#x2f;&#x3a;&#x28;&#x29;&#x22;&#x27;&#x27;&#x26;&#x40; &#x5d;&#x27;,&#x27;&#x27;,&#x27;g&#x27;&#x29;&#x29;,&#x27;utf8&#x27;&#x29; as nome, tx_nome_fantasia_osc&#xa;from osc.tb_dados_gerais where tx_nome_fantasia_osc &#x3d; &#x27;,&#x27;&#xa;union all&#xa;select id_osc,convert_to&#x28;unaccent&#x28;regexp_replace&#x28;tx_nome_fantasia_osc, &#x27;&#x5b;&#x5e;a-zA-Z&#x2b;&#x3f;&#x2f;&#x3a;&#x28;&#x29;&#x22;&#x27;&#x27;&#x26;&#x40; &#x5d;&#x27;,&#x27;&#x27;,&#x27;g&#x27;&#x29;&#x29;,&#x27;utf8&#x27;&#x29; as nome, tx_nome_fantasia_osc&#xa;from osc.tb_dados_gerais where tx_nome_fantasia_osc like &#x27;000&#x25;&#x27;&#xa;union all&#xa;select id_osc,null nome, tx_nome_fantasia_osc&#xa;from osc.tb_dados_gerais where trim&#x28;tx_nome_fantasia_osc&#x29; in&#x28;&#x27;-0-&#x27;,&#x27;--&#x27;,&#x27;---&#x27;,&#x27;----&#x27;,&#x27;-------&#x27;,&#x27;-------------&#x27;,&#x27;--------------------------------------&#x27;&#x29;&#xa;&#x29; as tb&#xa;WHERE osc.tb_dados_gerais.id_osc &#x3d; tb.id_osc&#x3b;&#xa;&#xa;UPDATE osc.tb_dados_gerais SET tx_nome_fantasia_osc &#x3d; null&#xa;where length&#x28;tx_nome_fantasia_osc&#x29; &#x3c;&#x3d; 2&#x3b;&#xa;&#xa;ALTER TABLE osc.tb_dados_gerais ENABLE TRIGGER ALL&#x3b; &#xa;&#xa;update osc.tb_localizacao SET geo_localizacao &#x3d; edmu_centroid&#xa;from spat.ed_municipio&#xa;inner join spat.ed_uf on spat.ed_municipio.eduf_cd_uf &#x3d; spat.ed_uf.eduf_cd_uf&#xa;inner join osc.tb_osc on osc.tb_osc.id_osc &#x3d; id_osc&#xa;where ST_Contains&#x28;eduf_bounding_box,geo_localizacao&#x29; &#x3d; false&#xa;and cd_municipio &#x3d; edmu_cd_municipio&#x3b;&#xa;&#xa;update osc.tb_localizacao SET geo_localizacao &#x3d; edmu_centroid&#xa;from spat.ed_municipio&#xa;inner join spat.ed_uf on spat.ed_municipio.eduf_cd_uf &#x3d; spat.ed_uf.eduf_cd_uf&#xa;inner join osc.tb_osc on osc.tb_osc.id_osc &#x3d;id_osc&#xa;where ST_Contains&#x28;edmu_bounding_box,geo_localizacao&#x29; &#x3d; false&#xa;and cd_municipio &#x3d; edmu_cd_municipio&#x3b;&#xa;&#xa;select RefreshAllMaterializedViews&#x28;&#x27;spat&#x27;&#x29;&#x3b;&#xa;select RefreshAllMaterializedViews&#x28;&#x27;osc&#x27;&#x29;&#x3b;&#xa;select RefreshAllMaterializedViews&#x28;&#x27;portal&#x27;&#x29;&#x3b;</sql>
+      <useVariableSubstitution>F</useVariableSubstitution>
+      <sqlfromfile>F</sqlfromfile>
+      <sqlfilename/>
+      <sendOneStatement>F</sendOneStatement>
+      <connection>etl</connection>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>689</xloc>
+      <yloc>393</yloc>
       </entry>
   </entries>
   <hops>
-    <hop>
-      <from>Job 15</from>
-      <to>Success</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
     <hop>
       <from>CNIS</from>
       <to>OSCIP</to>
@@ -686,8 +730,26 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
+      <from>SLIE</from>
+      <to>FINEP</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>FINEP</from>
+      <to>SICONV</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
       <from>START</from>
-      <to>Job</to>
+      <to>Set variables</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -695,7 +757,16 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>Job</from>
+      <from>Set variables</from>
+      <to>GRAPH</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>GRAPH</from>
       <to>CNIS</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -704,8 +775,17 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>SLIE</from>
-      <to>FINEP</to>
+      <from>SICONV</from>
+      <to>SQL</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>SQL</from>
+      <to>Success</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>

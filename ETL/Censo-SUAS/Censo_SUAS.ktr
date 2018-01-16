@@ -75,6 +75,30 @@
   <notepads>
   </notepads>
   <connection>
+    <name>etl</name>
+    <server>&#x24;&#x7b;db_host&#x7d;</server>
+    <type>POSTGRESQL</type>
+    <access>Native</access>
+    <database>&#x24;&#x7b;db_name&#x7d;</database>
+    <port>&#x24;&#x7b;db_port&#x7d;</port>
+    <username>&#x24;&#x7b;db_user&#x7d;</username>
+    <password>&#x24;&#x7b;db_pass&#x7d;</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>&#x24;&#x7b;db_port&#x7d;</attribute></attribute>
+      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>N</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
+  <connection>
     <name>portalosc</name>
     <server>localhost</server>
     <type>POSTGRESQL</type>
@@ -129,7 +153,7 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <filename>&#x2f;home&#x2f;DLIPEA&#x2f;b6519563&#x2f;Downloads&#x2f;dados_2017&#x2f;CensoSUAS2016_Acolhimento_DG_DIVULGA&#xc7;&#xc3;O.csv</filename>
+    <filename>&#x24;&#x7b;folder_path&#x7d;CensoSUAS2016_Acolhimento_DG_DIVULGA&#xc7;&#xc3;O.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -570,7 +594,7 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <filename>&#x2f;home&#x2f;DLIPEA&#x2f;b6519563&#x2f;Downloads&#x2f;dados_2017&#x2f;CensoSUAS_2016_Convivencia_DadosGerais_divulgacao.csv</filename>
+    <filename>&#x24;&#x7b;folder_path&#x7d;CensoSUAS_2016_Convivencia_DadosGerais_divulgacao.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -923,7 +947,7 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <filename>&#x2f;home&#x2f;DLIPEA&#x2f;b6519563&#x2f;Downloads&#x2f;dados_2017&#x2f;Censo_SUAS_2016_CentroDIA_DadosGerais_Divulgacao.csv</filename>
+    <filename>&#x24;&#x7b;folder_path&#x7d;Censo_SUAS_2016_CentroDIA_DadosGerais_Divulgacao.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -1901,7 +1925,7 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>portalosc</connection>
+    <connection>etl</connection>
     <sql>SELECT id_osc,&#x3f; as cnpj ,cd_identificador_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC &#x3b;</sql>
     <limit>0</limit>
     <lookup>Select_cnpj</lookup>
@@ -1927,7 +1951,7 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>portalosc</connection>
+    <connection>etl</connection>
     <sql>SELECT id_osc,&#x3f; as cnpj ,cd_identificador_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC &#x3b;</sql>
     <limit>0</limit>
     <lookup>Select_cnpj 2</lookup>
@@ -1953,7 +1977,7 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>portalosc</connection>
+    <connection>etl</connection>
     <sql>SELECT id_osc,&#x3f; as cnpj ,cd_identificador_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC &#x3b;</sql>
     <limit>0</limit>
     <lookup>Select_cnpj 3</lookup>
@@ -1979,7 +2003,7 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>portalosc</connection>
+    <connection>etl</connection>
     <execute_each_row>Y</execute_each_row>
     <single_statement>N</single_statement>
     <replace_variables>Y</replace_variables>
@@ -2012,7 +2036,7 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>portalosc</connection>
+    <connection>etl</connection>
     <execute_each_row>Y</execute_each_row>
     <single_statement>N</single_statement>
     <replace_variables>Y</replace_variables>
@@ -2045,7 +2069,7 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>portalosc</connection>
+    <connection>etl</connection>
     <execute_each_row>Y</execute_each_row>
     <single_statement>N</single_statement>
     <replace_variables>Y</replace_variables>
