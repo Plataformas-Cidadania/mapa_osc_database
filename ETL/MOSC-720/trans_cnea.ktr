@@ -76,6 +76,30 @@
   <notepads>
   </notepads>
   <connection>
+    <name>etl</name>
+    <server>&#x24;&#x7b;db_host&#x7d;</server>
+    <type>POSTGRESQL</type>
+    <access>Native</access>
+    <database>&#x24;&#x7b;db_name&#x7d;</database>
+    <port>&#x24;&#x7b;db_port&#x7d;</port>
+    <username>&#x24;&#x7b;db_user&#x7d;</username>
+    <password>&#x24;&#x7b;db_pass&#x7d;</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>&#x24;&#x7b;db_port&#x7d;</attribute></attribute>
+      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>N</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
+  <connection>
     <name>localhost</name>
     <server>localhost</server>
     <type>POSTGRESQL</type>
@@ -226,7 +250,7 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>localhost</connection>
+    <connection>etl</connection>
     <sql>SELECT &#x2a; &#xa;FROM portal.atualizar_area_atuacao_osc&#x28;&#xa;	&#x27;&#x24;&#x7b;FONTE_CARGA&#x7d;&#x27;&#x3a;&#x3a;TEXT, &#xa;	&#x3f;&#x3a;&#x3a;NUMERIC, &#xa;	&#x3f;&#x3a;&#x3a;TEXT, &#xa;	NOW&#x28;&#x29;&#x3a;&#x3a;TIMESTAMP, &#xa;	&#x3f;&#x3a;&#x3a;JSONB, &#xa;	&#x3f;&#x3a;&#x3a;BOOLEAN, &#xa;	&#x3f;&#x3a;&#x3a;BOOLEAN, &#xa;	&#x3f;&#x3a;&#x3a;BOOLEAN, &#xa;	&#x27;&#x24;&#x7b;ID_CARGA&#x7d;&#x27;&#x3a;&#x3a;INTEGER, &#xa;	2&#x3a;&#x3a;INTEGER&#xa;&#x29;&#x3b;&#xa;</sql>
     <limit>0</limit>
     <lookup>Select values &#xe1;rea atua&#xe7;&#xe3;o</lookup>
@@ -252,7 +276,7 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <filename>&#x24;&#x7b;ARQUIVO&#x7d;</filename>
+    <filename>&#x24;&#x7b;folder_path&#x7d;CNEA.csv</filename>
     <filename_field/>
     <rownum_field/>
     <include_filename>N</include_filename>
@@ -366,7 +390,7 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <connection>localhost</connection>
+    <connection>etl</connection>
     <sql>SELECT id_osc, &#x3f; AS cnpj FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x3b;</sql>
     <limit>0</limit>
     <lookup>Select values 1</lookup>
