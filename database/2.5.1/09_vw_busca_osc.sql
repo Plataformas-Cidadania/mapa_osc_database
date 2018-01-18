@@ -9,8 +9,8 @@ CREATE MATERIALIZED VIEW osc.vw_busca_osc AS
 		TRIM(TRANSLATE(TRANSLATE(tb_dados_gerais.tx_razao_social_osc, '.'::TEXT, ','::TEXT), '_'::TEXT, ' '::TEXT)) AS tx_razao_social_osc,
 		NULLIF(TRIM(TRANSLATE(TRANSLATE(tb_dados_gerais.tx_nome_fantasia_osc, '.'::TEXT, ','::TEXT), '_'::TEXT, ' '::TEXT)), ''::TEXT) AS tx_nome_fantasia_osc,
 		(
-			setweight(to_tsvector('portuguese_unaccent'::regconfig, COALESCE(TRANSLATE(TRIM(tb_dados_gerais.tx_razao_social_osc), '.,/,\,|,:,#,@,$,&,!,?,(,),[,],_'::TEXT, ''::TEXT), ''::TEXT)), 'A'::"char") || 
-			setweight(to_tsvector('portuguese_unaccent'::regconfig, COALESCE(TRANSLATE(TRIM(tb_dados_gerais.tx_nome_fantasia_osc), '.,/,\,|,:,#,@,$,&,!,?,(,),[,],_'::TEXT, ''::TEXT), ''::TEXT)), 'B'::"char")
+			setweight(to_tsvector('portuguese_unaccent'::regconfig, COALESCE(TRANSLATE(TRANSLATE(TRIM(tb_dados_gerais.tx_razao_social_osc), '.'::TEXT, ','::TEXT), '_'::TEXT, ' '::TEXT), ''::TEXT)), 'A'::"char") || 
+			setweight(to_tsvector('portuguese_unaccent'::regconfig, COALESCE(TRANSLATE(TRANSLATE(TRIM(tb_dados_gerais.tx_nome_fantasia_osc), '.'::TEXT, ','::TEXT), '_'::TEXT, ' '::TEXT), ''::TEXT)), 'B'::"char")
 		) AS document,
 		(
 			SELECT dc_natureza_juridica.tx_nome_natureza_juridica
