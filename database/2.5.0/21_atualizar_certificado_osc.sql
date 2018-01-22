@@ -127,10 +127,6 @@ BEGIN
 	END LOOP;
 
 	IF delete_valido THEN
-		DELETE FROM osc.tb_certificado WHERE id_certificado != ALL(dado_nao_delete);
-	END IF;
-
-	IF delete_valido THEN
 		FOR objeto IN (SELECT * FROM osc.tb_certificado WHERE id_osc = osc AND id_certificado != ALL(dado_nao_delete))
 		LOOP
 			IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_area_atuacao]) AS a) THEN
