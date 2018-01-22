@@ -125,9 +125,9 @@
   <order>
   <hop> <from>CSV</from><to>Seleciona_Dados</to><enabled>Y</enabled> </hop>
   <hop> <from>Seleciona_Dados</from><to>Filtro</to><enabled>Y</enabled> </hop>
-  <hop> <from>Tabela_id-exclui</from><to>DELETE antigos 2</to><enabled>Y</enabled> </hop>
-  <hop> <from>Filtro</from><to>Seleciona_Exclusao</to><enabled>Y</enabled> </hop>
-  <hop> <from>Seleciona_Exclusao</from><to>Tabela_id-exclui</to><enabled>Y</enabled> </hop>
+  <hop> <from>Tabela_id-exclui</from><to>DELETE antigos 2</to><enabled>N</enabled> </hop>
+  <hop> <from>Filtro</from><to>Seleciona_Exclusao</to><enabled>N</enabled> </hop>
+  <hop> <from>Seleciona_Exclusao</from><to>Tabela_id-exclui</to><enabled>N</enabled> </hop>
   <hop> <from>Select_cnpj</from><to>Tabela_id-cnpj</to><enabled>Y</enabled> </hop>
   <hop> <from>Tabela_id-cnpj</from><to>Ordena</to><enabled>Y</enabled> </hop>
   <hop> <from>Ordena</from><to>Junta_id-novos</to><enabled>Y</enabled> </hop>
@@ -136,7 +136,7 @@
   <hop> <from>Filtro</from><to>Dummy &#x28;do nothing&#x29;</to><enabled>Y</enabled> </hop>
   <hop> <from>Dummy &#x28;do nothing&#x29;</from><to>Select_cnpj</to><enabled>Y</enabled> </hop>
   <hop> <from>Dummy &#x28;do nothing&#x29;</from><to>Seleciona novos</to><enabled>Y</enabled> </hop>
-  <hop> <from>CSV</from><to>DELETE antigos</to><enabled>Y</enabled> </hop>
+  <hop> <from>CSV</from><to>DELETE antigos</to><enabled>N</enabled> </hop>
   <hop> <from>Junta_id-novos</from><to>UPDATE</to><enabled>Y</enabled> </hop>
   <hop> <from>Junta_id-novos</from><to>INSERT</to><enabled>N</enabled> </hop>
   </order>
@@ -381,7 +381,7 @@
            <schema_name/>
            </partitioning>
 <send_true_to>Dummy &#x28;do nothing&#x29;</send_true_to>
-<send_false_to>Seleciona_Exclusao</send_false_to>
+<send_false_to/>
     <compare>
 <condition>
  <negated>N</negated>
@@ -676,7 +676,7 @@
            <schema_name/>
            </partitioning>
     <connection>etl</connection>
-    <sql>SELECT id_osc, &#x3f; as CNPJ FROM osc.tb_certificado&#xa;    where cd_certificado&#x3d;2 and id_osc &#x3d; &#x28;SELECT id_osc FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC &#x29; &#x3b;</sql>
+    <sql>SELECT id_osc, &#x3f; AS cnpj FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x3b;</sql>
     <limit>0</limit>
     <lookup>Select_cnpj</lookup>
     <execute_each_row>Y</execute_each_row>
@@ -702,7 +702,7 @@
            <schema_name/>
            </partitioning>
     <connection>etl</connection>
-    <sql>SELECT id_osc,&#x3f; as cnpj	FROM osc.tb_certificado &#xa;WHERE id_osc &#x3d; &#x28;SELECT id_osc  FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x29; &#x3b;</sql>
+    <sql>SELECT id_osc, &#x3f; AS cnpj FROM osc.tb_osc WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#x3b;</sql>
     <limit>0</limit>
     <lookup>Seleciona_Exclusao</lookup>
     <execute_each_row>Y</execute_each_row>
@@ -732,7 +732,7 @@
     <single_statement>N</single_statement>
     <replace_variables>Y</replace_variables>
     <quoteString>N</quoteString>
-    <sql>SELECT portal.atualizar_certificado_osc&#x28;&#x27;&#x24;&#x7b;ETL&#x7d;&#x27;&#x3a;&#x3a;TEXT,&#x3f;&#x3a;&#x3a;NUMERIC, &#x27;id_osc&#x27;&#x3a;&#x3a;TEXT,&#x28;SELECT NOW&#x28;&#x29;&#x3a;&#x3a;TIMESTAMP&#x29;,&#xa;&#x27;&#x7b;&#x22;cd_certificado&#x22;&#x3a;&#x22;2&#x22;&#x7d;&#x27;&#x7c;&#x7c; jsonb_build_object&#x28;&#x27;dt_inicio_certificado&#x27;,&#x28;SELECT to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29;&#x3a;&#x3a;TEXT&#x29;&#x29; &#x7c;&#x7c; jsonb_build_object&#x28;&#x27;dt_fim_certificado&#x27;,&#x28;SELECT to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29;&#x3a;&#x3a;TEXT&#x29;&#x29;&#xa;, TRUE, TRUE, TRUE,&#x27;&#x24;&#x7b;ID_CARGA&#x7d;&#x27;&#x3a;&#x3a;INTEGER,2&#x3a;&#x3a;INTEGER&#x29; &#x3b;&#xa;&#xa;SELECT portal.atualizar_area_atuacao_osc&#x28;&#x27;&#x24;&#x7b;ETL&#x7d;&#x27;&#x3a;&#x3a;TEXT, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;id_osc&#x27;&#x3a;&#x3a;TEXT, &#x28;SELECT NOW&#x28;&#x29;&#x3a;&#x3a;TIMESTAMP&#x29;, &#xa;&#x27;&#x7b;&#x22;cd_area_atuacao&#x22;&#x3a;&#x22;4&#x22;&#x7d;&#x27;, FALSE, FALSE, TRUE, &#x27;&#x24;&#x7b;ID_CARGA&#x7d;&#x27;, 2&#x29;</sql>
+    <sql>SELECT portal.atualizar_certificado_osc&#x28;&#x27;&#x24;&#x7b;ETL&#x7d;&#x27;&#x3a;&#x3a;TEXT,&#x3f;&#x3a;&#x3a;NUMERIC, &#x27;id_osc&#x27;&#x3a;&#x3a;TEXT,&#x28;SELECT NOW&#x28;&#x29;&#x3a;&#x3a;TIMESTAMP&#x29;,&#xa;&#x27;&#x7b;&#x22;cd_certificado&#x22;&#x3a;&#x22;2&#x22;&#x7d;&#x27;&#x7c;&#x7c; jsonb_build_object&#x28;&#x27;dt_inicio_certificado&#x27;,&#x28;SELECT to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29;&#x3a;&#x3a;TEXT&#x29;&#x29; &#x7c;&#x7c; jsonb_build_object&#x28;&#x27;dt_fim_certificado&#x27;,&#x28;SELECT to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29;&#x3a;&#x3a;TEXT&#x29;&#x29;&#xa;, FALSE, FALSE, TRUE,&#x27;&#x24;&#x7b;ID_CARGA&#x7d;&#x27;&#x3a;&#x3a;INTEGER,2&#x3a;&#x3a;INTEGER&#x29; &#x3b;&#xa;&#xa;SELECT portal.atualizar_area_atuacao_osc&#x28;&#x27;&#x24;&#x7b;ETL&#x7d;&#x27;&#x3a;&#x3a;TEXT, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;id_osc&#x27;&#x3a;&#x3a;TEXT, &#x28;SELECT NOW&#x28;&#x29;&#x3a;&#x3a;TIMESTAMP&#x29;, &#xa;&#x27;&#x7b;&#x22;cd_area_atuacao&#x22;&#x3a;&#x22;4&#x22;&#x7d;&#x27;, FALSE, FALSE, TRUE, &#x27;&#x24;&#x7b;ID_CARGA&#x7d;&#x27;, 2&#x29;</sql>
     <set_params>N</set_params>
     <insert_field/>
     <update_field/>
