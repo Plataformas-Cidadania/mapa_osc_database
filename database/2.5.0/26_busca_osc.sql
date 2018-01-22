@@ -72,5 +72,3 @@ BEGIN
 			) DESC, vw_busca_osc.tx_nome_osc ASC ' || query_limit; 
 END; 
 $$ LANGUAGE 'plpgsql';
-
-SELECT * FROM portal.buscar_osc('10193', 10, 0, 0);
