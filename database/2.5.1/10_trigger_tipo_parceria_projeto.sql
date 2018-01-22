@@ -1,3 +1,8 @@
+CREATE UNIQUE INDEX ix_vw_osc_tipo_parceria_projeto
+    ON portal.vw_osc_tipo_parceria_projeto USING btree
+    (id_tipo_parceria_projeto ASC NULLS LAST)
+    TABLESPACE pg_default;
+
 -- Function: public.tipo_parceria_projeto()
 -- DROP FUNCTION public.tipo_parceria_projeto();
 CREATE OR REPLACE FUNCTION public.tipo_parceria_projeto() RETURNS 
