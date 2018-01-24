@@ -23,5 +23,3 @@ CREATE MATERIALIZED VIEW portal.vw_osc_fonte_recursos_projeto AS
 	WHERE 
 		tb_osc.bo_osc_ativa
 WITH DATA;
-
-ALTER TABLE portal.vw_osc_fonte_recursos_projeto OWNER TO postgres;
