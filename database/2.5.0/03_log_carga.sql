@@ -1,5 +1,6 @@
 -- Table: log.tb_log_carga
 
+DROP TABLE IF EXISTS log.tb_log_erro_carga;
 DROP TABLE IF EXISTS log.tb_log_carga;
 
 CREATE TABLE log.tb_log_carga
@@ -24,8 +25,6 @@ ALTER TABLE log.tb_log_carga
     OWNER to postgres;
 
 -- Table: log.tb_log_erro_carga
-
-DROP TABLE IF EXISTS log.tb_log_erro_carga;
 
 CREATE TABLE log.tb_log_erro_carga
 (
