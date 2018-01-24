@@ -1,3 +1,5 @@
+CREATE IF NOT EXISTS SCHEMA GRAPH;
+
 CREATE TABLE graph.tb_cnes(
 	id_cnes SERIAL NOT NULL,
 	nu_cnpj_requerente TEXT, 
