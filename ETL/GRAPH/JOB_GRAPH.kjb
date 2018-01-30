@@ -130,7 +130,7 @@
       <name>SQL</name>
       <description/>
       <type>SQL</type>
-      <sql>DROP SCHEMA IF EXISTS GRAPH CASCADE&#x3b;&#xd;&#xa;CREATE SCHEMA GRAPH&#x3b;</sql>
+      <sql>DROP SCHEMA IF EXISTS GRAPH CASCADE&#x3b;&#xd;&#xa;CREATE SCHEMA GRAPH&#x3b;&#xa;&#xa;CREATE TABLE graph.tb_cnes&#x28;&#xa;	id_cnes SERIAL NOT NULL,&#xa;	nu_cnpj_requerente TEXT, &#xa;	no_pessoa TEXT, &#xa;	no_regiao TEXT, &#xa;	sg_uf TEXT, &#xa;	no_municipio TEXT, &#xa;	a_lei TEXT, &#xa;	tempestividade TEXT, &#xa;	nu_sipar TEXT, &#xa;	dt_protocolo TEXT, &#xa;	dt_protocolo_menor TEXT, &#xa;	assunto TEXT, &#xa;	cebas_atual TEXT, &#xa;	inicio_validade_anterior TEXT, &#xa;	fim_validade_anterior TEXT, &#xa;	cnes TEXT, &#xa;	co_cnes TEXT, &#xa;	nu_cnpj TEXT, &#xa;	nu_cnpj_mantenedora TEXT, &#xa;	no_razao_social TEXT, &#xa;	no_fantasia TEXT, &#xa;	regiao TEXT, &#xa;	uf TEXT, &#xa;	co_municipio TEXT, &#xa;	municipio TEXT, &#xa;	no_logradouro TEXT, &#xa;	nu_endereco TEXT, &#xa;	no_complemento TEXT, &#xa;	no_bairro TEXT, &#xa;	co_cep TEXT, &#xa;	co_natureza_jur TEXT, &#xa;	ds_natureza_juridica TEXT, &#xa;	ds_retencao_tributo TEXT, &#xa;	ds_motivo_desab TEXT, &#xa;	co_natureza_organizacao TEXT, &#xa;	ds_natureza_organizacao TEXT, &#xa;	co_esfera_administrativa TEXT, &#xa;	ds_esfera_administrativa TEXT, &#xa;	ds_tipo_unidade TEXT, &#xa;	ds_gestao TEXT, &#xa;	st_registro_ativo TEXT, &#xa;	CONSTRAINT pk_tb_cnes PRIMARY KEY &#x28;id_cnes&#x29;&#xa;&#x29;&#x3b;&#xa;</sql>
       <useVariableSubstitution>F</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename/>

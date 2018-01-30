@@ -152,9 +152,6 @@
   <hop> <from>Select values</from><to>Select id_osc</to><enabled>Y</enabled> </hop>
   <hop> <from>Select id_osc</from><to>Merge Join</to><enabled>Y</enabled> </hop>
   <hop> <from>Replace in string</from><to>Merge Join</to><enabled>Y</enabled> </hop>
-  <hop> <from>Merge Join</from><to>Add constants</to><enabled>Y</enabled> </hop>
-  <hop> <from>Add constants</from><to>Filtrar certificados v&#xe1;lidos</to><enabled>Y</enabled> </hop>
-  <hop> <from>Filtrar certificados v&#xe1;lidos</from><to>Formatar JSON</to><enabled>Y</enabled> </hop>
   <hop> <from>CSV file input</from><to>Acertar nomes</to><enabled>Y</enabled> </hop>
   <hop> <from>Acertar nomes</from><to>Replace in string</to><enabled>Y</enabled> </hop>
   <hop> <from>Atualizar certificado</from><to>Set variable flag banco</to><enabled>Y</enabled> </hop>
@@ -169,6 +166,9 @@
   <hop> <from>Formatar JSON</from><to>Select values &#xe1;rea atua&#xe7;&#xe3;o</to><enabled>Y</enabled> </hop>
   <hop> <from>Formatar JSON</from><to>Select values localiza&#xe7;&#xe3;o</to><enabled>N</enabled> </hop>
   <hop> <from>Formatar JSON</from><to>Select values dados gerais</to><enabled>N</enabled> </hop>
+  <hop> <from>Filtrar certificados v&#xe1;lidos</from><to>Add constants</to><enabled>Y</enabled> </hop>
+  <hop> <from>Add constants</from><to>Formatar JSON</to><enabled>Y</enabled> </hop>
+  <hop> <from>Merge Join</from><to>Filtrar certificados v&#xe1;lidos</to><enabled>Y</enabled> </hop>
   </order>
   <step>
     <name>Acertar nomes</name>
@@ -364,8 +364,8 @@
     </fields>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>553</xloc>
-      <yloc>310</yloc>
+      <xloc>739</xloc>
+      <yloc>309</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -607,7 +607,7 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-<send_true_to>Formatar JSON</send_true_to>
+<send_true_to>Add constants</send_true_to>
 <send_false_to/>
     <compare>
 <condition>
@@ -645,8 +645,8 @@
     </compare>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>701</xloc>
-      <yloc>310</yloc>
+      <xloc>588</xloc>
+      <yloc>308</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -743,7 +743,7 @@
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>-</replace_string>
-        <replace_by_string>null</replace_by_string>
+        <replace_by_string>01&#x2f;01&#x2f;1900</replace_by_string>
         <set_empty_string>N</set_empty_string>
         <replace_field_by_string/>
         <whole_word>no</whole_word>
@@ -754,7 +754,7 @@
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>-</replace_string>
-        <replace_by_string>null</replace_by_string>
+        <replace_by_string>01&#x2f;01&#x2f;1900</replace_by_string>
         <set_empty_string>N</set_empty_string>
         <replace_field_by_string/>
         <whole_word>no</whole_word>
