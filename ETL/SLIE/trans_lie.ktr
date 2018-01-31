@@ -1181,14 +1181,49 @@
         <jsScript_name>Script 1</jsScript_name>
         <jsScript_script>var status_projeto = null;
 
-if(Situacao_Projeto == 'Em captacao'){
+if(Situacao_Projeto == 'Em Diligencia - Analise Tecnica (Reformulacao)')
+{
+	status_projeto = 1;
+}
+else if(Situacao_Projeto == 'Em Diligencia - Pre-Analise (Documental)')
+{
+	status_projeto = 1;
+}
+else if(Situacao_Projeto == 'Protocolado')
+{
+	status_projeto = 1;
+}
+else if(Situacao_Projeto == 'Em execucao')
+{
 	status_projeto = 2;
-}else if(Situacao_Projeto == 'Em execucao'){
+}
+else if(Situacao_Projeto == 'Em captacao')
+{
 	status_projeto = 2;
-}else if(Situacao_Projeto == 'Em TCE'){
+}
+else if(Situacao_Projeto == 'Em TCE')
+{
 	status_projeto = 3;
-}else if(Situacao_Projeto == 'Prestacao de Contas Final apresentada'){
+}
+else if(Situacao_Projeto == 'Prestacao de Contas Final apresentada')
+{
 	status_projeto = 3;
+}
+else if(Situacao_Projeto == 'Rejeitado pela Comissao Tecnica')
+{
+	status_projeto = 5;
+}
+else if(Situacao_Projeto == 'Rejeitado por nao cumprimento ao Art. 9o Dec. 6.180/07')
+{
+	status_projeto = 5;
+}
+else if(Situacao_Projeto == 'Arquivado - Período de Captacao Encerrado')
+{
+	status_projeto = 5;
+}
+else if(Situacao_Projeto == 'Arquivado - Solicitacao Proponente')
+{
+	status_projeto = 5;
 }
 
 var beneficiarios_projeto = parseInt(Numero_Beneficiarios_Diretos) + parseInt(Numero_Beneficiarios_Indiretos);</jsScript_script>
