@@ -2171,7 +2171,7 @@ var projeto_json = '{"tx_nome_projeto": ' + nome_projeto_final + ', "dt_data_ini
       <jsScript>
         <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>var cd_status_projeto = 4;
+        <jsScript_script>var cd_status_projeto = null;
 
 if(SIT_CONVENIO == 'Proposta/Plano de Trabalho Aprovado'){
 	cd_status_projeto = 1;
@@ -2188,37 +2188,37 @@ else if(SIT_CONVENIO == 'Assinado'){
 else if(SIT_CONVENIO == 'Assinado Pendente Registro TV Siafi'){
 	cd_status_projeto = 2;
 }
-else if('Inadimplente'){
+else if(SIT_CONVENIO == 'Inadimplente'){
 	cd_status_projeto = 3;
 }
-else if('Aguardando Prestação de Contas'){
+else if(SIT_CONVENIO == 'Aguardando Prestação de Contas'){
 	cd_status_projeto = 3;
 }
-else if('Prestação de Contas Aprovada'){
+else if(SIT_CONVENIO == 'Prestação de Contas Aprovada'){
 	cd_status_projeto = 3;
 }
-else if('Prestação de Contas Aprovada com Ressalvas'){
+else if(SIT_CONVENIO == 'Prestação de Contas Aprovada com Ressalvas'){
 	cd_status_projeto = 3;
 }
-else if('Prestação de Contas em Análise'){
+else if(SIT_CONVENIO == 'Prestação de Contas em Análise'){
 	cd_status_projeto = 3;
 }
-else if('Prestação de Contas em Complementação'){
+else if(SIT_CONVENIO == 'Prestação de Contas em Complementação'){
 	cd_status_projeto = 3;
 }
-else if('Prestação de Contas enviada para Análise'){
+else if(SIT_CONVENIO == 'Prestação de Contas enviada para Análise'){
 	cd_status_projeto = 3;
 }
-else if('Prestação de Contas Iniciada Por Antecipação'){
+else if(SIT_CONVENIO == 'Prestação de Contas Iniciada Por Antecipação'){
 	cd_status_projeto = 3;
 }
-else if('Prestação de Contas Rejeitada'){
+else if(SIT_CONVENIO == 'Prestação de Contas Rejeitada'){
 	cd_status_projeto = 3;
 }
-else if('Cancelado'){
+else if(SIT_CONVENIO == 'Cancelado'){
 	cd_status_projeto = 5;
 }
-else if('Convênio Anulado'){
+else if(SIT_CONVENIO == 'Convênio Anulado'){
 	cd_status_projeto = 5;
 }</jsScript_script>
       </jsScript>
