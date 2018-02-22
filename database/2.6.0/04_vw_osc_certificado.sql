@@ -12,8 +12,10 @@ SELECT
 	TO_CHAR(tb_certificado.dt_inicio_certificado, 'DD-MM-YYYY') AS dt_inicio_certificado,
 	TO_CHAR(tb_certificado.dt_fim_certificado, 'DD-MM-YYYY') AS dt_fim_certificado,
 	tb_certificado.cd_municipio,
+	(SELECT edmu_nm_municipio FROM spat.ed_municipio WHERE edmu_cd_municipio = tb_certificado.cd_municipio) AS tx_municipio,
 	tb_certificado.ft_municipio,
 	tb_certificado.cd_uf,
+	(SELECT eduf_nm_uf FROM spat.ed_uf WHERE eduf_cd_uf = tb_certificado.cd_uf) AS tx_uf,
 	tb_certificado.ft_uf,
 	tb_certificado.ft_certificado,
 	tb_certificado.bo_oficial

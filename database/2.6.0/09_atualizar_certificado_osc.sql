@@ -151,11 +151,13 @@ BEGIN
 	END LOOP;
 
 	IF delete_valido THEN
-		FOR objeto IN (SELECT * FROM osc.tb_certificado WHERE id_osc = osc AND id_certificado != ALL(dado_nao_delete))
+		FOR objeto IN (SELECT * FROM osc.tb_certificado WHERE id_osc = osc)
 		LOOP
-			IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_area_atuacao]) AS a) THEN
-				DELETE FROM osc.tb_certificado WHERE id_certificado = objeto.id_certificado;
-				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(objeto), null);
+			IF (objeto.id_certificado != ALL(dado_nao_delete)) OR (dado_nao_delete IS null) THEN
+				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_certificado]) AS a) THEN
+					DELETE FROM osc.tb_certificado WHERE id_certificado = objeto.id_certificado;
+					PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(objeto), null);
+				END IF;
 			END IF;
 		END LOOP;
 	END IF;
