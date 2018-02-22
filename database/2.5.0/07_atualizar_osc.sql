@@ -61,7 +61,7 @@ BEGIN
 			objeto.bo_osc_ativa
 		) RETURNING * INTO dado_posterior;
 
-		PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, null, row_to_json(dado_posterior),id_carga);
+		PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, dado_posterior.id_osc, fonte, data_atualizacao, null, row_to_json(dado_posterior),id_carga);
 
 	ELSE
 		dado_posterior := dado_anterior;
