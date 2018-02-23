@@ -63,6 +63,21 @@ BEGIN
 
 		END IF;
 
+		
+		IF objeto.cd_certificado = 7 THEN
+			objeto.cd_municipio = null;
+		ELSIF objeto.cd_certificado = 8 THEN
+			objeto.cd_uf = null;
+		ELSIF objeto.cd_certificado = 9 THEN
+			objeto.dt_inicio_certificado = null;
+			objeto.dt_fim_certificado = null;
+			objeto.cd_uf = null;
+			objeto.cd_uf = null;
+		ELSE
+			objeto.cd_municipio = null;
+			objeto.cd_uf = null;
+		END IF;
+
 		IF dado_anterior.id_certificado IS null THEN
 			INSERT INTO osc.tb_certificado (
 				id_osc,
@@ -146,6 +161,12 @@ BEGIN
 				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior),id_carga);
 			END IF;
 
+		END IF;
+		
+		IF objeto.cd_certificado = 9 THEN
+			dado_nao_delete := '{}';
+			dado_nao_delete := array_append(dado_nao_delete, dado_posterior.id_certificado);
+			EXIT;
 		END IF;
 
 	END LOOP;
