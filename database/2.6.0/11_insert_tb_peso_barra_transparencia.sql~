@@ -1,0 +1,15 @@
+INSERT INTO 
+	portal.tb_peso_barra_transparencia (id_peso_barra_transparencia, nome_secao, peso_secao)
+VALUES 
+	(1, 'Dados Gerais', 12.5), 
+	(2, 'Áreas de Atuação', 12.5), 
+	(3, 'Descrição', 12.5), 
+	(4, 'Títulos e Certificações', 12.5), 
+	(5, 'Relações de Trabalho e Governança', 12.5), 
+	(6, 'Espaços de Participação Social', 12.5), 
+	(7, 'Projetos, atividades e/ou programas', 12.5),
+	(8, 'Fonte de Recursos', 12.5);
+
+UPDATE portal.tb_peso_barra_transparencia 
+SET peso_secao = 12.5 
+WHERE condition;

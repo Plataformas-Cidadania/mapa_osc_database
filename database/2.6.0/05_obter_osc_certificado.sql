@@ -8,8 +8,10 @@ CREATE OR REPLACE FUNCTION portal.obter_osc_certificado(param TEXT) RETURNS TABL
 	dt_fim_certificado TEXT, 
 	ft_certificado TEXT, 
 	cd_municipio NUMERIC, 
+	tx_municipio CHARACTER VARYING, 
 	ft_municipio TEXT, 
 	cd_uf NUMERIC, 
+	tx_uf CHARACTER VARYING, 
 	ft_uf TEXT, 
 	bo_oficial BOOLEAN
 ) AS $$ 
@@ -23,8 +25,10 @@ BEGIN
 			vw_osc_certificado.dt_fim_certificado, 
 			vw_osc_certificado.ft_certificado, 
 			vw_osc_certificado.cd_municipio, 
+			vw_osc_certificado.tx_municipio, 
 			vw_osc_certificado.ft_municipio, 
 			vw_osc_certificado.cd_uf, 
+			vw_osc_certificado.tx_uf, 
 			vw_osc_certificado.ft_uf, 
 			vw_osc_certificado.bo_oficial 
 		FROM portal.vw_osc_certificado 

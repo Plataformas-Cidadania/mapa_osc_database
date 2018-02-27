@@ -63,6 +63,21 @@ BEGIN
 
 		END IF;
 
+		
+		IF objeto.cd_certificado = 7 THEN
+			objeto.cd_municipio = null;
+		ELSIF objeto.cd_certificado = 8 THEN
+			objeto.cd_uf = null;
+		ELSIF objeto.cd_certificado = 9 THEN
+			objeto.dt_inicio_certificado = null;
+			objeto.dt_fim_certificado = null;
+			objeto.cd_uf = null;
+			objeto.cd_uf = null;
+		ELSE
+			objeto.cd_municipio = null;
+			objeto.cd_uf = null;
+		END IF;
+
 		IF dado_anterior.id_certificado IS null THEN
 			INSERT INTO osc.tb_certificado (
 				id_osc,
@@ -147,15 +162,23 @@ BEGIN
 			END IF;
 
 		END IF;
+		
+		IF objeto.cd_certificado = 9 THEN
+			dado_nao_delete := '{}';
+			dado_nao_delete := array_append(dado_nao_delete, dado_posterior.id_certificado);
+			EXIT;
+		END IF;
 
 	END LOOP;
 
 	IF delete_valido THEN
-		FOR objeto IN (SELECT * FROM osc.tb_certificado WHERE id_osc = osc AND id_certificado != ALL(dado_nao_delete))
+		FOR objeto IN (SELECT * FROM osc.tb_certificado WHERE id_osc = osc)
 		LOOP
-			IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_area_atuacao]) AS a) THEN
-				DELETE FROM osc.tb_certificado WHERE id_certificado = objeto.id_certificado;
-				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(objeto), null);
+			IF (objeto.id_certificado != ALL(dado_nao_delete)) OR (dado_nao_delete IS null) THEN
+				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_certificado]) AS a) THEN
+					DELETE FROM osc.tb_certificado WHERE id_certificado = objeto.id_certificado;
+					PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(objeto), null);
+				END IF;
 			END IF;
 		END LOOP;
 	END IF;
