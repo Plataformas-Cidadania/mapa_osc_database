@@ -1,3 +1,0 @@
-UPDATE portal.tb_peso_barra_transparencia 
-SET peso_secao = 12.5 
-WHERE condition;
