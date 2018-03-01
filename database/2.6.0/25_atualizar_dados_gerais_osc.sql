@@ -15,6 +15,7 @@ DECLARE
 	osc INTEGER;
 
 BEGIN
+	RAISE NOTICE '%', nome_tabela;
 	nome_tabela := 'osc.atualizar_dados_gerais';
 	tipo_identificador := lower(tipo_identificador);
 
@@ -55,10 +56,10 @@ BEGIN
 			ft_nome_fantasia_osc,
 			im_logo,
 			ft_logo,
-			tx_missao_osc,
-			ft_missao_osc,
-			tx_visao_osc,
-			ft_visao_osc,
+			--tx_missao_osc,
+			--ft_missao_osc,
+			--tx_visao_osc,
+			--ft_visao_osc,
 			dt_fundacao_osc,
 			ft_fundacao_osc,
 			dt_ano_cadastro_cnpj,
@@ -70,12 +71,13 @@ BEGIN
 			ft_resumo_osc,
 			cd_situacao_imovel_osc,
 			ft_situacao_imovel_osc,
-			tx_link_estatuto_osc,
-			ft_link_estatuto_osc,
-			tx_historico,
-			ft_historico,
-			tx_finalidades_estatutarias,
-			ft_finalidades_estatutarias,
+			--tx_link_estatuto_osc,
+			--bo_nao_possui_link_estatuto_osc,
+			--ft_link_estatuto_osc,
+			--tx_historico,
+			--ft_historico,
+			--tx_finalidades_estatutarias,
+			--ft_finalidades_estatutarias,
 			tx_link_relatorio_auditoria,
 			ft_link_relatorio_auditoria,
 			tx_link_demonstracao_contabil,
@@ -94,10 +96,10 @@ BEGIN
 			fonte_dados.nome_fonte,
 			objeto.im_logo,
 			fonte_dados.nome_fonte,
-			objeto.tx_missao_osc,
-			fonte_dados.nome_fonte,
-			objeto.tx_visao_osc,
-			fonte_dados.nome_fonte,
+			--objeto.tx_missao_osc,
+			--fonte_dados.nome_fonte,
+			--objeto.tx_visao_osc,
+			--fonte_dados.nome_fonte,
 			objeto.dt_fundacao_osc,
 			fonte_dados.nome_fonte,
 			objeto.dt_ano_cadastro_cnpj,
@@ -109,12 +111,13 @@ BEGIN
 			fonte_dados.nome_fonte,
 			objeto.cd_situacao_imovel_osc,
 			fonte_dados.nome_fonte,
-			objeto.tx_link_estatuto_osc,
-			fonte_dados.nome_fonte,
-			objeto.tx_historico,
-			fonte_dados.nome_fonte,
-			objeto.tx_finalidades_estatutarias,
-			fonte_dados.nome_fonte,
+			--objeto.tx_link_estatuto_osc,
+			--objeto.bo_nao_possui_link_estatuto_osc,
+			--fonte_dados.nome_fonte,
+			--objeto.tx_historico,
+			--fonte_dados.nome_fonte,
+			--objeto.tx_finalidades_estatutarias,
+			--fonte_dados.nome_fonte,
 			objeto.tx_link_relatorio_auditoria,
 			fonte_dados.nome_fonte,
 			objeto.tx_link_demonstracao_contabil,
@@ -159,46 +162,46 @@ BEGIN
 			flag_update := true;
 		END IF;
 
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_missao_osc::TEXT, dado_anterior.ft_missao_osc, objeto.tx_missao_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
-			dado_posterior.tx_missao_osc := objeto.tx_missao_osc;
-			dado_posterior.ft_missao_osc := fonte_dados.nome_fonte;
-			flag_update := true;
-		END IF;
+		--IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_missao_osc::TEXT, dado_anterior.ft_missao_osc, objeto.tx_missao_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+		--	dado_posterior.tx_missao_osc := objeto.tx_missao_osc;
+		--	dado_posterior.ft_missao_osc := fonte_dados.nome_fonte;
+		--	flag_update := true;
+		--END IF;
 
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_visao_osc::TEXT, dado_anterior.ft_visao_osc, objeto.tx_visao_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
-			dado_posterior.tx_visao_osc := objeto.tx_visao_osc;
-			dado_posterior.ft_visao_osc := fonte_dados.nome_fonte;
-			flag_update := true;
-		END IF;
-
+		--IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_visao_osc::TEXT, dado_anterior.ft_visao_osc, objeto.tx_visao_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+		--	dado_posterior.tx_visao_osc := objeto.tx_visao_osc;
+		--	dado_posterior.ft_visao_osc := fonte_dados.nome_fonte;
+		--	flag_update := true;
+		--END IF;
+		
 		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.dt_fundacao_osc::TEXT, dado_anterior.ft_fundacao_osc, objeto.dt_fundacao_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.dt_fundacao_osc := objeto.dt_fundacao_osc;
 			dado_posterior.ft_fundacao_osc := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
-
+		
 		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.dt_ano_cadastro_cnpj::TEXT, dado_anterior.ft_ano_cadastro_cnpj, objeto.dt_ano_cadastro_cnpj::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.dt_ano_cadastro_cnpj := objeto.dt_ano_cadastro_cnpj;
 			dado_posterior.ft_ano_cadastro_cnpj := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
-
+		
 		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.bo_nao_possui_sigla_osc::TEXT, dado_anterior.ft_sigla_osc, objeto.bo_nao_possui_sigla_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			IF (objeto.bo_nao_possui_sigla_osc IS true) THEN
 				dado_posterior.tx_sigla_osc := null;
+				dado_posterior.bo_nao_possui_sigla_osc := objeto.bo_nao_possui_sigla_osc;
+				dado_posterior.ft_sigla_osc := fonte_dados.nome_fonte;
+			ELSE 
+				IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_sigla_osc::TEXT, dado_anterior.ft_sigla_osc, objeto.tx_sigla_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+					dado_posterior.tx_sigla_osc := objeto.tx_sigla_osc;
+					dado_posterior.bo_nao_possui_sigla_osc := false;
+					dado_posterior.ft_sigla_osc := fonte_dados.nome_fonte;
+					flag_update := true;
+				END IF;
 			END IF;
-			dado_posterior.bo_nao_possui_sigla_osc := objeto.bo_nao_possui_sigla_osc;
-			dado_posterior.ft_sigla_osc := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
-
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_sigla_osc::TEXT, dado_anterior.ft_sigla_osc, objeto.tx_sigla_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
-			dado_posterior.tx_sigla_osc := objeto.tx_sigla_osc;
-			dado_posterior.tx_sigla_osc := false;
-			dado_posterior.ft_sigla_osc := fonte_dados.nome_fonte;
-			flag_update := true;
-		END IF;
-
+		
 		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_resumo_osc::TEXT, dado_anterior.ft_resumo_osc, objeto.tx_resumo_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.tx_resumo_osc := objeto.tx_resumo_osc;
 			dado_posterior.ft_resumo_osc := fonte_dados.nome_fonte;
@@ -210,24 +213,34 @@ BEGIN
 			dado_posterior.ft_situacao_imovel_osc := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
+		
+		--IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.bo_nao_possui_link_estatuto_osc::TEXT, dado_anterior.ft_sigla_osc, objeto.bo_nao_possui_link_estatuto_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+		--	IF (objeto.bo_nao_possui_link_estatuto_osc IS true) THEN
+		--		dado_posterior.tx_link_estatuto_osc := null;
+		--		dado_posterior.bo_nao_possui_link_estatuto_osc := objeto.bo_nao_possui_link_estatuto_osc;
+		--		dado_posterior.ft_sigla_osc := fonte_dados.nome_fonte;
+		--	ELSE 
+		--		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_link_estatuto_osc::TEXT, dado_anterior.ft_sigla_osc, objeto.tx_link_estatuto_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+		--			dado_posterior.tx_link_estatuto_osc := objeto.tx_link_estatuto_osc;
+		--			dado_posterior.bo_nao_possui_link_estatuto_osc := false;
+		--			dado_posterior.ft_sigla_osc := fonte_dados.nome_fonte;
+		--			flag_update := true;
+		--		END IF;
+		--	END IF;
+		--	flag_update := true;
+		--END IF;
+		
+		--IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_historico::TEXT, dado_anterior.ft_historico, objeto.tx_historico::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+		--	dado_posterior.tx_historico := objeto.tx_historico;
+		--	dado_posterior.ft_historico := fonte_dados.nome_fonte;
+		--	flag_update := true;
+		--END IF;
 
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_link_estatuto_osc::TEXT, dado_anterior.ft_link_estatuto_osc, objeto.tx_link_estatuto_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
-			dado_posterior.tx_link_estatuto_osc := objeto.tx_link_estatuto_osc;
-			dado_posterior.ft_link_estatuto_osc := fonte_dados.nome_fonte;
-			flag_update := true;
-		END IF;
-
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_historico::TEXT, dado_anterior.ft_historico, objeto.tx_historico::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
-			dado_posterior.tx_historico := objeto.tx_historico;
-			dado_posterior.ft_historico := fonte_dados.nome_fonte;
-			flag_update := true;
-		END IF;
-
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_finalidades_estatutarias::TEXT, dado_anterior.ft_finalidades_estatutarias, objeto.tx_finalidades_estatutarias::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
-			dado_posterior.tx_finalidades_estatutarias := objeto.tx_finalidades_estatutarias;
-			dado_posterior.ft_finalidades_estatutarias := fonte_dados.nome_fonte;
-			flag_update := true;
-		END IF;
+		--IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_finalidades_estatutarias::TEXT, dado_anterior.ft_finalidades_estatutarias, objeto.tx_finalidades_estatutarias::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+		--	dado_posterior.tx_finalidades_estatutarias := objeto.tx_finalidades_estatutarias;
+		--	dado_posterior.ft_finalidades_estatutarias := fonte_dados.nome_fonte;
+		--	flag_update := true;
+		--END IF;
 
 		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_link_relatorio_auditoria::TEXT, dado_anterior.ft_link_relatorio_auditoria, objeto.tx_link_relatorio_auditoria::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.tx_link_relatorio_auditoria := objeto.tx_link_relatorio_auditoria;
@@ -259,26 +272,28 @@ BEGIN
 				ft_nome_fantasia_osc = dado_posterior.ft_nome_fantasia_osc,
 				im_logo = dado_posterior.im_logo,
 				ft_logo = dado_posterior.ft_logo,
-				tx_missao_osc = dado_posterior.tx_missao_osc,
-				ft_missao_osc = dado_posterior.ft_missao_osc,
-				tx_visao_osc = dado_posterior.tx_visao_osc,
-				ft_visao_osc = dado_posterior.ft_visao_osc,
+				--tx_missao_osc = dado_posterior.tx_missao_osc,
+				--ft_missao_osc = dado_posterior.ft_missao_osc,
+				--tx_visao_osc = dado_posterior.tx_visao_osc,
+				--ft_visao_osc = dado_posterior.ft_visao_osc,
 				dt_fundacao_osc = dado_posterior.dt_fundacao_osc,
 				ft_fundacao_osc = dado_posterior.ft_fundacao_osc,
 				dt_ano_cadastro_cnpj = dado_posterior.dt_ano_cadastro_cnpj,
 				ft_ano_cadastro_cnpj = dado_posterior.ft_ano_cadastro_cnpj,
 				tx_sigla_osc = dado_posterior.tx_sigla_osc,
+				bo_nao_possui_sigla_osc = dado_posterior.bo_nao_possui_sigla_osc,
 				ft_sigla_osc = dado_posterior.ft_sigla_osc,
 				tx_resumo_osc = dado_posterior.tx_resumo_osc,
 				ft_resumo_osc = dado_posterior.ft_resumo_osc,
 				cd_situacao_imovel_osc = dado_posterior.cd_situacao_imovel_osc,
 				ft_situacao_imovel_osc = dado_posterior.ft_situacao_imovel_osc,
-				tx_link_estatuto_osc = dado_posterior.tx_link_estatuto_osc,
-				ft_link_estatuto_osc = dado_posterior.ft_link_estatuto_osc,
-				tx_historico = dado_posterior.tx_historico,
-				ft_historico = dado_posterior.ft_historico,
-				tx_finalidades_estatutarias = dado_posterior.tx_finalidades_estatutarias,
-				ft_finalidades_estatutarias = dado_posterior.ft_finalidades_estatutarias,
+				--tx_link_estatuto_osc = dado_posterior.tx_link_estatuto_osc,
+				--bo_nao_possui_link_estatuto_osc = dado_posterior.bo_nao_possui_link_estatuto_osc,
+				--ft_link_estatuto_osc = dado_posterior.ft_link_estatuto_osc,
+				--tx_historico = dado_posterior.tx_historico,
+				--ft_historico = dado_posterior.ft_historico,
+				--tx_finalidades_estatutarias = dado_posterior.tx_finalidades_estatutarias,
+				--ft_finalidades_estatutarias = dado_posterior.ft_finalidades_estatutarias,
 				tx_link_relatorio_auditoria = dado_posterior.tx_link_relatorio_auditoria,
 				ft_link_relatorio_auditoria = dado_posterior.ft_link_relatorio_auditoria,
 				tx_link_demonstracao_contabil = dado_posterior.tx_link_demonstracao_contabil,
