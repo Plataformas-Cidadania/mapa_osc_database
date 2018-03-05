@@ -72,8 +72,7 @@ BEGIN
 				objeto.cd_fonte_recursos_projeto,
 				objeto.cd_origem_fonte_recursos_projeto,
 				fonte_dados.nome_fonte,
-                objeto.tx_tipo_parceria_outro,
-				fonte_dados.nome_fonte,
+				objeto.tx_tipo_parceria_outro,
 				objeto.tx_orgao_concedente,
 				fonte_dados.nome_fonte
 			) RETURNING * INTO dado_posterior;
