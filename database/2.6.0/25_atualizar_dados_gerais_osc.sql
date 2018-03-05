@@ -15,8 +15,7 @@ DECLARE
 	osc INTEGER;
 
 BEGIN
-	RAISE NOTICE '%', nome_tabela;
-	nome_tabela := 'osc.atualizar_dados_gerais';
+	nome_tabela := 'osc.tb_dados_gerais';
 	tipo_identificador := lower(tipo_identificador);
 
 	SELECT INTO fonte_dados * FROM portal.verificar_fonte(fonte);

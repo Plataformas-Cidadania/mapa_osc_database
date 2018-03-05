@@ -22,11 +22,7 @@ BEGIN
 	VALUES 
 		(
 			idosc, 
-			(
-				SELECT cd_origem_fonte_recursos_osc 
-				FROM syst.dc_fonte_recursos_osc 
-				WHERE cd_fonte_recursos_osc = cdfonterecursos OR cd_origem_fonte_recursos_osc = cdorigemrecursos
-			), 
+			COALESCE(cdorigemrecursos, (SELECT cd_origem_fonte_recursos_osc FROM syst.dc_fonte_recursos_osc WHERE cd_fonte_recursos_osc = cdfonterecursos)), 
 			cdfonterecursos, 
 			ftfonterecursos, 
 			dtanorecursos, 
