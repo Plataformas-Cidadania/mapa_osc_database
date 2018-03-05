@@ -97,7 +97,7 @@ BEGIN
 				flag_update := true;
 			END IF;
 
-			IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_tipo_parceria_outro::TEXT, objeto.tx_tipo_parceria_outro::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+			IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_tipo_parceria_outro::TEXT, null, objeto.tx_tipo_parceria_outro::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 				dado_posterior.tx_tipo_parceria_outro := objeto.tx_tipo_parceria_outro;
 				flag_update := true;
 			END IF;
