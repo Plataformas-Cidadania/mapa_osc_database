@@ -68,16 +68,8 @@ BEGIN
 		ELSIF tipo_busca = 2 THEN
 			SELECT INTO dado_anterior *
 			FROM osc.tb_recursos_osc
-			WHERE (
-				(
-					cd_origem_fonte_recursos_osc = objeto.cd_origem_fonte_recursos_osc 
-					AND cd_fonte_recursos_osc = objeto.cd_fonte_recursos_osc
-				) 
-				OR (
-					cd_origem_fonte_recursos_osc = objeto.cd_origem_fonte_recursos_osc 
-					AND cd_fonte_recursos_osc IS null
-				)
-			)
+			WHERE COALESCE(cd_origem_fonte_recursos_osc::TEXT, '') = COALESCE(objeto.cd_origem_fonte_recursos_osc::TEXT, '') 
+			AND COALESCE(cd_fonte_recursos_osc::TEXT, '') = COALESCE(objeto.cd_fonte_recursos_osc::TEXT, '') 
 			AND dt_ano_recursos_osc = objeto.dt_ano_recursos_osc
 			AND id_osc = osc;
 
@@ -168,7 +160,7 @@ BEGIN
 		IF lista_nao_possui IS NOT null THEN
 			FOREACH nao_possui IN ARRAY lista_nao_possui
 			LOOP
-				FOR objeto IN (SELECT * FROM osc.tb_recursos_osc WHERE bo_nao_possui = false AND cd_origem_fonte_recursos_osc = (nao_possui->>'origem')::INTEGER AND dt_ano_recursos_osc = (nao_possui->>'ano')::TIMESTAMP)
+				FOR objeto IN (SELECT * FROM osc.tb_recursos_osc WHERE bo_nao_possui = false AND COALESCE(cd_origem_fonte_recursos_osc::TEXT, '') = (nao_possui->>'origem')::TEXT AND dt_ano_recursos_osc = (nao_possui->>'ano')::TIMESTAMP)
 				LOOP
 					IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_fonte_recursos_osc, objeto.ft_ano_recursos_osc, objeto.ft_valor_recursos_osc, objeto.ft_nao_possui]) AS a) THEN
 						DELETE FROM osc.tb_recursos_osc WHERE id_recursos_osc = objeto.id_recursos_osc;
