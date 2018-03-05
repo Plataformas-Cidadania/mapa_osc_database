@@ -53,10 +53,10 @@ BEGIN
 		IF(objeto.bo_nao_possui IS true) THEN
 			objeto.cd_fonte_recursos_osc := null;
 			objeto.nr_valor_recursos_osc := null;
-			
+
 			lista_nao_possui := array_append(lista_nao_possui, ('{"origem": "' || COALESCE(objeto.cd_origem_fonte_recursos_osc::TEXT, '') || '", "ano": "' || COALESCE(objeto.dt_ano_recursos_osc::TEXT, '') || '"}')::JSONB);
 		END IF;
-		
+
 		dado_anterior := null;
 
 		IF tipo_busca = 1 THEN
@@ -68,9 +68,9 @@ BEGIN
 		ELSIF tipo_busca = 2 THEN
 			SELECT INTO dado_anterior *
 			FROM osc.tb_recursos_osc
-			WHERE COALESCE(cd_origem_fonte_recursos_osc::TEXT, '') = COALESCE(objeto.cd_origem_fonte_recursos_osc::TEXT, '') 
-			AND COALESCE(cd_fonte_recursos_osc::TEXT, '') = COALESCE(objeto.cd_fonte_recursos_osc::TEXT, '') 
-			AND dt_ano_recursos_osc = objeto.dt_ano_recursos_osc
+			WHERE cd_origem_fonte_recursos_osc = objeto.cd_origem_fonte_recursos_osc::INTEGER 
+			AND cd_fonte_recursos_osc = objeto.cd_fonte_recursos_osc::INTEGER 
+			AND dt_ano_recursos_osc = objeto.dt_ano_recursos_osc::TIMESTAMP 
 			AND id_osc = osc;
 
 		ELSE
@@ -105,7 +105,7 @@ BEGIN
 
 			dado_nao_delete := array_append(dado_nao_delete, dado_posterior.id_recursos_osc);
 
-			PERFORM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, null, row_to_json(dado_posterior),id_carga);
+			PERFORM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior), id_carga);
 
 		ELSE
 			dado_posterior := dado_anterior;
@@ -149,7 +149,7 @@ BEGIN
 					ft_nao_possui = dado_posterior.ft_nao_possui
 				WHERE id_recursos_osc = dado_posterior.id_recursos_osc;
 
-				PERFORM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior),id_carga);
+				PERFORM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior), id_carga);
 			END IF;
 
 		END IF;
@@ -162,27 +162,23 @@ BEGIN
 			LOOP
 				FOR objeto IN (SELECT * FROM osc.tb_recursos_osc WHERE bo_nao_possui = false AND COALESCE(cd_origem_fonte_recursos_osc::TEXT, '') = (nao_possui->>'origem')::TEXT AND dt_ano_recursos_osc = (nao_possui->>'ano')::TIMESTAMP)
 				LOOP
-					IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_fonte_recursos_osc, objeto.ft_ano_recursos_osc, objeto.ft_valor_recursos_osc, objeto.ft_nao_possui]) AS a) THEN
-						DELETE FROM osc.tb_recursos_osc WHERE id_recursos_osc = objeto.id_recursos_osc;
-						PERFORM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(objeto), null);
-					ELSE
+					IF(SELECT a.flag IS true FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_fonte_recursos_osc, objeto.ft_ano_recursos_osc, objeto.ft_valor_recursos_osc, objeto.ft_nao_possui]) AS a) THEN 
 						RAISE EXCEPTION 'nao_possui_invalido';
 					END IF;
 				END LOOP;
 			END LOOP;
 		END IF;
-		
 		FOR objeto IN (SELECT * FROM osc.tb_recursos_osc WHERE id_recursos_osc != ALL(dado_nao_delete))
 		LOOP
 			IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_fonte_recursos_osc, objeto.ft_ano_recursos_osc, objeto.ft_valor_recursos_osc, objeto.ft_nao_possui]) AS a) THEN
 				DELETE FROM osc.tb_recursos_osc WHERE id_recursos_osc = objeto.id_recursos_osc;
-				PERFORM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(objeto), null);
+				PERFORM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior), id_carga);
 			END IF;
 		END LOOP;
 	END IF;
 
 	flag := true;
-	mensagem := 'Área de atuação de OSC atualizado.';
+	mensagem := 'Fonte de recursos de OSC atualizado.';
 
 	RETURN NEXT;
 

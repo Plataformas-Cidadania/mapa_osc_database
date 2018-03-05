@@ -64,7 +64,7 @@ BEGIN
 
 	IF erro_log THEN 
 		INSERT INTO log.tb_log_erro_carga (cd_identificador_osc, cd_status, tx_mensagem, dt_carregamento_dados, id_carga)
-		VALUES (osc, 2, mensagem_log, data_operacao, id_carga);
+		VALUES (osc::NUMERIC, 2, mensagem_log::TEXT, data_operacao::TIMESTAMP, id_carga::INTEGER);
 	END IF;
 
 	RETURN NEXT;
