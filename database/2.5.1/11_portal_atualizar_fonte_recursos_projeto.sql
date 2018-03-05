@@ -98,12 +98,6 @@ BEGIN
 				flag_update := true;
 			END IF;
 
-			IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.cd_tipo_parceria::TEXT, dado_anterior.ft_tipo_parceria, objeto.cd_tipo_parceria::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
-				dado_posterior.cd_tipo_parceria := objeto.cd_tipo_parceria;
-				dado_posterior.ft_tipo_parceria := fonte_dados.nome_fonte;
-				flag_update := true;
-			END IF;
-
 			IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_tipo_parceria_outro::TEXT, dado_anterior.ft_tipo_parceria, objeto.tx_tipo_parceria_outro::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 				dado_posterior.tx_tipo_parceria_outro := objeto.tx_tipo_parceria_outro;
 				dado_posterior.ft_tipo_parceria := fonte_dados.nome_fonte;
@@ -121,9 +115,7 @@ BEGIN
 				SET cd_fonte_recursos_projeto = dado_posterior.cd_fonte_recursos_projeto,
 					cd_origem_fonte_recursos_projeto = dado_posterior.cd_origem_fonte_recursos_projeto,
 					ft_fonte_recursos_projeto = dado_posterior.ft_fonte_recursos_projeto,
-					cd_tipo_parceria = dado_posterior.cd_tipo_parceria,
 					tx_tipo_parceria_outro = dado_posterior.tx_tipo_parceria_outro,
-					ft_tipo_parceria = dado_posterior.ft_tipo_parceria,
 					tx_orgao_concedente = dado_posterior.tx_orgao_concedente,
 					ft_orgao_concedente = dado_posterior.ft_orgao_concedente
 				WHERE id_fonte_recursos_projeto = dado_posterior.id_fonte_recursos_projeto;
