@@ -157,17 +157,6 @@ BEGIN
 	END LOOP;
 
 	IF delete_valido THEN
-		IF lista_nao_possui IS NOT null THEN
-			FOREACH nao_possui IN ARRAY lista_nao_possui
-			LOOP
-				FOR objeto IN (SELECT * FROM osc.tb_recursos_osc WHERE bo_nao_possui = false AND COALESCE(cd_origem_fonte_recursos_osc::TEXT, '') = (nao_possui->>'origem')::TEXT AND dt_ano_recursos_osc = (nao_possui->>'ano')::TIMESTAMP)
-				LOOP
-					IF(SELECT a.flag IS true FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_fonte_recursos_osc, objeto.ft_ano_recursos_osc, objeto.ft_valor_recursos_osc, objeto.ft_nao_possui]) AS a) THEN 
-						RAISE EXCEPTION 'nao_possui_invalido';
-					END IF;
-				END LOOP;
-			END LOOP;
-		END IF;
 		FOR objeto IN (SELECT * FROM osc.tb_recursos_osc WHERE id_recursos_osc != ALL(dado_nao_delete))
 		LOOP
 			IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_fonte_recursos_osc, objeto.ft_ano_recursos_osc, objeto.ft_valor_recursos_osc, objeto.ft_nao_possui]) AS a) THEN
@@ -175,6 +164,21 @@ BEGIN
 				PERFORM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior), id_carga);
 			END IF;
 		END LOOP;
+
+		IF lista_nao_possui IS NOT null THEN
+			FOREACH nao_possui IN ARRAY lista_nao_possui
+			LOOP
+				IF((nao_possui->>'origem') <> '') THEN 
+					IF(SELECT EXISTS(SELECT * FROM osc.tb_recursos_osc WHERE id_osc = osc AND bo_nao_possui = false AND cd_origem_fonte_recursos_osc = (nao_possui->>'origem')::TEXT AND dt_ano_recursos_osc = (nao_possui->>'ano')::TIMESTAMP)) THEN 
+						RAISE EXCEPTION 'nao_possui_invalido';
+					END IF;
+				ELSE
+					IF(SELECT EXISTS(SELECT * FROM osc.tb_recursos_osc WHERE id_osc = osc AND bo_nao_possui = false AND dt_ano_recursos_osc = (nao_possui->>'ano')::TIMESTAMP)) THEN 
+						RAISE EXCEPTION 'nao_possui_invalido';
+					END IF;
+				END IF;
+			END LOOP;
+		END IF;
 	END IF;
 
 	flag := true;
