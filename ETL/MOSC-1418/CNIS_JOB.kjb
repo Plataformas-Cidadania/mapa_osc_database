@@ -4,12 +4,48 @@
     <description/>
     <extended_description/>
     <job_version/>
+    <job_status>0</job_status>
   <directory>&#x2f;</directory>
   <created_user>-</created_user>
   <created_date>2017&#x2f;10&#x2f;31 09&#x3a;58&#x3a;49.511</created_date>
   <modified_user>-</modified_user>
   <modified_date>2017&#x2f;10&#x2f;31 09&#x3a;58&#x3a;49.511</modified_date>
     <parameters>
+        <parameter>
+            <name>ID_CARGA</name>
+            <default_value/>
+            <description/>
+        </parameter>
+        <parameter>
+            <name>db_host</name>
+            <default_value/>
+            <description/>
+        </parameter>
+        <parameter>
+            <name>db_name</name>
+            <default_value/>
+            <description/>
+        </parameter>
+        <parameter>
+            <name>db_pass</name>
+            <default_value/>
+            <description/>
+        </parameter>
+        <parameter>
+            <name>db_port</name>
+            <default_value/>
+            <description/>
+        </parameter>
+        <parameter>
+            <name>db_user</name>
+            <default_value/>
+            <description/>
+        </parameter>
+        <parameter>
+            <name>folder_path</name>
+            <default_value/>
+            <description/>
+        </parameter>
     </parameters>
   <connection>
     <name>desenv</name>
