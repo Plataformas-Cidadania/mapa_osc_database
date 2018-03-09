@@ -152,8 +152,18 @@ BEGIN
 		END IF;
 		
 		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.bo_nao_possui_sigla_osc::TEXT, dado_anterior.ft_sigla_osc, objeto.bo_nao_possui_sigla_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
-			dado_posterior.bo_nao_possui_sigla_osc := objeto.bo_nao_possui_sigla_osc;
-			dado_posterior.ft_sigla_osc := fonte_dados.nome_fonte;
+			IF (objeto.bo_nao_possui_sigla_osc IS true) THEN
+				dado_posterior.tx_sigla_osc := null;
+				dado_posterior.bo_nao_possui_sigla_osc := objeto.bo_nao_possui_sigla_osc;
+				dado_posterior.ft_sigla_osc := fonte_dados.nome_fonte;
+			ELSE 
+				IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_sigla_osc::TEXT, dado_anterior.ft_sigla_osc, objeto.tx_sigla_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+					dado_posterior.tx_sigla_osc := objeto.tx_sigla_osc;
+					dado_posterior.bo_nao_possui_sigla_osc := false;
+					dado_posterior.ft_sigla_osc := fonte_dados.nome_fonte;
+					flag_update := true;
+				END IF;
+			END IF;
 			flag_update := true;
 		END IF;
 		
@@ -218,7 +228,7 @@ BEGIN
 				ft_nome_responsavel_legal = dado_posterior.ft_nome_responsavel_legal
 			WHERE id_osc = osc;
 			
-			PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior), id_carga);
+			PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior),id_carga);
 			
 		END IF;
 	END IF;
