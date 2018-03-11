@@ -47,7 +47,7 @@ BEGIN
 
 	FOR objeto IN (SELECT * FROM jsonb_populate_recordset(null::osc.tb_recursos_osc, json))
 	LOOP
-		objeto.cd_origem_fonte_recursos_osc := COALESCE((SELECT cd_origem_fonte_recursos_osc FROM syst.dc_fonte_recursos_osc WHERE cd_fonte_recursos_osc = objeto.cd_fonte_recursos_osc), objeto.cd_origem_fonte_recursos_osc);
+		objeto.cd_origem_fonte_recursos_osc := COALESCE((SELECT cd_origem_fonte_recursos_osc FROM syst.dc_fonte_recursos_osc WHERE cd_fonte_recursos_osc = objeto.cd_fonte_recursos_osc::INTEGER), objeto.cd_origem_fonte_recursos_osc);
 		objeto.bo_nao_possui := COALESCE(objeto.bo_nao_possui, false);
 
 		IF(objeto.bo_nao_possui IS true) THEN
@@ -118,6 +118,12 @@ BEGIN
 				flag_update := true;
 			END IF;
 
+			IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.cd_fonte_recursos_osc::TEXT, dado_anterior.ft_fonte_recursos_osc, objeto.cd_fonte_recursos_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+				dado_posterior.cd_fonte_recursos_osc := objeto.cd_fonte_recursos_osc;
+				dado_posterior.ft_fonte_recursos_osc := fonte_dados.nome_fonte;
+				flag_update := true;
+			END IF;
+
 			IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.dt_ano_recursos_osc::TEXT, dado_anterior.ft_ano_recursos_osc, objeto.dt_ano_recursos_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 				dado_posterior.dt_ano_recursos_osc := objeto.dt_ano_recursos_osc;
 				dado_posterior.ft_ano_recursos_osc := fonte_dados.nome_fonte;
@@ -169,7 +175,7 @@ BEGIN
 			FOREACH nao_possui IN ARRAY lista_nao_possui
 			LOOP
 				IF((nao_possui->>'origem') <> '') THEN 
-					IF(SELECT EXISTS(SELECT * FROM osc.tb_recursos_osc WHERE id_osc = osc AND bo_nao_possui = false AND cd_origem_fonte_recursos_osc = (nao_possui->>'origem')::TEXT AND dt_ano_recursos_osc = (nao_possui->>'ano')::TIMESTAMP)) THEN 
+					IF(SELECT EXISTS(SELECT * FROM osc.tb_recursos_osc WHERE id_osc = osc AND bo_nao_possui = false AND cd_origem_fonte_recursos_osc = (nao_possui->>'origem')::INTEGER AND dt_ano_recursos_osc = (nao_possui->>'ano')::TIMESTAMP)) THEN 
 						RAISE EXCEPTION 'nao_possui_invalido';
 					END IF;
 				ELSE
