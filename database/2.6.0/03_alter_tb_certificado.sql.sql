@@ -12,4 +12,4 @@ FOREIGN KEY (cd_uf)
 REFERENCES spat.ed_uf(eduf_cd_uf);
 
 ALTER TABLE osc.tb_certificado ADD ft_municipio TEXT DEFAULT null;
-ALTER TABLE osc.tb_certificado ADD ft_estado TEXT DEFAULT null;
+ALTER TABLE osc.tb_certificado ADD ft_uf TEXT DEFAULT null;
