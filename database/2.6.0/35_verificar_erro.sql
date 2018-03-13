@@ -41,6 +41,10 @@ BEGIN
 			mensagem := 'Informação de não possui inválido.';
 			status_log := 1;
 		
+		ELSIF mensagem_erro = 'prioridade_fonte_nao_possui' THEN
+			mensagem := 'Atualização de dados não permitida pela prioridade mais elevada da fonte de dados da informação de não possui.';
+			status_log := 1;
+		
 		END IF;
 
 		mensagem_log := mensagem;

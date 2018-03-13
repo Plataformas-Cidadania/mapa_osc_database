@@ -175,7 +175,7 @@ BEGIN
 		FOR objeto IN (SELECT * FROM osc.tb_certificado WHERE id_osc = osc)
 		LOOP
 			IF (objeto.id_certificado != ALL(dado_nao_delete)) OR (dado_nao_delete IS null) THEN
-				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_certificado]) AS a) THEN
+				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_certificado, objeto.ft_inicio_certificado, objeto.ft_fim_certificado, objeto.ft_municipio, objeto.ft_uf]) AS a) THEN
 					DELETE FROM osc.tb_certificado WHERE id_certificado = objeto.id_certificado;
 					PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(objeto), null);
 				END IF;
