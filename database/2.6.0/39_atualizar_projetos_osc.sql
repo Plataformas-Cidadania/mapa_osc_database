@@ -73,8 +73,7 @@ BEGIN
 	
 	IF nao_possui IS false THEN
 		IF jsonb_typeof((json->>'projeto')::JSONB) = 'object' THEN
-			--json := jsonb_build_array((json->>'projeto')::JSONB);
-			projetos := '[' || (json->>'projeto')::JSONB || ']';
+			json := jsonb_build_array((json->>'projeto')::JSONB);
 		ELSE
 			projetos := (json->>'projeto')::JSONB;
 		END IF;
