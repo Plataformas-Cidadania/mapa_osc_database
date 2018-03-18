@@ -14,7 +14,6 @@ BEGIN
 
 	IF codigo_erro = 'P0001' THEN
 		IF mensagem_erro = 'fonte_invalida' THEN
-
 			mensagem := 'Fonte de dados inválida.';
 
 		ELSIF mensagem_erro = 'permissao_negada_usuario' THEN
@@ -35,6 +34,10 @@ BEGIN
 
 		ELSIF mensagem_erro = 'projeto_nao_encontrado' THEN
 			mensagem := 'Projeto não encontrado.';
+			status_log := 1;
+		
+		ELSIF mensagem_erro = 'tipo_obter_projeto_invalido' THEN
+			mensagem := 'Tipo de resultado do obter projeto inválido.';
 			status_log := 1;
 		
 		ELSIF mensagem_erro = 'nao_possui_invalido' THEN
