@@ -243,7 +243,7 @@
       <fields>
         <field>
           <variable_name>ETL</variable_name>
-          <variable_value>OSCIP&#x2f;MJ</variable_value>
+          <variable_value>OSCIP&#x2f;MJ 10&#x2f;2017</variable_value>
           <variable_type>JVM</variable_type>
         </field>
       </fields>

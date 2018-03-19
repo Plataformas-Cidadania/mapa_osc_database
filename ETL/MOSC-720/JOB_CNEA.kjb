@@ -192,7 +192,7 @@
         </field>
         <field>
           <variable_name>FONTE_CARGA</variable_name>
-          <variable_value>CNEA&#x2f;MMA 2017</variable_value>
+          <variable_value>CNEA&#x2f;MMA 10&#x2f;2017</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>

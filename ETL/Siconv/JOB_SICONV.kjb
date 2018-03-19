@@ -300,8 +300,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>254</xloc>
-      <yloc>739</yloc>
+      <xloc>210</xloc>
+      <yloc>738</yloc>
       </entry>
     <entry>
       <name>Agrupar Arquivos</name>
@@ -343,8 +343,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>124</xloc>
-      <yloc>739</yloc>
+      <xloc>79</xloc>
+      <yloc>740</yloc>
       </entry>
     <entry>
       <name>Set variables</name>
@@ -426,7 +426,7 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>692</xloc>
+      <xloc>783</xloc>
       <yloc>741</yloc>
       </entry>
     <entry>
@@ -528,7 +528,7 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>538</xloc>
+      <xloc>448</xloc>
       <yloc>741</yloc>
       </entry>
     <entry>
@@ -580,8 +580,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>393</xloc>
-      <yloc>739</yloc>
+      <xloc>324</xloc>
+      <yloc>740</yloc>
       </entry>
     <entry>
       <name>Verificar se CSV Siconv existe</name>
@@ -593,6 +593,22 @@
       <nr>0</nr>
       <xloc>910</xloc>
       <yloc>613</yloc>
+      </entry>
+    <entry>
+      <name>Script delete projetos duplicados</name>
+      <description/>
+      <type>SQL</type>
+      <sql>DELETE &#xa;FROM osc.tb_projeto &#xa;WHERE ft_identificador_projeto_externo ILIKE &#x27;SICONV&#x2f;MPOG&#x25;&#x27; &#xa;AND ft_identificador_projeto_externo &#x21;&#x3d; &#x27;&#x24;&#x7b;FONTE_CARGA&#x7d;&#x27;&#x3a;&#x3a;TEXT&#x3b;</sql>
+      <useVariableSubstitution>F</useVariableSubstitution>
+      <sqlfromfile>F</sqlfromfile>
+      <sqlfilename/>
+      <sendOneStatement>F</sendOneStatement>
+      <connection>etl</connection>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>617</xloc>
+      <yloc>740</yloc>
       </entry>
   </entries>
   <hops>
@@ -786,15 +802,6 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Gravar dados</from>
-      <to>Gravar log fim</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
       <from>Delete propostas</from>
       <to>Set variables carga erro</to>
       <from_nr>0</from_nr>
@@ -846,6 +853,24 @@
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
       <evaluation>N</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Gravar dados</from>
+      <to>Script delete projetos duplicados</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Script delete projetos duplicados</from>
+      <to>Gravar log fim</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
   </hops>
