@@ -39,6 +39,10 @@ BEGIN
 		ELSIF mensagem_erro = 'tipo_obter_projeto_invalido' THEN
 			mensagem := 'Tipo de resultado do obter projeto inválido.';
 			status_log := 1;
+
+		ELSIF mensagem_erro = 'id_osc_nao_confere' THEN
+			mensagem := 'ID da OSC informado não confere com o recurso a ser manipulado.';
+			status_log := 1;
 		
 		ELSIF mensagem_erro = 'nao_possui_invalido' THEN
 			mensagem := 'Informação de não possui inválido.';
@@ -46,6 +50,10 @@ BEGIN
 		
 		ELSIF mensagem_erro = 'prioridade_fonte_nao_possui' THEN
 			mensagem := 'Atualização de dados não permitida pela prioridade mais elevada da fonte de dados da informação de não possui.';
+			status_log := 1;
+		
+		ELSIF mensagem_erro = 'prioridade_invalida' THEN
+			mensagem := 'Atualização não permitida pela prioridade das fontes de dados.';
 			status_log := 1;
 		
 		END IF;
