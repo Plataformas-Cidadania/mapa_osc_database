@@ -24,10 +24,10 @@ WHERE tb_osc.bo_osc_ativa;
 ALTER MATERIALIZED VIEW portal.vw_osc_descricao OWNER TO postgres;
 -- ddl-end --
 
-CREATE UNIQUE INDEX ix_vw_osc_dados_gerais
-    ON portal.vw_osc_dados_gerais USING btree
-    (id_osc ASC NULLS LAST)
-    TABLESPACE pg_default;
+CREATE UNIQUE INDEX ix_vw_osc_descricao
+	ON portal.vw_osc_descricao USING btree
+    	(id_osc ASC NULLS LAST)
+	TABLESPACE pg_default;
 
 CREATE OR REPLACE FUNCTION dados_gerais()
 RETURNS TRIGGER AS $$

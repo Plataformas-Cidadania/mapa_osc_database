@@ -1,4 +1,4 @@
-DROP FUNCTION IF EXISTS portal.inserir_recursos_osc(idosc INTEGER, cdorigemrecursos INTEGER, cdfonterecursos INTEGER, ftfonterecursos TEXT, dtanorecursos DATE, ftanorecursos TEXT, nrvalorrecursos DOUBLE PRECISION, ftvalorrecursos TEXT, bonaopossui BOOLEAN, ftnaopossui TEXT);
+DROP FUNCTION IF EXISTS portal.inserir_recursos_osc(INTEGER, INTEGER, INTEGER, TEXT, DATE, TEXT, DOUBLE PRECISION, TEXT, BOOLEAN, TEXT);
 
 CREATE OR REPLACE FUNCTION portal.inserir_recursos_osc(idosc INTEGER, cdorigemrecursos INTEGER, cdfonterecursos INTEGER, ftfonterecursos TEXT, dtanorecursos DATE, ftanorecursos TEXT, nrvalorrecursos DOUBLE PRECISION, ftvalorrecursos TEXT, bonaopossui BOOLEAN, ftnaopossui TEXT) RETURNS TABLE(
 	flag BOOLEAN,

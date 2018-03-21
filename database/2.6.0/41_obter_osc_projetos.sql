@@ -1,4 +1,4 @@
-DROP FUNCTION IF EXISTS portal.obter_osc_projetos(param TEXT, tipo INTEGER);
+DROP FUNCTION IF EXISTS portal.obter_osc_projetos(TEXT, INTEGER);
 
 CREATE OR REPLACE FUNCTION portal.obter_osc_projetos(param TEXT, tipo INTEGER) RETURNS TABLE (
 	resultado JSONB,

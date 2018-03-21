@@ -1,4 +1,4 @@
-DROP FUNCTION IF EXISTS portal.atualizar_descricao_osc(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT, data_atualizacao TIMESTAMP, json JSONB, null_valido BOOLEAN, erro_log BOOLEAN, id_carga INTEGER);
+DROP FUNCTION IF EXISTS portal.atualizar_descricao_osc(TEXT, NUMERIC, TEXT, TIMESTAMP, JSONB, BOOLEAN, BOOLEAN, INTEGER);
 
 CREATE OR REPLACE FUNCTION portal.atualizar_descricao_osc(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT, data_atualizacao TIMESTAMP, json JSONB, null_valido BOOLEAN, erro_log BOOLEAN, id_carga INTEGER) RETURNS TABLE(
 	mensagem TEXT,

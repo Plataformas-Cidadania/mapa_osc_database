@@ -1,4 +1,4 @@
-﻿DROP FUNCTION IF EXISTS portal.obter_osc_dados_gerais(param TEXT);
+﻿DROP FUNCTION IF EXISTS portal.obter_osc_dados_gerais(TEXT);
 
 CREATE OR REPLACE FUNCTION portal.obter_osc_dados_gerais(param TEXT) RETURNS TABLE (
 	cd_identificador_osc TEXT, 

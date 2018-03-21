@@ -1,4 +1,4 @@
-﻿DROP FUNCTION IF EXISTS portal.deletar_projeto(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT, data_atualizacao TIMESTAMP, id INTEGER, erro_log BOOLEAN, id_carga INTEGER);
+DROP FUNCTION IF EXISTS portal.deletar_projeto(TEXT, NUMERIC, TEXT, TIMESTAMP, INTEGER, BOOLEAN, INTEGER);
 
 CREATE OR REPLACE FUNCTION portal.deletar_projeto(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT, data_atualizacao TIMESTAMP, id INTEGER, erro_log BOOLEAN, id_carga INTEGER) RETURNS TABLE(
 	mensagem TEXT,

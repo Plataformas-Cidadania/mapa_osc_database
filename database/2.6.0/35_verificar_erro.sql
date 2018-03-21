@@ -1,4 +1,4 @@
-DROP FUNCTION IF EXISTS portal.verificar_erro(codigo_erro TEXT, mensagem_erro TEXT, fonte TEXT, osc NUMERIC, data_operacao TIMESTAMP, erro_log BOOLEAN, id_carga INTEGER);
+DROP FUNCTION IF EXISTS portal.verificar_erro(TEXT, TEXT, TEXT, NUMERIC, TIMESTAMP, BOOLEAN, INTEGER);
 
 CREATE OR REPLACE FUNCTION portal.verificar_erro(codigo_erro TEXT, mensagem_erro TEXT, fonte TEXT, osc NUMERIC, data_operacao TIMESTAMP, erro_log BOOLEAN, id_carga INTEGER) RETURNS TABLE(
 	mensagem TEXT
