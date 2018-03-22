@@ -1,7 +1,6 @@
 ﻿DROP FUNCTION IF EXISTS portal.obter_data_atualizacao(TEXT);
-DROP FUNCTION IF EXISTS portal.obter_data_atualizacao(INTEGER);
 
-CREATE OR REPLACE FUNCTION portal.obter_data_atualizacao(id INTEGER) RETURNS TABLE(
+CREATE OR REPLACE FUNCTION portal.obter_data_atualizacao(param TEXT) RETURNS TABLE(
 	dt_alteracao TEXT
 ) AS $$ 
 
@@ -12,7 +11,9 @@ BEGIN
 		FROM 
 			portal.vw_log_alteracao 
 		WHERE 
-			vw_log_alteracao.id_osc = id;
+			vw_log_alteracao.id_osc::TEXT = param 
+		OR 
+			vw_log_alteracao.tx_apelido_osc = param;
 
 END; 
 $$ LANGUAGE 'plpgsql';

@@ -4,28 +4,24 @@ CREATE MATERIALIZED VIEW portal.vw_log_alteracao
 AS
 
 SELECT 
-	b.id_osc, 
-	b.tx_apelido_osc, 
-	b.tx_nome_osc, 
-	a.id_log_alteracao, 
-	a.tx_nome_tabela, 
-	a.tx_fonte_dados, 
-	a.dt_alteracao, 
-	a.tx_dado_anterior, 
-	a.tx_dado_posterior, 
-	a.id_carga 
+	tb_log_alteracao.id_osc, 
+	(SELECT tx_apelido_osc FROM portal.vw_osc_dados_gerais WHERE id_osc = tb_log_alteracao.id_osc) AS tx_apelido_osc, 
+	(SELECT tx_nome_osc FROM portal.vw_osc_dados_gerais WHERE id_osc = tb_log_alteracao.id_osc) AS tx_nome_osc, 
+	tb_log_alteracao.id_log_alteracao, 
+	tb_log_alteracao.tx_nome_tabela, 
+	tb_log_alteracao.tx_fonte_dados, 
+	tb_log_alteracao.dt_alteracao, 
+	tb_log_alteracao.tx_dado_anterior, 
+	tb_log_alteracao.tx_dado_posterior, 
+	tb_log_alteracao.id_carga 
 FROM 
-	log.tb_log_alteracao AS a 
-INNER JOIN 
-	portal.vw_osc_dados_gerais AS b 
-ON 
-	a.id_osc = b.id_osc 
-WHERE a.id_log_alteracao IN (
+	log.tb_log_alteracao 
+WHERE tb_log_alteracao.id_log_alteracao IN (
 	SELECT MAX(id_log_alteracao) 
 	FROM log.tb_log_alteracao 
 	GROUP BY id_osc
 )
-ORDER BY a.id_log_alteracao DESC;
+ORDER BY tb_log_alteracao.id_log_alteracao DESC;
 
 -- ddl-end --
 ALTER MATERIALIZED VIEW portal.vw_log_alteracao OWNER TO postgres;
