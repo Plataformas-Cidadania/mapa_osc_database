@@ -467,7 +467,7 @@
       <type>JOB</type>
       <specification_method>filename</specification_method>
       <job_object_id/>
-      <filename>&#x2f;home&#x2f;DLIPEA&#x2f;b6519563&#x2f;workspace&#x2f;mapa_osc_database&#x2f;ETL&#x2f;Siconv&#x2f;JOB_SICONV.kjb</filename>
+      <filename>&#x2f;home&#x2f;DLIPEA&#x2f;b6519563&#x2f;workspace&#x2f;mapa_osc_database&#x2f;ETL&#x2f;Siconv&#x2f;Main Siconv.kjb</filename>
       <jobname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
