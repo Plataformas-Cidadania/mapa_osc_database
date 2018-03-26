@@ -19,7 +19,7 @@ BEGIN
 			dados_gerais.id_osc, 
 			(CAST(SUM(
 				(CASE WHEN NOT(dados_gerais.tx_nome_fantasia_osc IS NULL) THEN peso_campo ELSE 0 END) + 
-				(CASE WHEN NOT(dados_gerais.tx_sigla_osc IS NULL) THEN peso_campo ELSE 0 END) + 
+				(CASE WHEN (NOT(dados_gerais.tx_sigla_osc IS NULL) OR (dados_gerais.bo_nao_possui_sigla_osc IS true)) THEN peso_campo ELSE 0 END) + 
 				(CASE WHEN NOT(dados_gerais.tx_endereco IS NULL) THEN peso_campo ELSE 0 END) + 
 				(CASE WHEN NOT(dados_gerais.tx_nome_situacao_imovel_osc IS NULL) THEN peso_campo ELSE 0 END) + 
 				(CASE WHEN NOT(dados_gerais.tx_nome_responsavel_legal IS NULL) THEN peso_campo ELSE 0 END) + 
