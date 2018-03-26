@@ -1,0 +1,16 @@
+﻿DROP FUNCTION IF EXISTS portal.obter_osc_atualizadas_recentemente(INTEGER);
+
+CREATE OR REPLACE FUNCTION portal.obter_osc_atualizadas_recentemente(quantidade_oscs INTEGER) RETURNS TABLE(
+	id_osc INTEGER, 
+	tx_nome_osc TEXT
+)AS $$
+
+BEGIN 
+	RETURN QUERY 
+		EXECUTE '
+			SELECT * 
+			FROM portal.vw_log_alteracao 
+			LIMIT ' || quantidade_oscs;
+			
+END;
+$$ LANGUAGE 'plpgsql';

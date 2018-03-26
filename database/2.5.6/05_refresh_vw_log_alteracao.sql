@@ -1,0 +1,6 @@
+CREATE OR REPLACE FUNCTION refresh_vw_log_alteracao() RETURNS TRIGGER AS $$
+BEGIN
+	REFRESH MATERIALIZED VIEW CONCURRENTLY portal.vw_log_alteracao;
+	RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;

@@ -1,0 +1,1247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<transformation>
+  <info>
+    <name>Trans_Salic</name>
+    <description/>
+    <extended_description/>
+    <trans_version/>
+    <trans_type>Normal</trans_type>
+    <trans_status>0</trans_status>
+    <directory>&#x2f;</directory>
+    <parameters>
+    </parameters>
+    <log>
+<trans-log-table><connection/>
+<schema/>
+<table/>
+<size_limit_lines/>
+<interval/>
+<timeout_days/>
+<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>TRANSNAME</id><enabled>Y</enabled><name>TRANSNAME</name></field><field><id>STATUS</id><enabled>Y</enabled><name>STATUS</name></field><field><id>LINES_READ</id><enabled>Y</enabled><name>LINES_READ</name><subject/></field><field><id>LINES_WRITTEN</id><enabled>Y</enabled><name>LINES_WRITTEN</name><subject/></field><field><id>LINES_UPDATED</id><enabled>Y</enabled><name>LINES_UPDATED</name><subject/></field><field><id>LINES_INPUT</id><enabled>Y</enabled><name>LINES_INPUT</name><subject/></field><field><id>LINES_OUTPUT</id><enabled>Y</enabled><name>LINES_OUTPUT</name><subject/></field><field><id>LINES_REJECTED</id><enabled>Y</enabled><name>LINES_REJECTED</name><subject/></field><field><id>ERRORS</id><enabled>Y</enabled><name>ERRORS</name></field><field><id>STARTDATE</id><enabled>Y</enabled><name>STARTDATE</name></field><field><id>ENDDATE</id><enabled>Y</enabled><name>ENDDATE</name></field><field><id>LOGDATE</id><enabled>Y</enabled><name>LOGDATE</name></field><field><id>DEPDATE</id><enabled>Y</enabled><name>DEPDATE</name></field><field><id>REPLAYDATE</id><enabled>Y</enabled><name>REPLAYDATE</name></field><field><id>LOG_FIELD</id><enabled>Y</enabled><name>LOG_FIELD</name></field><field><id>EXECUTING_SERVER</id><enabled>N</enabled><name>EXECUTING_SERVER</name></field><field><id>EXECUTING_USER</id><enabled>N</enabled><name>EXECUTING_USER</name></field><field><id>CLIENT</id><enabled>N</enabled><name>CLIENT</name></field></trans-log-table>
+<perf-log-table><connection/>
+<schema/>
+<table/>
+<interval/>
+<timeout_days/>
+<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>SEQ_NR</id><enabled>Y</enabled><name>SEQ_NR</name></field><field><id>LOGDATE</id><enabled>Y</enabled><name>LOGDATE</name></field><field><id>TRANSNAME</id><enabled>Y</enabled><name>TRANSNAME</name></field><field><id>STEPNAME</id><enabled>Y</enabled><name>STEPNAME</name></field><field><id>STEP_COPY</id><enabled>Y</enabled><name>STEP_COPY</name></field><field><id>LINES_READ</id><enabled>Y</enabled><name>LINES_READ</name></field><field><id>LINES_WRITTEN</id><enabled>Y</enabled><name>LINES_WRITTEN</name></field><field><id>LINES_UPDATED</id><enabled>Y</enabled><name>LINES_UPDATED</name></field><field><id>LINES_INPUT</id><enabled>Y</enabled><name>LINES_INPUT</name></field><field><id>LINES_OUTPUT</id><enabled>Y</enabled><name>LINES_OUTPUT</name></field><field><id>LINES_REJECTED</id><enabled>Y</enabled><name>LINES_REJECTED</name></field><field><id>ERRORS</id><enabled>Y</enabled><name>ERRORS</name></field><field><id>INPUT_BUFFER_ROWS</id><enabled>Y</enabled><name>INPUT_BUFFER_ROWS</name></field><field><id>OUTPUT_BUFFER_ROWS</id><enabled>Y</enabled><name>OUTPUT_BUFFER_ROWS</name></field></perf-log-table>
+<channel-log-table><connection/>
+<schema/>
+<table/>
+<timeout_days/>
+<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>LOG_DATE</id><enabled>Y</enabled><name>LOG_DATE</name></field><field><id>LOGGING_OBJECT_TYPE</id><enabled>Y</enabled><name>LOGGING_OBJECT_TYPE</name></field><field><id>OBJECT_NAME</id><enabled>Y</enabled><name>OBJECT_NAME</name></field><field><id>OBJECT_COPY</id><enabled>Y</enabled><name>OBJECT_COPY</name></field><field><id>REPOSITORY_DIRECTORY</id><enabled>Y</enabled><name>REPOSITORY_DIRECTORY</name></field><field><id>FILENAME</id><enabled>Y</enabled><name>FILENAME</name></field><field><id>OBJECT_ID</id><enabled>Y</enabled><name>OBJECT_ID</name></field><field><id>OBJECT_REVISION</id><enabled>Y</enabled><name>OBJECT_REVISION</name></field><field><id>PARENT_CHANNEL_ID</id><enabled>Y</enabled><name>PARENT_CHANNEL_ID</name></field><field><id>ROOT_CHANNEL_ID</id><enabled>Y</enabled><name>ROOT_CHANNEL_ID</name></field></channel-log-table>
+<step-log-table><connection/>
+<schema/>
+<table/>
+<timeout_days/>
+<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>LOG_DATE</id><enabled>Y</enabled><name>LOG_DATE</name></field><field><id>TRANSNAME</id><enabled>Y</enabled><name>TRANSNAME</name></field><field><id>STEPNAME</id><enabled>Y</enabled><name>STEPNAME</name></field><field><id>STEP_COPY</id><enabled>Y</enabled><name>STEP_COPY</name></field><field><id>LINES_READ</id><enabled>Y</enabled><name>LINES_READ</name></field><field><id>LINES_WRITTEN</id><enabled>Y</enabled><name>LINES_WRITTEN</name></field><field><id>LINES_UPDATED</id><enabled>Y</enabled><name>LINES_UPDATED</name></field><field><id>LINES_INPUT</id><enabled>Y</enabled><name>LINES_INPUT</name></field><field><id>LINES_OUTPUT</id><enabled>Y</enabled><name>LINES_OUTPUT</name></field><field><id>LINES_REJECTED</id><enabled>Y</enabled><name>LINES_REJECTED</name></field><field><id>ERRORS</id><enabled>Y</enabled><name>ERRORS</name></field><field><id>LOG_FIELD</id><enabled>N</enabled><name>LOG_FIELD</name></field></step-log-table>
+<metrics-log-table><connection/>
+<schema/>
+<table/>
+<timeout_days/>
+<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>LOG_DATE</id><enabled>Y</enabled><name>LOG_DATE</name></field><field><id>METRICS_DATE</id><enabled>Y</enabled><name>METRICS_DATE</name></field><field><id>METRICS_CODE</id><enabled>Y</enabled><name>METRICS_CODE</name></field><field><id>METRICS_DESCRIPTION</id><enabled>Y</enabled><name>METRICS_DESCRIPTION</name></field><field><id>METRICS_SUBJECT</id><enabled>Y</enabled><name>METRICS_SUBJECT</name></field><field><id>METRICS_TYPE</id><enabled>Y</enabled><name>METRICS_TYPE</name></field><field><id>METRICS_VALUE</id><enabled>Y</enabled><name>METRICS_VALUE</name></field></metrics-log-table>
+    </log>
+    <maxdate>
+      <connection/>
+      <table/>
+      <field/>
+      <offset>0.0</offset>
+      <maxdiff>0.0</maxdiff>
+    </maxdate>
+    <size_rowset>10000</size_rowset>
+    <sleep_time_empty>50</sleep_time_empty>
+    <sleep_time_full>50</sleep_time_full>
+    <unique_connections>N</unique_connections>
+    <feedback_shown>Y</feedback_shown>
+    <feedback_size>50000</feedback_size>
+    <using_thread_priorities>Y</using_thread_priorities>
+    <shared_objects_file/>
+    <capture_step_performance>N</capture_step_performance>
+    <step_performance_capturing_delay>1000</step_performance_capturing_delay>
+    <step_performance_capturing_size_limit>100</step_performance_capturing_size_limit>
+    <dependencies>
+    </dependencies>
+    <partitionschemas>
+    </partitionschemas>
+    <slaveservers>
+    </slaveservers>
+    <clusterschemas>
+    </clusterschemas>
+  <created_user>-</created_user>
+  <created_date>2017&#x2f;12&#x2f;04 16&#x3a;32&#x3a;53.882</created_date>
+  <modified_user>-</modified_user>
+  <modified_date>2017&#x2f;12&#x2f;04 16&#x3a;32&#x3a;53.882</modified_date>
+    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA&#x3d;</key_for_session_key>
+    <is_key_private>N</is_key_private>
+  </info>
+  <notepads>
+  </notepads>
+  <connection>
+    <name>portalosc</name>
+    <server>mapaosc-desenv</server>
+    <type>POSTGRESQL</type>
+    <access>Native</access>
+    <database>portalosc</database>
+    <port>5434</port>
+    <username>i3geo</username>
+    <password>Encrypted 2be98afc86aa7f2e4cb10be75dfc2ff8b</password>
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
+    <attributes>
+      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
+      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
+      <attribute><code>PORT_NUMBER</code><attribute>5434</attribute></attribute>
+      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>N</attribute></attribute>
+      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
+      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>Y</attribute></attribute>
+      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+    </attributes>
+  </connection>
+  <order>
+  <hop> <from>Script status</from><to>Select status Projeto</to><enabled>Y</enabled> </hop>
+  <hop> <from>CSV file input</from><to>Select dados</to><enabled>Y</enabled> </hop>
+  <hop> <from>Filter rows</from><to>Script status</to><enabled>Y</enabled> </hop>
+  <hop> <from>Select dados</from><to>Sort pronac</to><enabled>Y</enabled> </hop>
+  <hop> <from>Sort pronac</from><to>Unique pronac</to><enabled>Y</enabled> </hop>
+  <hop> <from>Unique pronac</from><to>Filter rows</to><enabled>Y</enabled> </hop>
+  <hop> <from>Select status Projeto</from><to>Formatar JSON</to><enabled>Y</enabled> </hop>
+  <hop> <from>Formatar JSON</from><to>Select_Projeto</to><enabled>Y</enabled> </hop>
+  <hop> <from>CSV file input</from><to>Filter rows</to><enabled>N</enabled> </hop>
+  <hop> <from>Select_Projeto</from><to>Projetos</to><enabled>Y</enabled> </hop>
+  <hop> <from>Formatar JSON</from><to>Select_Fonte_Projeto</to><enabled>Y</enabled> </hop>
+  <hop> <from>Select_Fonte_Projeto</from><to>Fontes</to><enabled>Y</enabled> </hop>
+  </order>
+  <step>
+    <name>CSV file input</name>
+    <type>CsvInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <filename>&#x24;&#x7b;FILE2&#x7d;</filename>
+    <filename_field/>
+    <rownum_field/>
+    <include_filename>N</include_filename>
+    <separator>,</separator>
+    <enclosure>&#x22;</enclosure>
+    <header>Y</header>
+    <buffer_size>90000</buffer_size>
+    <lazy_conversion>Y</lazy_conversion>
+    <add_filename_result>N</add_filename_result>
+    <parallel>N</parallel>
+    <newline_possible>N</newline_possible>
+    <encoding/>
+    <fields>
+      <field>
+        <name>etapa</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>providencia</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>area</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>enquadramento</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>objetivos</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>ficha_tecnica</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>situacao</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>outras_fontes</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>acessibilidade</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>sinopse</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>nome</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>cgccpf</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>mecanismo</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>segmento</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>PRONAC</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>estrategia_execucao</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>valor_aprovado</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>justificativa</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>resumo</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>valor_solicitado</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>especificacao_tecnica</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>municipio</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>data_termino</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>UF</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>impacto_ambiental</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>democratizacao</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>valor_projeto</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>proponente</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>ano_projeto</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>data_inicio</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>valor_captado</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>valor_proposta</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>45</xloc>
+      <yloc>283</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Filter rows</name>
+    <type>FilterRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+<send_true_to/>
+<send_false_to>Script status</send_false_to>
+    <compare>
+<condition>
+ <negated>N</negated>
+ <conditions>
+  <condition>
+   <negated>N</negated>
+   <leftvalue>cgccpf</leftvalue>
+   <function>CONTAINS</function>
+   <rightvalue/>
+   <value><name>constant</name><type>String</type><text>&#x2a;</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value>   </condition>
+  <condition>
+   <negated>N</negated>
+   <operator>OR</operator>
+   <leftvalue>cgccpf</leftvalue>
+   <function>&#x3d;</function>
+   <rightvalue/>
+   <value><name>constant</name><type>String</type><text>cgccpf</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value>   </condition>
+  <condition>
+   <negated>N</negated>
+   <operator>OR</operator>
+   <leftvalue>cgccpf</leftvalue>
+   <function>CONTAINS</function>
+   <rightvalue/>
+   <value><name>constant</name><type>String</type><text>a</text><length>-1</length><precision>-1</precision><isnull>N</isnull><mask/></value>   </condition>
+  </conditions>
+ </condition>
+    </compare>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>407</xloc>
+      <yloc>281</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Fontes</name>
+    <type>TextFileOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <separator>&#x3b;</separator>
+    <enclosure>&#x22;</enclosure>
+    <enclosure_forced>N</enclosure_forced>
+    <enclosure_fix_disabled>N</enclosure_fix_disabled>
+    <header>Y</header>
+    <footer>N</footer>
+    <format>UNIX</format>
+    <compression>None</compression>
+    <encoding>UTF-8</encoding>
+    <endedLine/>
+    <fileNameInField>N</fileNameInField>
+    <fileNameField/>
+    <create_parent_folder>Y</create_parent_folder>
+    <file>
+      <name>&#x24;&#x7b;DIR&#x7d;&#x2f;fonte_projeto</name>
+      <is_command>N</is_command>
+      <servlet_output>N</servlet_output>
+      <do_not_open_new_file_init>N</do_not_open_new_file_init>
+      <extention>csv</extention>
+      <append>N</append>
+      <split>N</split>
+      <haspartno>N</haspartno>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <SpecifyFormat>N</SpecifyFormat>
+      <date_time_format/>
+      <add_to_result_filenames>Y</add_to_result_filenames>
+      <pad>N</pad>
+      <fast_dump>N</fast_dump>
+      <splitevery>0</splitevery>
+    </file>
+    <fields>
+      <field>
+        <name>cgccpf</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>PRONAC</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>fonte_recursos_projeto_json</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>origem_fonte_recursos_projeto</name>
+        <type>Integer</type>
+        <format>&#x23;&#x3b;-&#x23;</format>
+        <currency/>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>0</precision>
+      </field>
+      <field>
+        <name>null_valido</name>
+        <type>Boolean</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>delete_valido</name>
+        <type>Boolean</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>erro_log</name>
+        <type>Boolean</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>963</xloc>
+      <yloc>207</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Formatar JSON</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>Y</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>var fonte_recursos_projeto &#x3d; 1&#x3b;&#xa;var origem_fonte_recursos_projeto &#x3d; 1&#x3b;&#xa;var tipo_identificador &#x3d; &#x27;cnpj&#x27;&#x3b;&#xa;var null_valido &#x3d; false&#x3b;&#xa;var delete_valido &#x3d; false&#x3b;&#xa;var erro_log &#x3d; true&#x3b;&#xa;&#xa;function formatarDado&#x28;dado&#x29; &#x7b;&#xa;	var resultado &#x3d; String&#x28;dado&#x29;&#x3b;&#xa;	&#xa;	resultado &#x3d; resultado.replace&#x28;&#x2f;&#x27;&#x2f;g, &#x27;&#x5c;&#x27;&#x5c;&#x27;&#x27;&#x29;&#x3b;&#xa;	resultado &#x3d;	JSON.stringify&#x28;resultado&#x29;&#x3b;&#xa;	&#xa;	return resultado&#x3b;&#xa;&#x7d;&#xa;&#xa;function formatDate&#x28;dado&#x29;&#x7b;&#xa;	var result &#x3d; String&#x28;dado&#x29;&#x3b;&#xa;	result &#x3d; result.split&#x28;&#x27;&#x2f;&#x27;&#x29;.reverse&#x28;&#x29;.join&#x28;&#x27;-&#x27;&#x29;&#x3b;&#xa;	result &#x3d; JSON.stringify&#x28;result&#x29;&#x3b;&#xa;	return result&#x3b;&#xa;&#x7d;&#xa;&#xa;if&#x28;proponente&#x29; proponente &#x3d; formatarDado&#x28;proponente&#x29;&#x3b;&#xa;if&#x28;nome&#x29; nome &#x3d; formatarDado&#x28;nome&#x29;&#x3b;&#xa;if&#x28;valor_aprovado&#x29; valor_aprovado &#x3d; formatarDado&#x28;valor_aprovado&#x29;&#x3b;&#xa;if&#x28;valor_captado&#x29; valor_captado &#x3d; formatarDado&#x28;valor_captado&#x29;&#x3b;&#xa;var link &#x3d; &#xfeff;&#x27;http&#x3a;&#x2f;&#x2f;api.salic.cultura.gov.br&#x2f;v1&#x2f;projetos&#x2f;&#x27;&#x2b;PRONAC&#x3b; link &#x3d; formatarDado&#x28;link&#x29;&#x3b;&#xa;if&#x28;PRONAC&#x29; PRONAC &#x3d; formatarDado&#x28;PRONAC&#x29;&#x3b;&#xa;if&#x28;resumo&#x29; resumo &#x3d; formatarDado&#x28;resumo&#x29;&#x3b;&#xa;if&#x28;cd_status_projeto&#x29; cd_status_projeto &#x3d; formatarDado&#x28;cd_status_projeto&#x29;&#x3b;&#xa;&#xa;if&#x28;data_inicio&#x29; data_inicio &#x3d; formatDate&#x28;data_inicio&#x29;&#x3b;&#xa;if&#x28;data_termino&#x29; data_termino &#x3d; formatDate&#x28;data_termino&#x29;&#x3b;&#xa;&#xa;&#x2f;&#x2f; http&#x3a;&#x2f;&#x2f;api.salic.cultura.gov.br&#x2f;v1&#x2f;projetos&#x2f;180382&#xa;&#xa;var projeto_json &#x3d; &#x27;&#x7b;&#x22;tx_nome_projeto&#x22;&#x3a; &#x27; &#x2b; nome &#x2b; &#x27;, &#x22;dt_data_inicio_projeto&#x22;&#x3a; &#x27; &#x2b; data_inicio &#x2b; &#x27;, &#x22;dt_data_fim_projeto&#x22;&#x3a; &#x27; &#x2b; data_termino &#xa;&#x2b; &#x27;, &#x22;nr_valor_total_projeto&#x22;&#x3a; &#x27; &#x2b; valor_aprovado &#x2b; &#x27;, &#x22;nr_valor_captado_projeto&#x22;&#x3a; &#x27; &#x2b; valor_captado &#x2b; &#x27;, &#x22;tx_descricao_projeto&#x22;&#x3a; &#x27; &#x2b; resumo&#xa;&#x2b; &#x27;, &#x22;tx_link_projeto&#x22;&#x3a; &#x27; &#x2b; link &#x2b; &#x27;, &#x22;tx_identificador_projeto_externo&#x22;&#x3a; &#x27; &#x2b; PRONAC &#x2b; &#x27;, &#x22;cd_status_projeto&#x22;&#x3a; &#x27; &#x2b; cd_status_projeto &#x2b; &#x27;&#x7d;&#x27;&#x3b;&#xa;&#xa;var fonte_recursos_projeto_json &#x3d; &#x27;&#x7b;&#x22;cd_fonte_recursos_projeto&#x22;&#x3a; &#x27; &#x2b; fonte_recursos_projeto &#x2b; &#x27;, &#x22;cd_origem_fonte_recursos_projeto&#x22;&#x3a; &#x27; &#x2b; origem_fonte_recursos_projeto &#x2b; &#x27;&#x7d;&#x27;&#x3b;&#xa;&#xa;&#xa;</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>projeto_json</name>
+        <rename>projeto_json</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>fonte_recursos_projeto_json</name>
+        <rename>fonte_recursos_projeto_json</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>fonte_recursos_projeto</name>
+        <rename>fonte_recursos_projeto</rename>
+        <type>Integer</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>origem_fonte_recursos_projeto</name>
+        <rename>origem_fonte_recursos_projeto</rename>
+        <type>Integer</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>tipo_identificador</name>
+        <rename>tipo_identificador</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>null_valido</name>
+        <rename>null_valido</rename>
+        <type>Boolean</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>delete_valido</name>
+        <rename>delete_valido</rename>
+        <type>Boolean</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>erro_log</name>
+        <rename>erro_log</rename>
+        <type>Boolean</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>733</xloc>
+      <yloc>283</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Projetos</name>
+    <type>TextFileOutput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <separator>&#x3b;</separator>
+    <enclosure>&#x22;</enclosure>
+    <enclosure_forced>N</enclosure_forced>
+    <enclosure_fix_disabled>N</enclosure_fix_disabled>
+    <header>Y</header>
+    <footer>N</footer>
+    <format>UNIX</format>
+    <compression>None</compression>
+    <encoding>UTF-8</encoding>
+    <endedLine/>
+    <fileNameInField>N</fileNameInField>
+    <fileNameField/>
+    <create_parent_folder>Y</create_parent_folder>
+    <file>
+      <name>&#x24;&#x7b;DIR&#x7d;&#x2f;projetos_salic</name>
+      <is_command>N</is_command>
+      <servlet_output>N</servlet_output>
+      <do_not_open_new_file_init>N</do_not_open_new_file_init>
+      <extention>csv</extention>
+      <append>N</append>
+      <split>N</split>
+      <haspartno>N</haspartno>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <SpecifyFormat>N</SpecifyFormat>
+      <date_time_format/>
+      <add_to_result_filenames>Y</add_to_result_filenames>
+      <pad>N</pad>
+      <fast_dump>N</fast_dump>
+      <splitevery>0</splitevery>
+    </file>
+    <fields>
+      <field>
+        <name>cgccpf</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>PRONAC</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>cd_status_projeto</name>
+        <type>Integer</type>
+        <format>&#x23;&#x3b;-&#x23;</format>
+        <currency/>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>0</precision>
+      </field>
+      <field>
+        <name>projeto_json</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>origem_fonte_recursos_projeto</name>
+        <type>Integer</type>
+        <format>&#x23;&#x3b;-&#x23;</format>
+        <currency/>
+        <decimal>,</decimal>
+        <group>.</group>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>0</precision>
+      </field>
+      <field>
+        <name>tipo_identificador</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>null_valido</name>
+        <type>Boolean</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>delete_valido</name>
+        <type>Boolean</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+      <field>
+        <name>erro_log</name>
+        <type>Boolean</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
+        <trim_type>none</trim_type>
+        <length>-1</length>
+        <precision>-1</precision>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>962</xloc>
+      <yloc>285</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Script status</name>
+    <type>ScriptValueMod</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <compatible>N</compatible>
+    <optimizationLevel>9</optimizationLevel>
+    <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
+        <jsScript_name>Script 1</jsScript_name>
+        <jsScript_script>&#x2f;&#x2f;Script here&#xa;var sit&#x3d;&#x22;null&#x22;&#x3b;&#xa;&#xa;if &#x28; situacao.indexOf&#x28;&#x22;p&#x2f;&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;Para &#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;Pedido &#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;drado na exc&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;Projeto aval&#x22;&#x29;&#xa;&#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Projeto Conveniado&#x22;&#xa;&#x29; &#x7b;  &#xa; sit &#x3d; &#x22;Projeto em andamento&#x22; &#x3b; &#xa; cd_status_projeto &#x3d; 2&#xa;&#x7d; &#xa;&#xa;if &#x28; situacao.indexOf&#x28;&#x22;rquiv&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;ancela&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;ndeferid&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Aprova&#xe7;&#xe3;o suspensa&#x22; &#xa;&#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Complementa&#xe7;&#xe3;o aprovada - proponente inabilitado&#x22; &#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Projeto n&#xe3;o selecionado - FNC&#x22; &#xa;&#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Projeto n&#xe3;o executado por insufici&#xea;ncia de capta&#xe7;&#xe3;o de recursos&#x22;&#xa;&#x29; &#x7b;&#xa; sit &#x3d; &#x22;Arquivado, cancelado ou indeferido&#x22; &#x3b; &#xa; cd_status_projeto &#x3d; 5&#xa;&#x7d; &#xa; &#xa;&#xa;if &#x28;situacao &#x3d;&#x3d; &#x22;Carta circular&#x2f;Contextualiza&#xe7;&#xe3;o do projeto&#x22; &#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Enviado para o mecenato&#x22; &#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Aguardando cadastro de proponente&#x2f;Teto de valores&#x22; &#x7c;&#x7c; &#xa;situacao &#x3d;&#x3d; &#x22;Projeto priorizado&#x22; &#x7c;&#x7c;  situacao &#x3d;&#x3d; &#x22;Recurso&#x22;  &#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Aguarda Portaria VI&#x22; &#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Aguardando elabora&#xe7;&#xe3;o de portaria de Prorroga&#xe7;&#xe3;o&#x22; &#x7c;&#x7c; &#xa;situacao &#x3d;&#x3d; &#x22;Aguarda portaria de redu&#xe7;&#xe3;o&#x22; &#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;CADIN - Inadimplente&#x22; &#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Aguarda Decis&#xe3;o Superior&#x22; &#x7c;&#x7c; situacao &#x3d;&#x3d;  &#x22;Emiss&#xe3;o de Carta 02&#x22; &#x7c;&#x7c; &#xa;situacao &#x3d;&#x3d; &#x22;Banda sob Acompanhamento&#x22; &#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Banda Advertida&#x22; &#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Banda em Funcionamento&#x22; &#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Banda em D&#xe9;bito com o Acompanhamento&#x22; &#x7c;&#x7c; &#xa;situacao &#x3d;&#x3d; &#x22;Banda em Forma&#xe7;&#xe3;o&#x22; &#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Banda Contemplada&#x22; &#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Emitir of&#xed;cio de notifica&#xe7;&#xe3;o&#x22; &#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Proponente inadimplente&#x22; &#x7c;&#x7c; &#xa;situacao &#x3d;&#x3d; &#x22;Solicitar complement. documentos &#x2f;esclarecimentos&#x22; &#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Bolsa Virtuose&#x2f;Arquivado&#x2f;An&#xe1;lise Documental&#x22; &#x7c;&#x7c; &#xa;situacao &#x3d;&#x3d; &#x22;Bolsa Virtuose&#x2f;Arquivado&#x2f;An&#xe1;lise do M&#xe9;rito&#x22; &#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Bolsa Virtuose&#x2f;Prorroga&#xe7;&#xe3;o Aprovada&#x22; &#x7c;&#x7c; &#xa;situacao &#x3d;&#x3d; &#x22;Bolsa Virtuose&#x2f;Prorroga&#xe7;&#xe3;o Negada&#x22; &#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Encaminhado para a ANCINE&#x22; &#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Altera&#xe7;&#xe3;o de valor&#x22; &#x7c;&#x7c; &#xa;situacao &#x3d;&#x3d; &#x22;Conv&#xea;nio irregular - Conveniado inadimplente&#x22; &#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Projeto em avalia&#xe7;&#xe3;o documental&#x22; &#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;An&#xe1;lise de resposta de dilig&#xea;ncia - Objeto&#x22; &#xa;&#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Aguarda complementa&#xe7;&#xe3;o de documentos&#x22;&#xa;&#x29; &#x7b;&#xa; sit &#x3d; &#x22;Outro&#x22; &#x3b; &#xa; cd_status_projeto &#x3d; 4&#xa;&#x7d; &#xa;&#xa;&#xa;if &#x28; situacao.indexOf&#x28;&#x22;se finan&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;se Finan&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22; Final&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22; final&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Aguarda Registro de CPB&#x22; &#xa;&#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Inadimplente&#x22; &#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;An&#xe1;lise de resposta de dilig&#xea;ncia&#x22; &#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;D&#xe9;bito inferior ao valor m&#xed;nimo para TCE&#x22; &#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;D&#xe9;bito Parcelado&#x22;&#xa;&#x7c;&#x7c; situacao.indexOf&#x28;&#x22;UNB&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22; prest&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;P.C.&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;recer&#x2f;&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;zo de exe&#x22;&#x29;&#x3e;&#x3d;0 &#xa;&#x7c;&#x7c; situacao.indexOf&#x28;&#x22;avalia&#xe7;&#xe3;o do relat&#xf3;rio&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;plente &#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;pl&#xea;ncia &#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;Exe&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;Exp&#x22;&#x29;&#x3e;&#x3d;0 &#xa;&#x7c;&#x7c; situacao.indexOf&#x28;&#x22;D&#xe9;bito &#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;Dili&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;Pauta de Pro&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;Pauta de Co&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;Para CJ&#x22;&#x29;&#x3e;&#x3d;0 &#xa;&#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Indica&#xe7;&#xe3;o para tomada de contas especial&#x22; &#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Instaurada Tomada de Contas Especial&#x22; &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;Prest&#x22;&#x29;&#x3e;&#x3d;0&#xa;&#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Recolhimento integral dos recursos&#x22; &#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;TCE julgada pelo TCU&#x22; &#xa;&#x2f;&#x2f; Inadimplente - N&#xe3;o atendeu a notifica&#xe7;&#xe3;o para apresentar presta&#xe7;&#xe3;o de contas &#x2f;&#x2f; Inadimplente - Proponente notificado a apresentar presta&#xe7;&#xe3;o de contas&#xa;&#x29; &#x7b;&#xa; sit &#x3d; &#x22;Finalizado&#x22; &#x3b; &#xa; cd_status_projeto &#x3d; 3&#xa;&#x7d; &#xa;&#xa;&#xa;if &#x28; situacao.indexOf&#x28;&#x22;cer t&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;Parecer &#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;Desclas&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;Despa&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;ncia  Doc&#x22;&#x29;&#x3e;&#x3d;0 &#xa;&#x7c;&#x7c; situacao.indexOf&#x28;&#x22;da CNIC&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;do - An&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;da An&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c;situacao.indexOf&#x28;&#x22;do - C&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;qua&#xe7;&#xe3;o do&#x22;&#x29;&#x3e;&#x3d;0&#xa;&#x7c;&#x7c; situacao.indexOf&#x28;&#x22;se t&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;p&#x2f;1&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;p&#x2f;A&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;o de Ava&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;Em t&#x22;&#x29;&#x3e;&#x3d;0 &#xa;&#x7c;&#x7c; situacao.indexOf&#x28;&#x22;p&#x2f;Com&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;Edital &#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;Extra&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;Projeto i&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;adequado&#x22;&#x29;&#x3e;&#x3d;0 &#xa;&#x7c;&#x7c; situacao.indexOf&#x28;&#x22;adequado&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;Projeto aprov&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Projeto cadastrado&#x22; &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;Projeto enq&#x22;&#x29;&#x3e;&#x3d;0 &#xa;&#x7c;&#x7c; situacao.indexOf&#x28;&#x22;Encaminhado&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;Pauta&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;pauta&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;Pr&#xe9;&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;Proposta&#x22;&#x29;&#x3e;&#x3d;0&#xa;&#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Reanalisar enquadramento&#x22; &#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Projeto selecionado para atendimento&#x22; &#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Projeto n&#xe3;o selecionado&#x22;&#xa;&#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Projeto apreciado pela Comiss&#xe3;o Nacional de Incentivo &#xe0; Cultura - CNIC&#x22;&#xa;&#x29;&#x7b;&#xa; sit &#x3d; &#x22;Proposta&#x22; &#x3b; &#xa; cd_status_projeto &#x3d; 1 &#xa;&#x7d; &#xa;&#xa;&#xa;if &#x28; situacao.indexOf&#x28;&#x22;Desce&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;ado Prest&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;Desta&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;iado - Pro&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;PT&#x22;&#x29;&#x3e;&#x3d;0 &#xa;&#x7c;&#x7c; situacao.indexOf&#x28;&#x22;zo de c&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Diligenciado - Readequa&#xe7;&#xe3;o - An&#xe1;lise T&#xe9;cnica&#x22; &#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Em Andamento&#x22; &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;da Com&#x22;&#x29;&#x3e;&#x3d;0 &#xa;&#x7c;&#x7c; situacao.indexOf&#x28;&#x22;nico&#x2f;fi&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;izada&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;Em d&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;Em p&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;Emp&#x22;&#x29;&#x3e;&#x3d;0 &#xa;&#x7c;&#x7c; situacao.indexOf&#x28;&#x22;tura do Sec&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;Encer&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;de ext&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;p&#x2f;C&#x22;&#x29;&#x3e;&#x3d;0 &#xa;&#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Encaminhado para inclus&#xe3;o em portaria&#x22;  &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;to de edital&#x22;&#x29;&#x3e;&#x3d;0  &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;to no edital&#x22;&#x29;&#x3e;&#x3d;0  &#xa;&#x7c;&#x7c; situacao.indexOf&#x28;&#x22;exce&#xe7;&#xe3;o de execu&#xe7;&#xe3;o&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;Projeto em an&#xe1;lise documental&#x22;&#x29;&#x3e;&#x3d;0 &#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Projeto aprovado aguardando registro na CVM&#x22; &#xa;&#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Diligenciado - Projeto aprovado - &#x28;Solicita&#xe7;&#xe3;o de Documentos&#x29;&#x22; &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;Encaminhado p&#x2f;inclus&#x22;&#x29;&#x3e;&#x3d;0&#xa;&#x7c;&#x7c; situacao &#x3d;&#x3d; &#x22;Projeto liberado para adequa&#xe7;&#xe3;o &#xe0; realidade de execu&#xe7;&#xe3;o&#x22;&#xa;&#x2f;&#x2f; &#x22;Aguardando publica&#xe7;&#xe3;o de portaria de Prorroga&#xe7;&#xe3;o&#x22; &#x2f;&#x2f;  &#xa;&#x29; &#x7b;&#xa; sit &#x3d; &#x22;Projeto em andamento&#x22; &#x3b; &#xa; cd_status_projeto &#x3d; 2&#xa;&#x7d; &#xa;&#xa;if &#x28;situacao &#x3d;&#x3d; &#x22;Projeto encerrado por excesso de prazo sem capta&#xe7;&#xe3;o&#x22; &#x7c;&#x7c; situacao.indexOf&#x28;&#x22;Projeto encerrado por excesso de prazo sem capta&#x22;&#x29;&#x3e;&#x3d;0 &#x29; &#x7b;&#xa; sit &#x3d; &#x22;Arquivado, cancelado ou indeferido&#x22; &#x3b; &#xa; cd_status_projeto &#x3d; 5&#xa;&#x7d; &#xa;&#xa;&#xa;</jsScript_script>
+      </jsScript>    </jsScripts>    <fields>      <field>        <name>sit</name>
+        <rename>sit</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>cd_status_projeto</name>
+        <rename>cd_status_projeto</rename>
+        <type>Integer</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>502</xloc>
+      <yloc>281</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Select dados</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>      <field>        <name>nome</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>cgccpf</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>PRONAC</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>valor_aprovado</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>data_termino</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>proponente</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>data_inicio</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>valor_captado</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>situacao</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>resumo</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>        <select_unspecified>N</select_unspecified>
+    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>130</xloc>
+      <yloc>136</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Select status Projeto</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>      <field>        <name>nome</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>cgccpf</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>PRONAC</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>valor_aprovado</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>data_termino</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>proponente</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>data_inicio</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>valor_captado</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>sit</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>resumo</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>cd_status_projeto</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>        <select_unspecified>N</select_unspecified>
+    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>614</xloc>
+      <yloc>283</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Select_Fonte_Projeto</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>      <field>        <name>cgccpf</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>PRONAC</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>fonte_recursos_projeto_json</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>origem_fonte_recursos_projeto</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>null_valido</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>delete_valido</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>erro_log</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>        <select_unspecified>N</select_unspecified>
+    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>860</xloc>
+      <yloc>207</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Select_Projeto</name>
+    <type>SelectValues</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <fields>      <field>        <name>cgccpf</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>PRONAC</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>cd_status_projeto</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>projeto_json</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>origem_fonte_recursos_projeto</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>tipo_identificador</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>null_valido</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>delete_valido</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>      <field>        <name>erro_log</name>
+        <rename/>
+        <length>-2</length>
+        <precision>-2</precision>
+      </field>        <select_unspecified>N</select_unspecified>
+    </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>860</xloc>
+      <yloc>284</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Sort pronac</name>
+    <type>SortRows</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <directory>&#x25;&#x25;java.io.tmpdir&#x25;&#x25;</directory>
+      <prefix>out</prefix>
+      <sort_size>1000000</sort_size>
+      <free_memory/>
+      <compress>N</compress>
+      <compress_variable/>
+      <unique_rows>N</unique_rows>
+    <fields>
+      <field>
+        <name>pronac</name>
+        <ascending>Y</ascending>
+        <case_sensitive>N</case_sensitive>
+        <presorted>N</presorted>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>220</xloc>
+      <yloc>135</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>Unique pronac</name>
+    <type>Unique</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+      <count_rows>N</count_rows>
+      <count_field/>
+      <reject_duplicate_row>N</reject_duplicate_row>
+      <error_description/>
+    <fields>      <field>        <name>pronac</name>
+        <case_insensitive>N</case_insensitive>
+        </field>      </fields>     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>313</xloc>
+      <yloc>134</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step_error_handling>
+  </step_error_handling>
+   <slave-step-copy-partition-distribution>
+</slave-step-copy-partition-distribution>
+   <slave_transformation>N</slave_transformation>
+
+</transformation>

@@ -1,4 +1,4 @@
-DROP FUNCTION IF EXISTS portal.atualizar_osc(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT, data_atualizacao TIMESTAMP, json JSONB, null_valido BOOLEAN, erro_log BOOLEAN, id_carga INTEGER);
+DROP FUNCTION IF EXISTS portal.atualizar_osc(TEXT, NUMERIC, TEXT, TIMESTAMP, JSONB, BOOLEAN, BOOLEAN, INTEGER);
 
 CREATE OR REPLACE FUNCTION portal.atualizar_osc(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT, data_atualizacao TIMESTAMP, json JSONB, null_valido BOOLEAN, erro_log BOOLEAN, id_carga INTEGER) RETURNS TABLE(
 	mensagem TEXT,
@@ -67,7 +67,7 @@ BEGIN
 			objeto.bo_osc_ativa,
 			fonte_dados.nome_fonte,
 			objeto.bo_nao_possui_projeto,
-			fonte_dados.nome_fonte,
+			fonte_dados.nome_fonte
 		) RETURNING * INTO dado_posterior;
 
 		PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, null, row_to_json(dado_posterior),id_carga);

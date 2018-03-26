@@ -25,3 +25,8 @@ WHERE tb_osc.bo_osc_ativa;
 -- ddl-end --
 ALTER MATERIALIZED VIEW portal.vw_osc_certificado OWNER TO postgres;
 -- ddl-end --
+
+CREATE UNIQUE INDEX ix_vw_osc_certificado
+    ON portal.vw_osc_certificado USING btree
+    (id_osc,id_certificado ASC NULLS LAST)
+TABLESPACE pg_default;

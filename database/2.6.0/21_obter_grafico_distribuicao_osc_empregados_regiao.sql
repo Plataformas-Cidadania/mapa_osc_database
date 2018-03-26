@@ -90,4 +90,3 @@ END;
 
 $$ LANGUAGE 'plpgsql';
 
-SELECT * FROM portal.obter_grafico_distribuicao_osc_empregados_regiao();

@@ -14,10 +14,12 @@ DECLARE
 	dado_nao_delete INTEGER[];
 	flag_update BOOLEAN;
 	osc INTEGER;
+	nao_possui BOOLEAN;
 
 BEGIN
 	nome_tabela := 'osc.tb_certificado';
 	tipo_identificador := lower(tipo_identificador);
+	nao_possui := false;
 
 	SELECT INTO fonte_dados * FROM portal.verificar_fonte(fonte);
 
@@ -63,7 +65,6 @@ BEGIN
 
 		END IF;
 
-		
 		IF objeto.cd_certificado = 7 THEN
 			objeto.cd_municipio = null;
 		ELSIF objeto.cd_certificado = 8 THEN
@@ -162,11 +163,11 @@ BEGIN
 			END IF;
 
 		END IF;
-		
+
 		IF objeto.cd_certificado = 9 THEN
-			dado_nao_delete := '{}';
-			dado_nao_delete := array_append(dado_nao_delete, dado_posterior.id_certificado);
-			EXIT;
+			nao_possui := true;
+		ELSIF nao_possui = false THEN
+			nao_possui := false;
 		END IF;
 
 	END LOOP;
@@ -183,6 +184,10 @@ BEGIN
 		END LOOP;
 	END IF;
 
+	IF nao_possui = true AND (SELECT EXISTS(SELECT * FROM osc.tb_certificado WHERE id_osc = osc AND cd_certificado != 9)) THEN
+		RAISE EXCEPTION 'nao_possui_invalido';
+	END IF;
+	
 	flag := true;
 	mensagem := 'Certificado de OSC atualizado.';
 

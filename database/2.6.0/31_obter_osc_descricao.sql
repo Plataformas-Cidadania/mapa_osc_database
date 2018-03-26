@@ -1,4 +1,4 @@
-DROP FUNCTION IF EXISTS portal.obter_osc_descricao(param TEXT);
+DROP FUNCTION IF EXISTS portal.obter_osc_descricao(TEXT);
 
 CREATE OR REPLACE FUNCTION portal.obter_osc_descricao(param TEXT) RETURNS TABLE (
 	tx_historico TEXT, 

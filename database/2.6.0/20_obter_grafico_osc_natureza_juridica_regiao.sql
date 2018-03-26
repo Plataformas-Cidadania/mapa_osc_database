@@ -33,4 +33,3 @@ END;
 
 $$ LANGUAGE 'plpgsql';
 
-SELECT * FROM portal.obter_grafico_osc_natureza_juridica_regiao();
