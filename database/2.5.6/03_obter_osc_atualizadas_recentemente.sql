@@ -8,7 +8,7 @@ CREATE OR REPLACE FUNCTION portal.obter_osc_atualizadas_recentemente(quantidade_
 BEGIN 
 	RETURN QUERY 
 		EXECUTE '
-			SELECT id_osc, tx_nome_osc 
+			SELECT * 
 			FROM portal.vw_log_alteracao 
 			LIMIT ' || quantidade_oscs;
 			

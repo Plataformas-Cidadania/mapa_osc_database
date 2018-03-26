@@ -3,25 +3,12 @@ DROP MATERIALIZED VIEW IF EXISTS portal.vw_log_alteracao CASCADE;
 CREATE MATERIALIZED VIEW portal.vw_log_alteracao
 AS
 
-SELECT 
-	tb_log_alteracao.id_osc, 
-	(SELECT tx_apelido_osc FROM portal.vw_osc_dados_gerais WHERE id_osc = tb_log_alteracao.id_osc) AS tx_apelido_osc, 
-	(SELECT tx_nome_osc FROM portal.vw_osc_dados_gerais WHERE id_osc = tb_log_alteracao.id_osc) AS tx_nome_osc, 
-	tb_log_alteracao.id_log_alteracao, 
-	tb_log_alteracao.tx_nome_tabela, 
-	tb_log_alteracao.tx_fonte_dados, 
-	tb_log_alteracao.dt_alteracao, 
-	tb_log_alteracao.tx_dado_anterior, 
-	tb_log_alteracao.tx_dado_posterior, 
-	tb_log_alteracao.id_carga 
-FROM 
-	log.tb_log_alteracao 
-WHERE tb_log_alteracao.id_log_alteracao IN (
-	SELECT MAX(id_log_alteracao) 
-	FROM log.tb_log_alteracao 
-	GROUP BY id_osc
-)
-ORDER BY tb_log_alteracao.id_log_alteracao DESC;
+SELECT DISTINCT tb_log_alteracao.id_osc, tb_log_alteracao.dt_alteracao, vw_osc_dados_gerais.tx_nome_osc 
+FROM log.tb_log_alteracao 
+LEFT JOIN portal.vw_osc_dados_gerais 
+ON tb_log_alteracao.id_osc = vw_osc_dados_gerais.id_osc 
+ORDER BY dt_alteracao DESC 
+LIMIT 10;
 
 -- ddl-end --
 ALTER MATERIALIZED VIEW portal.vw_log_alteracao OWNER TO postgres;
@@ -29,5 +16,5 @@ ALTER MATERIALIZED VIEW portal.vw_log_alteracao OWNER TO postgres;
 
 CREATE UNIQUE INDEX ix_vw_log_alteracao
     ON portal.vw_log_alteracao USING btree
-    (id_log_alteracao, id_osc, dt_alteracao ASC NULLS LAST)
+    (id_osc, dt_alteracao ASC NULLS LAST)
 TABLESPACE pg_default;
