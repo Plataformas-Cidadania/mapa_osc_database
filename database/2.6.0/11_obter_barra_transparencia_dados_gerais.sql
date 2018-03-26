@@ -19,15 +19,15 @@ BEGIN
 			dados_gerais.id_osc, 
 			(CAST(SUM(
 				(CASE WHEN NOT(dados_gerais.tx_nome_fantasia_osc IS NULL) THEN peso_campo ELSE 0 END) + 
-				(CASE WHEN (NOT(dados_gerais.tx_sigla_osc IS NULL) OR (dados_gerais.bo_nao_possui_sigla_osc IS true)) THEN peso_campo ELSE 0 END) + 
+				(CASE WHEN dados_gerais.bo_nao_possui_sigla_osc IS true OR (dados_gerais.bo_nao_possui_sigla_osc IS NOT true AND dados_gerais.tx_sigla_osc IS NOT NULL) THEN peso_campo ELSE 0 END) + 
 				(CASE WHEN NOT(dados_gerais.tx_endereco IS NULL) THEN peso_campo ELSE 0 END) + 
 				(CASE WHEN NOT(dados_gerais.tx_nome_situacao_imovel_osc IS NULL) THEN peso_campo ELSE 0 END) + 
 				(CASE WHEN NOT(dados_gerais.tx_nome_responsavel_legal IS NULL) THEN peso_campo ELSE 0 END) + 
 				(CASE WHEN NOT(dados_gerais.dt_ano_cadastro_cnpj IS NULL) THEN peso_campo ELSE 0 END) + 
 				(CASE WHEN NOT(dados_gerais.dt_fundacao_osc IS NULL) THEN peso_campo ELSE 0 END) + 
-				(CASE WHEN NOT(dados_gerais.tx_email IS NULL) THEN peso_campo ELSE 0 END) + 
+				(CASE WHEN dados_gerais.bo_nao_possui_email IS true OR (dados_gerais.bo_nao_possui_email IS NOT true AND dados_gerais.tx_email IS NOT NULL) THEN peso_campo ELSE 0 END) + 
 				(CASE WHEN NOT(dados_gerais.tx_resumo_osc IS NULL) THEN peso_campo ELSE 0 END) + 
-				(CASE WHEN NOT(dados_gerais.tx_site IS NULL) THEN peso_campo ELSE 0 END) + 
+				(CASE WHEN dados_gerais.bo_nao_possui_site IS true OR (dados_gerais.bo_nao_possui_site IS NOT true AND dados_gerais.tx_site IS NOT NULL) THEN peso_campo ELSE 0 END) + 
 				(CASE WHEN NOT(dados_gerais.tx_telefone IS NULL) THEN peso_campo ELSE 0 END) + 
 				(CASE WHEN EXISTS(SELECT * FROM portal.vw_osc_objetivo_osc WHERE vw_osc_objetivo_osc.id_osc = dados_gerais.id_osc AND cd_meta_osc IS NOT null) THEN peso_campo ELSE 0 END) + 
 				(CASE WHEN EXISTS(SELECT * FROM portal.vw_osc_objetivo_osc WHERE vw_osc_objetivo_osc.id_osc = dados_gerais.id_osc AND cd_objetivo_osc IS NOT null) THEN peso_campo ELSE 0 END)
