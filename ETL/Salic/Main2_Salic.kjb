@@ -72,8 +72,8 @@
           <variable_type>JVM</variable_type>
         </field>
         <field>
-          <variable_name>FILE</variable_name>
-          <variable_value>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;salic_dwnld.csv</variable_value>
+          <variable_name>DIR</variable_name>
+          <variable_value>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
@@ -303,7 +303,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>258</xloc>
-      <yloc>334</yloc>
+      <yloc>237</yloc>
       </entry>
   </entries>
   <hops>
@@ -330,7 +330,7 @@
       <to>Atualizar Fonte</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
@@ -339,7 +339,7 @@
       <to>Ativar trigger</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
@@ -384,7 +384,7 @@
       <to>Shell</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <evaluation>Y</evaluation>
       <unconditional>Y</unconditional>
     </hop>
@@ -393,9 +393,27 @@
       <to>Desativar trigger</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <evaluation>Y</evaluation>
       <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Criar Variaveis</from>
+      <to>Desativar trigger</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Inserir Projeto</from>
+      <to>Ativar trigger</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
     </hop>
   </hops>
   <notepads>

@@ -1,0 +1,2 @@
+ALTER TABLE osc.tb_dados_gerais DISABLE TRIGGER ALL;
+ALTER TABLE osc.tb_contato DISABLE TRIGGER ALL;
