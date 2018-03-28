@@ -3,12 +3,21 @@ DROP MATERIALIZED VIEW IF EXISTS portal.vw_log_alteracao CASCADE;
 CREATE MATERIALIZED VIEW portal.vw_log_alteracao
 AS
 
-SELECT DISTINCT tb_log_alteracao.id_osc, tb_log_alteracao.dt_alteracao, vw_osc_dados_gerais.tx_nome_osc 
-FROM log.tb_log_alteracao 
-LEFT JOIN portal.vw_osc_dados_gerais 
-ON tb_log_alteracao.id_osc = vw_osc_dados_gerais.id_osc 
-ORDER BY dt_alteracao DESC 
-LIMIT 10;
+SELECT distinct y.dt_alteracao
+     , y.id_osc
+     , vw_osc_dados_gerais.tx_nome_osc
+FROM log.tb_log_alteracao y
+JOIN
+    ( SELECT id_osc
+           , MAX(dt_alteracao) AS currentTS
+      FROM log.tb_log_alteracao
+      GROUP BY id_osc
+    ) AS grp
+  ON grp.id_osc = y.id_osc
+    AND grp.currentTS = y.dt_alteracao
+join portal.vw_osc_dados_gerais ON y.id_osc = vw_osc_dados_gerais.id_osc
+ORDER BY y.dt_alteracao DESC
+limit 10;
 
 -- ddl-end --
 ALTER MATERIALIZED VIEW portal.vw_log_alteracao OWNER TO postgres;
