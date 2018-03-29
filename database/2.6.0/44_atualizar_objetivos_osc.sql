@@ -14,12 +14,10 @@ DECLARE
 	dado_nao_delete INTEGER[];
 	flag_update BOOLEAN;
 	osc INTEGER;
-	nao_possui BOOLEAN;
 
 BEGIN
 	nome_tabela := 'osc.tb_objetivo_osc';
 	tipo_identificador := lower(tipo_identificador);
-	nao_possui := false;
 
 	SELECT INTO fonte_dados * FROM portal.verificar_fonte(fonte);
 
@@ -41,6 +39,8 @@ BEGIN
 		RAISE EXCEPTION 'permissao_negada_usuario';
 	END IF;
 
+	json = COALESCE((json->>'objetivo_metas')::JSONB, '{}'::JSONB);
+	
 	IF jsonb_typeof(json) = 'object' THEN
 		json := jsonb_build_array(json);
 	END IF;
