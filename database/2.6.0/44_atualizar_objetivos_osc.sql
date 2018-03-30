@@ -38,13 +38,11 @@ BEGIN
 	ELSIF osc != ALL(fonte_dados.representacao) THEN
 		RAISE EXCEPTION 'permissao_negada_usuario';
 	END IF;
-
-	json = COALESCE((json->>'objetivo_metas')::JSONB, '{}'::JSONB);
 	
 	IF jsonb_typeof(json) = 'object' THEN
 		json := jsonb_build_array(json);
 	END IF;
-
+	
 	FOR objeto IN (SELECT * FROM jsonb_populate_recordset(null::osc.tb_objetivo_osc, json))
 	LOOP
 		dado_anterior := null;

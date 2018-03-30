@@ -55,9 +55,10 @@ BEGIN
 		ELSIF mensagem_erro = 'prioridade_invalida' THEN
 			mensagem := 'Atualização não permitida pela prioridade das fontes de dados.';
 			status_log := 1;
-		
+		ELSE 
+			mensagem := mensagem_erro;
 		END IF;
-
+		
 		mensagem_log := mensagem;
 
 	ELSE

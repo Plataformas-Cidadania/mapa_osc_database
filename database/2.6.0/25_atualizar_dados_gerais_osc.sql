@@ -1,6 +1,6 @@
 DROP FUNCTION IF EXISTS portal.atualizar_dados_gerais_osc(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT, data_atualizacao TIMESTAMP, json JSONB, null_valido BOOLEAN, erro_log BOOLEAN, id_carga INTEGER);
 
-CREATE OR REPLACE FUNCTION portal.atualizar_dados_gerais_osc(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT, data_atualizacao TIMESTAMP, json JSONB, null_valido BOOLEAN, erro_log BOOLEAN, id_carga INTEGER) RETURNS TABLE(
+CREATE OR REPLACE FUNCTION portal.atualizar_dados_gerais_osc(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT, data_atualizacao TIMESTAMP, json JSONB, null_valido BOOLEAN, delete_valido BOOLEAN, erro_log BOOLEAN, id_carga INTEGER, tipo_busca INTEGER) RETURNS TABLE(
 	mensagem TEXT,
 	flag BOOLEAN
 )AS $$
@@ -13,6 +13,9 @@ DECLARE
 	dado_posterior RECORD;
 	flag_update BOOLEAN;
 	osc INTEGER;
+	objetivos JSONB;
+	record_contato RECORD;
+	record_objetivos RECORD;
 
 BEGIN
 	nome_tabela := 'osc.tb_dados_gerais';
@@ -233,6 +236,19 @@ BEGIN
 		END IF;
 	END IF;
 	
+	SELECT INTO record_contato * FROM portal.atualizar_contato_osc(fonte, identificador, tipo_identificador, data_atualizacao, json, null_valido, erro_log, id_carga);
+	IF record_contato.flag = false THEN 
+		mensagem := record_contato.mensagem;
+		RAISE EXCEPTION 'funcao_externa';
+	END IF;
+
+	objetivos = COALESCE((json->>'objetivo_metas')::JSONB, '{}'::JSONB);
+	SELECT INTO record_objetivos * FROM portal.atualizar_objetivos_osc(fonte, identificador, tipo_identificador, data_atualizacao, objetivos, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
+	IF record_objetivos.flag = false THEN 
+		mensagem := record_objetivos.mensagem;
+		RAISE EXCEPTION 'funcao_externa';
+	END IF;
+	
 	flag := true;
 	mensagem := 'Dados gerais de OSC atualizado.';
 	
@@ -241,9 +257,10 @@ BEGIN
 EXCEPTION
 	WHEN others THEN
 		flag := false;
-		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, identificador, data_atualizacao::TIMESTAMP, erro_log, id_carga) AS a;
-		
-		RAISE NOTICE 'mensagem: %', mensagem;
+
+		IF SQLERRM <> 'funcao_externa' THEN 
+			SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, identificador, data_atualizacao::TIMESTAMP, erro_log, id_carga) AS a;
+		END IF;
 		
 		RETURN NEXT;
 
