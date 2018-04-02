@@ -12,7 +12,7 @@ DECLARE
 
 BEGIN 
 	peso_segmento := (SELECT peso_secao FROM portal.tb_peso_barra_transparencia WHERE id_peso_barra_transparencia = 4); 
-	peso_campo := 100 / 1;
+	peso_campo := 100.0 / 1.0;
 	
 	RETURN QUERY 
         SELECT 
