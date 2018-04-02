@@ -18,7 +18,7 @@ BEGIN
         SELECT 
 			projeto.id_osc, 
 			(
-				CASE WHEN (osc.bo_nao_possui_projeto IS true) THEN 100.0 ELSE (
+				CASE WHEN (SELECT bo_nao_possui_projeto FROM osc.tb_osc WHERE tb_osc.id_osc = projeto.id_osc) THEN 100.0 ELSE (
 					CAST(SUM(
 						(CASE WHEN NOT(projeto.tx_descricao_projeto IS NULL) THEN peso_campo ELSE 0 END) + 
 						(CASE WHEN NOT(projeto.tx_nome_status_projeto IS NULL) THEN peso_campo ELSE 0 END) + 
@@ -39,8 +39,7 @@ BEGIN
 			portal.vw_osc_projeto AS projeto FULL JOIN 
 			portal.vw_osc_fonte_recursos_projeto AS fonte_recursos ON projeto.id_projeto = fonte_recursos.id_projeto FULL JOIN 
 			portal.vw_osc_publico_beneficiado_projeto AS publico_beneficiado ON projeto.id_projeto = publico_beneficiado.id_projeto FULL JOIN 
-			portal.vw_osc_objetivo_projeto AS objetivo ON projeto.id_projeto = objetivo.id_projeto FULL JOIN 
-			osc.tb_osc AS osc ON osc.id_osc = projeto.id_osc 
+			portal.vw_osc_objetivo_projeto AS objetivo ON projeto.id_projeto = objetivo.id_projeto
 		GROUP BY 
 			projeto.id_osc;
 END;
