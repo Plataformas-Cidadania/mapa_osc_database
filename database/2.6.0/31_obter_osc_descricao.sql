@@ -1,4 +1,4 @@
-DROP FUNCTION IF EXISTS portal.obter_osc_descricao(TEXT);
+DROP FUNCTION IF EXISTS portal.obter_osc_descricao(param TEXT);
 
 CREATE OR REPLACE FUNCTION portal.obter_osc_descricao(param TEXT) RETURNS TABLE (
 	tx_historico TEXT, 
@@ -15,23 +15,25 @@ CREATE OR REPLACE FUNCTION portal.obter_osc_descricao(param TEXT) RETURNS TABLE 
 ) AS $$ 
 BEGIN 
 	RETURN QUERY 
-		SELECT 
-			vw_osc_descricao.tx_historico, 
-			vw_osc_descricao.ft_historico, 
-			vw_osc_descricao.tx_missao_osc, 
-			vw_osc_descricao.ft_missao_osc, 
-			vw_osc_descricao.tx_visao_osc, 
-			vw_osc_descricao.ft_visao_osc, 
-			vw_osc_descricao.tx_link_estatuto_osc, 
-			vw_osc_descricao.bo_nao_possui_link_estatuto_osc, 
-			vw_osc_descricao.ft_link_estatuto_osc, 
-			vw_osc_descricao.tx_finalidades_estatutarias, 
-			vw_osc_descricao.ft_finalidades_estatutarias 
-		FROM 
-			portal.vw_osc_descricao 
-		WHERE 
-			vw_osc_descricao.id_osc::TEXT = param OR 
-			vw_osc_descricao.tx_apelido_osc = param;
-	RETURN;
+		SELECT
+			tb_dados_gerais.tx_historico,
+			tb_dados_gerais.ft_historico,
+			tb_dados_gerais.tx_missao_osc,
+			tb_dados_gerais.ft_missao_osc,
+			tb_dados_gerais.tx_visao_osc,
+			tb_dados_gerais.ft_visao_osc,
+			tb_dados_gerais.tx_link_estatuto_osc,
+			tb_dados_gerais.bo_nao_possui_link_estatuto_osc, 
+			tb_dados_gerais.ft_link_estatuto_osc,
+			tb_dados_gerais.tx_finalidades_estatutarias,
+			tb_dados_gerais.ft_finalidades_estatutarias
+		FROM osc.tb_osc
+		LEFT JOIN osc.tb_dados_gerais ON tb_osc.id_osc = tb_dados_gerais.id_osc
+		WHERE tb_osc.bo_osc_ativa
+		AND (
+			tb_osc.id_osc = param::INTEGER
+			OR tb_osc.tx_apelido_osc = param
+		);
+
 END;
 $$ LANGUAGE 'plpgsql';
