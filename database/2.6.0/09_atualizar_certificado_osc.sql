@@ -108,7 +108,7 @@ BEGIN
 
 			dado_nao_delete := array_append(dado_nao_delete, dado_posterior.id_certificado);
 
-			PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, null, row_to_json(dado_posterior),id_carga);
+			PERFORM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, null, row_to_json(dado_posterior), id_carga);
 
 		ELSE
 			dado_posterior := dado_anterior;
@@ -159,7 +159,7 @@ BEGIN
 					ft_uf = dado_posterior.ft_uf
 				WHERE id_certificado = dado_posterior.id_certificado;
 
-				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior),id_carga);
+				PERFORM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior), id_carga);
 			END IF;
 
 		END IF;
@@ -178,7 +178,7 @@ BEGIN
 			IF (objeto.id_certificado != ALL(dado_nao_delete)) OR (dado_nao_delete IS null) THEN
 				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_certificado, objeto.ft_inicio_certificado, objeto.ft_fim_certificado, objeto.ft_municipio, objeto.ft_uf]) AS a) THEN
 					DELETE FROM osc.tb_certificado WHERE id_certificado = objeto.id_certificado;
-					PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(objeto), null);
+					PERFORM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(objeto), null, id_carga);
 				END IF;
 			END IF;
 		END LOOP;
