@@ -462,7 +462,7 @@
         <group>.</group>
         <length>15</length>
         <precision>0</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>ID_PROPOSTA</name>
@@ -473,7 +473,7 @@
         <group>.</group>
         <length>15</length>
         <precision>0</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>DIA</name>
@@ -484,7 +484,7 @@
         <group>.</group>
         <length>15</length>
         <precision>0</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>MES</name>
@@ -495,7 +495,7 @@
         <group>.</group>
         <length>15</length>
         <precision>0</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>ANO</name>
@@ -506,7 +506,7 @@
         <group>.</group>
         <length>15</length>
         <precision>0</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>DIA_ASSIN_CONV</name>
@@ -517,7 +517,7 @@
         <group>.</group>
         <length>-1</length>
         <precision>-1</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>SIT_CONVENIO</name>
@@ -526,20 +526,20 @@
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>44</length>
+        <length>61</length>
         <precision>-1</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>SUBSITUACAO_CONV</name>
         <type>String</type>
-        <format>yyyy&#x2f;MM&#x2f;dd HH&#x3a;mm&#x3a;ss.SSS</format>
+        <format/>
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>-1</length>
+        <length>30</length>
         <precision>-1</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>SITUACAO_PUBLICACAO</name>
@@ -550,7 +550,7 @@
         <group>.</group>
         <length>9</length>
         <precision>-1</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>INSTRUMENTO_ATIVO</name>
@@ -561,7 +561,7 @@
         <group>.</group>
         <length>3</length>
         <precision>-1</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>IND_OPERA_OBTV</name>
@@ -572,7 +572,7 @@
         <group>.</group>
         <length>3</length>
         <precision>-1</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>NR_PROCESSO</name>
@@ -581,9 +581,9 @@
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>21</length>
+        <length>20</length>
         <precision>-1</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>UG_EMITENTE</name>
@@ -594,7 +594,7 @@
         <group>.</group>
         <length>15</length>
         <precision>0</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>DIA_PUBL_CONV</name>
@@ -605,7 +605,7 @@
         <group>.</group>
         <length>-1</length>
         <precision>-1</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>DIA_INIC_VIGENC_CONV</name>
@@ -616,7 +616,7 @@
         <group>.</group>
         <length>-1</length>
         <precision>-1</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>DIA_FIM_VIGENC_CONV</name>
@@ -627,7 +627,7 @@
         <group>.</group>
         <length>-1</length>
         <precision>-1</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>DIAS_PREST_CONTAS</name>
@@ -638,7 +638,7 @@
         <group>.</group>
         <length>15</length>
         <precision>0</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>DIA_LIMITE_PREST_CONTAS</name>
@@ -649,7 +649,7 @@
         <group>.</group>
         <length>-1</length>
         <precision>-1</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>SITUACAO_CONTRATACAO</name>
@@ -660,7 +660,18 @@
         <group>.</group>
         <length>19</length>
         <precision>-1</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>IND_ASSINADO</name>
+        <type>String</type>
+        <format/>
+        <currency>R&#x24;</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>3</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>QTDE_CONVENIOS</name>
@@ -671,7 +682,7 @@
         <group>.</group>
         <length>15</length>
         <precision>0</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>QTD_TA</name>
@@ -682,7 +693,7 @@
         <group>.</group>
         <length>15</length>
         <precision>0</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>QTD_PRORROGA</name>
@@ -693,7 +704,7 @@
         <group>.</group>
         <length>15</length>
         <precision>0</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>VL_GLOBAL_CONV</name>
@@ -704,7 +715,7 @@
         <group>.</group>
         <length>15</length>
         <precision>2</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>VL_REPASSE_CONV</name>
@@ -715,7 +726,7 @@
         <group>.</group>
         <length>15</length>
         <precision>2</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>VL_CONTRAPARTIDA_CONV</name>
@@ -726,7 +737,7 @@
         <group>.</group>
         <length>15</length>
         <precision>2</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>VL_EMPENHADO_CONV</name>
@@ -737,7 +748,7 @@
         <group>.</group>
         <length>15</length>
         <precision>2</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>VL_DESEMBOLSADO_CONV</name>
@@ -748,7 +759,7 @@
         <group>.</group>
         <length>15</length>
         <precision>2</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>VL_SALDO_REMAN_TESOURO</name>
@@ -759,7 +770,7 @@
         <group>.</group>
         <length>15</length>
         <precision>2</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>VL_SALDO_REMAN_CONVENENTE</name>
@@ -770,18 +781,18 @@
         <group>.</group>
         <length>15</length>
         <precision>2</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>VL_RENDIMENTO_APLICACAO</name>
         <type>String</type>
-        <format>yyyy&#x2f;MM&#x2f;dd HH&#x3a;mm&#x3a;ss.SSS</format>
+        <format>&#x23;.&#x23;</format>
         <currency>R&#x24;</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
+        <length>15</length>
+        <precision>2</precision>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>VL_INGRESSO_CONTRAPARTIDA</name>
@@ -792,7 +803,7 @@
         <group>.</group>
         <length>15</length>
         <precision>2</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
     </fields>
      <cluster_schema/>
@@ -1201,7 +1212,7 @@
         <group>.</group>
         <length>15</length>
         <precision>0</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>UF_PROPONENTE</name>
@@ -1212,7 +1223,7 @@
         <group>.</group>
         <length>2</length>
         <precision>-1</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>MUNIC_PROPONENTE</name>
@@ -1223,7 +1234,7 @@
         <group>.</group>
         <length>25</length>
         <precision>-1</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>COD_MUNIC_IBGE</name>
@@ -1234,7 +1245,7 @@
         <group>.</group>
         <length>15</length>
         <precision>0</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>COD_ORGAO_SUP</name>
@@ -1245,7 +1256,7 @@
         <group>.</group>
         <length>15</length>
         <precision>0</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>DESC_ORGAO_SUP</name>
@@ -1256,7 +1267,7 @@
         <group>.</group>
         <length>59</length>
         <precision>-1</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>NATUREZA_JURIDICA</name>
@@ -1267,7 +1278,7 @@
         <group>.</group>
         <length>53</length>
         <precision>-1</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>NR_PROPOSTA</name>
@@ -1278,7 +1289,7 @@
         <group>.</group>
         <length>8</length>
         <precision>-1</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>DIA_PROP</name>
@@ -1289,7 +1300,7 @@
         <group>.</group>
         <length>15</length>
         <precision>0</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>MES_PROP</name>
@@ -1300,7 +1311,7 @@
         <group>.</group>
         <length>15</length>
         <precision>0</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>ANO_PROP</name>
@@ -1311,7 +1322,7 @@
         <group>.</group>
         <length>15</length>
         <precision>0</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>DIA_PROPOSTA</name>
@@ -1322,7 +1333,7 @@
         <group>.</group>
         <length>-1</length>
         <precision>-1</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>COD_ORGAO</name>
@@ -1333,7 +1344,7 @@
         <group>.</group>
         <length>15</length>
         <precision>0</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>DESC_ORGAO</name>
@@ -1344,7 +1355,7 @@
         <group>.</group>
         <length>59</length>
         <precision>-1</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>MODALIDADE</name>
@@ -1355,7 +1366,7 @@
         <group>.</group>
         <length>19</length>
         <precision>-1</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>IDENTIF_PROPONENTE</name>
@@ -1366,7 +1377,7 @@
         <group>.</group>
         <length>15</length>
         <precision>0</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>NM_PROPONENTE</name>
@@ -1377,7 +1388,7 @@
         <group>.</group>
         <length>101</length>
         <precision>-1</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>CEP_PROPONENTE</name>
@@ -1388,7 +1399,7 @@
         <group>.</group>
         <length>15</length>
         <precision>0</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>ENDERECO_PROPONENTE</name>
@@ -1399,7 +1410,7 @@
         <group>.</group>
         <length>125</length>
         <precision>-1</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>BAIRRO_PROPONENTE</name>
@@ -1410,7 +1421,7 @@
         <group>.</group>
         <length>16</length>
         <precision>-1</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>NM_BANCO</name>
@@ -1421,7 +1432,7 @@
         <group>.</group>
         <length>23</length>
         <precision>-1</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>SITUACAO_CONTA</name>
@@ -1432,7 +1443,7 @@
         <group>.</group>
         <length>11</length>
         <precision>-1</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>SITUACAO_PROJETO_BASICO</name>
@@ -1443,7 +1454,7 @@
         <group>.</group>
         <length>14</length>
         <precision>-1</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>SIT_PROPOSTA</name>
@@ -1454,7 +1465,7 @@
         <group>.</group>
         <length>55</length>
         <precision>-1</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>DIA_INIC_VIGENCIA_PROPOSTA</name>
@@ -1465,7 +1476,7 @@
         <group>.</group>
         <length>-1</length>
         <precision>-1</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>DIA_FIM_VIGENCIA_PROPOSTA</name>
@@ -1476,7 +1487,7 @@
         <group>.</group>
         <length>-1</length>
         <precision>-1</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>OBJETO_PROPOSTA</name>
@@ -1487,7 +1498,7 @@
         <group>.</group>
         <length>3811</length>
         <precision>-1</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>VL_GLOBAL_PROP</name>
@@ -1498,7 +1509,7 @@
         <group>.</group>
         <length>15</length>
         <precision>2</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>VL_REPASSE_PROP</name>
@@ -1509,7 +1520,7 @@
         <group>.</group>
         <length>15</length>
         <precision>2</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
       <field>
         <name>VL_CONTRAPARTIDA_PROP</name>
@@ -1520,7 +1531,7 @@
         <group>.</group>
         <length>15</length>
         <precision>2</precision>
-        <trim_type>both</trim_type>
+        <trim_type>none</trim_type>
       </field>
     </fields>
      <cluster_schema/>
@@ -1734,7 +1745,7 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <separator>&#x3b;</separator>
+    <separator>&#x7c;</separator>
     <enclosure>&#x22;</enclosure>
     <enclosure_forced>N</enclosure_forced>
     <enclosure_fix_disabled>N</enclosure_fix_disabled>
@@ -1761,7 +1772,7 @@
       <SpecifyFormat>N</SpecifyFormat>
       <date_time_format/>
       <add_to_result_filenames>Y</add_to_result_filenames>
-      <pad>N</pad>
+      <pad>Y</pad>
       <fast_dump>N</fast_dump>
       <splitevery>0</splitevery>
     </file>
@@ -1769,7 +1780,7 @@
       <field>
         <name>&#xfeff;ID_PROPOSTA</name>
         <type>String</type>
-        <format>&#x23;</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -1805,7 +1816,7 @@
       <field>
         <name>COD_MUNIC_IBGE</name>
         <type>String</type>
-        <format>&#x23;</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -1817,7 +1828,7 @@
       <field>
         <name>COD_ORGAO_SUP</name>
         <type>String</type>
-        <format>&#x23;</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -1865,7 +1876,7 @@
       <field>
         <name>DIA_PROP</name>
         <type>String</type>
-        <format>&#x23;</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -1877,7 +1888,7 @@
       <field>
         <name>MES_PROP</name>
         <type>String</type>
-        <format>&#x23;</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -1889,7 +1900,7 @@
       <field>
         <name>ANO_PROP</name>
         <type>String</type>
-        <format>&#x23;</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -1901,7 +1912,7 @@
       <field>
         <name>DIA_PROPOSTA</name>
         <type>String</type>
-        <format>dd&#x2f;MM&#x2f;yyyy</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -1913,7 +1924,7 @@
       <field>
         <name>COD_ORGAO</name>
         <type>String</type>
-        <format>&#x23;</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -1949,7 +1960,7 @@
       <field>
         <name>IDENTIF_PROPONENTE</name>
         <type>String</type>
-        <format>&#x23;</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -1973,7 +1984,7 @@
       <field>
         <name>CEP_PROPONENTE</name>
         <type>String</type>
-        <format>&#x23;</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -2057,7 +2068,7 @@
       <field>
         <name>DIA_INIC_VIGENCIA_PROPOSTA</name>
         <type>String</type>
-        <format>dd&#x2f;MM&#x2f;yyyy</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -2069,7 +2080,7 @@
       <field>
         <name>DIA_FIM_VIGENCIA_PROPOSTA</name>
         <type>String</type>
-        <format>dd&#x2f;MM&#x2f;yyyy</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -2093,7 +2104,7 @@
       <field>
         <name>VL_GLOBAL_PROP</name>
         <type>String</type>
-        <format>&#x23;.&#x23;</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -2105,7 +2116,7 @@
       <field>
         <name>VL_REPASSE_PROP</name>
         <type>String</type>
-        <format>&#x23;.&#x23;</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -2117,7 +2128,7 @@
       <field>
         <name>VL_CONTRAPARTIDA_PROP</name>
         <type>String</type>
-        <format>&#x23;.&#x23;</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -2129,7 +2140,7 @@
       <field>
         <name>&#xfeff;NR_CONVENIO</name>
         <type>String</type>
-        <format>&#x23;</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -2141,7 +2152,7 @@
       <field>
         <name>ID_PROPOSTA</name>
         <type>String</type>
-        <format>&#x23;</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -2153,7 +2164,7 @@
       <field>
         <name>DIA</name>
         <type>String</type>
-        <format>&#x23;</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -2165,7 +2176,7 @@
       <field>
         <name>MES</name>
         <type>String</type>
-        <format>&#x23;</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -2177,7 +2188,7 @@
       <field>
         <name>ANO</name>
         <type>String</type>
-        <format>&#x23;</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -2189,7 +2200,7 @@
       <field>
         <name>DIA_ASSIN_CONV</name>
         <type>String</type>
-        <format>dd&#x2f;MM&#x2f;yyyy</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -2213,7 +2224,7 @@
       <field>
         <name>SUBSITUACAO_CONV</name>
         <type>String</type>
-        <format>yyyy&#x2f;MM&#x2f;dd HH&#x3a;mm&#x3a;ss.SSS</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -2273,7 +2284,7 @@
       <field>
         <name>UG_EMITENTE</name>
         <type>String</type>
-        <format>&#x23;</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -2285,7 +2296,7 @@
       <field>
         <name>DIA_PUBL_CONV</name>
         <type>String</type>
-        <format>dd&#x2f;MM&#x2f;yyyy</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -2297,7 +2308,7 @@
       <field>
         <name>DIA_INIC_VIGENC_CONV</name>
         <type>String</type>
-        <format>dd&#x2f;MM&#x2f;yyyy</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -2309,7 +2320,7 @@
       <field>
         <name>DIA_FIM_VIGENC_CONV</name>
         <type>String</type>
-        <format>dd&#x2f;MM&#x2f;yyyy</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -2321,7 +2332,7 @@
       <field>
         <name>DIAS_PREST_CONTAS</name>
         <type>String</type>
-        <format>&#x23;</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -2333,7 +2344,7 @@
       <field>
         <name>DIA_LIMITE_PREST_CONTAS</name>
         <type>String</type>
-        <format>dd&#x2f;MM&#x2f;yyyy</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -2357,7 +2368,7 @@
       <field>
         <name>QTDE_CONVENIOS</name>
         <type>String</type>
-        <format>&#x23;</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -2369,7 +2380,7 @@
       <field>
         <name>QTD_TA</name>
         <type>String</type>
-        <format>&#x23;</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -2381,7 +2392,7 @@
       <field>
         <name>QTD_PRORROGA</name>
         <type>String</type>
-        <format>&#x23;</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -2393,7 +2404,7 @@
       <field>
         <name>VL_GLOBAL_CONV</name>
         <type>String</type>
-        <format>&#x23;.&#x23;</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -2405,7 +2416,7 @@
       <field>
         <name>VL_REPASSE_CONV</name>
         <type>String</type>
-        <format>&#x23;.&#x23;</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -2417,7 +2428,7 @@
       <field>
         <name>VL_CONTRAPARTIDA_CONV</name>
         <type>String</type>
-        <format>&#x23;.&#x23;</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -2429,7 +2440,7 @@
       <field>
         <name>VL_EMPENHADO_CONV</name>
         <type>String</type>
-        <format>&#x23;.&#x23;</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -2441,7 +2452,7 @@
       <field>
         <name>VL_DESEMBOLSADO_CONV</name>
         <type>String</type>
-        <format>&#x23;.&#x23;</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -2453,7 +2464,7 @@
       <field>
         <name>VL_SALDO_REMAN_TESOURO</name>
         <type>String</type>
-        <format>&#x23;.&#x23;</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -2465,7 +2476,7 @@
       <field>
         <name>VL_SALDO_REMAN_CONVENENTE</name>
         <type>String</type>
-        <format>&#x23;.&#x23;</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -2477,7 +2488,7 @@
       <field>
         <name>VL_RENDIMENTO_APLICACAO</name>
         <type>String</type>
-        <format>yyyy&#x2f;MM&#x2f;dd HH&#x3a;mm&#x3a;ss.SSS</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>
@@ -2489,7 +2500,7 @@
       <field>
         <name>VL_INGRESSO_CONTRAPARTIDA</name>
         <type>String</type>
-        <format>&#x23;.&#x23;</format>
+        <format/>
         <currency/>
         <decimal/>
         <group/>

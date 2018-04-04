@@ -20,7 +20,7 @@
     <database>&#x24;&#x7b;db_name&#x7d;</database>
     <port>&#x24;&#x7b;db_port&#x7d;</port>
     <username>&#x24;&#x7b;db_user&#x7d;</username>
-    <password>&#x24;&#x7b;db_user&#x7d;</password>
+    <password>&#x24;&#x7b;db_pass&#x7d;</password>
     <servername/>
     <data_tablespace/>
     <index_tablespace/>
@@ -361,6 +361,31 @@
         <field>
           <variable_name>PROPOSTAS_CSV</variable_name>
           <variable_value>&#x24;&#x7b;PROPOSTAS_CSV&#x7d;</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>db_host</variable_name>
+          <variable_value>localhost</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>db_name</variable_name>
+          <variable_value>portalosc_homologa_050318</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>db_port</variable_name>
+          <variable_value>5432</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>db_user</variable_name>
+          <variable_value>postgres</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>db_pass</variable_name>
+          <variable_value>ipearj</variable_value>
           <variable_type>JVM</variable_type>
         </field>
       </fields>
