@@ -1001,7 +1001,7 @@
        <argument><name>OBJETO_PROPOSTA</name></argument>
        <argument><name>DIA_INIC_VIGENC_CONV</name></argument>
        <argument><name>DIA_FIM_VIGENC_CONV</name></argument>
-       <argument><name>VL_GLOBAL_CONV</name></argument>
+       <argument><name>VL_GLOBAL_CONV_1</name></argument>
        <argument><name>nome_projeto_final</name></argument>
        <argument><name>link</name></argument>
        <argument><name>IDENTIF_PROPONENTE</name></argument>
@@ -1010,7 +1010,7 @@
        <argument><name>OBJETO_PROPOSTA</name></argument>
        <argument><name>DIA_INIC_VIGENC_CONV</name></argument>
        <argument><name>DIA_FIM_VIGENC_CONV</name></argument>
-       <argument><name>VL_GLOBAL_CONV</name></argument>
+       <argument><name>VL_GLOBAL_CONV_1</name></argument>
        <argument><name>convenio</name></argument>
        <argument><name>nome_projeto_final</name></argument>
        <argument><name>link</name></argument>
@@ -1040,9 +1040,15 @@
     <optimizationLevel>9</optimizationLevel>
     <jsScripts>      <jsScript>        <jsScript_type>0</jsScript_type>
         <jsScript_name>Script 1</jsScript_name>
-        <jsScript_script>var cd_status_projeto &#x3d; null&#x3b;&#xa;&#xa;if&#x28;SIT_CONVENIO &#x3d;&#x3d; &#x27;Proposta&#x2f;Plano de Trabalho Aprovado&#x27;&#x29;&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 1&#x3b;&#xa;&#x7d;&#xa;else if&#x28;SIT_CONVENIO &#x3d;&#x3d; &#x27;Proposta&#x2f;Plano de Trabalho Complementado Enviado para An&#xe1;lise&#x27;&#x29;&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 1&#x3b;&#xa;&#x7d;&#xa;else if&#x28;SIT_CONVENIO &#x3d;&#x3d; &#x27;Em execu&#xe7;&#xe3;o&#x27;&#x29;&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 2&#x3b;&#xa;&#x7d;&#xa;else if&#x28;SIT_CONVENIO &#x3d;&#x3d; &#x27;Assinado&#x27;&#x29;&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 2&#x3b;&#xa;&#x7d;&#xa;else if&#x28;SIT_CONVENIO &#x3d;&#x3d; &#x27;Assinado Pendente Registro TV Siafi&#x27;&#x29;&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 2&#x3b;&#xa;&#x7d;&#xa;else if&#x28;SIT_CONVENIO &#x3d;&#x3d; &#x27;Inadimplente&#x27;&#x29;&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 3&#x3b;&#xa;&#x7d;&#xa;else if&#x28;SIT_CONVENIO &#x3d;&#x3d; &#x27;Aguardando Presta&#xe7;&#xe3;o de Contas&#x27;&#x29;&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 3&#x3b;&#xa;&#x7d;&#xa;else if&#x28;SIT_CONVENIO &#x3d;&#x3d; &#x27;Presta&#xe7;&#xe3;o de Contas Aprovada&#x27;&#x29;&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 3&#x3b;&#xa;&#x7d;&#xa;else if&#x28;SIT_CONVENIO &#x3d;&#x3d; &#x27;Presta&#xe7;&#xe3;o de Contas Aprovada com Ressalvas&#x27;&#x29;&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 3&#x3b;&#xa;&#x7d;&#xa;else if&#x28;SIT_CONVENIO &#x3d;&#x3d; &#x27;Presta&#xe7;&#xe3;o de Contas em An&#xe1;lise&#x27;&#x29;&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 3&#x3b;&#xa;&#x7d;&#xa;else if&#x28;SIT_CONVENIO &#x3d;&#x3d; &#x27;Presta&#xe7;&#xe3;o de Contas em Complementa&#xe7;&#xe3;o&#x27;&#x29;&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 3&#x3b;&#xa;&#x7d;&#xa;else if&#x28;SIT_CONVENIO &#x3d;&#x3d; &#x27;Presta&#xe7;&#xe3;o de Contas enviada para An&#xe1;lise&#x27;&#x29;&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 3&#x3b;&#xa;&#x7d;&#xa;else if&#x28;SIT_CONVENIO &#x3d;&#x3d; &#x27;Presta&#xe7;&#xe3;o de Contas Iniciada Por Antecipa&#xe7;&#xe3;o&#x27;&#x29;&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 3&#x3b;&#xa;&#x7d;&#xa;else if&#x28;SIT_CONVENIO &#x3d;&#x3d; &#x27;Presta&#xe7;&#xe3;o de Contas Rejeitada&#x27;&#x29;&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 3&#x3b;&#xa;&#x7d;&#xa;else if&#x28;SIT_CONVENIO &#x3d;&#x3d; &#x27;Cancelado&#x27;&#x29;&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 5&#x3b;&#xa;&#x7d;&#xa;else if&#x28;SIT_CONVENIO &#x3d;&#x3d; &#x27;Conv&#xea;nio Anulado&#x27;&#x29;&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 5&#x3b;&#xa;&#x7d;&#xa;else&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 5&#x3b;&#xa;&#x7d;</jsScript_script>
+        <jsScript_script>var cd_status_projeto &#x3d; null&#x3b;&#xa;&#xa;if&#x28;SIT_CONVENIO &#x3d;&#x3d; &#x27;Proposta&#x2f;Plano de Trabalho Aprovado&#x27;&#x29;&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 1&#x3b;&#xa;&#x7d;&#xa;else if&#x28;SIT_CONVENIO &#x3d;&#x3d; &#x27;Proposta&#x2f;Plano de Trabalho Complementado Enviado para An&#xe1;lise&#x27;&#x29;&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 1&#x3b;&#xa;&#x7d;&#xa;else if&#x28;SIT_CONVENIO &#x3d;&#x3d; &#x27;Em execu&#xe7;&#xe3;o&#x27;&#x29;&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 2&#x3b;&#xa;&#x7d;&#xa;else if&#x28;SIT_CONVENIO &#x3d;&#x3d; &#x27;Assinado&#x27;&#x29;&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 2&#x3b;&#xa;&#x7d;&#xa;else if&#x28;SIT_CONVENIO &#x3d;&#x3d; &#x27;Assinado Pendente Registro TV Siafi&#x27;&#x29;&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 2&#x3b;&#xa;&#x7d;&#xa;else if&#x28;SIT_CONVENIO &#x3d;&#x3d; &#x27;Inadimplente&#x27;&#x29;&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 3&#x3b;&#xa;&#x7d;&#xa;else if&#x28;SIT_CONVENIO &#x3d;&#x3d; &#x27;Aguardando Presta&#xe7;&#xe3;o de Contas&#x27;&#x29;&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 3&#x3b;&#xa;&#x7d;&#xa;else if&#x28;SIT_CONVENIO &#x3d;&#x3d; &#x27;Presta&#xe7;&#xe3;o de Contas Aprovada&#x27;&#x29;&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 3&#x3b;&#xa;&#x7d;&#xa;else if&#x28;SIT_CONVENIO &#x3d;&#x3d; &#x27;Presta&#xe7;&#xe3;o de Contas Aprovada com Ressalvas&#x27;&#x29;&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 3&#x3b;&#xa;&#x7d;&#xa;else if&#x28;SIT_CONVENIO &#x3d;&#x3d; &#x27;Presta&#xe7;&#xe3;o de Contas em An&#xe1;lise&#x27;&#x29;&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 3&#x3b;&#xa;&#x7d;&#xa;else if&#x28;SIT_CONVENIO &#x3d;&#x3d; &#x27;Presta&#xe7;&#xe3;o de Contas em Complementa&#xe7;&#xe3;o&#x27;&#x29;&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 3&#x3b;&#xa;&#x7d;&#xa;else if&#x28;SIT_CONVENIO &#x3d;&#x3d; &#x27;Presta&#xe7;&#xe3;o de Contas enviada para An&#xe1;lise&#x27;&#x29;&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 3&#x3b;&#xa;&#x7d;&#xa;else if&#x28;SIT_CONVENIO &#x3d;&#x3d; &#x27;Presta&#xe7;&#xe3;o de Contas Iniciada Por Antecipa&#xe7;&#xe3;o&#x27;&#x29;&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 3&#x3b;&#xa;&#x7d;&#xa;else if&#x28;SIT_CONVENIO &#x3d;&#x3d; &#x27;Presta&#xe7;&#xe3;o de Contas Rejeitada&#x27;&#x29;&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 3&#x3b;&#xa;&#x7d;&#xa;else if&#x28;SIT_CONVENIO &#x3d;&#x3d; &#x27;Cancelado&#x27;&#x29;&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 5&#x3b;&#xa;&#x7d;&#xa;else if&#x28;SIT_CONVENIO &#x3d;&#x3d; &#x27;Conv&#xea;nio Anulado&#x27;&#x29;&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 5&#x3b;&#xa;&#x7d;&#xa;else&#xa;&#x7b;&#xa;	cd_status_projeto &#x3d; 5&#x3b;&#xa;&#x7d;&#xa;&#xa;var valor&#x3b;&#xa;if&#x28;VL_GLOBAL_CONV&#x3d;&#x3d;null&#x29;&#xa;	valor &#x3d; 0&#x3b;&#xa;else&#xa;	valor &#x3d; VL_GLOBAL_CONV&#x3b;</jsScript_script>
       </jsScript>    </jsScripts>    <fields>      <field>        <name>cd_status_projeto</name>
         <rename>cd_status_projeto</rename>
+        <type>String</type>
+        <length>-1</length>
+        <precision>-1</precision>
+        <replace>N</replace>
+      </field>      <field>        <name>valor</name>
+        <rename>VL_GLOBAL_CONV</rename>
         <type>String</type>
         <length>-1</length>
         <precision>-1</precision>
@@ -1188,7 +1194,7 @@
         <case_sensitive>no</case_sensitive>
       </field>
       <field>
-        <in_stream_name>VL_GLOBAL_CONV</in_stream_name>
+        <in_stream_name>VL_GLOBAL_CONV_1</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>,</replace_string>
