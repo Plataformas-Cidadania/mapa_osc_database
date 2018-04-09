@@ -16,8 +16,7 @@ JOIN
     ) AS grp
   ON grp.id_osc = y.id_osc
     AND grp.currentTS = y.dt_alteracao
-join portal.vw_osc_dados_gerais ON y.id_osc = vw_osc_dados_gerais.id_osc
-ORDER BY y.dt_alteracao DESC
+JOIN portal.vw_osc_dados_gerais ON y.id_osc = vw_osc_dados_gerais.id_osc
 limit 10;
 
 -- ddl-end --
