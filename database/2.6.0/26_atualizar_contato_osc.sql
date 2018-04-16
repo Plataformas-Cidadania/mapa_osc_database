@@ -107,7 +107,7 @@ BEGIN
 			IF (objeto.bo_nao_possui_email IS true) THEN
 				dado_posterior.tx_email := null;
 			END IF;
-			dado_posterior.bo_nao_possui_email := objeto.bo_nao_possui_email;
+			dado_posterior.bo_nao_possui_site := objeto.bo_nao_possui_email;
 			dado_posterior.ft_email := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
@@ -118,17 +118,17 @@ BEGIN
 			flag_update := true;
 		END IF;
 
+		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_site::TEXT, dado_anterior.ft_site, objeto.tx_site::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+			dado_posterior.tx_site := objeto.tx_site;
+			dado_posterior.ft_site := fonte_dados.nome_fonte;
+			flag_update := true;
+		END IF;
+
 		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.bo_nao_possui_site::TEXT, dado_anterior.ft_site, objeto.bo_nao_possui_site::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			IF (objeto.bo_nao_possui_site IS true) THEN
 				dado_posterior.tx_site := null;
 			END IF;
 			dado_posterior.bo_nao_possui_site := objeto.bo_nao_possui_site;
-			dado_posterior.ft_site := fonte_dados.nome_fonte;
-			flag_update := true;
-		END IF;
-
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_site::TEXT, dado_anterior.ft_site, objeto.tx_site::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
-			dado_posterior.tx_site := objeto.tx_site;
 			dado_posterior.ft_site := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
@@ -162,10 +162,12 @@ BEGIN
 			SET	tx_telefone = dado_posterior.tx_telefone,
 				ft_telefone = dado_posterior.ft_telefone,
 				tx_email = dado_posterior.tx_email,
+				bo_nao_possui_email = dado_posterior.bo_nao_possui_email,
 				ft_email = dado_posterior.ft_email,
 				nm_representante = dado_posterior.nm_representante,
 				ft_representante = dado_posterior.ft_representante,
 				tx_site = dado_posterior.tx_site,
+				bo_nao_possui_site = dado_posterior.bo_nao_possui_site,
 				ft_site = dado_posterior.ft_site,
 				tx_facebook = dado_posterior.tx_facebook,
 				ft_facebook = dado_posterior.ft_facebook,

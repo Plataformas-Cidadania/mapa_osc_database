@@ -40,17 +40,17 @@ BEGIN
 EXCEPTION 
 	WHEN not_null_violation THEN
 		flag := false;
-		mensagem := 'Campo(s) obrigatório(s) não preenchido(s) na gravação de recursos de OSC no banco de dados.';
+		mensagem := 'Campo(s) obrigatï¿½rio(s) nï¿½o preenchido(s) na gravaÃ§Ã£o de recursos de OSC no banco de dados.';
 		RETURN NEXT;
 		
 	WHEN unique_violation THEN
 		flag := false;
-		mensagem := 'Dado(s) único(s) violado(s) na gravação de recursos de OSC no banco de dados.';
+		mensagem := 'Dado(s) ï¿½nico(s) violado(s) na gravaÃ§Ã£o de recursos de OSC no banco de dados.';
 		RETURN NEXT;
 		
 	WHEN others THEN 
 		flag := false;
-		mensagem := 'Ocorreu um erro na gravação de recursos de OSC no banco de dados.';
+		mensagem := 'Ocorreu um erro na gravaÃ§Ã£o de recursos de OSC no banco de dados.';
 		RETURN NEXT;
 
 END;
