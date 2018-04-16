@@ -15,7 +15,6 @@ DECLARE
 	osc INTEGER;
 
 BEGIN
-	RAISE NOTICE '%', nome_tabela;
 	nome_tabela := 'osc.tb_dados_gerais';
 	tipo_identificador := lower(tipo_identificador);
 
@@ -32,7 +31,7 @@ BEGIN
 	ELSE
 		RAISE EXCEPTION 'tipo_identificador_invalido';
 	END IF;
-	
+
 	IF osc IS null THEN
 		RAISE EXCEPTION 'osc_nao_encontrada';
 	ELSIF osc != ALL(fonte_dados.representacao) THEN
@@ -42,7 +41,7 @@ BEGIN
 	SELECT INTO objeto * FROM jsonb_populate_record(null::osc.tb_dados_gerais, json);
 
 	SELECT INTO dado_anterior * FROM osc.tb_dados_gerais WHERE id_osc = osc;
-	
+
 	IF dado_anterior.id_osc IS null THEN
 		INSERT INTO osc.tb_dados_gerais (
 			id_osc,
@@ -90,22 +89,6 @@ BEGIN
 			flag_update := true;
 		END IF;
 		
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.bo_nao_possui_link_estatuto_osc::TEXT, dado_anterior.ft_sigla_osc, objeto.bo_nao_possui_link_estatuto_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
-			IF (objeto.bo_nao_possui_link_estatuto_osc IS true) THEN
-				dado_posterior.tx_link_estatuto_osc := null;
-				dado_posterior.bo_nao_possui_link_estatuto_osc := objeto.bo_nao_possui_link_estatuto_osc;
-				dado_posterior.ft_sigla_osc := fonte_dados.nome_fonte;
-			ELSE 
-				IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_link_estatuto_osc::TEXT, dado_anterior.ft_sigla_osc, objeto.tx_link_estatuto_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
-					dado_posterior.tx_link_estatuto_osc := objeto.tx_link_estatuto_osc;
-					dado_posterior.bo_nao_possui_link_estatuto_osc := false;
-					dado_posterior.ft_sigla_osc := fonte_dados.nome_fonte;
-					flag_update := true;
-				END IF;
-			END IF;
-			flag_update := true;
-		END IF;
-		
 		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_historico::TEXT, dado_anterior.ft_historico, objeto.tx_historico::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			dado_posterior.tx_historico := objeto.tx_historico;
 			dado_posterior.ft_historico := fonte_dados.nome_fonte;
@@ -116,6 +99,27 @@ BEGIN
 			dado_posterior.tx_finalidades_estatutarias := objeto.tx_finalidades_estatutarias;
 			dado_posterior.ft_finalidades_estatutarias := fonte_dados.nome_fonte;
 			flag_update := true;
+		END IF;		
+		
+		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_link_estatuto_osc::TEXT, dado_anterior.ft_link_estatuto_osc, objeto.tx_link_estatuto_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+			dado_posterior.tx_link_estatuto_osc := objeto.tx_link_estatuto_osc;
+			dado_posterior.ft_link_estatuto_osc := fonte_dados.nome_fonte;
+			flag_update := true;
+		END IF;
+		
+		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.bo_nao_possui_link_estatuto_osc::TEXT, dado_anterior.ft_link_estatuto_osc, objeto.bo_nao_possui_link_estatuto_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+			IF (objeto.bo_nao_possui_link_estatuto_osc IS true) THEN
+				IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_link_estatuto_osc::TEXT, dado_anterior.ft_link_estatuto_osc, null::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+					dado_posterior.tx_link_estatuto_osc := null;
+					dado_posterior.bo_nao_possui_link_estatuto_osc := true;
+					dado_posterior.ft_link_estatuto_osc := fonte_dados.nome_fonte;
+					flag_update := true;
+				END IF;				
+			ELSE
+				dado_posterior.bo_nao_possui_link_estatuto_osc := false;
+				dado_posterior.ft_link_estatuto_osc := fonte_dados.nome_fonte;
+				flag_update := true;	
+			END IF;
 		END IF;
 
 		IF flag_update THEN
@@ -124,11 +128,11 @@ BEGIN
 				ft_missao_osc = dado_posterior.ft_missao_osc,
 				tx_visao_osc = dado_posterior.tx_visao_osc,
 				ft_visao_osc = dado_posterior.ft_visao_osc,
+				tx_historico = dado_posterior.tx_historico,
+				ft_historico = dado_posterior.ft_historico,
 				tx_link_estatuto_osc = dado_posterior.tx_link_estatuto_osc,
 				bo_nao_possui_link_estatuto_osc = dado_posterior.bo_nao_possui_link_estatuto_osc,
-				ft_link_estatuto_osc = dado_posterior.ft_link_estatuto_osc,
-				tx_historico = dado_posterior.tx_historico,
-				ft_historico = dado_posterior.ft_historico
+				ft_link_estatuto_osc = dado_posterior.ft_link_estatuto_osc
 			WHERE id_osc = osc;
 			
 			PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior),id_carga);
