@@ -6,35 +6,39 @@ CREATE OR REPLACE FUNCTION portal.obter_osc_certificado(param TEXT) RETURNS TABL
 	tx_nome_certificado TEXT, 
 	dt_inicio_certificado TEXT, 
 	dt_fim_certificado TEXT, 
-	ft_certificado TEXT, 
-	cd_municipio NUMERIC, 
-	tx_municipio CHARACTER VARYING, 
+	cd_municipio INTEGER, 
+	tx_municipio TEXT, 
 	ft_municipio TEXT, 
-	cd_uf NUMERIC, 
-	tx_uf CHARACTER VARYING, 
+	cd_uf INTEGER, 
+	tx_uf TEXT, 
 	ft_uf TEXT, 
+	ft_certificado TEXT, 
 	bo_oficial BOOLEAN
 ) AS $$ 
 BEGIN 
 	RETURN QUERY 
-		SELECT 
-			vw_osc_certificado.id_certificado, 
-			vw_osc_certificado.cd_certificado, 
-			vw_osc_certificado.tx_nome_certificado, 
-			vw_osc_certificado.dt_inicio_certificado, 
-			vw_osc_certificado.dt_fim_certificado, 
-			vw_osc_certificado.ft_certificado, 
-			vw_osc_certificado.cd_municipio, 
-			vw_osc_certificado.tx_municipio, 
-			vw_osc_certificado.ft_municipio, 
-			vw_osc_certificado.cd_uf, 
-			vw_osc_certificado.tx_uf, 
-			vw_osc_certificado.ft_uf, 
-			vw_osc_certificado.bo_oficial 
-		FROM portal.vw_osc_certificado 
-		WHERE 
-			vw_osc_certificado.id_osc::TEXT = param OR 
-			vw_osc_certificado.tx_apelido_osc = param;
-	RETURN;
+		SELECT
+			tb_certificado.id_certificado,
+			tb_certificado.cd_certificado::INTEGER,
+			dc_certificado.tx_nome_certificado,
+			TO_CHAR(tb_certificado.dt_inicio_certificado, 'DD-MM-YYYY') AS dt_inicio_certificado,
+			TO_CHAR(tb_certificado.dt_fim_certificado, 'DD-MM-YYYY') AS dt_fim_certificado,
+			tb_certificado.cd_municipio::INTEGER,
+			(SELECT ed_municipio.edmu_nm_municipio || ' - ' || ed_uf.eduf_sg_uf FROM spat.ed_municipio LEFT JOIN spat.ed_uf ON ed_municipio.eduf_cd_uf = ed_uf.eduf_cd_uf WHERE edmu_cd_municipio = tb_certificado.cd_municipio) AS tx_municipio,
+			tb_certificado.ft_municipio,
+			tb_certificado.cd_uf::INTEGER,
+			(SELECT eduf_nm_uf FROM spat.ed_uf WHERE eduf_cd_uf = tb_certificado.cd_uf)::TEXT AS tx_uf,
+			tb_certificado.ft_uf,
+			tb_certificado.ft_certificado,
+			tb_certificado.bo_oficial
+		FROM osc.tb_osc
+		LEFT JOIN osc.tb_certificado ON tb_osc.id_osc = tb_certificado.id_osc
+		LEFT JOIN syst.dc_certificado ON tb_certificado.cd_certificado = dc_certificado.cd_certificado
+		WHERE tb_osc.bo_osc_ativa
+		AND (
+			tb_osc.id_osc = param::INTEGER
+			OR tb_osc.tx_apelido_osc = param
+		);
+		
 END;
 $$ LANGUAGE 'plpgsql';
