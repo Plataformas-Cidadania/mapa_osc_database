@@ -105,11 +105,17 @@ BEGIN
 
 		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.bo_nao_possui_email::TEXT, dado_anterior.ft_email, objeto.bo_nao_possui_email::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			IF (objeto.bo_nao_possui_email IS true) THEN
-				dado_posterior.tx_email := null;
+				IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_email::TEXT, dado_anterior.ft_email, null::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+					dado_posterior.tx_email := null;
+					dado_posterior.bo_nao_possui_email := true;
+					dado_posterior.ft_email := fonte_dados.nome_fonte;
+					flag_update := true;
+				END IF;				
+			ELSE
+				dado_posterior.bo_nao_possui_email := false;
+				dado_posterior.ft_email := fonte_dados.nome_fonte;
+				flag_update := true;	
 			END IF;
-			dado_posterior.bo_nao_possui_site := objeto.bo_nao_possui_email;
-			dado_posterior.ft_email := fonte_dados.nome_fonte;
-			flag_update := true;
 		END IF;
 
 		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.nm_representante::TEXT, dado_anterior.ft_representante, objeto.nm_representante::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
@@ -126,11 +132,17 @@ BEGIN
 
 		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.bo_nao_possui_site::TEXT, dado_anterior.ft_site, objeto.bo_nao_possui_site::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			IF (objeto.bo_nao_possui_site IS true) THEN
-				dado_posterior.tx_site := null;
+				IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_site::TEXT, dado_anterior.ft_site, null::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+					dado_posterior.tx_site := null;
+					dado_posterior.bo_nao_possui_site := true;
+					dado_posterior.ft_site := fonte_dados.nome_fonte;
+					flag_update := true;
+				END IF;				
+			ELSE
+				dado_posterior.bo_nao_possui_site := false;
+				dado_posterior.ft_site := fonte_dados.nome_fonte;
+				flag_update := true;	
 			END IF;
-			dado_posterior.bo_nao_possui_site := objeto.bo_nao_possui_site;
-			dado_posterior.ft_site := fonte_dados.nome_fonte;
-			flag_update := true;
 		END IF;
 
 		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_facebook::TEXT, dado_anterior.ft_facebook, objeto.tx_facebook::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN

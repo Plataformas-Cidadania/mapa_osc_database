@@ -154,20 +154,25 @@ BEGIN
 			flag_update := true;
 		END IF;
 		
+		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_sigla_osc::TEXT, dado_anterior.ft_sigla_osc, objeto.tx_sigla_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+			dado_posterior.tx_sigla_osc := objeto.tx_sigla_osc;
+			dado_posterior.ft_sigla_osc := fonte_dados.nome_fonte;
+			flag_update := true;
+		END IF;
+		
 		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.bo_nao_possui_sigla_osc::TEXT, dado_anterior.ft_sigla_osc, objeto.bo_nao_possui_sigla_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 			IF (objeto.bo_nao_possui_sigla_osc IS true) THEN
-				dado_posterior.tx_sigla_osc := null;
-				dado_posterior.bo_nao_possui_sigla_osc := objeto.bo_nao_possui_sigla_osc;
-				dado_posterior.ft_sigla_osc := fonte_dados.nome_fonte;
-			ELSE 
-				IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_sigla_osc::TEXT, dado_anterior.ft_sigla_osc, objeto.tx_sigla_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
-					dado_posterior.tx_sigla_osc := objeto.tx_sigla_osc;
-					dado_posterior.bo_nao_possui_sigla_osc := false;
+				IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_sigla_osc::TEXT, dado_anterior.ft_sigla_osc, null::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+					dado_posterior.tx_sigla_osc := null;
+					dado_posterior.bo_nao_possui_sigla_osc := true;
 					dado_posterior.ft_sigla_osc := fonte_dados.nome_fonte;
 					flag_update := true;
-				END IF;
+				END IF;				
+			ELSE
+				dado_posterior.bo_nao_possui_sigla_osc := false;
+				dado_posterior.ft_sigla_osc := fonte_dados.nome_fonte;
+				flag_update := true;	
 			END IF;
-			flag_update := true;
 		END IF;
 		
 		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_resumo_osc::TEXT, dado_anterior.ft_resumo_osc, objeto.tx_resumo_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
