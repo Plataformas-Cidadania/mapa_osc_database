@@ -14,6 +14,7 @@ DECLARE
 	flag_update BOOLEAN;
 	osc INTEGER;
 	objetivos JSONB;
+	record_apelido RECORD;
 	record_contato RECORD;
 	record_objetivos RECORD;
 
@@ -239,6 +240,12 @@ BEGIN
 			PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior),id_carga);
 			
 		END IF;
+	END IF;
+	
+	SELECT INTO record_apelido * FROM portal.atualizar_apelido_osc(fonte, identificador, tipo_identificador, data_atualizacao, json, null_valido, erro_log, id_carga);
+	IF record_apelido.flag = false THEN 
+		mensagem := record_apelido.mensagem;
+		RAISE EXCEPTION 'funcao_externa';
 	END IF;
 	
 	SELECT INTO record_contato * FROM portal.atualizar_contato_osc(fonte, identificador, tipo_identificador, data_atualizacao, json, null_valido, erro_log, id_carga);
