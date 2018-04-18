@@ -130,6 +130,8 @@ BEGIN
 				ft_visao_osc = dado_posterior.ft_visao_osc,
 				tx_historico = dado_posterior.tx_historico,
 				ft_historico = dado_posterior.ft_historico,
+				tx_finalidades_estatutarias = dado_posterior.tx_finalidades_estatutarias,
+				ft_finalidades_estatutarias = dado_posterior.ft_finalidades_estatutarias,
 				tx_link_estatuto_osc = dado_posterior.tx_link_estatuto_osc,
 				bo_nao_possui_link_estatuto_osc = dado_posterior.bo_nao_possui_link_estatuto_osc,
 				ft_link_estatuto_osc = dado_posterior.ft_link_estatuto_osc
