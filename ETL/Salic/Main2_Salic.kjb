@@ -68,7 +68,7 @@
       <fields>
         <field>
           <variable_name>FONTE_CARGA</variable_name>
-          <variable_value>SALICWEB&#x2f;MINC 03&#x2f;2018</variable_value>
+          <variable_value>SALICWEB&#x2f;MINC 04&#x2f;2018</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
@@ -109,47 +109,14 @@
       <yloc>335</yloc>
       </entry>
     <entry>
-      <name>Inserir Projeto</name>
-      <description/>
-      <type>TRANS</type>
-      <specification_method>filename</specification_method>
-      <trans_object_id/>
-      <filename>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;Trans2_Salic.ktr</filename>
-      <transname/>
-      <arg_from_previous>N</arg_from_previous>
-      <params_from_previous>Y</params_from_previous>
-      <exec_per_row>N</exec_per_row>
-      <clear_rows>N</clear_rows>
-      <clear_files>N</clear_files>
-      <set_logfile>N</set_logfile>
-      <logfile/>
-      <logext/>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <loglevel>Basic</loglevel>
-      <cluster>N</cluster>
-      <slave_server_name/>
-      <set_append_logfile>N</set_append_logfile>
-      <wait_until_finished>Y</wait_until_finished>
-      <follow_abort_remote>N</follow_abort_remote>
-      <create_parent_folder>N</create_parent_folder>
-      <logging_remote_work>N</logging_remote_work>
-      <parameters>        <pass_all_parameters>Y</pass_all_parameters>
-      </parameters>      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>714</xloc>
-      <yloc>242</yloc>
-      </entry>
-    <entry>
       <name>Success</name>
       <description/>
       <type>SUCCESS</type>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>1033</xloc>
-      <yloc>345</yloc>
+      <xloc>821</xloc>
+      <yloc>339</yloc>
       </entry>
     <entry>
       <name>Log_Carga</name>
@@ -204,7 +171,7 @@
       <name>Ativar trigger</name>
       <description/>
       <type>SQL</type>
-      <sql>ALTER TABLE osc.tb_projeto ENABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_fonte_recursos_projeto ENABLE TRIGGER ALL&#x3b;</sql>
+      <sql>ALTER TABLE osc.tb_projeto ENABLE TRIGGER ALL&#x3b;&#xa;ALTER TABLE osc.tb_fonte_recursos_projeto ENABLE TRIGGER ALL&#x3b;&#xa;&#xa;REFRESH MATERIALIZED VIEW CONCURRENTLY portal.vw_osc_projeto&#x3b;&#xa;REFRESH MATERIALIZED VIEW CONCURRENTLY portal.vw_osc_recursos_projeto&#x3b;&#xa;REFRESH MATERIALIZED VIEW CONCURRENTLY portal.vw_osc_fonte_recursos_projeto&#x3b;</sql>
       <useVariableSubstitution>F</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename/>
@@ -213,41 +180,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>945</xloc>
-      <yloc>346</yloc>
-      </entry>
-    <entry>
-      <name>Atualizar Fonte</name>
-      <description/>
-      <type>TRANS</type>
-      <specification_method>filename</specification_method>
-      <trans_object_id/>
-      <filename>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;Trans_fonte_Salic.ktr</filename>
-      <transname/>
-      <arg_from_previous>N</arg_from_previous>
-      <params_from_previous>N</params_from_previous>
-      <exec_per_row>N</exec_per_row>
-      <clear_rows>N</clear_rows>
-      <clear_files>N</clear_files>
-      <set_logfile>N</set_logfile>
-      <logfile/>
-      <logext/>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <loglevel>Basic</loglevel>
-      <cluster>N</cluster>
-      <slave_server_name/>
-      <set_append_logfile>N</set_append_logfile>
-      <wait_until_finished>Y</wait_until_finished>
-      <follow_abort_remote>N</follow_abort_remote>
-      <create_parent_folder>N</create_parent_folder>
-      <logging_remote_work>N</logging_remote_work>
-      <parameters>        <pass_all_parameters>Y</pass_all_parameters>
-      </parameters>      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>822</xloc>
-      <yloc>239</yloc>
+      <xloc>733</xloc>
+      <yloc>340</yloc>
       </entry>
     <entry>
       <name>Filtro</name>
@@ -326,24 +260,6 @@
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Inserir Projeto</from>
-      <to>Atualizar Fonte</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>N</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Atualizar Fonte</from>
-      <to>Ativar trigger</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>N</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
       <from>Log_Carga</from>
       <to>Filtro</to>
       <from_nr>0</from_nr>
@@ -354,19 +270,10 @@
     </hop>
     <hop>
       <from>Filtro</from>
-      <to>Inserir Projeto</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Filtro</from>
       <to>Ativar trigger</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
@@ -400,15 +307,6 @@
     <hop>
       <from>Criar Variaveis</from>
       <to>Desativar trigger</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Inserir Projeto</from>
-      <to>Ativar trigger</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
