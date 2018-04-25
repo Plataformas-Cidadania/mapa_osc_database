@@ -24,7 +24,7 @@ BEGIN
 			tb_participacao_social_conselho.cd_conselho,
 			dc_conselho.tx_nome_conselho,
 			tb_participacao_social_conselho_outro.tx_nome_conselho AS tx_nome_conselho_outro,
-			tb_participacao_social_conselho.ft_conselho,
+			COALESCE(tb_participacao_social_conselho.ft_conselho, tb_participacao_social_conselho_outro.ft_nome_conselho) AS ft_conselho,
 			tb_participacao_social_conselho.cd_tipo_participacao,
 			dc_tipo_participacao.tx_nome_tipo_participacao::TEXT,
 			tb_participacao_social_conselho.ft_tipo_participacao,
