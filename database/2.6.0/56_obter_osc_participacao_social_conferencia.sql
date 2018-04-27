@@ -1,4 +1,4 @@
-﻿DROP FUNCTION IF EXISTS portal.obter_osc_participacao_social_conferencia(param TEXT);
+DROP FUNCTION IF EXISTS portal.obter_osc_participacao_social_conferencia(param TEXT);
 ﻿
 CREATE OR REPLACE FUNCTION portal.obter_osc_participacao_social_conferencia(param TEXT) RETURNS TABLE (
 	id_conferencia INTEGER, 
@@ -52,6 +52,3 @@ BEGIN
 
 END;
 $$ LANGUAGE 'plpgsql';
-
-SELECT * FROM obter_osc_participacao_social_conferencia('789809');
-

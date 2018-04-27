@@ -1,4 +1,4 @@
-﻿DROP FUNCTION IF EXISTS portal.obter_osc_participacao_social_conselho(param TEXT);
+DROP FUNCTION IF EXISTS portal.obter_osc_participacao_social_conselho(param TEXT);
 ﻿
 CREATE OR REPLACE FUNCTION portal.obter_osc_participacao_social_conselho(param TEXT) RETURNS TABLE (
 	id_conselho INTEGER, 
@@ -22,7 +22,7 @@ BEGIN
 		SELECT
 			tb_participacao_social_conselho.id_conselho,
 			tb_participacao_social_conselho.cd_conselho,
-			dc_conselho.tx_nome_conselho,
+			dc_conselho.tx_nome_conselho::TEXT,
 			tb_participacao_social_conselho_outro.tx_nome_conselho AS tx_nome_conselho_outro,
 			COALESCE(tb_participacao_social_conselho.ft_conselho, tb_participacao_social_conselho_outro.ft_nome_conselho) AS ft_conselho,
 			tb_participacao_social_conselho.cd_tipo_participacao,
@@ -66,4 +66,3 @@ BEGIN
 
 END;
 $$ LANGUAGE 'plpgsql';
-
