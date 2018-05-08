@@ -1,4 +1,4 @@
-DROP FUNCTION IF EXISTS portal.atualizar_recursos_osc(TEXT, NUMERIC, TIMESTAMP, JSONB, BOOLEAN, BOOLEAN, BOOLEAN, INTEGER, INTEGER);
+﻿DROP FUNCTION IF EXISTS portal.atualizar_recursos_osc(TEXT, NUMERIC, TIMESTAMP, JSONB, BOOLEAN, BOOLEAN, BOOLEAN, INTEGER, INTEGER);
 
 CREATE OR REPLACE FUNCTION portal.atualizar_recursos_osc(fonte TEXT, identificador NUMERIC, data_atualizacao TIMESTAMP, json JSONB, null_valido BOOLEAN, delete_valido BOOLEAN, erro_log BOOLEAN, id_carga INTEGER, tipo_busca INTEGER) RETURNS TABLE(
 	mensagem TEXT,
@@ -28,19 +28,16 @@ BEGIN
 	SELECT id_osc INTO osc FROM osc.tb_recursos_osc WHERE id_osc = identificador;
 
 	IF osc IS null THEN
-		RAISE EXCEPTION 'projeto_nao_encontrado';
+		RAISE EXCEPTION 'osc_nao_encontrada';
 	ELSIF osc != ALL(fonte_dados.representacao) THEN
 		RAISE EXCEPTION 'permissao_negada_usuario';
 	END IF;
 	
-	IF json->>'recursos' IS null THEN
-		ano := null;
-		json := jsonb_build_array(json);
-	ELSIF jsonb_typeof(json) = 'object' THEN
+	IF jsonb_typeof(json) = 'object' THEN
 		ano := (json->>'dt_ano_recursos_osc')::DATE;
-		json := jsonb_build_array((json->>'recursos')::JSONB);
+		json := (json->>'recursos')::JSONB;
 	END IF;
-	
+
 	FOR objeto IN (SELECT *FROM jsonb_populate_recordset(null::osc.tb_recursos_osc, json))
 	LOOP
 		IF ano IS NOT null THEN
@@ -172,35 +169,9 @@ BEGIN
 
 EXCEPTION
 	WHEN others THEN
-		RAISE NOTICE '%', SQLERRM;
 		flag := false;
 		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, osc, data_atualizacao::TIMESTAMP, erro_log, id_carga) AS a;
 		RETURN NEXT;
 
 END;
 $$ LANGUAGE 'plpgsql';
-
-
-
-SELECT * FROM portal.atualizar_recursos_osc(
-	2::TEXT, 
-	'789809'::NUMERIC, 
-	now()::TIMESTAMP, 
-	'{
-		"dt_ano_recursos_osc": "2014-01-01",
-		"recursos": {
-			"cd_fonte_recursos_osc": 163,
-			"nr_valor_recursos_osc": 1000.0
-		}
-	}'::JSONB, 
-	true::BOOLEAN, 
-	true::BOOLEAN, 
-	false::BOOLEAN, 
-	null, 
-	2::INTEGER
-);
-
---SELECT * FROM syst.dc_tipo_usuario;
---SELECT * FROM portal.tb_usuario WHERE id_usuario = 2;
---SELECT * FROM osc.tb_recursos_osc WHERE id_osc = 789809 AND dt_ano_recursos_osc = '2014-01-01'::DATE;
---SELECT * FROM log.tb_log_erro_carga WHERE cd_identificador_osc = 789809 AND dt_carregamento_dados > '2018-04-07'::DATE;
