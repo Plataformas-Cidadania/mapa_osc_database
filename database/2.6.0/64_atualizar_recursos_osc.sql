@@ -1,6 +1,6 @@
-﻿DROP FUNCTION IF EXISTS portal.atualizar_recursos_osc(TEXT, NUMERIC, TIMESTAMP, JSONB, BOOLEAN, BOOLEAN, BOOLEAN, INTEGER, INTEGER);
+﻿DROP FUNCTION IF EXISTS portal.atualizar_recursos_osc(TEXT, NUMERIC, TEXT, TIMESTAMP, JSONB, BOOLEAN, BOOLEAN, BOOLEAN, INTEGER, INTEGER);
 
-CREATE OR REPLACE FUNCTION portal.atualizar_recursos_osc(fonte TEXT, identificador NUMERIC, data_atualizacao TIMESTAMP, json JSONB, null_valido BOOLEAN, delete_valido BOOLEAN, erro_log BOOLEAN, id_carga INTEGER, tipo_busca INTEGER) RETURNS TABLE(
+CREATE OR REPLACE FUNCTION portal.atualizar_recursos_osc(fonte TEXT, identificador NUMERIC, tipo_identificador TEXT, data_atualizacao TIMESTAMP, json JSONB, null_valido BOOLEAN, delete_valido BOOLEAN, erro_log BOOLEAN, id_carga INTEGER, tipo_busca INTEGER) RETURNS TABLE(
 	mensagem TEXT,
 	flag BOOLEAN
 )AS $$
@@ -25,7 +25,13 @@ BEGIN
 		RAISE EXCEPTION 'fonte_invalida';
 	END IF;
 
-	SELECT id_osc INTO osc FROM osc.tb_recursos_osc WHERE id_osc = identificador;
+	IF tipo_identificador = 'cnpj' THEN
+		SELECT id_osc INTO osc FROM osc.tb_osc WHERE cd_identificador_osc = identificador;
+	ELSIF tipo_identificador = 'id_osc' THEN
+		SELECT id_osc INTO osc FROM osc.tb_osc WHERE id_osc = identificador;
+	ELSE
+		RAISE EXCEPTION 'tipo_identificador_invalido';
+	END IF;
 
 	IF osc IS null THEN
 		RAISE EXCEPTION 'osc_nao_encontrada';
