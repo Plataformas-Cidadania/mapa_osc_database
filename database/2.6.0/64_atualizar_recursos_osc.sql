@@ -15,6 +15,7 @@ DECLARE
 	flag_update BOOLEAN;
 	osc INTEGER;
 	ano DATE;
+	nao_possui BOOLEAN;
 
 BEGIN
 	nome_tabela := 'osc.atualizar_recursos_osc';
@@ -38,17 +39,28 @@ BEGIN
 	ELSIF osc != ALL(fonte_dados.representacao) THEN
 		RAISE EXCEPTION 'permissao_negada_usuario';
 	END IF;
-	
-	IF (json->>'dt_ano_recursos_osc') IS NOT null THEN
-		ano := (json->>'dt_ano_recursos_osc')::DATE;
-	END IF;
 
-	json := json->>'recursos';
+	IF (json->>'dt_ano_recursos_osc') IS null THEN
+		json := json->>'recursos';
+	ELSE
+		ano := (json->>'dt_ano_recursos_osc')::DATE;
+		
+		IF (json->>'bo_nao_possui')::BOOLEAN IS true THEN
+			json := '[{"bo_nao_possui": true}]';
+			dado_nao_delete := '{}';
+		ELSE
+			json := json->>'recursos';
+		END IF;
+	END IF;
 
 	FOR objeto IN (SELECT *FROM jsonb_populate_recordset(null::osc.tb_recursos_osc, json))
 	LOOP
 		IF ano IS NOT null THEN
 			objeto.dt_ano_recursos_osc = ano;
+		END IF;
+
+		IF objeto.bo_nao_possui IS NOT true THEN
+			objeto.bo_nao_possui = false;
 		END IF;
 		
 		dado_anterior := null;
@@ -186,7 +198,7 @@ BEGIN
 		ELSE
 			FOR objeto IN (SELECT * FROM osc.tb_recursos_osc WHERE id_osc = identificador AND id_recursos_osc != ALL(dado_nao_delete) AND dt_ano_recursos_osc = ano)
 			LOOP
-				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_fonte_recursos_osc, objeto.ft_ano_recursos_osc, objeto.ft_valor_recursos_osc]) AS a) THEN
+				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_fonte_recursos_osc, objeto.ft_ano_recursos_osc, objeto.ft_valor_recursos_osc, objeto.ft_nao_possui]) AS a) THEN
 					DELETE FROM osc.tb_recursos_osc WHERE id_recursos_osc = objeto.id_recursos_osc;
 					PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(objeto), null,id_carga);
 				END IF;
@@ -201,7 +213,6 @@ BEGIN
 
 EXCEPTION
 	WHEN others THEN
-		RAISE NOTICE '%', SQLERRM;
 		flag := false;
 		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, osc, data_atualizacao::TIMESTAMP, erro_log, id_carga) AS a;
 		RETURN NEXT;
