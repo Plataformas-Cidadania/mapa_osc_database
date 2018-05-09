@@ -39,10 +39,11 @@ BEGIN
 		RAISE EXCEPTION 'permissao_negada_usuario';
 	END IF;
 	
-	IF jsonb_typeof(json) = 'object' THEN
+	IF (json->>'dt_ano_recursos_osc') IS NOT null THEN
 		ano := (json->>'dt_ano_recursos_osc')::DATE;
-		json := (json->>'recursos')::JSONB;
 	END IF;
+
+	json := json->>'recursos';
 
 	FOR objeto IN (SELECT *FROM jsonb_populate_recordset(null::osc.tb_recursos_osc, json))
 	LOOP
@@ -86,7 +87,9 @@ BEGIN
 				dt_ano_recursos_osc,
 				ft_ano_recursos_osc,
 				nr_valor_recursos_osc,
-				ft_valor_recursos_osc
+				ft_valor_recursos_osc,
+				bo_nao_possui,
+				ft_nao_possui
 			) VALUES (
 				identificador,
 				objeto.cd_origem_fonte_recursos_osc,
@@ -95,6 +98,8 @@ BEGIN
 				objeto.dt_ano_recursos_osc,
 				fonte_dados.nome_fonte,
 				objeto.nr_valor_recursos_osc,
+				fonte_dados.nome_fonte,
+				objeto.bo_nao_possui,
 				fonte_dados.nome_fonte
 			) RETURNING * INTO dado_posterior;
 
@@ -113,6 +118,10 @@ BEGIN
 			END IF;
 			
 			IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.cd_fonte_recursos_osc::TEXT, dado_anterior.ft_fonte_recursos_osc, objeto.cd_fonte_recursos_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+				IF objeto.cd_fonte_recursos_osc IS NOT null THEN
+					dado_posterior.cd_origem_fonte_recursos_osc := null;
+				END IF;
+				
 				dado_posterior.cd_fonte_recursos_osc := objeto.cd_fonte_recursos_osc;
 				dado_posterior.ft_fonte_recursos_osc := fonte_dados.nome_fonte;
 				flag_update := true;
@@ -130,6 +139,21 @@ BEGIN
 				flag_update := true;
 			END IF;
 
+			IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.bo_nao_possui::TEXT, dado_anterior.ft_nao_possui, objeto.bo_nao_possui::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+				IF objeto.bo_nao_possui IS true THEN
+					IF objeto.cd_origem_fonte_recursos_osc IS null AND objeto.cd_fonte_recursos_osc IS null AND objeto.dt_ano_recursos_osc IS null THEN
+						RAISE EXCEPTION 'nao_possui_invalido';
+					ELSE
+						dado_posterior.nr_valor_recursos_osc := null;
+						dado_posterior.ft_valor_recursos_osc := null;
+					END IF;
+				END IF;
+				
+				dado_posterior.bo_nao_possui := objeto.bo_nao_possui;
+				dado_posterior.ft_nao_possui := fonte_dados.nome_fonte;
+				flag_update := true;
+			END IF;
+
 			IF flag_update THEN
 				UPDATE osc.tb_recursos_osc
 				SET cd_origem_fonte_recursos_osc = dado_posterior.cd_origem_fonte_recursos_osc,
@@ -138,7 +162,9 @@ BEGIN
 					dt_ano_recursos_osc = dado_posterior.dt_ano_recursos_osc,
 					ft_ano_recursos_osc = dado_posterior.ft_ano_recursos_osc,
 					nr_valor_recursos_osc = dado_posterior.nr_valor_recursos_osc,
-					ft_valor_recursos_osc = dado_posterior.ft_valor_recursos_osc
+					ft_valor_recursos_osc = dado_posterior.ft_valor_recursos_osc,
+					bo_nao_possui = dado_posterior.bo_nao_possui,
+					ft_nao_possui = dado_posterior.ft_nao_possui
 				WHERE id_recursos_osc = dado_posterior.id_recursos_osc;
 
 				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior),id_carga);
@@ -152,7 +178,7 @@ BEGIN
 		IF ano IS null THEN
 			FOR objeto IN (SELECT * FROM osc.tb_recursos_osc WHERE id_osc = identificador AND id_recursos_osc != ALL(dado_nao_delete))
 			LOOP
-				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_fonte_recursos_osc, objeto.ft_ano_recursos_osc, objeto.ft_valor_recursos_osc]) AS a) THEN
+				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_fonte_recursos_osc, objeto.ft_ano_recursos_osc, objeto.ft_valor_recursos_osc, objeto.ft_nao_possui]) AS a) THEN
 					DELETE FROM osc.tb_recursos_osc WHERE id_recursos_osc = objeto.id_recursos_osc;
 					PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(objeto), null,id_carga);
 				END IF;
@@ -175,6 +201,7 @@ BEGIN
 
 EXCEPTION
 	WHEN others THEN
+		RAISE NOTICE '%', SQLERRM;
 		flag := false;
 		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, osc, data_atualizacao::TIMESTAMP, erro_log, id_carga) AS a;
 		RETURN NEXT;
