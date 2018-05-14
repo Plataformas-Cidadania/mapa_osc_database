@@ -29,8 +29,7 @@ BEGIN
 								'ft_ano_recursos_osc', ft_ano_recursos_osc, 
 								'nr_valor_recursos_osc', nr_valor_recursos_osc, 
 								'ft_valor_recursos_osc', ft_valor_recursos_osc, 
-								'bo_nao_possui', bo_nao_possui, 
-								'ft_nao_possui', ft_nao_possui
+								'bo_nao_possui', bo_nao_possui
 							)
 						)
 					FROM 
