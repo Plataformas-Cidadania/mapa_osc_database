@@ -46,6 +46,3 @@ EXCEPTION
 		RETURN NEXT;
 END;
 $$ LANGUAGE 'plpgsql';
-
-SELECT * FROM portal.obter_osc_conselho_fiscal('789809');
-

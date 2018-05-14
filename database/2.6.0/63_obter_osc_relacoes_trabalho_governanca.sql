@@ -47,6 +47,3 @@ EXCEPTION
 		RETURN NEXT;
 END;
 $$ LANGUAGE 'plpgsql';
-
-SELECT * FROM portal.obter_osc_relacoes_trabalho_governanca('789809');
-
