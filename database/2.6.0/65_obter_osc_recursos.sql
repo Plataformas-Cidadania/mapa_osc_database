@@ -70,12 +70,9 @@ BEGIN
 	
 EXCEPTION
 	WHEN others THEN 
-		RAISE NOTICE '%', SQLERRM;
 		flag := false;
 		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, null, null, null, false, null) AS a;
 		RETURN NEXT;
 END;
 $$ LANGUAGE 'plpgsql';
-
-SELECT * FROM portal.obter_osc_recursos(789809::TEXT);
 

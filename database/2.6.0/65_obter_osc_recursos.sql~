@@ -37,8 +37,6 @@ BEGIN
 						osc.tb_recursos_osc
 					WHERE 
 						id_osc = param::INTEGER
-					ORDER BY 
-						dt_ano_recursos_osc DESC
 				),
 				'recursos_outros', (
 					SELECT
@@ -56,8 +54,6 @@ BEGIN
 						osc.tb_recursos_outro_osc
 					WHERE 
 						id_osc = param::INTEGER
-					ORDER BY 
-						dt_ano_recursos_outro_osc DESC
 				)
 			)
 		);
@@ -74,12 +70,9 @@ BEGIN
 	
 EXCEPTION
 	WHEN others THEN 
-		RAISE NOTICE '%', SQLERRM;
 		flag := false;
 		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, null, null, null, false, null) AS a;
 		RETURN NEXT;
 END;
 $$ LANGUAGE 'plpgsql';
-
-SELECT * FROM portal.obter_osc_recursos(789809::TEXT);
 
