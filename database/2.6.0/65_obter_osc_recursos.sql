@@ -25,7 +25,7 @@ BEGIN
 								'cd_origem_fonte_recursos_osc', cd_origem_fonte_recursos_osc, 
 								'cd_fonte_recursos_osc', cd_fonte_recursos_osc, 
 								'ft_fonte_recursos_osc', ft_fonte_recursos_osc, 
-								'dt_ano_recursos_osc', dt_ano_recursos_osc, 
+								'dt_ano_recursos_osc', SUBSTRING(dt_ano_recursos_osc::text FROM 1 FOR 4), 
 								'ft_ano_recursos_osc', ft_ano_recursos_osc, 
 								'nr_valor_recursos_osc', nr_valor_recursos_osc, 
 								'ft_valor_recursos_osc', ft_valor_recursos_osc, 
@@ -44,7 +44,7 @@ BEGIN
 							jsonb_build_object(
 								'tx_nome_fonte_recursos_outro_osc', tx_nome_fonte_recursos_outro_osc, 
 								'ft_nome_fonte_recursos_outro_osc', ft_nome_fonte_recursos_outro_osc, 
-								'dt_ano_recursos_outro_osc', dt_ano_recursos_outro_osc, 
+								'dt_ano_recursos_outro_osc', SUBSTRING(dt_ano_recursos_outro_osc::text FROM 1 FOR 4), 
 								'ft_ano_recursos_outro_osc', ft_ano_recursos_outro_osc, 
 								'nr_valor_recursos_outro_osc', nr_valor_recursos_outro_osc, 
 								'ft_valor_recursos_outro_osc', ft_valor_recursos_outro_osc
