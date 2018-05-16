@@ -5,18 +5,26 @@ CREATE OR REPLACE FUNCTION portal.obter_graficos() RETURNS TABLE (
 	grafico JSONB
 ) AS $$ 
 
-DECLARE
-	graficos RECORD;
-
 BEGIN 
-	SELECT * INFO graficos FROM ('osc_natureza_juridica_regiao', (SELECT * FROM portal.obter_grafico_osc_natureza_juridica_regiao()) as a));
-	--INSERT INTO ' || graficos || ' VALUES(''osc_natureza_juridica_regiao'', (SELECT row_to_json(a) FROM (SELECT * FROM portal.obter_grafico_osc_natureza_juridica_regiao()) as a));
-
-	--EXECUTE 'INSERT INTO graficos (nome_grafico, grafico) VALUES (?, ?)' USING graficos.nome_grafico, graficos.grafico;
-
-	--EXECUTE 'INSERT INTO ' || graficos || ' VALUES(''osc_natureza_juridica_regiao'', (SELECT row_to_json(a) FROM (SELECT * FROM portal.obter_grafico_osc_natureza_juridica_regiao()) as a))';
+	/*
+	SELECT 
+		('osc_natureza_juridica_regiao'::TEXT, (SELECT a FROM (SELECT * FROM portal.obter_grafico_osc_natureza_juridica_regiao()) as a)), 
+		('distribuicao_osc_empregados_regiao'::TEXT, (SELECT a FROM (SELECT * FROM portal.obter_grafico_distribuicao_osc_empregados_regiao()) as a)), 
+		('osc_titulos_certificados'::TEXT, (SELECT a FROM (SELECT * FROM portal.obter_grafico_osc_titulos_certificados()) as a))
+	INTO nome_grafico, grafico;
 	
 	RETURN NEXT;
+	*/
+
+	RETURN QUERY SELECT (
+		(
+			'osc_natureza_juridica_regiao', (SELECT a FROM (SELECT * FROM portal.obter_grafico_osc_natureza_juridica_regiao()) as a)
+		), 
+		(
+			'osc_natureza_juridica_regiao', (SELECT a FROM (SELECT * FROM portal.obter_grafico_osc_natureza_juridica_regiao()) as a)
+		)
+	);
+	
 	
 EXCEPTION
 	WHEN others THEN 
