@@ -1,4 +1,4 @@
-DROP FUNCTION IF EXISTS portal.obter_grafico_osc_natureza_juridica_regiao();
+DROP FUNCTION IF EXISTS portal.obter_grafico_osc_natureza_juridica_regiao() CASCADE;
 
 CREATE OR REPLACE FUNCTION portal.obter_grafico_osc_natureza_juridica_regiao() RETURNS TABLE (
 	titulo TEXT, 

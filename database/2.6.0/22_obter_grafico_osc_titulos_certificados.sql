@@ -1,4 +1,4 @@
-DROP FUNCTION IF EXISTS portal.obter_grafico_osc_titulos_certificados();
+DROP FUNCTION IF EXISTS portal.obter_grafico_osc_titulos_certificados() CASCADE;
 
 CREATE OR REPLACE FUNCTION portal.obter_grafico_osc_titulos_certificados() RETURNS TABLE (
 	titulo TEXT, 
@@ -22,4 +22,3 @@ BEGIN
 END;
 
 $$ LANGUAGE 'plpgsql';
-

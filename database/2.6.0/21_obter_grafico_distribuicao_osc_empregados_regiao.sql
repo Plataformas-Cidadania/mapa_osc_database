@@ -1,4 +1,4 @@
-DROP FUNCTION IF EXISTS portal.obter_grafico_distribuicao_osc_empregados_regiao();
+DROP FUNCTION IF EXISTS portal.obter_grafico_distribuicao_osc_empregados_regiao() CASCADE;
 
 CREATE OR REPLACE FUNCTION portal.obter_grafico_distribuicao_osc_empregados_regiao() RETURNS TABLE (
 	titulo TEXT, 
@@ -99,4 +99,3 @@ BEGIN
 END;
 
 $$ LANGUAGE 'plpgsql';
-
