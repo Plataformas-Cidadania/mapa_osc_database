@@ -3,7 +3,7 @@ DROP FUNCTION IF EXISTS portal.obter_grafico(TEXT);
 CREATE OR REPLACE FUNCTION portal.obter_grafico(param TEXT) RETURNS TABLE (
 	resultado JSONB,
 	mensagem TEXT,
-	flag BOOLEAN
+	codigo INTEGER
 ) AS $$ 
 
 DECLARE
@@ -20,21 +20,22 @@ BEGIN
 	WHERE 
 		id = param::INTEGER;
 
-	IF linha != (null::INTEGER, null::TEXT, null::TEXT)::RECORD THEN 
+	IF linha != (null::INTEGER, null::TEXT, null::TEXT, null::JSONB)::RECORD THEN 
 		resultado := to_jsonb(linha);
-		flag := true;
+		codigo := 200;
 		mensagem := 'Dados de gráfico retornado.';
 	ELSE 
-		flag := false;
-		mensagem := 'Gráfico não encontrada.';
+		codigo := 404;
+		mensagem := 'Gráfico não encontrado.';
 	END IF;
 
 	RETURN NEXT;
 	
 EXCEPTION
 	WHEN others THEN 
-		flag := false;
+		codigo := 500;
 		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, null, null, null, false, null) AS a;
 		RETURN NEXT;
+		
 END;
 $$ LANGUAGE 'plpgsql';
