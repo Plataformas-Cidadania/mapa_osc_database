@@ -28,12 +28,12 @@ BEGIN
 			FROM 
 				osc.tb_governanca
 			WHERE 
-				id_osc = 789809
+				id_osc = param::INTEGER
 		) a;
 
-		--IF linha != (null)::RECORD THEN 
+		IF linha != (null::INTEGER, null::TEXT, null::TEXT, null::TEXT, null::TEXT)::RECORD THEN 
 			resultado := to_jsonb(linha.array);
-		--END IF;
+		END IF;
 
 		flag := true;
 		mensagem := 'Governança retornada.';
@@ -52,6 +52,3 @@ EXCEPTION
 		RETURN NEXT;
 END;
 $$ LANGUAGE 'plpgsql';
-
-SELECT * FROM portal.obter_osc_governanca('789809');
-

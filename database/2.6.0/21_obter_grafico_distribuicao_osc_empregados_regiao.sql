@@ -8,7 +8,7 @@ CREATE OR REPLACE FUNCTION portal.obter_grafico_distribuicao_osc_empregados_regi
 
 BEGIN 
 	RETURN QUERY 
-		SELECT 'Distribuição de OSCs por número de empregados e região, Brasil'::TEXT AS titulo, 'barras'::TEXT AS tipo, (SELECT row_to_json(p)) AS resultado 
+		SELECT 'Distribuição de OSCs por número de empregados e região, Brasil'::TEXT AS titulo, 'barras'::TEXT AS tipo, (SELECT row_to_json(p)) AS dados 
 		FROM (
 			SELECT (
 				SELECT array_to_json(array_agg(row_to_json(a))) 
@@ -16,11 +16,13 @@ BEGIN
 					SELECT count(*) AS valor, (
 						SELECT edre_nm_regiao 
 						FROM spat.ed_regiao 
-						WHERE edre_cd_regiao = (SELECT SUBSTR(cd_uf::TEXT, 1, 1))::NUMERIC(1, 0)
+						WHERE edre_cd_regiao = (SELECT SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1))::NUMERIC(1, 0)
 					) AS rotulo 
-					FROM portal.vw_osc_dados_gerais 
-					JOIN portal.vw_osc_relacoes_trabalho 
-					ON vw_osc_dados_gerais.id_osc = vw_osc_relacoes_trabalho.id_osc
+					FROM osc.tb_dados_gerais 
+					INNER JOIN osc.tb_relacoes_trabalho 
+					ON tb_dados_gerais.id_osc = tb_relacoes_trabalho.id_osc 
+					INNER JOIN osc.tb_localizacao 
+					ON tb_dados_gerais.id_osc = tb_localizacao.id_osc 
 					WHERE nr_trabalhadores_vinculo = 0 
 					GROUP BY rotulo
 				) AS a
@@ -31,11 +33,13 @@ BEGIN
 					SELECT count(*) AS valor, (
 						SELECT edre_nm_regiao 
 						FROM spat.ed_regiao 
-						WHERE edre_cd_regiao = (SELECT SUBSTR(cd_uf::TEXT, 1, 1))::NUMERIC(1, 0)
+						WHERE edre_cd_regiao = (SELECT SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1))::NUMERIC(1, 0)
 					) AS rotulo 
-					FROM portal.vw_osc_dados_gerais 
-					JOIN portal.vw_osc_relacoes_trabalho 
-					ON vw_osc_dados_gerais.id_osc = vw_osc_relacoes_trabalho.id_osc
+					FROM osc.tb_dados_gerais 
+					INNER JOIN osc.tb_relacoes_trabalho 
+					ON tb_dados_gerais.id_osc = tb_relacoes_trabalho.id_osc 
+					INNER JOIN osc.tb_localizacao 
+					ON tb_dados_gerais.id_osc = tb_localizacao.id_osc 
 					WHERE nr_trabalhadores_vinculo BETWEEN 1 AND 4 
 					GROUP BY rotulo
 				) AS b
@@ -46,11 +50,13 @@ BEGIN
 					SELECT count(*) AS valor, (
 						SELECT edre_nm_regiao 
 						FROM spat.ed_regiao 
-						WHERE edre_cd_regiao = (SELECT SUBSTR(cd_uf::TEXT, 1, 1))::NUMERIC(1, 0)
+						WHERE edre_cd_regiao = (SELECT SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1))::NUMERIC(1, 0)
 					) AS rotulo 
-					FROM portal.vw_osc_dados_gerais 
-					JOIN portal.vw_osc_relacoes_trabalho 
-					ON vw_osc_dados_gerais.id_osc = vw_osc_relacoes_trabalho.id_osc
+					FROM osc.tb_dados_gerais 
+					INNER JOIN osc.tb_relacoes_trabalho 
+					ON tb_dados_gerais.id_osc = tb_relacoes_trabalho.id_osc 
+					INNER JOIN osc.tb_localizacao 
+					ON tb_dados_gerais.id_osc = tb_localizacao.id_osc 
 					WHERE nr_trabalhadores_vinculo BETWEEN 5 AND 19 
 					GROUP BY rotulo
 				) AS c
@@ -61,11 +67,13 @@ BEGIN
 					SELECT count(*) AS valor, (
 						SELECT edre_nm_regiao 
 						FROM spat.ed_regiao 
-						WHERE edre_cd_regiao = (SELECT SUBSTR(cd_uf::TEXT, 1, 1))::NUMERIC(1, 0)
+						WHERE edre_cd_regiao = (SELECT SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1))::NUMERIC(1, 0)
 					) AS rotulo 
-					FROM portal.vw_osc_dados_gerais 
-					JOIN portal.vw_osc_relacoes_trabalho 
-					ON vw_osc_dados_gerais.id_osc = vw_osc_relacoes_trabalho.id_osc
+					FROM osc.tb_dados_gerais 
+					INNER JOIN osc.tb_relacoes_trabalho 
+					ON tb_dados_gerais.id_osc = tb_relacoes_trabalho.id_osc 
+					INNER JOIN osc.tb_localizacao 
+					ON tb_dados_gerais.id_osc = tb_localizacao.id_osc 
 					WHERE nr_trabalhadores_vinculo BETWEEN 20 AND 99 
 					GROUP BY rotulo
 				) AS d
@@ -76,11 +84,13 @@ BEGIN
 					SELECT count(*) AS valor, (
 						SELECT edre_nm_regiao 
 						FROM spat.ed_regiao 
-						WHERE edre_cd_regiao = (SELECT SUBSTR(cd_uf::TEXT, 1, 1))::NUMERIC(1, 0)
+						WHERE edre_cd_regiao = (SELECT SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1))::NUMERIC(1, 0)
 					) AS rotulo 
-					FROM portal.vw_osc_dados_gerais 
-					JOIN portal.vw_osc_relacoes_trabalho 
-					ON vw_osc_dados_gerais.id_osc = vw_osc_relacoes_trabalho.id_osc
+					FROM osc.tb_dados_gerais 
+					INNER JOIN osc.tb_relacoes_trabalho 
+					ON tb_dados_gerais.id_osc = tb_relacoes_trabalho.id_osc 
+					INNER JOIN osc.tb_localizacao 
+					ON tb_dados_gerais.id_osc = tb_localizacao.id_osc 
 					WHERE nr_trabalhadores_vinculo >= 100 
 					GROUP BY rotulo
 				) AS e
