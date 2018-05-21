@@ -17,9 +17,7 @@ BEGIN
 		FROM (
 			SELECT 
 				ARRAY_TO_JSON(ARRAY_AGG('{' || a.valor::TEXT || ', ' || a.rotulo::TEXT || '}')) AS dados, 
-				(SELECT ARRAY(SELECT DISTINCT UNNEST((
-					'{' || REPLACE(REPLACE(TRANSLATE(ARRAY_AGG(a.fontes::TEXT)::TEXT, '{\}', ''), '""', '"'), 'NULL"', 'NULL') || '}'
-				)::TEXT[]))) AS fontes
+				ARRAY_AGG(a.fontes::TEXT) AS fontes
 			FROM (
 				SELECT 
 					SUM(tb_relacoes_trabalho.nr_trabalhadores_vinculo) AS valor, 
