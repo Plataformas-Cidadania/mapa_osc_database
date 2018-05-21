@@ -94,7 +94,7 @@ BEGIN
 END;
 
 -- object: portal.vw_log_alteracao | type: MATERIALIZED VIEW --
-DROP MATERIALIZED VIEW IF EXISTS portal.vw_log_alteracao CASCADE;
+-- DROP MATERIALIZED VIEW IF EXISTS portal.vw_log_alteracao CASCADE;
 CREATE MATERIALIZED VIEW portal.vw_log_alteracao
 AS
 
@@ -121,6 +121,3 @@ ALTER MATERIALIZED VIEW portal.vw_log_alteracao OWNER TO postgres;
 CREATE UNIQUE INDEX ix_vw_log_alteracao
     ON portal.vw_log_alteracao USING btree
     (id_osc, dt_alteracao ASC NULLS LAST)
-TABLESPACE pg_default;
-
-$$ LANGUAGE plpgsql;
