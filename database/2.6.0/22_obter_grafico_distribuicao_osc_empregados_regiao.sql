@@ -10,7 +10,7 @@ CREATE OR REPLACE FUNCTION portal.obter_grafico_distribuicao_osc_empregados_regi
 BEGIN 
 	RETURN QUERY 
 		SELECT 
-			'Distribuição de OSCs por número de empregados e região, Brasil'::TEXT AS titulo, 
+			'Distribuição de OSCs por número de empregados e região'::TEXT AS titulo, 
 			'barras'::TEXT AS tipo, 
 			c.dados::JSONB AS dados, 
 			c.fontes AS fontes 

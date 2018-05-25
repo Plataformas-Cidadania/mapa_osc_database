@@ -6,13 +6,15 @@ AS
 
 SELECT id, titulo, tipo, dados::JSONB
 FROM (
-	SELECT 1 AS id, titulo, tipo, dados::TEXT FROM (SELECT * FROM portal.obter_grafico_osc_natureza_juridica_regiao()) AS dados
-	UNION
-	SELECT 2 AS id, titulo, tipo, dados::TEXT FROM (SELECT * FROM portal.obter_grafico_osc_titulos_certificados()) AS dados
-	UNION
-	SELECT 3 AS id, titulo, tipo, dados::TEXT FROM (SELECT * FROM portal.obter_grafico_distribuicao_osc_empregados_regiao()) AS dados
-	UNION
-	SELECT 4 AS id, titulo, tipo, dados::TEXT FROM (SELECT * FROM portal.obter_grafico_empregos_formais_oscs_regiao()) AS dados
+	SELECT 1 AS id, titulo, tipo, dados::TEXT FROM (SELECT * FROM portal.obter_grafico_distribuicao_osc_empregados_regiao()) AS dados 
+	UNION 
+	SELECT 2 AS id, titulo, tipo, dados::TEXT FROM (SELECT * FROM portal.obter_grafico_empregos_formais_oscs_regiao()) AS dados 
+	UNION 
+	SELECT 3 AS id, titulo, tipo, dados::TEXT FROM (SELECT * FROM portal.obter_grafico_oscs_area_atuacao()) AS dados 
+	UNION 
+	SELECT 10 AS id, titulo, tipo, dados::TEXT FROM (SELECT * FROM portal.obter_grafico_osc_natureza_juridica_regiao()) AS dados 
+	UNION 
+	SELECT 11 AS id, titulo, tipo, dados::TEXT FROM (SELECT * FROM portal.obter_grafico_osc_titulos_certificados()) AS dados 
 ) AS graficos;
 
 
