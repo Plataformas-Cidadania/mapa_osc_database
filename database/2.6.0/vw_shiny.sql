@@ -131,3 +131,7 @@ SELECT p.id_osc,
      LEFT JOIN syst.dc_objetivo_projeto kk ON jj.cd_objetivo_projeto = kk.cd_objetivo_projeto
   WHERE p.id_osc <> 789809 AND p.id_osc <> 987654 AND tb_osc.bo_osc_ativa;
   
+CREATE UNIQUE INDEX ix_vw_shiny
+    ON graph.vw_shiny USING btree
+    (id_osc, id_projeto, cd_subarea_atuacao, cd_fonte_recursos_projeto, cd_origem_fonte_recursos_projeto, cd_meta_osc ASC NULLS LAST)
+    TABLESPACE pg_default;
