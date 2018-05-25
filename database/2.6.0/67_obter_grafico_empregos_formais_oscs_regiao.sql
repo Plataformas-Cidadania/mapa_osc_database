@@ -16,7 +16,7 @@ BEGIN
 			b.fontes AS fontes 
 		FROM (
 			SELECT 
-				'[{' || RTRIM(LTRIM(REPLACE(REPLACE(TRANSLATE(ARRAY_AGG('{"' || a.regiao::TEXT || '": ' || a.trabalhadores::TEXT || '}')::TEXT, '\', ''), '"{', '{'), '}"', '}'), '{'), '}') || '}]' AS dados, 
+				'{' || RTRIM(LTRIM(REPLACE(REPLACE(TRANSLATE(ARRAY_AGG('{"' || a.regiao::TEXT || '": ' || a.trabalhadores::TEXT || '}')::TEXT, '\', ''), '"{', '{'), '}"', '}'), '{'), '}') || '}' AS dados, 
 				(SELECT ARRAY(SELECT DISTINCT UNNEST(('{' || BTRIM(REPLACE(REPLACE(RTRIM(LTRIM(TRANSLATE(ARRAY_AGG(a.fontes::TEXT)::TEXT, '"\', ''), '{'), '}'), '},{', ','), ',,', ','), ',') || '}')::TEXT[]))) AS fontes
 			FROM (
 				SELECT 

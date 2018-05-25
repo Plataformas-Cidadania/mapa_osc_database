@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS portal.obter_grafico_oscs_area_atuacao() CASCADE;
+DROP FUNCTION IF EXISTS portal.obter_grafico_empregos_formais_oscs_regiao() CASCADE;
 
-CREATE OR REPLACE FUNCTION portal.obter_grafico_oscs_area_atuacao() RETURNS TABLE (
+CREATE OR REPLACE FUNCTION portal.obter_grafico_empregos_formais_oscs_regiao() RETURNS TABLE (
 	titulo TEXT, 
 	tipo TEXT, 
 	dados JSONB, 
@@ -10,34 +10,33 @@ CREATE OR REPLACE FUNCTION portal.obter_grafico_oscs_area_atuacao() RETURNS TABL
 BEGIN 
 	RETURN QUERY 
 		SELECT 
-			'Distribuição de OSCs por área de atuação'::TEXT AS titulo, 
-			'pizza'::TEXT AS tipo, 
-			c.dados::JSONB AS dados, 
-			c.fontes AS fontes 
+			'Número de empregos formais nas OSCs por região'::TEXT AS titulo, 
+			'barras'::TEXT AS tipo, 
+			b.dados::JSONB AS dados, 
+			b.fontes AS fontes 
 		FROM (
 			SELECT 
-				('{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG(b.dados)::TEXT, '\', '') || '}'), '""', '"'), '",', ','), '"}', '}'), '"{', '{'), '{'), '}') || '}')::JSONB AS dados, 
-				(SELECT ARRAY(SELECT DISTINCT UNNEST(('{' || BTRIM(REPLACE(REPLACE(RTRIM(LTRIM(TRANSLATE(ARRAY_AGG(b.fontes::TEXT)::TEXT, '"\', ''), '{'), '}'), '},{', ','), ',,', ','), ',') || '}')::TEXT[]))) AS fontes
+				('{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG('"' || a.regiao::TEXT || '": ' || a.quantidade::TEXT)::TEXT, '\', '') || '}'), '""', '"'), '",', ','), '"}', '}'), '"{', '{'), '{'), '}') || '}')::JSONB AS dados, 
+				(SELECT ARRAY(SELECT DISTINCT UNNEST(('{' || BTRIM(REPLACE(REPLACE(RTRIM(LTRIM(TRANSLATE(ARRAY_AGG(a.fontes::TEXT)::TEXT, '"\', ''), '{'), '}'), '},{', ','), ',,', ','), ',') || '}')::TEXT[]))) AS fontes
 			FROM (
 				SELECT 
-					ARRAY_AGG('"' || COALESCE(a.area_atuacao::TEXT, 'Outras organizações da sociedade civil') || '": ' || a.quantidade::TEXT)::TEXT AS dados, 
-					(SELECT ARRAY(SELECT DISTINCT UNNEST(('{' || BTRIM(REPLACE(REPLACE(RTRIM(LTRIM(TRANSLATE(ARRAY_AGG(a.fontes::TEXT)::TEXT, '"\', ''), '{'), '}'), '},{', ','), ',,', ','), ',') || '}')::TEXT[]))) AS fontes 
-				FROM (
-					SELECT 
-						dc_area_atuacao.tx_nome_area_atuacao AS area_atuacao, 
-						count(*) AS quantidade, 
-						ARRAY_AGG(DISTINCT(COALESCE(tb_area_atuacao.ft_area_atuacao, ''))) AS fontes 
-					FROM osc.tb_dados_gerais 
-					LEFT JOIN osc.tb_area_atuacao 
-					ON tb_dados_gerais.id_osc = tb_area_atuacao.id_osc 
-					LEFT JOIN syst.dc_area_atuacao 
-					ON tb_area_atuacao.cd_area_atuacao = dc_area_atuacao.cd_area_atuacao 
-					GROUP BY dc_area_atuacao.tx_nome_area_atuacao
-				) AS a
-			) AS b
-		) AS c;
+					(
+						SELECT edre_nm_regiao 
+						FROM spat.ed_regiao 
+						WHERE edre_cd_regiao = (SELECT SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1))::NUMERIC(1, 0)
+					) AS regiao, 
+					SUM(tb_relacoes_trabalho.nr_trabalhadores_vinculo) AS quantidade, 
+					ARRAY_AGG(DISTINCT(COALESCE(tb_relacoes_trabalho.ft_trabalhadores_vinculo, '') || ',' || COALESCE(tb_localizacao.ft_municipio, ''))) AS fontes
+				FROM osc.tb_dados_gerais 
+				INNER JOIN osc.tb_relacoes_trabalho 
+				ON tb_dados_gerais.id_osc = tb_relacoes_trabalho.id_osc 
+				INNER JOIN osc.tb_localizacao 
+				ON tb_dados_gerais.id_osc = tb_localizacao.id_osc 
+				GROUP BY regiao
+			) AS a
+		) AS b;
 END;
 
 $$ LANGUAGE 'plpgsql';
 
-SELECT * FROM portal.obter_grafico_oscs_area_atuacao();
+SELECT * FROM portal.obter_grafico_empregos_formais_oscs_regiao();
