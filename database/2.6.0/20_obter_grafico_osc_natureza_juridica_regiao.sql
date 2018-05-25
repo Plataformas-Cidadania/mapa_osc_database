@@ -10,33 +10,37 @@ CREATE OR REPLACE FUNCTION portal.obter_grafico_osc_natureza_juridica_regiao() R
 BEGIN 
 	RETURN QUERY 
 		SELECT 
-			'Número de OSCs por natureza jurídica e região, Brasil'::TEXT as titulo, 
+			'Número de OSCs por natureza jurídica e região'::TEXT as titulo, 
 			'barras'::TEXT as tipo, 
-			b.dados::JSON AS dados, 
-			b.fontes AS fontes 
+			c.dados::JSON AS dados, 
+			c.fontes AS fontes 
 		FROM (
 			SELECT 
-				a.regiao AS rotulo, 
-				ARRAY_TO_JSON(ARRAY_AGG('{' || a.natureza_juridica::TEXT || ', ' || a.valor::TEXT || '}')) AS dados, 
-				(SELECT ARRAY(SELECT DISTINCT UNNEST(('{' || BTRIM(REPLACE(REPLACE(RTRIM(LTRIM(TRANSLATE(ARRAY_AGG(a.fontes::TEXT)::TEXT, '"\', ''), '{'), '}'), '},{', ','), ',,', ','), ',') || '}')::TEXT[]))) AS fontes
+				'[{' || RTRIM(LTRIM(REPLACE(REPLACE(TRANSLATE(ARRAY_AGG(b.dados::JSONB)::TEXT, '\', ''), '"{', '{'), '}"', '}'), '{'), '}') || '}]' AS dados, 
+				(SELECT ARRAY(SELECT DISTINCT UNNEST(('{' || BTRIM(REPLACE(REPLACE(RTRIM(LTRIM(TRANSLATE(ARRAY_AGG(b.fontes::TEXT)::TEXT, '"\', ''), '{'), '}'), '},{', ','), ',,', ','), ',') || '}')::TEXT[]))) AS fontes
 			FROM (
 				SELECT 
-					ed_regiao.edre_nm_regiao AS regiao, 
-					dc_natureza_juridica.tx_nome_natureza_juridica AS natureza_juridica, 
-					count(*) AS valor, 
-					ARRAY_AGG(DISTINCT(COALESCE(tb_dados_gerais.ft_classe_atividade_economica_osc, '') || ',' || COALESCE(tb_localizacao.ft_municipio, ''))) AS fontes 
-				FROM osc.tb_dados_gerais 
-				INNER JOIN osc.tb_localizacao 
-				ON tb_dados_gerais.id_osc = tb_localizacao.id_osc 
-				INNER JOIN syst.dc_natureza_juridica
-				ON tb_dados_gerais.cd_natureza_juridica_osc = dc_natureza_juridica.cd_natureza_juridica 
-				RIGHT JOIN spat.ed_regiao 
-				ON ed_regiao.edre_cd_regiao::TEXT = SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1) 
-				GROUP BY ed_regiao.edre_nm_regiao, dc_natureza_juridica.tx_nome_natureza_juridica 
-				ORDER BY ed_regiao.edre_nm_regiao, dc_natureza_juridica.tx_nome_natureza_juridica
-			) AS a 
-			GROUP BY regiao
-		) AS b;
+					'{"' || a.regiao || '": [{' || RTRIM(LTRIM(REPLACE(REPLACE(TRANSLATE(ARRAY_AGG('{"' || a.natureza_juridica::TEXT || '": ' || a.quantidade::TEXT || '}')::TEXT, '\', ''), '"{', '{'), '}"', '}'), '{'), '}') || '}]}' AS dados, 
+					(SELECT ARRAY(SELECT DISTINCT UNNEST(('{' || BTRIM(REPLACE(REPLACE(RTRIM(LTRIM(TRANSLATE(ARRAY_AGG(a.fontes::TEXT)::TEXT, '"\', ''), '{'), '}'), '},{', ','), ',,', ','), ',') || '}')::TEXT[]))) AS fontes
+				FROM (
+					SELECT 
+						ed_regiao.edre_nm_regiao AS regiao, 
+						dc_natureza_juridica.tx_nome_natureza_juridica AS natureza_juridica, 
+						count(*) AS quantidade, 
+						ARRAY_AGG(DISTINCT(COALESCE(tb_dados_gerais.ft_classe_atividade_economica_osc, '') || ',' || COALESCE(tb_localizacao.ft_municipio, ''))) AS fontes 
+					FROM osc.tb_dados_gerais 
+					INNER JOIN osc.tb_localizacao 
+					ON tb_dados_gerais.id_osc = tb_localizacao.id_osc 
+					INNER JOIN syst.dc_natureza_juridica
+					ON tb_dados_gerais.cd_natureza_juridica_osc = dc_natureza_juridica.cd_natureza_juridica 
+					RIGHT JOIN spat.ed_regiao 
+					ON ed_regiao.edre_cd_regiao::TEXT = SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1) 
+					GROUP BY ed_regiao.edre_nm_regiao, dc_natureza_juridica.tx_nome_natureza_juridica 
+					ORDER BY ed_regiao.edre_nm_regiao, dc_natureza_juridica.tx_nome_natureza_juridica
+				) AS a 
+				GROUP BY regiao
+			) AS b 
+		) AS c;
 END;
 
 $$ LANGUAGE 'plpgsql';

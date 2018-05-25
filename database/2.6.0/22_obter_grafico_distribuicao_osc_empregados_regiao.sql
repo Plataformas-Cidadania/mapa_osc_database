@@ -3,99 +3,125 @@ DROP FUNCTION IF EXISTS portal.obter_grafico_distribuicao_osc_empregados_regiao(
 CREATE OR REPLACE FUNCTION portal.obter_grafico_distribuicao_osc_empregados_regiao() RETURNS TABLE (
 	titulo TEXT, 
 	tipo TEXT, 
-	dados JSON
+	dados JSONB, 
+	fontes TEXT[]
 ) AS $$ 
 
 BEGIN 
 	RETURN QUERY 
-		SELECT 'Distribuição de OSCs por número de empregados e região, Brasil'::TEXT AS titulo, 'barras'::TEXT AS tipo, (SELECT row_to_json(p)) AS dados 
+		SELECT 
+			'Distribuição de OSCs por número de empregados e região, Brasil'::TEXT AS titulo, 
+			'barras'::TEXT AS tipo, 
+			c.dados::JSONB AS dados, 
+			c.fontes AS fontes 
 		FROM (
-			SELECT (
-				SELECT array_to_json(array_agg(row_to_json(a))) 
+			SELECT 
+				'[{' || RTRIM(LTRIM(REPLACE(REPLACE(TRANSLATE(ARRAY_AGG(b.dados::JSONB)::TEXT, '\', ''), '"{', '{'), '}"', '}'), '{'), '}') || '}]' AS dados, 
+				(SELECT ARRAY(SELECT DISTINCT UNNEST(('{' || BTRIM(REPLACE(REPLACE(RTRIM(LTRIM(TRANSLATE(ARRAY_AGG(b.fontes::TEXT)::TEXT, '"\', ''), '{'), '}'), '},{', ','), ',,', ','), ',') || '}')::TEXT[]))) AS fontes
+			FROM (
+				SELECT 
+					'{"0": ' || ARRAY_TO_JSON(ARRAY_AGG('{"' || a.regiao::TEXT || '": ' || a.quantidade::TEXT || '}'))::TEXT || '}' AS dados, 
+					(SELECT ARRAY(SELECT DISTINCT UNNEST(('{' || BTRIM(REPLACE(REPLACE(RTRIM(LTRIM(TRANSLATE(ARRAY_AGG(a.fontes::TEXT)::TEXT, '"\', ''), '{'), '}'), '},{', ','), ',,', ','), ',') || '}')::TEXT[]))) AS fontes 
 				FROM (
-					SELECT count(*) AS valor, (
+					SELECT (
 						SELECT edre_nm_regiao 
 						FROM spat.ed_regiao 
 						WHERE edre_cd_regiao = (SELECT SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1))::NUMERIC(1, 0)
-					) AS rotulo 
+					) AS regiao, 
+					count(*) AS quantidade, 
+					ARRAY_AGG(DISTINCT(COALESCE(tb_relacoes_trabalho.ft_trabalhadores_vinculo, '') || ',' || COALESCE(tb_localizacao.ft_municipio, ''))) AS fontes 
 					FROM osc.tb_dados_gerais 
 					INNER JOIN osc.tb_relacoes_trabalho 
 					ON tb_dados_gerais.id_osc = tb_relacoes_trabalho.id_osc 
 					INNER JOIN osc.tb_localizacao 
 					ON tb_dados_gerais.id_osc = tb_localizacao.id_osc 
 					WHERE nr_trabalhadores_vinculo = 0 
-					GROUP BY rotulo
+					GROUP BY regiao
 				) AS a
-			) AS "0",
-			(
-				SELECT array_to_json(array_agg(row_to_json(b))) 
+				UNION 
+				SELECT 
+					'{"1 a 4": ' || ARRAY_TO_JSON(ARRAY_AGG('{"' || a.regiao::TEXT || '": ' || a.quantidade::TEXT || '}'))::TEXT || '}' AS dados, 
+					(SELECT ARRAY(SELECT DISTINCT UNNEST(('{' || BTRIM(REPLACE(REPLACE(RTRIM(LTRIM(TRANSLATE(ARRAY_AGG(a.fontes::TEXT)::TEXT, '"\', ''), '{'), '}'), '},{', ','), ',,', ','), ',') || '}')::TEXT[]))) AS fontes 
 				FROM (
-					SELECT count(*) AS valor, (
+					SELECT (
 						SELECT edre_nm_regiao 
 						FROM spat.ed_regiao 
 						WHERE edre_cd_regiao = (SELECT SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1))::NUMERIC(1, 0)
-					) AS rotulo 
+					) AS regiao, 
+					count(*) AS quantidade, 
+					ARRAY_AGG(DISTINCT(COALESCE(tb_relacoes_trabalho.ft_trabalhadores_vinculo, '') || ',' || COALESCE(tb_localizacao.ft_municipio, ''))) AS fontes 
 					FROM osc.tb_dados_gerais 
 					INNER JOIN osc.tb_relacoes_trabalho 
 					ON tb_dados_gerais.id_osc = tb_relacoes_trabalho.id_osc 
 					INNER JOIN osc.tb_localizacao 
 					ON tb_dados_gerais.id_osc = tb_localizacao.id_osc 
 					WHERE nr_trabalhadores_vinculo BETWEEN 1 AND 4 
-					GROUP BY rotulo
-				) AS b
-			) AS "1 a 4",
-			(
-				SELECT array_to_json(array_agg(row_to_json(c))) 
+					GROUP BY regiao
+				) AS a
+				UNION 
+				SELECT 
+					'{"5 a 19": ' || ARRAY_TO_JSON(ARRAY_AGG('{"' || a.regiao::TEXT || '": ' || a.quantidade::TEXT || '}'))::TEXT || '}' AS dados, 
+					(SELECT ARRAY(SELECT DISTINCT UNNEST(('{' || BTRIM(REPLACE(REPLACE(RTRIM(LTRIM(TRANSLATE(ARRAY_AGG(a.fontes::TEXT)::TEXT, '"\', ''), '{'), '}'), '},{', ','), ',,', ','), ',') || '}')::TEXT[]))) AS fontes 
 				FROM (
-					SELECT count(*) AS valor, (
+					SELECT (
 						SELECT edre_nm_regiao 
 						FROM spat.ed_regiao 
 						WHERE edre_cd_regiao = (SELECT SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1))::NUMERIC(1, 0)
-					) AS rotulo 
+					) AS regiao, 
+					count(*) AS quantidade, 
+					ARRAY_AGG(DISTINCT(COALESCE(tb_relacoes_trabalho.ft_trabalhadores_vinculo, '') || ',' || COALESCE(tb_localizacao.ft_municipio, ''))) AS fontes 
 					FROM osc.tb_dados_gerais 
 					INNER JOIN osc.tb_relacoes_trabalho 
 					ON tb_dados_gerais.id_osc = tb_relacoes_trabalho.id_osc 
 					INNER JOIN osc.tb_localizacao 
 					ON tb_dados_gerais.id_osc = tb_localizacao.id_osc 
 					WHERE nr_trabalhadores_vinculo BETWEEN 5 AND 19 
-					GROUP BY rotulo
-				) AS c
-			) AS "5 a 19",
-			(
-				SELECT array_to_json(array_agg(row_to_json(d))) 
+					GROUP BY regiao
+				) AS a
+				UNION 
+				SELECT 
+					'{"20 a 99": ' || ARRAY_TO_JSON(ARRAY_AGG('{"' || a.regiao::TEXT || '": ' || a.quantidade::TEXT || '}'))::TEXT || '}' AS dados, 
+					(SELECT ARRAY(SELECT DISTINCT UNNEST(('{' || BTRIM(REPLACE(REPLACE(RTRIM(LTRIM(TRANSLATE(ARRAY_AGG(a.fontes::TEXT)::TEXT, '"\', ''), '{'), '}'), '},{', ','), ',,', ','), ',') || '}')::TEXT[]))) AS fontes 
 				FROM (
-					SELECT count(*) AS valor, (
+					SELECT (
 						SELECT edre_nm_regiao 
 						FROM spat.ed_regiao 
 						WHERE edre_cd_regiao = (SELECT SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1))::NUMERIC(1, 0)
-					) AS rotulo 
+					) AS regiao, 
+					count(*) AS quantidade, 
+					ARRAY_AGG(DISTINCT(COALESCE(tb_relacoes_trabalho.ft_trabalhadores_vinculo, '') || ',' || COALESCE(tb_localizacao.ft_municipio, ''))) AS fontes 
 					FROM osc.tb_dados_gerais 
 					INNER JOIN osc.tb_relacoes_trabalho 
 					ON tb_dados_gerais.id_osc = tb_relacoes_trabalho.id_osc 
 					INNER JOIN osc.tb_localizacao 
 					ON tb_dados_gerais.id_osc = tb_localizacao.id_osc 
 					WHERE nr_trabalhadores_vinculo BETWEEN 20 AND 99 
-					GROUP BY rotulo
-				) AS d
-			) AS "20 a 99",
-			(
-				SELECT array_to_json(array_agg(row_to_json(e))) 
+					GROUP BY regiao
+				) AS a
+				UNION 
+				SELECT 
+					'{"100 ou mais": ' || ARRAY_TO_JSON(ARRAY_AGG('{"' || a.regiao::TEXT || '": ' || a.quantidade::TEXT || '}'))::TEXT || '}' AS dados, 
+					(SELECT ARRAY(SELECT DISTINCT UNNEST(('{' || BTRIM(REPLACE(REPLACE(RTRIM(LTRIM(TRANSLATE(ARRAY_AGG(a.fontes::TEXT)::TEXT, '"\', ''), '{'), '}'), '},{', ','), ',,', ','), ',') || '}')::TEXT[]))) AS fontes 
 				FROM (
-					SELECT count(*) AS valor, (
+					SELECT (
 						SELECT edre_nm_regiao 
 						FROM spat.ed_regiao 
 						WHERE edre_cd_regiao = (SELECT SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1))::NUMERIC(1, 0)
-					) AS rotulo 
+					) AS regiao, 
+					count(*) AS quantidade, 
+					ARRAY_AGG(DISTINCT(COALESCE(tb_relacoes_trabalho.ft_trabalhadores_vinculo, '') || ',' || COALESCE(tb_localizacao.ft_municipio, ''))) AS fontes 
 					FROM osc.tb_dados_gerais 
 					INNER JOIN osc.tb_relacoes_trabalho 
 					ON tb_dados_gerais.id_osc = tb_relacoes_trabalho.id_osc 
 					INNER JOIN osc.tb_localizacao 
 					ON tb_dados_gerais.id_osc = tb_localizacao.id_osc 
 					WHERE nr_trabalhadores_vinculo >= 100 
-					GROUP BY rotulo
-				) AS e
-			) AS "100 ou mais"
-		) p;
+					GROUP BY regiao
+				) AS a
+			) AS b
+		) AS c;
 END;
 
 $$ LANGUAGE 'plpgsql';
+
+SELECT * FROM portal.obter_grafico_distribuicao_osc_empregados_regiao();
