@@ -3,7 +3,7 @@ DROP FUNCTION IF EXISTS portal.obter_grafico_osc_natureza_juridica_regiao() CASC
 CREATE OR REPLACE FUNCTION portal.obter_grafico_osc_natureza_juridica_regiao() RETURNS TABLE (
 	titulo TEXT, 
 	tipo TEXT, 
-	dados JSON, 
+	dados JSONB, 
 	fontes TEXT[]	
 ) AS $$ 
 
@@ -12,15 +12,15 @@ BEGIN
 		SELECT 
 			'Número de OSCs por natureza jurídica e região'::TEXT as titulo, 
 			'barras'::TEXT as tipo, 
-			c.dados::JSON AS dados, 
+			c.dados::JSONB AS dados, 
 			c.fontes AS fontes 
 		FROM (
 			SELECT 
-				'[{' || RTRIM(LTRIM(REPLACE(REPLACE(TRANSLATE(ARRAY_AGG(b.dados::JSONB)::TEXT, '\', ''), '"{', '{'), '}"', '}'), '{'), '}') || '}]' AS dados, 
+				(REPLACE(REPLACE(TRANSLATE(ARRAY_AGG(b.dados)::TEXT, '\', ''), '",', ','), '"}', '}')) AS dados, 
 				(SELECT ARRAY(SELECT DISTINCT UNNEST(('{' || BTRIM(REPLACE(REPLACE(RTRIM(LTRIM(TRANSLATE(ARRAY_AGG(b.fontes::TEXT)::TEXT, '"\', ''), '{'), '}'), '},{', ','), ',,', ','), ',') || '}')::TEXT[]))) AS fontes
 			FROM (
 				SELECT 
-					'{"' || a.regiao || '": [{' || RTRIM(LTRIM(REPLACE(REPLACE(TRANSLATE(ARRAY_AGG('{"' || a.natureza_juridica::TEXT || '": ' || a.quantidade::TEXT || '}')::TEXT, '\', ''), '"{', '{'), '}"', '}'), '{'), '}') || '}]}' AS dados, 
+					a.regiao || '": ' || '{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG('"' || a.natureza_juridica::TEXT || '": ' || a.quantidade::TEXT)::TEXT, '\', '') || '}'), '""', '"'), '",', ','), '"}', '}'), '"{', '{'), '{'), '}') || '}' AS dados, 
 					(SELECT ARRAY(SELECT DISTINCT UNNEST(('{' || BTRIM(REPLACE(REPLACE(RTRIM(LTRIM(TRANSLATE(ARRAY_AGG(a.fontes::TEXT)::TEXT, '"\', ''), '{'), '}'), '},{', ','), ',,', ','), ',') || '}')::TEXT[]))) AS fontes
 				FROM (
 					SELECT 
@@ -39,7 +39,7 @@ BEGIN
 					ORDER BY ed_regiao.edre_nm_regiao, dc_natureza_juridica.tx_nome_natureza_juridica
 				) AS a 
 				GROUP BY regiao
-			) AS b 
+			) AS b
 		) AS c;
 END;
 
