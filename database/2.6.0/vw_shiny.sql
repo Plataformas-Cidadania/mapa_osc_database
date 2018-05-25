@@ -49,7 +49,7 @@ SELECT p.id_osc,
     v.nr_trabalhadores_voluntarios,
     ods.id_objetivo_osc,
     ods.cd_meta_osc,
-    kk.cd_objetivo_projeto as objetivo_osc,
+    jj.cd_objetivo_projeto as objetivo_osc,
     q.id_projeto,
     q.tx_nome_projeto,
     gg.tx_nome_status_projeto,
@@ -69,6 +69,8 @@ SELECT p.id_osc,
     q.ft_identificador_projeto_externo,    
     jj.tx_codigo_meta_projeto,
     kk.tx_codigo_objetivo_projeto,
+    font.cd_fonte_recursos_projeto,
+    font.cd_origem_fonte_recursos_projeto,    
     r.cd_certificado,
     s.tx_nome_certificado,
     t.tx_cargo_dirigente,
@@ -98,6 +100,7 @@ SELECT p.id_osc,
      JOIN osc.tb_dados_gerais p ON p.id_osc = tb_osc.id_osc
      LEFT JOIN osc.tb_localizacao bb ON p.id_osc = bb.id_osc
      LEFT JOIN osc.tb_projeto q ON p.id_osc = q.id_osc
+     LEFT JOIN osc.tb_fonte_recursos_projeto font ON q.id_projeto = font.id_projeto
      LEFT JOIN osc.tb_relacoes_trabalho v ON p.id_osc = v.id_osc
      LEFT JOIN osc.tb_certificado r ON p.id_osc = r.id_osc
      LEFT JOIN syst.dc_certificado s ON r.cd_certificado = s.cd_certificado
@@ -127,8 +130,4 @@ SELECT p.id_osc,
      LEFT JOIN syst.dc_meta_projeto jj ON ods.cd_meta_osc = jj.cd_meta_projeto
      LEFT JOIN syst.dc_objetivo_projeto kk ON jj.cd_objetivo_projeto = kk.cd_objetivo_projeto
   WHERE p.id_osc <> 789809 AND p.id_osc <> 987654 AND tb_osc.bo_osc_ativa;
-
-CREATE UNIQUE INDEX ix_vw_shiny
-    ON graph.vw_shiny USING btree
-    (id_osc ASC NULLS LAST)
-    TABLESPACE pg_default;
+  
