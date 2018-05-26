@@ -16,7 +16,7 @@ BEGIN
 			c.fontes AS fontes 
 		FROM (
 			SELECT 
-				('{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG(b.dados)::TEXT, '\', '') || '}'), '""', '"'), '",', ','), '"}', '}'), '"{', '{'), '{'), '}')) AS dados, 
+				('{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG(b.dados)::TEXT, '\', '') || '}'), '""', '"'), '",', ','), '"}', '}'), '"{', '{'), '{'), '}') || '}}') AS dados, 
 				(SELECT ARRAY(SELECT DISTINCT UNNEST(('{' || BTRIM(REPLACE(REPLACE(RTRIM(LTRIM(TRANSLATE(ARRAY_AGG(b.fontes::TEXT)::TEXT, '"\', ''), '{'), '}'), '},{', ','), ',,', ','), ',') || '}')::TEXT[]))) AS fontes
 			FROM (
 				SELECT 
@@ -55,7 +55,7 @@ BEGIN
 					ON (SELECT SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1))::NUMERIC(1, 0) = ed_regiao.edre_cd_regiao 
 					WHERE nr_trabalhadores_vinculo BETWEEN 1 AND 4 
 					GROUP BY regiao
-				) AS a
+				) AS a 
 				UNION 
 				SELECT 
 					('"5 a 19": {' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG('"' || a.regiao::TEXT || '": ' || a.quantidade::TEXT)::TEXT, '\', '') || '}'), '""', '"'), '",', ','), '"}', '}'), '"{', '{'), '{'), '}') || '}') AS dados, 
