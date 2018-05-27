@@ -16,11 +16,11 @@ BEGIN
 			c.fontes AS fontes 
 		FROM (
 			SELECT 
-				(REPLACE(REPLACE(TRANSLATE(ARRAY_AGG(b.dados)::TEXT, '\', ''), '",', ','), '"}', '}')) AS dados, 
+				('[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG(b.dados)::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), '{'), '}') || '}]') AS dados, 
 				(SELECT ARRAY(SELECT DISTINCT UNNEST(('{' || BTRIM(REPLACE(REPLACE(RTRIM(LTRIM(TRANSLATE(ARRAY_AGG(b.fontes::TEXT)::TEXT, '"\', ''), '{'), '}'), '},{', ','), ',,', ','), ',') || '}')::TEXT[]))) AS fontes
 			FROM (
 				SELECT 
-					a.regiao || '": ' || '{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG('"' || a.natureza_juridica::TEXT || '": ' || a.quantidade::TEXT)::TEXT, '\', '') || '}'), '""', '"'), '",', ','), '"}', '}'), '"{', '{'), '{'), '}') || '}' AS dados, 
+					('{"rotulo": "' || a.regiao || '", "valor": ' || '[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG('{"rotulo": "' || a.natureza_juridica::TEXT || '", "valor": ' || a.quantidade::TEXT || '}')::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), '{'), '}') || '}]}') AS dados, 
 					(SELECT ARRAY(SELECT DISTINCT UNNEST(('{' || BTRIM(REPLACE(REPLACE(RTRIM(LTRIM(TRANSLATE(ARRAY_AGG(a.fontes::TEXT)::TEXT, '"\', ''), '{'), '}'), '},{', ','), ',,', ','), ',') || '}')::TEXT[]))) AS fontes
 				FROM (
 					SELECT 
