@@ -12,6 +12,8 @@ FROM (
 	UNION 
 	SELECT 3 AS id, titulo, tipo, dados::TEXT FROM (SELECT * FROM portal.obter_grafico_oscs_area_atuacao()) AS dados 
 	UNION 
+	SELECT 4 AS id, titulo, tipo, dados::TEXT FROM (SELECT * FROM portal.obter_oscs_assistencia_social_tipo_servico()) AS dados 
+	UNION 
 	SELECT 10 AS id, titulo, tipo, dados::TEXT FROM (SELECT * FROM portal.obter_grafico_osc_natureza_juridica_regiao()) AS dados 
 	UNION 
 	SELECT 11 AS id, titulo, tipo, dados::TEXT FROM (SELECT * FROM portal.obter_grafico_osc_titulos_certificados()) AS dados 
