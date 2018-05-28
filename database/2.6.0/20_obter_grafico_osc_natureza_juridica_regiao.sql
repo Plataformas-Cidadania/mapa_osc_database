@@ -29,11 +29,11 @@ BEGIN
 						count(*) AS quantidade, 
 						ARRAY_AGG(DISTINCT(COALESCE(tb_dados_gerais.ft_classe_atividade_economica_osc, '') || ',' || COALESCE(tb_localizacao.ft_municipio, ''))) AS fontes 
 					FROM osc.tb_dados_gerais 
-					INNER JOIN osc.tb_localizacao 
-					ON tb_dados_gerais.id_osc = tb_localizacao.id_osc 
 					INNER JOIN syst.dc_natureza_juridica
 					ON tb_dados_gerais.cd_natureza_juridica_osc = dc_natureza_juridica.cd_natureza_juridica 
-					RIGHT JOIN spat.ed_regiao 
+					LEFT JOIN osc.tb_localizacao 
+					ON tb_dados_gerais.id_osc = tb_localizacao.id_osc 
+					LEFT JOIN spat.ed_regiao 
 					ON ed_regiao.edre_cd_regiao::TEXT = SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1) 
 					GROUP BY ed_regiao.edre_nm_regiao, dc_natureza_juridica.tx_nome_natureza_juridica 
 					ORDER BY ed_regiao.edre_nm_regiao, dc_natureza_juridica.tx_nome_natureza_juridica
