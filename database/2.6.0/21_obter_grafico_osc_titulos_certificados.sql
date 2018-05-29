@@ -13,15 +13,15 @@ BEGIN
 			'Número de organizações civis com títulos e certificações'::TEXT AS titulo, 
 			'barras'::TEXT AS tipo, 
 			b.dados::JSONB AS dados, 
-			b.fontes AS fontes 
+			b.fontes::TEXT[] AS fontes 
 		FROM (
 			SELECT 
-				('[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG('{"rotulo": "' || a.certificado::TEXT || '", "value": ' || a.quantidade::TEXT || '}')::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), '{'), '}') || '}]') AS dados, 
-				(SELECT ARRAY(SELECT DISTINCT UNNEST(('{' || BTRIM(REPLACE(REPLACE(RTRIM(LTRIM(TRANSLATE(ARRAY_AGG(a.fontes::TEXT)::TEXT, '"\', ''), '{'), '}'), '},{', ','), ',,', ','), ',') || '}')::TEXT[]))) AS fontes
+				('[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG('{"rotulo": "' || a.rotulo::TEXT || '", "valor": ' || a.valor::TEXT || '}')::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), '{'), '}') || '}]') AS dados, 
+				(SELECT ARRAY(SELECT DISTINCT UNNEST(('{' || BTRIM(REPLACE(REPLACE(RTRIM(LTRIM(TRANSLATE(ARRAY_AGG(a.fontes::TEXT)::TEXT, '"\', ''), '{'), '}'), '},{', ','), ',,', ','), ',') || '}')::TEXT[]))) AS fontes 
 			FROM (
 				SELECT 
-					dc_certificado.tx_nome_certificado AS certificado, 
-					count(*) AS quantidade, 
+					dc_certificado.tx_nome_certificado AS rotulo, 
+					count(*) AS valor, 
 					ARRAY_AGG(DISTINCT(COALESCE(tb_certificado.ft_certificado, ''))) AS fontes
 				FROM osc.tb_certificado 
 				INNER JOIN syst.dc_certificado 

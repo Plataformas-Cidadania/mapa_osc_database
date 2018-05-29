@@ -13,20 +13,20 @@ BEGIN
 			'Número de OSCs por natureza jurídica e região'::TEXT as titulo, 
 			'barras'::TEXT as tipo, 
 			c.dados::JSONB AS dados, 
-			c.fontes AS fontes 
+			c.fontes::TEXT[] AS fontes 
 		FROM (
 			SELECT 
 				('[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG(b.dados)::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), '{'), '}') || '}]') AS dados, 
 				(SELECT ARRAY(SELECT DISTINCT UNNEST(('{' || BTRIM(REPLACE(REPLACE(RTRIM(LTRIM(TRANSLATE(ARRAY_AGG(b.fontes::TEXT)::TEXT, '"\', ''), '{'), '}'), '},{', ','), ',,', ','), ',') || '}')::TEXT[]))) AS fontes
 			FROM (
 				SELECT 
-					('{"rotulo": "' || a.regiao || '", "valor": ' || '[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG('{"rotulo": "' || a.natureza_juridica::TEXT || '", "valor": ' || a.quantidade::TEXT || '}')::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), '{'), '}') || '}]}') AS dados, 
+					('{"rotulo": "' || a.rotulo_1 || '", "valor": ' || '[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG('{"rotulo": "' || a.rotulo_2::TEXT || '", "valor": ' || a.valor::TEXT || '}')::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), '{'), '}') || '}]}') AS dados, 
 					(SELECT ARRAY(SELECT DISTINCT UNNEST(('{' || BTRIM(REPLACE(REPLACE(RTRIM(LTRIM(TRANSLATE(ARRAY_AGG(a.fontes::TEXT)::TEXT, '"\', ''), '{'), '}'), '},{', ','), ',,', ','), ',') || '}')::TEXT[]))) AS fontes
 				FROM (
 					SELECT 
-						ed_regiao.edre_nm_regiao AS regiao, 
-						dc_natureza_juridica.tx_nome_natureza_juridica AS natureza_juridica, 
-						count(*) AS quantidade, 
+						ed_regiao.edre_nm_regiao AS rotulo_1, 
+						dc_natureza_juridica.tx_nome_natureza_juridica AS rotulo_2, 
+						count(*) AS valor, 
 						ARRAY_AGG(DISTINCT(COALESCE(tb_dados_gerais.ft_classe_atividade_economica_osc, '') || ',' || COALESCE(tb_localizacao.ft_municipio, ''))) AS fontes 
 					FROM osc.tb_dados_gerais 
 					INNER JOIN syst.dc_natureza_juridica
@@ -38,7 +38,7 @@ BEGIN
 					GROUP BY ed_regiao.edre_nm_regiao, dc_natureza_juridica.tx_nome_natureza_juridica 
 					ORDER BY ed_regiao.edre_nm_regiao, dc_natureza_juridica.tx_nome_natureza_juridica
 				) AS a 
-				GROUP BY regiao
+				GROUP BY rotulo_1
 			) AS b
 		) AS c;
 END;

@@ -18,26 +18,26 @@ BEGIN
 			'Distribuição de OSCs por área de atuação'::TEXT AS titulo, 
 			'pizza'::TEXT AS tipo, 
 			c.dados::JSONB AS dados, 
-			c.fontes AS fontes 
+			c.fontes::TEXT[] AS fontes 
 		FROM (
 			SELECT 
 				('[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG(b.dados)::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), '{'), '}') || '}]') AS dados, 
 				(SELECT ARRAY(SELECT DISTINCT UNNEST(('{' || BTRIM(REPLACE(REPLACE(RTRIM(LTRIM(TRANSLATE(ARRAY_AGG(b.fontes::TEXT)::TEXT, '"\', ''), '{'), '}'), '},{', ','), ',,', ','), ',') || '}')::TEXT[]))) AS fontes
 			FROM (
 				SELECT 
-					ARRAY_AGG('{"rotulo": "' || COALESCE(a.area_atuacao::TEXT, 'Outras organizações da sociedade civil') || '", "valor": ' || a.quantidade::TEXT || '}')::TEXT AS dados, 
+					ARRAY_AGG('{"rotulo": "' || COALESCE(a.rotulo::TEXT, 'Outras organizações da sociedade civil') || '", "valor": ' || a.valor::TEXT || '}')::TEXT AS dados, 
 					(SELECT ARRAY(SELECT DISTINCT UNNEST(('{' || BTRIM(REPLACE(REPLACE(RTRIM(LTRIM(TRANSLATE(ARRAY_AGG(a.fontes::TEXT)::TEXT, '"\', ''), '{'), '}'), '},{', ','), ',,', ','), ',') || '}')::TEXT[]))) AS fontes 
 				FROM (
 					SELECT 
-						dc_area_atuacao.tx_nome_area_atuacao AS area_atuacao, 
-						ROUND(((COUNT(*) / quantidade_oscs) * 100.)::NUMERIC, 2) AS quantidade, 
+						dc_area_atuacao.tx_nome_area_atuacao AS rotulo, 
+						ROUND(((COUNT(*) / quantidade_oscs) * 100.)::NUMERIC, 2) AS valor, 
 						ARRAY_AGG(DISTINCT(COALESCE(tb_area_atuacao.ft_area_atuacao, ''))) AS fontes 
 					FROM osc.tb_dados_gerais 
 					LEFT JOIN osc.tb_area_atuacao 
 					ON tb_dados_gerais.id_osc = tb_area_atuacao.id_osc 
 					LEFT JOIN syst.dc_area_atuacao 
 					ON tb_area_atuacao.cd_area_atuacao = dc_area_atuacao.cd_area_atuacao 
-					GROUP BY dc_area_atuacao.tx_nome_area_atuacao
+					GROUP BY rotulo
 				) AS a
 			) AS b
 		) AS c;

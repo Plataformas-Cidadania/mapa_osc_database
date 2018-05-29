@@ -13,20 +13,20 @@ BEGIN
 			'Distribuição de OSCs de saúde por região e tipo de gestão'::TEXT as titulo, 
 			'barras'::TEXT as tipo, 
 			c.dados::JSONB AS dados, 
-			c.fontes AS fontes 
+			c.fontes::TEXT[] AS fontes 
 		FROM (
 			SELECT 
 				('[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG(b.dados)::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), '{'), '}') || '}]') AS dados, 
 				(SELECT ARRAY(SELECT DISTINCT UNNEST(('{' || BTRIM(REPLACE(REPLACE(RTRIM(LTRIM(TRANSLATE(ARRAY_AGG(b.fontes::TEXT)::TEXT, '"\', ''), '{'), '}'), '},{', ','), ',,', ','), ',') || '}')::TEXT[]))) AS fontes
 			FROM (
 				SELECT 
-					('{"rotulo": "' || a.regiao || '", "valor": ' || '[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG('{"rotulo": "' || a.esfera_administrativa::TEXT || '", "valor": ' || a.quantidade::TEXT || '}')::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), '{'), '}') || '}]}') AS dados, 
+					('{"rotulo": "' || a.rotulo_1 || '", "valor": ' || '[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG('{"rotulo": "' || a.rotulo_2::TEXT || '", "valor": ' || a.valor::TEXT || '}')::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), '{'), '}') || '}]}') AS dados, 
 					(SELECT ARRAY(SELECT DISTINCT UNNEST(('{' || BTRIM(REPLACE(REPLACE(RTRIM(LTRIM(TRANSLATE(ARRAY_AGG(a.fontes::TEXT)::TEXT, '"\', ''), '{'), '}'), '},{', ','), ',,', ','), ',') || '}')::TEXT[]))) AS fontes
 				FROM (
 					SELECT 
-						ed_regiao.edre_nm_regiao AS regiao, 
-						tb_cnes.ds_esfera_administrativa  AS esfera_administrativa, 
-						count(*) AS quantidade, 
+						ed_regiao.edre_nm_regiao AS rotulo_1, 
+						tb_cnes.ds_esfera_administrativa  AS rotulo_2, 
+						count(*) AS valor, 
 						ARRAY_AGG(DISTINCT(COALESCE(tb_dados_gerais.ft_classe_atividade_economica_osc, '') || ',' || COALESCE(tb_localizacao.ft_municipio, ''))) AS fontes 
 					FROM osc.tb_dados_gerais 
 					INNER JOIN graph.tb_cnes 
@@ -35,8 +35,8 @@ BEGIN
 					ON tb_dados_gerais.id_osc = tb_localizacao.id_osc 
 					LEFT JOIN spat.ed_regiao 
 					ON ed_regiao.edre_cd_regiao::TEXT = SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1) 
-					GROUP BY ed_regiao.edre_nm_regiao, tb_cnes.ds_esfera_administrativa 
-					ORDER BY ed_regiao.edre_nm_regiao, tb_cnes.ds_esfera_administrativa 
+					GROUP BY rotulo_1, rotulo_2 
+					ORDER BY rotulo_1, rotulo_2 
 				) AS a 
 				GROUP BY regiao
 			) AS b
