@@ -4,7 +4,7 @@ DROP MATERIALIZED VIEW IF EXISTS portal.vw_graficos CASCADE;
 CREATE MATERIALIZED VIEW portal.vw_graficos
 AS
 
-SELECT id, titulo, tipo, dados::JSONB, data_atualizacao 
+SELECT id, titulo, tipo, dados::JSONB
 FROM (
 	SELECT 1 AS id, titulo, tipo, dados::TEXT, NOW() AS data_atualizacao FROM (SELECT * FROM portal.obter_grafico_distribuicao_osc_empregados_regiao()) AS dados 
 	UNION 

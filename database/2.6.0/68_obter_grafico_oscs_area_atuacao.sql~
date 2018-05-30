@@ -31,7 +31,7 @@ BEGIN
 					SELECT 
 						dc_area_atuacao.tx_nome_area_atuacao AS rotulo, 
 						ROUND(((COUNT(*) / quantidade_oscs) * 100.)::NUMERIC, 2) AS valor, 
-						ARRAY_AGG(DISTINCT(COALESCE(REPLACE(tb_area_atuacao.ft_area_atuacao, '${ETL}', ''), ''))) AS fontes 
+						ARRAY_AGG(DISTINCT(COALESCE(REPLACE(tb_area_atuacao.ft_area_atuacao, ''), ''))) AS fontes 
 					FROM osc.tb_dados_gerais 
 					LEFT JOIN osc.tb_area_atuacao 
 					ON tb_dados_gerais.id_osc = tb_area_atuacao.id_osc 

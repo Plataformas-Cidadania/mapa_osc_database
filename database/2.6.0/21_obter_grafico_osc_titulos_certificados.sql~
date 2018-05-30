@@ -22,7 +22,7 @@ BEGIN
 				SELECT 
 					dc_certificado.tx_nome_certificado AS rotulo, 
 					count(*) AS valor, 
-					ARRAY_AGG(DISTINCT(COALESCE(REPLACE(tb_certificado.ft_certificado, '${ETL}', ''), ''))) AS fontes
+					ARRAY_AGG(DISTINCT(COALESCE(tb_certificado.ft_certificado, ''))) AS fontes
 				FROM osc.tb_certificado 
 				INNER JOIN syst.dc_certificado 
 				ON tb_certificado.cd_certificado = dc_certificado.cd_certificado
