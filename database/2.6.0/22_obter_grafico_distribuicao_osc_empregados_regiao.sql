@@ -16,15 +16,15 @@ BEGIN
 			c.fontes::TEXT[] AS fontes 
 		FROM (
 			SELECT 
-				('[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG(b.dados)::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), '{'), '}') || '}]') AS dados, 
-				(SELECT ARRAY(SELECT DISTINCT UNNEST(('{' || BTRIM(REPLACE(REPLACE(RTRIM(LTRIM(TRANSLATE(ARRAY_AGG(b.fontes::TEXT)::TEXT, '"\', ''), '{'), '}'), '},{', ','), ',,', ','), ',') || '}')::TEXT[]))) AS fontes
+				'[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG(b.dados)::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), '{'), '}') || '}]' AS dados, 
+				REPLACE(REPLACE(TRANSLATE((ARRAY_AGG(DISTINCT REPLACE(TRIM(TRANSLATE(b.fontes::TEXT, '"\{}', ''), ','), '","', ',')))::TEXT, '"', ''), '{,', '{'), ',}', '}')::TEXT[] AS fontes 
 			FROM (
 				SELECT 
 					'{"rotulo": "' || a.rotulo_1 || '", "valor": ' || '[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG('{"rotulo": "' || a.rotulo_2::TEXT || '", "valor": ' || a.valor::TEXT || '}')::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), '{'), '}') || '}]}' AS dados, 
-					(SELECT ARRAY(SELECT DISTINCT UNNEST(('{' || BTRIM(REPLACE(REPLACE(RTRIM(LTRIM(TRANSLATE(ARRAY_AGG(a.fontes::TEXT)::TEXT, '"\', ''), '{'), '}'), '},{', ','), ',,', ','), ',') || '}')::TEXT[]))) AS fontes 
+					REPLACE(REPLACE(TRANSLATE((ARRAY_AGG(DISTINCT REPLACE(TRIM(TRANSLATE(a.fontes::TEXT, '"\{}', ''), ','), '","', ',')))::TEXT, '"', ''), '{,', '{'), ',}', '}')::TEXT[] AS fontes 
 				FROM (
 					SELECT 
-						COALESCE(ed_regiao.edre_nm_regiao, 'Outro') AS rotulo_1, 
+						COALESCE(ed_regiao.edre_nm_regiao, 'Sem informação') AS rotulo_1, 
 						(
 							CASE 
 								WHEN (tb_relacoes_trabalho.nr_trabalhadores_vinculo = 0) THEN '0' 
@@ -36,14 +36,17 @@ BEGIN
 							END
 						) AS rotulo_2, 
 						count(*) AS valor, 
-						ARRAY_AGG(DISTINCT(COALESCE(REPLACE(tb_relacoes_trabalho.ft_trabalhadores_vinculo, '${ETL}', ''), '') || ',' || COALESCE(REPLACE(tb_localizacao.ft_municipio, '${ETL}', ''), ''))) AS fontes 
-					FROM osc.tb_dados_gerais 
-					INNER JOIN osc.tb_relacoes_trabalho 
+						ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_relacoes_trabalho.ft_trabalhadores_vinculo, ''), '${ETL}', '')) AS fontes 
+					FROM osc.tb_osc 
+					LEFT JOIN osc.tb_dados_gerais 
+					ON tb_osc.id_osc = tb_dados_gerais.id_osc 
+					LEFT JOIN osc.tb_relacoes_trabalho 
 					ON tb_dados_gerais.id_osc = tb_relacoes_trabalho.id_osc 
-					INNER JOIN osc.tb_localizacao 
+					LEFT JOIN osc.tb_localizacao 
 					ON tb_dados_gerais.id_osc = tb_localizacao.id_osc 
-					INNER JOIN spat.ed_regiao 
+					LEFT JOIN spat.ed_regiao 
 					ON (SELECT SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1))::NUMERIC(1, 0) = ed_regiao.edre_cd_regiao 
+					WHERE tb_osc.bo_osc_ativa 
 					GROUP BY rotulo_1, rotulo_2
 				) AS a 
 				GROUP BY a.rotulo_1

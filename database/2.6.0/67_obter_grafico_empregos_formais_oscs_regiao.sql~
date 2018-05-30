@@ -16,20 +16,23 @@ BEGIN
 			b.fontes::TEXT[] AS fontes 
 		FROM (
 			SELECT 
-				('[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG('{"rotulo": "' || a.rotulo::TEXT || '", "valor": ' || a.valor::TEXT || '}')::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), '{'), '}') || '}]') AS dados, 
-				(SELECT ARRAY(SELECT DISTINCT UNNEST(('{' || BTRIM(REPLACE(REPLACE(RTRIM(LTRIM(TRANSLATE(ARRAY_AGG(a.fontes::TEXT)::TEXT, '"\', ''), '{'), '}'), '},{', ','), ',,', ','), ',') || '}')::TEXT[]))) AS fontes
+				'[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG('{"rotulo": "' || a.rotulo::TEXT || '", "valor": ' || a.valor::TEXT || '}')::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), '{'), '}') || '}]' AS dados, 
+				REPLACE(REPLACE(TRANSLATE((ARRAY_AGG(DISTINCT REPLACE(TRIM(TRANSLATE(a.fontes::TEXT, '"\{}', ''), ','), '","', ',')))::TEXT, '"', ''), '{,', '{'), ',}', '}')::TEXT[] AS fontes 
 			FROM (
 				SELECT 
-					ed_regiao.edre_nm_regiao AS rotulo,
+					COALESCE(ed_regiao.edre_nm_regiao, 'Sem informação') AS rotulo, 
 					SUM(tb_relacoes_trabalho.nr_trabalhadores_vinculo) AS valor, 
-					ARRAY_AGG(DISTINCT(COALESCE(REPLACE(tb_relacoes_trabalho.ft_trabalhadores_vinculo, '${ETL}', ''), '') || ',' || COALESCE(REPLACE(tb_localizacao.ft_municipio, '${ETL}', ''), ''))) AS fontes
-				FROM osc.tb_dados_gerais 
-				INNER JOIN osc.tb_relacoes_trabalho 
+					ARRAY_CAT(ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_relacoes_trabalho.ft_trabalhadores_vinculo, ''), '${ETL}', '')), ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_localizacao.ft_municipio, ''), '${ETL}', ''))) AS fontes 
+				FROM osc.tb_osc 
+				LEFT JOIN osc.tb_dados_gerais 
+				ON tb_osc.id_osc = tb_dados_gerais.id_osc 
+				LEFT JOIN osc.tb_relacoes_trabalho 
 				ON tb_dados_gerais.id_osc = tb_relacoes_trabalho.id_osc 
-				INNER JOIN osc.tb_localizacao 
+				LEFT JOIN osc.tb_localizacao 
 				ON tb_dados_gerais.id_osc = tb_localizacao.id_osc 
-				INNER JOIN spat.ed_regiao 
+				LEFT JOIN spat.ed_regiao 
 				ON (SELECT SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1))::NUMERIC(1, 0) = ed_regiao.edre_cd_regiao 
+				WHERE tb_osc.bo_osc_ativa 
 				GROUP BY rotulo
 			) AS a
 		) AS b;
