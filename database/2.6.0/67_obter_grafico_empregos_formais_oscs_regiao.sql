@@ -41,4 +41,3 @@ END;
 $$ LANGUAGE 'plpgsql';
 
 SELECT * FROM portal.obter_grafico_empregos_formais_oscs_regiao();
-

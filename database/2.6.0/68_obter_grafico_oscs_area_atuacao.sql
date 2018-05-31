@@ -33,10 +33,8 @@ BEGIN
 						ROUND(((COUNT(*) / quantidade_oscs) * 100.)::NUMERIC, 2) AS valor, 
 						ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_area_atuacao.ft_area_atuacao, ''), '${ETL}', '')) AS fontes 
 					FROM osc.tb_osc 
-					LEFT JOIN osc.tb_dados_gerais 
-					ON tb_osc.id_osc = tb_dados_gerais.id_osc 
 					LEFT JOIN osc.tb_area_atuacao 
-					ON tb_dados_gerais.id_osc = tb_area_atuacao.id_osc 
+					ON tb_osc.id_osc = tb_area_atuacao.id_osc 
 					LEFT JOIN syst.dc_area_atuacao 
 					ON tb_area_atuacao.cd_area_atuacao = dc_area_atuacao.cd_area_atuacao 
 					WHERE tb_osc.bo_osc_ativa 
@@ -49,4 +47,3 @@ END;
 $$ LANGUAGE 'plpgsql';
 
 SELECT * FROM portal.obter_grafico_oscs_area_atuacao();
-
