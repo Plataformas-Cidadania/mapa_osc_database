@@ -26,7 +26,7 @@ BEGIN
 					SELECT 
 						COALESCE(ed_regiao.edre_nm_regiao, 'Sem informação') AS rotulo_1, 
 						COALESCE(dc_natureza_juridica.tx_nome_natureza_juridica, 'Sem informação') AS rotulo_2, 
-						count(*) AS valor, 
+						COUNT(*) AS valor, 
 						ARRAY_CAT(ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_dados_gerais.ft_classe_atividade_economica_osc, ''), '${ETL}', '')), ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_localizacao.ft_municipio, ''), '${ETL}', ''))) AS fontes 
 					FROM osc.tb_osc 
 					LEFT JOIN osc.tb_dados_gerais 

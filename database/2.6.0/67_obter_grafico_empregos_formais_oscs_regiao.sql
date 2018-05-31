@@ -21,7 +21,7 @@ BEGIN
 			FROM (
 				SELECT 
 					COALESCE(ed_regiao.edre_nm_regiao, 'Sem informação') AS rotulo, 
-					SUM(tb_relacoes_trabalho.nr_trabalhadores_vinculo) AS valor, 
+					COALESCE(SUM(tb_relacoes_trabalho.nr_trabalhadores_vinculo), 0) AS valor, 
 					ARRAY_CAT(ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_relacoes_trabalho.ft_trabalhadores_vinculo, ''), '${ETL}', '')), ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_localizacao.ft_municipio, ''), '${ETL}', ''))) AS fontes 
 				FROM osc.tb_osc 
 				LEFT JOIN osc.tb_dados_gerais 

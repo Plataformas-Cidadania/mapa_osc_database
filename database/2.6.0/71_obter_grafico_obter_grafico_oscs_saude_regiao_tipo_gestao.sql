@@ -26,8 +26,8 @@ BEGIN
 					SELECT 
 						COALESCE(ed_regiao.edre_nm_regiao, 'Sem informação') AS rotulo_1, 
 						COALESCE(tb_cnes.ds_gestao, 'Sem informação') AS rotulo_2, 
-						count(*) AS valor, 
-						ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_localizacao.ft_municipio, ''), '${ETL}', '')) AS fontes 
+						COUNT(*) AS valor, 
+						ARRAY_CAT('{"CNES/MS"}'::TEXT[], ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_localizacao.ft_municipio, ''), '${ETL}', ''))) AS fontes 
 					FROM osc.tb_osc 
 					INNER JOIN graph.tb_cnes 
 					ON tb_osc.cd_identificador_osc = TRANSLATE(tb_cnes.nu_cnpj_requerente, '-', '')::NUMERIC 

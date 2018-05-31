@@ -35,7 +35,7 @@ BEGIN
 								ELSE '0'
 							END
 						) AS rotulo_2, 
-						count(*) AS valor, 
+						COUNT(*) AS valor, 
 						ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_relacoes_trabalho.ft_trabalhadores_vinculo, ''), '${ETL}', '')) AS fontes 
 					FROM osc.tb_osc 
 					LEFT JOIN osc.tb_dados_gerais 
