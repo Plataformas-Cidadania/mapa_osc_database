@@ -19,7 +19,7 @@ BEGIN
 					COALESCE(ed_regiao.edre_nm_regiao, 'Sem informação') AS rotulo_1, 
 					COALESCE(dc_natureza_juridica.tx_nome_natureza_juridica, 'Sem informação') AS rotulo_2, 
 					COUNT(*) AS valor, 
-					ARRAY_CAT(ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_dados_gerais.ft_classe_atividade_economica_osc, ''), '${ETL}', '')), ARRAY_CAT(ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_localizacao.ft_municipio, ''), '${ETL}', '')), ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_osc.ft_identificador_osc, ''), '${ETL}', '')))) AS fontes 
+					ARRAY_CAT(ARRAY_CAT(ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_dados_gerais.ft_classe_atividade_economica_osc, ''), '${ETL}', '')), ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_localizacao.ft_municipio, ''), '${ETL}', ''))), ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_osc.ft_identificador_osc, ''), '${ETL}', ''))) AS fontes 
 				FROM osc.tb_osc 
 				LEFT JOIN osc.tb_dados_gerais 
 				ON tb_osc.id_osc = tb_dados_gerais.id_osc  
@@ -39,4 +39,3 @@ END;
 $$ LANGUAGE 'plpgsql';
 
 SELECT * FROM portal.obter_grafico_osc_natureza_juridica_regiao();
-

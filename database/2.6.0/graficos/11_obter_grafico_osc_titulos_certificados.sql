@@ -28,4 +28,3 @@ END;
 $$ LANGUAGE 'plpgsql';
 
 SELECT * FROM portal.obter_grafico_osc_titulos_certificados();
-

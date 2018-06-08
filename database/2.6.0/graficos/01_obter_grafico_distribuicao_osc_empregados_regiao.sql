@@ -28,7 +28,7 @@ BEGIN
 						END
 					) AS rotulo_2, 
 					COUNT(*) AS valor, 
-					ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_relacoes_trabalho.ft_trabalhadores_vinculo, ''), '${ETL}', '')) AS fontes 
+					ARRAY_CAT(ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_relacoes_trabalho.ft_trabalhadores_vinculo, ''), '${ETL}', '')), ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_osc.ft_identificador_osc, ''), '${ETL}', ''))) AS fontes 
 				FROM osc.tb_osc 
 				LEFT JOIN osc.tb_dados_gerais 
 				ON tb_osc.id_osc = tb_dados_gerais.id_osc 
@@ -48,4 +48,3 @@ END;
 $$ LANGUAGE 'plpgsql';
 
 SELECT * FROM portal.obter_grafico_distribuicao_osc_empregados_regiao();
-
