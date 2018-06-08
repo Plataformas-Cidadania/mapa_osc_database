@@ -11,5 +11,6 @@ CREATE TABLE portal.tb_analise(
 	cores TEXT[], 
 	indicador_barras BOOLEAN[], 
 	series JSONB, 
+	fontes TEXT[], 
 	CONSTRAINT pk_tb_analise PRIMARY KEY (id_analise)
 );
