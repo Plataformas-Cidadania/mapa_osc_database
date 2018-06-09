@@ -7,9 +7,7 @@ CREATE TABLE portal.tb_analise(
 	titulo_colunas TEXT[], 
 	legenda_x TEXT, 
 	legenda_y TEXT,  
-	chaves TEXT[], 
-	cores TEXT[], 
-	indicador_barras BOOLEAN[], 
+	parametros JSONB[], 
 	series JSONB, 
 	fontes TEXT[], 
 	CONSTRAINT pk_tb_analise PRIMARY KEY (id_analise)
