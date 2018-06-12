@@ -16,7 +16,7 @@ BEGIN
 			WHERE id_analise = 1;
 		ELSE 
 			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series, fontes) 
-			VALUES (1, null, null, null, null, null, null, null, null, grafico.dados, grafico.fontes);
+			VALUES (1, '{'',f'', 1,''''}', 'MultiBarChart', 'Distribuição de OSCs por número de empregados e região', null, null, 'Quantidade de OSC', 'Região', null, grafico.dados, grafico.fontes);
 		END IF;
 	END LOOP;
 	
@@ -27,7 +27,7 @@ BEGIN
 			WHERE id_analise = 2;
 		ELSE 
 			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series, fontes) 
-			VALUES (2, null, null, null, null, null, null, null, null, grafico.dados, grafico.fontes);
+			VALUES (2, '{'',f'', 1,''''}', 'BarChart', 'Número de empregos formais nas OSCs por região', null, null, 'Quantidade de empregos', 'Região', null, grafico.dados, grafico.fontes);
 		END IF;
 	END LOOP;
 	
@@ -38,7 +38,7 @@ BEGIN
 			WHERE id_analise = 3;
 		ELSE 
 			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series, fontes) 
-			VALUES (3, null, null, null, null, null, null, null, null, grafico.dados, grafico.fontes);
+			VALUES (3, '{'',f'', 1,''''}', 'DonutChart', 'Distribuição de OSCs por área de atuação', null, null, null, null, null, grafico.dados, grafico.fontes);
 		END IF;
 	END LOOP;
 	
@@ -49,7 +49,7 @@ BEGIN
 			WHERE id_analise = 5;
 		ELSE 
 			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series, fontes) 
-			VALUES (5, null, null, null, null, null, null, null, null, grafico.dados, grafico.fontes);
+			VALUES (5, '{'',f'', 1,''''}', 'DonutChart', 'Distribuição de OSCs de saúde por tipo de estabelecimento de saúde', null, null, null, null, null, grafico.dados, grafico.fontes);
 		END IF;
 	END LOOP;
 	
@@ -60,7 +60,7 @@ BEGIN
 			WHERE id_analise = 6;
 		ELSE 
 			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series, fontes) 
-			VALUES (6, null, null, null, null, null, null, null, null, grafico.dados, grafico.fontes);
+			VALUES (6, '{'',f'', 1,''''}', 'MultiBarChart', 'Distribuição de OSCs de saúde por região e tipo de gestão', null, null, 'Quantidade de OSC', 'Região', null, grafico.dados, grafico.fontes);
 		END IF;
 	END LOOP;
 	
@@ -71,7 +71,7 @@ BEGIN
 			WHERE id_analise = 10;
 		ELSE 
 			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series, fontes) 
-			VALUES (10, null, null, null, null, null, null, null, null, grafico.dados, grafico.fontes);
+			VALUES (10, '{'',f'', 1,''''}', 'MultiBarChart', 'Número de OSCs por natureza jurídica e região', null, null, 'Quantidade de OSC', 'Região', null, grafico.dados, grafico.fontes);
 		END IF;
 	END LOOP;
 	
@@ -82,7 +82,7 @@ BEGIN
 			WHERE id_analise = 11;
 		ELSE 
 			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series, fontes) 
-			VALUES (11, null, null, null, null, null, null, null, null, grafico.dados, grafico.fontes);
+			VALUES (11, '{'',f'', 1,''''}', 'BarChart', 'Número de organizações civis com títulos e certificações', null, null, 'Quantidade de OSC', 'Tipo de título ou certificação', null, grafico.dados, grafico.fontes);
 		END IF;
 	END LOOP;
 	
