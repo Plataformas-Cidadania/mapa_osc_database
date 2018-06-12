@@ -5,8 +5,11 @@ CREATE OR REPLACE FUNCTION portal.atualizar_graficos() RETURNS VOID AS $$
 DECLARE
 	grafico RECORD;
 	lista_id INTEGER[];
+	parametros_grafico_9 JSONB;
 	
 BEGIN 
+	parametros_grafico_9 := '[{"barra": true, "cor": "#ccf"}, {"cor": "#ff7f0e"}]'::JSONB;
+	
 	lista_id := (SELECT ARRAY_AGG(id_analise) FROM portal.tb_analise)::INTEGER[];
 	
 	FOR grafico IN SELECT * FROM portal.obter_grafico_distribuicao_osc_empregados_regiao() LOOP
@@ -75,14 +78,14 @@ BEGIN
 		END IF;
 	END LOOP;
 	
-	FOR grafico IN SELECT * FROM portal.obter_grafico_total_osc_ano() LOOP
+	FOR grafico IN SELECT * FROM portal.obter_grafico_total_osc_ano(parametros_grafico_9) LOOP
 		IF (SELECT 9 = ANY(lista_id)) THEN 
 			UPDATE portal.tb_analise 
 			SET series = grafico.dados, fontes = grafico.fontes 
 			WHERE id_analise = 9;
 		ELSE 
 			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series, fontes) 
-			VALUES (9, '{'',f'', 1000000,''M'', '',f''', 'LinePlusBarChart', 'Total de OSC, por ano', null, null, 'Quantidade de OSC', 'Ano', null, grafico.dados, grafico.fontes);
+			VALUES (9, '{'',f'', 1000000, ''M'', '',f''}', 'LinePlusBarChart', 'Total de OSC, por ano', null, null, 'Quantidade de OSC', 'Ano', null, grafico.dados, grafico.fontes);
 		END IF;
 	END LOOP;
 	
