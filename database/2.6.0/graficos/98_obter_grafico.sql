@@ -10,18 +10,22 @@ DECLARE
 	linha RECORD;
 
 BEGIN 
-	SELECT INTO linha
-		id, 
+	SELECT INTO linha 
+		configuracao, 
+		tipo_grafico, 
 		titulo, 
-		tipo, 
-		dados, 
-		data_atualizacao 
+		legenda, 
+		titulo_colunas, 
+		legenda_x, 
+		legenda_y, 
+		series, 
+		fontes 
 	FROM 
-		portal.vw_graficos
+		portal.tb_analise
 	WHERE 
-		id = param::INTEGER;
+		id_analise = param::INTEGER;
 
-	IF linha != (null::INTEGER, null::TEXT, null::TEXT, null::JSONB, null::TIMESTAMP WITH TIME ZONE)::RECORD THEN 
+	IF linha != (null::TEXT[], null::TEXT, null::TEXT, null::TEXT, null::TEXT[], null::TEXT, null::TEXT, null::JSONB, null::TEXT[])::RECORD THEN 
 		resultado := to_jsonb(linha);
 		codigo := 200;
 		mensagem := 'Dados de gráfico retornado.';
@@ -40,3 +44,4 @@ EXCEPTION
 END;
 $$ LANGUAGE 'plpgsql';
 
+SELECT * FROM portal.obter_grafico(1::TEXT);
