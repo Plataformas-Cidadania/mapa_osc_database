@@ -92,8 +92,18 @@ BEGIN
 	]'::JSONB;
 	
 	dados := '[' ||
-		RTRIM((dados->>0)::TEXT, '}') || ', ' || '"cor": ' || '"' || ((parametros->>0)::JSONB->>'cor')::TEXT || ', ' || '"}, ' ||
-		RTRIM((dados->>1)::TEXT, '}') || ', ' || '"cor": ' || '"' || ((parametros->>1)::JSONB->>'cor')::TEXT || ', ' || '"}' ||
+		RTRIM((dados->>0)::TEXT, '}') || ', ' || '"cor": ' || COALESCE('"' || ((parametros->>0)::JSONB->>'cor')::TEXT || '"', 'null') || '}, ' ||
+		RTRIM((dados->>1)::TEXT, '}') || ', ' || '"cor": ' || COALESCE('"' || ((parametros->>1)::JSONB->>'cor')::TEXT || '"', 'null') || '}' ||
+	']';
+	
+	dados := '[' ||
+		RTRIM((dados->>0)::TEXT, '}') || ', ' || '"barra": ' || COALESCE('"' || ((parametros->>0)::JSONB->>'barra')::TEXT || '"', 'null') || '}, ' ||
+		RTRIM((dados->>1)::TEXT, '}') || ', ' || '"barra": ' || COALESCE('"' || ((parametros->>1)::JSONB->>'barra')::TEXT || '"', 'null') || '}' ||
+	']';
+	
+	dados := '[' ||
+		RTRIM((dados->>0)::TEXT, '}') || ', ' || '"tipo_valor": ' || COALESCE('"' || ((parametros->>0)::JSONB->>'tipo_valor')::TEXT || '"', 'null') || '}, ' ||
+		RTRIM((dados->>1)::TEXT, '}') || ', ' || '"tipo_valor": ' || COALESCE('"' || ((parametros->>1)::JSONB->>'tipo_valor')::TEXT || '"', 'null') || '}' ||
 	']';
 	
 	fontes := '{''RAIS'', ''CNIS''}'::TEXT[];
