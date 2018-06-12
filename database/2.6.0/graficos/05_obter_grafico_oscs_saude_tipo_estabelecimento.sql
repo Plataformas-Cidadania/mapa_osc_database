@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS portal.obter_oscs_saude_tipo_estabelecimento() CASCADE;
+DROP FUNCTION IF EXISTS portal.obter_grafico_oscs_saude_tipo_estabelecimento() CASCADE;
 
-CREATE OR REPLACE FUNCTION portal.obter_oscs_saude_tipo_estabelecimento() RETURNS TABLE (
+CREATE OR REPLACE FUNCTION portal.obter_grafico_oscs_saude_tipo_estabelecimento() RETURNS TABLE (
 	dados JSONB, 
 	fontes TEXT[]
 ) AS $$ 
@@ -47,4 +47,4 @@ END;
 
 $$ LANGUAGE 'plpgsql';
 
-SELECT * FROM portal.obter_oscs_saude_tipo_estabelecimento();
+SELECT * FROM portal.obter_grafico_oscs_saude_tipo_estabelecimento();

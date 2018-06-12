@@ -42,7 +42,7 @@ BEGIN
 		END IF;
 	END LOOP;
 	
-	FOR grafico IN SELECT * FROM portal.obter_oscs_assistencia_social_tipo_servico() LOOP
+	FOR grafico IN SELECT * FROM portal.obter_grafico_oscs_assistencia_social_tipo_servico() LOOP
 		IF (SELECT 4 = ANY(lista_id)) THEN 
 			UPDATE portal.tb_analise 
 			SET series = grafico.dados, fontes = grafico.fontes 
@@ -53,7 +53,7 @@ BEGIN
 		END IF;
 	END LOOP;
 	
-	FOR grafico IN SELECT * FROM portal.obter_oscs_saude_tipo_estabelecimento() LOOP
+	FOR grafico IN SELECT * FROM portal.obter_grafico_oscs_saude_tipo_estabelecimento() LOOP
 		IF (SELECT 5 = ANY(lista_id)) THEN 
 			UPDATE portal.tb_analise 
 			SET series = grafico.dados, fontes = grafico.fontes 

@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS portal.obter_oscs_assistencia_social_tipo_servico() CASCADE;
+DROP FUNCTION IF EXISTS portal.obter_grafico_oscs_assistencia_social_tipo_servico() CASCADE;
 
-CREATE OR REPLACE FUNCTION portal.obter_oscs_assistencia_social_tipo_servico() RETURNS TABLE (
+CREATE OR REPLACE FUNCTION portal.obter_grafico_oscs_assistencia_social_tipo_servico() RETURNS TABLE (
 	dados JSONB, 
 	fontes TEXT[]
 ) AS $$ 
@@ -51,4 +51,4 @@ END;
 
 $$ LANGUAGE 'plpgsql';
 
-SELECT * FROM portal.obter_oscs_assistencia_social_tipo_servico();
+SELECT * FROM portal.obter_grafico_oscs_assistencia_social_tipo_servico();
