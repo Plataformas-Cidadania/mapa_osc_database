@@ -75,6 +75,17 @@ BEGIN
 		END IF;
 	END LOOP;
 	
+	FOR grafico IN SELECT * FROM portal.obter_grafico_total_osc_ano() LOOP
+		IF (SELECT 9 = ANY(lista_id)) THEN 
+			UPDATE portal.tb_analise 
+			SET series = grafico.dados, fontes = grafico.fontes 
+			WHERE id_analise = 9;
+		ELSE 
+			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series, fontes) 
+			VALUES (9, '{'',f'', 1000000,''M'', '',f''', 'LinePlusBarChart', 'Total de OSC, por ano', null, null, 'Quantidade de OSC', 'Ano', null, grafico.dados, grafico.fontes);
+		END IF;
+	END LOOP;
+	
 	FOR grafico IN SELECT * FROM portal.obter_grafico_osc_natureza_juridica_regiao() LOOP
 		IF (SELECT 10 = ANY(lista_id)) THEN 
 			UPDATE portal.tb_analise 
