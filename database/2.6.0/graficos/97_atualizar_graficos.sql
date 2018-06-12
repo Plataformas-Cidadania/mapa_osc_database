@@ -42,6 +42,17 @@ BEGIN
 		END IF;
 	END LOOP;
 	
+	FOR grafico IN SELECT * FROM portal.obter_oscs_assistencia_social_tipo_servico() LOOP
+		IF (SELECT 4 = ANY(lista_id)) THEN 
+			UPDATE portal.tb_analise 
+			SET series = grafico.dados, fontes = grafico.fontes 
+			WHERE id_analise = 4;
+		ELSE 
+			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series, fontes) 
+			VALUES (4, '{'',f'', 1,''''}', 'DonutChart', 'Distribuição de OSCs de assistência social por tipo de serviço prestado', null, null, null, null, null, grafico.dados, grafico.fontes);
+		END IF;
+	END LOOP;
+	
 	FOR grafico IN SELECT * FROM portal.obter_oscs_saude_tipo_estabelecimento() LOOP
 		IF (SELECT 5 = ANY(lista_id)) THEN 
 			UPDATE portal.tb_analise 
