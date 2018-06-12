@@ -546,7 +546,7 @@
     </hop>
     <hop>
       <from>Select values</from>
-      <to>Insert / Update</to>
+      <to>Execute SQL script</to>
       <enabled>Y</enabled>
     </hop>
   </order>
@@ -755,122 +755,10 @@
     </GUI>
   </step>
   <step>
-    <name>Insert / Update</name>
-    <type>InsertUpdate</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <connection>localhost</connection>
-    <commit>100</commit>
-    <update_bypassed>N</update_bypassed>
-    <lookup>
-      <schema>graph</schema>
-      <table>tb_cneas_mds</table>
-      <key>
-        <name>cnpj</name>
-        <field>cnpj</field>
-        <condition>=</condition>
-        <name2 />
-      </key>
-      <value>
-        <name>cnpj</name>
-        <rename>cnpj</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>ibge</name>
-        <rename>ibge</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>uf</name>
-        <rename>uf</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>municipio</name>
-        <rename>municipio</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>nome_fantasia</name>
-        <rename>nome_fantasia</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>razao_social</name>
-        <rename>razao_social</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>logradouro</name>
-        <rename>logradouro</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>numero</name>
-        <rename>numero</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>complemento</name>
-        <rename>complemento</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>bairro</name>
-        <rename>bairro</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>cep</name>
-        <rename>cep</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>email</name>
-        <rename>email</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>telefone</name>
-        <rename>telefone</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>bloco_servico</name>
-        <rename>bloco_servico</rename>
-        <update>Y</update>
-      </value>
-      <value>
-        <name>atividade</name>
-        <rename>atividade</rename>
-        <update>Y</update>
-      </value>
-    </lookup>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>353</xloc>
-      <yloc>253</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
     <name>Select values</name>
     <type>SelectValues</type>
     <description />
-    <distribute>Y</distribute>
+    <distribute>N</distribute>
     <custom_distribution />
     <copies>1</copies>
     <partitioning>
@@ -1144,6 +1032,122 @@
     </remotesteps>
     <GUI>
       <xloc>231</xloc>
+      <yloc>253</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Execute SQL script</name>
+    <type>ExecSQL</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>localhost</connection>
+    <execute_each_row>Y</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>Y</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>INSERT INTO 
+	graph.tb_cneas_mds(
+		cnpj, 
+		ibge, 
+		uf, 
+		municipio, 
+		nome_fantasia, 
+		razao_social, 
+		logradouro, 
+		numero, 
+		complemento, 
+		bairro, 
+		cep, 
+		email, 
+		telefone, 
+		bloco_servico, 
+		atividade
+	)
+VALUES(
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT
+);</sql>
+    <set_params>Y</set_params>
+    <insert_field />
+    <update_field />
+    <delete_field />
+    <read_field />
+    <arguments>
+      <argument>
+        <name>cnpj</name>
+      </argument>
+      <argument>
+        <name>ibge</name>
+      </argument>
+      <argument>
+        <name>uf</name>
+      </argument>
+      <argument>
+        <name>municipio</name>
+      </argument>
+      <argument>
+        <name>nome_fantasia</name>
+      </argument>
+      <argument>
+        <name>razao_social</name>
+      </argument>
+      <argument>
+        <name>logradouro</name>
+      </argument>
+      <argument>
+        <name>numero</name>
+      </argument>
+      <argument>
+        <name>complemento</name>
+      </argument>
+      <argument>
+        <name>bairro</name>
+      </argument>
+      <argument>
+        <name>cep</name>
+      </argument>
+      <argument>
+        <name>email</name>
+      </argument>
+      <argument>
+        <name>telefone</name>
+      </argument>
+      <argument>
+        <name>bloco_servico</name>
+      </argument>
+      <argument>
+        <name>atividade</name>
+      </argument>
+    </arguments>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>373</xloc>
       <yloc>253</yloc>
       <draw>Y</draw>
     </GUI>
