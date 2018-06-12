@@ -835,7 +835,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>3</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -846,7 +846,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>3</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -857,7 +857,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>3</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -879,7 +879,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>8</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -890,7 +890,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>2</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -963,12 +963,12 @@
       <field>
         <name>abr13_3_2</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
+        <length>-1</length>
+        <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
@@ -1172,12 +1172,12 @@
       <field>
         <name>abr13_3_21</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
+        <length>-1</length>
+        <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
@@ -1198,7 +1198,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1220,7 +1220,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1242,19 +1242,19 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
         <name>abr13_3_28</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
+        <length>-1</length>
+        <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
@@ -1264,7 +1264,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>8</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1275,7 +1275,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>8</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1286,7 +1286,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1297,7 +1297,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1308,7 +1308,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1319,7 +1319,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1330,7 +1330,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1341,7 +1341,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1352,7 +1352,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1363,7 +1363,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1374,7 +1374,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1385,7 +1385,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>16</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1396,7 +1396,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1407,7 +1407,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1418,7 +1418,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1429,7 +1429,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1440,7 +1440,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>5</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1451,7 +1451,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1462,7 +1462,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1473,7 +1473,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1484,7 +1484,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1495,19 +1495,19 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
         <name>ddd_3</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
+        <length>-1</length>
+        <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
@@ -1517,7 +1517,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1528,7 +1528,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1539,7 +1539,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1550,7 +1550,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1561,19 +1561,19 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
         <name>tipo_fone_3</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
+        <length>-1</length>
+        <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
@@ -1583,7 +1583,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1594,7 +1594,7 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
@@ -1605,34 +1605,12 @@
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
-        <length>4</length>
+        <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
       <field>
-        <name />
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>4</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-      </field>
-      <field>
-        <name />
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>4</length>
-        <precision>-1</precision>
-        <trim_type>both</trim_type>
-      </field>
-      <field>
-        <name />
+        <name>var_1</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
@@ -1643,7 +1621,7 @@
         <trim_type>both</trim_type>
       </field>
       <field>
-        <name />
+        <name>var_2</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
@@ -1654,7 +1632,7 @@
         <trim_type>both</trim_type>
       </field>
       <field>
-        <name />
+        <name>var_3</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
@@ -1665,7 +1643,7 @@
         <trim_type>both</trim_type>
       </field>
       <field>
-        <name />
+        <name>var_4</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
@@ -1676,7 +1654,29 @@
         <trim_type>both</trim_type>
       </field>
       <field>
-        <name />
+        <name>var_5</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>var_6</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>both</trim_type>
+      </field>
+      <field>
+        <name>var_7</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
@@ -1717,24 +1717,196 @@
     <replace_variables>Y</replace_variables>
     <quoteString>N</quoteString>
     <sql>INSERT INTO 
-	graph.tb_cneas_mds(
-		cnpj, 
-		ibge, 
+	graph.tb_senaes(
+		nom1, 
+		end2, 
+		bai3, 
+		cep3, 
+		codmunic, 
+		mun4, 
 		uf, 
-		municipio, 
-		nome_fantasia, 
-		razao_social, 
-		logradouro, 
-		numero, 
-		complemento, 
-		bairro, 
-		cep, 
-		email, 
-		telefone, 
-		bloco_servico, 
-		atividade
+		microreg, 
+		ema6, 
+		con7, 
+		cnpj8, 
+		temcnpj, 
+		nat9, 
+		nat9or, 
+		vin10, 
+		red11, 
+		red11or, 
+		atu12a, 
+		atu12b, 
+		atu12c, 
+		atu12d, 
+		atu12e, 
+		atu12f, 
+		atu12o, 
+		atu12or, 
+		abr_13, 
+		abr13_2_1, 
+		abr13_2_2, 
+		abr13_2_3, 
+		abr13_2_4, 
+		abr13_2_5, 
+		abr13_2_6, 
+		abr13_2_7, 
+		num_uf, 
+		abr13_3_1, 
+		abr13_3_2, 
+		abr13_3_3, 
+		abr13_3_4, 
+		abr13_3_5, 
+		abr13_3_6, 
+		abr13_3_7, 
+		abr13_3_8, 
+		abr13_3_9, 
+		abr13_3_10, 
+		abr13_3_11, 
+		abr13_3_12, 
+		abr13_3_13, 
+		abr13_3_14, 
+		abr13_3_15, 
+		abr13_3_16, 
+		abr13_3_17, 
+		abr13_3_18, 
+		abr13_3_19, 
+		abr13_3_20, 
+		abr13_3_21, 
+		abr13_3_22, 
+		abr13_3_23, 
+		abr13_3_24, 
+		abr13_3_25, 
+		abr13_3_26, 
+		abr13_3_27, 
+		abr13_3_28, 
+		abr13_3_29, 
+		abr13_3_30, 
+		abr13_3_31, 
+		abr13_3_32, 
+		abr13_3_33, 
+		abr13_3_34, 
+		abr13_3_35, 
+		num_mun, 
+		resp, 
+		datacad, 
+		website, 
+		auto_declarado, 
+		auto_declarado_atualizacao, 
+		ano_declaracao, 
+		num_fone_1, 
+		num_fone_2, 
+		num_fone_3, 
+		num_fone_4, 
+		num_fone_5, 
+		num_fone_6, 
+		ddd_1, 
+		ddd_2, 
+		ddd_3, 
+		ddd_4, 
+		ddd_5, 
+		ddd_6, 
+		tipo_fone_1, 
+		tipo_fone_2, 
+		tipo_fone_3, 
+		tipo_fone_4, 
+		tipo_fone_5, 
+		tipo_fone_6, 
+		var_1, 
+		var_2, 
+		var_3, 
+		var_4, 
+		var_5, 
+		var_6, 
+		var_7
 	)
 VALUES(
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
+	?::TEXT, 
 	?::TEXT, 
 	?::TEXT, 
 	?::TEXT, 
@@ -1758,49 +1930,307 @@ VALUES(
     <read_field />
     <arguments>
       <argument>
-        <name>cnpj</name>
+        <name>nom1</name>
       </argument>
       <argument>
-        <name>ibge</name>
+        <name>end2</name>
+      </argument>
+      <argument>
+        <name>bai3</name>
+      </argument>
+      <argument>
+        <name>cep3</name>
+      </argument>
+      <argument>
+        <name>codmunic</name>
+      </argument>
+      <argument>
+        <name>mun4</name>
       </argument>
       <argument>
         <name>uf</name>
       </argument>
       <argument>
-        <name>municipio</name>
+        <name>microreg</name>
       </argument>
       <argument>
-        <name>nome_fantasia</name>
+        <name>ema6</name>
       </argument>
       <argument>
-        <name>razao_social</name>
+        <name>con7</name>
       </argument>
       <argument>
-        <name>logradouro</name>
+        <name>cnpj8</name>
       </argument>
       <argument>
-        <name>numero</name>
+        <name>temcnpj</name>
       </argument>
       <argument>
-        <name>complemento</name>
+        <name>nat9</name>
       </argument>
       <argument>
-        <name>bairro</name>
+        <name>nat9or</name>
       </argument>
       <argument>
-        <name>cep</name>
+        <name>vin10</name>
       </argument>
       <argument>
-        <name>email</name>
+        <name>red11</name>
       </argument>
       <argument>
-        <name>telefone</name>
+        <name>red11or</name>
       </argument>
       <argument>
-        <name>bloco_servico</name>
+        <name>atu12a</name>
       </argument>
       <argument>
-        <name>atividade</name>
+        <name>atu12b</name>
+      </argument>
+      <argument>
+        <name>atu12c</name>
+      </argument>
+      <argument>
+        <name>atu12d</name>
+      </argument>
+      <argument>
+        <name>atu12e</name>
+      </argument>
+      <argument>
+        <name>atu12f</name>
+      </argument>
+      <argument>
+        <name>atu12o</name>
+      </argument>
+      <argument>
+        <name>atu12or</name>
+      </argument>
+      <argument>
+        <name>abr_13</name>
+      </argument>
+      <argument>
+        <name>abr13_2_1</name>
+      </argument>
+      <argument>
+        <name>abr13_2_2</name>
+      </argument>
+      <argument>
+        <name>abr13_2_3</name>
+      </argument>
+      <argument>
+        <name>abr13_2_4</name>
+      </argument>
+      <argument>
+        <name>abr13_2_5</name>
+      </argument>
+      <argument>
+        <name>abr13_2_6</name>
+      </argument>
+      <argument>
+        <name>abr13_2_7</name>
+      </argument>
+      <argument>
+        <name>num_uf</name>
+      </argument>
+      <argument>
+        <name>abr13_3_1</name>
+      </argument>
+      <argument>
+        <name>abr13_3_2</name>
+      </argument>
+      <argument>
+        <name>abr13_3_3</name>
+      </argument>
+      <argument>
+        <name>abr13_3_4</name>
+      </argument>
+      <argument>
+        <name>abr13_3_5</name>
+      </argument>
+      <argument>
+        <name>abr13_3_6</name>
+      </argument>
+      <argument>
+        <name>abr13_3_7</name>
+      </argument>
+      <argument>
+        <name>abr13_3_8</name>
+      </argument>
+      <argument>
+        <name>abr13_3_9</name>
+      </argument>
+      <argument>
+        <name>abr13_3_10</name>
+      </argument>
+      <argument>
+        <name>abr13_3_11</name>
+      </argument>
+      <argument>
+        <name>abr13_3_12</name>
+      </argument>
+      <argument>
+        <name>abr13_3_13</name>
+      </argument>
+      <argument>
+        <name>abr13_3_14</name>
+      </argument>
+      <argument>
+        <name>abr13_3_15</name>
+      </argument>
+      <argument>
+        <name>abr13_3_16</name>
+      </argument>
+      <argument>
+        <name>abr13_3_17</name>
+      </argument>
+      <argument>
+        <name>abr13_3_18</name>
+      </argument>
+      <argument>
+        <name>abr13_3_19</name>
+      </argument>
+      <argument>
+        <name>abr13_3_20</name>
+      </argument>
+      <argument>
+        <name>abr13_3_21</name>
+      </argument>
+      <argument>
+        <name>abr13_3_22</name>
+      </argument>
+      <argument>
+        <name>abr13_3_23</name>
+      </argument>
+      <argument>
+        <name>abr13_3_24</name>
+      </argument>
+      <argument>
+        <name>abr13_3_25</name>
+      </argument>
+      <argument>
+        <name>abr13_3_26</name>
+      </argument>
+      <argument>
+        <name>abr13_3_27</name>
+      </argument>
+      <argument>
+        <name>abr13_3_28</name>
+      </argument>
+      <argument>
+        <name>abr13_3_29</name>
+      </argument>
+      <argument>
+        <name>abr13_3_30</name>
+      </argument>
+      <argument>
+        <name>abr13_3_31</name>
+      </argument>
+      <argument>
+        <name>abr13_3_32</name>
+      </argument>
+      <argument>
+        <name>abr13_3_33</name>
+      </argument>
+      <argument>
+        <name>abr13_3_34</name>
+      </argument>
+      <argument>
+        <name>abr13_3_35</name>
+      </argument>
+      <argument>
+        <name>num_mun</name>
+      </argument>
+      <argument>
+        <name>resp</name>
+      </argument>
+      <argument>
+        <name>datacad</name>
+      </argument>
+      <argument>
+        <name>website</name>
+      </argument>
+      <argument>
+        <name>auto_declarado</name>
+      </argument>
+      <argument>
+        <name>auto_declarado_atualizacao</name>
+      </argument>
+      <argument>
+        <name>ano_declaracao</name>
+      </argument>
+      <argument>
+        <name>num_fone_1</name>
+      </argument>
+      <argument>
+        <name>num_fone_2</name>
+      </argument>
+      <argument>
+        <name>num_fone_3</name>
+      </argument>
+      <argument>
+        <name>num_fone_4</name>
+      </argument>
+      <argument>
+        <name>num_fone_5</name>
+      </argument>
+      <argument>
+        <name>num_fone_6</name>
+      </argument>
+      <argument>
+        <name>ddd_1</name>
+      </argument>
+      <argument>
+        <name>ddd_2</name>
+      </argument>
+      <argument>
+        <name>ddd_3</name>
+      </argument>
+      <argument>
+        <name>ddd_4</name>
+      </argument>
+      <argument>
+        <name>ddd_5</name>
+      </argument>
+      <argument>
+        <name>ddd_6</name>
+      </argument>
+      <argument>
+        <name>tipo_fone_1</name>
+      </argument>
+      <argument>
+        <name>tipo_fone_2</name>
+      </argument>
+      <argument>
+        <name>tipo_fone_3</name>
+      </argument>
+      <argument>
+        <name>tipo_fone_4</name>
+      </argument>
+      <argument>
+        <name>tipo_fone_5</name>
+      </argument>
+      <argument>
+        <name>tipo_fone_6</name>
+      </argument>
+      <argument>
+        <name>var_1</name>
+      </argument>
+      <argument>
+        <name>var_2</name>
+      </argument>
+      <argument>
+        <name>var_3</name>
+      </argument>
+      <argument>
+        <name>var_4</name>
+      </argument>
+      <argument>
+        <name>var_5</name>
+      </argument>
+      <argument>
+        <name>var_6</name>
+      </argument>
+      <argument>
+        <name>var_7</name>
       </argument>
     </arguments>
     <cluster_schema />
@@ -1933,7 +2363,7 @@ VALUES(
       </meta>
       <meta>
         <name>UF</name>
-        <rename>UF</rename>
+        <rename>uf</rename>
         <type>None</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -2392,7 +2822,7 @@ VALUES(
       </meta>
       <meta>
         <name>num_UF</name>
-        <rename>num_UF</rename>
+        <rename>num_uf</rename>
         <type>None</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -3072,7 +3502,7 @@ VALUES(
       </meta>
       <meta>
         <name>AutoDeclarado</name>
-        <rename>AutoDeclarado</rename>
+        <rename>auto_declarado</rename>
         <type>None</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -3089,7 +3519,7 @@ VALUES(
       </meta>
       <meta>
         <name>AutoDeclaradoAtualizacao</name>
-        <rename>AutoDeclaradoAtualizacao</rename>
+        <rename>auto_declarado_atualizacao</rename>
         <type>None</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -3106,7 +3536,7 @@ VALUES(
       </meta>
       <meta>
         <name>ano_declaração</name>
-        <rename>ano_declaração</rename>
+        <rename>ano_declaracao</rename>
         <type>None</type>
         <length>-2</length>
         <precision>-2</precision>
@@ -3428,7 +3858,7 @@ VALUES(
         <storage_type />
       </meta>
       <meta>
-        <name />
+        <name>var_1</name>
         <rename>var_1</rename>
         <type>None</type>
         <length>-2</length>
@@ -3445,7 +3875,7 @@ VALUES(
         <storage_type />
       </meta>
       <meta>
-        <name>_1</name>
+        <name>var_2</name>
         <rename>var_2</rename>
         <type>None</type>
         <length>-2</length>
@@ -3462,7 +3892,7 @@ VALUES(
         <storage_type />
       </meta>
       <meta>
-        <name>_2</name>
+        <name>var_3</name>
         <rename>var_3</rename>
         <type>None</type>
         <length>-2</length>
@@ -3479,7 +3909,7 @@ VALUES(
         <storage_type />
       </meta>
       <meta>
-        <name>_3</name>
+        <name>var_4</name>
         <rename>var_4</rename>
         <type>None</type>
         <length>-2</length>
@@ -3496,7 +3926,7 @@ VALUES(
         <storage_type />
       </meta>
       <meta>
-        <name>_4</name>
+        <name>var_5</name>
         <rename>var_5</rename>
         <type>None</type>
         <length>-2</length>
@@ -3513,7 +3943,7 @@ VALUES(
         <storage_type />
       </meta>
       <meta>
-        <name>_5</name>
+        <name>var_6</name>
         <rename>var_6</rename>
         <type>None</type>
         <length>-2</length>
@@ -3530,7 +3960,7 @@ VALUES(
         <storage_type />
       </meta>
       <meta>
-        <name>_6</name>
+        <name>var_7</name>
         <rename>var_7</rename>
         <type>None</type>
         <length>-2</length>
