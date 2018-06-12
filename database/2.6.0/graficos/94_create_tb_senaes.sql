@@ -94,5 +94,12 @@ CREATE TABLE graph.tb_senaes(
 	tipo_fone_4 TEXT, 
 	tipo_fone_5 TEXT, 
 	tipo_fone_6 TEXT, 
+	var_1 TEXT, 
+	var_2 TEXT, 
+	var_3 TEXT, 
+	var_4 TEXT, 
+	var_5 TEXT, 
+	var_6 TEXT, 
+	var_7 TEXT, 
 	CONSTRAINT pk_tb_senaes PRIMARY KEY (id_senaes)
 );
