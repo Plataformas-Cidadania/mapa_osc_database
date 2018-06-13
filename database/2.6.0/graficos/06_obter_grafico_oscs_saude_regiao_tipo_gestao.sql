@@ -31,7 +31,7 @@ BEGIN
 						SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
 							ARRAY_CAT(
 								ARRAY_CAT(
-									'{"CNES/MS"}'::TEXT[], 
+									'{"MS/CNES"}'::TEXT[], 
 									ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_localizacao.ft_municipio, ''), '${ETL}', ''))
 								),
 								ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_osc.ft_identificador_osc, ''), '${ETL}', ''))

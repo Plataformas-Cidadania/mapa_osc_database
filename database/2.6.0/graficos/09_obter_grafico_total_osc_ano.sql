@@ -106,7 +106,7 @@ BEGIN
 		RTRIM((dados->>1)::TEXT, '}') || ', ' || '"tipo_valor": ' || COALESCE('"' || ((parametros->>1)::JSONB->>'tipo_valor')::TEXT || '"', 'null') || '}' ||
 	']';
 	
-	fontes := '{''RAIS'', ''CNIS''}'::TEXT[];
+	fontes := '{''MTE/RAIS'', ''MPS/CNIS''}'::TEXT[];
 	
 	RETURN QUERY 
 		SELECT dados, fontes;
