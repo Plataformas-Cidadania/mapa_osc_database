@@ -121,8 +121,9 @@ BEGIN
 	]'::JSONB;
 	
 	dados := '[' ||
-		RTRIM((dados->>0)::TEXT, '}') || ', ' || '"tipo_valor": ' || COALESCE('"' || ((parametros->>0)::JSONB->>'tipo_valor')::TEXT || '"', 'null') || '}, ' ||
-		RTRIM((dados->>1)::TEXT, '}') || ', ' || '"tipo_valor": ' || COALESCE('"' || ((parametros->>1)::JSONB->>'tipo_valor')::TEXT || '"', 'null') || '}' ||
+		RTRIM((dados->>0)::TEXT, '}') || ', ' || '"tipo_valor": ' || COALESCE('"' || ((parametros->>0)::JSONB->>'tipo_valor')::TEXT || '"', 'null') || '}, ' || 
+		RTRIM((dados->>1)::TEXT, '}') || ', ' || '"tipo_valor": ' || COALESCE('"' || ((parametros->>1)::JSONB->>'tipo_valor')::TEXT || '"', 'null') || '}, ' || 
+		RTRIM((dados->>2)::TEXT, '}') || ', ' || '"tipo_valor": ' || COALESCE('"' || ((parametros->>1)::JSONB->>'tipo_valor')::TEXT || '"', 'null') || '}' ||
 	']';
 	
 	fontes := null::TEXT[];

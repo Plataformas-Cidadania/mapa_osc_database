@@ -108,7 +108,7 @@ BEGIN
 		END IF;
 	END LOOP;
 	
-	parametros_grafico := COALESCE((SELECT parametros FROM portal.tb_analise WHERE id_analise = 11), '[{"tipo_valor": "$"}, {"tipo_valor": "$"}]'::JSONB);
+	parametros_grafico := COALESCE((SELECT parametros FROM portal.tb_analise WHERE id_analise = 11), '[{"tipo_valor": "$"}, {"tipo_valor": "$"}, {"tipo_valor": "$"}]'::JSONB);
 	FOR grafico IN SELECT * FROM portal.obter_grafico_evolucao_recursos_transferidos(parametros_grafico) LOOP
 		id := 11;
 		IF (SELECT id = ANY(lista_id)) THEN 
