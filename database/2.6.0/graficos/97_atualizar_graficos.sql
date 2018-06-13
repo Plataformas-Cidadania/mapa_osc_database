@@ -108,6 +108,19 @@ BEGIN
 		END IF;
 	END LOOP;
 	
+	parametros_grafico := COALESCE((SELECT parametros FROM portal.tb_analise WHERE id_analise = 11), '[{"tipo_valor": "$"}, {"tipo_valor": "$"}]'::JSONB);
+	FOR grafico IN SELECT * FROM portal.obter_grafico_evolucao_recursos_transferidos(parametros_grafico) LOOP
+		id := 11;
+		IF (SELECT id = ANY(lista_id)) THEN 
+			UPDATE portal.tb_analise 
+			SET series = grafico.dados, fontes = grafico.fontes 
+			WHERE id_analise = id;
+		ELSE 
+			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series, fontes) 
+			VALUES (id, '{'',.1f'', 1000000000, ''''}', 'LineChart', 'Evolução de recursos públicos federais transferidos para entidades sem fins lucrativos e somente para OSCs', null, null, 'em Bilhões R$', 'Ano', null, grafico.dados, grafico.fontes);
+		END IF;
+	END LOOP;
+	
 	FOR grafico IN SELECT * FROM portal.obter_grafico_osc_titulos_certificados() LOOP
 		id := 12;
 		IF (SELECT id = ANY(lista_id)) THEN 

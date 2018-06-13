@@ -101,11 +101,6 @@ BEGIN
 		RTRIM((dados->>1)::TEXT, '}') || ', ' || '"barra": ' || COALESCE('"' || ((parametros->>1)::JSONB->>'barra')::TEXT || '"', 'null') || '}' ||
 	']';
 	
-	dados := '[' ||
-		RTRIM((dados->>0)::TEXT, '}') || ', ' || '"tipo_valor": ' || COALESCE('"' || ((parametros->>0)::JSONB->>'tipo_valor')::TEXT || '"', 'null') || '}, ' ||
-		RTRIM((dados->>1)::TEXT, '}') || ', ' || '"tipo_valor": ' || COALESCE('"' || ((parametros->>1)::JSONB->>'tipo_valor')::TEXT || '"', 'null') || '}' ||
-	']';
-	
 	fontes := '{''MTE/RAIS'', ''MPS/CNIS''}'::TEXT[];
 	
 	RETURN QUERY 
