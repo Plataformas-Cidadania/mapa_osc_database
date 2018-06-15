@@ -17,7 +17,7 @@ BEGIN
 		query_limit := ';'; 
 	END IF; 
 	
-	param := TRANSLATE(UNACCENT(param::TEXT), ' /_-', '');
+	param := TRANSLATE(UNACCENT(LOWER(param::TEXT)), '_', ' ');
 	
 	RETURN QUERY
 		EXECUTE 
