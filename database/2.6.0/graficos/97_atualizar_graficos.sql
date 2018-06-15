@@ -83,6 +83,30 @@ BEGIN
 		END IF;
 	END LOOP;
 	
+	FOR grafico IN SELECT * FROM portal.obter_grafico_oscs_economia_solidaria_regiao_tipo_vinculo() LOOP
+		id := 7;
+		IF (SELECT id = ANY(lista_id)) THEN 
+			UPDATE portal.tb_analise 
+			SET series = grafico.dados, fontes = grafico.fontes 
+			WHERE id_analise = id;
+		ELSE 
+			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series, fontes) 
+			VALUES (id, '{'',f'', 1,''''}', 'DonutChart', 'Distribuição de OSCs de economia solidária por região e tipo de vínculo com outras entidades', null, null, null, null, null, grafico.dados, grafico.fontes);
+		END IF;
+	END LOOP;
+	
+	FOR grafico IN SELECT * FROM portal.obter_grafico_oscs_economia_solidaria_regiao_abrangencia() LOOP
+		id := 8;
+		IF (SELECT id = ANY(lista_id)) THEN 
+			UPDATE portal.tb_analise 
+			SET series = grafico.dados, fontes = grafico.fontes 
+			WHERE id_analise = id;
+		ELSE 
+			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series, fontes) 
+			VALUES (id, '{'',f'', 1,''''}', 'DonutChart', 'Distribuição de OSCs de economia solidária por região e abrangência da atuação', null, null, null, null, null, grafico.dados, grafico.fontes);
+		END IF;
+	END LOOP;
+	
 	parametros_grafico := COALESCE((SELECT parametros FROM portal.tb_analise WHERE id_analise = 9), '[{"barra": true, "cor": "#ccf"}, {"cor": "#ff7f0e"}]'::JSONB);
 	FOR grafico IN SELECT * FROM portal.obter_grafico_total_osc_ano(parametros_grafico) LOOP
 		id := 9;

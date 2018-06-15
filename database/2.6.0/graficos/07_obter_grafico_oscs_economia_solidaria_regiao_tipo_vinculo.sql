@@ -55,4 +55,3 @@ END;
 $$ LANGUAGE 'plpgsql';
 
 SELECT * FROM portal.obter_grafico_oscs_economia_solidaria_regiao_tipo_vinculo();
-
