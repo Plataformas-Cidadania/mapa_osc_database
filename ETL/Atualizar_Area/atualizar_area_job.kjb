@@ -162,8 +162,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>706</xloc>
-      <yloc>106</yloc>
+      <xloc>766</xloc>
+      <yloc>109</yloc>
       </entry>
     <entry>
       <name>SQL</name>
@@ -214,6 +214,22 @@
       <xloc>429</xloc>
       <yloc>106</yloc>
       </entry>
+    <entry>
+      <name>SQL 2</name>
+      <description/>
+      <type>SQL</type>
+      <sql>ALTER TABLE osc.tb_area_atuacao ENABLE TRIGGER ALL&#x3b;&#xa;&#xa;REFRESH MATERIALIZED VIEW portal.vw_osc_area_atuacao&#x3b;</sql>
+      <useVariableSubstitution>F</useVariableSubstitution>
+      <sqlfromfile>F</sqlfromfile>
+      <sqlfilename/>
+      <sendOneStatement>F</sendOneStatement>
+      <connection>etl</connection>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>680</xloc>
+      <yloc>108</yloc>
+      </entry>
   </entries>
   <hops>
     <hop>
@@ -224,15 +240,6 @@
       <enabled>Y</enabled>
       <evaluation>Y</evaluation>
       <unconditional>Y</unconditional>
-    </hop>
-    <hop>
-      <from>Transformation</from>
-      <to>Success</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
     </hop>
     <hop>
       <from>Set variables</from>
@@ -255,6 +262,24 @@
     <hop>
       <from>Transformation 2</from>
       <to>Transformation</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Transformation</from>
+      <to>SQL 2</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>SQL 2</from>
+      <to>Success</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
