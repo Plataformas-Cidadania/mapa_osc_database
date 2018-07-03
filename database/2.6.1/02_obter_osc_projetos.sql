@@ -100,16 +100,16 @@ BEGIN
 							SELECT 
 								jsonb_agg(
 									jsonb_build_object(
-										'id_projeto', id_projeto, 
-										'tx_nome_projeto', tx_nome_projeto
+										'id_projeto', tb_projeto.id_projeto, 
+										'tx_nome_projeto', tb_projeto.tx_nome_projeto
 									)
 								)
 							FROM 
 								osc.tb_projeto 
 							WHERE 
-								id_osc::TEXT = param 
+								tb_projeto.id_osc::TEXT = param 
 							OR 
-								tx_apelido_osc = param
+								tb_osc.tx_apelido_osc = param
 					)
 				)
 			);
