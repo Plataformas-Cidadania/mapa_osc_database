@@ -61,7 +61,7 @@ BEGIN
 									'ft_uf', tb_projeto.ft_uf,
 									'publico_beneficiado', (
 										SELECT 
-											jsonb_agg(	
+											jsonb_agg(
 												jsonb_build_object(
 													'id_publico_beneficiado', tb_publico_beneficiado_projeto.id_publico_beneficiado, 
 													'tx_nome_publico_beneficiado', tb_publico_beneficiado.tx_nome_publico_beneficiado, 
@@ -78,6 +78,25 @@ BEGIN
 										WHERE 
 											tb_publico_beneficiado_projeto.id_projeto = tb_projeto.id_projeto 
 									),
+									'fonte_recursos', (
+										SELECT 
+											jsonb_agg(
+												jsonb_build_object(
+													'id_fonte_recursos_projeto', tb_fonte_recursos_projeto.id_fonte_recursos_projeto, 
+													'cd_origem_fonte_recursos_projeto', tb_fonte_recursos_projeto.cd_origem_fonte_recursos_projeto, 
+													'tx_nome_origem_fonte_recursos_projeto', dc_origem_fonte_recursos_projeto.tx_nome_origem_fonte_recursos_projeto, 
+													'ft_fonte_recursos_projeto', tb_fonte_recursos_projeto.ft_fonte_recursos_projeto
+												)
+											)
+										FROM 
+											osc.tb_fonte_recursos_projeto 
+										LEFT JOIN 
+											syst.dc_origem_fonte_recursos_projeto 
+										ON 
+											tb_fonte_recursos_projeto.cd_origem_fonte_recursos_projeto = dc_origem_fonte_recursos_projeto.cd_origem_fonte_recursos_projeto 
+										WHERE 
+											tb_fonte_recursos_projeto.id_projeto = tb_projeto.id_projeto 
+									), 
 									'financiador_projeto', (
 										SELECT 
 											jsonb_agg(
