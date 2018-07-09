@@ -58,7 +58,100 @@ BEGIN
 									'ft_municipio', tb_projeto.ft_municipio, 
 									'cd_uf', tb_projeto.cd_uf, 
 									'tx_nome_uf', ed_uf.eduf_nm_uf, 
-									'ft_uf', tb_projeto.ft_uf
+									'ft_uf', tb_projeto.ft_uf,
+									'publico_beneficiado', (
+										SELECT 
+											jsonb_agg(	
+												jsonb_build_object(
+													'id_publico_beneficiado', tb_publico_beneficiado_projeto.id_publico_beneficiado, 
+													'tx_nome_publico_beneficiado', tb_publico_beneficiado.tx_nome_publico_beneficiado, 
+													'nr_estimativa_pessoas_atendidas', tb_publico_beneficiado_projeto.nr_estimativa_pessoas_atendidas, 
+													'ft_publico_beneficiado_projeto', tb_publico_beneficiado_projeto.ft_publico_beneficiado_projeto
+												)
+											)
+										FROM 
+											osc.tb_publico_beneficiado_projeto 
+										LEFT JOIN 
+											osc.tb_publico_beneficiado 
+										ON 
+											tb_publico_beneficiado_projeto.id_publico_beneficiado = tb_publico_beneficiado.id_publico_beneficiado 
+										WHERE 
+											tb_publico_beneficiado_projeto.id_projeto = tb_projeto.id_projeto 
+									),
+									'financiador_projeto', (
+										SELECT 
+											jsonb_agg(
+												jsonb_build_object(
+													'id_financiador_projeto', tb_financiador_projeto.id_financiador_projeto, 
+													'tx_nome_financiador', tb_financiador_projeto.tx_nome_financiador, 
+													'ft_nome_financiador', tb_financiador_projeto.ft_nome_financiador
+												)
+											)
+										FROM 
+											osc.tb_financiador_projeto 
+										WHERE 
+											tb_financiador_projeto.id_projeto = tb_projeto.id_projeto
+									),
+									'localizacao', (
+										SELECT 
+											jsonb_agg(
+												jsonb_build_object(
+													'id_localizacao_projeto', tb_localizacao_projeto.id_localizacao_projeto, 
+													'id_regiao_localizacao_projeto', tb_localizacao_projeto.id_regiao_localizacao_projeto, 
+													'tx_nome_regiao_localizacao_projeto', tb_localizacao_projeto.tx_nome_regiao_localizacao_projeto, 
+													'ft_nome_regiao_localizacao_projeto', tb_localizacao_projeto.ft_nome_regiao_localizacao_projeto, 
+													'bo_localizacao_prioritaria', tb_localizacao_projeto.bo_localizacao_prioritaria, 
+													'ft_localizacao_prioritaria', tb_localizacao_projeto.ft_localizacao_prioritaria
+												)
+											)
+										FROM 
+											osc.tb_localizacao_projeto 
+										WHERE 
+											tb_localizacao_projeto.id_projeto = tb_projeto.id_projeto
+									),
+									'osc_parceira', (
+										SELECT 
+											jsonb_agg(
+												jsonb_build_object(
+													'id_osc', tb_osc_parceira_projeto.id_osc, 
+													'tx_nome_osc_parceira_projeto', COALESCE(tb_dados_gerais.tx_nome_fantasia_osc, tb_dados_gerais.tx_razao_social_osc), 
+													'ft_osc_parceira_projeto', tb_osc_parceira_projeto.ft_osc_parceira_projeto
+												)
+											)
+										FROM 
+											osc.tb_osc_parceira_projeto 
+										LEFT JOIN 
+											osc.tb_dados_gerais 
+										ON 
+											tb_osc_parceira_projeto.id_osc = tb_dados_gerais.id_osc 
+										WHERE 
+											tb_osc_parceira_projeto.id_projeto = tb_projeto.id_projeto
+									), 
+									'objetivo_meta', (
+										SELECT 
+											jsonb_agg(
+												jsonb_build_object(
+													'id_objetivo_projeto', tb_objetivo_projeto.id_objetivo_projeto, 
+													'cd_objetivo_projeto', dc_meta_projeto.cd_objetivo_projeto, 
+													'tx_nome_objetivo_projeto', dc_objetivo_projeto.tx_nome_objetivo_projeto, 
+													'cd_meta_projeto', tb_objetivo_projeto.cd_meta_projeto, 
+													'tx_nome_meta_projeto', dc_meta_projeto.tx_nome_meta_projeto, 
+													'ft_objetivo_projeto', tb_objetivo_projeto.ft_objetivo_projeto
+												)
+											)
+										FROM 
+											osc.tb_objetivo_projeto 
+										LEFT JOIN 
+											syst.dc_meta_projeto 
+										ON 
+											tb_objetivo_projeto.cd_meta_projeto = dc_meta_projeto.cd_meta_projeto 
+										LEFT JOIN 
+											syst.dc_objetivo_projeto 
+										ON 
+											dc_meta_projeto.cd_objetivo_projeto = dc_objetivo_projeto.cd_objetivo_projeto 
+										WHERE 
+											tb_objetivo_projeto.id_projeto = tb_projeto.id_projeto
+									)
 								)
 							)
 						FROM 
