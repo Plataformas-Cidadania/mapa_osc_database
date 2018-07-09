@@ -145,6 +145,25 @@ BEGIN
 											tb_osc_parceira_projeto.id_osc = tb_dados_gerais.id_osc 
 										WHERE 
 											tb_osc_parceira_projeto.id_projeto = tb_projeto.id_projeto
+									),
+									'tipo_parceria', (
+										SELECT 
+											jsonb_agg(
+												jsonb_build_object(
+													'id_tipo_parceria_projeto', tb_tipo_parceria_projeto.id_tipo_parceria_projeto, 
+													'cd_tipo_parceria_projeto', tb_tipo_parceria_projeto.cd_tipo_parceria_projeto, 
+													'tx_nome_tipo_parceria', dc_tipo_parceria.tx_nome_tipo_parceria, 
+													'ft_tipo_parceria_projeto', tb_tipo_parceria_projeto.ft_tipo_parceria_projeto
+												)
+											)
+										FROM 
+											osc.tb_tipo_parceria_projeto 
+										LEFT JOIN 
+											syst.dc_tipo_parceria 
+										ON 
+											tb_tipo_parceria_projeto.cd_tipo_parceria_projeto = dc_tipo_parceria.cd_tipo_parceria 
+										WHERE 
+											tb_tipo_parceria_projeto.id_projeto = tb_projeto.id_projeto
 									), 
 									'objetivo_meta', (
 										SELECT 
