@@ -19,7 +19,9 @@ DECLARE
 	projetos JSONB;
 	projeto RECORD;
 	objetivos JSONB;
-	record_apelido RECORD;
+	record_objetivos RECORD;
+	localizacao JSONB;
+	record_localizacao RECORD;
 
 BEGIN
 	nome_tabela := 'osc.tb_projeto';
@@ -312,6 +314,20 @@ BEGIN
 			END IF;
 		END LOOP;
 	END IF;
+
+	objetivos = COALESCE((json->>'objetivo_metas')::JSONB, '{}'::JSONB);
+	SELECT INTO record_objetivos * FROM portal.atualizar_objetivos_osc(fonte, identificador, tipo_identificador, data_atualizacao, objetivos, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
+	IF record_objetivos.flag = false THEN 
+		mensagem := record_objetivos.mensagem;
+		RAISE EXCEPTION 'funcao_externa';
+	END IF;
+
+	localizacao = COALESCE((json->>'localizacao')::JSONB, '{}'::JSONB);
+	SELECT INTO record_localizacao * FROM portal.atualizar_localizacao_projeto(fonte, identificador, tipo_identificador, data_atualizacao, objetivos, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
+	IF record_localizacao.flag = false THEN 
+		mensagem := record_localizacao.mensagem;
+		RAISE EXCEPTION 'funcao_externa';
+	END IF;
 	
 	IF delete_valido AND nao_possui IS false THEN
 		FOR objeto IN (SELECT * FROM osc.tb_projeto WHERE id_osc = osc AND id_projeto != ALL(dado_nao_delete))
@@ -365,7 +381,7 @@ BEGIN
 					dado_nao_delete := array_append(dado_nao_delete, projeto.id_projeto);
 				END IF;
 			END LOOP;
-			
+			/*
 			FOR projeto IN (SELECT * FROM osc.tb_localizacao_projeto WHERE id_projeto = objeto.id_projeto)
 			LOOP
 				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[projeto.ft_regiao_localizacao_projeto, projeto.ft_nome_regiao_localizacao_projeto, projeto.ft_localizacao_prioritaria]) AS a) THEN
@@ -375,7 +391,7 @@ BEGIN
 					dado_nao_delete := array_append(dado_nao_delete, projeto.id_projeto);
 				END IF;
 			END LOOP;
-			/*
+			
 			FOR projeto IN (SELECT * FROM osc.tb_objetivo_projeto WHERE id_projeto = objeto.id_projeto)
 			LOOP
 				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[projeto.ft_objetivo_projeto]) AS a) THEN
@@ -413,13 +429,6 @@ BEGIN
 				dado_nao_delete := array_append(dado_nao_delete, projeto.id_projeto);
 			END IF;
 		END LOOP;
-	END IF;
-
-	objetivos = COALESCE((json->>'objetivo_metas')::JSONB, '{}'::JSONB);
-	SELECT INTO record_objetivos * FROM portal.atualizar_objetivos_osc(fonte, identificador, tipo_identificador, data_atualizacao, objetivos, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
-	IF record_objetivos.flag = false THEN 
-		mensagem := record_objetivos.mensagem;
-		RAISE EXCEPTION 'funcao_externa';
 	END IF;
 	
 	IF nao_possui AND (SELECT EXISTS(SELECT * FROM osc.tb_projeto WHERE id_osc = osc)) THEN 
