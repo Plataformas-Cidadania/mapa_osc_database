@@ -18,6 +18,8 @@ DECLARE
 	nao_possui BOOLEAN;
 	projetos JSONB;
 	projeto RECORD;
+	objetivos JSONB;
+	record_apelido RECORD;
 
 BEGIN
 	nome_tabela := 'osc.tb_projeto';
@@ -373,7 +375,7 @@ BEGIN
 					dado_nao_delete := array_append(dado_nao_delete, projeto.id_projeto);
 				END IF;
 			END LOOP;
-			
+			/*
 			FOR projeto IN (SELECT * FROM osc.tb_objetivo_projeto WHERE id_projeto = objeto.id_projeto)
 			LOOP
 				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[projeto.ft_objetivo_projeto]) AS a) THEN
@@ -383,7 +385,7 @@ BEGIN
 					dado_nao_delete := array_append(dado_nao_delete, projeto.id_projeto);
 				END IF;
 			END LOOP;
-			
+			*/
 			FOR projeto IN (SELECT * FROM osc.tb_osc_parceira_projeto WHERE id_projeto = objeto.id_projeto)
 			LOOP
 				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[projeto.ft_osc_parceira_projeto]) AS a) THEN
@@ -412,6 +414,13 @@ BEGIN
 			END IF;
 		END LOOP;
 	END IF;
+
+	objetivos = COALESCE((json->>'objetivo_metas')::JSONB, '{}'::JSONB);
+	SELECT INTO record_objetivos * FROM portal.atualizar_objetivos_osc(fonte, identificador, tipo_identificador, data_atualizacao, objetivos, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
+	IF record_objetivos.flag = false THEN 
+		mensagem := record_objetivos.mensagem;
+		RAISE EXCEPTION 'funcao_externa';
+	END IF;
 	
 	IF nao_possui AND (SELECT EXISTS(SELECT * FROM osc.tb_projeto WHERE id_osc = osc)) THEN 
 		RAISE EXCEPTION 'nao_possui_invalido';
@@ -425,7 +434,11 @@ BEGIN
 EXCEPTION
 	WHEN others THEN
 		flag := false;
-		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, identificador, data_atualizacao::TIMESTAMP, erro_log, id_carga) AS a;
+
+		IF SQLERRM <> 'funcao_externa' THEN 
+			SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, identificador, data_atualizacao::TIMESTAMP, erro_log, id_carga) AS a;
+		END IF;
+		
 		RETURN NEXT;
 
 END;
