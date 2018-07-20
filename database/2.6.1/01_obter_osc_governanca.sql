@@ -20,15 +20,15 @@ BEGIN
 			array_agg(a) AS array 
 		FROM (
 			SELECT 
-				id_dirigente,
-				tx_cargo_dirigente,
-				ft_cargo_dirigente,
-				tx_nome_dirigente,
-				ft_nome_dirigente
+				tb_governanca.id_dirigente,
+				tb_governanca.tx_cargo_dirigente,
+				tb_governanca.ft_cargo_dirigente,
+				tb_governanca.tx_nome_dirigente,
+				tb_governanca.ft_nome_dirigente
 			FROM 
 				osc.tb_governanca
 			WHERE 
-				id_osc = param::INTEGER
+				tb_governanca.id_osc = osc.id_osc
 		) a;
 
 		IF ARRAY_LENGTH(linha.array, 1) > 0 THEN 
