@@ -13,7 +13,7 @@ DECLARE
 	dado_posterior RECORD;
 	dado_nao_delete INTEGER[];
 	flag_update BOOLEAN;
-	conselho RECORD;
+	osc RECORD;
 
 BEGIN
 	nome_tabela := 'osc.tb_participacao_social_conselho_outro';
@@ -24,17 +24,19 @@ BEGIN
 		RAISE EXCEPTION 'fonte_invalida';
 	END IF;
 
-	SELECT * INTO conselho 
+	SELECT * INTO osc 
 	FROM osc.tb_osc 
 	LEFT JOIN osc.tb_participacao_social_conselho 
 	ON tb_osc.id_osc = tb_participacao_social_conselho.id_osc 
-	WHERE id_conselho = identificador;
+	WHERE tb_participacao_social_conselho.id_conselho = identificador;
 
-	IF conselho.bo_osc_ativa IS false THEN
+	IF osc IS null THEN
+		RAISE EXCEPTION 'osc_nao_encontrada';
+	ELSIF osc.bo_osc_ativa IS false THEN
 		RAISE EXCEPTION 'osc_inativa';
-	ELSIF conselho.id_conselho IS null THEN
+	ELSIF osc.id_conselho IS null THEN
 		RAISE EXCEPTION 'conselho_nao_encontrado';
-	ELSIF conselho.id_osc != ALL(fonte_dados.representacao) THEN
+	ELSIF osc.id_osc != ALL(fonte_dados.representacao) THEN
 		RAISE EXCEPTION 'permissao_negada_usuario';
 	END IF;
 
@@ -48,7 +50,7 @@ BEGIN
 
 		SELECT INTO dado_anterior * FROM osc.tb_participacao_social_conselho_outro
 		WHERE id_conselho_outro = objeto.id_conselho_outro
-		AND id_conselho = conselho.id_conselho;
+		AND id_conselho = osc.id_conselho;
 
 		IF dado_anterior.id_conselho_outro IS null THEN
 			INSERT INTO osc.tb_participacao_social_conselho_outro (
@@ -62,7 +64,7 @@ BEGIN
 			) RETURNING * INTO dado_posterior;
 
 			dado_nao_delete := array_append(dado_nao_delete, dado_posterior.id_conselho_outro);
-			PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, conselho.id_osc, fonte, data_atualizacao, null, row_to_json(dado_posterior), id_carga);
+			PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, null, row_to_json(dado_posterior), id_carga);
 
 		ELSE
 			dado_posterior := dado_anterior;
@@ -81,7 +83,7 @@ BEGIN
 					ft_nome_conselho = dado_posterior.ft_nome_conselho
 				WHERE id_conselho_outro = dado_posterior.id_conselho_outro;
 
-				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, conselho.id_osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior), id_carga);
+				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior), id_carga);
 			END IF;
 
 		END IF;
@@ -93,7 +95,7 @@ BEGIN
 		LOOP
 			IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_nome_conselho]) AS a) THEN
 				DELETE FROM osc.tb_participacao_social_conselho_outro WHERE id_conselho_outro = objeto.id_conselho_outro;
-				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, conselho.id_osc, fonte, data_atualizacao, row_to_json(objeto), null, id_carga);
+				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, row_to_json(objeto), null, id_carga);
 			END IF;
 		END LOOP;
 	END IF;
@@ -106,7 +108,7 @@ BEGIN
 EXCEPTION
 	WHEN others THEN
 		flag := false;
-		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, conselho.id_osc, data_atualizacao::TIMESTAMP, erro_log, id_carga) AS a;
+		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, osc.id_osc, data_atualizacao::TIMESTAMP, erro_log, id_carga) AS a;
 		RETURN NEXT;
 
 END;
