@@ -1,0 +1,1 @@
+ALTER TABLE osc.tb_representante_conselho ALTER COLUMN id_osc DROP NOT NULL;
