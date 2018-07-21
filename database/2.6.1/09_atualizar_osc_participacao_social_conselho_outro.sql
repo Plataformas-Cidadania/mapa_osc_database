@@ -99,36 +99,15 @@ BEGIN
 	END IF;
 
 	flag := true;
-	mensagem := 'Representante(s) de conselho atualizado.';
+	mensagem := 'Outro conselho atualizado.';
 
 	RETURN NEXT;
 
 EXCEPTION
 	WHEN others THEN
-		RAISE NOTICE '%', SQLERRM;
 		flag := false;
 		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, conselho.id_osc, data_atualizacao::TIMESTAMP, erro_log, id_carga) AS a;
 		RETURN NEXT;
 
 END;
 $$ LANGUAGE 'plpgsql';
-
-SELECT * FROM portal.atualizar_osc_participacao_social_conselho_outro(
-	'Representante de OSC'::TEXT, 
-	'171'::NUMERIC, 
-	NOW()::TIMESTAMP, 
-	'[
-		{
-			"id_conselho_outro": 2488,
-			"tx_nome_conselho": "Teste 2a"
-		},
-		{
-			"id_conselho_outro": 2488,
-			"tx_nome_conselho": "Teste 2c"
-		}
-	]'::JSONB, 
-	true::BOOLEAN, 
-	true::BOOLEAN, 
-	false::BOOLEAN, 
-	null::INTEGER
-);
