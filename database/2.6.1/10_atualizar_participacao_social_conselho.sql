@@ -30,6 +30,7 @@ BEGIN
 	cd_conselho_outra := (SELECT cd_conselho FROM syst.dc_conselho WHERE tx_nome_conselho = 'Outra');
 	cd_conselho_nao_possui := (SELECT cd_conselho FROM syst.dc_conselho WHERE tx_nome_conselho = 'Não Possui');
 	nao_possui := false;
+	dado_nao_delete := '{}'::INTEGER[];
 	
 	SELECT INTO fonte_dados * FROM portal.verificar_fonte(fonte);
 	
@@ -181,12 +182,10 @@ BEGIN
 			END IF;
 		END IF;
 		
-		IF json_representante IS NOT null THEN
-			SELECT INTO record_funcao_externa * FROM portal.atualizar_osc_representante_conselho(fonte, dado_posterior.id_conselho, data_atualizacao, json_representante, null_valido, delete_valido, erro_log, id_carga);
-			IF record_funcao_externa.flag = false THEN 
-				mensagem := record_funcao_externa.mensagem;
-				RAISE EXCEPTION 'funcao_externa';
-			END IF;
+		SELECT INTO record_funcao_externa * FROM portal.atualizar_osc_representante_conselho(fonte, dado_posterior.id_conselho, data_atualizacao, json_representante, null_valido, delete_valido, erro_log, id_carga);
+		IF record_funcao_externa.flag = false THEN 
+			mensagem := record_funcao_externa.mensagem;
+			RAISE EXCEPTION 'funcao_externa';
 		END IF;
 
 		IF conselho.cd_conselho = cd_conselho_nao_possui THEN

@@ -17,6 +17,7 @@ DECLARE
 
 BEGIN
 	nome_tabela := 'osc.tb_participacao_social_conselho_outro';
+	dado_nao_delete := '{}'::INTEGER[];
 
 	SELECT INTO fonte_dados * FROM portal.verificar_fonte(fonte);
 

@@ -17,7 +17,8 @@ DECLARE
 
 BEGIN
 	nome_tabela := 'osc.tb_representante_conselho';
-
+	dado_nao_delete := '{}'::INTEGER[];
+	
 	SELECT INTO fonte_dados * FROM portal.verificar_fonte(fonte);
 
 	IF fonte_dados IS null THEN
@@ -38,7 +39,9 @@ BEGIN
 		RAISE EXCEPTION 'permissao_negada_usuario';
 	END IF;
 
-	IF jsonb_typeof(json) = 'object' THEN
+	IF json IS null THEN
+		json := ('[]')::JSONB;
+	ELSIF jsonb_typeof(json) = 'object' THEN
 		--json := jsonb_build_array(json);
 		json := ('[' || json || ']')::JSONB;
 	END IF;
@@ -90,7 +93,7 @@ BEGIN
 	END LOOP;
 
 	IF delete_valido THEN
-		FOR objeto IN (SELECT * FROM osc.tb_representante_conselho WHERE id_participacao_social_conselho = identificador AND id_representante_conselho != ALL(dado_nao_delete))
+		FOR objeto IN (SELECT * FROM osc.tb_representante_conselho WHERE id_participacao_social_conselho = conselho.id_conselho AND id_representante_conselho != ALL(dado_nao_delete))
 		LOOP
 			IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_nome_representante_conselho]) AS a) THEN
 				DELETE FROM osc.tb_representante_conselho WHERE id_representante_conselho = objeto.id_representante_conselho;
