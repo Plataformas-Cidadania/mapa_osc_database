@@ -103,7 +103,7 @@ BEGIN
 			
 			dado_nao_delete := array_append(dado_nao_delete, dado_posterior.id_conselho);
 			
-			PERFORM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, null::JSONB, row_to_json(dado_posterior), id_carga);
+			PERFORM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, null::JSON, row_to_json(dado_posterior), id_carga);
 			
 		ELSE
 			dado_posterior := dado_anterior;
@@ -154,7 +154,7 @@ BEGIN
 					ft_data_fim_conselho = dado_posterior.ft_data_fim_conselho
 				WHERE id_conselho = dado_posterior.id_conselho;
 				
-				PERFORM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior), id_carga);
+				PERFORM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior), id_carga);
 			END IF;
 		END IF;
 		
@@ -162,27 +162,26 @@ BEGIN
 		json_conselho_outro = null::JSONB;
 		
 		IF conselho.cd_conselho <> cd_conselho_nao_possui THEN
-			dado_nao_delete := ('{' || dado_posterior.id_conselho::TEXT || '}')::INTEGER[];
-			
 			IF (objeto.conselho->>'tx_nome_conselho_outro') IS NOT null THEN
-				json_conselho_outro := '{"tx_nome_conselho": ' || (objeto.conselho->>'tx_nome_conselho_outro')::TEXT || '}'::JSONB;
+				json_conselho_outro := ('{"tx_nome_conselho": "' || (objeto.conselho->>'tx_nome_conselho_outro')::TEXT || '"}')::JSONB;
 			END IF;
-
-			IF (objeto.conselho->>'representante') IS NOT null THEN
-				json_representante := COALESCE((json->>'representante')::JSONB, '{}'::JSONB);
+			
+			IF objeto.representante IS NOT null THEN
+				json_representante := COALESCE((objeto.representante)::JSONB, '{}'::JSONB);
 			END IF;
+		ELSE
+			dado_nao_delete := ('{' || dado_posterior.id_conselho::TEXT || '}')::INTEGER[];
 		END IF;
 		
 		IF conselho.cd_conselho = cd_conselho_outra AND json_conselho_outro IS NOT null THEN
 			SELECT INTO record_funcao_externa * FROM portal.atualizar_osc_participacao_social_conselho_outro(fonte, dado_posterior.id_conselho, data_atualizacao, json_conselho_outro, null_valido, delete_valido, erro_log, id_carga);
-			IF record_funcao_externa.flag = false THEN 
+			IF record_funcao_externa.flag = false THEN
 				mensagem := record_funcao_externa.mensagem;
 				RAISE EXCEPTION 'funcao_externa';
 			END IF;
 		END IF;
 		
 		IF json_representante IS NOT null THEN
-			RAISE NOTICE '%', json_representante;
 			SELECT INTO record_funcao_externa * FROM portal.atualizar_osc_representante_conselho(fonte, dado_posterior.id_conselho, data_atualizacao, json_representante, null_valido, delete_valido, erro_log, id_carga);
 			IF record_funcao_externa.flag = false THEN 
 				mensagem := record_funcao_externa.mensagem;
@@ -202,38 +201,36 @@ BEGIN
 			LOOP
 				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto_externo.ft_nome_conselho]) AS a) THEN
 					DELETE FROM osc.tb_participacao_social_conselho_outro WHERE id_conselho = objeto_externo.id_conselho AND id_conselho != ALL(dado_nao_delete);
-					PERFORM portal.inserir_log_atualizacao('osc.tb_participacao_social_conselho_outro'::TEXT, osc.id_osc, fonte, data_atualizacao, row_to_json(objeto_externo)::JSONB, null::JSONB, id_carga);
+					PERFORM portal.inserir_log_atualizacao('osc.tb_participacao_social_conselho_outro'::TEXT, osc.id_osc, fonte, data_atualizacao, row_to_json(objeto_externo), null::JSON, id_carga);
 				END IF;
 			END LOOP;
 			
-			FOR objeto_externo IN (SELECT * FROM osc.tb_representante_conselho WHERE id_conselho = objeto.id_conselho)
+			FOR objeto_externo IN (SELECT * FROM osc.tb_representante_conselho WHERE id_participacao_social_conselho = objeto.id_conselho)
 			LOOP
 				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto_externo.ft_nome_representante_conselho]) AS a) THEN
-					DELETE FROM osc.tb_representante_conselho WHERE id_conselho = objeto_externo.id_conselho AND id_conselho != ALL(dado_nao_delete);
-					PERFORM portal.inserir_log_atualizacao('osc.tb_representante_conselho'::TEXT, osc.id_osc, fonte, data_atualizacao, row_to_json(objeto_externo)::JSONB, null::JSONB, id_carga);
+					DELETE FROM osc.tb_representante_conselho WHERE id_representante_conselho = objeto_externo.id_representante_conselho AND id_participacao_social_conselho != ALL(dado_nao_delete);
+					PERFORM portal.inserir_log_atualizacao('osc.tb_representante_conselho'::TEXT, osc.id_osc, fonte, data_atualizacao, row_to_json(objeto_externo), null::JSON, id_carga);
 				END IF;
 			END LOOP;
 
 			IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_conselho, objeto.ft_tipo_participacao, objeto.ft_periodicidade_reuniao, objeto.ft_data_inicio_conselho, objeto.ft_data_fim_conselho]) AS a) THEN
-				DELETE FROM osc.tb_participacao_social_conselho WHERE id_conselho = objeto.id_conselho AND id_conselho;
-				PERFORM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, row_to_json(objeto)::JSONB, null::JSONB, id_carga);
+				DELETE FROM osc.tb_participacao_social_conselho WHERE id_conselho = objeto.id_conselho AND id_conselho != ALL(dado_nao_delete);
+				PERFORM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, row_to_json(objeto), null::JSON, id_carga);
 			END IF;
 		END LOOP;
 	END IF;
 	
-	IF nao_possui AND (SELECT EXISTS(SELECT * FROM osc.tb_participacao_social_conselho WHERE cd_conselho = cd_conselho_nao_possui AND id_osc = osc)) THEN 
+	IF nao_possui AND (SELECT EXISTS(SELECT * FROM osc.tb_participacao_social_conselho WHERE cd_conselho = cd_conselho_nao_possui AND id_osc = osc.id_osc)) THEN 
 		RAISE EXCEPTION 'nao_possui_invalido';
 	END IF;
 	
 	flag := true;
-	mensagem := 'Projetos de OSC atualizado.';
+	mensagem := 'Participação social em conselho(s) atualizado.';
 	
 	RETURN NEXT;
 
 EXCEPTION
 	WHEN others THEN
-		RAISE NOTICE '%', SQLERRM;
-		
 		flag := false;
 
 		IF SQLERRM <> 'funcao_externa' THEN 
@@ -244,54 +241,3 @@ EXCEPTION
 
 END;
 $$ LANGUAGE 'plpgsql';
-
-
-
-SELECT * FROM portal.atualizar_participacao_social_conselho(
-	'Representante de OSC'::TEXT,
-	'987654'::NUMERIC,
-	'id_osc'::TEXT,
-	now()::TIMESTAMP,
-	'[
-		{
-			"conselho": {
-				"id_conselho": null,
-				"cd_conselho": "1",
-				"cd_tipo_participacao": "1",
-				"tx_nome_conselho": "Teste 1",
-				"cd_periodicidade_reuniao_conselho": "1",
-				"dt_data_inicio_conselho": "01-01-2001",
-				"dt_data_fim_conselho": "01-01-2011"
-			},
-			"representante": [
-				{
-					"tx_nome_representante_conselho": "Teste 1"
-				}
-			]
-		},
-		{
-			"conselho": {
-				"id_conselho": null,
-				"cd_conselho": "2",
-				"cd_tipo_participacao": "2",
-				"tx_nome_conselho": "Teste 2",
-				"cd_periodicidade_reuniao_conselho": "2",
-				"dt_data_inicio_conselho": "02-02-2002",
-				"dt_data_fim_conselho": "02-02-2012"
-			},
-			"representante": [
-				{
-					"tx_nome_representante_conselho": "Teste 2a"
-				},
-				{
-					"tx_nome_representante_conselho": "Teste 2b"
-				}
-			]
-		}
-	]'::JSONB,
-	true::BOOLEAN,
-	true::BOOLEAN,
-	false::BOOLEAN,
-	null::INTEGER,
-	2::INTEGER
-);
