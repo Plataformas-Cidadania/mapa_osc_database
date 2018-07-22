@@ -147,6 +147,7 @@ BEGIN
 		END IF;
 
 		IF conferencia.cd_conferencia = cd_conferencia_nao_possui THEN
+			nao_possui := true;
 			EXIT;
 		END IF;
 	END LOOP;
@@ -169,7 +170,7 @@ BEGIN
 		END LOOP;
 	END IF;
 	
-	IF nao_possui AND (SELECT EXISTS(SELECT * FROM osc.tb_participacao_social_conferencia WHERE cd_conferencia = cd_conferencia_nao_possui AND id_osc = osc.id_osc)) THEN 
+	IF nao_possui AND (SELECT EXISTS(SELECT * FROM osc.tb_participacao_social_conferencia WHERE cd_conferencia <> cd_conferencia_nao_possui AND id_osc = osc.id_osc)) THEN 
 		RAISE EXCEPTION 'nao_possui_invalido';
 	END IF;
 	
