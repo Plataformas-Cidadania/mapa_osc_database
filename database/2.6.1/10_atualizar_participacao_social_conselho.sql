@@ -165,6 +165,8 @@ BEGIN
 		IF conselho.cd_conselho <> cd_conselho_nao_possui THEN
 			IF (objeto.conselho->>'tx_nome_conselho_outro') IS NOT null THEN
 				json_conselho_outro := ('{"tx_nome_conselho": "' || (objeto.conselho->>'tx_nome_conselho_outro')::TEXT || '"}')::JSONB;
+			ELSE
+				json_conselho_outro := ('{}')::JSONB;
 			END IF;
 			
 			IF objeto.representante IS NOT null THEN
