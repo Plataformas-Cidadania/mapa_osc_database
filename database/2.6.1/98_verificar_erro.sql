@@ -43,6 +43,10 @@ BEGIN
 		ELSIF mensagem_erro = 'conselho_nao_encontrado' THEN
 			mensagem := 'Conselho não encontrado.';
 			status_log := 1;
+
+		ELSIF mensagem_erro = 'conferencia_nao_encontrada' THEN
+			mensagem := 'Conferência não encontrada.';
+			status_log := 1;
 		
 		ELSIF mensagem_erro = 'tipo_obter_projeto_invalido' THEN
 			mensagem := 'Tipo de resultado do obter projeto inválido.';

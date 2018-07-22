@@ -1,0 +1,1 @@
+ALTER TABLE osc.tb_participacao_social_conferencia_outra ALTER COLUMN id_osc DROP NOT NULL;
