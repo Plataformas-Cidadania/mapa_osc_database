@@ -139,3 +139,18 @@ EXCEPTION
 
 END;
 $$ LANGUAGE 'plpgsql';
+
+SELECT * FROM portal.atualizar_osc_participacao_social_conferencia_outra(
+	'Representante de OSC'::TEXT, 
+	'14'::NUMERIC, 
+	now()::TIMESTAMP, 
+	'{
+		"tx_nome_conferencia": "Teste 1"
+	}'::JSONB, 
+	true::BOOLEAN, 
+	true::BOOLEAN, 
+	false::BOOLEAN, 
+	null::INTEGER
+);
+
+SELECT * FROM osc.tb_participacao_social_conferencia_outra JOIN osc.tb_participacao_social_conferencia ON tb_participacao_social_conferencia_outra.id_conferencia = tb_participacao_social_conferencia.id_conferencia WHERE tb_participacao_social_conferencia.id_osc = 987654;
