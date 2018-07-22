@@ -103,7 +103,7 @@ BEGIN
 			
 			dado_nao_delete := array_append(dado_nao_delete, dado_posterior.id_conselho);
 			
-			PERFORM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, null, row_to_json(dado_posterior), id_carga);
+			PERFORM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, null::JSONB, row_to_json(dado_posterior), id_carga);
 			
 		ELSE
 			dado_posterior := dado_anterior;
@@ -158,28 +158,36 @@ BEGIN
 			END IF;
 		END IF;
 		
-		IF conselho.cd_conselho = cd_conselho_nao_possui THEN
-			dado_nao_delete := '{' || dado_posterior.id_conselho::STRING || '}'::INTEGER[];
+		json_representante = null::JSONB;
+		json_conselho_outro = null::JSONB;
+		
+		IF conselho.cd_conselho <> cd_conselho_nao_possui THEN
+			dado_nao_delete := ('{' || dado_posterior.id_conselho::TEXT || '}')::INTEGER[];
+			
+			IF (objeto.conselho->>'tx_nome_conselho_outro') IS NOT null THEN
+				json_conselho_outro := '{"tx_nome_conselho": ' || (objeto.conselho->>'tx_nome_conselho_outro')::TEXT || '}'::JSONB;
+			END IF;
 
-			json_conselho_outro := '{"tx_nome_conselho": ' || conselho.tx_nome_conselho_outro::STRING || '}'::JSONB;
-			json_representante := COALESCE((json->>'representante')::JSONB, '{}'::JSONB);
-		ELSE
-			json_representante = '{}'::JSONB;
-			json_conselho_outro = '{}'::JSONB;
+			IF (objeto.conselho->>'representante') IS NOT null THEN
+				json_representante := COALESCE((json->>'representante')::JSONB, '{}'::JSONB);
+			END IF;
 		END IF;
 		
-		IF conselho.cd_conselho = cd_conselho_outra THEN
-			SELECT INTO record_funcao_externa * FROM portal.atualizar_osc_participacao_social_conselho_outro(fonte, conselho.id_conselho, data_atualizacao, json_conselho_outro, null_valido, delete_valido, erro_log, id_carga);
+		IF conselho.cd_conselho = cd_conselho_outra AND json_conselho_outro IS NOT null THEN
+			SELECT INTO record_funcao_externa * FROM portal.atualizar_osc_participacao_social_conselho_outro(fonte, dado_posterior.id_conselho, data_atualizacao, json_conselho_outro, null_valido, delete_valido, erro_log, id_carga);
 			IF record_funcao_externa.flag = false THEN 
-				mensagem := record_representante.mensagem;
+				mensagem := record_funcao_externa.mensagem;
 				RAISE EXCEPTION 'funcao_externa';
 			END IF;
 		END IF;
-
-		SELECT INTO record_funcao_externa * FROM portal.atualizar_osc_representante_conselho(fonte, conselho.id_conselho, data_atualizacao, json_representante, null_valido, delete_valido, erro_log, id_carga);
-		IF record_funcao_externa.flag = false THEN 
-			mensagem := record_representante.mensagem;
-			RAISE EXCEPTION 'funcao_externa';
+		
+		IF json_representante IS NOT null THEN
+			RAISE NOTICE '%', json_representante;
+			SELECT INTO record_funcao_externa * FROM portal.atualizar_osc_representante_conselho(fonte, dado_posterior.id_conselho, data_atualizacao, json_representante, null_valido, delete_valido, erro_log, id_carga);
+			IF record_funcao_externa.flag = false THEN 
+				mensagem := record_funcao_externa.mensagem;
+				RAISE EXCEPTION 'funcao_externa';
+			END IF;
 		END IF;
 
 		IF conselho.cd_conselho = cd_conselho_nao_possui THEN
@@ -192,23 +200,23 @@ BEGIN
 		LOOP
 			FOR objeto_externo IN (SELECT * FROM osc.tb_participacao_social_conselho_outro WHERE id_conselho = objeto.id_conselho)
 			LOOP
-				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_nome_conselho]) AS a) THEN
+				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto_externo.ft_nome_conselho]) AS a) THEN
 					DELETE FROM osc.tb_participacao_social_conselho_outro WHERE id_conselho = objeto_externo.id_conselho AND id_conselho != ALL(dado_nao_delete);
-					PERFORM portal.inserir_log_atualizacao('osc.tb_participacao_social_conselho_outro', osc, fonte, data_atualizacao, row_to_json(objeto_externo), null, id_carga);
+					PERFORM portal.inserir_log_atualizacao('osc.tb_participacao_social_conselho_outro'::TEXT, osc.id_osc, fonte, data_atualizacao, row_to_json(objeto_externo)::JSONB, null::JSONB, id_carga);
 				END IF;
 			END LOOP;
 			
 			FOR objeto_externo IN (SELECT * FROM osc.tb_representante_conselho WHERE id_conselho = objeto.id_conselho)
 			LOOP
-				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_nome_representante_conselho]) AS a) THEN
+				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto_externo.ft_nome_representante_conselho]) AS a) THEN
 					DELETE FROM osc.tb_representante_conselho WHERE id_conselho = objeto_externo.id_conselho AND id_conselho != ALL(dado_nao_delete);
-					PERFORM portal.inserir_log_atualizacao('osc.tb_representante_conselho', osc, fonte, data_atualizacao, row_to_json(objeto_externo), null, id_carga);
+					PERFORM portal.inserir_log_atualizacao('osc.tb_representante_conselho'::TEXT, osc.id_osc, fonte, data_atualizacao, row_to_json(objeto_externo)::JSONB, null::JSONB, id_carga);
 				END IF;
 			END LOOP;
 
 			IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_conselho, objeto.ft_tipo_participacao, objeto.ft_periodicidade_reuniao, objeto.ft_data_inicio_conselho, objeto.ft_data_fim_conselho]) AS a) THEN
 				DELETE FROM osc.tb_participacao_social_conselho WHERE id_conselho = objeto.id_conselho AND id_conselho;
-				PERFORM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(objeto), null, id_carga);
+				PERFORM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, row_to_json(objeto)::JSONB, null::JSONB, id_carga);
 			END IF;
 		END LOOP;
 	END IF;

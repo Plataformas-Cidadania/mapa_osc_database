@@ -39,7 +39,8 @@ BEGIN
 	END IF;
 
 	IF jsonb_typeof(json) = 'object' THEN
-		json := jsonb_build_array(json);
+		--json := jsonb_build_array(json);
+		json := ('[' || json || ']')::JSONB;
 	END IF;
 
 	FOR objeto IN (SELECT * FROM jsonb_populate_recordset(null::osc.tb_representante_conselho, json))
@@ -105,6 +106,8 @@ BEGIN
 
 EXCEPTION
 	WHEN others THEN
+		RAISE NOTICE '%', SQLERRM;
+
 		flag := false;
 		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, conselho.id_osc, data_atualizacao::TIMESTAMP, erro_log, id_carga) AS a;
 		RETURN NEXT;
