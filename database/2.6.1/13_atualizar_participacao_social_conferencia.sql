@@ -48,19 +48,20 @@ BEGIN
 		RAISE EXCEPTION 'osc_inativa';
 	END IF;
 	
-	FOR objeto IN (SELECT * FROM jsonb_to_recordset(null::osc.tb_participacao_social_conferencia, objeto))
+	--FOR objeto IN (SELECT * FROM jsonb_populate_recordset(null::osc.tb_participacao_social_conferencia, json))
+	FOR objeto IN (SELECT * FROM jsonb_to_recordset(json) AS x(id_conferencia INTEGER, cd_conferencia INTEGER, dt_ano_realizacao DATE, cd_forma_participacao_conferencia INTEGER, tx_nome_conferencia_outra TEXT))
 	LOOP
 		dado_anterior := null;
 		
 		IF tipo_busca = 1 THEN
 			SELECT INTO dado_anterior *
 			FROM osc.tb_participacao_social_conferencia
-			WHERE id_conferencia = conferencia.id_conferencia;
+			WHERE id_conferencia = objeto.id_conferencia;
 			
 		ELSIF tipo_busca = 2 THEN
 			SELECT INTO dado_anterior * 
 			FROM osc.tb_participacao_social_conferencia
-			WHERE tb_participacao_social_conferencia.cd_conferencia = conferencia.cd_conferencia
+			WHERE tb_participacao_social_conferencia.cd_conferencia = objeto.cd_conferencia
 			AND tb_participacao_social_conferencia.id_osc = osc.id_osc;
 			
 		ELSE
@@ -79,11 +80,11 @@ BEGIN
 				ft_forma_participacao_conferencia
 			) VALUES (
 				osc.id_osc,
-				conferencia.cd_conferencia,
+				objeto.cd_conferencia,
 				fonte_dados.nome_fonte,
-				conferencia.dt_ano_realizacao,
+				objeto.dt_ano_realizacao,
 				fonte_dados.nome_fonte,
-				conferencia.cd_forma_participacao_conferencia,
+				objeto.cd_forma_participacao_conferencia,
 				fonte_dados.nome_fonte
 			) RETURNING * INTO dado_posterior;
 			
@@ -96,20 +97,20 @@ BEGIN
 			dado_nao_delete := array_append(dado_nao_delete, dado_posterior.id_conferencia);
 			flag_update := false;
 			
-			IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.cd_conferencia::TEXT, dado_anterior.ft_conferencia, conferencia.cd_conferencia::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
-				dado_posterior.cd_conferencia := conferencia.cd_conferencia;
+			IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.cd_conferencia::TEXT, dado_anterior.ft_conferencia, objeto.cd_conferencia::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+				dado_posterior.cd_conferencia := objeto.cd_conferencia;
 				dado_posterior.ft_conferencia := fonte_dados.nome_fonte;
 				flag_update := true;
 			END IF;
 			
-			IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.dt_ano_realizacao::TEXT, dado_anterior.ft_ano_realizacao, conferencia.dt_ano_realizacao::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
-				dado_posterior.dt_ano_realizacao := conferencia.dt_ano_realizacao;
+			IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.dt_ano_realizacao::TEXT, dado_anterior.ft_ano_realizacao, objeto.dt_ano_realizacao::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+				dado_posterior.dt_ano_realizacao := objeto.dt_ano_realizacao;
 				dado_posterior.ft_ano_realizacao := fonte_dados.nome_fonte;
 				flag_update := true;
 			END IF;
 			
-			IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.cd_forma_participacao_conferencia::TEXT, dado_anterior.ft_forma_participacao_conferencia, conferencia.cd_forma_participacao_conferencia::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
-				dado_posterior.cd_forma_participacao_conferencia := conferencia.cd_forma_participacao_conferencia;
+			IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.cd_forma_participacao_conferencia::TEXT, dado_anterior.ft_forma_participacao_conferencia, objeto.cd_forma_participacao_conferencia::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+				dado_posterior.cd_forma_participacao_conferencia := objeto.cd_forma_participacao_conferencia;
 				dado_posterior.ft_forma_participacao_conferencia := fonte_dados.nome_fonte;
 				flag_update := true;
 			END IF;
@@ -118,9 +119,9 @@ BEGIN
 				UPDATE osc.tb_participacao_social_conferencia
 				SET	cd_conferencia = dado_posterior.cd_conferencia,
 					ft_conferencia = dado_posterior.ft_conferencia,
-					cd_tipo_participacao = dado_posterior.dt_ano_realizacao,
-					ft_tipo_participacao = dado_posterior.ft_ano_realizacao,
-					cd_periodicidade_reuniao_conferencia = dado_posterior.cd_forma_participacao_conferencia,
+					dt_ano_realizacao = dado_posterior.dt_ano_realizacao,
+					ft_ano_realizacao = dado_posterior.ft_ano_realizacao,
+					cd_forma_participacao_conferencia = dado_posterior.cd_forma_participacao_conferencia,
 					ft_forma_participacao_conferencia = dado_posterior.ft_forma_participacao_conferencia
 				WHERE id_conferencia = dado_posterior.id_conferencia;
 				
@@ -130,15 +131,17 @@ BEGIN
 		
 		json_conferencia_outra = null::JSONB;
 		
-		IF conferencia.cd_conferencia <> cd_conferencia_nao_possui THEN
-			IF (objeto.conferencia->>'tx_nome_conferencia_outra') IS NOT null THEN
-				json_conferencia_outra := ('{"tx_nome_conferencia": "' || (objeto.conferencia->>'tx_nome_conferencia_outra')::TEXT || '"}')::JSONB;
+		IF objeto.cd_conferencia <> cd_conferencia_nao_possui THEN
+			IF objeto.tx_nome_conferencia_outra IS NOT null THEN
+				json_conferencia_outra := ('{"tx_nome_conferencia": "' || objeto.tx_nome_conferencia_outra || '"}')::JSONB;
+			ELSE
+				json_conferencia_outra := ('{}')::JSONB;
 			END IF;
 		ELSE
 			dado_nao_delete := ('{' || dado_posterior.id_conferencia::TEXT || '}')::INTEGER[];
 		END IF;
 		
-		IF conferencia.cd_conferencia = cd_conferencia_outra AND json_conferencia_outra IS NOT null THEN
+		IF json_conferencia_outra IS NOT null THEN
 			SELECT INTO record_funcao_externa * FROM portal.atualizar_osc_participacao_social_conferencia_outra(fonte, dado_posterior.id_conferencia, data_atualizacao, json_conferencia_outra, null_valido, delete_valido, erro_log, id_carga);
 			IF record_funcao_externa.flag = false THEN
 				mensagem := record_funcao_externa.mensagem;
@@ -146,7 +149,7 @@ BEGIN
 			END IF;
 		END IF;
 
-		IF conferencia.cd_conferencia = cd_conferencia_nao_possui THEN
+		IF objeto.cd_conferencia = cd_conferencia_nao_possui THEN
 			nao_possui := true;
 			EXIT;
 		END IF;
@@ -163,7 +166,7 @@ BEGIN
 				END IF;
 			END LOOP;
 
-			IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_conferencia, objeto.ft_tipo_participacao, objeto.ft_periodicidade_reuniao, objeto.ft_data_inicio_conferencia, objeto.ft_data_fim_conferencia]) AS a) THEN
+			IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_conferencia, objeto.ft_ano_realizacao, objeto.ft_forma_participacao_conferencia]) AS a) THEN
 				DELETE FROM osc.tb_participacao_social_conferencia WHERE id_conferencia = objeto.id_conferencia AND id_conferencia != ALL(dado_nao_delete);
 				PERFORM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, row_to_json(objeto), null::JSON, id_carga);
 			END IF;
@@ -181,6 +184,7 @@ BEGIN
 
 EXCEPTION
 	WHEN others THEN
+		RAISE NOTICE '%', SQLERRM;
 		flag := false;
 
 		IF SQLERRM <> 'funcao_externa' THEN 
@@ -191,3 +195,22 @@ EXCEPTION
 
 END;
 $$ LANGUAGE 'plpgsql';
+
+SELECT * FROM portal.atualizar_participacao_social_conferencia(
+	'Representante de OSC'::TEXT, 
+	'987654'::NUMERIC, 
+	'id_osc'::TEXT, 
+	now()::TIMESTAMP, 
+	'[
+		{"id_conferencia": 13, "cd_conferencia": 2, "tx_nome_conferencia_outra": "Teste 2", "dt_ano_realizacao": "2015-01-01", "cd_forma_participacao_conferencia": 1},
+		{"id_conferencia": 14, "cd_conferencia": 1, "tx_nome_conferencia_outra": null, "dt_ano_realizacao": "2016-01-01", "cd_forma_participacao_conferencia": 1},
+		{					   "cd_conferencia": 45, "tx_nome_conferencia_outra": "Teste 1", "dt_ano_realizacao": "2016-01-01", "cd_forma_participacao_conferencia": 1}
+	]'::JSONB, 
+	true::BOOLEAN, 
+	true::BOOLEAN, 
+	false::BOOLEAN, 
+	null::INTEGER, 
+	2::INTEGER
+);
+
+SELECT * FROM osc.tb_participacao_social_conferencia LEFT JOIN osc.tb_participacao_social_conferencia_outra ON tb_participacao_social_conferencia_outra.id_conferencia = tb_participacao_social_conferencia.id_conferencia WHERE tb_participacao_social_conferencia.id_osc = 987654;

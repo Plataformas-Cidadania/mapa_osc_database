@@ -52,7 +52,7 @@ BEGIN
 		RAISE EXCEPTION 'osc_inativa';
 	END IF;
 	
-	FOR objeto IN (SELECT * FROM jsonb_to_recordset(json) AS x(conselho jsonb, representante jsonb))
+	FOR objeto IN (SELECT * FROM jsonb_to_recordset(json) AS x(conselho JSONB, representante JSONB))
 	LOOP
 		conselho = (jsonb_populate_record(null::osc.tb_participacao_social_conselho, objeto.conselho));
 		
