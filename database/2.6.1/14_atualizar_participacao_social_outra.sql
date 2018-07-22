@@ -42,7 +42,7 @@ BEGIN
 		RAISE EXCEPTION 'osc_inativa';
 	END IF;
 	
-	FOR objeto IN (SELECT * FROM jsonb_to_recordset(null::osc.tb_participacao_social_outra, json))
+	FOR objeto IN (SELECT * FROM jsonb_populate_recordset(null::osc.tb_participacao_social_outra, json))
 	LOOP
 		dado_anterior := null;
 		

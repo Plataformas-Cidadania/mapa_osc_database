@@ -48,7 +48,6 @@ BEGIN
 		RAISE EXCEPTION 'osc_inativa';
 	END IF;
 	
-	--FOR objeto IN (SELECT * FROM jsonb_populate_recordset(null::osc.tb_participacao_social_conferencia, json))
 	FOR objeto IN (SELECT * FROM jsonb_to_recordset(json) AS x(id_conferencia INTEGER, cd_conferencia INTEGER, dt_ano_realizacao DATE, cd_forma_participacao_conferencia INTEGER, tx_nome_conferencia_outra TEXT))
 	LOOP
 		dado_anterior := null;
@@ -184,7 +183,6 @@ BEGIN
 
 EXCEPTION
 	WHEN others THEN
-		RAISE NOTICE '%', SQLERRM;
 		flag := false;
 
 		IF SQLERRM <> 'funcao_externa' THEN 
@@ -195,22 +193,3 @@ EXCEPTION
 
 END;
 $$ LANGUAGE 'plpgsql';
-
-SELECT * FROM portal.atualizar_participacao_social_conferencia(
-	'Representante de OSC'::TEXT, 
-	'987654'::NUMERIC, 
-	'id_osc'::TEXT, 
-	now()::TIMESTAMP, 
-	'[
-		{"id_conferencia": 13, "cd_conferencia": 2, "tx_nome_conferencia_outra": "Teste 2", "dt_ano_realizacao": "2015-01-01", "cd_forma_participacao_conferencia": 1},
-		{"id_conferencia": 14, "cd_conferencia": 1, "tx_nome_conferencia_outra": null, "dt_ano_realizacao": "2016-01-01", "cd_forma_participacao_conferencia": 1},
-		{					   "cd_conferencia": 45, "tx_nome_conferencia_outra": "Teste 1", "dt_ano_realizacao": "2016-01-01", "cd_forma_participacao_conferencia": 1}
-	]'::JSONB, 
-	true::BOOLEAN, 
-	true::BOOLEAN, 
-	false::BOOLEAN, 
-	null::INTEGER, 
-	2::INTEGER
-);
-
-SELECT * FROM osc.tb_participacao_social_conferencia LEFT JOIN osc.tb_participacao_social_conferencia_outra ON tb_participacao_social_conferencia_outra.id_conferencia = tb_participacao_social_conferencia.id_conferencia WHERE tb_participacao_social_conferencia.id_osc = 987654;
