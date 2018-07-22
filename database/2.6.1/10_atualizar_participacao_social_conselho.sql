@@ -53,7 +53,7 @@ BEGIN
 	
 	FOR objeto IN (SELECT * FROM jsonb_to_recordset(json) AS x(conselho jsonb, representante jsonb))
 	LOOP
-		conselho = (SELECT * FROM jsonb_populate_record(null::osc.tb_participacao_social_conselho, objeto.conselho));
+		conselho = (jsonb_populate_record(null::osc.tb_participacao_social_conselho, objeto.conselho));
 		
 		dado_anterior := null;
 		
@@ -73,7 +73,7 @@ BEGIN
 			RAISE EXCEPTION 'tipo_busca_invalido';
 
 		END IF;
-		
+
 		IF dado_anterior.id_conselho IS null THEN
 			INSERT INTO osc.tb_participacao_social_conselho (
 				id_osc,
@@ -122,8 +122,8 @@ BEGIN
 				flag_update := true;
 			END IF;
 			
-			IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.cd_periodicidade_reuniao_conselho::TEXT, dado_anterior.ft_periodicidade_reuniao, objeto.cd_periodicidade_reuniao_conselho::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
-				dado_posterior.cd_periodicidade_reuniao_conselho := objeto.cd_periodicidade_reuniao_conselho;
+			IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.cd_periodicidade_reuniao_conselho::TEXT, dado_anterior.ft_periodicidade_reuniao, conselho.cd_periodicidade_reuniao_conselho::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+				dado_posterior.cd_periodicidade_reuniao_conselho := conselho.cd_periodicidade_reuniao_conselho;
 				dado_posterior.ft_periodicidade_reuniao := fonte_dados.nome_fonte;
 				flag_update := true;
 			END IF;
@@ -158,17 +158,17 @@ BEGIN
 			END IF;
 		END IF;
 		
-		IF objeto.cd_conselho = cd_conselho_nao_possui THEN
+		IF conselho.cd_conselho = cd_conselho_nao_possui THEN
 			dado_nao_delete := '{' || dado_posterior.id_conselho::STRING || '}'::INTEGER[];
 
-			json_conselho_outro := '{"tx_nome_conselho": ' || objeto.tx_nome_conselho_outro::STRING || '}'::JSONB;
+			json_conselho_outro := '{"tx_nome_conselho": ' || conselho.tx_nome_conselho_outro::STRING || '}'::JSONB;
 			json_representante := COALESCE((json->>'representante')::JSONB, '{}'::JSONB);
 		ELSE
 			json_representante = '{}'::JSONB;
 			json_conselho_outro = '{}'::JSONB;
 		END IF;
 		
-		IF objeto.cd_conselho = cd_conselho_outra THEN
+		IF conselho.cd_conselho = cd_conselho_outra THEN
 			SELECT INTO record_funcao_externa * FROM portal.atualizar_osc_participacao_social_conselho_outro(fonte, conselho.id_conselho, data_atualizacao, json_conselho_outro, null_valido, delete_valido, erro_log, id_carga);
 			IF record_funcao_externa.flag = false THEN 
 				mensagem := record_representante.mensagem;
@@ -182,7 +182,7 @@ BEGIN
 			RAISE EXCEPTION 'funcao_externa';
 		END IF;
 
-		IF objeto.cd_conselho = cd_conselho_nao_possui THEN
+		IF conselho.cd_conselho = cd_conselho_nao_possui THEN
 			EXIT;
 		END IF;
 	END LOOP;
