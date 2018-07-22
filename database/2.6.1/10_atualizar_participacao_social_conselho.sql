@@ -33,12 +33,6 @@ BEGIN
 	
 	SELECT INTO fonte_dados * FROM portal.verificar_fonte(fonte);
 	
-	IF fonte_dados IS null THEN
-		RAISE EXCEPTION 'fonte_invalida';
-	ELSIF osc != ALL(fonte_dados.representacao) THEN
-		RAISE EXCEPTION 'permissao_negada_usuario';
-	END IF;
-	
 	IF tipo_identificador = 'cnpj' THEN
 		SELECT * INTO osc FROM osc.tb_osc WHERE cd_identificador_osc = identificador::NUMERIC;
 	ELSIF tipo_identificador = 'id_osc' THEN
@@ -47,17 +41,19 @@ BEGIN
 		RAISE EXCEPTION 'tipo_identificador_invalido';
 	END IF;
 	
-	IF osc IS null THEN
+	IF fonte_dados IS null THEN
+		RAISE EXCEPTION 'fonte_invalida';
+	ELSIF osc IS null THEN
 		RAISE EXCEPTION 'osc_nao_encontrada';
-	ELSIF osc.bo_osc_ativa IS false THEN
-		RAISE EXCEPTION 'osc_inativa';
 	ELSIF osc.id_osc != ALL(fonte_dados.representacao) THEN
 		RAISE EXCEPTION 'permissao_negada_usuario';
+	ELSIF osc.bo_osc_ativa IS false THEN
+		RAISE EXCEPTION 'osc_inativa';
 	END IF;
 	
-	FOR objeto IN (SELECT * FROM json_to_recordset(json) AS x(conselho jsonb, representante jsonb))
+	FOR objeto IN (SELECT * FROM jsonb_to_recordset(json) AS x(conselho jsonb, representante jsonb))
 	LOOP
-		conselho = (SELECT * FROM jsonb_populate_record(null::osc.tb_participacao_social_conselho, objeto.conselho);
+		conselho = (SELECT * FROM jsonb_populate_record(null::osc.tb_participacao_social_conselho, objeto.conselho));
 		
 		dado_anterior := null;
 		
@@ -228,6 +224,8 @@ BEGIN
 
 EXCEPTION
 	WHEN others THEN
+		RAISE NOTICE '%', SQLERRM;
+		
 		flag := false;
 
 		IF SQLERRM <> 'funcao_externa' THEN 
@@ -286,6 +284,6 @@ SELECT * FROM portal.atualizar_participacao_social_conselho(
 	true::BOOLEAN,
 	true::BOOLEAN,
 	false::BOOLEAN,
-	null:INTEGER,
+	null::INTEGER,
 	2::INTEGER
 );
