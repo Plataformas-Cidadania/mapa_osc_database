@@ -1,0 +1,1 @@
+ALTER TABLE osc.tb_participacao_social_conselho ALTER COLUMN bo_oficial DROP NOT NULL;
