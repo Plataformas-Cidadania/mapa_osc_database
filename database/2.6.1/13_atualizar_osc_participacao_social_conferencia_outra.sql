@@ -1,5 +1,3 @@
-DROP FUNCTION IF EXISTS portal.atualizar_osc_participacao_social_conferencia_outra(TEXT, NUMERIC, TIMESTAMP, JSONB, BOOLEAN, BOOLEAN, BOOLEAN, INTEGER);
-
 CREATE OR REPLACE FUNCTION portal.atualizar_osc_participacao_social_conferencia_outra(fonte TEXT, identificador NUMERIC, data_atualizacao TIMESTAMP, json JSONB, null_valido BOOLEAN, delete_valido BOOLEAN, erro_log BOOLEAN, id_carga INTEGER) RETURNS TABLE(
 	mensagem TEXT,
 	flag BOOLEAN
@@ -58,22 +56,15 @@ BEGIN
 				INSERT INTO osc.tb_participacao_social_conferencia_outra (
 					id_conferencia,
 					tx_nome_conferencia,
-					ft_nome_conferencia,
-					dt_ano_realizacao,
-					ft_ano_realizacao,
-					cd_forma_participacao_conferencia,
-					ft_forma_participacao_conferencia
+					ft_nome_conferencia
 				) VALUES (
 					osc.id_conferencia,
 					objeto.tx_nome_conferencia,
-					fonte_dados.nome_fonte,
-					objeto.dt_ano_realizacao,
-					fonte_dados.nome_fonte,
-					objeto.cd_forma_participacao_conferencia,
 					fonte_dados.nome_fonte
 				) RETURNING * INTO dado_posterior;
 
 				dado_nao_delete := array_append(dado_nao_delete, dado_posterior.id_conferencia_outra);
+				
 				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, null, row_to_json(dado_posterior), id_carga);
 
 			ELSE
@@ -87,28 +78,12 @@ BEGIN
 					flag_update := true;
 				END IF;
 
-				IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.dt_ano_realizacao::TEXT, dado_anterior.ft_ano_realizacao, objeto.dt_ano_realizacao::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
-					dado_posterior.dt_ano_realizacao := objeto.dt_ano_realizacao;
-					dado_posterior.ft_ano_realizacao := fonte_dados.nome_fonte;
-					flag_update := true;
-				END IF;
-
-				IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.cd_forma_participacao_conferencia::TEXT, dado_anterior.ft_forma_participacao_conferencia, objeto.cd_forma_participacao_conferencia::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
-					dado_posterior.cd_forma_participacao_conferencia := objeto.cd_forma_participacao_conferencia;
-					dado_posterior.ft_forma_participacao_conferencia := fonte_dados.nome_fonte;
-					flag_update := true;
-				END IF;
-
 				IF flag_update THEN
 					UPDATE osc.tb_participacao_social_conferencia_outra
 					SET tx_nome_conferencia = dado_posterior.tx_nome_conferencia,
-						ft_nome_conferencia = dado_posterior.ft_nome_conferencia,
-						dt_ano_realizacao = dado_posterior.dt_ano_realizacao,
-						ft_ano_realizacao = dado_posterior.ft_ano_realizacao,
-						cd_forma_participacao_conferencia = dado_posterior.cd_forma_participacao_conferencia,
-						ft_forma_participacao_conferencia = dado_posterior.ft_forma_participacao_conferencia
+						ft_nome_conferencia = dado_posterior.ft_nome_conferencia
 					WHERE id_conferencia_outra = dado_posterior.id_conferencia_outra;
-
+					
 					PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior), id_carga);
 				END IF;
 
@@ -135,8 +110,28 @@ BEGIN
 EXCEPTION
 	WHEN others THEN
 		flag := false;
-		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, osc.id_osc, data_atualizacao::TIMESTAMP, erro_log, id_carga) AS a;
+		
+		IF osc.id_osc IS NOT null THEN
+			SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, osc.id_osc, data_atualizacao::TIMESTAMP, erro_log, id_carga) AS a;
+		ELSE
+			mensagem := 'Ocorreu um erro.';
+		END IF;
+		
 		RETURN NEXT;
 
 END;
 $$ LANGUAGE 'plpgsql';
+
+
+
+-- Teste
+SELECT * FROM portal.atualizar_osc_participacao_social_conferencia_outra(
+	'Representande de OSC'::TEXT, 
+	63::NUMERIC, 
+	now()::TIMESTAMP, 
+	'{"tx_nome_conferencia": "Teste"}'::JSONB, 
+	true::BOOLEAN, 
+	true::BOOLEAN, 
+	true::BOOLEAN, 
+	null::INTEGER
+);

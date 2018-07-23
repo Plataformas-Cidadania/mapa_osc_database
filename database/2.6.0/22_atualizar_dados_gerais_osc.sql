@@ -237,7 +237,7 @@ BEGIN
 				ft_nome_responsavel_legal = dado_posterior.ft_nome_responsavel_legal
 			WHERE id_osc = osc;
 			
-			PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior),id_carga);
+			PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior), id_carga);
 			
 		END IF;
 	END IF;

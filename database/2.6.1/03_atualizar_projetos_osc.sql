@@ -314,14 +314,7 @@ BEGIN
 			END IF;
 		END LOOP;
 	END IF;
-	/*
-	objetivos = COALESCE((json->>'objetivo_metas')::JSONB, '{}'::JSONB);
-	SELECT INTO record_objetivos * FROM portal.atualizar_objetivos_osc(fonte, identificador, tipo_identificador, data_atualizacao, objetivos, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
-	IF record_objetivos.flag = false THEN 
-		mensagem := record_objetivos.mensagem;
-		RAISE EXCEPTION 'funcao_externa';
-	END IF;
-	*/
+	
 	localizacao = COALESCE((json->>'localizacao')::JSONB, '{}'::JSONB);
 	SELECT INTO record_localizacao * FROM portal.atualizar_localizacao_projeto(fonte, identificador, data_atualizacao, objetivos, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
 	IF record_localizacao.flag = false THEN 
