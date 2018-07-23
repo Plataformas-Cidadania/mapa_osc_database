@@ -16,6 +16,7 @@ DECLARE
 	flag_update BOOLEAN;
 	osc RECORD;
 	conselho RECORD;
+	conselho_outro TEXT;
 	representante RECORD;
 	cd_conselho_outra INTEGER;
 	cd_conselho_nao_possui INTEGER;
@@ -27,7 +28,7 @@ DECLARE
 BEGIN
 	nome_tabela := 'osc.tb_participacao_social_conselho';
 	tipo_identificador := lower(tipo_identificador);
-	cd_conselho_outra := (SELECT cd_conselho FROM syst.dc_conselho WHERE tx_nome_conselho = 'Outra');
+	cd_conselho_outra := (SELECT cd_conselho FROM syst.dc_conselho WHERE tx_nome_conselho = 'Outra' OR tx_nome_conselho = 'Outro' OR tx_nome_conselho = 'Outro Conselho');
 	cd_conselho_nao_possui := (SELECT cd_conselho FROM syst.dc_conselho WHERE tx_nome_conselho = 'Não Possui');
 	nao_possui := false;
 	dado_nao_delete := '{}'::INTEGER[];
@@ -53,13 +54,13 @@ BEGIN
 	END IF;
 	
 	IF jsonb_typeof(json) = 'object' THEN
-		--json := jsonb_build_array(json);
-		json := '[' || json || ']';
+		json := jsonb_build_array(json);
 	END IF;
 	
 	FOR objeto IN (SELECT * FROM jsonb_to_recordset(json) AS x(conselho JSONB, representante JSONB))
 	LOOP
 		conselho := (jsonb_populate_record(null::osc.tb_participacao_social_conselho, objeto.conselho));
+		conselho_outro := objeto.conselho->>'tx_nome_conselho_outro';
 		
 		dado_anterior := null;
 		
@@ -168,7 +169,7 @@ BEGIN
 		json_conselho_outro = null::JSONB;
 		
 		IF conselho.cd_conselho <> cd_conselho_nao_possui THEN
-			IF (objeto.conselho->>'tx_nome_conselho_outro') IS NOT null THEN
+			IF conselho_outro IS NOT null THEN
 				json_conselho_outro := ('{"tx_nome_conselho": "' || (objeto.conselho->>'tx_nome_conselho_outro')::TEXT || '"}')::JSONB;
 			ELSE
 				json_conselho_outro := ('{}')::JSONB;

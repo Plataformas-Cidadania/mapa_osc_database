@@ -16,6 +16,7 @@ DECLARE
 	flag_update BOOLEAN;
 	osc RECORD;
 	conferencia RECORD;
+	cd_conferencia_outra INTEGER;
 	cd_conferencia_nao_possui INTEGER;
 	nao_possui BOOLEAN;
 	json_conferencia_outra JSONB;
@@ -24,6 +25,7 @@ DECLARE
 BEGIN
 	nome_tabela := 'osc.tb_participacao_social_conferencia';
 	tipo_identificador := lower(tipo_identificador);
+	cd_conferencia_outra := (SELECT cd_conferencia FROM syst.dc_conferencia WHERE tx_nome_conferencia = 'Outra' OR tx_nome_conferencia = 'Outro' OR tx_nome_conferencia = 'Outra Conferência');
 	cd_conferencia_nao_possui := (SELECT cd_conferencia FROM syst.dc_conferencia WHERE tx_nome_conferencia = 'Não Possui');
 	nao_possui := false;
 	dado_nao_delete := '{}'::INTEGER[];
@@ -49,10 +51,9 @@ BEGIN
 	END IF;
 	
 	IF jsonb_typeof(json) = 'object' THEN
-		--json := jsonb_build_array(json);
-		json := '[' || json || ']';
+		json := jsonb_build_array(json);
 	END IF;
-
+	
 	FOR objeto IN (SELECT * FROM jsonb_to_recordset(json) AS x(id_conferencia INTEGER, cd_conferencia INTEGER, dt_ano_realizacao DATE, cd_forma_participacao_conferencia INTEGER, tx_nome_conferencia_outra TEXT))
 	LOOP
 		dado_anterior := null;
@@ -72,7 +73,7 @@ BEGIN
 			RAISE EXCEPTION 'tipo_busca_invalido';
 
 		END IF;
-
+		
 		IF dado_anterior.id_conferencia IS null THEN
 			INSERT INTO osc.tb_participacao_social_conferencia (
 				id_osc,
@@ -145,7 +146,7 @@ BEGIN
 			dado_nao_delete := ('{' || dado_posterior.id_conferencia::TEXT || '}')::INTEGER[];
 		END IF;
 		
-		IF json_conferencia_outra IS NOT null THEN
+		IF objeto.cd_conferencia = cd_conferencia_outra AND json_conferencia_outra IS NOT null THEN
 			SELECT INTO record_funcao_externa * FROM portal.atualizar_osc_participacao_social_conferencia_outra(fonte, dado_posterior.id_conferencia, data_atualizacao, json_conferencia_outra, null_valido, delete_valido, erro_log, id_carga);
 			IF record_funcao_externa.flag = false THEN
 				mensagem := record_funcao_externa.mensagem;
@@ -188,6 +189,7 @@ BEGIN
 
 EXCEPTION
 	WHEN others THEN
+		raise notice '%', SQLERRM;
 		flag := false;
 
 		IF SQLERRM <> 'funcao_externa' THEN 
@@ -198,3 +200,31 @@ EXCEPTION
 
 END;
 $$ LANGUAGE 'plpgsql';
+
+SELECT  * FROM portal.atualizar_participacao_social_conferencia(
+	'Representante de OSC'::TEXT, 
+	'789809'::NUMERIC, 
+	'id_osc'::TEXT, 
+	now()::TIMESTAMP, 
+	'[
+	      {
+		 "cd_conferencia":132,
+		 "cd_forma_participacao_conferencia":1,
+		 "dt_ano_realizacao":null,
+		 "tx_nome_conferencia_outra":"Teste"
+	      },
+	      {
+		 "cd_conferencia":1,
+		 "cd_forma_participacao_conferencia":1,
+		 "dt_ano_realizacao":null,
+		 "tx_nome_conferencia_outro":null
+	      },
+	      {
+		 "cd_conferencia":45,
+		 "cd_forma_participacao_conferencia":1,
+		 "dt_ano_realizacao":null,
+		 "tx_nome_conferencia_outro":null
+	      }
+	]'::JSONB, 
+	true::BOOLEAN, true::BOOLEAN, true::BOOLEAN, null::INTEGER, 2::INTEGER
+);

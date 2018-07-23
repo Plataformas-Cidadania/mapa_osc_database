@@ -43,8 +43,7 @@ BEGIN
 
 	IF json <> '{}'::JSONB THEN
 		IF jsonb_typeof(json) = 'object' THEN
-			--json := jsonb_build_array(json);
-			json := ('[' || json || ']')::JSONB;
+			json := jsonb_build_array(json);
 		END IF;
 
 		FOR objeto IN (SELECT * FROM jsonb_populate_recordset(null::osc.tb_participacao_social_conselho_outro, json))
