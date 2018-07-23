@@ -52,9 +52,14 @@ BEGIN
 		RAISE EXCEPTION 'osc_inativa';
 	END IF;
 	
+	IF jsonb_typeof(json) = 'object' THEN
+		--json := jsonb_build_array(json);
+		json := '[' || json || ']';
+	END IF;
+	
 	FOR objeto IN (SELECT * FROM jsonb_to_recordset(json) AS x(conselho JSONB, representante JSONB))
 	LOOP
-		conselho = (jsonb_populate_record(null::osc.tb_participacao_social_conselho, objeto.conselho));
+		conselho := (jsonb_populate_record(null::osc.tb_participacao_social_conselho, objeto.conselho));
 		
 		dado_anterior := null;
 		

@@ -50,6 +50,10 @@ BEGIN
 		FROM osc.tb_participacao_social_outra
 		WHERE id_participacao_social_outra = objeto.id_participacao_social_outra;
 
+		IF objeto.bo_nao_possui IS true THEN
+			objeto.tx_nome_participacao_social_outra = null;
+		END IF;
+
 		IF dado_anterior.id_participacao_social_outra IS null THEN
 			INSERT INTO osc.tb_participacao_social_outra (
 				id_osc,
@@ -95,7 +99,7 @@ BEGIN
 			END IF;
 		END IF;
 		
-		IF objeto.bo_nao_possui THEN
+		IF objeto.bo_nao_possui IS true THEN
 			dado_nao_delete := ('{' || dado_posterior.id_participacao_social_outra::TEXT || '}')::INTEGER[];
 			nao_possui := true;
 			EXIT;

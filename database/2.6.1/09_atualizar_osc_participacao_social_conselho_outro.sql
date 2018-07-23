@@ -110,9 +110,7 @@ BEGIN
 	RETURN NEXT;
 
 EXCEPTION
-	WHEN others THEN
-		RAISE NOTICE '%', SQLERRM;
-		
+	WHEN others THEN		
 		flag := false;
 		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, osc.id_osc, data_atualizacao::TIMESTAMP, erro_log, id_carga) AS a;
 		RETURN NEXT;

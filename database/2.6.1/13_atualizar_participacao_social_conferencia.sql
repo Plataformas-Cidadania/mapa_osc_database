@@ -48,6 +48,11 @@ BEGIN
 		RAISE EXCEPTION 'osc_inativa';
 	END IF;
 	
+	IF jsonb_typeof(json) = 'object' THEN
+		--json := jsonb_build_array(json);
+		json := '[' || json || ']';
+	END IF;
+
 	FOR objeto IN (SELECT * FROM jsonb_to_recordset(json) AS x(id_conferencia INTEGER, cd_conferencia INTEGER, dt_ano_realizacao DATE, cd_forma_participacao_conferencia INTEGER, tx_nome_conferencia_outra TEXT))
 	LOOP
 		dado_anterior := null;
