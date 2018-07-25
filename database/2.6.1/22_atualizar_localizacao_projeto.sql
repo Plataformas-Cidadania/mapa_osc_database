@@ -37,8 +37,6 @@ BEGIN
 		RAISE EXCEPTION 'projeto_nao_encontrado';
 	ELSIF osc.id_osc != ALL(fonte_dados.representacao) THEN
 		RAISE EXCEPTION 'permissao_negada_usuario';
-	ELSIF osc.bo_osc_ativa IS false THEN
-		RAISE EXCEPTION 'osc_inativa';
 	END IF;
 	
 	IF json IS null THEN
@@ -179,4 +177,4 @@ SELECT * FROM portal.atualizar_localizacao_projeto(
 	2::INTEGER
 );
 
-SELECT * FROM osc.tb_localizacao_projeto WHERE id_projeto = 1;
+SELECT * FROM osc.tb_localizacao_projeto a JOIN osc.tb_projeto b ON a.id_projeto = b.id_projeto WHERE b.id_osc = 1548640;

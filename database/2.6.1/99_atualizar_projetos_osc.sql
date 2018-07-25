@@ -446,6 +446,7 @@ SELECT * FROM portal.atualizar_projetos_osc(
 				"localizacao": null
 			},
 			{
+				"id_projeto": 87081,
 				"tx_identificador_projeto_externo": null,
 				"cd_municipio": null,
 				"cd_uf": null,
@@ -461,7 +462,11 @@ SELECT * FROM portal.atualizar_projetos_osc(
 				"tx_descricao_projeto": "Teste descrição 2",
 				"tx_metodologia_monitoramento": "Teste motodologia 2",
 				"tx_link_projeto": "Teste link 2",
-				"localizacao": null
+				"localizacao": [
+					{"id_regiao_localizacao_projeto": 33, "tx_nome_regiao_localizacao_projeto": "Xerém", "bo_localizacao_prioritaria": true},
+					{"id_regiao_localizacao_projeto": 34, "tx_nome_regiao_localizacao_projeto": "Xerém", "bo_localizacao_prioritaria": false},
+					{"id_regiao_localizacao_projeto": 35, "tx_nome_regiao_localizacao_projeto": "Xerém", "bo_localizacao_prioritaria": false}
+				]
 			}
 		]
 	}'::JSONB, 
@@ -469,7 +474,7 @@ SELECT * FROM portal.atualizar_projetos_osc(
 	true::BOOLEAN, 
 	true::BOOLEAN, 
 	null::INTEGER, 
-	2::INTEGER
+	1::INTEGER
 );
 
 SELECT * FROM osc.tb_projeto WHERE id_osc = 1548640;
