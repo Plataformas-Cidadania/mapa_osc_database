@@ -44,17 +44,15 @@ BEGIN
 		RAISE EXCEPTION 'osc_nao_encontrada';
 	ELSIF osc.bo_osc_ativa IS false THEN
 		RAISE EXCEPTION 'osc_inativa';
-	ELSIF osc.id_projeto IS null THEN
-		RAISE EXCEPTION 'projeto_nao_encontrado';
 	ELSIF osc.id_osc != ALL(fonte_dados.representacao) THEN
 		RAISE EXCEPTION 'permissao_negada_usuario';
 	END IF;
 	
 	nao_possui = json->>'bo_nao_possui_projeto';
 	IF nao_possui IS NOT null THEN
-		SELECT INTO record_funcao_externa * FROM portal.atualizar_osc(fonte, osc.id_osc, data_atualizacao, '{"bo_nao_possui_projeto": ' || nao_possui::TEXT || '}'::JSONB, null_valido, delete_valido, erro_log, id_carga);
-		IF record_funcao_externa.flag = false THEN 
-			mensagem := record_funcao_externa.mensagem;
+		SELECT INTO record_externo * FROM portal.atualizar_osc(fonte, osc.id_osc, data_atualizacao, '{"bo_nao_possui_projeto": ' || nao_possui::TEXT || '}'::JSONB, null_valido, delete_valido, erro_log, id_carga);
+		IF record_externo.flag = false THEN 
+			mensagem := record_externo.mensagem;
 			RAISE EXCEPTION 'funcao_externa';
 		END IF;
 	END IF;
@@ -333,7 +331,7 @@ BEGIN
 				END IF;
 			END LOOP;
 			
-			FOR projeto IN (SELECT * FROM osc.tb_area_atuacao_projeto WHERE id_projeto = objeto.id_projeto)
+			FOR objeto_externo IN (SELECT * FROM osc.tb_area_atuacao_projeto WHERE id_projeto = objeto.id_projeto)
 			LOOP
 				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto_externo.ft_area_atuacao_projeto]) AS a) THEN
 					DELETE FROM osc.tb_area_atuacao_projeto WHERE id_projeto = objeto_externo.id_projeto AND id_projeto != ALL(dado_nao_delete);
@@ -341,7 +339,7 @@ BEGIN
 				END IF;
 			END LOOP;
 			
-			FOR projeto IN (SELECT * FROM osc.tb_financiador_projeto WHERE id_projeto = objeto.id_projeto)
+			FOR objeto_externo IN (SELECT * FROM osc.tb_financiador_projeto WHERE id_projeto = objeto.id_projeto)
 			LOOP
 				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto_externo.ft_nome_financiador]) AS a) THEN
 					DELETE FROM osc.tb_financiador_projeto WHERE id_projeto = objeto_externo.id_projeto AND id_projeto != ALL(dado_nao_delete);
@@ -349,7 +347,7 @@ BEGIN
 				END IF;
 			END LOOP;
 			
-			FOR projeto IN (SELECT * FROM osc.tb_localizacao_projeto WHERE id_projeto = objeto.id_projeto)
+			FOR objeto_externo IN (SELECT * FROM osc.tb_localizacao_projeto WHERE id_projeto = objeto.id_projeto)
 			LOOP
 				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto_externo.ft_regiao_localizacao_projeto, objeto_externo.ft_nome_regiao_localizacao_projeto, objeto_externo.ft_localizacao_prioritaria]) AS a) THEN
 					DELETE FROM osc.tb_localizacao_projeto WHERE id_projeto = objeto_externo.id_projeto AND id_projeto != ALL(dado_nao_delete);
@@ -357,7 +355,7 @@ BEGIN
 				END IF;
 			END LOOP;
 			
-			FOR projeto IN (SELECT * FROM osc.tb_objetivo_projeto WHERE id_projeto = objeto.id_projeto)
+			FOR objeto_externo IN (SELECT * FROM osc.tb_objetivo_projeto WHERE id_projeto = objeto.id_projeto)
 			LOOP
 				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto_externo.ft_objetivo_projeto]) AS a) THEN
 					DELETE FROM osc.tb_objetivo_projeto WHERE id_projeto = objeto_externo.id_projeto AND id_projeto != ALL(dado_nao_delete);
@@ -365,7 +363,7 @@ BEGIN
 				END IF;
 			END LOOP;
 			
-			FOR projeto IN (SELECT * FROM osc.tb_osc_parceira_projeto WHERE id_projeto = objeto.id_projeto)
+			FOR objeto_externo IN (SELECT * FROM osc.tb_osc_parceira_projeto WHERE id_projeto = objeto.id_projeto)
 			LOOP
 				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto_externo.ft_osc_parceira_projeto]) AS a) THEN
 					DELETE FROM osc.tb_osc_parceira_projeto WHERE id_projeto = objeto_externo.id_projeto AND id_projeto != ALL(dado_nao_delete);
@@ -375,7 +373,7 @@ BEGIN
 				END IF;
 			END LOOP;
 			
-			FOR projeto IN (SELECT * FROM osc.tb_publico_beneficiado_projeto WHERE id_projeto = objeto.id_projeto)
+			FOR objeto_externo IN (SELECT * FROM osc.tb_publico_beneficiado_projeto WHERE id_projeto = objeto.id_projeto)
 			LOOP
 				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto_externo.ft_publico_beneficiado_projeto]) AS a) THEN
 					DELETE FROM osc.tb_publico_beneficiado_projeto WHERE id_projeto = objeto_externo.id_projeto AND id_projeto != ALL(dado_nao_delete);
@@ -401,6 +399,7 @@ BEGIN
 
 EXCEPTION
 	WHEN others THEN
+		RAISE NOTICE '%', SQLERRM;
 		flag := false;
 
 		IF osc IS NOT null THEN
@@ -424,7 +423,47 @@ SELECT * FROM portal.atualizar_projetos_osc(
 	'987654'::NUMERIC, 
 	'id_osc'::TEXT, 
 	now()::TIMESTAMP, 
-	'{}'::JSONB, 
+	'{
+		"bo_nao_possui_projeto": false,
+		"projetos": [
+			{
+				"tx_identificador_projeto_externo": null,
+				"cd_municipio": null,
+				"cd_uf": null,
+				"tx_nome_projeto": "Teste nome 1",
+				"cd_status_projeto": 1,
+				"dt_data_inicio_projeto": "01-01-2001",
+				"dt_data_fim_projeto": "01-01-2011",
+				"nr_valor_total_projeto": 100000.0,
+				"nr_valor_captado_projeto": 100000.0,
+				"nr_total_beneficiarios": 100000.0,
+				"cd_abrangencia_projeto": 1,
+				"cd_zona_atuacao_projeto": 1,
+				"tx_descricao_projeto": "Teste descrição 1",
+				"tx_metodologia_monitoramento": "Teste motodologia 1",
+				"tx_link_projeto": "Teste link 1",
+				"localizacao": null
+			},
+			{
+				"tx_identificador_projeto_externo": null,
+				"cd_municipio": null,
+				"cd_uf": null,
+				"tx_nome_projeto": "Teste nome 2",
+				"cd_status_projeto": 2,
+				"dt_data_inicio_projeto": "02-02-2002",
+				"dt_data_fim_projeto": "02-02-2022",
+				"nr_valor_total_projeto": 200000.0,
+				"nr_valor_captado_projeto": 200000.0,
+				"nr_total_beneficiarios": 200000.0,
+				"cd_abrangencia_projeto": 2,
+				"cd_zona_atuacao_projeto": 2,
+				"tx_descricao_projeto": "Teste descrição 2",
+				"tx_metodologia_monitoramento": "Teste motodologia 2",
+				"tx_link_projeto": "Teste link 2",
+				"localizacao": null
+			}
+		]
+	}'::JSONB, 
 	true::BOOLEAN, 
 	true::BOOLEAN, 
 	true::BOOLEAN, 
