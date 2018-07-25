@@ -118,10 +118,16 @@ BEGIN
 	END IF;
 
 	IF(objeto.bo_nao_possui_projeto IS true) THEN
+		/*
 		SELECT INTO record_funcao_externa * FROM portal.atualizar_projetos_osc(fonte, osc.id_osc, 'id_osc'::TEXT, data_atualizacao, '{"projetos": []}'::JSONB, null_valido, delete_valido, erro_log, id_carga, 2::INTEGER);
 		IF record_funcao_externa.flag = false THEN 
 			mensagem := record_funcao_externa.mensagem;
 			RAISE EXCEPTION 'funcao_externa';
+		END IF;
+		*/
+
+		IF (SELECT EXISTS(SELECT * FROM osc.tb_projeto WHERE id_osc = osc.id_osc)) THEN 
+			RAISE EXCEPTION 'nao_possui_invalido';
 		END IF;
 	END IF;
 	
