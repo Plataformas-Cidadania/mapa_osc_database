@@ -51,6 +51,10 @@ BEGIN
 		ELSIF mensagem_erro = 'publico_beneficiado_nao_encontrado' THEN
 			mensagem := 'Público beneficiado não encontrado.';
 			status_log := 1;
+			
+		ELSIF mensagem_erro = 'area_atuacao_projeto_nao_encontrada' THEN
+			mensagem := 'Área de atuação de projeto não encontrada.';
+			status_log := 1;
 		
 		ELSIF mensagem_erro = 'tipo_obter_projeto_invalido' THEN
 			mensagem := 'Tipo de resultado do obter projeto inválido.';
