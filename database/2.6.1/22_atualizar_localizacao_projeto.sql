@@ -53,12 +53,12 @@ BEGIN
 		IF tipo_busca = 1 THEN
 			SELECT INTO dado_anterior * FROM osc.tb_localizacao_projeto
 			WHERE id_localizacao_projeto = objeto.id_localizacao_projeto
-			AND id_projeto = identificador;
+			AND id_projeto = osc.id_projeto;
 
 		ELSIF tipo_busca = 2 THEN
 			SELECT INTO dado_anterior * FROM osc.tb_localizacao_projeto
 			WHERE id_regiao_localizacao_projeto = objeto.id_regiao_localizacao_projeto
-			AND id_projeto = identificador;
+			AND id_projeto = osc.id_projeto;
 
 		ELSE
 			RAISE EXCEPTION 'tipo_busca_invalido';
@@ -85,7 +85,7 @@ BEGIN
 			) RETURNING * INTO dado_posterior;
 
 			dado_nao_delete := array_append(dado_nao_delete, dado_posterior.id_localizacao_projeto);
-			PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, null, row_to_json(dado_posterior), id_carga);
+			PERFORM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, null, row_to_json(dado_posterior), id_carga);
 
 		ELSE
 			dado_posterior := dado_anterior;
@@ -98,7 +98,7 @@ BEGIN
 				flag_update := true;
 			END IF;
 
-			IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_nome_regiao_localizacao_projeto::TEXT, dado_anterior.ft_nome_regiao_localizacao_projeto, objeto.bo_localizacao_prioritaria::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+			IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_nome_regiao_localizacao_projeto::TEXT, dado_anterior.ft_nome_regiao_localizacao_projeto, objeto.tx_nome_regiao_localizacao_projeto::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 				dado_posterior.tx_nome_regiao_localizacao_projeto := objeto.tx_nome_regiao_localizacao_projeto;
 				dado_posterior.ft_nome_regiao_localizacao_projeto := fonte_dados.nome_fonte;
 				flag_update := true;
@@ -120,7 +120,7 @@ BEGIN
 					ft_localizacao_prioritaria = dado_posterior.ft_localizacao_prioritaria
 				WHERE id_localizacao_projeto = dado_posterior.id_localizacao_projeto;
 
-				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior), id_carga);
+				PERFORM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior), id_carga);
 			END IF;
 
 		END IF;
@@ -132,7 +132,7 @@ BEGIN
 		LOOP
 			IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_regiao_localizacao_projeto, objeto.ft_nome_regiao_localizacao_projeto, objeto.ft_localizacao_prioritaria]) AS a) THEN
 				DELETE FROM osc.tb_localizacao_projeto WHERE id_localizacao_projeto = objeto.id_localizacao_projeto;
-				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, row_to_json(objeto), null, id_carga);
+				PERFORM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, row_to_json(objeto), null, id_carga);
 			END IF;
 		END LOOP;
 	END IF;
