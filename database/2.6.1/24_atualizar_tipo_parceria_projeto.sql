@@ -57,7 +57,6 @@ BEGIN
 
 		ELSIF tipo_busca = 2 THEN
 			SELECT INTO dado_anterior * FROM osc.tb_tipo_parceria_projeto
-			WHERE cd_origem_fonte_recursos_projeto = objeto.cd_origem_fonte_recursos_projeto
 			AND cd_tipo_parceria_projeto = objeto.cd_tipo_parceria_projeto
 			AND id_projeto = osc.id_projeto;
 
@@ -69,12 +68,10 @@ BEGIN
 		IF dado_anterior.id_tipo_parceria_projeto IS null THEN
 			INSERT INTO osc.tb_tipo_parceria_projeto (
 				id_projeto,
-				cd_origem_fonte_recursos_projeto,
 				cd_tipo_parceria_projeto,
 				ft_tipo_parceria_projeto
 			) VALUES (
 				osc.id_projeto,
-				objeto.cd_origem_fonte_recursos_projeto,
 				objeto.cd_tipo_parceria_projeto,
 				fonte_dados.nome_fonte
 			) RETURNING * INTO dado_posterior;
@@ -87,12 +84,6 @@ BEGIN
 			dado_nao_delete := array_append(dado_nao_delete, dado_posterior.id_tipo_parceria_projeto);
 			flag_update := false;
 
-			IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.cd_origem_fonte_recursos_projeto::TEXT, dado_anterior.ft_tipo_parceria_projeto, objeto.cd_origem_fonte_recursos_projeto::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
-				dado_posterior.cd_origem_fonte_recursos_projeto := objeto.cd_origem_fonte_recursos_projeto;
-				dado_posterior.ft_tipo_parceria_projeto := fonte_dados.nome_fonte;
-				flag_update := true;
-			END IF;
-
 			IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.cd_tipo_parceria_projeto::TEXT, dado_anterior.ft_tipo_parceria_projeto, objeto.cd_tipo_parceria_projeto::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
 				dado_posterior.cd_tipo_parceria_projeto := objeto.cd_tipo_parceria_projeto;
 				dado_posterior.ft_tipo_parceria_projeto := fonte_dados.nome_fonte;
@@ -101,8 +92,7 @@ BEGIN
 
 			IF flag_update THEN
 				UPDATE osc.tb_tipo_parceria_projeto
-				SET cd_origem_fonte_recursos_projeto = dado_posterior.cd_origem_fonte_recursos_projeto,
-					cd_tipo_parceria_projeto = dado_posterior.cd_tipo_parceria_projeto,
+				SET cd_tipo_parceria_projeto = dado_posterior.cd_tipo_parceria_projeto,
 					ft_tipo_parceria_projeto = dado_posterior.ft_tipo_parceria_projeto
 				WHERE id_tipo_parceria_projeto = objeto.id_tipo_parceria_projeto;
 
