@@ -13,26 +13,37 @@ DECLARE
 	dado_posterior RECORD;
 	dado_nao_delete INTEGER[];
 	flag_update BOOLEAN;
-	osc INTEGER;
+	osc RECORD;
 
 BEGIN
 	nome_tabela := 'osc.tb_localizacao_projeto';
+	dado_nao_delete := '{}'::INTEGER[];
 
 	SELECT INTO fonte_dados * FROM portal.verificar_fonte(fonte);
 
+	SELECT * INTO osc 
+	FROM osc.tb_osc 
+	LEFT JOIN osc.tb_projeto 
+	ON tb_osc.id_osc = tb_projeto.id_osc 
+	WHERE tb_projeto.id_projeto = identificador;
+
 	IF fonte_dados IS null THEN
 		RAISE EXCEPTION 'fonte_invalida';
-	END IF;
-
-	SELECT id_osc INTO osc FROM osc.tb_projeto WHERE id_projeto = identificador;
-
-	IF osc IS null THEN
+	ELSIF osc IS null THEN
+		RAISE EXCEPTION 'osc_nao_encontrada';
+	ELSIF osc.bo_osc_ativa IS false THEN
+		RAISE EXCEPTION 'osc_inativa';
+	ELSIF osc.id_projeto IS null THEN
 		RAISE EXCEPTION 'projeto_nao_encontrado';
-	ELSIF osc != ALL(fonte_dados.representacao) THEN
+	ELSIF osc.id_osc != ALL(fonte_dados.representacao) THEN
 		RAISE EXCEPTION 'permissao_negada_usuario';
+	ELSIF osc.bo_osc_ativa IS false THEN
+		RAISE EXCEPTION 'osc_inativa';
 	END IF;
-
-	IF jsonb_typeof(json) = 'object' THEN
+	
+	IF json IS null THEN
+		json := ('[]')::JSONB;
+	ELSIF jsonb_typeof(json) = 'object' THEN
 		json := jsonb_build_array(json);
 	END IF;
 
@@ -65,7 +76,7 @@ BEGIN
 				bo_localizacao_prioritaria,
 				ft_localizacao_prioritaria
 			) VALUES (
-				identificador,
+				osc.id_projeto,
 				objeto.id_regiao_localizacao_projeto,
 				fonte_dados.nome_fonte,
 				objeto.tx_nome_regiao_localizacao_projeto,
@@ -75,7 +86,7 @@ BEGIN
 			) RETURNING * INTO dado_posterior;
 
 			dado_nao_delete := array_append(dado_nao_delete, dado_posterior.id_localizacao_projeto);
-			PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, null, row_to_json(dado_posterior), id_carga);
+			PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, null, row_to_json(dado_posterior), id_carga);
 
 		ELSE
 			dado_posterior := dado_anterior;
@@ -110,7 +121,7 @@ BEGIN
 					ft_localizacao_prioritaria = dado_posterior.ft_localizacao_prioritaria
 				WHERE id_localizacao_projeto = dado_posterior.id_localizacao_projeto;
 
-				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior), id_carga);
+				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior), id_carga);
 			END IF;
 
 		END IF;
@@ -118,11 +129,11 @@ BEGIN
 	END LOOP;
 
 	IF delete_valido THEN
-		FOR objeto IN (SELECT * FROM osc.tb_localizacao_projeto WHERE id_projeto = identificador AND id_localizacao_projeto != ALL(dado_nao_delete))
+		FOR objeto IN (SELECT * FROM osc.tb_localizacao_projeto WHERE id_projeto = osc.id_projeto AND id_localizacao_projeto != ALL(dado_nao_delete))
 		LOOP
 			IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_regiao_localizacao_projeto, objeto.ft_nome_regiao_localizacao_projeto, objeto.ft_localizacao_prioritaria]) AS a) THEN
 				DELETE FROM osc.tb_localizacao_projeto WHERE id_localizacao_projeto = objeto.id_localizacao_projeto;
-				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(objeto), null, id_carga);
+				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, row_to_json(objeto), null, id_carga);
 			END IF;
 		END LOOP;
 	END IF;
@@ -134,9 +145,37 @@ BEGIN
 
 EXCEPTION
 	WHEN others THEN
+		RAISE NOTICE '%', SQLERRM;
 		flag := false;
-		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, osc, data_atualizacao::TIMESTAMP, erro_log, id_carga) AS a;
+		
+		IF osc IS NOT null THEN
+			SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, osc.id_osc, data_atualizacao::TIMESTAMP, erro_log, id_carga) AS a;
+		ELSE
+			mensagem := 'Ocorreu um erro.';
+		END IF;
+
 		RETURN NEXT;
 
 END;
 $$ LANGUAGE 'plpgsql';
+
+
+
+-- Teste
+SELECT * FROM portal.atualizar_localizacao_projeto(
+	'Representante de OSC'::TEXT, 
+	'1'::NUMERIC, 
+	now()::TIMESTAMP, 
+	'[
+		{"id_regiao_localizacao_projeto": 33, "tx_nome_regiao_localizacao_projeto": "Xerém", "bo_localizacao_prioritaria": true},
+		{"id_regiao_localizacao_projeto": 34, "tx_nome_regiao_localizacao_projeto": "Xerém", "bo_localizacao_prioritaria": false},
+		{"id_regiao_localizacao_projeto": 35, "tx_nome_regiao_localizacao_projeto": "Xerém", "bo_localizacao_prioritaria": false}
+	]'::JSONB, 
+	true::BOOLEAN, 
+	true::BOOLEAN, 
+	true::BOOLEAN, 
+	null::INTEGER, 
+	2::INTEGER
+);
+
+SELECT * FROM osc.tb_localizacao_projeto WHERE id_projeto = 1;

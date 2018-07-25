@@ -13,76 +13,60 @@ DECLARE
 	dado_posterior RECORD;
 	dado_nao_delete INTEGER[];
 	flag_update BOOLEAN;
-	osc INTEGER;
-	tb_osc RECORD;
+	osc RECORD;
 	nao_possui BOOLEAN;
-	projetos JSONB;
-	projeto RECORD;
-	objetivos JSONB;
-	record_objetivos RECORD;
-	localizacao JSONB;
-	record_localizacao RECORD;
+	projetos RECORD;
+	objeto_externo RECORD;
+	record_funcao_externa RECORD;
 
 BEGIN
 	nome_tabela := 'osc.tb_projeto';
 	tipo_identificador := lower(tipo_identificador);
-	
+	dado_nao_delete := '{}'::INTEGER[];
+
 	SELECT INTO fonte_dados * FROM portal.verificar_fonte(fonte);
 	
-	IF fonte_dados IS null THEN
+	IF tipo_identificador = 'cnpj' THEN
+		SELECT * INTO osc 
+		FROM osc.tb_osc 
+		WHERE tb_osc.cd_identificador_osc = identificador;
+	ELSIF tipo_identificador = 'id_osc' THEN
+		SELECT * INTO osc 
+		FROM osc.tb_osc 
+		WHERE tb_osc.id_osc = identificador;
+	END IF;
+
+	IF tipo_identificador != 'cnpj' AND tipo_identificador != 'id_osc' THEN
+		RAISE EXCEPTION 'tipo_identificador_invalido';
+	ELSIF fonte_dados IS null THEN
 		RAISE EXCEPTION 'fonte_invalida';
-	ELSIF osc != ALL(fonte_dados.representacao) THEN
+	ELSIF osc IS null THEN
+		RAISE EXCEPTION 'osc_nao_encontrada';
+	ELSIF osc.bo_osc_ativa IS false THEN
+		RAISE EXCEPTION 'osc_inativa';
+	ELSIF osc.id_projeto IS null THEN
+		RAISE EXCEPTION 'projeto_nao_encontrado';
+	ELSIF osc.id_osc != ALL(fonte_dados.representacao) THEN
 		RAISE EXCEPTION 'permissao_negada_usuario';
 	END IF;
 	
-	IF tipo_identificador = 'cnpj' THEN
-		SELECT id_osc INTO osc FROM osc.tb_osc WHERE cd_identificador_osc = identificador;
-	ELSIF tipo_identificador = 'id_osc' THEN
-		osc := identificador;
-	END IF;
-	
-	IF tipo_identificador != 'cnpj' AND tipo_identificador != 'id_osc' THEN
-		RAISE EXCEPTION 'tipo_identificador_invalido';
-	ELSIF osc IS null THEN
-		RAISE EXCEPTION 'osc_nao_encontrada';
-	END IF;
-	
-	SELECT INTO tb_osc * FROM osc.tb_osc WHERE id_osc = osc;
-	
-	nao_possui = COALESCE((json->>'bo_nao_possui_projeto')::BOOLEAN, false);
-	
-	IF (tb_osc.bo_nao_possui_projeto IS true) AND (nao_possui IS false) THEN
-		tb_osc.ft_nao_possui_projeto := SUBSTRING(tb_osc.ft_nao_possui_projeto FROM 0 FOR char_length(tb_osc.ft_nao_possui_projeto) - position(' ' in reverse(tb_osc.ft_nao_possui_projeto)) + 1);
-		IF (fonte_dados.prioridade >= (SELECT nr_prioridade FROM syst.dc_fonte_dados WHERE cd_sigla_fonte_dados = tb_osc.ft_nao_possui_projeto)) THEN
-			RAISE EXCEPTION 'prioridade_fonte_nao_possui';
+	nao_possui = json->>'bo_nao_possui_projeto';
+	IF nao_possui IS NOT null THEN
+		SELECT INTO record_funcao_externa * FROM portal.atualizar_osc(fonte, osc.id_osc, data_atualizacao, '{"bo_nao_possui_projeto": ' || nao_possui::TEXT || '}'::JSONB, null_valido, delete_valido, erro_log, id_carga);
+		IF record_funcao_externa.flag = false THEN 
+			mensagem := record_funcao_externa.mensagem;
+			RAISE EXCEPTION 'funcao_externa';
 		END IF;
 	END IF;
 	
-	IF nao_possui <> COALESCE(tb_osc.bo_nao_possui_projeto, false) THEN
-		nome_tabela := 'osc.tb_osc';
-		
-		dado_anterior := tb_osc;
-		dado_posterior := dado_anterior;
-		
-		dado_posterior.bo_nao_possui_projeto = nao_possui;
-		dado_posterior.ft_nao_possui_projeto = fonte_dados.nome_fonte;
-		
-		UPDATE osc.tb_osc
-		SET bo_nao_possui_projeto = dado_posterior.bo_nao_possui_projeto,
-			ft_nao_possui_projeto = dado_posterior.ft_nao_possui_projeto
-		WHERE id_osc = osc;
-		
-		PERFORM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior),id_carga);
-	END IF;
-	
-	IF nao_possui IS false THEN
+	IF nao_possui IS NOT true THEN
 		IF jsonb_typeof((json->>'projetos')::JSONB) = 'object' THEN
 			projetos := jsonb_build_array((json->>'projetos')::JSONB);
 		ELSE
 			projetos := (json->>'projetos')::JSONB;
 		END IF;
 		
-		FOR objeto IN (SELECT * FROM jsonb_populate_recordset(null::osc.tb_projeto, projetos))
+		FOR objeto IN (SELECT * FROM jsonb_to_recordset(json) AS x(tx_identificador_projeto_externo TEXT, cd_municipio INTEGER, cd_uf INTEGER, tx_nome_projeto TEXT, cd_status_projeto INTEGER, dt_data_inicio_projeto TIMESTAMP, dt_data_fim_projeto TIMESTAMP, nr_valor_total_projeto DOUBLE PRECISION, nr_valor_captado_projeto DOUBLE PRECISION, nr_total_beneficiarios DOUBLE PRECISION, cd_abrangencia_projeto INTEGER, cd_zona_atuacao_projeto INTEGER, tx_descricao_projeto TEXT, tx_metodologia_monitoramento TEXT, tx_link_projeto TEXT, localizacao JSONB))
 		LOOP
 			dado_anterior := null;
 			
@@ -90,19 +74,19 @@ BEGIN
 				SELECT INTO dado_anterior *
 				FROM osc.tb_projeto
 				WHERE id_projeto = objeto.id_projeto
-				AND id_osc = osc;
+				AND id_osc = osc.id_osc;
 				
 			ELSIF tipo_busca = 2 THEN
 				SELECT INTO dado_anterior * FROM osc.tb_projeto
 				WHERE (tx_identificador_projeto_externo = objeto.tx_identificador_projeto_externo AND cd_uf = objeto.cd_uf AND cd_municipio is null)
 				OR (tx_identificador_projeto_externo = objeto.tx_identificador_projeto_externo AND cd_uf is null AND cd_municipio = objeto.cd_municipio)
-				AND id_osc = osc;
+				AND id_osc = osc.id_osc;
 				
 			ELSIF tipo_busca = 3 THEN
 				SELECT INTO dado_anterior * FROM osc.tb_projeto
 				WHERE tx_identificador_projeto_externo = objeto.tx_identificador_projeto_externo
 				AND SUBSTRING(ft_identificador_projeto_externo FROM 0 FOR char_length(ft_identificador_projeto_externo) - position(' ' in reverse(ft_identificador_projeto_externo)) + 1) = SUBSTRING(fonte_dados.nome_fonte FROM 0 FOR char_length(fonte_dados.nome_fonte) - position(' ' in reverse(fonte_dados.nome_fonte)) + 1)
-				AND id_osc = osc;
+				AND id_osc = osc.id_osc;
 				
 			ELSE
 				RAISE EXCEPTION 'tipo_busca_invalido';
@@ -143,7 +127,7 @@ BEGIN
 					tx_link_projeto,
 					ft_link_projeto
 				) VALUES (
-					osc,
+					osc.id_osc,
 					objeto.tx_identificador_projeto_externo,
 					fonte_dados.nome_fonte,
 					objeto.cd_municipio,
@@ -178,7 +162,7 @@ BEGIN
 				
 				dado_nao_delete := array_append(dado_nao_delete, dado_posterior.id_projeto);
 				
-				PERFORM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, null, row_to_json(dado_posterior),id_carga);
+				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, null, row_to_json(dado_posterior), id_carga);
 				
 			ELSE
 				dado_posterior := dado_anterior;
@@ -309,18 +293,20 @@ BEGIN
 						ft_link_projeto = dado_posterior.ft_link_projeto
 					WHERE id_projeto = dado_posterior.id_projeto;
 					
-					PERFORM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior),id_carga);
+					PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior), id_carga);
 				END IF;
+			END IF;
+
+			objeto_externo = COALESCE(objeto.localizacao, '{}'::JSONB);
+			SELECT INTO record_funcao_externa * FROM portal.atualizar_localizacao_projeto(fonte, identificador, data_atualizacao, objetivos, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
+			IF record_funcao_externa.flag = false THEN 
+				mensagem := record_funcao_externa.mensagem;
+				RAISE EXCEPTION 'funcao_externa';
 			END IF;
 		END LOOP;
 	END IF;
 	
-	localizacao = COALESCE((json->>'localizacao')::JSONB, '{}'::JSONB);
-	SELECT INTO record_localizacao * FROM portal.atualizar_localizacao_projeto(fonte, identificador, data_atualizacao, objetivos, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
-	IF record_localizacao.flag = false THEN 
-		mensagem := record_localizacao.mensagem;
-		RAISE EXCEPTION 'funcao_externa';
-	END IF;
+	
 
 	IF delete_valido AND nao_possui IS false THEN
 		FOR objeto IN (SELECT * FROM osc.tb_projeto WHERE id_osc = osc AND id_projeto != ALL(dado_nao_delete))
@@ -437,8 +423,12 @@ EXCEPTION
 	WHEN others THEN
 		flag := false;
 
-		IF SQLERRM <> 'funcao_externa' THEN 
-			SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, identificador, data_atualizacao::TIMESTAMP, erro_log, id_carga) AS a;
+		IF osc IS NOT null THEN
+			IF SQLERRM <> 'funcao_externa' THEN 
+				SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, osc.id_osc, data_atualizacao::TIMESTAMP, erro_log, id_carga) AS a;
+			END IF;
+		ELSE
+			mensagem := 'Ocorreu um erro.';
 		END IF;
 		
 		RETURN NEXT;

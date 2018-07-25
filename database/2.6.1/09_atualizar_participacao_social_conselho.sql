@@ -9,7 +9,6 @@ DECLARE
 	nome_tabela TEXT;
 	fonte_dados RECORD;
 	objeto RECORD;
-	objeto_externo RECORD;
 	dado_anterior RECORD;
 	dado_posterior RECORD;
 	dado_nao_delete INTEGER[];
@@ -23,6 +22,7 @@ DECLARE
 	nao_possui BOOLEAN;
 	json_conselho_outro JSONB;
 	json_representante JSONB;
+	objeto_externo RECORD;
 	record_funcao_externa RECORD;
 
 BEGIN
