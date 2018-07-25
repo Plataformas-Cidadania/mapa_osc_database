@@ -50,7 +50,7 @@ BEGIN
 	
 	nao_possui = json->>'bo_nao_possui_projeto';
 	IF nao_possui IS NOT null THEN
-		SELECT INTO record_externo * FROM portal.atualizar_osc(fonte, osc.id_osc, data_atualizacao, '{"bo_nao_possui_projeto": ' || nao_possui::TEXT || '}'::JSONB, null_valido, delete_valido, erro_log, id_carga);
+		SELECT INTO record_externo * FROM portal.atualizar_osc(fonte, osc.id_osc, 'id_osc', data_atualizacao, ('{"bo_nao_possui_projeto": ' || nao_possui::TEXT || '}')::JSONB, null_valido, delete_valido, erro_log, id_carga);
 		IF record_externo.flag = false THEN 
 			mensagem := record_externo.mensagem;
 			RAISE EXCEPTION 'funcao_externa';
@@ -63,7 +63,7 @@ BEGIN
 		ELSE
 			json := (json->>'projetos')::JSONB;
 		END IF;
-		
+
 		FOR objeto IN (SELECT * FROM jsonb_to_recordset(json) AS x(tx_identificador_projeto_externo TEXT, cd_municipio INTEGER, cd_uf INTEGER, tx_nome_projeto TEXT, cd_status_projeto INTEGER, dt_data_inicio_projeto TIMESTAMP, dt_data_fim_projeto TIMESTAMP, nr_valor_total_projeto DOUBLE PRECISION, nr_valor_captado_projeto DOUBLE PRECISION, nr_total_beneficiarios DOUBLE PRECISION, cd_abrangencia_projeto INTEGER, cd_zona_atuacao_projeto INTEGER, tx_descricao_projeto TEXT, tx_metodologia_monitoramento TEXT, tx_link_projeto TEXT, localizacao JSONB))
 		LOOP
 			dado_anterior := null;
