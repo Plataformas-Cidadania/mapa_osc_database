@@ -1,0 +1,1 @@
+ALTER TABLE osc.tb_localizacao_projeto ALTER COLUMN id_regiao_localizacao_projeto DROP NOT NULL;
