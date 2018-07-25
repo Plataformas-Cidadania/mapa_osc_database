@@ -11,5 +11,5 @@ ALTER TABLE osc.tb_publico_beneficiado_projeto ADD COLUMN tx_nome_publico_benefi
 ALTER TABLE osc.tb_publico_beneficiado_projeto ADD COLUMN ft_nome_publico_beneficiado TEXT;
 
 UPDATE osc.tb_publico_beneficiado_projeto 
-SET tx_nome_publico_beneficiado = (SELECT tx_nome_publico_beneficiado FROM osc.tb_publico_beneficiado WHERE tb_publico_beneficiado.id_publico_beneficiado = tb_publico_beneficiado_projeto.id_publico_beneficiado),
-    ft_nome_publico_beneficiado = (SELECT ft_publico_beneficiado FROM osc.tb_publico_beneficiado WHERE tb_publico_beneficiado.id_publico_beneficiado = tb_publico_beneficiado_projeto.id_publico_beneficiado);
+SET tx_nome_publico_beneficiado = (SELECT tx_nome_publico_beneficiado FROM osc.tb_publico_beneficiado WHERE tb_publico_beneficiado.id_publico_beneficiado = tb_publico_beneficiado_projeto.id_publico_beneficiado_projeto),
+    ft_nome_publico_beneficiado = (SELECT ft_publico_beneficiado FROM osc.tb_publico_beneficiado WHERE tb_publico_beneficiado.id_publico_beneficiado = tb_publico_beneficiado_projeto.id_publico_beneficiado_projeto);

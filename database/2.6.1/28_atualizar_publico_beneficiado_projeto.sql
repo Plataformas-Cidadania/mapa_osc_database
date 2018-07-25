@@ -27,6 +27,8 @@ BEGIN
 	ON tb_osc.id_osc = tb_projeto.id_osc 
 	WHERE tb_projeto.id_projeto = identificador;
 
+	RAISE NOTICE '%', osc;
+	
 	IF fonte_dados IS null THEN
 		RAISE EXCEPTION 'fonte_invalida';
 	ELSIF osc IS null THEN
@@ -151,7 +153,7 @@ $$ LANGUAGE 'plpgsql';
 -- Teste
 SELECT * FROM portal.atualizar_publico_beneficiado_projeto(
 	'Representante de OSC'::TEXT, 
-	'789809'::NUMERIC, 
+	'92855'::NUMERIC, 
 	now()::TIMESTAMP, 
 	'[
 		{"id_publico_beneficiado": "33", "tx_nome_publico_beneficiado": "100", "nr_estimativa_pessoas_atendidas": "100"},
@@ -165,4 +167,4 @@ SELECT * FROM portal.atualizar_publico_beneficiado_projeto(
 	2::INTEGER
 );
 
-SELECT * FROM osc.tb_publico_beneficiado_projeto a JOIN osc.tb_projeto b ON a.id_projeto = b.id_projeto WHERE b.id_osc = 789809;
+--SELECT * FROM osc.tb_publico_beneficiado_projeto a JOIN osc.tb_projeto b ON a.id_projeto = b.id_projeto WHERE b.id_osc = 789809;
