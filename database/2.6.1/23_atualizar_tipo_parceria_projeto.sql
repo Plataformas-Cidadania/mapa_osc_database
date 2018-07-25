@@ -104,7 +104,7 @@ BEGIN
 				SET cd_origem_fonte_recursos_projeto = dado_posterior.cd_origem_fonte_recursos_projeto,
 					cd_tipo_parceria_projeto = dado_posterior.cd_tipo_parceria_projeto,
 					ft_tipo_parceria_projeto = dado_posterior.ft_tipo_parceria_projeto
-				WHERE id_tipo_parceria_projeto = dado_posterior.id_tipo_parceria_projeto;
+				WHERE id_tipo_parceria_projeto = objeto.id_tipo_parceria_projeto;
 
 				PERFORM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior), id_carga);
 			END IF;

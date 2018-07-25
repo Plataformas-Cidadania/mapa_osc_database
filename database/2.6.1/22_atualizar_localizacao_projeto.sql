@@ -118,7 +118,7 @@ BEGIN
 					ft_nome_regiao_localizacao_projeto = dado_posterior.ft_nome_regiao_localizacao_projeto,
 					bo_localizacao_prioritaria = dado_posterior.bo_localizacao_prioritaria,
 					ft_localizacao_prioritaria = dado_posterior.ft_localizacao_prioritaria
-				WHERE id_localizacao_projeto = dado_posterior.id_localizacao_projeto;
+				WHERE id_localizacao_projeto = objeto.id_localizacao_projeto;
 
 				PERFORM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior), id_carga);
 			END IF;

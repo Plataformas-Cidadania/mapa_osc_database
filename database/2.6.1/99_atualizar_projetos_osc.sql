@@ -35,7 +35,7 @@ BEGIN
 		FROM osc.tb_osc 
 		WHERE tb_osc.id_osc = identificador;
 	END IF;
-
+	
 	IF tipo_identificador != 'cnpj' AND tipo_identificador != 'id_osc' THEN
 		RAISE EXCEPTION 'tipo_identificador_invalido';
 	ELSIF fonte_dados IS null THEN
@@ -64,8 +64,8 @@ BEGIN
 		ELSE
 			json := (json->>'projetos')::JSONB;
 		END IF;
-
-		FOR objeto IN (SELECT * FROM jsonb_to_recordset(json) AS x(tx_identificador_projeto_externo TEXT, cd_municipio INTEGER, cd_uf INTEGER, tx_nome_projeto TEXT, cd_status_projeto INTEGER, dt_data_inicio_projeto TIMESTAMP, dt_data_fim_projeto TIMESTAMP, nr_valor_total_projeto DOUBLE PRECISION, nr_valor_captado_projeto DOUBLE PRECISION, nr_total_beneficiarios DOUBLE PRECISION, cd_abrangencia_projeto INTEGER, cd_zona_atuacao_projeto INTEGER, tx_descricao_projeto TEXT, tx_metodologia_monitoramento TEXT, tx_link_projeto TEXT, localizacao JSONB))
+		
+		FOR objeto IN (SELECT * FROM jsonb_to_recordset(json) AS x(id_projeto INTEGER, tx_identificador_projeto_externo TEXT, cd_municipio INTEGER, cd_uf INTEGER, tx_nome_projeto TEXT, cd_status_projeto INTEGER, dt_data_inicio_projeto TIMESTAMP, dt_data_fim_projeto TIMESTAMP, nr_valor_total_projeto DOUBLE PRECISION, nr_valor_captado_projeto DOUBLE PRECISION, nr_total_beneficiarios DOUBLE PRECISION, cd_abrangencia_projeto INTEGER, cd_zona_atuacao_projeto INTEGER, tx_descricao_projeto TEXT, tx_metodologia_monitoramento TEXT, tx_link_projeto TEXT, localizacao JSONB, tipo_parceria JSONB))
 		LOOP
 			dado_anterior := null;
 			
@@ -86,7 +86,7 @@ BEGIN
 				WHERE tx_identificador_projeto_externo = objeto.tx_identificador_projeto_externo
 				AND SUBSTRING(ft_identificador_projeto_externo FROM 0 FOR char_length(ft_identificador_projeto_externo) - position(' ' in reverse(ft_identificador_projeto_externo)) + 1) = SUBSTRING(fonte_dados.nome_fonte FROM 0 FOR char_length(fonte_dados.nome_fonte) - position(' ' in reverse(fonte_dados.nome_fonte)) + 1)
 				AND id_osc = osc.id_osc;
-				
+			
 			ELSE
 				RAISE EXCEPTION 'tipo_busca_invalido';
 
@@ -290,7 +290,7 @@ BEGIN
 						ft_metodologia_monitoramento = dado_posterior.ft_metodologia_monitoramento,
 						tx_link_projeto = dado_posterior.tx_link_projeto,
 						ft_link_projeto = dado_posterior.ft_link_projeto
-					WHERE id_projeto = dado_posterior.id_projeto;
+					WHERE id_projeto = objeto.id_projeto;
 					
 					PERFORM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior), id_carga);
 				END IF;
@@ -298,6 +298,13 @@ BEGIN
 
 			json_externo = COALESCE(objeto.localizacao, '{}'::JSONB);
 			SELECT INTO record_externo * FROM portal.atualizar_localizacao_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
+			IF record_externo.flag = false THEN 
+				mensagem := record_externo.mensagem;
+				RAISE EXCEPTION 'funcao_externa';
+			END IF;
+
+			json_externo = COALESCE(objeto.tipo_parceria, '{}'::JSONB);
+			SELECT INTO record_externo * FROM portal.atualizar_tipo_parceria_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
 			IF record_externo.flag = false THEN 
 				mensagem := record_externo.mensagem;
 				RAISE EXCEPTION 'funcao_externa';
@@ -466,6 +473,11 @@ SELECT * FROM portal.atualizar_projetos_osc(
 					{"id_regiao_localizacao_projeto": 33, "tx_nome_regiao_localizacao_projeto": "Xerém", "bo_localizacao_prioritaria": true},
 					{"id_regiao_localizacao_projeto": 34, "tx_nome_regiao_localizacao_projeto": "Xerém", "bo_localizacao_prioritaria": false},
 					{"id_regiao_localizacao_projeto": 35, "tx_nome_regiao_localizacao_projeto": "Xerém", "bo_localizacao_prioritaria": false}
+				],
+				"tipo_parceria": [
+					{"cd_origem_fonte_recursos_projeto": 1, "cd_tipo_parceria_projeto": "1"},
+					{"cd_origem_fonte_recursos_projeto": 1, "cd_tipo_parceria_projeto": "2"},
+					{"cd_origem_fonte_recursos_projeto": 1, "cd_tipo_parceria_projeto": "3"}
 				]
 			}
 		]
@@ -477,4 +489,5 @@ SELECT * FROM portal.atualizar_projetos_osc(
 	1::INTEGER
 );
 
-SELECT * FROM osc.tb_projeto WHERE id_osc = 1548640;
+--SELECT * FROM osc.tb_projeto WHERE id_osc = 1548640;
+--SELECT * FROM osc.tb_tipo_parceria_projeto a JOIN osc.tb_projeto b ON a.id_projeto = b.id_projeto WHERE b.id_osc = 1548640;
