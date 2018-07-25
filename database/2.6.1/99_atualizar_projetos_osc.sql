@@ -65,7 +65,7 @@ BEGIN
 			json := (json->>'projetos')::JSONB;
 		END IF;
 		
-		FOR objeto IN (SELECT * FROM jsonb_to_recordset(json) AS x(id_projeto INTEGER, tx_identificador_projeto_externo TEXT, cd_municipio INTEGER, cd_uf INTEGER, tx_nome_projeto TEXT, cd_status_projeto INTEGER, dt_data_inicio_projeto TIMESTAMP, dt_data_fim_projeto TIMESTAMP, nr_valor_total_projeto DOUBLE PRECISION, nr_valor_captado_projeto DOUBLE PRECISION, nr_total_beneficiarios DOUBLE PRECISION, cd_abrangencia_projeto INTEGER, cd_zona_atuacao_projeto INTEGER, tx_descricao_projeto TEXT, tx_metodologia_monitoramento TEXT, tx_link_projeto TEXT, localizacao JSONB, tipo_parceria JSONB, fonte_recursos JSONB, financiador JSONB))
+		FOR objeto IN (SELECT * FROM jsonb_to_recordset(json) AS x(id_projeto INTEGER, tx_identificador_projeto_externo TEXT, cd_municipio INTEGER, cd_uf INTEGER, tx_nome_projeto TEXT, cd_status_projeto INTEGER, dt_data_inicio_projeto TIMESTAMP, dt_data_fim_projeto TIMESTAMP, nr_valor_total_projeto DOUBLE PRECISION, nr_valor_captado_projeto DOUBLE PRECISION, nr_total_beneficiarios DOUBLE PRECISION, cd_abrangencia_projeto INTEGER, cd_zona_atuacao_projeto INTEGER, tx_descricao_projeto TEXT, tx_metodologia_monitoramento TEXT, tx_link_projeto TEXT, localizacao JSONB, tipo_parceria JSONB, fonte_recursos JSONB, financiador JSONB, objetivo JSONB))
 		LOOP
 			dado_anterior := null;
 			
@@ -317,8 +317,15 @@ BEGIN
 				RAISE EXCEPTION 'funcao_externa';
 			END IF;
 
-			json_externo = COALESCE(objeto.fonte_recursos, '{}'::JSONB);
+			json_externo = COALESCE(objeto.financiador, '{}'::JSONB);
 			SELECT INTO record_externo * FROM portal.atualizar_financiador_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
+			IF record_externo.flag = false THEN 
+				mensagem := record_externo.mensagem;
+				RAISE EXCEPTION 'funcao_externa';
+			END IF;
+
+			json_externo = COALESCE(objeto.objetivo, '{}'::JSONB);
+			SELECT INTO record_externo * FROM portal.atualizar_objetivo_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
 			IF record_externo.flag = false THEN 
 				mensagem := record_externo.mensagem;
 				RAISE EXCEPTION 'funcao_externa';
@@ -502,6 +509,11 @@ SELECT * FROM portal.atualizar_projetos_osc(
 					{"tx_nome_financiador": "Teste 1"},
 					{"tx_nome_financiador": "Teste 2"},
 					{"tx_nome_financiador": "Teste 3"}
+				],
+				"objetivo": [
+					{"cd_meta_projeto": 1},
+					{"cd_meta_projeto": 2},
+					{"cd_meta_projeto": 3}
 				]
 			}
 		]

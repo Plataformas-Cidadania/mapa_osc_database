@@ -163,7 +163,7 @@ $$ LANGUAGE 'plpgsql';
 -- Teste
 SELECT * FROM portal.atualizar_localizacao_projeto(
 	'Representante de OSC'::TEXT, 
-	'1'::NUMERIC, 
+	'87081'::NUMERIC, 
 	now()::TIMESTAMP, 
 	'[
 		{"id_regiao_localizacao_projeto": 33, "tx_nome_regiao_localizacao_projeto": "Xerém", "bo_localizacao_prioritaria": true},
