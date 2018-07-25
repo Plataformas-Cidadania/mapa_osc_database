@@ -1,0 +1,1 @@
+ALTER TABLE osc.tb_objetivo_projeto ALTER COLUMN bo_oficial DROP NOT NULL;
