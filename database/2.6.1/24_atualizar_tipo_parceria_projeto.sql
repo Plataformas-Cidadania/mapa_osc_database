@@ -45,7 +45,7 @@ BEGIN
 		json := jsonb_build_array(json);
 		--json := ('{' || (json->>'projetos')::TEXT || '}')::JSONB;
 	END IF;
-
+	
 	FOR objeto IN (SELECT * FROM jsonb_populate_recordset(null::osc.tb_tipo_parceria_projeto, json))
 	LOOP
 		dado_anterior := null;
@@ -57,7 +57,7 @@ BEGIN
 
 		ELSIF tipo_busca = 2 THEN
 			SELECT INTO dado_anterior * FROM osc.tb_tipo_parceria_projeto
-			AND cd_tipo_parceria_projeto = objeto.cd_tipo_parceria_projeto
+			WHERE cd_tipo_parceria_projeto = objeto.cd_tipo_parceria_projeto
 			AND id_projeto = osc.id_projeto;
 
 		ELSE
@@ -137,6 +137,7 @@ $$ LANGUAGE 'plpgsql';
 
 
 -- Teste
+/*
 SELECT * FROM portal.atualizar_tipo_parceria_projeto(
 	'Representante de OSC'::TEXT, 
 	'87081'::NUMERIC, 
@@ -152,5 +153,6 @@ SELECT * FROM portal.atualizar_tipo_parceria_projeto(
 	null::INTEGER, 
 	2::INTEGER
 );
+*/
 
 --SELECT * FROM osc.tb_tipo_parceria_projeto a JOIN osc.tb_projeto b ON a.id_projeto = b.id_projeto WHERE b.id_osc = 1548640;
