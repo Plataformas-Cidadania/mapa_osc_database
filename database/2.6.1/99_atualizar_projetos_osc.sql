@@ -389,7 +389,7 @@ BEGIN
 		END LOOP;
 	END IF;
 	
-	IF osc.bo_nao_possui_projeto AND (SELECT EXISTS(SELECT * FROM osc.tb_projeto WHERE id_osc = osc.id_osc)) THEN 
+	IF nao_possui AND (SELECT EXISTS(SELECT * FROM osc.tb_projeto WHERE id_osc = osc.id_osc)) THEN 
 		RAISE EXCEPTION 'nao_possui_invalido';
 	END IF;
 	
@@ -421,7 +421,7 @@ $$ LANGUAGE 'plpgsql';
 -- Teste
 SELECT * FROM portal.atualizar_projetos_osc(
 	'Representante de OSC'::TEXT, 
-	'987654'::NUMERIC, 
+	'1548640'::NUMERIC, 
 	'id_osc'::TEXT, 
 	now()::TIMESTAMP, 
 	'{
@@ -472,4 +472,4 @@ SELECT * FROM portal.atualizar_projetos_osc(
 	2::INTEGER
 );
 
-SELECT * FROM osc.tb_projeto WHERE id_osc = 987654;
+SELECT * FROM osc.tb_projeto WHERE id_osc = 1548640;

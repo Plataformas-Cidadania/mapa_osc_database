@@ -153,12 +153,12 @@ $$ LANGUAGE 'plpgsql';
 -- Teste
 SELECT * FROM portal.atualizar_osc(
 	'Representante de OSC'::TEXT, 
-	'987654'::NUMERIC, 
+	'1548640'::NUMERIC, 
 	'id_osc'::TEXT, 
 	now()::TIMESTAMP, 
 	'{
 		"tx_apelido_osc": "teste",
-		"bo_nao_possui_projeto": "false"
+		"bo_nao_possui_projeto": "true"
 	}'::JSONB, 
 	true::BOOLEAN, 
 	true::BOOLEAN, 
@@ -166,4 +166,4 @@ SELECT * FROM portal.atualizar_osc(
 	null::INTEGER
 );
 
---SELECT * FROM osc.tb_osc WHERE id_osc = 987654;
+SELECT * FROM osc.tb_osc WHERE id_osc = 1548640;
