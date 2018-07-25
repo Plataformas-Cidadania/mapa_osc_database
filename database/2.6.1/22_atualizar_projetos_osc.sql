@@ -15,9 +15,9 @@ DECLARE
 	flag_update BOOLEAN;
 	osc RECORD;
 	nao_possui BOOLEAN;
-	projetos RECORD;
+	json_externo JSONB;
 	objeto_externo RECORD;
-	record_funcao_externa RECORD;
+	record_externo RECORD;
 
 BEGIN
 	nome_tabela := 'osc.tb_projeto';
@@ -61,9 +61,9 @@ BEGIN
 	
 	IF nao_possui IS NOT true THEN
 		IF jsonb_typeof((json->>'projetos')::JSONB) = 'object' THEN
-			projetos := jsonb_build_array((json->>'projetos')::JSONB);
+			json := jsonb_build_array((json->>'projetos')::JSONB);
 		ELSE
-			projetos := (json->>'projetos')::JSONB;
+			json := (json->>'projetos')::JSONB;
 		END IF;
 		
 		FOR objeto IN (SELECT * FROM jsonb_to_recordset(json) AS x(tx_identificador_projeto_externo TEXT, cd_municipio INTEGER, cd_uf INTEGER, tx_nome_projeto TEXT, cd_status_projeto INTEGER, dt_data_inicio_projeto TIMESTAMP, dt_data_fim_projeto TIMESTAMP, nr_valor_total_projeto DOUBLE PRECISION, nr_valor_captado_projeto DOUBLE PRECISION, nr_total_beneficiarios DOUBLE PRECISION, cd_abrangencia_projeto INTEGER, cd_zona_atuacao_projeto INTEGER, tx_descricao_projeto TEXT, tx_metodologia_monitoramento TEXT, tx_link_projeto TEXT, localizacao JSONB))
@@ -162,7 +162,7 @@ BEGIN
 				
 				dado_nao_delete := array_append(dado_nao_delete, dado_posterior.id_projeto);
 				
-				PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, null, row_to_json(dado_posterior), id_carga);
+				PERFORM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, null, row_to_json(dado_posterior), id_carga);
 				
 			ELSE
 				dado_posterior := dado_anterior;
@@ -293,124 +293,104 @@ BEGIN
 						ft_link_projeto = dado_posterior.ft_link_projeto
 					WHERE id_projeto = dado_posterior.id_projeto;
 					
-					PERFORM * FROM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior), id_carga);
+					PERFORM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior), id_carga);
 				END IF;
 			END IF;
 
-			objeto_externo = COALESCE(objeto.localizacao, '{}'::JSONB);
-			SELECT INTO record_funcao_externa * FROM portal.atualizar_localizacao_projeto(fonte, identificador, data_atualizacao, objetivos, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
-			IF record_funcao_externa.flag = false THEN 
-				mensagem := record_funcao_externa.mensagem;
+			json_externo = COALESCE(objeto.localizacao, '{}'::JSONB);
+			SELECT INTO record_externo * FROM portal.atualizar_localizacao_projeto(fonte, identificador, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
+			IF record_externo.flag = false THEN 
+				mensagem := record_externo.mensagem;
 				RAISE EXCEPTION 'funcao_externa';
 			END IF;
 		END LOOP;
 	END IF;
 	
-	
-
-	IF delete_valido AND nao_possui IS false THEN
-		FOR objeto IN (SELECT * FROM osc.tb_projeto WHERE id_osc = osc AND id_projeto != ALL(dado_nao_delete))
+	IF delete_valido THEN
+		FOR objeto IN (SELECT * FROM osc.tb_projeto WHERE id_osc = osc.id_osc AND id_projeto != ALL(dado_nao_delete))
 		LOOP
-			FOR projeto IN (SELECT * FROM osc.tb_tipo_parceria_projeto WHERE id_projeto = objeto.id_projeto)
+			FOR objeto_externo IN (SELECT * FROM osc.tb_tipo_parceria_projeto WHERE id_projeto = objeto.id_projeto)
 			LOOP
-				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[projeto.ft_tipo_parceria_projeto]) AS a) THEN
-					DELETE FROM osc.tb_tipo_parceria_projeto WHERE id_projeto = projeto.id_projeto AND id_projeto != ALL(dado_nao_delete);
-					PERFORM portal.inserir_log_atualizacao('osc.tb_tipo_parceria_projeto', osc, fonte, data_atualizacao, row_to_json(projeto), null, id_carga);
-				ELSE
-					dado_nao_delete := array_append(dado_nao_delete, projeto.id_projeto);
+				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto_externo.ft_tipo_parceria_projeto]) AS a) THEN
+					DELETE FROM osc.tb_tipo_parceria_projeto WHERE id_projeto = objeto_externo.id_projeto AND id_projeto != ALL(dado_nao_delete);
+					PERFORM portal.inserir_log_atualizacao('osc.tb_tipo_parceria_projeto', osc, fonte, data_atualizacao, row_to_json(objeto_externo), null, id_carga);
 				END IF;
 			END LOOP;
 			
-			FOR projeto IN (SELECT * FROM osc.tb_fonte_recursos_projeto WHERE id_projeto = objeto.id_projeto)
+			FOR objeto_externo IN (SELECT * FROM osc.tb_fonte_recursos_projeto WHERE id_projeto = objeto.id_projeto)
 			LOOP
-				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[projeto.ft_fonte_recursos_projeto, projeto.ft_orgao_concedente]) AS a) THEN
-					DELETE FROM osc.tb_fonte_recursos_projeto WHERE id_projeto = projeto.id_projeto AND id_projeto != ALL(dado_nao_delete);
-					PERFORM portal.inserir_log_atualizacao('osc.tb_fonte_recursos_projeto', osc, fonte, data_atualizacao, row_to_json(projeto), null, id_carga);
-				ELSE
-					dado_nao_delete := array_append(dado_nao_delete, projeto.id_projeto);
+				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto_externo.ft_fonte_recursos_projeto, objeto_externo.ft_orgao_concedente]) AS a) THEN
+					DELETE FROM osc.tb_fonte_recursos_projeto WHERE id_projeto = objeto_externo.id_projeto AND id_projeto != ALL(dado_nao_delete);
+					PERFORM portal.inserir_log_atualizacao('osc.tb_fonte_recursos_projeto', osc, fonte, data_atualizacao, row_to_json(objeto_externo), null, id_carga);
 				END IF;
 			END LOOP;
 			
-			FOR projeto IN (SELECT * FROM osc.tb_area_atuacao_outra_projeto WHERE id_projeto = objeto.id_projeto)
+			FOR objeto_externo IN (SELECT * FROM osc.tb_area_atuacao_outra_projeto WHERE id_projeto = objeto.id_projeto)
 			LOOP
-				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[projeto.ft_area_atuacao_outra_projeto]) AS a) THEN
-					DELETE FROM osc.tb_area_atuacao_outra_projeto WHERE id_projeto = projeto.id_projeto AND id_projeto != ALL(dado_nao_delete);
-					PERFORM portal.inserir_log_atualizacao('osc.tb_area_atuacao_outra_projeto', osc, fonte, data_atualizacao, row_to_json(projeto), null, id_carga);
-				ELSE
-					dado_nao_delete := array_append(dado_nao_delete, projeto.id_projeto);
+				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto_externo.ft_area_atuacao_outra_projeto]) AS a) THEN
+					DELETE FROM osc.tb_area_atuacao_outra_projeto WHERE id_projeto = objeto_externo.id_projeto AND id_projeto != ALL(dado_nao_delete);
+					PERFORM portal.inserir_log_atualizacao('osc.tb_area_atuacao_outra_projeto', osc, fonte, data_atualizacao, row_to_json(objeto_externo), null, id_carga);
 				END IF;
 			END LOOP;
 			
 			FOR projeto IN (SELECT * FROM osc.tb_area_atuacao_projeto WHERE id_projeto = objeto.id_projeto)
 			LOOP
-				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[projeto.ft_area_atuacao_projeto]) AS a) THEN
-					DELETE FROM osc.tb_area_atuacao_projeto WHERE id_projeto = projeto.id_projeto AND id_projeto != ALL(dado_nao_delete);
+				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto_externo.ft_area_atuacao_projeto]) AS a) THEN
+					DELETE FROM osc.tb_area_atuacao_projeto WHERE id_projeto = objeto_externo.id_projeto AND id_projeto != ALL(dado_nao_delete);
 					PERFORM portal.inserir_log_atualizacao('osc.tb_area_atuacao_projeto', osc, fonte, data_atualizacao, row_to_json(projeto), null, id_carga);
-				ELSE
-					dado_nao_delete := array_append(dado_nao_delete, projeto.id_projeto);
 				END IF;
 			END LOOP;
 			
 			FOR projeto IN (SELECT * FROM osc.tb_financiador_projeto WHERE id_projeto = objeto.id_projeto)
 			LOOP
-				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[projeto.ft_nome_financiador]) AS a) THEN
-					DELETE FROM osc.tb_financiador_projeto WHERE id_projeto = projeto.id_projeto AND id_projeto != ALL(dado_nao_delete);
+				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto_externo.ft_nome_financiador]) AS a) THEN
+					DELETE FROM osc.tb_financiador_projeto WHERE id_projeto = objeto_externo.id_projeto AND id_projeto != ALL(dado_nao_delete);
 					PERFORM portal.inserir_log_atualizacao('osc.tb_financiador_projeto', osc, fonte, data_atualizacao, row_to_json(projeto), null, id_carga);
-				ELSE
-					dado_nao_delete := array_append(dado_nao_delete, projeto.id_projeto);
 				END IF;
 			END LOOP;
-			/*
+			
 			FOR projeto IN (SELECT * FROM osc.tb_localizacao_projeto WHERE id_projeto = objeto.id_projeto)
 			LOOP
-				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[projeto.ft_regiao_localizacao_projeto, projeto.ft_nome_regiao_localizacao_projeto, projeto.ft_localizacao_prioritaria]) AS a) THEN
-					DELETE FROM osc.tb_localizacao_projeto WHERE id_projeto = projeto.id_projeto AND id_projeto != ALL(dado_nao_delete);
+				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto_externo.ft_regiao_localizacao_projeto, objeto_externo.ft_nome_regiao_localizacao_projeto, objeto_externo.ft_localizacao_prioritaria]) AS a) THEN
+					DELETE FROM osc.tb_localizacao_projeto WHERE id_projeto = objeto_externo.id_projeto AND id_projeto != ALL(dado_nao_delete);
 					PERFORM portal.inserir_log_atualizacao('osc.tb_localizacao_projeto', osc, fonte, data_atualizacao, row_to_json(projeto), null, id_carga);
-				ELSE
-					dado_nao_delete := array_append(dado_nao_delete, projeto.id_projeto);
 				END IF;
 			END LOOP;
 			
 			FOR projeto IN (SELECT * FROM osc.tb_objetivo_projeto WHERE id_projeto = objeto.id_projeto)
 			LOOP
-				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[projeto.ft_objetivo_projeto]) AS a) THEN
-					DELETE FROM osc.tb_objetivo_projeto WHERE id_projeto = projeto.id_projeto AND id_projeto != ALL(dado_nao_delete);
+				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto_externo.ft_objetivo_projeto]) AS a) THEN
+					DELETE FROM osc.tb_objetivo_projeto WHERE id_projeto = objeto_externo.id_projeto AND id_projeto != ALL(dado_nao_delete);
 					PERFORM portal.inserir_log_atualizacao('osc.tb_objetivo_projeto', osc, fonte, data_atualizacao, row_to_json(projeto), null, id_carga);
-				ELSE
-					dado_nao_delete := array_append(dado_nao_delete, projeto.id_projeto);
 				END IF;
 			END LOOP;
-			*/
+			
 			FOR projeto IN (SELECT * FROM osc.tb_osc_parceira_projeto WHERE id_projeto = objeto.id_projeto)
 			LOOP
-				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[projeto.ft_osc_parceira_projeto]) AS a) THEN
-					DELETE FROM osc.tb_osc_parceira_projeto WHERE id_projeto = projeto.id_projeto AND id_projeto != ALL(dado_nao_delete);
+				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto_externo.ft_osc_parceira_projeto]) AS a) THEN
+					DELETE FROM osc.tb_osc_parceira_projeto WHERE id_projeto = objeto_externo.id_projeto AND id_projeto != ALL(dado_nao_delete);
 					PERFORM portal.inserir_log_atualizacao('osc.tb_osc_parceira_projeto', osc, fonte, data_atualizacao, row_to_json(projeto), null, id_carga);
 				ELSE
-					dado_nao_delete := array_append(dado_nao_delete, projeto.id_projeto);
+					dado_nao_delete := array_append(dado_nao_delete, objeto_externo.id_projeto);
 				END IF;
 			END LOOP;
 			
 			FOR projeto IN (SELECT * FROM osc.tb_publico_beneficiado_projeto WHERE id_projeto = objeto.id_projeto)
 			LOOP
-				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[projeto.ft_publico_beneficiado_projeto]) AS a) THEN
-					DELETE FROM osc.tb_publico_beneficiado_projeto WHERE id_projeto = projeto.id_projeto AND id_projeto != ALL(dado_nao_delete);
+				IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto_externo.ft_publico_beneficiado_projeto]) AS a) THEN
+					DELETE FROM osc.tb_publico_beneficiado_projeto WHERE id_projeto = objeto_externo.id_projeto AND id_projeto != ALL(dado_nao_delete);
 					PERFORM portal.inserir_log_atualizacao('osc.tb_publico_beneficiado_projeto', osc, fonte, data_atualizacao, row_to_json(projeto), null, id_carga);
-				ELSE
-					dado_nao_delete := array_append(dado_nao_delete, projeto.id_projeto);
 				END IF;
 			END LOOP;
 			
 			IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_identificador_projeto_externo, objeto.ft_uf, objeto.ft_municipio, objeto.ft_nome_projeto, objeto.ft_status_projeto, objeto.ft_data_inicio_projeto, objeto.ft_data_fim_projeto, objeto.ft_valor_total_projeto, objeto.ft_valor_captado_projeto, objeto.ft_total_beneficiarios, objeto.ft_abrangencia_projeto, objeto.ft_zona_atuacao_projeto, objeto.ft_descricao_projeto, objeto.ft_metodologia_monitoramento, objeto.ft_link_projeto]) AS a) THEN
 				DELETE FROM osc.tb_projeto WHERE id_projeto = objeto.id_projeto AND id_projeto != ALL(dado_nao_delete);
 				PERFORM portal.inserir_log_atualizacao(nome_tabela, osc, fonte, data_atualizacao, row_to_json(objeto), null, id_carga);
-			ELSE
-				dado_nao_delete := array_append(dado_nao_delete, projeto.id_projeto);
 			END IF;
 		END LOOP;
 	END IF;
 	
-	IF nao_possui AND (SELECT EXISTS(SELECT * FROM osc.tb_projeto WHERE id_osc = osc)) THEN 
+	IF osc.bo_nao_possui_projeto AND (SELECT EXISTS(SELECT * FROM osc.tb_projeto WHERE id_osc = osc.id_osc)) THEN 
 		RAISE EXCEPTION 'nao_possui_invalido';
 	END IF;
 	
@@ -435,3 +415,21 @@ EXCEPTION
 
 END;
 $$ LANGUAGE 'plpgsql';
+
+
+
+-- Teste
+SELECT * FROM portal.atualizar_projetos_osc(
+	'Representante de OSC'::TEXT, 
+	'987654'::NUMERIC, 
+	'id_osc'::TEXT, 
+	now()::TIMESTAMP, 
+	'{}'::JSONB, 
+	true::BOOLEAN, 
+	true::BOOLEAN, 
+	true::BOOLEAN, 
+	null::INTEGER, 
+	2::INTEGER
+);
+
+--SELECT * FROM osc.tb_projetos WHERE id_osc = 987654;
