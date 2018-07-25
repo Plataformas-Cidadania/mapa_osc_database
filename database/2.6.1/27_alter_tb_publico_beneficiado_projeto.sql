@@ -1,0 +1,15 @@
+ALTER TABLE osc.tb_publico_beneficiado_projeto RENAME id_publico_beneficiado TO id_publico_beneficiado_projeto;
+ALTER TABLE osc.tb_publico_beneficiado_projeto RENAME ft_publico_beneficiado_projeto TO ft_estimativa_pessoas_atendidas;
+ALTER TABLE osc.tb_publico_beneficiado_projeto ALTER bo_oficial DROP NOT NULL;
+ALTER TABLE osc.tb_publico_beneficiado_projeto DROP CONSTRAINT pk_id_publico_beneficiado_projeto;
+
+CREATE SEQUENCE osc.tb_publico_beneficiado_projeto_id_publico_beneficiado_projeto_s;
+SELECT setval('osc.tb_publico_beneficiado_projeto_id_publico_beneficiado_projeto_s', COALESCE(MAX(id_publico_beneficiado_projeto), 0)) FROM osc.tb_publico_beneficiado_projeto;
+ALTER TABLE osc.tb_publico_beneficiado_projeto ALTER COLUMN id_publico_beneficiado_projeto SET DEFAULT nextval('osc.tb_publico_beneficiado_projeto_id_publico_beneficiado_projeto_s');
+
+ALTER TABLE osc.tb_publico_beneficiado_projeto ADD COLUMN tx_nome_publico_beneficiado TEXT;
+ALTER TABLE osc.tb_publico_beneficiado_projeto ADD COLUMN ft_nome_publico_beneficiado TEXT;
+
+UPDATE osc.tb_publico_beneficiado_projeto 
+SET tx_nome_publico_beneficiado = (SELECT tx_nome_publico_beneficiado FROM osc.tb_publico_beneficiado WHERE tb_publico_beneficiado.id_publico_beneficiado = tb_publico_beneficiado_projeto.id_publico_beneficiado),
+    ft_nome_publico_beneficiado = (SELECT ft_publico_beneficiado FROM osc.tb_publico_beneficiado WHERE tb_publico_beneficiado.id_publico_beneficiado = tb_publico_beneficiado_projeto.id_publico_beneficiado);
