@@ -43,7 +43,6 @@ BEGIN
 		json := ('[]')::JSONB;
 	ELSIF jsonb_typeof(json) = 'object' THEN
 		json := jsonb_build_array(json);
-		--json := ('{' || (json->>'projetos')::TEXT || '}')::JSONB;
 	END IF;
 
 	FOR objeto IN (SELECT * FROM jsonb_populate_recordset(null::osc.tb_objetivo_projeto, json))
@@ -133,24 +132,3 @@ EXCEPTION
 
 END;
 $$ LANGUAGE 'plpgsql';
-
-
-
--- Teste
-SELECT * FROM portal.atualizar_objetivo_projeto(
-	'Representante de OSC'::TEXT, 
-	'87081'::NUMERIC, 
-	now()::TIMESTAMP, 
-	'[
-		{"cd_meta_projeto": 1},
-		{"cd_meta_projeto": 2},
-		{"cd_meta_projeto": 3}
-	]'::JSONB, 
-	true::BOOLEAN, 
-	true::BOOLEAN, 
-	true::BOOLEAN, 
-	null::INTEGER, 
-	2::INTEGER
-);
-
-SELECT * FROM osc.tb_objetivo_projeto a JOIN osc.tb_projeto b ON a.id_projeto = b.id_projeto WHERE b.id_osc = 1548640;

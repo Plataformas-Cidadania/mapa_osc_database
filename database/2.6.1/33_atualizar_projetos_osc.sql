@@ -8,6 +8,7 @@ CREATE OR REPLACE FUNCTION portal.atualizar_projetos_osc(fonte TEXT, identificad
 DECLARE
 	nome_tabela TEXT;
 	fonte_dados RECORD;
+	json_principal JSONB;
 	objeto RECORD;
 	dado_anterior RECORD;
 	dado_posterior RECORD;
@@ -23,7 +24,7 @@ BEGIN
 	nome_tabela := 'osc.tb_projeto';
 	tipo_identificador := lower(tipo_identificador);
 	dado_nao_delete := '{}'::INTEGER[];
-
+	
 	SELECT INTO fonte_dados * FROM portal.verificar_fonte(fonte);
 	
 	IF tipo_identificador = 'cnpj' THEN
@@ -60,14 +61,14 @@ BEGIN
 	IF nao_possui IS NOT true THEN
 		IF jsonb_typeof((json->>'projetos')::JSONB) = 'object' THEN
 			json := jsonb_build_array((json->>'projetos')::JSONB);
-			--json := ('{' || (json->>'projetos')::TEXT || '}')::JSONB;
 		ELSE
 			json := (json->>'projetos')::JSONB;
 		END IF;
 		
-		--FOR objeto IN SELECT * FROM jsonb_array_elements(json)
-		FOR objeto IN SELECT * FROM jsonb_to_recordset(json) AS x(id_projeto INTEGER, tx_identificador_projeto_externo TEXT, cd_municipio INTEGER, cd_uf INTEGER, tx_nome_projeto TEXT, cd_status_projeto INTEGER, dt_data_inicio_projeto TIMESTAMP, dt_data_fim_projeto TIMESTAMP, nr_valor_total_projeto DOUBLE PRECISION, nr_valor_captado_projeto DOUBLE PRECISION, nr_total_beneficiarios DOUBLE PRECISION, cd_abrangencia_projeto INTEGER, cd_zona_atuacao_projeto INTEGER, tx_descricao_projeto TEXT, tx_metodologia_monitoramento TEXT, tx_link_projeto TEXT, localizacao JSONB, tipo_parceria JSONB, fonte_recursos JSONB, financiador JSONB, objetivo JSONB, publico_beneficiado JSONB)
+		FOR json_principal IN (SELECT * FROM jsonb_array_elements((json::TEXT)::JSONB))
 		LOOP
+			objeto := (jsonb_populate_record(null::osc.tb_projeto, json_principal));
+			
 			dado_anterior := null;
 			
 			IF tipo_busca = 1 THEN
@@ -296,47 +297,68 @@ BEGIN
 					PERFORM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior), id_carga);
 				END IF;
 			END IF;
-
-			json_externo = COALESCE(objeto.fonte_recursos, '{}'::JSONB);
-			SELECT INTO record_externo * FROM portal.atualizar_fonte_recursos_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
-			IF record_externo.flag = false THEN 
-				mensagem := record_externo.mensagem;
-				RAISE EXCEPTION 'funcao_externa';
+			
+			IF json_principal->>'fonte_recursos' IS NOT null THEN
+				objeto := (jsonb_populate_record(null::osc.tb_fonte_recursos_projeto, (json_principal->>'fonte_recursos')::JSONB));
+				json_externo := to_jsonb(objeto);
+				SELECT INTO record_externo * FROM portal.atualizar_fonte_recursos_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
+				IF record_externo.flag = false THEN 
+					mensagem := record_externo.mensagem;
+					RAISE EXCEPTION 'funcao_externa';
+				END IF;
 			END IF;
-
-			json_externo = COALESCE(objeto.localizacao, '{}'::JSONB);
-			SELECT INTO record_externo * FROM portal.atualizar_localizacao_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
-			IF record_externo.flag = false THEN 
-				mensagem := record_externo.mensagem;
-				RAISE EXCEPTION 'funcao_externa';
+			
+			IF json_principal->>'localizacao' IS NOT null THEN
+				objeto := (jsonb_populate_record(null::osc.tb_localizacao_projeto, (json_principal->>'localizacao')::JSONB));
+				json_externo := to_jsonb(objeto);
+				SELECT INTO record_externo * FROM portal.atualizar_localizacao_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
+				IF record_externo.flag = false THEN 
+					mensagem := record_externo.mensagem;
+					RAISE EXCEPTION 'funcao_externa';
+				END IF;
 			END IF;
-
-			json_externo = COALESCE(objeto.tipo_parceria, '{}'::JSONB);
-			SELECT INTO record_externo * FROM portal.atualizar_tipo_parceria_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
-			IF record_externo.flag = false THEN 
-				mensagem := record_externo.mensagem;
-				RAISE EXCEPTION 'funcao_externa';
+			
+			IF json_principal->>'tipo_parceria' IS NOT null THEN
+				objeto := (jsonb_populate_record(null::osc.tb_tipo_parceria_projeto, (json_principal->>'tipo_parceria')::JSONB));
+				json_externo := to_jsonb(objeto);
+				SELECT INTO record_externo * FROM portal.atualizar_tipo_parceria_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
+				IF record_externo.flag = false THEN 
+					mensagem := record_externo.mensagem;
+					RAISE EXCEPTION 'funcao_externa';
+				END IF;
 			END IF;
-
-			json_externo = COALESCE(objeto.financiador, '{}'::JSONB);
-			SELECT INTO record_externo * FROM portal.atualizar_financiador_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
-			IF record_externo.flag = false THEN 
-				mensagem := record_externo.mensagem;
-				RAISE EXCEPTION 'funcao_externa';
+			
+			IF json_principal->>'financiador' IS NOT null THEN
+				RAISE NOTICE '1';
+				objeto := (jsonb_populate_record(null::osc.tb_financiador_projeto, (json_principal->>'financiador')::JSONB));
+				json_externo := to_jsonb(objeto);
+				RAISE NOTICE '2: %', json_externo;
+				SELECT INTO record_externo * FROM portal.atualizar_financiador_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
+				IF record_externo.flag = false THEN 
+					mensagem := record_externo.mensagem;
+					RAISE EXCEPTION 'funcao_externa';
+				END IF;
+				RAISE NOTICE '3';
 			END IF;
-
-			json_externo = COALESCE(objeto.objetivo, '{}'::JSONB);
-			SELECT INTO record_externo * FROM portal.atualizar_objetivo_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
-			IF record_externo.flag = false THEN 
-				mensagem := record_externo.mensagem;
-				RAISE EXCEPTION 'funcao_externa';
+			
+			IF json_principal->>'objetivo' IS NOT null THEN
+				objeto := (jsonb_populate_record(null::osc.tb_objetivo_projeto, (json_principal->>'objetivo')::JSONB));
+				json_externo := to_jsonb(objeto);
+				SELECT INTO record_externo * FROM portal.atualizar_objetivo_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
+				IF record_externo.flag = false THEN 
+					mensagem := record_externo.mensagem;
+					RAISE EXCEPTION 'funcao_externa';
+				END IF;
 			END IF;
-
-			json_externo = COALESCE(objeto.publico_beneficiado, '{}'::JSONB);
-			SELECT INTO record_externo * FROM portal.atualizar_publico_beneficiado_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
-			IF record_externo.flag = false THEN 
-				mensagem := record_externo.mensagem;
-				RAISE EXCEPTION 'funcao_externa';
+			
+			IF json_principal->>'publico_beneficiado' IS NOT null THEN
+				objeto := (objetivo(null::osc.tb_publico_beneficiado_projeto, (json_principal->>'publico_beneficiado')::JSONB));
+				json_externo := to_jsonb(objeto);
+				SELECT INTO record_externo * FROM portal.atualizar_publico_beneficiado_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
+				IF record_externo.flag = false THEN 
+					mensagem := record_externo.mensagem;
+					RAISE EXCEPTION 'funcao_externa';
+				END IF;
 			END IF;
 		END LOOP;
 	END IF;
@@ -455,7 +477,7 @@ $$ LANGUAGE 'plpgsql';
 
 
 -- Teste
-/*
+
 SELECT * FROM portal.atualizar_projetos_osc(
 	'Representante de OSC'::TEXT, 
 	'1548640'::NUMERIC, 
@@ -474,7 +496,7 @@ SELECT * FROM portal.atualizar_projetos_osc(
 				"dt_data_fim_projeto": "01-01-2011",
 				"nr_valor_total_projeto": 100000.0,
 				"nr_valor_captado_projeto": 100000.0,
-				"nr_total_beneficiarios": 100000.0,
+				"nr_total_beneficiarios": 1000,
 				"cd_abrangencia_projeto": 1,
 				"cd_zona_atuacao_projeto": 1,
 				"tx_descricao_projeto": "Teste descrição 1",
@@ -493,7 +515,7 @@ SELECT * FROM portal.atualizar_projetos_osc(
 				"dt_data_fim_projeto": "02-02-2022",
 				"nr_valor_total_projeto": 200000.0,
 				"nr_valor_captado_projeto": 200000.0,
-				"nr_total_beneficiarios": 200000.0,
+				"nr_total_beneficiarios": 200000,
 				"cd_abrangencia_projeto": 2,
 				"cd_zona_atuacao_projeto": 2,
 				"tx_descricao_projeto": "Teste descrição 2",
@@ -533,7 +555,6 @@ SELECT * FROM portal.atualizar_projetos_osc(
 	null::INTEGER, 
 	1::INTEGER
 );
-*/
 
 --SELECT * FROM osc.tb_projeto WHERE id_osc = 1548640;
 --SELECT * FROM osc.tb_tipo_parceria_projeto a JOIN osc.tb_projeto b ON a.id_projeto = b.id_projeto WHERE b.id_osc = 1548640;
