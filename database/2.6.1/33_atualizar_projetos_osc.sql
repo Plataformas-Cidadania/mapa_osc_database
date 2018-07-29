@@ -329,16 +329,16 @@ BEGIN
 			END IF;
 			
 			IF json_principal->>'financiador' IS NOT null THEN
-				RAISE NOTICE '1';
-				objeto := (jsonb_populate_record(null::osc.tb_financiador_projeto, (json_principal->>'financiador')::JSONB));
-				json_externo := to_jsonb(objeto);
-				RAISE NOTICE '2: %', json_externo;
+				--json_externo := to_jsonb(json_principal->>'financiador');
+				--json_externo := jsonb_build_array(json_principal->>'financiador');
+				json_externo := json_principal->>'financiador';
+				RAISE NOTICE '1: %', json_externo;
 				SELECT INTO record_externo * FROM portal.atualizar_financiador_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
 				IF record_externo.flag = false THEN 
 					mensagem := record_externo.mensagem;
 					RAISE EXCEPTION 'funcao_externa';
 				END IF;
-				RAISE NOTICE '3';
+				RAISE NOTICE '2';
 			END IF;
 			
 			IF json_principal->>'objetivo' IS NOT null THEN
