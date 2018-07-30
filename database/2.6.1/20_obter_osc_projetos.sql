@@ -63,18 +63,15 @@ BEGIN
 										SELECT 
 											jsonb_agg(
 												jsonb_build_object(
-													'id_publico_beneficiado', tb_publico_beneficiado_projeto.id_publico_beneficiado, 
-													'tx_nome_publico_beneficiado', tb_publico_beneficiado.tx_nome_publico_beneficiado, 
+													'id_publico_beneficiado', tb_publico_beneficiado_projeto.id_publico_beneficiado_projeto, 
+													'tx_nome_publico_beneficiado', tb_publico_beneficiado_projeto.tx_nome_publico_beneficiado, 
 													'nr_estimativa_pessoas_atendidas', tb_publico_beneficiado_projeto.nr_estimativa_pessoas_atendidas, 
-													'ft_publico_beneficiado_projeto', tb_publico_beneficiado_projeto.ft_publico_beneficiado_projeto
+													'ft_estimativa_pessoas_atendidas', tb_publico_beneficiado_projeto.ft_estimativa_pessoas_atendidas, 
+													'ft_publico_beneficiado_projeto', tb_publico_beneficiado_projeto.ft_nome_publico_beneficiado
 												)
 											)
 										FROM 
 											osc.tb_publico_beneficiado_projeto 
-										LEFT JOIN 
-											osc.tb_publico_beneficiado 
-										ON 
-											tb_publico_beneficiado_projeto.id_publico_beneficiado = tb_publico_beneficiado.id_publico_beneficiado 
 										WHERE 
 											tb_publico_beneficiado_projeto.id_projeto = tb_projeto.id_projeto 
 									),

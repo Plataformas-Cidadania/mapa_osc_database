@@ -300,7 +300,7 @@ BEGIN
 			
 			IF json_principal->>'fonte_recursos' IS NOT null THEN
 				json_externo := json_principal->>'fonte_recursos';
-				SELECT INTO record_externo * FROM portal.atualizar_fonte_recursos_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, 1);
+				SELECT INTO record_externo * FROM portal.atualizar_fonte_recursos_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, true, erro_log, id_carga, 1);
 				IF record_externo.flag = false THEN 
 					mensagem := record_externo.mensagem;
 					RAISE EXCEPTION 'funcao_externa';
@@ -309,7 +309,7 @@ BEGIN
 			
 			IF json_principal->>'localizacao' IS NOT null THEN
 				json_externo := json_principal->>'localizacao';
-				SELECT INTO record_externo * FROM portal.atualizar_localizacao_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, 1);
+				SELECT INTO record_externo * FROM portal.atualizar_localizacao_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, true, erro_log, id_carga, 1);
 				IF record_externo.flag = false THEN 
 					mensagem := record_externo.mensagem;
 					RAISE EXCEPTION 'funcao_externa';
@@ -318,7 +318,7 @@ BEGIN
 			
 			IF json_principal->>'tipo_parceria' IS NOT null THEN
 				json_externo := json_principal->>'tipo_parceria';
-				SELECT INTO record_externo * FROM portal.atualizar_tipo_parceria_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, 1);
+				SELECT INTO record_externo * FROM portal.atualizar_tipo_parceria_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, true, erro_log, id_carga, 1);
 				IF record_externo.flag = false THEN 
 					mensagem := record_externo.mensagem;
 					RAISE EXCEPTION 'funcao_externa';
@@ -327,7 +327,7 @@ BEGIN
 			
 			IF json_principal->>'financiador' IS NOT null THEN
 				json_externo := json_principal->>'financiador';
-				SELECT INTO record_externo * FROM portal.atualizar_financiador_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, 1);
+				SELECT INTO record_externo * FROM portal.atualizar_financiador_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, true, erro_log, id_carga, 1);
 				IF record_externo.flag = false THEN 
 					mensagem := record_externo.mensagem;
 					RAISE EXCEPTION 'funcao_externa';
@@ -336,7 +336,7 @@ BEGIN
 			
 			IF json_principal->>'objetivo' IS NOT null THEN
 				json_externo := json_principal->>'objetivo';
-				SELECT INTO record_externo * FROM portal.atualizar_objetivo_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, 1);
+				SELECT INTO record_externo * FROM portal.atualizar_objetivo_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, true, erro_log, id_carga, 1);
 				IF record_externo.flag = false THEN 
 					mensagem := record_externo.mensagem;
 					RAISE EXCEPTION 'funcao_externa';
@@ -345,7 +345,7 @@ BEGIN
 			
 			IF json_principal->>'publico_beneficiado' IS NOT null THEN
 				json_externo := json_principal->>'publico_beneficiado';
-				SELECT INTO record_externo * FROM portal.atualizar_publico_beneficiado_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, 1);
+				SELECT INTO record_externo * FROM portal.atualizar_publico_beneficiado_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, true, erro_log, id_carga, 1);
 				IF record_externo.flag = false THEN 
 					mensagem := record_externo.mensagem;
 					RAISE EXCEPTION 'funcao_externa';
