@@ -105,7 +105,7 @@ BEGIN
 	END IF;
 	
 	SELECT INTO objeto * FROM osc.tb_publico_beneficiado_projeto WHERE id_projeto = id;
-	IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_publico_beneficiado_projeto]) AS a) THEN
+	IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_estimativa_pessoas_atendidas, objeto.ft_nome_publico_beneficiado]) AS a) THEN
 		DELETE FROM osc.tb_publico_beneficiado_projeto WHERE id_projeto = id;
 		PERFORM portal.inserir_log_atualizacao('osc.tb_publico_beneficiado_projeto', osc, fonte, data_atualizacao, row_to_json(objeto), null, id_carga);
 	ELSE
