@@ -2,6 +2,7 @@ ALTER TABLE osc.tb_publico_beneficiado_projeto RENAME id_publico_beneficiado TO 
 ALTER TABLE osc.tb_publico_beneficiado_projeto RENAME ft_publico_beneficiado_projeto TO ft_estimativa_pessoas_atendidas;
 ALTER TABLE osc.tb_publico_beneficiado_projeto ALTER bo_oficial DROP NOT NULL;
 ALTER TABLE osc.tb_publico_beneficiado_projeto DROP CONSTRAINT pk_id_publico_beneficiado_projeto;
+ALTER TABLE osc.tb_publico_beneficiado_projeto DROP CONSTRAINT fk_id_publico_beneficiado;
 
 CREATE SEQUENCE osc.tb_publico_beneficiado_projeto_id_publico_beneficiado_projeto_s;
 SELECT setval('osc.tb_publico_beneficiado_projeto_id_publico_beneficiado_projeto_s', COALESCE(MAX(id_publico_beneficiado_projeto), 0)) FROM osc.tb_publico_beneficiado_projeto;
