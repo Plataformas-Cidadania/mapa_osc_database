@@ -256,7 +256,7 @@ BEGIN
 	
 	END IF;
 	
-	flag := false;
+	flag := true;
 	mensagem := 'Projetos retornados.';
 	
 	RETURN NEXT;
