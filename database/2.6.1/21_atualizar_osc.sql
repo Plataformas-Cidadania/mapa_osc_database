@@ -138,7 +138,6 @@ BEGIN
 
 EXCEPTION
 	WHEN others THEN
-		RAISE NOTICE '%', SQLERRM;
 		flag := false;
 
 		IF osc IS NOT null THEN
@@ -153,23 +152,3 @@ EXCEPTION
 
 END;
 $$ LANGUAGE 'plpgsql';
-
-
-
--- Teste
-SELECT * FROM portal.atualizar_osc(
-	'Representante de OSC'::TEXT, 
-	'1548640'::NUMERIC, 
-	'id_osc'::TEXT, 
-	now()::TIMESTAMP, 
-	'{
-		"tx_apelido_osc": "teste",
-		"bo_nao_possui_projeto": "true"
-	}'::JSONB, 
-	true::BOOLEAN, 
-	true::BOOLEAN, 
-	true::BOOLEAN, 
-	null::INTEGER
-);
-
-SELECT * FROM osc.tb_osc WHERE id_osc = 1548640;

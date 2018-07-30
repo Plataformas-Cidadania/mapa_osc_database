@@ -120,7 +120,6 @@ BEGIN
 
 EXCEPTION
 	WHEN others THEN
-		RAISE NOTICE '%', SQLERRM;
 		flag := false;
 		
 		IF osc IS NOT null THEN
@@ -133,26 +132,3 @@ EXCEPTION
 
 END;
 $$ LANGUAGE 'plpgsql';
-
-
-
--- Teste
-/*
-SELECT * FROM portal.atualizar_tipo_parceria_projeto(
-	'Representante de OSC'::TEXT, 
-	'87081'::NUMERIC, 
-	now()::TIMESTAMP, 
-	'[
-		{"cd_origem_fonte_recursos_projeto": 1, "cd_tipo_parceria_projeto": "1"},
-		{"cd_origem_fonte_recursos_projeto": 1, "cd_tipo_parceria_projeto": "2"},
-		{"cd_origem_fonte_recursos_projeto": 1, "cd_tipo_parceria_projeto": "3"}
-	]'::JSONB, 
-	true::BOOLEAN, 
-	true::BOOLEAN, 
-	true::BOOLEAN, 
-	null::INTEGER, 
-	2::INTEGER
-);
-*/
-
---SELECT * FROM osc.tb_tipo_parceria_projeto a JOIN osc.tb_projeto b ON a.id_projeto = b.id_projeto WHERE b.id_osc = 1548640;

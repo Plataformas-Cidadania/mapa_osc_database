@@ -130,7 +130,6 @@ BEGIN
 
 EXCEPTION
 	WHEN others THEN
-		RAISE NOTICE '%', SQLERRM;
 		flag := false;
 		
 		IF osc IS NOT null THEN
@@ -145,26 +144,3 @@ EXCEPTION
 
 END;
 $$ LANGUAGE 'plpgsql';
-
-
-
--- Teste
-/*
-SELECT * FROM portal.atualizar_publico_beneficiado_projeto(
-	'Representante de OSC'::TEXT, 
-	'92855'::NUMERIC, 
-	now()::TIMESTAMP, 
-	'[
-		{"id_publico_beneficiado": "33", "tx_nome_publico_beneficiado": "100", "nr_estimativa_pessoas_atendidas": "100"},
-		{"id_publico_beneficiado": "34", "tx_nome_publico_beneficiado": "100", "nr_estimativa_pessoas_atendidas": "200"},
-		{"id_publico_beneficiado": "35", "tx_nome_publico_beneficiado": "100", "nr_estimativa_pessoas_atendidas": "300"}
-	]'::JSONB, 
-	true::BOOLEAN, 
-	true::BOOLEAN, 
-	true::BOOLEAN, 
-	null::INTEGER, 
-	2::INTEGER
-);
-*/
-
---SELECT * FROM osc.tb_publico_beneficiado_projeto a JOIN osc.tb_projeto b ON a.id_projeto = b.id_projeto WHERE b.id_osc = 789809;

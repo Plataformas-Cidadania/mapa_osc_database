@@ -299,9 +299,8 @@ BEGIN
 			END IF;
 			
 			IF json_principal->>'fonte_recursos' IS NOT null THEN
-				objeto := (jsonb_populate_record(null::osc.tb_fonte_recursos_projeto, (json_principal->>'fonte_recursos')::JSONB));
-				json_externo := to_jsonb(objeto);
-				SELECT INTO record_externo * FROM portal.atualizar_fonte_recursos_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
+				json_externo := json_principal->>'fonte_recursos';
+				SELECT INTO record_externo * FROM portal.atualizar_fonte_recursos_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, 1);
 				IF record_externo.flag = false THEN 
 					mensagem := record_externo.mensagem;
 					RAISE EXCEPTION 'funcao_externa';
@@ -309,9 +308,8 @@ BEGIN
 			END IF;
 			
 			IF json_principal->>'localizacao' IS NOT null THEN
-				objeto := (jsonb_populate_record(null::osc.tb_localizacao_projeto, (json_principal->>'localizacao')::JSONB));
-				json_externo := to_jsonb(objeto);
-				SELECT INTO record_externo * FROM portal.atualizar_localizacao_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
+				json_externo := json_principal->>'localizacao';
+				SELECT INTO record_externo * FROM portal.atualizar_localizacao_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, 1);
 				IF record_externo.flag = false THEN 
 					mensagem := record_externo.mensagem;
 					RAISE EXCEPTION 'funcao_externa';
@@ -319,9 +317,8 @@ BEGIN
 			END IF;
 			
 			IF json_principal->>'tipo_parceria' IS NOT null THEN
-				objeto := (jsonb_populate_record(null::osc.tb_tipo_parceria_projeto, (json_principal->>'tipo_parceria')::JSONB));
-				json_externo := to_jsonb(objeto);
-				SELECT INTO record_externo * FROM portal.atualizar_tipo_parceria_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
+				json_externo := json_principal->>'tipo_parceria';
+				SELECT INTO record_externo * FROM portal.atualizar_tipo_parceria_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, 1);
 				IF record_externo.flag = false THEN 
 					mensagem := record_externo.mensagem;
 					RAISE EXCEPTION 'funcao_externa';
@@ -329,22 +326,17 @@ BEGIN
 			END IF;
 			
 			IF json_principal->>'financiador' IS NOT null THEN
-				--json_externo := to_jsonb(json_principal->>'financiador');
-				--json_externo := jsonb_build_array(json_principal->>'financiador');
 				json_externo := json_principal->>'financiador';
-				RAISE NOTICE '1: %', json_externo;
-				SELECT INTO record_externo * FROM portal.atualizar_financiador_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
+				SELECT INTO record_externo * FROM portal.atualizar_financiador_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, 1);
 				IF record_externo.flag = false THEN 
 					mensagem := record_externo.mensagem;
 					RAISE EXCEPTION 'funcao_externa';
 				END IF;
-				RAISE NOTICE '2';
 			END IF;
 			
 			IF json_principal->>'objetivo' IS NOT null THEN
-				objeto := (jsonb_populate_record(null::osc.tb_objetivo_projeto, (json_principal->>'objetivo')::JSONB));
-				json_externo := to_jsonb(objeto);
-				SELECT INTO record_externo * FROM portal.atualizar_objetivo_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
+				json_externo := json_principal->>'objetivo';
+				SELECT INTO record_externo * FROM portal.atualizar_objetivo_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, 1);
 				IF record_externo.flag = false THEN 
 					mensagem := record_externo.mensagem;
 					RAISE EXCEPTION 'funcao_externa';
@@ -352,9 +344,8 @@ BEGIN
 			END IF;
 			
 			IF json_principal->>'publico_beneficiado' IS NOT null THEN
-				objeto := (objetivo(null::osc.tb_publico_beneficiado_projeto, (json_principal->>'publico_beneficiado')::JSONB));
-				json_externo := to_jsonb(objeto);
-				SELECT INTO record_externo * FROM portal.atualizar_publico_beneficiado_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, tipo_busca);
+				json_externo := json_principal->>'publico_beneficiado';
+				SELECT INTO record_externo * FROM portal.atualizar_publico_beneficiado_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, delete_valido, erro_log, id_carga, 1);
 				IF record_externo.flag = false THEN 
 					mensagem := record_externo.mensagem;
 					RAISE EXCEPTION 'funcao_externa';
@@ -458,7 +449,6 @@ BEGIN
 
 EXCEPTION
 	WHEN others THEN
-		RAISE NOTICE '%', SQLERRM;
 		flag := false;
 
 		IF osc IS NOT null THEN
@@ -477,10 +467,9 @@ $$ LANGUAGE 'plpgsql';
 
 
 -- Teste
-
 SELECT * FROM portal.atualizar_projetos_osc(
 	'Representante de OSC'::TEXT, 
-	'1548640'::NUMERIC, 
+	'987654'::NUMERIC, 
 	'id_osc'::TEXT, 
 	now()::TIMESTAMP, 
 	'{
@@ -531,11 +520,6 @@ SELECT * FROM portal.atualizar_projetos_osc(
 					{"cd_origem_fonte_recursos_projeto": 1, "cd_tipo_parceria_projeto": "2"},
 					{"cd_origem_fonte_recursos_projeto": 1, "cd_tipo_parceria_projeto": "3"}
 				],
-				"fonte_recursos": [
-					{"cd_fonte_recursos_projeto": "1", "cd_origem_fonte_recursos_projeto": "1", "tx_tipo_parceria_outro": "Teste 1", "tx_orgao_concedente": "Teste 1"},
-					{"cd_fonte_recursos_projeto": "2", "cd_origem_fonte_recursos_projeto": "2", "tx_tipo_parceria_outro": "Teste 2", "tx_orgao_concedente": "Teste 2"},
-					{"cd_fonte_recursos_projeto": "3", "cd_origem_fonte_recursos_projeto": "3", "tx_tipo_parceria_outro": "Teste 3", "tx_orgao_concedente": "Teste 3"}
-				],
 				"financiador": [
 					{"tx_nome_financiador": "Teste 1"},
 					{"tx_nome_financiador": "Teste 2"},
@@ -545,17 +529,20 @@ SELECT * FROM portal.atualizar_projetos_osc(
 					{"cd_meta_projeto": 1},
 					{"cd_meta_projeto": 2},
 					{"cd_meta_projeto": 3}
+				],
+				"fonte_recursos": [
+					{"cd_fonte_recursos_projeto": "1", "cd_origem_fonte_recursos_projeto": "1", "tx_tipo_parceria_outro": "Teste 1", "tx_orgao_concedente": "Teste 1"},
+					{"cd_fonte_recursos_projeto": "2", "cd_origem_fonte_recursos_projeto": "2", "tx_tipo_parceria_outro": "Teste 2", "tx_orgao_concedente": "Teste 2"},
+					{"cd_fonte_recursos_projeto": "3", "cd_origem_fonte_recursos_projeto": "3", "tx_tipo_parceria_outro": "Teste 3", "tx_orgao_concedente": "Teste 3"}
 				]
 			}
 		]
 	}'::JSONB, 
 	true::BOOLEAN, 
-	false::BOOLEAN, 
+	true::BOOLEAN, 
 	true::BOOLEAN, 
 	null::INTEGER, 
-	1::INTEGER
+	3::INTEGER
 );
 
---SELECT * FROM osc.tb_projeto WHERE id_osc = 1548640;
---SELECT * FROM osc.tb_tipo_parceria_projeto a JOIN osc.tb_projeto b ON a.id_projeto = b.id_projeto WHERE b.id_osc = 1548640;
---SELECT * FROM osc.tb_fonte_recursos_projeto a JOIN osc.tb_projeto b ON a.id_projeto = b.id_projeto WHERE b.id_osc = 1548640;
+SELECT * FROM osc.tb_projeto WHERE id_osc = 987654;

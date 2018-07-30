@@ -151,7 +151,6 @@ BEGIN
 
 EXCEPTION
 	WHEN others THEN
-		RAISE NOTICE '%', SQLERRM;
 		flag := false;
 		
 		IF osc IS NOT null THEN
@@ -164,24 +163,3 @@ EXCEPTION
 
 END;
 $$ LANGUAGE 'plpgsql';
-
-
-
--- Teste
-SELECT * FROM portal.atualizar_fonte_recursos_projeto(
-	'Representante de OSC'::TEXT, 
-	'1'::NUMERIC, 
-	now()::TIMESTAMP, 
-	'[
-		{"cd_fonte_recursos_projeto": "1", "cd_origem_fonte_recursos_projeto": "1", "tx_tipo_parceria_outro": "Teste 1", "tx_orgao_concedente": "Teste 1"},
-		{"cd_fonte_recursos_projeto": "2", "cd_origem_fonte_recursos_projeto": "2", "tx_tipo_parceria_outro": "Teste 2", "tx_orgao_concedente": "Teste 2"},
-		{"cd_fonte_recursos_projeto": "3", "cd_origem_fonte_recursos_projeto": "3", "tx_tipo_parceria_outro": "Teste 3", "tx_orgao_concedente": "Teste 3"}
-	]'::JSONB, 
-	true::BOOLEAN, 
-	true::BOOLEAN, 
-	true::BOOLEAN, 
-	null::INTEGER, 
-	2::INTEGER
-);
-
-SELECT * FROM osc.tb_fonte_recursos_projeto a JOIN osc.tb_projeto b ON a.id_projeto = b.id_projeto WHERE b.id_osc = 1548640;
