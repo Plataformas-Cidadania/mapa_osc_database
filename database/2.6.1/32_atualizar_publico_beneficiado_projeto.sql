@@ -42,8 +42,7 @@ BEGIN
 	IF json IS null THEN
 		json := ('[]')::JSONB;
 	ELSIF jsonb_typeof(json) = 'object' THEN
-		--json := jsonb_build_array(json);
-		json := ('{' || (json->>'projetos')::TEXT || '}')::JSONB;
+		json := jsonb_build_array(json);
 	END IF;
 
 	FOR objeto IN (SELECT * FROM jsonb_populate_recordset(null::osc.tb_publico_beneficiado_projeto, json))
