@@ -343,6 +343,15 @@ BEGIN
 				END IF;
 			END IF;
 			
+			IF json_principal->>'osc_parceira' IS NOT null THEN
+				json_externo := json_principal->>'osc_parceira';
+				SELECT INTO record_externo * FROM portal.atualizar_osc_parceira_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, true, erro_log, id_carga, 1);
+				IF record_externo.flag = false THEN 
+					mensagem := record_externo.mensagem;
+					RAISE EXCEPTION 'funcao_externa';
+				END IF;
+			END IF;
+			
 			IF json_principal->>'publico_beneficiado' IS NOT null THEN
 				json_externo := json_principal->>'publico_beneficiado';
 				SELECT INTO record_externo * FROM portal.atualizar_publico_beneficiado_projeto(fonte, dado_posterior.id_projeto, data_atualizacao, json_externo, null_valido, true, erro_log, id_carga, 1);
