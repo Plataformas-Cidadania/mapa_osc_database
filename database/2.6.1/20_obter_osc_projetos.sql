@@ -1,23 +1,40 @@
-DROP FUNCTION IF EXISTS portal.obter_osc_projetos(TEXT, INTEGER);
+DROP FUNCTION IF EXISTS portal.obter_osc_projetos(TEXT, TEXT, INTEGER);
 
-CREATE OR REPLACE FUNCTION portal.obter_osc_projetos(param TEXT, tipo INTEGER) RETURNS TABLE (
+CREATE OR REPLACE FUNCTION portal.obter_osc_projetos(identificador TEXT, tipo_identificador TEXT, tipo INTEGER) RETURNS TABLE (
 	resultado JSONB,
 	mensagem TEXT,
 	flag BOOLEAN
 ) AS $$ 
 
 DECLARE
-	tb_osc RECORD;
+	osc RECORD;
 
 BEGIN 
-	SELECT INTO tb_osc * FROM osc.tb_osc WHERE id_osc::TEXT = param OR tx_apelido_osc = param;
-	
-	IF tb_osc.bo_nao_possui_projeto IS NOT true THEN 
+	IF tipo_identificador = 'id_osc' THEN
+		SELECT INTO osc * FROM osc.tb_osc WHERE id_osc::TEXT = identificador OR tx_apelido_osc = identificador;
+
+	ELSIF tipo_identificador = 'id_projeto' THEN
+		SELECT INTO osc * FROM osc.tb_osc INNER JOIN osc.tb_projeto ON tb_osc.id_osc = tb_projeto.id_osc WHERE tb_projeto.id_projeto::TEXT = identificador;
+
+	ELSE
+			RAISE EXCEPTION 'tipo_busca_invalido';
+
+	END IF;
+
+	IF osc IS null THEN
+		RAISE EXCEPTION 'osc_nao_encontrada';
+	ELSIF osc.bo_osc_ativa IS false THEN
+		RAISE EXCEPTION 'osc_inativa';
+	ELSIF osc.id_projeto IS null THEN
+		RAISE EXCEPTION 'projeto_nao_encontrado';
+	END IF;
+
+	IF osc.bo_nao_possui_projeto IS NOT true THEN 
 		IF tipo = 1 THEN 
 			resultado := (
 				jsonb_build_object(
-					'bo_nao_possui_projeto', tb_osc.bo_nao_possui_projeto, 
-					'ft_nao_possui_projeto', tb_osc.ft_nao_possui_projeto, 
+					'bo_nao_possui_projeto', osc.bo_nao_possui_projeto, 
+					'ft_nao_possui_projeto', osc.ft_nao_possui_projeto, 
 					'projetos', (
 						SELECT 
 							jsonb_agg(
@@ -212,9 +229,9 @@ BEGIN
 						ON 
 							tb_projeto.cd_uf = ed_uf.eduf_cd_uf 
 						WHERE 
-							tb_projeto.id_osc::TEXT = param 
+							tb_projeto.id_osc::TEXT = identificador 
 						OR 
-							tb_osc.tx_apelido_osc = param
+							osc.tx_apelido_osc = identificador
 					)
 				)
 			);
@@ -223,7 +240,7 @@ BEGIN
 			resultado := (
 				jsonb_build_object(
 					'bo_nao_possui_projeto', true, 
-					'ft_nao_possui_projeto', tb_osc.ft_nao_possui_projeto, 
+					'ft_nao_possui_projeto', osc.ft_nao_possui_projeto, 
 					'projetos', (
 							SELECT 
 								jsonb_agg(
@@ -235,9 +252,9 @@ BEGIN
 							FROM 
 								osc.tb_projeto 
 							WHERE 
-								tb_projeto.id_osc::TEXT = param 
+								tb_projeto.id_osc::TEXT = identificador 
 							OR 
-								tb_osc.tx_apelido_osc = param
+								osc.tx_apelido_osc = identificador
 					)
 				)
 			);
@@ -250,7 +267,7 @@ BEGIN
 	ELSE 
 		resultado := jsonb_build_object(
 			'bo_nao_possui_projeto', true, 
-			'ft_nao_possui_projeto', tb_osc.ft_nao_possui_projeto, 
+			'ft_nao_possui_projeto', osc.ft_nao_possui_projeto, 
 			'projetos', null
 		);
 	
