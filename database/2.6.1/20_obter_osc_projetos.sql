@@ -14,10 +14,10 @@ BEGIN
 		SELECT INTO osc * FROM osc.tb_osc WHERE id_osc::TEXT = identificador OR tx_apelido_osc = identificador;
 
 	ELSIF tipo_identificador = 'id_projeto' THEN
-		SELECT INTO osc * FROM osc.tb_osc INNER JOIN osc.tb_projeto ON tb_osc.id_osc = tb_projeto.id_osc WHERE tb_projeto.id_projeto::TEXT = identificador;
+		SELECT INTO osc * FROM osc.tb_osc LEFT JOIN osc.tb_projeto ON tb_osc.id_osc = tb_projeto.id_osc WHERE tb_projeto.id_projeto::TEXT = identificador;
 
 	ELSE
-			RAISE EXCEPTION 'tipo_busca_invalido';
+		RAISE EXCEPTION 'tipo_busca_invalido';
 
 	END IF;
 
@@ -25,8 +25,6 @@ BEGIN
 		RAISE EXCEPTION 'osc_nao_encontrada';
 	ELSIF osc.bo_osc_ativa IS false THEN
 		RAISE EXCEPTION 'osc_inativa';
-	ELSIF osc.id_projeto IS null THEN
-		RAISE EXCEPTION 'projeto_nao_encontrado';
 	END IF;
 
 	IF osc.bo_nao_possui_projeto IS NOT true THEN 
@@ -229,9 +227,9 @@ BEGIN
 						ON 
 							tb_projeto.cd_uf = ed_uf.eduf_cd_uf 
 						WHERE 
-							tb_projeto.id_osc::TEXT = identificador 
+							tb_projeto.id_osc = identificador::INTEGER
 						OR 
-							osc.tx_apelido_osc = identificador
+							tb_projeto.id_projeto = identificador::INTEGER
 					)
 				)
 			);
@@ -252,9 +250,9 @@ BEGIN
 							FROM 
 								osc.tb_projeto 
 							WHERE 
-								tb_projeto.id_osc::TEXT = identificador 
+								tb_projeto.id_osc = identificador::INTEGER
 							OR 
-								osc.tx_apelido_osc = identificador
+								tb_projeto.id_projeto = identificador::INTEGER
 					)
 				)
 			);
@@ -272,9 +270,13 @@ BEGIN
 		);
 	
 	END IF;
+
+	IF tipo_identificador = 'id_projeto' THEN
+		resultado := ((resultado->>'projetos')::JSONB)->(0);
+	END IF;
 	
 	flag := true;
-	mensagem := 'Projetos retornados.';
+	mensagem := 'Projeto(s) retornado(s).';
 	
 	RETURN NEXT;
 
