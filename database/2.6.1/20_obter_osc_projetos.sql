@@ -76,7 +76,7 @@ BEGIN
 									'ft_uf', tb_projeto.ft_uf,
 									'publico_beneficiado', (
 										SELECT 
-											jsonb_agg(
+											COALESCE(jsonb_agg(
 												jsonb_build_object(
 													'id_publico_beneficiado', tb_publico_beneficiado_projeto.id_publico_beneficiado_projeto, 
 													'tx_nome_publico_beneficiado', tb_publico_beneficiado_projeto.tx_nome_publico_beneficiado, 
@@ -84,7 +84,7 @@ BEGIN
 													'ft_estimativa_pessoas_atendidas', tb_publico_beneficiado_projeto.ft_estimativa_pessoas_atendidas, 
 													'ft_publico_beneficiado_projeto', tb_publico_beneficiado_projeto.ft_nome_publico_beneficiado
 												)
-											)
+											), '[]')
 										FROM 
 											osc.tb_publico_beneficiado_projeto 
 										WHERE 
@@ -92,14 +92,14 @@ BEGIN
 									),
 									'fonte_recursos', (
 										SELECT 
-											jsonb_agg(
+											COALESCE(jsonb_agg(
 												jsonb_build_object(
 													'id_fonte_recursos_projeto', tb_fonte_recursos_projeto.id_fonte_recursos_projeto, 
 													'cd_origem_fonte_recursos_projeto', tb_fonte_recursos_projeto.cd_origem_fonte_recursos_projeto, 
 													'tx_nome_origem_fonte_recursos_projeto', dc_origem_fonte_recursos_projeto.tx_nome_origem_fonte_recursos_projeto, 
 													'ft_fonte_recursos_projeto', tb_fonte_recursos_projeto.ft_fonte_recursos_projeto
 												)
-											)
+											), '[]')
 										FROM 
 											osc.tb_fonte_recursos_projeto 
 										LEFT JOIN 
@@ -111,13 +111,13 @@ BEGIN
 									), 
 									'financiador_projeto', (
 										SELECT 
-											jsonb_agg(
+											COALESCE(jsonb_agg(
 												jsonb_build_object(
 													'id_financiador_projeto', tb_financiador_projeto.id_financiador_projeto, 
 													'tx_nome_financiador', tb_financiador_projeto.tx_nome_financiador, 
 													'ft_nome_financiador', tb_financiador_projeto.ft_nome_financiador
 												)
-											)
+											), '[]')
 										FROM 
 											osc.tb_financiador_projeto 
 										WHERE 
@@ -125,7 +125,7 @@ BEGIN
 									),
 									'localizacao', (
 										SELECT 
-											jsonb_agg(
+											COALESCE(jsonb_agg(
 												jsonb_build_object(
 													'id_localizacao_projeto', tb_localizacao_projeto.id_localizacao_projeto, 
 													'id_regiao_localizacao_projeto', tb_localizacao_projeto.id_regiao_localizacao_projeto, 
@@ -134,7 +134,7 @@ BEGIN
 													'bo_localizacao_prioritaria', tb_localizacao_projeto.bo_localizacao_prioritaria, 
 													'ft_localizacao_prioritaria', tb_localizacao_projeto.ft_localizacao_prioritaria
 												)
-											)
+											), '[]')
 										FROM 
 											osc.tb_localizacao_projeto 
 										WHERE 
@@ -142,13 +142,13 @@ BEGIN
 									),
 									'osc_parceira', (
 										SELECT 
-											jsonb_agg(
+											COALESCE(jsonb_agg(
 												jsonb_build_object(
 													'id_osc', tb_osc_parceira_projeto.id_osc, 
 													'tx_nome_osc_parceira_projeto', COALESCE(tb_dados_gerais.tx_nome_fantasia_osc, tb_dados_gerais.tx_razao_social_osc), 
 													'ft_osc_parceira_projeto', tb_osc_parceira_projeto.ft_osc_parceira_projeto
 												)
-											)
+											), '[]')
 										FROM 
 											osc.tb_osc_parceira_projeto 
 										LEFT JOIN 
@@ -160,14 +160,14 @@ BEGIN
 									),
 									'tipo_parceria', (
 										SELECT 
-											jsonb_agg(
+											COALESCE(jsonb_agg(
 												jsonb_build_object(
 													'id_tipo_parceria_projeto', tb_tipo_parceria_projeto.id_tipo_parceria_projeto, 
 													'cd_tipo_parceria_projeto', tb_tipo_parceria_projeto.cd_tipo_parceria_projeto, 
 													'tx_nome_tipo_parceria', dc_tipo_parceria.tx_nome_tipo_parceria, 
 													'ft_tipo_parceria_projeto', tb_tipo_parceria_projeto.ft_tipo_parceria_projeto
 												)
-											)
+											), '[]')
 										FROM 
 											osc.tb_tipo_parceria_projeto 
 										LEFT JOIN 
@@ -179,7 +179,7 @@ BEGIN
 									), 
 									'objetivo_meta', (
 										SELECT 
-											jsonb_agg(
+											COALESCE(jsonb_agg(
 												jsonb_build_object(
 													'id_objetivo_projeto', tb_objetivo_projeto.id_objetivo_projeto, 
 													'cd_objetivo_projeto', dc_meta_projeto.cd_objetivo_projeto, 
@@ -188,7 +188,7 @@ BEGIN
 													'tx_nome_meta_projeto', dc_meta_projeto.tx_nome_meta_projeto, 
 													'ft_objetivo_projeto', tb_objetivo_projeto.ft_objetivo_projeto
 												)
-											)
+											), '[]')
 										FROM 
 											osc.tb_objetivo_projeto 
 										LEFT JOIN 
@@ -287,3 +287,5 @@ EXCEPTION
 		RETURN NEXT;
 END;
 $$ LANGUAGE 'plpgsql';
+
+SELECT * FROM portal.obter_osc_projetos('2'::TEXT, 'id_projeto'::TEXT, '1'::INTEGER);
