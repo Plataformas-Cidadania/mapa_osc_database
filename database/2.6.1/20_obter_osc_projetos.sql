@@ -287,5 +287,3 @@ EXCEPTION
 		RETURN NEXT;
 END;
 $$ LANGUAGE 'plpgsql';
-
-SELECT * FROM portal.obter_osc_projetos('2'::TEXT, 'id_projeto'::TEXT, '1'::INTEGER);
