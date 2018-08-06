@@ -121,7 +121,7 @@ BEGIN
 	END IF;
 	
 	flag := true;
-	mensagem := 'Projeto deletado.';
+	mensagem := 'Projeto excluído.';
 	
 	RETURN NEXT;
 
