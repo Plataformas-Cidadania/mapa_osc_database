@@ -30,51 +30,53 @@ BEGIN
 	IF osc.bo_nao_possui_projeto IS NOT true THEN 
 		IF tipo = 1 THEN 
 			resultado := (
-				jsonb_build_object(
-					'bo_nao_possui_projeto', osc.bo_nao_possui_projeto, 
-					'ft_nao_possui_projeto', osc.ft_nao_possui_projeto, 
-					'projetos', (
-						SELECT 
-							jsonb_agg(
-								jsonb_build_object(
-									'id_projeto', tb_projeto.id_projeto, 
-									'tx_identificador_projeto_externo', tb_projeto.tx_identificador_projeto_externo, 
-									'ft_identificador_projeto_externo', tb_projeto.ft_identificador_projeto_externo, 
-									'tx_nome_projeto', tb_projeto.tx_nome_projeto, 
-									'ft_nome_projeto', tb_projeto.ft_nome_projeto, 
-									'cd_status_projeto', tb_projeto.cd_status_projeto, 
-									'tx_nome_status_projeto', dc_status_projeto.tx_nome_status_projeto, 
-									'tx_status_projeto_outro', tb_projeto.tx_status_projeto_outro, 
-									'ft_status_projeto', tb_projeto.ft_status_projeto, 
-									'dt_data_inicio_projeto', TO_CHAR(tb_projeto.dt_data_inicio_projeto, 'DD-MM-YYYY'), 
-									'ft_data_inicio_projeto', tb_projeto.ft_data_inicio_projeto, 
-									'dt_data_fim_projeto', TO_CHAR(tb_projeto.dt_data_fim_projeto, 'DD-MM-YYYY'), 
-									'ft_data_fim_projeto', tb_projeto.ft_data_fim_projeto, 
-									'tx_link_projeto', tb_projeto.tx_link_projeto, 
-									'ft_link_projeto', tb_projeto.ft_link_projeto, 
-									'nr_total_beneficiarios', tb_projeto.nr_total_beneficiarios, 
-									'ft_total_beneficiarios', tb_projeto.ft_total_beneficiarios, 
-									'nr_valor_total_projeto', TRIM(TO_CHAR(tb_projeto.nr_valor_total_projeto, '99999999999999999999D99')), 
-									'ft_valor_total_projeto', tb_projeto.ft_valor_total_projeto, 
-									'nr_valor_captado_projeto', TRIM(TO_CHAR(tb_projeto.nr_valor_captado_projeto, '99999999999999999999D99')), 
-									'ft_valor_captado_projeto', tb_projeto.ft_valor_captado_projeto, 
-									'tx_metodologia_monitoramento', tb_projeto.tx_metodologia_monitoramento, 
-									'ft_metodologia_monitoramento', tb_projeto.ft_metodologia_monitoramento, 
-									'tx_descricao_projeto', tb_projeto.tx_descricao_projeto, 
-									'ft_descricao_projeto', tb_projeto.ft_descricao_projeto, 
-									'cd_abrangencia_projeto', tb_projeto.cd_abrangencia_projeto, 
-									'tx_nome_abrangencia_projeto', dc_abrangencia_projeto.tx_nome_abrangencia_projeto, 
-									'ft_abrangencia_projeto', tb_projeto.ft_abrangencia_projeto, 
-									'cd_zona_atuacao_projeto', tb_projeto.cd_zona_atuacao_projeto, 
-									'tx_nome_zona_atuacao', dc_zona_atuacao_projeto.tx_nome_zona_atuacao, 
-									'ft_zona_atuacao_projeto', tb_projeto.ft_zona_atuacao_projeto, 
-									'cd_municipio', tb_projeto.cd_municipio, 
-									'tx_nome_municipio', ed_municipio.edmu_nm_municipio, 
-									'ft_municipio', tb_projeto.ft_municipio, 
-									'cd_uf', tb_projeto.cd_uf, 
-									'tx_nome_uf', ed_uf.eduf_nm_uf, 
-									'ft_uf', tb_projeto.ft_uf,
-									'publico_beneficiado', (
+				SELECT row_to_json(a) 
+				FROM (
+					SELECT 
+						osc.bo_nao_possui_projeto AS bo_nao_possui_projeto, 
+						osc.ft_nao_possui_projeto AS ft_nao_possui_projeto, 
+						(
+							SELECT array_to_json(array_agg(row_to_json(a)))
+							FROM (
+								SELECT 
+									tb_projeto.id_projeto AS id_projeto, 
+									tb_projeto.tx_identificador_projeto_externo AS tx_identificador_projeto_externo, 
+									tb_projeto.ft_identificador_projeto_externo AS ft_identificador_projeto_externo, 
+									tb_projeto.tx_nome_projeto AS tx_nome_projeto, 
+									tb_projeto.ft_nome_projeto AS ft_nome_projeto, 
+									tb_projeto.cd_status_projeto AS cd_status_projeto, 
+									dc_status_projeto.tx_nome_status_projeto AS tx_nome_status_projeto, 
+									tb_projeto.tx_status_projeto_outro AS tx_status_projeto_outro, 
+									tb_projeto.ft_status_projeto AS ft_status_projeto, 
+									TO_CHAR(tb_projeto.dt_data_inicio_projeto, 'DD-MM-YYYY') AS dt_data_inicio_projeto, 
+									tb_projeto.ft_data_inicio_projeto AS ft_data_inicio_projeto, 
+									TO_CHAR(tb_projeto.dt_data_fim_projeto, 'DD-MM-YYYY') AS dt_data_fim_projeto, 
+									tb_projeto.ft_data_fim_projeto AS ft_data_fim_projeto, 
+									tb_projeto.tx_link_projeto AS tx_link_projeto, 
+									tb_projeto.ft_link_projeto AS ft_link_projeto, 
+									tb_projeto.nr_total_beneficiarios AS nr_total_beneficiarios, 
+									tb_projeto.ft_total_beneficiarios AS ft_total_beneficiarios, 
+									TRIM(TO_CHAR(tb_projeto.nr_valor_total_projeto, '99999999999999999999D99')) AS nr_valor_total_projeto, 
+									tb_projeto.ft_valor_total_projeto AS ft_valor_total_projeto, 
+									TRIM(TO_CHAR(tb_projeto.nr_valor_captado_projeto, '99999999999999999999D99')) AS nr_valor_captado_projeto, 
+									tb_projeto.ft_valor_captado_projeto AS ft_valor_captado_projeto, 
+									tb_projeto.tx_metodologia_monitoramento AS tx_metodologia_monitoramento, 
+									tb_projeto.ft_metodologia_monitoramento AS ft_metodologia_monitoramento, 
+									tb_projeto.tx_descricao_projeto AS tx_descricao_projeto, 
+									tb_projeto.ft_descricao_projeto AS ft_descricao_projeto, 
+									tb_projeto.cd_abrangencia_projeto AS cd_abrangencia_projeto, 
+									dc_abrangencia_projeto.tx_nome_abrangencia_projeto AS tx_nome_abrangencia_projeto, 
+									tb_projeto.ft_abrangencia_projeto AS ft_abrangencia_projeto, 
+									tb_projeto.cd_zona_atuacao_projeto AS cd_zona_atuacao_projeto, 
+									dc_zona_atuacao_projeto.tx_nome_zona_atuacao AS tx_nome_zona_atuacao, 
+									tb_projeto.ft_zona_atuacao_projeto AS ft_zona_atuacao_projeto, 
+									tb_projeto.cd_municipio AS cd_municipio, 
+									ed_municipio.edmu_nm_municipio AS edmu_nm_municipio, 
+									tb_projeto.ft_municipio AS ft_municipio, 
+									tb_projeto.cd_uf AS cd_uf, 
+									ed_uf.eduf_nm_uf AS eduf_nm_uf, 
+									tb_projeto.ft_uf AS ft_uf, 
+									(
 										SELECT array_to_json(array_agg(row_to_json(a)))
 										FROM (
 											SELECT 
@@ -87,9 +89,9 @@ BEGIN
 												osc.tb_publico_beneficiado_projeto 
 											WHERE 
 												id_projeto = tb_projeto.id_projeto
-										) a
-									),
-									'fonte_recursos', (
+										) AS a
+									) AS publico_beneficiado,
+									(
 										SELECT array_to_json(array_agg(row_to_json(a)))
 										FROM (
 											SELECT 
@@ -105,9 +107,9 @@ BEGIN
 												tb_fonte_recursos_projeto.cd_origem_fonte_recursos_projeto = dc_origem_fonte_recursos_projeto.cd_origem_fonte_recursos_projeto 
 											WHERE 
 												tb_fonte_recursos_projeto.id_projeto = tb_projeto.id_projeto
-										) a
-									), 
-									'financiador_projeto', (
+										) AS a
+									) AS fonte_recursos, 
+									(
 										SELECT array_to_json(array_agg(row_to_json(a)))
 										FROM (
 											SELECT 
@@ -118,9 +120,9 @@ BEGIN
 												osc.tb_financiador_projeto 
 											WHERE 
 												tb_financiador_projeto.id_projeto = tb_projeto.id_projeto
-										) a
-									),
-									'localizacao', (
+										) AS a
+									) AS financiador_projeto,
+									(
 										SELECT array_to_json(array_agg(row_to_json(a)))
 										FROM (
 											SELECT 
@@ -134,123 +136,120 @@ BEGIN
 												osc.tb_localizacao_projeto 
 											WHERE 
 												tb_localizacao_projeto.id_projeto = tb_projeto.id_projeto
-										) a
-									),
-									'osc_parceira', (
-										SELECT 
-											COALESCE(jsonb_agg(
-												jsonb_build_object(
-													'id_osc', tb_osc_parceira_projeto.id_osc, 
-													'tx_nome_osc_parceira_projeto', COALESCE(tb_dados_gerais.tx_nome_fantasia_osc, tb_dados_gerais.tx_razao_social_osc), 
-													'ft_osc_parceira_projeto', tb_osc_parceira_projeto.ft_osc_parceira_projeto
-												)
-											), '[]')
-										FROM 
-											osc.tb_osc_parceira_projeto 
-										LEFT JOIN 
-											osc.tb_dados_gerais 
-										ON 
-											tb_osc_parceira_projeto.id_osc = tb_dados_gerais.id_osc 
-										WHERE 
-											tb_osc_parceira_projeto.id_projeto = tb_projeto.id_projeto
-									),
-									'tipo_parceria', (
-										SELECT 
-											COALESCE(jsonb_agg(
-												jsonb_build_object(
-													'id_tipo_parceria_projeto', tb_tipo_parceria_projeto.id_tipo_parceria_projeto, 
-													'cd_tipo_parceria_projeto', tb_tipo_parceria_projeto.cd_tipo_parceria_projeto, 
-													'tx_nome_tipo_parceria', dc_tipo_parceria.tx_nome_tipo_parceria, 
-													'ft_tipo_parceria_projeto', tb_tipo_parceria_projeto.ft_tipo_parceria_projeto
-												)
-											), '[]')
-										FROM 
-											osc.tb_tipo_parceria_projeto 
-										LEFT JOIN 
-											syst.dc_tipo_parceria 
-										ON 
-											tb_tipo_parceria_projeto.cd_tipo_parceria_projeto = dc_tipo_parceria.cd_tipo_parceria 
-										WHERE 
-											tb_tipo_parceria_projeto.id_projeto = tb_projeto.id_projeto
-									), 
-									'objetivo_meta', (
-										SELECT 
-											COALESCE(jsonb_agg(
-												jsonb_build_object(
-													'id_objetivo_projeto', tb_objetivo_projeto.id_objetivo_projeto, 
-													'cd_objetivo_projeto', dc_meta_projeto.cd_objetivo_projeto, 
-													'tx_nome_objetivo_projeto', (dc_objetivo_projeto.tx_codigo_objetivo_projeto || '. ' || dc_objetivo_projeto.tx_nome_objetivo_projeto), 
-													'cd_meta_projeto', tb_objetivo_projeto.cd_meta_projeto, 
-													'tx_nome_meta_projeto', (dc_meta_projeto.tx_codigo_meta_projeto || '. ' || dc_meta_projeto.tx_nome_meta_projeto), 
-													'ft_objetivo_projeto', tb_objetivo_projeto.ft_objetivo_projeto
-												)
-											), '[]')
-										FROM 
-											osc.tb_objetivo_projeto 
-										LEFT JOIN 
-											syst.dc_meta_projeto 
-										ON 
-											tb_objetivo_projeto.cd_meta_projeto = dc_meta_projeto.cd_meta_projeto 
-										LEFT JOIN 
-											syst.dc_objetivo_projeto 
-										ON 
-											dc_meta_projeto.cd_objetivo_projeto = dc_objetivo_projeto.cd_objetivo_projeto 
-										WHERE 
-											tb_objetivo_projeto.id_projeto = tb_projeto.id_projeto
-									)
-								)
-							)
-						FROM 
-							osc.tb_projeto 
-						LEFT JOIN 
-							syst.dc_status_projeto 
-						ON 
-							tb_projeto.cd_status_projeto = dc_status_projeto.cd_status_projeto 
-						LEFT JOIN 	
-							syst.dc_abrangencia_projeto 
-						ON 
-							tb_projeto.cd_abrangencia_projeto = dc_abrangencia_projeto.cd_abrangencia_projeto 
-						LEFT JOIN 	
-							syst.dc_zona_atuacao_projeto 
-						ON 
-							tb_projeto.cd_zona_atuacao_projeto = dc_zona_atuacao_projeto.cd_zona_atuacao_projeto 
-						LEFT JOIN 	
-							spat.ed_municipio 
-						ON 
-							tb_projeto.cd_municipio = ed_municipio.edmu_cd_municipio 
-						LEFT JOIN 	
-							spat.ed_uf 
-						ON 
-							tb_projeto.cd_uf = ed_uf.eduf_cd_uf 
-						WHERE 
-							tb_projeto.id_osc = identificador::INTEGER
-						OR 
-							tb_projeto.id_projeto = identificador::INTEGER
-					)
-				)
+										) AS a
+									) AS localizacao,
+									(
+										SELECT array_to_json(array_agg(row_to_json(a)))
+										FROM (
+											SELECT 
+												tb_osc_parceira_projeto.id_osc AS id_osc, 
+												COALESCE(tb_dados_gerais.tx_nome_fantasia_osc, tb_dados_gerais.tx_razao_social_osc) AS tx_nome_regiao_localizacao_projeto, 
+												tb_osc_parceira_projeto.ft_osc_parceira_projeto AS ft_osc_parceira_projeto 
+											FROM 
+												osc.tb_osc_parceira_projeto 
+											LEFT JOIN 
+												osc.tb_dados_gerais 
+											ON 
+												tb_osc_parceira_projeto.id_osc = tb_dados_gerais.id_osc 
+											WHERE 
+												tb_osc_parceira_projeto.id_projeto = tb_projeto.id_projeto
+										) AS a
+									) AS osc_parceira,
+									(
+										SELECT array_to_json(array_agg(row_to_json(a)))
+										FROM (
+											SELECT 
+												tb_tipo_parceria_projeto.id_tipo_parceria_projeto AS id_tipo_parceria_projeto, 
+												tb_tipo_parceria_projeto.cd_tipo_parceria_projeto AS cd_tipo_parceria_projeto, 
+												dc_tipo_parceria.tx_nome_tipo_parceria AS tx_nome_tipo_parceria, 
+												tb_tipo_parceria_projeto.ft_tipo_parceria_projeto AS ft_tipo_parceria_projeto 
+											FROM 
+												osc.tb_tipo_parceria_projeto 
+											LEFT JOIN 
+												syst.dc_tipo_parceria 
+											ON 
+												tb_tipo_parceria_projeto.cd_tipo_parceria_projeto = dc_tipo_parceria.cd_tipo_parceria 
+											WHERE 
+												tb_tipo_parceria_projeto.id_projeto = tb_projeto.id_projeto
+										) AS a
+									) AS tipo_parceria, 
+									(
+										SELECT array_to_json(array_agg(row_to_json(a)))
+										FROM (
+											SELECT 
+												tb_objetivo_projeto.id_objetivo_projeto AS id_objetivo_projeto, 
+												dc_meta_projeto.cd_objetivo_projeto AS cd_objetivo_projeto, 
+												(dc_objetivo_projeto.tx_codigo_objetivo_projeto || '. ' || dc_objetivo_projeto.tx_nome_objetivo_projeto) AS tx_nome_objetivo_projeto, 
+												tb_objetivo_projeto.cd_meta_projeto AS cd_meta_projeto, 
+												(dc_meta_projeto.tx_codigo_meta_projeto || '. ' || dc_meta_projeto.tx_nome_meta_projeto) AS tx_nome_meta_projeto, 
+												tb_objetivo_projeto.ft_objetivo_projeto AS ft_objetivo_projeto 
+											FROM 
+												osc.tb_objetivo_projeto 
+											LEFT JOIN 
+												syst.dc_meta_projeto 
+											ON 
+												tb_objetivo_projeto.cd_meta_projeto = dc_meta_projeto.cd_meta_projeto 
+											LEFT JOIN 
+												syst.dc_objetivo_projeto 
+											ON 
+												dc_meta_projeto.cd_objetivo_projeto = dc_objetivo_projeto.cd_objetivo_projeto 
+											WHERE 
+												tb_objetivo_projeto.id_projeto = tb_projeto.id_projeto
+										) AS a
+									) AS objetivo_meta 
+								FROM 
+									osc.tb_projeto 
+								LEFT JOIN 
+									syst.dc_status_projeto 
+								ON 
+									tb_projeto.cd_status_projeto = dc_status_projeto.cd_status_projeto 
+								LEFT JOIN 	
+									syst.dc_abrangencia_projeto 
+								ON 
+									tb_projeto.cd_abrangencia_projeto = dc_abrangencia_projeto.cd_abrangencia_projeto 
+								LEFT JOIN 	
+									syst.dc_zona_atuacao_projeto 
+								ON 
+									tb_projeto.cd_zona_atuacao_projeto = dc_zona_atuacao_projeto.cd_zona_atuacao_projeto 
+								LEFT JOIN 	
+									spat.ed_municipio 
+								ON 
+									tb_projeto.cd_municipio = ed_municipio.edmu_cd_municipio 
+								LEFT JOIN 	
+									spat.ed_uf 
+								ON 
+									tb_projeto.cd_uf = ed_uf.eduf_cd_uf 
+								WHERE 
+									tb_projeto.id_osc = identificador::INTEGER
+								OR 
+									tb_projeto.id_projeto = identificador::INTEGER
+							) AS a
+						) AS projetos
+				) AS a
 			);
 			
 		ELSIF tipo = 2 THEN 
 			resultado := (
-				jsonb_build_object(
-					'bo_nao_possui_projeto', true, 
-					'ft_nao_possui_projeto', osc.ft_nao_possui_projeto, 
-					'projetos', (
-							SELECT 
-								jsonb_agg(
-									jsonb_build_object(
-										'id_projeto', tb_projeto.id_projeto, 
-										'tx_nome_projeto', tb_projeto.tx_nome_projeto
-									)
-								)
-							FROM 
-								osc.tb_projeto 
-							WHERE 
-								tb_projeto.id_osc = identificador::INTEGER
-							OR 
-								tb_projeto.id_projeto = identificador::INTEGER
-					)
-				)
+				SELECT row_to_json(a) 
+				FROM (
+					SELECT
+						true AS bo_nao_possui_projeto, 
+						osc.ft_nao_possui_projeto AS ft_nao_possui_projeto, 
+						(
+							SELECT array_to_json(array_agg(row_to_json(a)))
+							FROM (
+								SELECT 
+									tb_projeto.id_projeto as id_projeto, 
+									tb_projeto.tx_nome_projeto AS tx_nome_projeto
+								FROM 
+									osc.tb_projeto 
+								WHERE 
+									tb_projeto.id_osc = identificador::INTEGER
+								OR 
+									tb_projeto.id_projeto = identificador::INTEGER
+							) AS a
+						) AS projetos
+				) AS a
 			);
 			
 		ELSE 
@@ -259,10 +258,14 @@ BEGIN
 		END IF;
 		
 	ELSE 
-		resultado := jsonb_build_object(
-			'bo_nao_possui_projeto', true, 
-			'ft_nao_possui_projeto', osc.ft_nao_possui_projeto, 
-			'projetos', null
+		resultado := (
+			SELECT row_to_json(a) 
+			FROM (
+				SELECT 
+					true AS bo_nao_possui_projeto, 
+					osc.ft_nao_possui_projeto AS ft_nao_possui_projeto, 
+					null AS projetos
+			) AS a
 		);
 	
 	END IF;
