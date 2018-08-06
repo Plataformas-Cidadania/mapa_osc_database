@@ -80,21 +80,6 @@ BEGIN
 										SELECT array_to_json(array_agg(row_to_json(a)))
 										FROM (
 											SELECT 
-												id_publico_beneficiado_projeto AS id_publico_beneficiado, 
-												tx_nome_publico_beneficiado AS tx_nome_publico_beneficiado, 
-												nr_estimativa_pessoas_atendidas AS nr_estimativa_pessoas_atendidas, 
-												ft_nome_publico_beneficiado AS ft_publico_beneficiado_projeto, 
-												ft_estimativa_pessoas_atendidas AS ft_estimativa_pessoas_atendidas 
-											FROM 
-												osc.tb_publico_beneficiado_projeto 
-											WHERE 
-												id_projeto = tb_projeto.id_projeto
-										) AS a
-									) AS publico_beneficiado,
-									(
-										SELECT array_to_json(array_agg(row_to_json(a)))
-										FROM (
-											SELECT 
 												tb_fonte_recursos_projeto.id_fonte_recursos_projeto AS id_fonte_recursos_projeto, 
 												tb_fonte_recursos_projeto.cd_origem_fonte_recursos_projeto AS cd_origem_fonte_recursos_projeto, 
 												dc_origem_fonte_recursos_projeto.tx_nome_origem_fonte_recursos_projeto AS tx_nome_origem_fonte_recursos_projeto, 
@@ -113,6 +98,39 @@ BEGIN
 										SELECT array_to_json(array_agg(row_to_json(a)))
 										FROM (
 											SELECT 
+												tb_tipo_parceria_projeto.id_tipo_parceria_projeto AS id_tipo_parceria_projeto, 
+												tb_tipo_parceria_projeto.cd_tipo_parceria_projeto AS cd_tipo_parceria_projeto, 
+												dc_tipo_parceria.tx_nome_tipo_parceria AS tx_nome_tipo_parceria, 
+												tb_tipo_parceria_projeto.ft_tipo_parceria_projeto AS ft_tipo_parceria_projeto 
+											FROM 
+												osc.tb_tipo_parceria_projeto 
+											LEFT JOIN 
+												syst.dc_tipo_parceria 
+											ON 
+												tb_tipo_parceria_projeto.cd_tipo_parceria_projeto = dc_tipo_parceria.cd_tipo_parceria 
+											WHERE 
+												tb_tipo_parceria_projeto.id_projeto = tb_projeto.id_projeto
+										) AS a
+									) AS tipo_parceria, 
+									(
+										SELECT array_to_json(array_agg(row_to_json(a)))
+										FROM (
+											SELECT 
+												id_publico_beneficiado_projeto AS id_publico_beneficiado, 
+												tx_nome_publico_beneficiado AS tx_nome_publico_beneficiado, 
+												ft_nome_publico_beneficiado AS ft_publico_beneficiado_projeto, 
+												nr_estimativa_pessoas_atendidas AS nr_estimativa_pessoas_atendidas, 
+												ft_estimativa_pessoas_atendidas AS ft_estimativa_pessoas_atendidas 
+											FROM 
+												osc.tb_publico_beneficiado_projeto 
+											WHERE 
+												id_projeto = tb_projeto.id_projeto
+										) AS a
+									) AS publico_beneficiado, 
+									(
+										SELECT array_to_json(array_agg(row_to_json(a)))
+										FROM (
+											SELECT 
 												id_financiador_projeto AS id_fonte_recursos_projeto, 
 												tx_nome_financiador AS tx_nome_financiador, 
 												ft_nome_financiador AS ft_nome_financiador 
@@ -121,7 +139,7 @@ BEGIN
 											WHERE 
 												tb_financiador_projeto.id_projeto = tb_projeto.id_projeto
 										) AS a
-									) AS financiador_projeto,
+									) AS financiador_projeto, 
 									(
 										SELECT array_to_json(array_agg(row_to_json(a)))
 										FROM (
@@ -137,7 +155,7 @@ BEGIN
 											WHERE 
 												tb_localizacao_projeto.id_projeto = tb_projeto.id_projeto
 										) AS a
-									) AS localizacao,
+									) AS localizacao, 
 									(
 										SELECT array_to_json(array_agg(row_to_json(a)))
 										FROM (
@@ -154,25 +172,7 @@ BEGIN
 											WHERE 
 												tb_osc_parceira_projeto.id_projeto = tb_projeto.id_projeto
 										) AS a
-									) AS osc_parceira,
-									(
-										SELECT array_to_json(array_agg(row_to_json(a)))
-										FROM (
-											SELECT 
-												tb_tipo_parceria_projeto.id_tipo_parceria_projeto AS id_tipo_parceria_projeto, 
-												tb_tipo_parceria_projeto.cd_tipo_parceria_projeto AS cd_tipo_parceria_projeto, 
-												dc_tipo_parceria.tx_nome_tipo_parceria AS tx_nome_tipo_parceria, 
-												tb_tipo_parceria_projeto.ft_tipo_parceria_projeto AS ft_tipo_parceria_projeto 
-											FROM 
-												osc.tb_tipo_parceria_projeto 
-											LEFT JOIN 
-												syst.dc_tipo_parceria 
-											ON 
-												tb_tipo_parceria_projeto.cd_tipo_parceria_projeto = dc_tipo_parceria.cd_tipo_parceria 
-											WHERE 
-												tb_tipo_parceria_projeto.id_projeto = tb_projeto.id_projeto
-										) AS a
-									) AS tipo_parceria, 
+									) AS osc_parceira, 
 									(
 										SELECT array_to_json(array_agg(row_to_json(a)))
 										FROM (
