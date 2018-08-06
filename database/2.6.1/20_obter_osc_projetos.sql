@@ -1,7 +1,7 @@
 DROP FUNCTION IF EXISTS portal.obter_osc_projetos(TEXT, TEXT, INTEGER);
 
 CREATE OR REPLACE FUNCTION portal.obter_osc_projetos(identificador TEXT, tipo_identificador TEXT, tipo INTEGER) RETURNS TABLE (
-	resultado JSONB,
+	resultado JSON,
 	mensagem TEXT,
 	flag BOOLEAN
 ) AS $$ 
@@ -314,5 +314,3 @@ EXCEPTION
 		RETURN NEXT;
 END;
 $$ LANGUAGE 'plpgsql';
-
-SELECT * FROM portal.obter_osc_projetos('789809'::TEXT, 'id_osc'::TEXT, 1::INTEGER);
