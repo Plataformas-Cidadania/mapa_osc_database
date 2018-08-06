@@ -183,9 +183,9 @@ BEGIN
 												jsonb_build_object(
 													'id_objetivo_projeto', tb_objetivo_projeto.id_objetivo_projeto, 
 													'cd_objetivo_projeto', dc_meta_projeto.cd_objetivo_projeto, 
-													'tx_nome_objetivo_projeto', dc_objetivo_projeto.tx_nome_objetivo_projeto, 
+													'tx_nome_objetivo_projeto', (dc_objetivo_projeto.tx_codigo_objetivo_projeto || '. ' || dc_objetivo_projeto.tx_nome_objetivo_projeto), 
 													'cd_meta_projeto', tb_objetivo_projeto.cd_meta_projeto, 
-													'tx_nome_meta_projeto', dc_meta_projeto.tx_nome_meta_projeto, 
+													'tx_nome_meta_projeto', (dc_meta_projeto.tx_codigo_meta_projeto || '. ' || dc_meta_projeto.tx_nome_meta_projeto), 
 													'ft_objetivo_projeto', tb_objetivo_projeto.ft_objetivo_projeto
 												)
 											), '[]')
