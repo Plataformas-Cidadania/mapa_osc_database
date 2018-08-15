@@ -100,15 +100,11 @@
     </attributes>
   </connection>
   <order>
+  <hop> <from>Atualizar projeto</from><to>Set flag banco</to><enabled>Y</enabled> </hop>
+  <hop> <from>Select projeto</from><to>Atualizar projeto</to><enabled>Y</enabled> </hop>
   <hop> <from>Select Result</from><to>Copy rows to result</to><enabled>N</enabled> </hop>
   <hop> <from>Set flag banco</from><to>Select Result</to><enabled>N</enabled> </hop>
   <hop> <from>CSV file input</from><to>Select projeto</to><enabled>Y</enabled> </hop>
-  <hop> <from>Atualizar projeto</from><to>Set flag banco</to><enabled>N</enabled> </hop>
-  <hop> <from>Select projeto 2</from><to>Atualizar projeto</to><enabled>N</enabled> </hop>
-  <hop> <from>Get rows from result</from><to>Select projeto</to><enabled>N</enabled> </hop>
-  <hop> <from>Execute SQL script</from><to>Set flag banco</to><enabled>Y</enabled> </hop>
-  <hop> <from>Select projeto</from><to>Replace in string</to><enabled>Y</enabled> </hop>
-  <hop> <from>Replace in string</from><to>Execute SQL script</to><enabled>Y</enabled> </hop>
   </order>
   <step>
     <name>Atualizar projeto</name>
@@ -122,182 +118,16 @@
            <schema_name/>
            </partitioning>
     <connection>portalosc</connection>
-    <sql>&#xa;&#xa;INSERT INTO osc.tb_projeto &#x28;cd_status_projeto, ft_status_projeto, tx_descricao_projeto, ft_descricao_projeto, dt_data_inicio_projeto, ft_data_inicio_projeto, dt_data_fim_projeto,&#xa;							ft_data_fim_projeto, nr_valor_total_projeto, nr_valor_captado_projeto, ft_valor_total_projeto, ft_valor_captado_projeto, tx_identificador_projeto_externo, bo_oficial, tx_nome_projeto, ft_nome_projeto, &#xa;							id_osc, ft_identificador_projeto_externo, tx_link_projeto&#x29;&#xa;&#xa;SELECT &#x27;&#x3f;&#x27;, &#x27;&#x24;&#x7b;FONTE_CARGA&#x7d;&#x27;&#x3a;&#x3a;TEXT, RTRIM&#x28;&#x27;&#x3f;&#x27;&#x29;, &#x27;&#x24;&#x7b;FONTE_CARGA&#x7d;&#x27;&#x3a;&#x3a;TEXT, to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29;, &#x27;&#x24;&#x7b;FONTE_CARGA&#x7d;&#x27;&#x3a;&#x3a;TEXT, to_date&#x28;&#x27;&#x3f;&#x27;,&#x27;DD&#x2f;MM&#x2f;YYYY&#x27;&#x29;, &#x27;&#x24;&#x7b;FONTE_CARGA&#x7d;&#x27;&#x3a;&#x3a;TEXT, &#xa;&#x3f;&#x3a;&#x3a;DOUBLE PRECISION, &#x3f;&#x3a;&#x3a;DOUBLE PRECISION, &#x27;&#x24;&#x7b;FONTE_CARGA&#x7d;&#x27;&#x3a;&#x3a;TEXT,&#x27;&#x24;&#x7b;FONTE_CARGA&#x7d;&#x27;&#x3a;&#x3a;TEXT, &#x27;&#x3f;&#x27;, true, &#x27;&#x3f;&#x27;,&#x27;&#x24;&#x7b;FONTE_CARGA&#x7d;&#x27;&#x3a;&#x3a;TEXT, a.id_osc, &#x27;&#x24;&#x7b;FONTE_CARGA&#x7d;&#x27;&#x3a;&#x3a;TEXT, &#x27;&#x3f;&#x27;&#xa;FROM osc.tb_osc a&#xa;WHERE cd_identificador_osc &#x3d; &#x3f;&#x3a;&#x3a;NUMERIC&#xa;AND NOT EXISTS &#x28;SELECT &#x2a; FROM osc.tb_projeto WHERE osc.tb_projeto.tx_identificador_projeto_externo &#x3d; &#x27;&#x3f;&#x27; AND ft_identificador_projeto_externo &#x3d; &#x27;&#x24;&#x7b;FONTE_CARGA&#x7d;&#x27;&#x3a;&#x3a;TEXT&#x29;&#x3b;&#xa;&#xa;</sql>
+    <sql>SELECT portal.atualizar_projeto_osc&#x28;&#xa;	&#x27;&#x24;&#x7b;FONTE_CARGA&#x7d;&#x27;&#x3a;&#x3a;TEXT, &#xa;	&#x3f;&#x3a;&#x3a;NUMERIC, &#xa;	&#x3f;&#x3a;&#x3a;TEXT, &#xa;	NOW&#x28;&#x29;&#x3a;&#x3a;TIMESTAMP, &#xa;	&#x3f;&#x3a;&#x3a;JSONB, &#xa;	&#x3f;&#x3a;&#x3a;BOOLEAN, &#xa;	&#x3f;&#x3a;&#x3a;BOOLEAN, &#xa;	&#x3f;&#x3a;&#x3a;BOOLEAN, &#xa;	&#x27;&#x24;&#x7b;ID_CARGA&#x7d;&#x27;&#x3a;&#x3a;INTEGER, &#xa;	3&#x3a;&#x3a;INTEGER&#xa;&#x29;&#x3b;&#xa;</sql>
     <limit>0</limit>
-    <lookup>Select projeto 2</lookup>
-    <execute_each_row>N</execute_each_row>
+    <lookup>Select projeto</lookup>
+    <execute_each_row>Y</execute_each_row>
     <variables_active>Y</variables_active>
     <lazy_conversion_active>N</lazy_conversion_active>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>635</xloc>
-      <yloc>52</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>CSV file input</name>
-    <type>CsvInput</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <filename>&#x2f;var&#x2f;www&#x2f;html&#x2f;mapa_osc_database&#x2f;ETL&#x2f;Salic&#x2f;projetos_salic.csv</filename>
-    <filename_field/>
-    <rownum_field/>
-    <include_filename>N</include_filename>
-    <separator>&#x3b;</separator>
-    <enclosure>&#x22;</enclosure>
-    <header>N</header>
-    <buffer_size>90000</buffer_size>
-    <lazy_conversion>Y</lazy_conversion>
-    <add_filename_result>N</add_filename_result>
-    <parallel>N</parallel>
-    <newline_possible>Y</newline_possible>
-    <encoding>UTF-8</encoding>
-    <fields>
-      <field>
-        <name>nome</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>cgccpf</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>PRONAC</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>valor_aprovado</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>data_termino</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>proponente</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>data_inicio</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>valor_captado</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>sit</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>resumo</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>link</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-      <field>
-        <name>cd_status_projeto</name>
-        <type>String</type>
-        <format/>
-        <currency/>
-        <decimal/>
-        <group/>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-      </field>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>63</xloc>
-      <yloc>101</yloc>
+      <xloc>524</xloc>
+      <yloc>125</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -315,157 +145,8 @@
            </partitioning>
      <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>979</xloc>
-      <yloc>179</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Execute SQL script</name>
-    <type>ExecSQL</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <connection>portalosc</connection>
-    <execute_each_row>Y</execute_each_row>
-    <single_statement>N</single_statement>
-    <replace_variables>Y</replace_variables>
-    <quoteString>N</quoteString>
-    <sql>UPDATE osc.tb_projeto&#xa;SET tx_nome_projeto &#x3d; &#x27;&#x3f;&#x27;,&#xa;	dt_data_inicio_projeto &#x3d;   CONCAT&#x28;&#x27;&#x3f;&#x27;, NULL&#x29;&#x3a;&#x3a;DATE,&#xa;	ft_data_inicio_projeto &#x3d; &#x27;&#x24;&#x7b;FONTE_CARGA&#x7d;&#x27;&#x3a;&#x3a;TEXT,&#xa;	dt_data_fim_projeto &#x3d;  CONCAT&#x28;&#x27;&#x3f;&#x27;, NULL&#x29;&#x3a;&#x3a;DATE,&#xa;	ft_data_fim_projeto &#x3d; &#x27;&#x24;&#x7b;FONTE_CARGA&#x7d;&#x27;&#x3a;&#x3a;TEXT,&#xa;	nr_valor_total_projeto &#x3d; &#x27;&#x3f;&#x27;,&#xa;	ft_valor_total_projeto &#x3d; &#x27;&#x24;&#x7b;FONTE_CARGA&#x7d;&#x27;&#x3a;&#x3a;TEXT,&#xa;	nr_valor_captado_projeto &#x3d; &#x27;&#x3f;&#x27;,&#xa;	ft_valor_captado_projeto &#x3d; &#x27;&#x24;&#x7b;FONTE_CARGA&#x7d;&#x27;&#x3a;&#x3a;TEXT,&#xa;	tx_descricao_projeto &#x3d; &#x27;&#x3f;&#x27;,&#xa;	ft_descricao_projeto &#x3d; &#x27;&#x24;&#x7b;FONTE_CARGA&#x7d;&#x27;&#x3a;&#x3a;TEXT,&#xa;	tx_link_projeto &#x3d; &#x27;&#x3f;&#x27;,&#xa;	ft_link_projeto &#x3d; &#x27;&#x24;&#x7b;FONTE_CARGA&#x7d;&#x27;&#x3a;&#x3a;TEXT,&#xa;	tx_identificador_projeto_externo &#x3d; &#x27;&#x3f;&#x27;,&#xa;	cd_status_projeto &#x3d; &#x27;&#x3f;&#x27;,&#xa;	id_osc &#x3d; a.id_osc&#xa;FROM osc.tb_osc a &#xa;WHERE cd_identificador_osc &#x3d; &#x27;&#x3f;&#x27;&#x3a;&#x3a;NUMERIC&#xa;AND &#x28;tx_identificador_projeto_externo &#x3d; &#x27;&#x3f;&#x27; AND ft_identificador_projeto_externo &#x3d; &#x27;&#x24;&#x7b;FONTE_CARGA&#x7d;&#x27;&#x3a;&#x3a;TEXT&#x29;&#x3b;&#xa;&#xa;</sql>
-    <set_params>N</set_params>
-    <insert_field/>
-    <update_field/>
-    <delete_field/>
-    <read_field/>
-    <arguments>
-       <argument><name>nome</name></argument>
-       <argument><name>data_inicio</name></argument>
-       <argument><name>data_termino</name></argument>
-       <argument><name>valor_aprovado</name></argument>
-       <argument><name>valor_captado</name></argument>
-       <argument><name>resumo</name></argument>
-       <argument><name>link</name></argument>
-       <argument><name>PRONAC</name></argument>
-       <argument><name>cd_status_projeto</name></argument>
-       <argument><name>cgccpf</name></argument>
-       <argument><name>PRONAC</name></argument>
-    </arguments>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>645</xloc>
-      <yloc>185</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Get rows from result</name>
-    <type>RowsFromResult</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>      </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>79</xloc>
-      <yloc>194</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Replace in string</name>
-    <type>ReplaceString</type>
-    <description/>
-    <distribute>Y</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>
-      <field>
-        <in_stream_name>nome</in_stream_name>
-        <out_stream_name/>
-        <use_regex>no</use_regex>
-        <replace_string>&#x27;</replace_string>
-        <replace_by_string/>
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string/>
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-      </field>
-      <field>
-        <in_stream_name>proponente</in_stream_name>
-        <out_stream_name/>
-        <use_regex>no</use_regex>
-        <replace_string>&#x27;</replace_string>
-        <replace_by_string/>
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string/>
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-      </field>
-      <field>
-        <in_stream_name>resumo</in_stream_name>
-        <out_stream_name/>
-        <use_regex>no</use_regex>
-        <replace_string>&#x27;</replace_string>
-        <replace_by_string/>
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string/>
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-      </field>
-      <field>
-        <in_stream_name>nome</in_stream_name>
-        <out_stream_name/>
-        <use_regex>no</use_regex>
-        <replace_string>&#x22;</replace_string>
-        <replace_by_string/>
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string/>
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-      </field>
-      <field>
-        <in_stream_name>proponente</in_stream_name>
-        <out_stream_name/>
-        <use_regex>no</use_regex>
-        <replace_string>&#x22;</replace_string>
-        <replace_by_string/>
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string/>
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-      </field>
-      <field>
-        <in_stream_name>resumo</in_stream_name>
-        <out_stream_name/>
-        <use_regex>no</use_regex>
-        <replace_string>&#x22;</replace_string>
-        <replace_by_string/>
-        <set_empty_string>N</set_empty_string>
-        <replace_field_by_string/>
-        <whole_word>no</whole_word>
-        <case_sensitive>no</case_sensitive>
-      </field>
-    </fields>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>362</xloc>
-      <yloc>189</yloc>
+      <xloc>879</xloc>
+      <yloc>124</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -508,8 +189,8 @@
       </field>        <select_unspecified>N</select_unspecified>
     </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>872</xloc>
-      <yloc>181</yloc>
+      <xloc>772</xloc>
+      <yloc>126</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -525,127 +206,35 @@
            <method>none</method>
            <schema_name/>
            </partitioning>
-    <fields>      <field>        <name>nome</name>
+    <fields>      <field>        <name>cgccpf</name>
         <rename/>
         <length>-2</length>
         <precision>-2</precision>
-      </field>      <field>        <name>cgccpf</name>
+      </field>      <field>        <name>tipo_identificador</name>
         <rename/>
         <length>-2</length>
         <precision>-2</precision>
-      </field>      <field>        <name>PRONAC</name>
+      </field>      <field>        <name>projeto_json</name>
         <rename/>
         <length>-2</length>
         <precision>-2</precision>
-      </field>      <field>        <name>valor_aprovado</name>
+      </field>      <field>        <name>null_valido</name>
         <rename/>
         <length>-2</length>
         <precision>-2</precision>
-      </field>      <field>        <name>data_termino</name>
+      </field>      <field>        <name>delete_valido</name>
         <rename/>
         <length>-2</length>
         <precision>-2</precision>
-      </field>      <field>        <name>proponente</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>data_inicio</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>valor_captado</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>sit</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>resumo</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>link</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>cd_status_projeto</name>
+      </field>      <field>        <name>erro_log</name>
         <rename/>
         <length>-2</length>
         <precision>-2</precision>
       </field>        <select_unspecified>N</select_unspecified>
     </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>189</xloc>
-      <yloc>188</yloc>
-      <draw>Y</draw>
-      </GUI>
-    </step>
-
-  <step>
-    <name>Select projeto 2</name>
-    <type>SelectValues</type>
-    <description/>
-    <distribute>N</distribute>
-    <custom_distribution/>
-    <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-    <fields>      <field>        <name>nome</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>cgccpf</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>PRONAC</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>valor_aprovado</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>data_termino</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>proponente</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>data_inicio</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>valor_captado</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>sit</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>resumo</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>cd_status_projeto</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>      <field>        <name>id_osc</name>
-        <rename/>
-        <length>-2</length>
-        <precision>-2</precision>
-      </field>        <select_unspecified>N</select_unspecified>
-    </fields>     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>418</xloc>
-      <yloc>53</yloc>
+      <xloc>346</xloc>
+      <yloc>127</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
@@ -668,8 +257,141 @@
         <jsScript_script>var flag_variable &#x3d; getVariable&#x28;&#x27;FLAG_BANCO&#x27;, true&#x29;&#x3b;&#xa;&#xa;if&#x28;flag_variable &#x3d;&#x3d; true &#x26;&#x26; flag &#x3d;&#x3d; false&#x29;&#x7b;&#xa;	setVariable&#x28;&#x27;FLAG_BANCO&#x27;, false&#x29;&#x3b;&#xa;&#x7d;&#xa;</jsScript_script>
       </jsScript>    </jsScripts>    <fields>    </fields>     <cluster_schema/>
  <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>773</xloc>
-      <yloc>180</yloc>
+      <xloc>673</xloc>
+      <yloc>125</yloc>
+      <draw>Y</draw>
+      </GUI>
+    </step>
+
+  <step>
+    <name>CSV file input</name>
+    <type>CsvInput</type>
+    <description/>
+    <distribute>Y</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+         <partitioning>
+           <method>none</method>
+           <schema_name/>
+           </partitioning>
+    <filename>&#x24;&#x7b;DIR&#x7d;&#x2f;projetos_salic.csv</filename>
+    <filename_field/>
+    <rownum_field/>
+    <include_filename>N</include_filename>
+    <separator>&#x3b;</separator>
+    <enclosure>&#x22;</enclosure>
+    <header>Y</header>
+    <buffer_size>90000</buffer_size>
+    <lazy_conversion>Y</lazy_conversion>
+    <add_filename_result>N</add_filename_result>
+    <parallel>N</parallel>
+    <newline_possible>N</newline_possible>
+    <encoding/>
+    <fields>
+      <field>
+        <name>cgccpf</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>PRONAC</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>cd_status_projeto</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>projeto_json</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>origem_fonte_recursos_projeto</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>tipo_identificador</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>null_valido</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>delete_valido</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>erro_log</name>
+        <type>String</type>
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+     <cluster_schema/>
+ <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+      <xloc>227</xloc>
+      <yloc>126</yloc>
       <draw>Y</draw>
       </GUI>
     </step>
