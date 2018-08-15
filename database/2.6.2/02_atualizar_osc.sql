@@ -16,6 +16,7 @@ DECLARE
 	record_funcao_externa RECORD;
 
 BEGIN
+	osc := (jsonb_populate_record(null::osc.tb_osc, '{"id_osc": null}'::JSONB));
 	nome_tabela := 'osc.tb_osc';
 	tipo_identificador := lower(tipo_identificador);
 
@@ -132,7 +133,7 @@ EXCEPTION
 	WHEN others THEN
 		flag := false;
 
-		IF osc IS NOT null THEN
+		IF osc.id_osc IS NOT null THEN
 			IF SQLERRM <> 'funcao_externa' THEN 
 				SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, osc.id_osc, data_atualizacao::TIMESTAMP, erro_log, id_carga) AS a;
 			END IF;
