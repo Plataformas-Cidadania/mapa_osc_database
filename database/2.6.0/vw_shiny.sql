@@ -1,7 +1,9 @@
 
 DROP MATERIALIZED VIEW IF EXISTS graph.vw_shiny;
 
-CREATE MATERIALIZED VIEW graph.vw_shiny AS
+CREATE MATERIALIZED VIEW graph.vw_shiny 
+TABLESPACE shiny
+AS
 SELECT p.id_osc,
 	-- p.cd_identificador_osc,
     p.tx_razao_social_osc,
@@ -134,4 +136,4 @@ SELECT p.id_osc,
 CREATE UNIQUE INDEX ix_vw_shiny
     ON graph.vw_shiny USING btree
     (id_osc, id_projeto, cd_subarea_atuacao, cd_fonte_recursos_projeto, cd_origem_fonte_recursos_projeto, cd_meta_osc ASC NULLS LAST)
-    TABLESPACE pg_default;
+    TABLESPACE shiny;
