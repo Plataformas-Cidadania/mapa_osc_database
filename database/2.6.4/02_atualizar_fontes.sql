@@ -26,6 +26,8 @@ ALTER TABLE osc.tb_relacoes_trabalho DISABLE TRIGGER ALL;
 ALTER TABLE osc.tb_relacoes_trabalho_outra DISABLE TRIGGER ALL;
 ALTER TABLE osc.tb_representante_conselho DISABLE TRIGGER ALL;
 
+SELECT * FROM syst.atualizar_fontes_dados_geral('Representate', 'Representante de OSC');
+SELECT * FROM syst.atualizar_fontes_dados_geral('Representante', 'Representante de OSC');
 SELECT * FROM syst.atualizar_fontes_dados_geral('Representante de Organização da Sociedade Cívil', 'Representante de OSC');
 
 ALTER TABLE osc.tb_area_atuacao ENABLE TRIGGER ALL;
