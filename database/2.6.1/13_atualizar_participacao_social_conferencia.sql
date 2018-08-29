@@ -200,31 +200,3 @@ EXCEPTION
 
 END;
 $$ LANGUAGE 'plpgsql';
-
-SELECT  * FROM portal.atualizar_participacao_social_conferencia(
-	'Representante de OSC'::TEXT, 
-	'789809'::NUMERIC, 
-	'id_osc'::TEXT, 
-	now()::TIMESTAMP, 
-	'[
-	      {
-		 "cd_conferencia":132,
-		 "cd_forma_participacao_conferencia":1,
-		 "dt_ano_realizacao":null,
-		 "tx_nome_conferencia_outra":"Teste"
-	      },
-	      {
-		 "cd_conferencia":1,
-		 "cd_forma_participacao_conferencia":1,
-		 "dt_ano_realizacao":null,
-		 "tx_nome_conferencia_outro":null
-	      },
-	      {
-		 "cd_conferencia":45,
-		 "cd_forma_participacao_conferencia":1,
-		 "dt_ano_realizacao":null,
-		 "tx_nome_conferencia_outro":null
-	      }
-	]'::JSONB, 
-	true::BOOLEAN, true::BOOLEAN, true::BOOLEAN, null::INTEGER, 2::INTEGER
-);

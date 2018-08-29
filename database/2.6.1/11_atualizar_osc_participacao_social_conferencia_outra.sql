@@ -121,17 +121,3 @@ EXCEPTION
 
 END;
 $$ LANGUAGE 'plpgsql';
-
-
-
--- Teste
-SELECT * FROM portal.atualizar_osc_participacao_social_conferencia_outra(
-	'Representande de OSC'::TEXT, 
-	63::NUMERIC, 
-	now()::TIMESTAMP, 
-	'{"tx_nome_conferencia": "Teste"}'::JSONB, 
-	true::BOOLEAN, 
-	true::BOOLEAN, 
-	true::BOOLEAN, 
-	null::INTEGER
-);
