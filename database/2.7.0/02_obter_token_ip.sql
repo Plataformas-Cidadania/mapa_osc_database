@@ -45,9 +45,3 @@ EXCEPTION
 END;
 
 $$ LANGUAGE 'plpgsql';
-
-SELECT * FROM portal.obter_token_ip(
-	1::TEXT, 
-	123::TEXT, 
-	now()::TIMESTAMP
-);
