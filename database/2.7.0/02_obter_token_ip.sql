@@ -20,7 +20,7 @@ BEGIN
 	
 	IF linha_token IS null THEN 
 		INSERT INTO portal.tb_token_ip (tx_ip, tx_token, dt_data_expiracao, nr_quantidade_acessos) 
-			VALUES (ip, token, data_expericao, 0) 
+			VALUES (ip, token, data_expericao, 1) 
 			RETURNING tx_token, dt_data_expiracao, nr_quantidade_acessos 
 			INTO linha_token;
 	

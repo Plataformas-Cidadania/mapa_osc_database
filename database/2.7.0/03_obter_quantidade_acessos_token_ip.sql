@@ -21,7 +21,7 @@ BEGIN
 	IF linha_token IS NOT null THEN 
         IF linha_token.dt_data_expiracao > data_execucao THEN 
             UPDATE portal.tb_token_ip 
-                SET tx_token = token, dt_data_expiracao = data_expericao, nr_quantidade_acessos = (linha_token.nr_quantidade_acessos + 1);
+                SET nr_quantidade_acessos = (nr_quantidade_acessos + 1);
 
 			resultado := TO_JSONB(linha_token);
 			mensagem := 'Token retornado.';
