@@ -19,17 +19,23 @@ BEGIN
 		WHERE tx_ip = ip;
 
 	IF linha_token IS NOT null THEN 
-        IF linha_token.dt_data_expiracao < data_execucao THEN 
+        IF linha_token.dt_data_expiracao > data_execucao THEN 
             UPDATE portal.tb_token_ip 
-                SET tx_token = token, dt_data_expiracao = data_expericao, nr_quantidade_acessos = (linha_token.nr_quantidade_acessos + 1) 
-                RETURNING tx_token, dt_data_expiracao, nr_quantidade_acessos 
-                INTO linha_token;
-        END IF;
-	END IF;
+                SET tx_token = token, dt_data_expiracao = data_expericao, nr_quantidade_acessos = (linha_token.nr_quantidade_acessos + 1);
 
-	resultado := TO_JSONB(linha_token);
-	mensagem := 'Token retornado.';
-	flag := true;
+			resultado := TO_JSONB(linha_token);
+			mensagem := 'Token retornado.';
+			flag := true;
+
+		ELSE
+			mensagem := 'O token deste IP expirou.';
+			flag := false;
+        END IF;
+
+	ELSE 
+		mensagem := 'Este IP não possui token.';
+		flag := false;
+	END IF;
 
 	RETURN NEXT;
 
@@ -39,4 +45,5 @@ EXCEPTION
 		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, null, null, null, false, null) AS a;
 		RETURN NEXT;
 END;
+
 $$ LANGUAGE 'plpgsql';
