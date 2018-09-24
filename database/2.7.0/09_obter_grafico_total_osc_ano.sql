@@ -8,88 +8,29 @@ CREATE OR REPLACE FUNCTION portal.obter_grafico_total_osc_ano(parametros JSONB) 
 BEGIN 
 	dados := '[
 		{
-			"key": "Número OSC Parcerias",
-			"values":[
-				{
-					"label": 2009, 
-					"value": 1251
-				},
-				{
-					"label": 2010, 
-					"value": 1526
-				},
-				{
-					"label": 2011, 
-					"value" : 16090
-				},
-				{
-					"label": 2012, 
-					"value": 16557
-				},
-				{
-					"label": 2013, 
-					"value": 16642
-				},
-				{
-					"label": 2014, 
-					"value": 16974
-				},
-				{
-					"label": 2015, 
-					"value": 14984
-				},
-				{
-					"label": 2016, 
-					"value": 16086
-				},
-				{
-					"label": 2017, 
-					"value": 1441
-				}
+			"key": "Número de OSCs",
+			"values": [
+				{"label": 2010, "value": 514027}, 
+				{"label": 2011, "value": 534728},
+				{"label": 2012, "value": 539792}, 
+				{"label": 2013, "value": 546453},
+				{"label": 2014, "value": 509608}, 
+				{"label": 2015, "value": 525591},
+				{"label": 2016, "value": 820186}
 			]
 		},
 		{
-			"key": "Valor Total Pago" ,
-			"values":[
-				{
-					"label": 2009, 
-					"value": 2825785175.20046
-				},
-				{
-					"label": 2010, 
-					"value": 3689756338.37335
-				},
-				{
-					"label": 2011, 
-					"value": 6897283626.21569
-				},
-				{
-					"label": 2012, 
-					"value": 7457550609.07884
-				},
-				{
-					"label": 2013, 
-					"value": 8738240049.30125
-				},
-				{
-					"label": 2014, 
-					"value": 6582659367.61274
-				},
-				{
-					"label": 2015, 
-					"value": 3476167177.2369
-				},
-				{
-					"label": 2016, 
-					"value": 3569745888.21392
-				},
-				{
-					"label": 2017, 
-					"value": 144648063.09
-				}
+			"key": "Taxa de Crescimento Acumulado",
+			"values": [
+				{"label": 2010, "value": 0}, 
+				{"label": 2011, "value": 0.04}, 
+				{"label": 2012, "value": 0.01} , 
+				{"label": 2013, "value": 0.012},
+				{"label": 2014, "value": -0.067} , 
+				{"label": 2015, "value": 0.031},
+				{"label": 2016, "value": 0.56} 
 			]
-		}
-	]'::JSONB;
+		}'::JSONB;
 	
 	dados := '[' ||
 		RTRIM((dados->>0)::TEXT, '}') || ', ' || '"cor": ' || COALESCE('"' || ((parametros->>0)::JSONB->>'cor')::TEXT || '"', 'null') || '}, ' ||
@@ -97,8 +38,8 @@ BEGIN
 	']';
 	
 	dados := '[' ||
-		RTRIM((dados->>0)::TEXT, '}') || ', ' || '"barra": ' || COALESCE('"' || ((parametros->>0)::JSONB->>'barra')::TEXT || '"', 'null') || '}, ' ||
-		RTRIM((dados->>1)::TEXT, '}') || ', ' || '"barra": ' || COALESCE('"' || ((parametros->>1)::JSONB->>'barra')::TEXT || '"', 'null') || '}' ||
+		RTRIM((dados->>0)::TEXT, '}') || ', ' || '"bar": ' || COALESCE('"' || ((parametros->>0)::JSONB->>'bar')::TEXT || '"', 'null') || '}, ' ||
+		RTRIM((dados->>1)::TEXT, '}') || ', ' || '"bar": ' || COALESCE('"' || ((parametros->>1)::JSONB->>'bar')::TEXT || '"', 'null') || '}' ||
 	']';
 	
 	fontes := '{''MTE/RAIS'', ''MPS/CNIS''}'::TEXT[];
