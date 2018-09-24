@@ -1,7 +1,7 @@
 UPDATE graph.tb_cnes
-SET ds_gestao = "SEM GESTÃO" 
-WHERE ds_gestao LIKE "SEM GESTÃ%";
+SET ds_gestao = 'SEM GESTÃO' 
+WHERE ds_gestao LIKE 'SEM GESTÃ%';
 
 UPDATE graph.tb_cnes
-SET ds_gestao = "NÃO" 
-WHERE ds_gestao LIKE "NÃ%";
+SET ds_gestao = 'NÃO' 
+WHERE ds_gestao LIKE 'NÃ%';
