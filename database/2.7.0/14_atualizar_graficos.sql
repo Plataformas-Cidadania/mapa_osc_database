@@ -13,6 +13,7 @@ BEGIN
 	
 	FOR grafico IN SELECT * FROM portal.obter_grafico_distribuicao_osc_empregados_regiao(1) LOOP
 		id := 1;
+		lista_id := ARRAY_APPEND(lista_id, id);
 		IF (SELECT id = ANY(lista_id)) THEN 
 			UPDATE portal.tb_analise 
 			SET series_1 = grafico.dados, fontes = grafico.fontes 
@@ -25,6 +26,7 @@ BEGIN
 	
 	FOR grafico IN SELECT * FROM portal.obter_grafico_distribuicao_osc_empregados_regiao(2) LOOP
 		id := 1;
+		lista_id := ARRAY_APPEND(lista_id, id);
 		IF (SELECT id = ANY(lista_id)) THEN 
 			UPDATE portal.tb_analise 
 			SET series_2 = grafico.dados, fontes = grafico.fontes 
@@ -37,6 +39,7 @@ BEGIN
 	
 	FOR grafico IN SELECT * FROM portal.obter_grafico_empregos_formais_oscs_regiao() LOOP
 		id := 2;
+		lista_id := ARRAY_APPEND(lista_id, id);
 		IF (SELECT id = ANY(lista_id)) THEN 
 			UPDATE portal.tb_analise 
 			SET series_1 = grafico.dados, fontes = grafico.fontes 
@@ -49,6 +52,7 @@ BEGIN
 	
 	FOR grafico IN SELECT * FROM portal.obter_grafico_oscs_area_atuacao() LOOP
 		id := 3;
+		lista_id := ARRAY_APPEND(lista_id, id);
 		IF (SELECT id = ANY(lista_id)) THEN 
 			UPDATE portal.tb_analise 
 			SET series_1 = grafico.dados, fontes = grafico.fontes 
@@ -61,6 +65,7 @@ BEGIN
 	
 	FOR grafico IN SELECT * FROM portal.obter_grafico_oscs_assistencia_social_tipo_servico() LOOP
 		id := 4;
+		lista_id := ARRAY_APPEND(lista_id, id);
 		IF (SELECT id = ANY(lista_id)) THEN 
 			UPDATE portal.tb_analise 
 			SET series_1 = grafico.dados, fontes = grafico.fontes 
@@ -73,6 +78,7 @@ BEGIN
 	
 	FOR grafico IN SELECT * FROM portal.obter_grafico_oscs_saude_tipo_estabelecimento() LOOP
 		id := 5;
+		lista_id := ARRAY_APPEND(lista_id, id);
 		IF (SELECT id = ANY(lista_id)) THEN 
 			UPDATE portal.tb_analise 
 			SET series_1 = grafico.dados, fontes = grafico.fontes 
@@ -85,6 +91,7 @@ BEGIN
 	
 	FOR grafico IN SELECT * FROM portal.obter_grafico_oscs_saude_regiao_tipo_gestao(1) LOOP
 		id := 6;
+		lista_id := ARRAY_APPEND(lista_id, id);
 		IF (SELECT id = ANY(lista_id)) THEN 
 			UPDATE portal.tb_analise 
 			SET series_1 = grafico.dados, fontes = grafico.fontes 
@@ -97,6 +104,7 @@ BEGIN
 	
 	FOR grafico IN SELECT * FROM portal.obter_grafico_oscs_saude_regiao_tipo_gestao(2) LOOP
 		id := 6;
+		lista_id := ARRAY_APPEND(lista_id, id);
 		IF (SELECT id = ANY(lista_id)) THEN 
 			UPDATE portal.tb_analise 
 			SET series_2 = grafico.dados, fontes = grafico.fontes 
@@ -109,6 +117,7 @@ BEGIN
 	
 	FOR grafico IN SELECT * FROM portal.obter_grafico_oscs_economia_solidaria_regiao_tipo_vinculo(1) LOOP
 		id := 7;
+		lista_id := ARRAY_APPEND(lista_id, id);
 		IF (SELECT id = ANY(lista_id)) THEN 
 			UPDATE portal.tb_analise 
 			SET series_1 = grafico.dados, fontes = grafico.fontes 
@@ -121,6 +130,7 @@ BEGIN
 	
 	FOR grafico IN SELECT * FROM portal.obter_grafico_oscs_economia_solidaria_regiao_tipo_vinculo(2) LOOP
 		id := 7;
+		lista_id := ARRAY_APPEND(lista_id, id);
 		IF (SELECT id = ANY(lista_id)) THEN 
 			UPDATE portal.tb_analise 
 			SET series_2 = grafico.dados, fontes = grafico.fontes 
@@ -133,6 +143,7 @@ BEGIN
 	
 	FOR grafico IN SELECT * FROM portal.obter_grafico_oscs_economia_solidaria_regiao_abrangencia(1) LOOP
 		id := 8;
+		lista_id := ARRAY_APPEND(lista_id, id);
 		IF (SELECT id = ANY(lista_id)) THEN 
 			UPDATE portal.tb_analise 
 			SET series_1 = grafico.dados, fontes = grafico.fontes 
@@ -145,6 +156,7 @@ BEGIN
 	
 	FOR grafico IN SELECT * FROM portal.obter_grafico_oscs_economia_solidaria_regiao_abrangencia(2) LOOP
 		id := 8;
+		lista_id := ARRAY_APPEND(lista_id, id);
 		IF (SELECT id = ANY(lista_id)) THEN 
 			UPDATE portal.tb_analise 
 			SET series_2 = grafico.dados, fontes = grafico.fontes 
@@ -158,6 +170,7 @@ BEGIN
 	parametros_grafico := COALESCE((SELECT parametros FROM portal.tb_analise WHERE id_analise = 9), '[{"bar": true, "color": "#ccf"}, {"color": "#ff7f0e"}]'::JSONB);
 	FOR grafico IN SELECT * FROM portal.obter_grafico_total_osc_ano(parametros_grafico) LOOP
 		id := 9;
+		lista_id := ARRAY_APPEND(lista_id, id);
 		IF (SELECT id = ANY(lista_id)) THEN 
 			UPDATE portal.tb_analise 
 			SET series_1 = grafico.dados, fontes = grafico.fontes 
@@ -170,6 +183,7 @@ BEGIN
 	
 	FOR grafico IN SELECT * FROM portal.obter_grafico_osc_natureza_juridica_regiao() LOOP
 		id := 10;
+		lista_id := ARRAY_APPEND(lista_id, id);
 		IF (SELECT id = ANY(lista_id)) THEN 
 			UPDATE portal.tb_analise 
 			SET series_1 = grafico.dados, fontes = grafico.fontes 
@@ -183,6 +197,7 @@ BEGIN
 	parametros_grafico := COALESCE((SELECT parametros FROM portal.tb_analise WHERE id_analise = 11), '[{"tipo_valor": "$"}, {"tipo_valor": "$"}, {"tipo_valor": "$"}]'::JSONB);
 	FOR grafico IN SELECT * FROM portal.obter_grafico_evolucao_recursos_transferidos(parametros_grafico) LOOP
 		id := 11;
+		lista_id := ARRAY_APPEND(lista_id, id);
 		IF (SELECT id = ANY(lista_id)) THEN 
 			UPDATE portal.tb_analise 
 			SET series_1 = grafico.dados, fontes = grafico.fontes 
@@ -195,6 +210,7 @@ BEGIN
 	
 	FOR grafico IN SELECT * FROM portal.obter_grafico_osc_titulos_certificados() LOOP
 		id := 12;
+		lista_id := ARRAY_APPEND(lista_id, id);
 		IF (SELECT id = ANY(lista_id)) THEN 
 			UPDATE portal.tb_analise 
 			SET series_1 = grafico.dados, fontes = grafico.fontes 

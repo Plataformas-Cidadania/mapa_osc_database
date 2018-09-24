@@ -11,5 +11,7 @@ CREATE TABLE portal.tb_analise(
 	series_1 JSONB, 
 	series_2 JSONB, 
 	fontes TEXT[], 
+	inverter_eixo BOOLEAN, 
+	slug BOOLEAN, 
 	CONSTRAINT pk_tb_analise PRIMARY KEY (id_analise)
 );

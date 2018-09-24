@@ -20,13 +20,15 @@ BEGIN
 		legenda_y, 
 		series_1, 
 		series_2, 
-		fontes 
+		fontes, 
+		inverter_eixo, 
+		slug 
 	FROM 
 		portal.tb_analise
 	WHERE 
 		id_analise = param::INTEGER;
 
-	IF linha != (null::TEXT[], null::TEXT, null::TEXT, null::TEXT, null::TEXT[], null::TEXT, null::TEXT, null::JSONB, null::JSONB, null::TEXT[])::RECORD THEN 
+	IF linha != (null::TEXT[], null::TEXT, null::TEXT, null::TEXT, null::TEXT[], null::TEXT, null::TEXT, null::JSONB, null::JSONB, null::TEXT[], null::BOOLEAN, null::BOOLEAN)::RECORD THEN 
 		resultado := to_jsonb(linha);
 		codigo := 200;
 		mensagem := 'Dados de gráfico retornado.';
@@ -44,5 +46,3 @@ EXCEPTION
 		RETURN NEXT;
 END;
 $$ LANGUAGE 'plpgsql';
-
-SELECT * FROM portal.obter_grafico(1::TEXT);
