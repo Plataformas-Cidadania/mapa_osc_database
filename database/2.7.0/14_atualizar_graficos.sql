@@ -155,7 +155,7 @@ BEGIN
 		END IF;
 	END LOOP;
 	
-	parametros_grafico := COALESCE((SELECT parametros FROM portal.tb_analise WHERE id_analise = 9), '[{"bar": true, "cor": "#ccf"}, {"cor": "#ff7f0e"}]'::JSONB);
+	parametros_grafico := COALESCE((SELECT parametros FROM portal.tb_analise WHERE id_analise = 9), '[{"bar": true, "color": "#ccf"}, {"color": "#ff7f0e"}]'::JSONB);
 	FOR grafico IN SELECT * FROM portal.obter_grafico_total_osc_ano(parametros_grafico) LOOP
 		id := 9;
 		IF (SELECT id = ANY(lista_id)) THEN 

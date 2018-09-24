@@ -34,8 +34,8 @@ BEGIN
 	]'::JSONB;
 	
 	dados := '[' ||
-		RTRIM((dados->>0)::TEXT, '}') || ', ' || '"cor": ' || COALESCE('"' || ((parametros->>0)::JSONB->>'cor')::TEXT || '"', 'null') || '}, ' ||
-		RTRIM((dados->>1)::TEXT, '}') || ', ' || '"cor": ' || COALESCE('"' || ((parametros->>1)::JSONB->>'cor')::TEXT || '"', 'null') || '}' ||
+		RTRIM((dados->>0)::TEXT, '}') || ', ' || '"color": ' || COALESCE('"' || ((parametros->>0)::JSONB->>'color')::TEXT || '"', 'null') || '}, ' ||
+		RTRIM((dados->>1)::TEXT, '}') || ', ' || '"color": ' || COALESCE('"' || ((parametros->>1)::JSONB->>'color')::TEXT || '"', 'null') || '}' ||
 	']';
 	
 	dados := '[' ||

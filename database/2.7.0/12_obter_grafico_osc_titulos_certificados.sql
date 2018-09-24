@@ -16,7 +16,15 @@ BEGIN
 			) AS fontes 
 		FROM (
 			SELECT 
-				COALESCE(dc_certificado.tx_nome_certificado, 'Sem informação') AS rotulo, 
+				CASE 
+					WHEN dc_certificado.tx_nome_certificado = 'Entidade Ambientalista' THEN 'Entidade Ambientalista/MMA' 
+					WHEN dc_certificado.tx_nome_certificado = 'CEBAS - Educação' THEN 'CEBAS/MEC' 
+					WHEN dc_certificado.tx_nome_certificado = 'CEBAS - Saúde' THEN 'CEBAS/MS' 
+					WHEN dc_certificado.tx_nome_certificado = 'OSCIP' THEN 'OSCIP/MJ' 
+					WHEN dc_certificado.tx_nome_certificado = 'Utilidade Pública Federal' THEN 'UPF/MJ' 
+					WHEN dc_certificado.tx_nome_certificado = 'CEBAS - Assistência Social' THEN 'CEBAS/MDS' 
+					ELSE dc_certificado.tx_nome_certificado
+				END AS rotulo, 
 				COUNT(*) AS valor, 
 				(
 						SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
@@ -32,10 +40,9 @@ BEGIN
 			LEFT JOIN syst.dc_certificado 
 			ON tb_certificado.cd_certificado = dc_certificado.cd_certificado
 			WHERE tb_osc.bo_osc_ativa 
+			AND dc_certificado.tx_nome_certificado IS NOT null 
 			GROUP BY rotulo
 		) AS a;
 END;
 
 $$ LANGUAGE 'plpgsql';
-
---SELECT * FROM portal.obter_grafico_osc_titulos_certificados();
