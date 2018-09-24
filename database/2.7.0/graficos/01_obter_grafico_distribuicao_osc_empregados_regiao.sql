@@ -114,9 +114,6 @@ BEGIN
 				GROUP BY a.rotulo_2
 			) AS b;
 	END IF;
-
 END;
 
 $$ LANGUAGE 'plpgsql';
-
-SELECT * FROM portal.obter_grafico_distribuicao_osc_empregados_regiao(2);

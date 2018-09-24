@@ -98,9 +98,6 @@ BEGIN
 				GROUP BY a.rotulo_2
 			) AS b;
 	END IF;
-	
 END;
 
 $$ LANGUAGE 'plpgsql';
-
-SELECT * FROM portal.obter_grafico_oscs_saude_regiao_tipo_gestao(1);
