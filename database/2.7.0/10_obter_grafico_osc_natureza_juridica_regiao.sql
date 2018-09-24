@@ -48,6 +48,7 @@ BEGIN
 				LEFT JOIN spat.ed_regiao 
 				ON ed_regiao.edre_cd_regiao::TEXT = SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1) 
 				WHERE tb_osc.bo_osc_ativa 
+				AND tb_osc.id_osc <> 789809 
 				GROUP BY ed_regiao.edre_nm_regiao, dc_natureza_juridica.tx_nome_natureza_juridica
 			) AS a 
 			GROUP BY rotulo_1
@@ -55,5 +56,3 @@ BEGIN
 END;
 
 $$ LANGUAGE 'plpgsql';
-
---SELECT * FROM portal.obter_grafico_osc_natureza_juridica_regiao();

@@ -45,11 +45,10 @@ BEGIN
 				LEFT JOIN syst.dc_area_atuacao 
 				ON tb_area_atuacao.cd_area_atuacao = dc_area_atuacao.cd_area_atuacao 
 				WHERE tb_osc.bo_osc_ativa 
+				AND tb_osc.id_osc <> 789809 
 				GROUP BY rotulo
 			) AS a
 		) AS b;
 END;
 
 $$ LANGUAGE 'plpgsql';
-
---SELECT * FROM portal.obter_grafico_oscs_area_atuacao();

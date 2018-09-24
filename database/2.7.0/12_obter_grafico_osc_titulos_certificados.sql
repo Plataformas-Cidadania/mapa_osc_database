@@ -36,11 +36,12 @@ BEGIN
 					) AS fontes 
 			FROM osc.tb_osc 
 			LEFT JOIN osc.tb_certificado 
-			ON tb_osc.id_osc = tb_certificado.id_osc
+			ON tb_osc.id_osc = tb_certificado.id_osc 
 			LEFT JOIN syst.dc_certificado 
-			ON tb_certificado.cd_certificado = dc_certificado.cd_certificado
+			ON tb_certificado.cd_certificado = dc_certificado.cd_certificado 
 			WHERE tb_osc.bo_osc_ativa 
 			AND dc_certificado.tx_nome_certificado IS NOT null 
+			AND tb_osc.id_osc <> 789809 
 			GROUP BY rotulo
 		) AS a;
 END;

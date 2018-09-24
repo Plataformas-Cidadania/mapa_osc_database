@@ -46,6 +46,7 @@ BEGIN
 					ON tb_osc.id_osc = tb_localizacao.id_osc 
 					LEFT JOIN spat.ed_regiao 
 					ON ed_regiao.edre_cd_regiao::TEXT = SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1) 
+					WHERE tb_osc.id_osc <> 789809 
 					GROUP BY rotulo_1, rotulo_2 
 					ORDER BY rotulo_1, rotulo_2 
 				) AS a 
@@ -92,6 +93,7 @@ BEGIN
 					ON tb_osc.id_osc = tb_localizacao.id_osc 
 					LEFT JOIN spat.ed_regiao 
 					ON ed_regiao.edre_cd_regiao::TEXT = SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1) 
+					WHERE tb_osc.id_osc <> 789809 
 					GROUP BY rotulo_1, rotulo_2 
 					ORDER BY rotulo_1, rotulo_2 
 				) AS a 

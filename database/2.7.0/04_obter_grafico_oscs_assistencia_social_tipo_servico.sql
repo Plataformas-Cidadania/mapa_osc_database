@@ -45,10 +45,9 @@ BEGIN
 			INNER JOIN graph.tb_cneas_mds 
 			ON tb_osc.cd_identificador_osc::TEXT = REGEXP_REPLACE(tb_cneas_mds.cnpj, '[^0-9]', '', 'g') 
 			WHERE tb_osc.bo_osc_ativa 
+			AND tb_osc.id_osc <> 789809 
 			GROUP BY rotulo
 		) AS a;
 END;
 
 $$ LANGUAGE 'plpgsql';
-
---SELECT * FROM portal.obter_grafico_oscs_assistencia_social_tipo_servico();

@@ -58,10 +58,9 @@ BEGIN
 			INNER JOIN graph.tb_cnes 
 			ON tb_osc.cd_identificador_osc = TRANSLATE(tb_cnes.nu_cnpj_requerente, '-', '')::NUMERIC 
 			WHERE tb_osc.bo_osc_ativa 
+			AND tb_osc.id_osc <> 789809 
 			GROUP BY rotulo
 		) AS a;
 END;
 
 $$ LANGUAGE 'plpgsql';
-
---SELECT * FROM portal.obter_grafico_oscs_saude_tipo_estabelecimento();

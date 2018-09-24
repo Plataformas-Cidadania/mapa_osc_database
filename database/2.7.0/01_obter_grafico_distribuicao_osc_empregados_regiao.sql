@@ -55,6 +55,7 @@ BEGIN
 					LEFT JOIN spat.ed_regiao 
 					ON (SELECT SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1))::NUMERIC(1, 0) = ed_regiao.edre_cd_regiao 
 					WHERE tb_osc.bo_osc_ativa 
+					AND tb_osc.id_osc <> 789809 
 					GROUP BY rotulo_1, rotulo_2
 				) AS a 
 				GROUP BY a.rotulo_1
@@ -109,6 +110,7 @@ BEGIN
 					LEFT JOIN spat.ed_regiao 
 					ON (SELECT SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1))::NUMERIC(1, 0) = ed_regiao.edre_cd_regiao 
 					WHERE tb_osc.bo_osc_ativa 
+					AND tb_osc.id_osc <> 789809 
 					GROUP BY rotulo_1, rotulo_2
 				) AS a 
 				GROUP BY a.rotulo_2
