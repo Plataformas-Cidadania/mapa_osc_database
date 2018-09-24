@@ -11,7 +11,7 @@ DECLARE
 BEGIN 	
 	lista_id := (SELECT ARRAY_AGG(id_analise) FROM portal.tb_analise)::INTEGER[];
 	
-	FOR grafico IN SELECT * FROM portal.obter_grafico_distribuicao_osc_empregados_regiao(2) LOOP
+	FOR grafico IN SELECT * FROM portal.obter_grafico_distribuicao_osc_empregados_regiao(1) LOOP
 		id := 1;
 		IF (SELECT id = ANY(lista_id)) THEN 
 			UPDATE portal.tb_analise 
@@ -19,6 +19,18 @@ BEGIN
 			WHERE id_analise = id;
 		ELSE 
 			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_1, fontes) 
+			VALUES (id, '{",f", 1, ""}'::TEXT[], 'MultiBarChart', 'Distribuição de OSCs por número de empregados e região', null, null, 'Quantidade de OSC', 'Região', null, grafico.dados, grafico.fontes);
+		END IF;
+	END LOOP;
+	
+	FOR grafico IN SELECT * FROM portal.obter_grafico_distribuicao_osc_empregados_regiao(2) LOOP
+		id := 1;
+		IF (SELECT id = ANY(lista_id)) THEN 
+			UPDATE portal.tb_analise 
+			SET series_2 = grafico.dados, fontes = grafico.fontes 
+			WHERE id_analise = id;
+		ELSE 
+			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_2, fontes) 
 			VALUES (id, '{",f", 1, ""}'::TEXT[], 'MultiBarChart', 'Distribuição de OSCs por número de empregados e região', null, null, 'Quantidade de OSC', 'Região', null, grafico.dados, grafico.fontes);
 		END IF;
 	END LOOP;
