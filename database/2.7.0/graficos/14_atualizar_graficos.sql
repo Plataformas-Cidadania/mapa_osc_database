@@ -83,7 +83,7 @@ BEGIN
 		END IF;
 	END LOOP;
 	
-	FOR grafico IN SELECT * FROM portal.obter_grafico_oscs_saude_regiao_tipo_gestao() LOOP
+	FOR grafico IN SELECT * FROM portal.obter_grafico_oscs_saude_regiao_tipo_gestao(1) LOOP
 		id := 6;
 		IF (SELECT id = ANY(lista_id)) THEN 
 			UPDATE portal.tb_analise 
@@ -95,7 +95,19 @@ BEGIN
 		END IF;
 	END LOOP;
 	
-	FOR grafico IN SELECT * FROM portal.obter_grafico_oscs_economia_solidaria_regiao_tipo_vinculo() LOOP
+	FOR grafico IN SELECT * FROM portal.obter_grafico_oscs_saude_regiao_tipo_gestao(2) LOOP
+		id := 6;
+		IF (SELECT id = ANY(lista_id)) THEN 
+			UPDATE portal.tb_analise 
+			SET series_2 = grafico.dados, fontes = grafico.fontes 
+			WHERE id_analise = id;
+		ELSE 
+			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_2, fontes) 
+			VALUES (id, '{",f", 1, ""}'::TEXT[], 'MultiBarChart', 'Distribuição de OSCs de saúde por região e tipo de gestão', null, null, 'Quantidade de OSC', 'Região', null, grafico.dados, grafico.fontes);
+		END IF;
+	END LOOP;
+	
+	FOR grafico IN SELECT * FROM portal.obter_grafico_oscs_economia_solidaria_regiao_tipo_vinculo(1) LOOP
 		id := 7;
 		IF (SELECT id = ANY(lista_id)) THEN 
 			UPDATE portal.tb_analise 
@@ -107,7 +119,19 @@ BEGIN
 		END IF;
 	END LOOP;
 	
-	FOR grafico IN SELECT * FROM portal.obter_grafico_oscs_economia_solidaria_regiao_abrangencia() LOOP
+	FOR grafico IN SELECT * FROM portal.obter_grafico_oscs_economia_solidaria_regiao_tipo_vinculo(2) LOOP
+		id := 7;
+		IF (SELECT id = ANY(lista_id)) THEN 
+			UPDATE portal.tb_analise 
+			SET series_2 = grafico.dados, fontes = grafico.fontes 
+			WHERE id_analise = id;
+		ELSE 
+			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_2, fontes) 
+			VALUES (id, '{",f", 1, ""}'::TEXT[], 'DonutChart', 'Distribuição de OSCs de economia solidária por região e tipo de vínculo com outras entidades', null, null, null, null, null, grafico.dados, grafico.fontes);
+		END IF;
+	END LOOP;
+	
+	FOR grafico IN SELECT * FROM portal.obter_grafico_oscs_economia_solidaria_regiao_abrangencia(1) LOOP
 		id := 8;
 		IF (SELECT id = ANY(lista_id)) THEN 
 			UPDATE portal.tb_analise 
@@ -115,6 +139,18 @@ BEGIN
 			WHERE id_analise = id;
 		ELSE 
 			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_1, fontes) 
+			VALUES (id, '{",f", 1, ""}'::TEXT[], 'DonutChart', 'Distribuição de OSCs de economia solidária por região e abrangência da atuação', null, null, null, null, null, grafico.dados, grafico.fontes);
+		END IF;
+	END LOOP;
+	
+	FOR grafico IN SELECT * FROM portal.obter_grafico_oscs_economia_solidaria_regiao_abrangencia(2) LOOP
+		id := 8;
+		IF (SELECT id = ANY(lista_id)) THEN 
+			UPDATE portal.tb_analise 
+			SET series_2 = grafico.dados, fontes = grafico.fontes 
+			WHERE id_analise = id;
+		ELSE 
+			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_2, fontes) 
 			VALUES (id, '{",f", 1, ""}'::TEXT[], 'DonutChart', 'Distribuição de OSCs de economia solidária por região e abrangência da atuação', null, null, null, null, null, grafico.dados, grafico.fontes);
 		END IF;
 	END LOOP;
