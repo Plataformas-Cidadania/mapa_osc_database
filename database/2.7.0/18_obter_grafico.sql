@@ -22,14 +22,14 @@ BEGIN
 		series_2, 
 		fontes, 
 		inverter_eixo, 
-		slug, 
-		ativo 
+		slug
 	FROM 
 		portal.tb_analise
 	WHERE 
-		id_analise = param::INTEGER;
+		id_analise = param::INTEGER
+	AND ativo;
 
-	IF linha != (null::TEXT[], null::INTEGER, null::TEXT, null::TEXT, null::TEXT[], null::TEXT, null::TEXT, null::JSONB, null::JSONB, null::TEXT[], null::BOOLEAN, null::TEXT, null::BOOLEAN)::RECORD THEN 
+	IF linha != (null::TEXT[], null::INTEGER, null::TEXT, null::TEXT, null::TEXT[], null::TEXT, null::TEXT, null::JSONB, null::JSONB, null::TEXT[], null::BOOLEAN, null::TEXT)::RECORD THEN 
 		resultado := to_jsonb(linha);
 		codigo := 200;
 		mensagem := 'Dados de gráfico retornado.';

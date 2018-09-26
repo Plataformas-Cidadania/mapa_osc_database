@@ -18,8 +18,8 @@ BEGIN
 				SET series_1 = grafico.dados, fontes = grafico.fontes 
 				WHERE id_analise = id;
 		ELSE 
-			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_1, fontes, inverter_eixo, slug) 
-				VALUES (id, '{",f", 1, ""}'::TEXT[], 2, 'Distribuição de OSCs por número de empregados e região', null, null, 'Quantidade de OSC', 'Região', null, grafico.dados, grafico.fontes, null, null);
+			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_1, fontes, inverter_eixo, slug, ativo) 
+				VALUES (id, '{",f", 1, ""}'::TEXT[], 2, 'Distribuição de OSCs por número de empregados e região', null, null, 'Quantidade de OSC', 'Região', null, grafico.dados, grafico.fontes, null, null, true);
 			
 			lista_id := ARRAY_APPEND(lista_id, id);
 		END IF;
@@ -31,8 +31,8 @@ BEGIN
 				SET series_2 = grafico.dados, fontes = grafico.fontes 
 				WHERE id_analise = id;
 		ELSE 
-			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_2, fontes, inverter_eixo, slug) 
-				VALUES (id, '{",f", 1, ""}'::TEXT[], 2, 'Distribuição de OSCs por número de empregados e região', null, null, 'Quantidade de OSC', 'Região', null, grafico.dados, grafico.fontes, null, null);
+			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_2, fontes, inverter_eixo, slug, ativo) 
+				VALUES (id, '{",f", 1, ""}'::TEXT[], 2, 'Distribuição de OSCs por número de empregados e região', null, null, 'Quantidade de OSC', 'Região', null, grafico.dados, grafico.fontes, null, null, true);
 			
 			lista_id := ARRAY_APPEND(lista_id, id);
 		END IF;
@@ -45,8 +45,8 @@ BEGIN
 				SET series_1 = grafico.dados, fontes = grafico.fontes 
 				WHERE id_analise = id;
 		ELSE 
-			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_1, fontes, inverter_eixo, slug) 
-				VALUES (id, '{",f", 1, ""}'::TEXT[], 1, 'Número de empregos formais nas OSCs por região', null, null, 'Quantidade de empregos', 'Região', null, grafico.dados, grafico.fontes, null, null);
+			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_1, fontes, inverter_eixo, slug, ativo) 
+				VALUES (id, '{",f", 1, ""}'::TEXT[], 1, 'Número de empregos formais nas OSCs por região', null, null, 'Quantidade de empregos', 'Região', null, grafico.dados, grafico.fontes, null, null, true);
 			
 			lista_id := ARRAY_APPEND(lista_id, id);
 		END IF;
@@ -59,8 +59,8 @@ BEGIN
 				SET series_1 = grafico.dados, fontes = grafico.fontes 
 				WHERE id_analise = id;
 		ELSE 
-			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_1, fontes, inverter_eixo, slug) 
-				VALUES (id, '{",f", 1, ""}'::TEXT[], 5, 'Distribuição de OSCs por área de atuação', null, null, null, null, null, grafico.dados, grafico.fontes, null, null);
+			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_1, fontes, inverter_eixo, slug, ativo) 
+				VALUES (id, '{",f", 1, ""}'::TEXT[], 5, 'Distribuição de OSCs por área de atuação', null, null, null, null, null, grafico.dados, grafico.fontes, null, null, true);
 			
 			lista_id := ARRAY_APPEND(lista_id, id);
 		END IF;
@@ -73,8 +73,8 @@ BEGIN
 				SET series_1 = grafico.dados, fontes = grafico.fontes 
 				WHERE id_analise = id;
 		ELSE 
-			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_1, fontes, inverter_eixo, slug) 
-				VALUES (id, '{",f", 1, ""}'::TEXT[], 5, 'Distribuição de OSCs de assistência social por tipo de serviço prestado', null, null, null, null, null, grafico.dados, grafico.fontes, null, null);
+			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_1, fontes, inverter_eixo, slug, ativo) 
+				VALUES (id, '{",f", 1, ""}'::TEXT[], 5, 'Distribuição de OSCs de assistência social por tipo de serviço prestado', null, null, null, null, null, grafico.dados, grafico.fontes, null, null, true);
 			
 			lista_id := ARRAY_APPEND(lista_id, id);
 		END IF;
@@ -87,8 +87,8 @@ BEGIN
 				SET series_1 = grafico.dados, fontes = grafico.fontes 
 				WHERE id_analise = id;
 		ELSE 
-			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_1, fontes, inverter_eixo, slug) 
-				VALUES (id, '{",f", 1, ""}'::TEXT[], 5, 'Distribuição de OSCs de saúde por tipo de estabelecimento de saúde', null, null, null, null, null, grafico.dados, grafico.fontes, null, null);
+			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_1, fontes, inverter_eixo, slug, ativo) 
+				VALUES (id, '{",f", 1, ""}'::TEXT[], 5, 'Distribuição de OSCs de saúde por tipo de estabelecimento de saúde', null, null, null, null, null, grafico.dados, grafico.fontes, null, null, true);
 			
 			lista_id := ARRAY_APPEND(lista_id, id);
 		END IF;
@@ -101,8 +101,8 @@ BEGIN
 				SET series_1 = grafico.dados, fontes = grafico.fontes 
 				WHERE id_analise = id;
 		ELSE 
-			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_1, fontes, inverter_eixo, slug) 
-				VALUES (id, '{",f", 1, ""}'::TEXT[], 2, 'Distribuição de OSCs de saúde por região e tipo de gestão', null, null, 'Quantidade de OSC', 'Região', null, grafico.dados, grafico.fontes, null, null);
+			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_1, fontes, inverter_eixo, slug, ativo) 
+				VALUES (id, '{",f", 1, ""}'::TEXT[], 2, 'Distribuição de OSCs de saúde por região e tipo de gestão', null, null, 'Quantidade de OSC', 'Região', null, grafico.dados, grafico.fontes, null, null, true);
 			
 			lista_id := ARRAY_APPEND(lista_id, id);
 		END IF;
@@ -114,8 +114,8 @@ BEGIN
 				SET series_2 = grafico.dados, fontes = grafico.fontes 
 				WHERE id_analise = id;
 		ELSE 
-			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_2, fontes, inverter_eixo, slug) 
-				VALUES (id, '{",f", 1, ""}'::TEXT[], 2, 'Distribuição de OSCs de saúde por região e tipo de gestão', null, null, 'Quantidade de OSC', 'Região', null, grafico.dados, grafico.fontes, null, null);
+			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_2, fontes, inverter_eixo, slug, ativo) 
+				VALUES (id, '{",f", 1, ""}'::TEXT[], 2, 'Distribuição de OSCs de saúde por região e tipo de gestão', null, null, 'Quantidade de OSC', 'Região', null, grafico.dados, grafico.fontes, null, null, true);
 			
 			lista_id := ARRAY_APPEND(lista_id, id);
 		END IF;
@@ -128,8 +128,8 @@ BEGIN
 				SET series_1 = grafico.dados, fontes = grafico.fontes 
 				WHERE id_analise = id;
 		ELSE 
-			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_1, fontes, inverter_eixo, slug) 
-				VALUES (id, '{",f", 1, ""}'::TEXT[], 5, 'Distribuição de OSCs de economia solidária por região e tipo de vínculo com outras entidades', null, null, null, null, null, grafico.dados, grafico.fontes, null, null);
+			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_1, fontes, inverter_eixo, slug, ativo) 
+				VALUES (id, '{",f", 1, ""}'::TEXT[], 5, 'Distribuição de OSCs de economia solidária por região e tipo de vínculo com outras entidades', null, null, null, null, null, grafico.dados, grafico.fontes, null, null, true);
 			
 			lista_id := ARRAY_APPEND(lista_id, id);
 		END IF;
@@ -141,8 +141,8 @@ BEGIN
 				SET series_2 = grafico.dados, fontes = grafico.fontes 
 				WHERE id_analise = id;
 		ELSE 
-			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_2, fontes, inverter_eixo, slug) 
-				VALUES (id, '{",f", 1, ""}'::TEXT[], 5, 'Distribuição de OSCs de economia solidária por região e tipo de vínculo com outras entidades', null, null, null, null, null, grafico.dados, grafico.fontes, null, null);
+			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_2, fontes, inverter_eixo, slug, ativo) 
+				VALUES (id, '{",f", 1, ""}'::TEXT[], 5, 'Distribuição de OSCs de economia solidária por região e tipo de vínculo com outras entidades', null, null, null, null, null, grafico.dados, grafico.fontes, null, null, true);
 			
 			lista_id := ARRAY_APPEND(lista_id, id);
 		END IF;
@@ -155,8 +155,8 @@ BEGIN
 				SET series_1 = grafico.dados, fontes = grafico.fontes 
 				WHERE id_analise = id;
 		ELSE 
-			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_1, fontes, inverter_eixo, slug) 
-				VALUES (id, '{",f", 1, ""}'::TEXT[], 5, 'Distribuição de OSCs de economia solidária por região e abrangência da atuação', null, null, null, null, null, grafico.dados, grafico.fontes, null, null);
+			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_1, fontes, inverter_eixo, slug, ativo) 
+				VALUES (id, '{",f", 1, ""}'::TEXT[], 5, 'Distribuição de OSCs de economia solidária por região e abrangência da atuação', null, null, null, null, null, grafico.dados, grafico.fontes, null, null, true);
 			
 			lista_id := ARRAY_APPEND(lista_id, id);
 		END IF;
@@ -168,8 +168,8 @@ BEGIN
 				SET series_2 = grafico.dados, fontes = grafico.fontes 
 				WHERE id_analise = id;
 		ELSE 
-			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_2, fontes, inverter_eixo, slug) 
-				VALUES (id, '{",f", 1, ""}'::TEXT[], 5, 'Distribuição de OSCs de economia solidária por região e abrangência da atuação', null, null, null, null, null, grafico.dados, grafico.fontes, null, null);
+			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_2, fontes, inverter_eixo, slug, ativo) 
+				VALUES (id, '{",f", 1, ""}'::TEXT[], 5, 'Distribuição de OSCs de economia solidária por região e abrangência da atuação', null, null, null, null, null, grafico.dados, grafico.fontes, null, null, true);
 			
 			lista_id := ARRAY_APPEND(lista_id, id);
 		END IF;
@@ -183,8 +183,8 @@ BEGIN
 				SET series_1 = grafico.dados, fontes = grafico.fontes 
 				WHERE id_analise = id;
 		ELSE 
-			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_1, fontes, inverter_eixo, slug) 
-				VALUES (id, '{",f", 1000000, "M", ",f"}'::TEXT[], 4, 'Total de OSC, por ano', null, null, 'Quantidade de OSC', 'Ano', null, grafico.dados, grafico.fontes, null, null);
+			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_1, fontes, inverter_eixo, slug, ativo) 
+				VALUES (id, '{",f", 1000000, "M", ",f"}'::TEXT[], 4, 'Total de OSC, por ano', null, null, 'Quantidade de OSC', 'Ano', null, grafico.dados, grafico.fontes, null, null, true);
 			
 			lista_id := ARRAY_APPEND(lista_id, id);
 		END IF;
@@ -197,8 +197,8 @@ BEGIN
 				SET series_1 = grafico.dados, fontes = grafico.fontes 
 				WHERE id_analise = id;
 		ELSE 
-			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_1, fontes, inverter_eixo, slug) 
-				VALUES (id, '{",f", 1, ""}'::TEXT[], 2, 'Número de OSCs por natureza jurídica e região', null, null, 'Quantidade de OSC', 'Região', null, grafico.dados, grafico.fontes, null, null);
+			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_1, fontes, inverter_eixo, slug, ativo) 
+				VALUES (id, '{",f", 1, ""}'::TEXT[], 2, 'Número de OSCs por natureza jurídica e região', null, null, 'Quantidade de OSC', 'Região', null, grafico.dados, grafico.fontes, null, null, true);
 			
 			lista_id := ARRAY_APPEND(lista_id, id);
 		END IF;
@@ -212,8 +212,8 @@ BEGIN
 				SET series_1 = grafico.dados, fontes = grafico.fontes 
 				WHERE id_analise = id;
 		ELSE 
-			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_1, fontes, inverter_eixo, slug) 
-				VALUES (id, '{",.1f", 1000000000, ""}'::TEXT[], 3, 'Evolução de recursos públicos federais transferidos para entidades sem fins lucrativos e somente para OSCs', null, null, 'em Bilhões R$', 'Ano', null, grafico.dados, grafico.fontes, null, null);
+			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_1, fontes, inverter_eixo, slug, ativo) 
+				VALUES (id, '{",.1f", 1000000000, ""}'::TEXT[], 3, 'Evolução de recursos públicos federais transferidos para entidades sem fins lucrativos e somente para OSCs', null, null, 'em Bilhões R$', 'Ano', null, grafico.dados, grafico.fontes, null, null, true);
 			
 			lista_id := ARRAY_APPEND(lista_id, id);
 		END IF;
@@ -226,8 +226,8 @@ BEGIN
 				SET series_1 = grafico.dados, fontes = grafico.fontes 
 				WHERE id_analise = id;
 		ELSE 
-			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_1, fontes, inverter_eixo, slug) 
-				VALUES (id, '{",f", 1, ""}'::TEXT[], 1, 'Número de organizações civis com títulos e certificações', null, null, 'Quantidade de OSC', 'Tipo de título ou certificação', null, grafico.dados, grafico.fontes, null, null);
+			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_1, fontes, inverter_eixo, slug, ativo) 
+				VALUES (id, '{",f", 1, ""}'::TEXT[], 1, 'Número de organizações civis com títulos e certificações', null, null, 'Quantidade de OSC', 'Tipo de título ou certificação', null, grafico.dados, grafico.fontes, null, null, true);
 			
 			lista_id := ARRAY_APPEND(lista_id, id);
 		END IF;
