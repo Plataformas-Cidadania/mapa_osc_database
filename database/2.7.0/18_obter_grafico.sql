@@ -6,28 +6,32 @@ CREATE OR REPLACE FUNCTION portal.obter_grafico(param TEXT) RETURNS TABLE (
 	codigo INTEGER
 ) AS $$ 
 
-DECLARE
+DECLARE 
 	linha RECORD;
 
 BEGIN 
 	SELECT INTO linha 
-		configuracao, 
-		tipo_grafico, 
-		titulo, 
-		legenda, 
-		titulo_colunas, 
-		legenda_x, 
-		legenda_y, 
-		series_1, 
-		series_2, 
-		fontes, 
-		inverter_eixo, 
-		slug
+		tb_analise.configuracao, 
+		tb_tipo_grafico.nome_tipo_grafico AS tipo_grafico, 
+		tb_analise.titulo, 
+		tb_analise.legenda, 
+		tb_analise.titulo_colunas, 
+		tb_analise.legenda_x, 
+		tb_analise.legenda_y, 
+		tb_analise.series_1, 
+		tb_analise.series_2, 
+		tb_analise.fontes, 
+		tb_analise.inverter_eixo, 
+		tb_analise.slug
 	FROM 
-		portal.tb_analise
+		portal.tb_analise 
+	GROUP BY 
+		syst.tb_tipo_grafico 
+	ON 
+		tb_analise.tipo_grafico = tb_tipo_grafico.id_grafico 
 	WHERE 
-		id_analise = param::INTEGER
-	AND ativo;
+		tb_analise.id_analise = param::INTEGER 
+	AND tb_analise.ativo;
 
 	IF linha != (null::TEXT[], null::INTEGER, null::TEXT, null::TEXT, null::TEXT[], null::TEXT, null::TEXT, null::JSONB, null::JSONB, null::TEXT[], null::BOOLEAN, null::TEXT)::RECORD THEN 
 		resultado := to_jsonb(linha);
