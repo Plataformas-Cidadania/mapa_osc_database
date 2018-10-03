@@ -11,7 +11,7 @@ CREATE TABLE portal.tb_analise(
 	series_1 JSONB, 
 	series_2 JSONB, 
 	fontes TEXT[], 
-	inverter_eixo BOOLEAN, 
+	inverter_label BOOLEAN, 
 	slug TEXT, 
 	ativo BOOLEAN, 
 	status INTEGER, 
