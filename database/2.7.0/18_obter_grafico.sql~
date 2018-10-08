@@ -21,14 +21,14 @@ BEGIN
 		tb_analise.series_1, 
 		tb_analise.series_2, 
 		tb_analise.fontes, 
-		tb_analise.inverter_label, 
+		tb_analise.inverter_eixo, 
 		tb_analise.slug
 	FROM 
 		portal.tb_analise 
-	INNER JOIN 
+	GROUP BY 
 		syst.tb_tipo_grafico 
 	ON 
-		tb_analise.tipo_grafico = tb_tipo_grafico.id_grafico  
+		tb_analise.id_grafico = tb_tipo_grafico.id_grafico 
 	WHERE 
 		tb_analise.id_analise = param::INTEGER 
 	AND tb_analise.ativo;
