@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS portal.tb_analise;
+
 CREATE TABLE portal.tb_analise(
 	id_analise INTEGER NOT NULL,
 	configuracao TEXT[], 
