@@ -97,3 +97,4 @@ CREATE TABLE graph.tb_senaes(
 	CONSTRAINT pk_tb_senaes PRIMARY KEY (id_senaes)
 );
 
+ALTER TABLE graph.tb_senaes RENAME COLUMN ano_declaração TO ano_declaracao;
