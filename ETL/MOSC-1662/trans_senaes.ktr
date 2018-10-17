@@ -1401,7 +1401,7 @@
         <trim_type>both</trim_type>
       </field>
       <field>
-        <name>ano_declaração</name>
+        <name>ano_declaracao</name>
         <type>String</type>
         <format />
         <currency>R$</currency>
@@ -1716,7 +1716,7 @@
 		website, 
 		auto_declarado, 
 		auto_declarado_atualizacao, 
-		ano_declaração, 
+		ano_declaracao, 
 		num_fone_1, 
 		num_fone_2, 
 		num_fone_3, 
@@ -2064,7 +2064,7 @@ VALUES(
         <name>AutoDeclaradoAtualizacao</name>
       </argument>
       <argument>
-        <name>ano_declaração</name>
+        <name>ano_declaracao</name>
       </argument>
       <argument>
         <name>num_fone_1</name>
