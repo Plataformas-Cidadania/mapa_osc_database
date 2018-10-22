@@ -24,6 +24,78 @@ BEGIN
 						)) AS a
 					) AS fontes 
 				FROM (
+					SELECT 'Norte'::TEXT AS rotulo_1, 'Federação de Órgãos Sociais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Norte'::TEXT AS rotulo_1, 'Governo (Órgãos, Instituições Governamentais)'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Norte'::TEXT AS rotulo_1, 'Igreja ou Instituição Religiosa'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Norte'::TEXT AS rotulo_1, 'Instituição de Ensino, Universidade, Centro de Pesquisa'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Norte'::TEXT AS rotulo_1, 'Movimento Sindical (Sindicato, Federação, Confederação, Cent'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Norte'::TEXT AS rotulo_1, 'Não possui nenhum tipo de vínculo'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Nordeste'::TEXT AS rotulo_1, 'Federação de Órgãos Sociais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Nordeste'::TEXT AS rotulo_1, 'Governo (Órgãos, Instituições Governamentais)'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Nordeste'::TEXT AS rotulo_1, 'Igreja ou Instituição Religiosa'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Nordeste'::TEXT AS rotulo_1, 'Instituição de Ensino, Universidade, Centro de Pesquisa'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Nordeste'::TEXT AS rotulo_1, 'Movimento Sindical (Sindicato, Federação, Confederação, Cent'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Nordeste'::TEXT AS rotulo_1, 'Não possui nenhum tipo de vínculo'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Centro Oeste'::TEXT AS rotulo_1, 'Federação de Órgãos Sociais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Centro Oeste'::TEXT AS rotulo_1, 'Governo (Órgãos, Instituições Governamentais)'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Centro Oeste'::TEXT AS rotulo_1, 'Igreja ou Instituição Religiosa'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Centro Oeste'::TEXT AS rotulo_1, 'Instituição de Ensino, Universidade, Centro de Pesquisa'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Centro Oeste'::TEXT AS rotulo_1, 'Movimento Sindical (Sindicato, Federação, Confederação, Cent'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Centro Oeste'::TEXT AS rotulo_1, 'Não possui nenhum tipo de vínculo'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sudeste'::TEXT AS rotulo_1, 'Federação de Órgãos Sociais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sudeste'::TEXT AS rotulo_1, 'Governo (Órgãos, Instituições Governamentais)'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sudeste'::TEXT AS rotulo_1, 'Igreja ou Instituição Religiosa'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sudeste'::TEXT AS rotulo_1, 'Instituição de Ensino, Universidade, Centro de Pesquisa'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sudeste'::TEXT AS rotulo_1, 'Movimento Sindical (Sindicato, Federação, Confederação, Cent'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sudeste'::TEXT AS rotulo_1, 'Não possui nenhum tipo de vínculo'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sul'::TEXT AS rotulo_1, 'Federação de Órgãos Sociais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sul'::TEXT AS rotulo_1, 'Governo (Órgãos, Instituições Governamentais)'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sul'::TEXT AS rotulo_1, 'Igreja ou Instituição Religiosa'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sul'::TEXT AS rotulo_1, 'Instituição de Ensino, Universidade, Centro de Pesquisa'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sul'::TEXT AS rotulo_1, 'Movimento Sindical (Sindicato, Federação, Confederação, Cent'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sul'::TEXT AS rotulo_1, 'Não possui nenhum tipo de vínculo'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sem informação'::TEXT AS rotulo_1, 'Federação de Órgãos Sociais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sem informação'::TEXT AS rotulo_1, 'Governo (Órgãos, Instituições Governamentais)'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sem informação'::TEXT AS rotulo_1, 'Igreja ou Instituição Religiosa'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sem informação'::TEXT AS rotulo_1, 'Instituição de Ensino, Universidade, Centro de Pesquisa'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sem informação'::TEXT AS rotulo_1, 'Movimento Sindical (Sindicato, Federação, Confederação, Cent'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sem informação'::TEXT AS rotulo_1, 'Não possui nenhum tipo de vínculo'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
 					SELECT 
 						COALESCE(ed_regiao.edre_nm_regiao, 'Sem informação') AS rotulo_1, 
 						COALESCE(tb_senaes.vin_10, 'Sem informação') AS rotulo_2, 
@@ -71,6 +143,78 @@ BEGIN
 						)) AS a
 					) AS fontes 
 				FROM (
+					SELECT 'Norte'::TEXT AS rotulo_1, 'Federação de Órgãos Sociais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Norte'::TEXT AS rotulo_1, 'Governo (Órgãos, Instituições Governamentais)'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Norte'::TEXT AS rotulo_1, 'Igreja ou Instituição Religiosa'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Norte'::TEXT AS rotulo_1, 'Instituição de Ensino, Universidade, Centro de Pesquisa'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Norte'::TEXT AS rotulo_1, 'Movimento Sindical (Sindicato, Federação, Confederação, Cent'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Norte'::TEXT AS rotulo_1, 'Não possui nenhum tipo de vínculo'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Nordeste'::TEXT AS rotulo_1, 'Federação de Órgãos Sociais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Nordeste'::TEXT AS rotulo_1, 'Governo (Órgãos, Instituições Governamentais)'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Nordeste'::TEXT AS rotulo_1, 'Igreja ou Instituição Religiosa'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Nordeste'::TEXT AS rotulo_1, 'Instituição de Ensino, Universidade, Centro de Pesquisa'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Nordeste'::TEXT AS rotulo_1, 'Movimento Sindical (Sindicato, Federação, Confederação, Cent'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Nordeste'::TEXT AS rotulo_1, 'Não possui nenhum tipo de vínculo'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Centro Oeste'::TEXT AS rotulo_1, 'Federação de Órgãos Sociais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Centro Oeste'::TEXT AS rotulo_1, 'Governo (Órgãos, Instituições Governamentais)'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Centro Oeste'::TEXT AS rotulo_1, 'Igreja ou Instituição Religiosa'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Centro Oeste'::TEXT AS rotulo_1, 'Instituição de Ensino, Universidade, Centro de Pesquisa'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Centro Oeste'::TEXT AS rotulo_1, 'Movimento Sindical (Sindicato, Federação, Confederação, Cent'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Centro Oeste'::TEXT AS rotulo_1, 'Não possui nenhum tipo de vínculo'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sudeste'::TEXT AS rotulo_1, 'Federação de Órgãos Sociais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sudeste'::TEXT AS rotulo_1, 'Governo (Órgãos, Instituições Governamentais)'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sudeste'::TEXT AS rotulo_1, 'Igreja ou Instituição Religiosa'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sudeste'::TEXT AS rotulo_1, 'Instituição de Ensino, Universidade, Centro de Pesquisa'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sudeste'::TEXT AS rotulo_1, 'Movimento Sindical (Sindicato, Federação, Confederação, Cent'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sudeste'::TEXT AS rotulo_1, 'Não possui nenhum tipo de vínculo'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sul'::TEXT AS rotulo_1, 'Federação de Órgãos Sociais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sul'::TEXT AS rotulo_1, 'Governo (Órgãos, Instituições Governamentais)'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sul'::TEXT AS rotulo_1, 'Igreja ou Instituição Religiosa'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sul'::TEXT AS rotulo_1, 'Instituição de Ensino, Universidade, Centro de Pesquisa'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sul'::TEXT AS rotulo_1, 'Movimento Sindical (Sindicato, Federação, Confederação, Cent'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sul'::TEXT AS rotulo_1, 'Não possui nenhum tipo de vínculo'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sem informação'::TEXT AS rotulo_1, 'Federação de Órgãos Sociais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sem informação'::TEXT AS rotulo_1, 'Governo (Órgãos, Instituições Governamentais)'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sem informação'::TEXT AS rotulo_1, 'Igreja ou Instituição Religiosa'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sem informação'::TEXT AS rotulo_1, 'Instituição de Ensino, Universidade, Centro de Pesquisa'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sem informação'::TEXT AS rotulo_1, 'Movimento Sindical (Sindicato, Federação, Confederação, Cent'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
+					SELECT 'Sem informação'::TEXT AS rotulo_1, 'Não possui nenhum tipo de vínculo'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+					UNION 
 					SELECT 
 						COALESCE(ed_regiao.edre_nm_regiao, 'Sem informação') AS rotulo_1, 
 						COALESCE(tb_senaes.vin_10, 'Sem informação') AS rotulo_2, 
@@ -103,3 +247,5 @@ BEGIN
 END;
 
 $$ LANGUAGE 'plpgsql';
+
+SELECT * FROM portal.obter_grafico_oscs_economia_solidaria_regiao_tipo_vinculo(1::INTEGER);
