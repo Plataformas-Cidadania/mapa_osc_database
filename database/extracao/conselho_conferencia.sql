@@ -1,4 +1,4 @@
-﻿select c.tx_nome_conferencia, b.ft_conferencia, b.dt_ano_realizacao, d.tx_nome_forma_participacao_conferencia,
+select a.id_osc, c.tx_nome_conferencia, b.ft_conferencia, b.dt_ano_realizacao, d.tx_nome_forma_participacao_conferencia,
 f.tx_nome_conselho, f.tx_nome_orgao_vinculado, e.dt_data_inicio_conselho, e.dt_data_fim_conselho,
 g.tx_nome_periodicidade_reuniao_conselho
 from osc.tb_osc a 
