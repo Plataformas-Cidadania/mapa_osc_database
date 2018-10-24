@@ -265,7 +265,6 @@ BEGIN
 				) AS a 
 				GROUP BY a.rotulo_2
 			) AS b;
-
 	END IF;
 END;
 

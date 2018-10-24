@@ -191,10 +191,23 @@ BEGIN
 	END LOOP;
 	
 	id := 10;
-	FOR grafico IN SELECT * FROM portal.obter_grafico_osc_natureza_juridica_regiao() LOOP
+	FOR grafico IN SELECT * FROM portal.obter_grafico_osc_natureza_juridica_regiao(1) LOOP
 		IF (SELECT id = ANY(lista_id)) AND lista_id IS NOT null THEN 
 			UPDATE portal.tb_analise 
 				SET series_1 = grafico.dados, fontes = grafico.fontes 
+				WHERE id_analise = id;
+		ELSE 
+			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_1, fontes, inverter_label, slug, ativo) 
+				VALUES (id, '{",f", 1, ""}'::TEXT[], 2, 'Número de OSCs por natureza jurídica e região', null, null, 'Quantidade de OSC', 'Região', null, grafico.dados, grafico.fontes, null, null, true);
+			
+			lista_id := ARRAY_APPEND(lista_id, id);
+		END IF;
+	END LOOP;
+
+	FOR grafico IN SELECT * FROM portal.obter_grafico_osc_natureza_juridica_regiao(2) LOOP
+		IF (SELECT id = ANY(lista_id)) AND lista_id IS NOT null THEN 
+			UPDATE portal.tb_analise 
+				SET series_2 = grafico.dados, fontes = grafico.fontes 
 				WHERE id_analise = id;
 		ELSE 
 			INSERT INTO portal.tb_analise(id_analise, configuracao, tipo_grafico, titulo, legenda, titulo_colunas, legenda_x, legenda_y, parametros, series_1, fontes, inverter_label, slug, ativo) 
