@@ -185,7 +185,7 @@ BEGIN
 							ON ed_regiao.edre_cd_regiao::TEXT = SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1) 
 							WHERE tb_osc.id_osc <> 789809 
 							GROUP BY rotulo_1, rotulo_2 
-							ORDER BY rotulo_1, rotulo_2 
+							ORDER BY rotulo_1, rotulo_2
 						) AS a 
 						UNION 
 						SELECT 'Centro Oeste'::CHARACTER VARYING, 'Federação de Órgãos Sociais'::TEXT, 0::BIGINT, null::TEXT[] 
@@ -258,7 +258,7 @@ BEGIN
 						UNION 
 						SELECT 'Sul'::CHARACTER VARYING, 'Movimento Sindical (Sindicato, Federação, Confederação, Cent'::TEXT, 0::BIGINT, null::TEXT[] 
 						UNION 
-						SELECT 'Sul'::CHARACTER VARYING, 'Não possui nenhum tipo de vínculo'::TEXT, 0::BIGINT, null::TEXT[] 
+						SELECT 'Sul'::CHARACTER VARYING, 'Não possui nenhum tipo de vínculo'::TEXT, 0::BIGINT, null::TEXT[]
 					) AS a 
 					GROUP BY rotulo_1, rotulo_2 
 					ORDER BY rotulo_1, rotulo_2
