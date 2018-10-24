@@ -106,7 +106,7 @@ BEGIN
 						UNION 
 						SELECT 'Sul'::CHARACTER VARYING, 'SEM GESTÃO'::TEXT, 0::BIGINT, null::TEXT[] 
 						UNION 
-						SELECT 'Sul'::CHARACTER VARYING, 'Sem informação'::TEXT, 0::BIGINT, null::TEXT[] 
+						SELECT 'Sul'::CHARACTER VARYING, 'Sem informação'::TEXT, 0::BIGINT, null::TEXT[]
 					) AS a 
 					GROUP BY rotulo_1, rotulo_2 
 					ORDER BY rotulo_1, rotulo_2
