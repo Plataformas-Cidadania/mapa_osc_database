@@ -12,7 +12,7 @@ BEGIN
 				('[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG(b.dados)::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), '{'), '}') || '}]')::JSONB AS dados, 
 				(
 					SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()\"', '')) FROM (SELECT DISTINCT UNNEST(
-						TRANSLATE(ARRAY_AGG(REPLACE(TRIM(TRANSLATE(b.fontes::TEXT, '"\{}', ''), ','), '","', ','))::TEXT, '"', '')::TEXT[]
+						REPLACE(REPLACE(TRANSLATE(ARRAY_AGG(TRIM(TRANSLATE(b.fontes::TEXT, '"\{}', ''), ','))::TEXT, '"', ''), '","', ','), ',,', ',')::TEXT[]
 					)) AS a
 				) AS fontes 
 			FROM (
