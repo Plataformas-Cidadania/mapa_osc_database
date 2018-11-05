@@ -1,5 +1,6 @@
 CREATE TABLE syst.tb_tipo_grafico(
-	id_grafico INTEGER NOT NULL, 
+	id_tipo_grafico SERIAL, 
 	nome_tipo_grafico TEXT, 
-	CONSTRAINT pk_tb_tipo_grafico PRIMARY KEY (id_grafico)
+	status INTEGER, 
+	CONSTRAINT pk_tb_tipo_grafico PRIMARY KEY (id_tipo_grafico)
 );

@@ -18,5 +18,5 @@ CREATE TABLE portal.tb_analise(
 	ativo BOOLEAN, 
 	status INTEGER, 
 	CONSTRAINT pk_tb_analise PRIMARY KEY (id_analise), 
-    CONSTRAINT fk_tipo_grafico FOREIGN KEY (tipo_grafico) REFERENCES syst.tb_tipo_grafico (id_grafico)
+    CONSTRAINT fk_tipo_grafico FOREIGN KEY (tipo_grafico) REFERENCES syst.tb_tipo_grafico (id_tipo_grafico)
 );
