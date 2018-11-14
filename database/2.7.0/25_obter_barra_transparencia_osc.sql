@@ -1,6 +1,6 @@
-﻿DROP FUNCTION IF EXISTS portal.obter_barra_transparencia_osc2(INTEGER) CASCADE;
+﻿DROP FUNCTION IF EXISTS portal.obter_barra_transparencia_osc(INTEGER) CASCADE;
 
-CREATE OR REPLACE FUNCTION portal.obter_barra_transparencia_osc2(id_osc_req INTEGER) RETURNS TABLE (
+CREATE OR REPLACE FUNCTION portal.obter_barra_transparencia_osc(id_osc_req INTEGER) RETURNS TABLE (
 	transparencia_dados_gerais NUMERIC, 
 	peso_dados_gerais DOUBLE PRECISION, 
 	transparencia_area_atuacao NUMERIC, 
