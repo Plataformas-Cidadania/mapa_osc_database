@@ -47,5 +47,3 @@ BEGIN
 END;
 
 $$ LANGUAGE 'plpgsql';
-
-SELECT * FROM portal.obter_barra_transparencia_osc2(789809::INTEGER);
