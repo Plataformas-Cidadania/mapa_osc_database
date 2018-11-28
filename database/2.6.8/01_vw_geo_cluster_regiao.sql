@@ -1,4 +1,4 @@
-﻿DROP MATERIALIZED VIEW IF EXISTS spat.vw_geo_cluster_regiao CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS spat.vw_geo_cluster_regiao CASCADE;
 
 CREATE MATERIALIZED VIEW spat.vw_geo_cluster_regiao
 AS
@@ -12,7 +12,7 @@ SELECT ed_regiao.edre_cd_regiao AS id_regiao,
     round(st_x(ed_regiao.edre_centroid)::numeric, 6)::double precision AS geo_lng_centroid_regiao,
     (( SELECT count(*) AS count
            FROM osc.tb_localizacao
-      	   LEFT JOIN osc.tb_osc on osc.tb_localizacao.id_osc = osc.tb_osc.id_osc and bo_osc_ativa is true
+      	   JOIN osc.tb_osc on osc.tb_localizacao.id_osc = osc.tb_osc.id_osc and bo_osc_ativa is true
           WHERE "substring"(tb_localizacao.cd_municipio::text, 1, 1)::numeric(1,0) = ed_regiao.edre_cd_regiao))::integer AS nr_quantidade_osc_regiao
    FROM spat.ed_regiao
 UNION
@@ -25,7 +25,7 @@ UNION
     round(st_x(ed_uf.eduf_centroid)::numeric, 6)::double precision AS geo_lng_centroid_regiao,
     (( SELECT count(*) AS count
            FROM osc.tb_localizacao
-      	   LEFT JOIN osc.tb_osc on osc.tb_localizacao.id_osc = osc.tb_osc.id_osc and bo_osc_ativa is true
+      	   JOIN osc.tb_osc on osc.tb_localizacao.id_osc = osc.tb_osc.id_osc and bo_osc_ativa is true
           WHERE "substring"(tb_localizacao.cd_municipio::text, 1, 2)::numeric(2,0) = ed_uf.eduf_cd_uf))::integer AS nr_quantidade_osc_regiao
    FROM spat.ed_uf
 UNION
@@ -38,7 +38,7 @@ UNION
     round(st_x(ed_municipio.edmu_centroid)::numeric, 6)::double precision AS geo_lng_centroid_regiao,
     (( SELECT count(*) AS count
            FROM osc.tb_localizacao
-           LEFT JOIN osc.tb_osc on osc.tb_localizacao.id_osc = osc.tb_osc.id_osc and bo_osc_ativa is true
+           JOIN osc.tb_osc on osc.tb_localizacao.id_osc = osc.tb_osc.id_osc and bo_osc_ativa is true
           WHERE tb_localizacao.cd_municipio = ed_municipio.edmu_cd_municipio))::integer AS nr_quantidade_osc_regiao
    FROM spat.ed_municipio;
 
