@@ -27,7 +27,8 @@ SELECT
         SELECT dc_classe_atividade_economica.tx_nome_classe_atividade_economica
         FROM syst.dc_classe_atividade_economica
         WHERE dc_classe_atividade_economica.cd_classe_atividade_economica = tb_dados_gerais.cd_classe_atividade_economica_osc
-    ) AS tx_nome_atividade_economica
+    ) AS tx_nome_atividade_economica,
+    osc.tb_dados_gerais.im_logo
 FROM osc.tb_osc
 LEFT JOIN osc.tb_dados_gerais ON tb_osc.id_osc = tb_dados_gerais.id_osc
 LEFT JOIN osc.tb_localizacao ON tb_osc.id_osc = tb_localizacao.id_osc
