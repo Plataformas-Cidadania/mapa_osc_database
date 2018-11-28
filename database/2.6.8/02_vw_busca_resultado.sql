@@ -1,6 +1,6 @@
 DROP MATERIALIZED VIEW IF EXISTS osc.vw_busca_resultado CASCADE;
 
-CREATE MATERIALIZED VIEW portal.vw_busca_resultado 
+CREATE MATERIALIZED VIEW osc.vw_busca_resultado 
 AS
 
 SELECT 
