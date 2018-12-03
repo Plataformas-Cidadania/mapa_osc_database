@@ -85,11 +85,11 @@ BEGIN
 			WHERE tb_osc.bo_osc_ativa 
 			AND tb_osc.id_osc <> 789809 
 			AND (
-				SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1) = 11::TEXT 
+				SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1) = id_localidade::TEXT 
 				OR 
-				SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2) = 11::TEXT 
+				SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2) = id_localidade::TEXT 
 				OR 
-				tb_localizacao.cd_municipio = 11 
+				tb_localizacao.cd_municipio = id_localidade 
 			)
 		) AS a;
 END;
