@@ -94,7 +94,7 @@ BEGIN
 END;
 
 -- object: portal.vw_log_alteracao | type: MATERIALIZED VIEW --
--- DROP MATERIALIZED VIEW IF EXISTS portal.vw_log_alteracao CASCADE;
+DROP MATERIALIZED VIEW IF EXISTS portal.vw_log_alteracao CASCADE;
 CREATE MATERIALIZED VIEW portal.vw_log_alteracao
 AS
 
