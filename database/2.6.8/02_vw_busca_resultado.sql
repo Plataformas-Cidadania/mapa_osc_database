@@ -6,7 +6,7 @@ AS
 SELECT 
     tb_osc.id_osc,
     btrim(COALESCE(tb_dados_gerais.tx_nome_fantasia_osc, tb_dados_gerais.tx_razao_social_osc)) AS tx_nome_osc,
-    tb_osc.cd_identificador_osc,
+    LPAD(tb_osc.cd_identificador_osc::TEXT, 14, '0'::TEXT) AS cd_identificador_osc,
     (
         SELECT dc_natureza_juridica.tx_nome_natureza_juridica 
         FROM syst.dc_natureza_juridica 
@@ -38,3 +38,11 @@ CREATE UNIQUE INDEX ix_vw_busca_resultado
     ON osc.vw_busca_resultado USING btree
     (id_osc)
     TABLESPACE pg_default;    
+    
+CREATE OR REPLACE FUNCTION vw_busca_resultado()
+RETURNS TRIGGER AS $$
+BEGIN
+  REFRESH MATERIALIZED VIEW CONCURRENTLY osc.vw_busca_resultado;
+  RETURN NULL;
+END;
+$$ LANGUAGE plpgsql;
