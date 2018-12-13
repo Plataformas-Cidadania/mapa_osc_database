@@ -3,8 +3,11 @@ DROP FUNCTION IF EXISTS portal.load_localidade_perfil_nacional() CASCADE;
 CREATE OR REPLACE FUNCTION portal.load_localidade_perfil_nacional() RETURNS VOID AS $$ 
 
 DECLARE
+	municpios_maior_media_natureza_juridica_regiao TEXT[];
     porcentagem_maior_media_natureza_juridica_regiao NUMERIC;
+	municpios_maior_media_natureza_juridica_estado TEXT[];
     porcentagem_maior_media_natureza_juridica_estado NUMERIC;
+	municpios_maior_media_natureza_juridica_municipio TEXT[];
     porcentagem_maior_media_natureza_juridica_municipio NUMERIC;
     porcentagem_maior_media_nacional_natureza_juridica_regiao NUMERIC;
     porcentagem_maior_media_nacional_natureza_juridica_estado NUMERIC;
@@ -28,19 +31,29 @@ DECLARE
 BEGIN
 	DELETE FROM portal.tb_perfil_nacional;
 
-	SELECT INTO porcentagem_maior_media_natureza_juridica_regiao 
-		AVG(a.quantidade) AS media 
-	FROM (
-		SELECT cd_municipio, cd_natureza_juridica_osc, COUNT(*) AS quantidade
-		FROM osc.tb_dados_gerais
-		LEFT JOIN osc.tb_localizacao
-		ON tb_dados_gerais.id_osc = tb_localizacao.id_osc
-		WHERE cd_natureza_juridica_osc IS NOT null
-		GROUP BY (cd_natureza_juridica_osc, cd_municipio)
-	) AS a
-	GROUP BY a.cd_natureza_juridica_osc
-	ORDER BY media DESC
-	LIMIT 1;
+	SELECT INTO municpios_maior_media_natureza_juridica_municipio, porcentagem_maior_media_natureza_juridica_regiao 
+			ARRAY_AGG(b.nm_localidade),	b.media
+		FROM 
+		(
+			SELECT a.nm_localidade, MAX(a.quantidade) / SUM(a.quantidade) * 100 AS media
+			FROM (
+				SELECT edmu_nm_municipio || ' - ' || eduf_sg_uf AS nm_localidade, cd_natureza_juridica_osc, COUNT(*) AS quantidade
+				FROM osc.tb_dados_gerais
+				LEFT JOIN osc.tb_localizacao
+				ON tb_dados_gerais.id_osc = tb_localizacao.id_osc
+				LEFT JOIN spat.ed_municipio
+				ON tb_localizacao.cd_municipio = ed_municipio.edmu_cd_municipio
+				LEFT JOIN spat.ed_uf
+				ON ed_municipio.eduf_cd_uf = ed_uf.eduf_cd_uf
+				WHERE cd_natureza_juridica_osc IS NOT null
+				GROUP BY cd_natureza_juridica_osc, edmu_nm_municipio, eduf_sg_uf
+				ORDER BY quantidade DESC
+			) AS a
+			GROUP BY a.nm_localidade
+		) AS b
+		GROUP BY b.media
+		ORDER BY b.media DESC
+		LIMIT 1;
 
 	RAISE NOTICE '%', porcentagem_maior_media_natureza_juridica_regiao;
 	/*
