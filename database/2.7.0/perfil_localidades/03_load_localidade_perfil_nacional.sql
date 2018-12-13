@@ -31,59 +31,79 @@ DECLARE
 BEGIN
 	DELETE FROM portal.tb_perfil_nacional;
 
-	SELECT INTO municpios_maior_media_natureza_juridica_municipio, porcentagem_maior_media_natureza_juridica_regiao 
-			ARRAY_AGG(b.nm_localidade),	b.media
-		FROM 
-		(
-			SELECT a.nm_localidade, MAX(a.quantidade) / SUM(a.quantidade) * 100 AS media
-			FROM (
-				SELECT edmu_nm_municipio || ' - ' || eduf_sg_uf AS nm_localidade, cd_natureza_juridica_osc, COUNT(*) AS quantidade
-				FROM osc.tb_dados_gerais
-				LEFT JOIN osc.tb_localizacao
-				ON tb_dados_gerais.id_osc = tb_localizacao.id_osc
-				LEFT JOIN spat.ed_municipio
-				ON tb_localizacao.cd_municipio = ed_municipio.edmu_cd_municipio
-				LEFT JOIN spat.ed_uf
-				ON ed_municipio.eduf_cd_uf = ed_uf.eduf_cd_uf
-				WHERE cd_natureza_juridica_osc IS NOT null
-				GROUP BY cd_natureza_juridica_osc, edmu_nm_municipio, eduf_sg_uf
-				ORDER BY quantidade DESC
-			) AS a
-			GROUP BY a.nm_localidade
-		) AS b
-		GROUP BY b.media
-		ORDER BY b.media DESC
-		LIMIT 1;
+	SELECT INTO
+		municpios_maior_media_natureza_juridica_regiao, porcentagem_maior_media_natureza_juridica_regiao
+		ARRAY_AGG(b.nm_localidade), b.media
+	FROM 
+	(
+		SELECT a.nm_localidade, MAX(a.quantidade) / SUM(a.quantidade) * 100 AS media
+		FROM (
+			SELECT edre_nm_regiao AS nm_localidade, cd_natureza_juridica_osc, COUNT(*) AS quantidade
+			FROM osc.tb_dados_gerais
+			LEFT JOIN osc.tb_localizacao
+			ON tb_dados_gerais.id_osc = tb_localizacao.id_osc
+			LEFT JOIN spat.ed_regiao
+			ON ed_regiao.edre_cd_regiao = SUBSTRING(tb_localizacao.cd_municipio::TEXT from 1 for 1)::NUMERIC(1, 0)
+			WHERE cd_natureza_juridica_osc IS NOT null
+			GROUP BY cd_natureza_juridica_osc, edre_nm_regiao
+			ORDER BY quantidade DESC
+		) AS a
+		GROUP BY a.nm_localidade
+	) AS b
+	GROUP BY b.media
+	ORDER BY b.media DESC
+	LIMIT 1;
+
+	SELECT INTO
+		municpios_maior_media_natureza_juridica_estado, porcentagem_maior_media_natureza_juridica_estado
+		ARRAY_AGG(b.nm_localidade), b.media
+	FROM 
+	(
+		SELECT a.nm_localidade, MAX(a.quantidade) / SUM(a.quantidade) * 100 AS media
+		FROM (
+			SELECT eduf_nm_uf AS nm_localidade, cd_natureza_juridica_osc, COUNT(*) AS quantidade
+			FROM osc.tb_dados_gerais
+			LEFT JOIN osc.tb_localizacao
+			ON tb_dados_gerais.id_osc = tb_localizacao.id_osc
+			LEFT JOIN spat.ed_uf
+			ON ed_uf.eduf_cd_uf = SUBSTRING(tb_localizacao.cd_municipio::TEXT from 1 for 2)::NUMERIC(2, 0)
+			WHERE cd_natureza_juridica_osc IS NOT null
+			GROUP BY cd_natureza_juridica_osc, eduf_nm_uf
+			ORDER BY quantidade DESC
+		) AS a
+		GROUP BY a.nm_localidade
+	) AS b
+	GROUP BY b.media
+	ORDER BY b.media DESC
+	LIMIT 1;
+
+	SELECT INTO 
+		municpios_maior_media_natureza_juridica_municipio, porcentagem_maior_media_natureza_juridica_regiao 
+		ARRAY_AGG(b.nm_localidade),	b.media
+	FROM 
+	(
+		SELECT a.nm_localidade, MAX(a.quantidade) / SUM(a.quantidade) * 100 AS media
+		FROM (
+			SELECT edmu_nm_municipio || ' - ' || eduf_sg_uf AS nm_localidade, cd_natureza_juridica_osc, COUNT(*) AS quantidade
+			FROM osc.tb_dados_gerais
+			LEFT JOIN osc.tb_localizacao
+			ON tb_dados_gerais.id_osc = tb_localizacao.id_osc
+			LEFT JOIN spat.ed_municipio
+			ON tb_localizacao.cd_municipio = ed_municipio.edmu_cd_municipio
+			LEFT JOIN spat.ed_uf
+			ON ed_municipio.eduf_cd_uf = ed_uf.eduf_cd_uf
+			WHERE cd_natureza_juridica_osc IS NOT null
+			GROUP BY cd_natureza_juridica_osc, edmu_nm_municipio, eduf_sg_uf
+			ORDER BY quantidade DESC
+		) AS a
+		GROUP BY a.nm_localidade
+	) AS b
+	GROUP BY b.media
+	ORDER BY b.media DESC
+	LIMIT 1;
 
 	RAISE NOTICE '%', porcentagem_maior_media_natureza_juridica_regiao;
-	/*
-	INSERT INTO
-		portal.tb_perfil_naiconal(
-			nr_porcentagem_maior_media_natureza_juridica_regiao,
-			nr_porcentagem_maior_media_natureza_juridica_estado,
-			nr_porcentagem_maior_media_natureza_juridica_municipio,
-			tx_porcentagem_maior_media_nacional_natureza_juridica_regiao,
-			tx_porcentagem_maior_media_nacional_natureza_juridica_estado,
-			tx_porcentagem_maior_media_nacional_natureza_juridica_municipio,
-			nr_media_nacional_repasse_regiao,
-			nr_media_nacional_repasse_estado,
-			nr_media_nacional_repasse_municipio,
-			nr_porcentagem_maior_media_nacional_area_atuacao_regiao,
-			nr_porcentagem_maior_media_nacional_area_atuacao_estado,
-			nr_porcentagem_maior_media_nacional_area_atuacao_municipio,
-			tx_porcentagem_maior_media_nacional_area_atuacao_regiao,
-			tx_porcentagem_maior_media_nacional_area_atuacao_estado,
-			tx_porcentagem_maior_media_nacional_area_atuacao_municipio,
-			nr_porcentagem_maior_media_nacional_trabalhadores_regiao,
-			nr_porcentagem_maior_media_nacional_trabalhadores_estado,
-			nr_porcentagem_maior_media_nacional_trabalhadores_municipio,
-			tx_porcentagem_maior_media_nacional_trabalhadores_regiao,
-			tx_porcentagem_maior_media_nacional_trabalhadores_estado,
-			tx_porcentagem_maior_media_nacional_trabalhadores_municipio,
-		) VALUES (
-
-		);
-	*/
+	
 
 END;
 
