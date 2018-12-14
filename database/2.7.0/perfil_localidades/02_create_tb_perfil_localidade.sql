@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS portal.tb_perfil_localidade;
 
 CREATE TABLE portal.tb_perfil_localidade
 (
-    id_perfil_localidade SERIAL NOT NULL, -- Identificador do perfil da localidade
+    id INTEGER NOT NULL, -- Identificador do perfil da localidade
     id_localidade INTEGER UNIQUE NOT NULL, -- Identificador da localidade
     tx_localidade TEXT, -- Nome da localidade
 	tx_tipo_localidade TEXT, -- Nome do tipo da localidade
@@ -23,10 +23,11 @@ CREATE TABLE portal.tb_perfil_localidade
     area_atuacao JSONB, -- Dados sobre a área de atuação das OSCs na localidade
     ft_area_atuacao TEXT[], -- Fontes sobre a área de atuação das OSCs na localidade
     trabalhadores JSONB, -- Dados sobre os trabalhadores das OSCs na localidade
-    ft_trabalhadores TEXT[] -- Fontes sobre os trabalhadores das OSCs na localidade
+    ft_trabalhadores TEXT[], -- Fontes sobre os trabalhadores das OSCs na localidade
+    CONSTRAINT pk_tb_perfil PRIMARY KEY (id)
 );
 
 CREATE UNIQUE INDEX ix_perfil_localidade
     ON portal.tb_perfil_localidade USING btree
-    (id_localidade ASC NULLS LAST)
+    (id ASC NULLS LAST)
 TABLESPACE pg_default;

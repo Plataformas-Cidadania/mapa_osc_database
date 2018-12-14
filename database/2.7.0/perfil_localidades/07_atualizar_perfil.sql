@@ -3,9 +3,9 @@ DROP FUNCTION IF EXISTS portal.obter_grafico_oscs_saude_tipo_estabelecimento();
 CREATE OR REPLACE FUNCTION portal.atualizar_perfil() RETURNS VOID AS $$ 
 
 DECLARE
-    nome_tipo_localidade_regiao TEXT;
-    nome_tipo_localidade_estado TEXT;
-    nome_tipo_localidade_municipio TEXT;
+    nome_tipo_localidade_regiao := 'regiao';
+    nome_tipo_localidade_estado := 'estado';
+    nome_tipo_localidade_municipio := 'municipio';
     id_perfil INTEGER;
     nome_perfil TEXT;
     series_perfil JSONB;
@@ -13,10 +13,6 @@ DECLARE
 
 BEGIN
     DROP TABLE IF EXISTS portal.tb_perfil;
-
-    nome_tipo_localidade_regiao := 'regiao';
-    nome_tipo_localidade_estado := 'estado';
-    nome_tipo_localidade_municipio := 'municipio';
 
     /* ==================== Maior média de natureza juridica ==================== */
     nome_perfil := 'maior_media_natureza_juridica';

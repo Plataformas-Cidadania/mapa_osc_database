@@ -7,5 +7,5 @@ CREATE TABLE portal.tb_perfil
     tipo_localidade TEXT,
     series JSONB,
     fontes TEXT[],
-    CONSTRAINT pk_tb_perfil PRIMARY KEY (id_perfil)
+    CONSTRAINT pk_tb_perfil PRIMARY KEY (id)
 );
