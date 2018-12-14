@@ -3,7 +3,7 @@ DROP TABLE IF EXISTS portal.tb_perfil;
 CREATE TABLE portal.tb_perfil
 (
     id SERIAL,
-    nome_localidade TEXT,
+    nome_perfil TEXT,
     tipo_localidade TEXT,
     series JSONB,
     fonte TEXT[]

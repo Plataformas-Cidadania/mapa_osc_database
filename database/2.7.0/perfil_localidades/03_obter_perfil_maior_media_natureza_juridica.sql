@@ -25,7 +25,8 @@ BEGIN
 					FROM (
 						SELECT
 							edre_nm_regiao AS nm_localidade,
-							cd_natureza_juridica_osc, COUNT(*) AS quantidade,
+							cd_natureza_juridica_osc,
+							COUNT(*) AS quantidade,
 							(
 								SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
 									ARRAY_CAT(
@@ -67,7 +68,8 @@ BEGIN
 					FROM (
 						SELECT
 							eduf_nm_uf AS nm_localidade,
-							cd_natureza_juridica_osc, COUNT(*) AS quantidade,
+							cd_natureza_juridica_osc,
+							COUNT(*) AS quantidade,
 							(
 								SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
 									ARRAY_CAT(
@@ -109,7 +111,8 @@ BEGIN
 					FROM (
 						SELECT
 							edmu_nm_municipio || ' - ' || eduf_sg_uf AS nm_localidade,
-							cd_natureza_juridica_osc, COUNT(*) AS quantidade,
+							cd_natureza_juridica_osc,
+							COUNT(*) AS quantidade,
 							(
 								SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
 									ARRAY_CAT(
