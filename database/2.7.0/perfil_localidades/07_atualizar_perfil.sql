@@ -1,3 +1,5 @@
+DROP FUNCTION IF EXISTS portal.obter_grafico_oscs_saude_tipo_estabelecimento();
+
 CREATE OR REPLACE FUNCTION portal.atualizar_perfil() RETURNS VOID AS $$ 
 
 DECLARE
@@ -260,4 +262,4 @@ END;
 
 $$ LANGUAGE 'plpgsql';
 
-SELECT * FROM portal.obter_perfil_maior_media_trabalhadores('regiao'::TEXT);
+SELECT * FROM portal.atualizar_perfil();
