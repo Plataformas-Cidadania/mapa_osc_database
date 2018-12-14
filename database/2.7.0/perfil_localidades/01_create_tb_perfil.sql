@@ -1,7 +1,13 @@
-DROP TABLE IF EXISTS portal.tb_perfil_nacional;
+DROP TABLE IF EXISTS portal.tb_perfil;
 
-CREATE TABLE portal.tb_perfil_nacional
+CREATE TABLE portal.tb_perfil
 (
+    id SERIAL,
+    nome_localidade TEXT,
+    tipo_localidade TEXT,
+    series JSONB,
+    fonte TEXT[]
+    /*
     tx_maior_media_nacional_natureza_juridica_regiao TEXT[],
     nr_porcentagem_maior_media_natureza_juridica_regiao NUMERIC,
     tx_maior_media_nacional_natureza_juridica_estado TEXT[],
@@ -26,4 +32,5 @@ CREATE TABLE portal.tb_perfil_nacional
     tx_porcentagem_maior_media_nacional_trabalhadores_regiao NUMERIC,
     tx_porcentagem_maior_media_nacional_trabalhadores_estado NUMERIC,
     tx_porcentagem_maior_media_nacional_trabalhadores_municipio NUMERIC
+    */
 );
