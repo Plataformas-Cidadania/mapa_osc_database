@@ -72,3 +72,9 @@ LEFT JOIN syst.dc_situacao_imovel ON dc_situacao_imovel.cd_situacao_imovel = tb_
 LEFT JOIN spat.ed_municipio ON ed_municipio.edmu_cd_municipio = tb_localizacao.cd_municipio
 LEFT JOIN spat.ed_uf ON ed_uf.eduf_cd_uf = substr(tb_localizacao.cd_municipio::text, 0, 3)::numeric(2,0)
 WHERE tb_osc.bo_osc_ativa;
+
+CREATE UNIQUE INDEX ix_vw_osc_dados_gerais
+    ON portal.vw_osc_dados_gerais USING btree
+    (id_osc ASC NULLS LAST)
+TABLESPACE pg_default;
+
