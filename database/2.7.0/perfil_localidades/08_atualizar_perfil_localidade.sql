@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS portal.atualizar_localidade_perfil_localidade() CASCADE;
+DROP FUNCTION IF EXISTS portal.atualizar_perfil_localidade() CASCADE;
 
-CREATE OR REPLACE FUNCTION portal.atualizar_localidade_perfil_localidade() RETURNS VOID AS $$ 
+CREATE OR REPLACE FUNCTION portal.atualizar_perfil_localidade() RETURNS VOID AS $$ 
 
 DECLARE
     id_perfil := 1;
@@ -83,7 +83,7 @@ BEGIN
     FOR localidade IN
         SELECT 
             edre_cd_regiao::NUMERIC AS id_localidade, 
-            edmu_nm_municipio::TEXT AS nome_localidade,
+            edre_nm_regiao::TEXT AS nome_localidade,
             nome_tipo_localidade_regiao AS tipo_localidade 
             FROM spat.ed_regiao
 		UNION
@@ -95,9 +95,10 @@ BEGIN
 		UNION
 		SELECT 
             edmu_cd_municipio::NUMERIC AS id_localidade, 
-            edre_nm_regiao::TEXT AS nome_localidade,
+            edmu_nm_municipio::TEXT AS nome_localidade,
             nome_tipo_localidade_municipio AS tipo_localidade 
             FROM spat.ed_municipio
+        ORDER BY id_localidade
     LOOP
         INSERT INTO 
             portal.tb_perfil_localidade(
