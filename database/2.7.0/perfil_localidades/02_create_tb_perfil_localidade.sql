@@ -24,7 +24,7 @@ CREATE TABLE portal.tb_perfil_localidade
     ft_area_atuacao TEXT[], -- Fontes sobre a área de atuação das OSCs na localidade
     trabalhadores JSONB, -- Dados sobre os trabalhadores das OSCs na localidade
     ft_trabalhadores TEXT[], -- Fontes sobre os trabalhadores das OSCs na localidade
-    CONSTRAINT pk_tb_perfil PRIMARY KEY (id)
+    CONSTRAINT pk_tb_perfil_localidade PRIMARY KEY (id)
 );
 
 CREATE UNIQUE INDEX ix_perfil_localidade
