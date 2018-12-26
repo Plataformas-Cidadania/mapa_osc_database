@@ -6,14 +6,14 @@ CREATE OR REPLACE FUNCTION portal.obter_perfil_localidade_natureza_juridica(id_l
 ) AS $$ 
 
 BEGIN 
-	RETURN QUERY 
-		SELECT 
-			('{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG(
+	RETURN QUERY
+		SELECT
+			('[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG(
 				'{' ||
 					'"tx_nome_natureza_juridica": "' || a.tx_nome_natureza_juridica::TEXT || '", ' ||
 					'"nr_quantidade_oscs": "' || a.nr_quantidade_oscs::TEXT ||  '"' ||
 				'}'
-			)::TEXT, '\', '') || '}'), '""', '"'), '","', ','), '{"{"', '{"'), '"}"}', '"}'), '{'), '}') || '}')::JSONB AS dados, 
+			)::TEXT, '\', '') || '}'), '{"{"', '{"'), '"}"}', '"}'), '","', ','), '{'), '}') || '}]')::JSONB AS dados,
 			(
 				SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()\"', '')) FROM (SELECT DISTINCT UNNEST(
 					TRANSLATE(ARRAY_AGG(REPLACE(REPLACE(TRIM(TRANSLATE(a.fontes::TEXT, '"\{}', ''), ','), '","', ','), ',,', ','))::TEXT, '"', '')::TEXT[]
@@ -34,7 +34,7 @@ BEGIN
 							)
 						)
 					) AS a
-				) AS fontes 
+				) AS fontes
 			FROM osc.tb_osc
 			LEFT JOIN osc.tb_dados_gerais
 			ON tb_osc.id_osc = tb_dados_gerais.id_osc
