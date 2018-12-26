@@ -46,8 +46,8 @@ BEGIN
 												ARRAY_CAT(
 													ARRAY_CAT(
 														ARRAY_CAT(
-															ARRAY_AGG(DISTINCT COALESCE(tb_osc.ft_identificador_osc, '')), 
-															ARRAY_AGG(DISTINCT COALESCE(tb_osc.ft_osc_ativa, ''))
+															ARRAY_AGG(DISTINCT COALESCE(tb_osc.ft_osc_ativa, '')), 
+															ARRAY_AGG(DISTINCT COALESCE(tb_localizacao.ft_municipio, ''))
 														),
 														ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho.ft_trabalhadores_vinculo, ''))
 													),

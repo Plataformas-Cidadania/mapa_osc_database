@@ -8,14 +8,12 @@ CREATE OR REPLACE FUNCTION portal.obter_perfil_localidade_natureza_juridica(id_l
 BEGIN 
 	RETURN QUERY 
 		SELECT 
-			('{' || RTRIM(LTRIM(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG(
+			('{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG(
 				'{' ||
-					'"nr_quantidade_oscs": "' || a.nr_quantidade_oscs::TEXT || '", ' || 
-					'"nr_quantidade_trabalhadores": "' || a.nr_quantidade_trabalhadores::TEXT ||  '", ' || 
-					'"nr_quantidade_recursos": "' || a.nr_quantidade_recursos::TEXT || '", ' || 
-					'"nr_quantidade_projetos": "' || a.nr_quantidade_projetos::TEXT ||  '"' || 
+					'"tx_nome_natureza_juridica": "' || a.tx_nome_natureza_juridica::TEXT || '", ' ||
+					'"nr_quantidade_oscs": "' || a.nr_quantidade_oscs::TEXT ||  '"' ||
 				'}'
-			)::TEXT, '\', '') || '}'), '{"{"', '{"'), '"}"}', '"}'), '{'), '}') || '}')::JSONB AS dados, 
+			)::TEXT, '\', '') || '}'), '""', '"'), '","', ','), '{"{"', '{"'), '"}"}', '"}'), '{'), '}') || '}')::JSONB AS dados, 
 			(
 				SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()\"', '')) FROM (SELECT DISTINCT UNNEST(
 					TRANSLATE(ARRAY_AGG(REPLACE(REPLACE(TRIM(TRANSLATE(a.fontes::TEXT, '"\{}', ''), ','), '","', ','), ',,', ','))::TEXT, '"', '')::TEXT[]
@@ -23,74 +21,39 @@ BEGIN
 			) AS fontes 
 		FROM (
 			SELECT 
-				COUNT(tb_osc) AS nr_quantidade_oscs, 
-				COALESCE(SUM(
-					COALESCE(tb_relacoes_trabalho.nr_trabalhadores_vinculo, 0) + 
-					COALESCE(tb_relacoes_trabalho.nr_trabalhadores_deficiencia, 0) + 
-					COALESCE(tb_relacoes_trabalho.nr_trabalhadores_voluntarios, 0) + 
-					COALESCE(tb_relacoes_trabalho_outra.nr_trabalhadores, 0)
-				), 0) AS nr_quantidade_trabalhadores, 
-				COALESCE(SUM(
-					COALESCE(tb_recursos_osc.nr_valor_recursos_osc, 0) + 
-					COALESCE(tb_recursos_outro_osc.nr_valor_recursos_outro_osc, 0)
-				), 0) AS nr_quantidade_recursos, 
-				COUNT(tb_projeto) AS nr_quantidade_projetos, 
+				COALESCE(dc_natureza_juridica.tx_nome_natureza_juridica, 'Sem informação') AS tx_nome_natureza_juridica,
+				COUNT(tb_osc) AS nr_quantidade_oscs,
 				(
 					SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
-						ARRAY_CAT(
 							ARRAY_CAT(
 								ARRAY_CAT(
-									ARRAY_CAT(
-										ARRAY_CAT(
-											ARRAY_CAT(
-												ARRAY_CAT(
-													ARRAY_CAT(
-														ARRAY_CAT(
-															ARRAY_AGG(DISTINCT COALESCE(tb_osc.ft_identificador_osc, '')), 
-															ARRAY_AGG(DISTINCT COALESCE(tb_osc.ft_osc_ativa, ''))
-														),
-														ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho.ft_trabalhadores_vinculo, ''))
-													),
-													ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho.ft_trabalhadores_deficiencia, ''))
-												),
-												ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho.ft_trabalhadores_voluntarios, ''))
-											),
-											ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho_outra.ft_trabalhadores, ''))
-										),
-										ARRAY_AGG(DISTINCT COALESCE(tb_recursos_osc.ft_valor_recursos_osc, ''))
-									),
-									ARRAY_AGG(DISTINCT COALESCE(tb_recursos_outro_osc.ft_valor_recursos_outro_osc, ''))
+									ARRAY_AGG(DISTINCT COALESCE(tb_osc.ft_osc_ativa, '')), 
+									ARRAY_AGG(DISTINCT COALESCE(tb_localizacao.ft_municipio, ''))
 								),
-								ARRAY_AGG(DISTINCT COALESCE(tb_projeto.ft_nome_projeto, ''))
-							),
-							ARRAY_AGG(DISTINCT COALESCE(tb_projeto.ft_identificador_projeto_externo, ''))
+								ARRAY_AGG(DISTINCT COALESCE(tb_dados_gerais.ft_natureza_juridica_osc, ''))
+							)
 						)
-					)) AS a
+					) AS a
 				) AS fontes 
-			FROM osc.tb_osc 
-			LEFT JOIN osc.tb_relacoes_trabalho 
-			ON tb_osc.id_osc = tb_relacoes_trabalho.id_osc 
-			LEFT JOIN osc.tb_relacoes_trabalho_outra 
-			ON tb_osc.id_osc = tb_relacoes_trabalho_outra.id_osc 
-			LEFT JOIN osc.tb_recursos_osc 
-			ON tb_osc.id_osc = tb_recursos_osc.id_osc 
-			LEFT JOIN osc.tb_recursos_outro_osc 
-			ON tb_osc.id_osc = tb_recursos_outro_osc.id_osc 
-			LEFT JOIN osc.tb_projeto 
-			ON tb_osc.id_osc = tb_projeto.id_osc 
-			LEFT JOIN osc.tb_localizacao 
-			ON tb_osc.id_osc = tb_localizacao.id_osc 
-			LEFT JOIN spat.ed_regiao 
-			ON (SELECT SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1))::NUMERIC(1, 0) = ed_regiao.edre_cd_regiao 
-			WHERE tb_osc.bo_osc_ativa 
-			AND tb_osc.id_osc <> 789809 
+			FROM osc.tb_osc
+			LEFT JOIN osc.tb_dados_gerais
+			ON tb_osc.id_osc = tb_dados_gerais.id_osc
+			LEFT JOIN syst.dc_natureza_juridica
+			ON tb_dados_gerais.cd_natureza_juridica_osc = dc_natureza_juridica.cd_natureza_juridica
+			LEFT JOIN osc.tb_localizacao
+			ON tb_osc.id_osc = tb_localizacao.id_osc
+			LEFT JOIN spat.ed_regiao
+			ON (SELECT SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1))::NUMERIC(1, 0) = ed_regiao.edre_cd_regiao
+			WHERE tb_osc.bo_osc_ativa
+			AND tb_osc.id_osc <> 789809
 			AND (
-				SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1) = id_localidade::TEXT 
-				OR 
-				SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2) = id_localidade::TEXT 
-				OR 
-				tb_localizacao.cd_municipio = id_localidade 
+				SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1) = id_localidade::TEXT
+				OR
+				SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2) = id_localidade::TEXT
+				OR
+				tb_localizacao.cd_municipio = id_localidade
 			)
+			GROUP BY dc_natureza_juridica.tx_nome_natureza_juridica
 		) AS a;
 END;
 
