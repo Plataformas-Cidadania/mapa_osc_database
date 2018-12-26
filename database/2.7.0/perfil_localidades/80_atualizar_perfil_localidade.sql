@@ -29,6 +29,15 @@ BEGIN
             SET caracteristicas = dados_localidade,
                 ft_caracteristicas = fontes_localidade
             WHERE id = localidade.id;
+
+        /* ==================== Atualização de natureza jurídica do perfil ==================== */
+        SELECT INTO dados_localidade, fontes_localidade dados, fontes
+            FROM portal.obter_perfil_localidade_natureza_juridica(localidade.id_localidade);
+
+        UPDATE portal.tb_perfil_localidade
+            SET caracteristicas = dados_localidade,
+                ft_caracteristicas = fontes_localidade
+            WHERE id = localidade.id;
     END LOOP;
 
 END;
