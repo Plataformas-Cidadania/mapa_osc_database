@@ -96,4 +96,4 @@ END;
 
 $$ LANGUAGE 'plpgsql';
 
-SELECT * FROM portal.obter_perfil_localidade_caracteristicas(11);
+SELECT * FROM portal.obter_perfil_localidade_caracteristicas(35);
