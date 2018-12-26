@@ -23,16 +23,16 @@ BEGIN
 		FROM (
 			SELECT 
 				COUNT(tb_osc) AS nr_quantidade_oscs, 
-				SUM(
+				COALESCE(SUM(
 					COALESCE(tb_relacoes_trabalho.nr_trabalhadores_vinculo, 0) + 
 					COALESCE(tb_relacoes_trabalho.nr_trabalhadores_deficiencia, 0) + 
 					COALESCE(tb_relacoes_trabalho.nr_trabalhadores_voluntarios, 0) + 
 					COALESCE(tb_relacoes_trabalho_outra.nr_trabalhadores, 0)
-				) AS nr_quantidade_trabalhadores, 
-				SUM(
+				), 0) AS nr_quantidade_trabalhadores, 
+				COALESCE(SUM(
 					COALESCE(tb_recursos_osc.nr_valor_recursos_osc, 0) + 
 					COALESCE(tb_recursos_outro_osc.nr_valor_recursos_outro_osc, 0)
-				) AS nr_quantidade_recursos, 
+				), 0) AS nr_quantidade_recursos, 
 				COUNT(tb_projeto) AS nr_quantidade_projetos, 
 				(
 					SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
