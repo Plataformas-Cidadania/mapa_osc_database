@@ -43,11 +43,11 @@ BEGIN
 			WHERE tb_osc.bo_osc_ativa
 			AND tb_osc.id_osc <> 789809
 			AND (
-				SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1) = 35::TEXT
+				SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1) = id_localidade::TEXT
 				OR
-				SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2) = 35::TEXT
+				SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2) = id_localidade::TEXT
 				OR
-				tb_localizacao.cd_municipio = 35
+				tb_localizacao.cd_municipio = id_localidade
 			)
 			GROUP BY dt_ano_recursos, tx_nome_fonte_recursos_osc
 		) AS a 

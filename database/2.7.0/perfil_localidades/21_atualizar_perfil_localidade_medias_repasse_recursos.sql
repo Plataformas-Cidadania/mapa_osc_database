@@ -13,6 +13,7 @@ DECLARE
 	series JSONB;
 	dados JSONB;
 	atualizado JSONB;
+	soma_repasse_localidade DOUBLE PRECISION;
 	media_localidade DOUBLE PRECISION;
 	repasse_maior_media_localidade TEXT;
 	maior_media_localidade DOUBLE PRECISION;
@@ -72,7 +73,7 @@ BEGIN
 		--OR tx_tipo_localidade = 'estado'
 	LOOP
 		atualizado := '[]'::JSONB;
-		quantidade_osc_localidade := (carasteristicas->>'nr_quantidade_oscs')::INTEGER;
+		soma_repasse_localidade := 0;
 		media_localidade := 0;
 		repasse_maior_media_localidade := '';
 		maior_media_localidade := 0;
@@ -82,7 +83,14 @@ BEGIN
 		ELSE
 			series := localidade.repasse_recursos->>'series_1';
 		END IF;
-		
+
+		FOR dados IN 
+			SELECT *
+			FROM jsonb_array_elements(series)
+		LOOP
+
+		END LOOP;
+
 		FOR dados IN 
 			SELECT *
 			FROM jsonb_array_elements(series)
@@ -95,7 +103,6 @@ BEGIN
 				repasse_maior_media_localidade := (dados->>'tx_nome_natureza_juridica')::TEXT;
 				maior_media_localidade := media_localidade;
 			END IF;
-			
 		END LOOP;
 		
 		atualizado := ('{
@@ -110,23 +117,7 @@ BEGIN
 		SET natureza_juridica = atualizado
 		WHERE id_localidade = localidade.id_localidade;
 	END LOOP;
-	
 
-
-	/* ------------------------------ Cálculo da média das localidades ------------------------------ */
-	FOR localidade IN
-		SELECT id_localidade, caracteristicas, natureza_juridica
-		FROM portal.tb_perfil_localidade
-		WHERE tx_tipo_localidade = 'regiao'
-		--OR tx_tipo_localidade = 'estado'
-	LOOP
-		IF (localidade.natureza_juridica->>'values') IS null THEN
-			series := localidade.natureza_juridica;
-		ELSE
-			series := localidade.natureza_juridica->>'values';
-		END IF;
-
-	END LOOP;
 END;
 
 $$ LANGUAGE 'plpgsql';
