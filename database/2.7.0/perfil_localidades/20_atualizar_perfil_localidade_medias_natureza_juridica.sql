@@ -5,7 +5,6 @@ CREATE OR REPLACE FUNCTION portal.atualizar_perfil_localidade_medias_natureza_ju
 DECLARE
 	nacional RECORD;
 	quantidade_osc_nacional INTEGER;
-	media_nacional DOUBLE PRECISION;
 	natureza_juridica_maior_media_nacional TEXT;
 	maior_media_nacional DOUBLE PRECISION;
 	localidade RECORD;
@@ -19,7 +18,6 @@ DECLARE
 
 BEGIN
 	/* ------------------------------ Cálculo da média nacional ------------------------------ */
-	natureza_juridica_maior_media_nacional := '';
 	maior_media_nacional := 0;
 	
 	SELECT INTO quantidade_osc_nacional COUNT(*)
@@ -41,15 +39,11 @@ BEGIN
 		WHERE tb_osc.bo_osc_ativa
 		AND tb_osc.id_osc <> 789809
 		GROUP BY dc_natureza_juridica.tx_nome_natureza_juridica
+		ORDER BY nr_quantidade_oscs DESC
+		LIMIT 1
 	LOOP
-		media_nacional := 0;
-		
-		media_nacional := nacional.nr_quantidade_oscs::DOUBLE PRECISION / quantidade_osc_nacional::DOUBLE PRECISION * 100;
-
-		IF media_nacional >= maior_media_nacional THEN
-			natureza_juridica_maior_media_nacional := nacional.tx_nome_natureza_juridica::TEXT;
-			maior_media_nacional := media_nacional;
-		END IF;
+		natureza_juridica_maior_media_nacional := nacional.tx_nome_natureza_juridica::TEXT;
+		maior_media_nacional := nacional.nr_quantidade_oscs::DOUBLE PRECISION / quantidade_osc_nacional::DOUBLE PRECISION * 100;
 	END LOOP;
 
 

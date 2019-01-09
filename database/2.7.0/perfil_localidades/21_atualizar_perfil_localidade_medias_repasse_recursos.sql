@@ -19,7 +19,9 @@ DECLARE
 	maior_media_localidade DOUBLE PRECISION;
 
 BEGIN
-	/* ------------------------------ Cálculo da média nacional ------------------------------ */	
+	/* ------------------------------ Cálculo da média nacional ------------------------------ */
+	maior_media_nacional := 0;
+	
 	SELECT INTO quantidade_osc_nacional COUNT(*)
 	FROM osc.tb_osc
 	LEFT JOIN osc.tb_dados_gerais
@@ -63,11 +65,9 @@ BEGIN
 
 
 
-
 	/* ------------------------------ Cálculo da média das localidades ------------------------------ */
-	/*
 	FOR localidade IN
-		SELECT id_localidade, natureza_juridica
+		SELECT id_localidade, repasse_recursos
 		FROM portal.tb_perfil_localidade
 		WHERE tx_tipo_localidade = 'regiao'
 		--OR tx_tipo_localidade = 'estado'
@@ -75,13 +75,13 @@ BEGIN
 		atualizado := '[]'::JSONB;
 		quantidade_osc_localidade := 0;
 		media_localidade := 0;
-		natureza_juridica_maior_media_localidade := '';
+		repasse_maior_media_localidade := '';
 		maior_media_localidade := 0;
 		
-		IF (localidade.natureza_juridica->>'series_1') IS null THEN
-			series := localidade.natureza_juridica;
+		IF (localidade.repasse_recursos->>'values') IS null THEN
+			series := localidade.repasse_recursos;
 		ELSE
-			series := localidade.natureza_juridica->>'series_1';
+			series := localidade.repasse_recursos->>'values';
 		END IF;
 		
 		FOR dados IN 
@@ -100,7 +100,7 @@ BEGIN
 			atualizado := atualizado || dados;
 			
 			IF media_localidade >= maior_media_localidade THEN
-				natureza_juridica_maior_media_localidade := (dados->>'tx_nome_natureza_juridica')::TEXT;
+				repasse_maior_media_localidade := (dados->>'tx_nome_natureza_juridica')::TEXT;
 				maior_media_localidade := media_localidade;
 			END IF;
 			
@@ -108,9 +108,9 @@ BEGIN
 		
 		atualizado := ('{
 			"nr_porcentagem_maior": "' || maior_media_localidade::TEXT || '", 
-			"tx_porcentagem_maior": "' || natureza_juridica_maior_media_localidade::TEXT || '", 
+			"tx_porcentagem_maior": "' || repasse_maior_media_localidade::TEXT || '", 
 			"nr_porcentagem_maior_media_nacional": "' || maior_media_nacional::TEXT || '", 
-			"tx_porcentagem_maior_media_nacional": "' || natureza_juridica_maior_media_nacional || '", 
+			"tx_porcentagem_maior_media_nacional": "' || repasse_maior_media_nacional || '", 
 			"series_1": ' || atualizado::TEXT || 
 		'}')::JSONB;
 		
@@ -118,7 +118,7 @@ BEGIN
 		SET natureza_juridica = atualizado
 		WHERE id_localidade = localidade.id_localidade;
 	END LOOP;
-	*/
+	
 END;
 
 $$ LANGUAGE 'plpgsql';
