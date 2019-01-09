@@ -13,7 +13,6 @@ DECLARE
 	series JSONB;
 	dados JSONB;
 	atualizado JSONB;
-	quantidade_osc_localidade INTEGER;
 	media_localidade DOUBLE PRECISION;
 	repasse_maior_media_localidade TEXT;
 	maior_media_localidade DOUBLE PRECISION;
@@ -78,10 +77,10 @@ BEGIN
 		repasse_maior_media_localidade := '';
 		maior_media_localidade := 0;
 		
-		IF (localidade.repasse_recursos->>'values') IS null THEN
+		IF (localidade.repasse_recursos->>'series_1') IS null THEN
 			series := localidade.repasse_recursos;
 		ELSE
-			series := localidade.repasse_recursos->>'values';
+			series := localidade.repasse_recursos->>'series_1';
 		END IF;
 		
 		FOR dados IN 
@@ -112,6 +111,22 @@ BEGIN
 		WHERE id_localidade = localidade.id_localidade;
 	END LOOP;
 	
+
+
+	/* ------------------------------ Cálculo da média das localidades ------------------------------ */
+	FOR localidade IN
+		SELECT id_localidade, caracteristicas, natureza_juridica
+		FROM portal.tb_perfil_localidade
+		WHERE tx_tipo_localidade = 'regiao'
+		--OR tx_tipo_localidade = 'estado'
+	LOOP
+		IF (localidade.natureza_juridica->>'values') IS null THEN
+			series := localidade.natureza_juridica;
+		ELSE
+			series := localidade.natureza_juridica->>'values';
+		END IF;
+
+	END LOOP;
 END;
 
 $$ LANGUAGE 'plpgsql';

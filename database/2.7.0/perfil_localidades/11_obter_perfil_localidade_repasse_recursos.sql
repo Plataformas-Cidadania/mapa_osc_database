@@ -8,12 +8,7 @@ CREATE OR REPLACE FUNCTION portal.obter_perfil_localidade_repasse_recursos(id_lo
 BEGIN 
 	RETURN QUERY 
 		SELECT 
-			('[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG(
-				'{' ||
-					'"dt_ano_recursos": "' || a.dt_ano_recursos::TEXT || '", ' ||
-					'"nr_valor_recursos": "' || a.nr_valor_recursos::TEXT ||  '"' ||
-				'}'
-			)::TEXT, '\', '') || '}'), '{"{"', '{"'), '"}"}', '"}'), '","', ','), '{'), '}') || '}]')::JSONB AS dados,
+			('{"key": "' || a.tx_nome_fonte_recursos_osc || '", "values": ' || '[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG('{"x": "' || a.dt_ano_recursos::TEXT || '", "y": ' || a.nr_valor_recursos::TEXT || '}')::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), '{'), '}') || '}]}')::JSONB AS dados, 
 			(
 				SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()\"', '')) FROM (SELECT DISTINCT UNNEST(
 					TRANSLATE(ARRAY_AGG(REPLACE(REPLACE(TRIM(TRANSLATE(a.fontes::TEXT, '"\{}', ''), ','), '","', ','), ',,', ','))::TEXT, '"', '')::TEXT[]
@@ -22,6 +17,7 @@ BEGIN
 		FROM (
 			SELECT 
 				COALESCE(DATE_PART('year', tb_recursos_osc.dt_ano_recursos_osc)::TEXT, 'Sem informação') AS dt_ano_recursos,
+				COALESCE(dc_fonte_recursos_osc.tx_nome_fonte_recursos_osc, 'Sem informação') AS tx_nome_fonte_recursos_osc,
 				SUM(COALESCE(tb_recursos_osc.nr_valor_recursos_osc, 0)) AS nr_valor_recursos,
 				(
 					SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
@@ -38,6 +34,8 @@ BEGIN
 			FROM osc.tb_osc
 			LEFT JOIN osc.tb_recursos_osc
 			ON tb_osc.id_osc = tb_recursos_osc.id_osc
+			LEFT JOIN syst.dc_fonte_recursos_osc
+			ON tb_recursos_osc.cd_fonte_recursos_osc = dc_fonte_recursos_osc.cd_fonte_recursos_osc
 			LEFT JOIN osc.tb_localizacao
 			ON tb_osc.id_osc = tb_localizacao.id_osc
 			LEFT JOIN spat.ed_regiao
@@ -45,14 +43,15 @@ BEGIN
 			WHERE tb_osc.bo_osc_ativa
 			AND tb_osc.id_osc <> 789809
 			AND (
-				SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1) = id_localidade::TEXT
+				SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1) = 35::TEXT
 				OR
-				SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2) = id_localidade::TEXT
+				SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2) = 35::TEXT
 				OR
-				tb_localizacao.cd_municipio = id_localidade
+				tb_localizacao.cd_municipio = 35
 			)
-			GROUP BY dt_ano_recursos
-		) AS a;
+			GROUP BY dt_ano_recursos, tx_nome_fonte_recursos_osc
+		) AS a 
+		GROUP BY a.tx_nome_fonte_recursos_osc;
 END;
 
 $$ LANGUAGE 'plpgsql';
