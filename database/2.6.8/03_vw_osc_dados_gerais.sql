@@ -24,6 +24,7 @@ SELECT
     tb_dados_gerais.ft_natureza_juridica_osc,
     NULLIF(btrim(tb_dados_gerais.tx_sigla_osc), ''::text) AS tx_sigla_osc,
     tb_dados_gerais.ft_sigla_osc,
+    tb_dados_gerais.bo_nao_possui_sigla_osc,
     to_char(tb_dados_gerais.dt_fundacao_osc::timestamp with time zone, 'DD-MM-YYYY'::text) AS dt_fundacao_osc,
     tb_dados_gerais.ft_fundacao_osc,
     to_char(tb_dados_gerais.dt_ano_cadastro_cnpj::timestamp with time zone, 'DD-MM-YYYY'::text) AS dt_ano_cadastro_cnpj,
@@ -37,6 +38,7 @@ SELECT
     tb_dados_gerais.ft_situacao_imovel_osc,
     NULLIF(btrim(tb_dados_gerais.tx_link_estatuto_osc), ''::text) AS tx_link_estatuto_osc,
     tb_dados_gerais.ft_link_estatuto_osc,
+    tb_dados_gerais.bo_nao_possui_link_estatuto_osc,
     NULLIF(btrim(tb_localizacao.tx_endereco), ''::text) AS tx_endereco,
     tb_localizacao.ft_endereco,
     tb_localizacao.nr_localizacao,
@@ -58,15 +60,17 @@ SELECT
     st_x(st_transform(tb_localizacao.geo_localizacao, 4674)) AS geo_lng,
     NULLIF(btrim(tb_contato.tx_email), ''::text) AS tx_email,
     tb_contato.ft_email,
+    tb_contato.bo_nao_possui_email,
     NULLIF(btrim(tb_contato.tx_site), ''::text) AS tx_site,
     tb_contato.ft_site,
+    tb_contato.bo_nao_possui_site,
     NULLIF(btrim(tb_contato.tx_telefone), ''::text) AS tx_telefone,
     tb_contato.ft_telefone
 FROM osc.tb_osc
 LEFT JOIN osc.tb_dados_gerais ON tb_osc.id_osc = tb_dados_gerais.id_osc
 LEFT JOIN osc.tb_localizacao ON tb_osc.id_osc = tb_localizacao.id_osc
 LEFT JOIN osc.tb_contato ON tb_osc.id_osc = tb_contato.id_osc
-LEFT JOIN syst.dc_classe_atividade_economica ON dc_classe_atividade_economica.cd_classe_atividade_economica = tb_dados_gerais.cd_classe_atividade_economica_osc
+LEFT JOIN syst.dc_classe_atividade_economica ON dc_classe_atividade_economica.cd_classe_atividade_economica::TEXT = tb_dados_gerais.cd_classe_atividade_economica_osc::TEXT
 LEFT JOIN syst.dc_natureza_juridica ON dc_natureza_juridica.cd_natureza_juridica = tb_dados_gerais.cd_natureza_juridica_osc
 LEFT JOIN syst.dc_situacao_imovel ON dc_situacao_imovel.cd_situacao_imovel = tb_dados_gerais.cd_situacao_imovel_osc
 LEFT JOIN spat.ed_municipio ON ed_municipio.edmu_cd_municipio = tb_localizacao.cd_municipio
@@ -78,3 +82,11 @@ CREATE UNIQUE INDEX ix_vw_osc_dados_gerais
     (id_osc ASC NULLS LAST)
 TABLESPACE pg_default;
 
+CREATE OR REPLACE FUNCTION dados_gerais()
+RETURNS TRIGGER AS $$
+BEGIN
+ REFRESH MATERIALIZED VIEW CONCURRENTLY portal.vw_osc_dados_gerais;
+ REFRESH MATERIALIZED VIEW CONCURRENTLY portal.vw_osc_descricao;
+ REFRESH MATERIALIZED VIEW CONCURRENTLY portal.vw_osc_recursos_projeto;
+ RETURN NULL;
+END;
