@@ -1,4 +1,6 @@
-DO $$ 
+DROP FUNCTION IF EXISTS portal.atualizar_perfil_localidade_medias_natureza_juridica() CASCADE;
+
+CREATE OR REPLACE FUNCTION portal.atualizar_perfil_localidade_medias_natureza_juridica() RETURNS VOID AS $$ 
 
 DECLARE
 	localidade RECORD;
@@ -56,5 +58,8 @@ BEGIN
 		natureza_juridica_maior_media := '';
 		maior_media := 0;
 	END LOOP;
-END
-$$;
+END;
+
+$$ LANGUAGE 'plpgsql';
+
+SELECT * FROM portal.atualizar_perfil_localidade_medias_natureza_juridica();
