@@ -1,11 +1,13 @@
-DROP FUNCTION IF EXISTS portal.atualizar_perfil_localidade_medias_natureza_juridica() CASCADE;
+DROP FUNCTION IF EXISTS portal.atualizar_perfil_localidade_medias_repasse_recursos() CASCADE;
 
-CREATE OR REPLACE FUNCTION portal.atualizar_perfil_localidade_medias_natureza_juridica() RETURNS VOID AS $$ 
+CREATE OR REPLACE FUNCTION portal.atualizar_perfil_localidade_medias_repasse_recursos() RETURNS VOID AS $$ 
 
 DECLARE
 	nacional RECORD;
+	quantidade_osc_nacional INTEGER;
+	soma_repasse_nacional DOUBLE PRECISION;
 	media_nacional DOUBLE PRECISION;
-	natureza_juridica_maior_media_nacional TEXT;
+	repasse_maior_media_nacional TEXT;
 	maior_media_nacional DOUBLE PRECISION;
 	localidade RECORD;
 	series JSONB;
@@ -13,48 +15,57 @@ DECLARE
 	atualizado JSONB;
 	quantidade_osc_localidade INTEGER;
 	media_localidade DOUBLE PRECISION;
-	natureza_juridica_maior_media_localidade TEXT;
+	repasse_maior_media_localidade TEXT;
 	maior_media_localidade DOUBLE PRECISION;
-	quantidade_osc_nacional INTEGER;
 
 BEGIN
-	/* ------------------------------ Cálculo da média nacional ------------------------------ */
-	natureza_juridica_maior_media_nacional := '';
-	maior_media_nacional := 0;
-	
+	/* ------------------------------ Cálculo da média nacional ------------------------------ */	
 	SELECT INTO quantidade_osc_nacional COUNT(*)
 	FROM osc.tb_osc
 	LEFT JOIN osc.tb_dados_gerais
 	ON tb_osc.id_osc = tb_dados_gerais.id_osc
 	WHERE tb_osc.bo_osc_ativa
 	AND tb_osc.id_osc <> 789809;
+
+	SELECT INTO soma_repasse_nacional SUM(COALESCE(tb_recursos_osc.nr_valor_recursos_osc, 0)) AS nr_valor_recursos
+	FROM osc.tb_osc
+	LEFT JOIN osc.tb_recursos_osc
+	ON tb_osc.id_osc = tb_recursos_osc.id_osc
+	WHERE tb_osc.bo_osc_ativa
+	AND tb_osc.id_osc <> 789809;
 	
+	media_nacional := soma_repasse_nacional / quantidade_osc_nacional::DOUBLE PRECISION;
+
 	FOR nacional IN 
 		SELECT 
-			COALESCE(dc_natureza_juridica.tx_nome_natureza_juridica, 'Sem informação') AS tx_nome_natureza_juridica,
-			COUNT(tb_osc) AS nr_quantidade_oscs
+			dc_fonte_recursos_osc.tx_nome_fonte_recursos_osc AS fonte_recursos_osc,
+			SUM(COALESCE(tb_recursos_osc.nr_valor_recursos_osc, 0)) AS valor_recursos
 		FROM osc.tb_osc
-		LEFT JOIN osc.tb_dados_gerais
-		ON tb_osc.id_osc = tb_dados_gerais.id_osc
-		LEFT JOIN syst.dc_natureza_juridica
-		ON tb_dados_gerais.cd_natureza_juridica_osc = dc_natureza_juridica.cd_natureza_juridica
+		LEFT JOIN osc.tb_recursos_osc
+		ON tb_osc.id_osc = tb_recursos_osc.id_osc
+		LEFT JOIN syst.dc_fonte_recursos_osc
+		ON tb_recursos_osc.cd_fonte_recursos_osc = dc_fonte_recursos_osc.cd_fonte_recursos_osc
 		WHERE tb_osc.bo_osc_ativa
 		AND tb_osc.id_osc <> 789809
-		GROUP BY dc_natureza_juridica.tx_nome_natureza_juridica
+		GROUP BY dc_fonte_recursos_osc.tx_nome_fonte_recursos_osc
+		ORDER BY valor_recursos DESC
+		LIMIT 1
 	LOOP
-		media_nacional := 0;
-		
-		media_nacional := nacional.nr_quantidade_oscs::DOUBLE PRECISION / quantidade_osc_nacional::DOUBLE PRECISION * 100;
-
-		IF media_nacional >= maior_media_nacional THEN
-			natureza_juridica_maior_media_nacional := nacional.tx_nome_natureza_juridica::TEXT;
-			maior_media_nacional := media_nacional;
-		END IF;
+		repasse_maior_media_nacional := nacional.fonte_recursos_osc::TEXT;
+		maior_media_nacional := nacional.valor_recursos::DOUBLE PRECISION / soma_repasse_nacional::DOUBLE PRECISION * 100;
 	END LOOP;
+
+	RAISE NOTICE 'quantidade_osc_nacional: %', quantidade_osc_nacional;
+	RAISE NOTICE 'soma_repasse_nacional: %', soma_repasse_nacional;
+	RAISE NOTICE 'media_nacional: %', media_nacional;
+	RAISE NOTICE 'repasse_maior_media_nacional: %', repasse_maior_media_nacional;
+	RAISE NOTICE 'maior_media_nacional: %', maior_media_nacional;
+
 
 
 
 	/* ------------------------------ Cálculo da média das localidades ------------------------------ */
+	/*
 	FOR localidade IN
 		SELECT id_localidade, natureza_juridica
 		FROM portal.tb_perfil_localidade
@@ -107,10 +118,9 @@ BEGIN
 		SET natureza_juridica = atualizado
 		WHERE id_localidade = localidade.id_localidade;
 	END LOOP;
-
-	
+	*/
 END;
 
 $$ LANGUAGE 'plpgsql';
 
-SELECT * FROM portal.atualizar_perfil_localidade_medias_natureza_juridica();
+SELECT * FROM portal.atualizar_perfil_localidade_medias_repasse_recursos();
