@@ -3,6 +3,10 @@ DROP FUNCTION IF EXISTS portal.atualizar_perfil_localidade_medias_natureza_jurid
 CREATE OR REPLACE FUNCTION portal.atualizar_perfil_localidade_medias_natureza_juridica() RETURNS VOID AS $$ 
 
 DECLARE
+	nacional RECORD;
+	media_nacional DOUBLE PRECISION;
+	natureza_juridica_maior_media_nacional TEXT;
+	maior_media_nacional DOUBLE PRECISION;
 	localidade RECORD;
 	series JSONB;
 	dados JSONB;
@@ -11,8 +15,46 @@ DECLARE
 	media_localidade DOUBLE PRECISION;
 	natureza_juridica_maior_media_localidade TEXT;
 	maior_media_localidade DOUBLE PRECISION;
+	quantidade_osc_nacional INTEGER;
 
 BEGIN
+	/* ------------------------------ Cálculo da média nacional ------------------------------ */
+	natureza_juridica_maior_media_nacional := '';
+	maior_media_nacional := 0;
+	
+	SELECT INTO quantidade_osc_nacional COUNT(*)
+	FROM osc.tb_osc
+	LEFT JOIN osc.tb_dados_gerais
+	ON tb_osc.id_osc = tb_dados_gerais.id_osc
+	WHERE tb_osc.bo_osc_ativa
+	AND tb_osc.id_osc <> 789809;
+	
+	FOR nacional IN 
+		SELECT 
+			COALESCE(dc_natureza_juridica.tx_nome_natureza_juridica, 'Sem informação') AS tx_nome_natureza_juridica,
+			COUNT(tb_osc) AS nr_quantidade_oscs
+		FROM osc.tb_osc
+		LEFT JOIN osc.tb_dados_gerais
+		ON tb_osc.id_osc = tb_dados_gerais.id_osc
+		LEFT JOIN syst.dc_natureza_juridica
+		ON tb_dados_gerais.cd_natureza_juridica_osc = dc_natureza_juridica.cd_natureza_juridica
+		WHERE tb_osc.bo_osc_ativa
+		AND tb_osc.id_osc <> 789809
+		GROUP BY dc_natureza_juridica.tx_nome_natureza_juridica
+	LOOP
+		media_nacional := 0;
+		
+		media_nacional := nacional.nr_quantidade_oscs::DOUBLE PRECISION / quantidade_osc_nacional::DOUBLE PRECISION * 100;
+
+		IF media_nacional >= maior_media_nacional THEN
+			natureza_juridica_maior_media_nacional := nacional.tx_nome_natureza_juridica::TEXT;
+			maior_media_nacional := media_nacional;
+		END IF;
+	END LOOP;
+
+
+
+	/* ------------------------------ Cálculo da média das localidades ------------------------------ */
 	FOR localidade IN
 		SELECT id_localidade, natureza_juridica
 		FROM portal.tb_perfil_localidade
@@ -53,18 +95,20 @@ BEGIN
 			
 		END LOOP;
 		
-		atualizado := ('{"nr_porcentagem_maior": "' || maior_media_localidade::TEXT || '", "tx_porcentagem_maior": "' || natureza_juridica_maior_media_localidade::TEXT || '", "series_1": ' || atualizado::TEXT || '}')::JSONB;
-		
-		RAISE NOTICE 'Localidade: %', localidade.id_localidade;
-		RAISE NOTICE 'Atualizado: %', atualizado;
-		RAISE NOTICE 'Maior Média Natureza Jurdica: %', natureza_juridica_maior_media_localidade;
-		RAISE NOTICE 'Maior Média: %', maior_media_localidade;
-		RAISE NOTICE '';
+		atualizado := ('{
+			"nr_porcentagem_maior": "' || maior_media_localidade::TEXT || '", 
+			"tx_porcentagem_maior": "' || natureza_juridica_maior_media_localidade::TEXT || '", 
+			"nr_porcentagem_maior_media_nacional": "' || maior_media_nacional::TEXT || '", 
+			"tx_porcentagem_maior_media_nacional": "' || natureza_juridica_maior_media_nacional || '", 
+			"series_1": ' || atualizado::TEXT || 
+		'}')::JSONB;
 		
 		UPDATE portal.tb_perfil_localidade
 		SET natureza_juridica = atualizado
 		WHERE id_localidade = localidade.id_localidade;
 	END LOOP;
+
+	
 END;
 
 $$ LANGUAGE 'plpgsql';
