@@ -67,13 +67,13 @@ BEGIN
 
 	/* ------------------------------ Cálculo da média das localidades ------------------------------ */
 	FOR localidade IN
-		SELECT id_localidade, repasse_recursos
+		SELECT id_localidade, carasteristicas, repasse_recursos
 		FROM portal.tb_perfil_localidade
 		WHERE tx_tipo_localidade = 'regiao'
 		--OR tx_tipo_localidade = 'estado'
 	LOOP
 		atualizado := '[]'::JSONB;
-		quantidade_osc_localidade := 0;
+		quantidade_osc_localidade := (carasteristicas->>'nr_quantidade_oscs')::INTEGER;
 		media_localidade := 0;
 		repasse_maior_media_localidade := '';
 		maior_media_localidade := 0;
@@ -84,13 +84,6 @@ BEGIN
 			series := localidade.repasse_recursos->>'values';
 		END IF;
 		
-		FOR dados IN 
-			SELECT *
-			FROM jsonb_array_elements(series)
-		LOOP
-			quantidade_osc_localidade := quantidade_osc_localidade + (dados->>'nr_quantidade_oscs')::INTEGER;
-		END LOOP;
-
 		FOR dados IN 
 			SELECT *
 			FROM jsonb_array_elements(series)
