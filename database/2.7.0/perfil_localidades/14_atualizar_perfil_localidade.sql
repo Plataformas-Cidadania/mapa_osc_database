@@ -11,8 +11,8 @@ BEGIN
     FOR localidade IN
         SELECT * 
             FROM portal.tb_perfil_localidade
-	    WHERE tx_tipo_localidade = 'regiao'
-	    OR tx_tipo_localidade = 'estado'
+	        WHERE tx_tipo_localidade = 'regiao'
+	        OR tx_tipo_localidade = 'estado'
     LOOP
         /* ==================== Atualização do perfil de características ==================== */
         SELECT INTO dados_localidade, fontes_localidade dados, fontes
