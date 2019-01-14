@@ -23,8 +23,6 @@ DECLARE
 
 BEGIN
 	/* ------------------------------ Cálculo da média nacional ------------------------------ */
-	maior_media_nacional := 0;
-	
 	SELECT INTO quantidade_osc_nacional COUNT(*)
 	FROM osc.tb_osc
 	LEFT JOIN osc.tb_dados_gerais
@@ -59,9 +57,7 @@ BEGIN
 		repasse_maior_media_nacional := nacional.fonte_recursos_osc::TEXT;
 		maior_media_nacional := nacional.valor_recursos::DOUBLE PRECISION / soma_repasse_nacional::DOUBLE PRECISION * 100;
 	END LOOP;
-
-
-
+	
 	/* ------------------------------ Cálculo da média das localidades ------------------------------ */
 	soma_repasse_localidade := 0;
 
@@ -71,22 +67,22 @@ BEGIN
 		WHERE tx_tipo_localidade = 'regiao'
 		--OR tx_tipo_localidade = 'estado'
 	LOOP
-		IF (localidade.repasse_recursos->>'series_1') IS null THEN
+		IF (localidade.repasse_recursos->>'values') IS null THEN
 			series := localidade.repasse_recursos;
 		ELSE
-			series := localidade.repasse_recursos->>'series_1';
+			series := localidade.repasse_recursos->>'values';
 		END IF;
-
+		
 		FOR dados_fonte IN
 			SELECT *
-			FROM jsonb_array_elements((series->>'values')::JSONB)
+			FROM jsonb_array_elements((series)::JSONB)
 		LOOP
 			soma_repasse_localidade := soma_repasse_localidade + (dados_fonte->>'y')::DOUBLE PRECISION;
 		END LOOP;
 	END LOOP;
 
 	FOR localidade IN
-		SELECT id_localidade, repasse_recursos
+		SELECT id_localidade, tx_localidade, repasse_recursos
 		FROM portal.tb_perfil_localidade
 		WHERE tx_tipo_localidade = 'regiao'
 		--OR tx_tipo_localidade = 'estado'
@@ -95,45 +91,69 @@ BEGIN
 		media_localidade := 0;
 		repasse_maior_media_localidade := '';
 		maior_media_localidade := 0;
-		
-		IF (localidade.repasse_recursos->>'series_1') IS null THEN
+
+		IF (localidade.repasse_recursos->>'values') IS null THEN
 			series := localidade.repasse_recursos;
 		ELSE
-			series := localidade.repasse_recursos->>'series_1';
+			series := localidade.repasse_recursos->>'values';
 		END IF;
 
 		soma_repasse_fonte := 0;
 
 		FOR dados_fonte IN
 			SELECT *
-			FROM jsonb_array_elements((series->>'values')::JSONB)
+			FROM jsonb_array_elements(series::JSONB)
 		LOOP
 			soma_repasse_fonte := soma_repasse_fonte + (dados_fonte->>'y')::DOUBLE PRECISION;
 		END LOOP;
+		
+		dados := TO_JSONB(localidade);
 
-		media_localidade := soma_repasse_fonte / soma_repasse_localidade;
-		porcentagem_localidade := soma_repasse_fonte / soma_repasse_localidade * 100;
-		dados := dados || ('{"media":' || media_localidade::TEXT || '}')::JSONB;
-		atualizado := atualizado || dados;
+		IF soma_repasse_localidade > 0 THEN
+			media_localidade := soma_repasse_fonte / soma_repasse_localidade;
+			porcentagem_localidade := soma_repasse_fonte / soma_repasse_localidade * 100;
+			dados := dados || ('{"media":' || media_localidade::TEXT || '}')::JSONB;
+			atualizado := atualizado || dados;
+		ELSE
+			media_localidade := 0;
+			porcentagem_localidade := 0;
+			dados := dados || ('{"media":' || media_localidade::TEXT || '}')::JSONB;
+			atualizado := atualizado || dados;
+		END IF;
 		
 		IF media_localidade >= maior_media_localidade THEN
-			repasse_maior_media_localidade := (dados->>'key')::TEXT;
+			repasse_maior_media_localidade := localidade.tx_localidade;
 			maior_media_localidade := media_localidade;
 		END IF;
+
+		RAISE NOTICE '%', soma_repasse_localidade::TEXT;
+		RAISE NOTICE '%', repasse_maior_media_localidade::TEXT;
+		RAISE NOTICE '%', media_localidade::TEXT;
+		RAISE NOTICE '%', porcentagem_localidade::TEXT;
+		RAISE NOTICE '%', repasse_maior_media_nacional::TEXT;
+
+		RAISE NOTICE '%', '{"tx_maior_tipo_repasse": "' || repasse_maior_media_localidade::TEXT || 
+			'", "nr_repasse_media": "' || media_localidade::TEXT || 
+			'", "nr_porcentagem_maior_tipo_repasse": "' || porcentagem_localidade::TEXT || 
+			'", "nr_repasse_media_nacional": "' || repasse_maior_media_nacional::TEXT || 
+			'", "series_1": ' || atualizado::TEXT || '}';
 		
 		atualizado := ('{
 			"tx_maior_tipo_repasse": "' || repasse_maior_media_localidade::TEXT || '", 
 			"nr_repasse_media": "' || media_localidade::TEXT || '", 
 			"nr_porcentagem_maior_tipo_repasse": "' || porcentagem_localidade::TEXT || '", 
-			"nr_repasse_media_nacional": "' || repasse_maior_media_nacional || '", 
+			"nr_repasse_media_nacional": "' || repasse_maior_media_nacional::TEXT || '", 
 			"series_1": ' || atualizado::TEXT || 
 		'}')::JSONB;
+
+		RAISE NOTICE '%', atualizado;
+		RAISE NOTICE '--------------------------------------------------';
 		
 		UPDATE portal.tb_perfil_localidade
 		SET repasse_recursos = atualizado
 		WHERE id_localidade = localidade.id_localidade;
 	END LOOP;
-
+	
 END;
 
 $$ LANGUAGE 'plpgsql';
