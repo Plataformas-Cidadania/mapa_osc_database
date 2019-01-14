@@ -115,7 +115,7 @@ BEGIN
 			FROM jsonb_array_elements(series)
 		LOOP
 			IF soma_repasse_localidade > 0 THEN
-				media_localidade := soma_repasse_localidade::DOUBLE PRECISION / soma_repasse_localidade::DOUBLE PRECISION;
+				media_localidade := soma_repasse_localidade::DOUBLE PRECISION / JSONB_ARRAY_LENGTH((dados->>'values')::JSONB)::DOUBLE PRECISION;
 				porcentagem_localidade := soma_repasse_fonte::DOUBLE PRECISION / soma_repasse_localidade::DOUBLE PRECISION * 100;
 			ELSE
 				media_localidade := 0;
