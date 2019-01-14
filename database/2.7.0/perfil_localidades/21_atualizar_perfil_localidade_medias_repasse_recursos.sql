@@ -20,6 +20,7 @@ DECLARE
 	porcentagem_localidade DOUBLE PRECISION;
 	repasse_maior_media_localidade TEXT;
 	maior_media_localidade DOUBLE PRECISION;
+	numero_repasses_localidade INTEGER;
 
 BEGIN
 	/* ------------------------------ Cálculo da média nacional ------------------------------ */
@@ -91,6 +92,7 @@ BEGIN
 		media_localidade := 0;
 		repasse_maior_media_localidade := '';
 		maior_media_localidade := 0;
+		numero_repasses_localidade := 0;
 
 		IF (localidade.repasse_recursos->>'values') IS null THEN
 			series := localidade.repasse_recursos;
@@ -105,13 +107,14 @@ BEGIN
 			FROM jsonb_array_elements(series::JSONB)
 		LOOP
 			soma_repasse_fonte := soma_repasse_fonte + (dados_fonte->>'y')::DOUBLE PRECISION;
+			numero_repasses_localidade := numero_repasses_localidade + 1;
 		END LOOP;
 		
 		dados := TO_JSONB(localidade);
 
 		IF soma_repasse_localidade > 0 THEN
-			media_localidade := soma_repasse_fonte / soma_repasse_localidade;
-			porcentagem_localidade := soma_repasse_fonte / soma_repasse_localidade * 100;
+			media_localidade := soma_repasse_localidade::DOUBLE PRECISION / numero_repasses_localidade::DOUBLE PRECISION;
+			porcentagem_localidade := soma_repasse_fonte::DOUBLE PRECISION / soma_repasse_localidade::DOUBLE PRECISION * 100;
 			dados := dados || ('{"media":' || media_localidade::TEXT || '}')::JSONB;
 			atualizado := atualizado || dados;
 		ELSE
@@ -136,13 +139,15 @@ BEGIN
 			'", "nr_repasse_media": "' || media_localidade::TEXT || 
 			'", "nr_porcentagem_maior_tipo_repasse": "' || porcentagem_localidade::TEXT || 
 			'", "nr_repasse_media_nacional": "' || repasse_maior_media_nacional::TEXT || 
+			'", "tx_repasse_media_nacional": "' || maior_media_nacional::TEXT || 
 			'", "series_1": ' || atualizado::TEXT || '}';
 		
 		atualizado := ('{
 			"tx_maior_tipo_repasse": "' || repasse_maior_media_localidade::TEXT || '", 
 			"nr_repasse_media": "' || media_localidade::TEXT || '", 
 			"nr_porcentagem_maior_tipo_repasse": "' || porcentagem_localidade::TEXT || '", 
-			"nr_repasse_media_nacional": "' || repasse_maior_media_nacional::TEXT || '", 
+			"tx_repasse_media_nacional": "' || repasse_maior_media_nacional::TEXT || '", 
+			"nr_repasse_media_nacional": "' || maior_media_nacional::TEXT || '", 
 			"series_1": ' || atualizado::TEXT || 
 		'}')::JSONB;
 
