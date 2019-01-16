@@ -4,7 +4,7 @@ CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_natureza_juridica AS
 SELECT 
 	COALESCE(SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1), 'Sem informação') AS localidade,
 	COALESCE(dc_natureza_juridica.tx_nome_natureza_juridica::TEXT, 'Sem informação') AS natureza_juridica,
-	COUNT(tb_osc) AS nr_quantidade_oscs,
+	COUNT(tb_osc) AS quantidade_oscs,
 	('{' || TRIM(TRANSLATE(
 		(
 		    SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(

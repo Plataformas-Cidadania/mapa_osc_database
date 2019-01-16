@@ -1,5 +1,5 @@
-DROP MATERIALIZED VIEW IF EXISTS analysis.vw_perfil_localidade_dados_gerais CASCADE;
-CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_dados_gerais AS 
+DROP MATERIALIZED VIEW IF EXISTS analysis.vw_perfil_localidade_caracteristicas CASCADE;
+CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_caracteristicas AS 
 
 SELECT 
 	COALESCE(SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1), 'Sem informação') AS localidade,
