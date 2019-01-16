@@ -1,5 +1,6 @@
 DROP MATERIALIZED VIEW IF EXISTS analysis.vw_perfil_localidade_dados_gerais CASCADE;
-CREATE MATERIALIZED VIEW osc.vw_perfil_localidade_dados_gerais AS 
+CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_dados_gerais AS 
+
 SELECT 
 	COALESCE(SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1), 'Sem informação') AS localidade,
 	COUNT(tb_osc) AS nr_quantidade_oscs,
@@ -61,8 +62,6 @@ LEFT JOIN osc.tb_projeto
 ON tb_osc.id_osc = tb_projeto.id_osc
 LEFT JOIN osc.tb_localizacao
 ON tb_osc.id_osc = tb_localizacao.id_osc
-LEFT JOIN spat.ed_regiao
-ON (SELECT SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1))::NUMERIC(1, 0) = ed_regiao.edre_cd_regiao
 WHERE tb_osc.bo_osc_ativa
 AND tb_osc.id_osc <> 789809
 GROUP BY localidade
@@ -130,8 +129,6 @@ LEFT JOIN osc.tb_projeto
 ON tb_osc.id_osc = tb_projeto.id_osc
 LEFT JOIN osc.tb_localizacao
 ON tb_osc.id_osc = tb_localizacao.id_osc
-LEFT JOIN spat.ed_regiao
-ON (SELECT SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1))::NUMERIC(1, 0) = ed_regiao.edre_cd_regiao
 WHERE tb_osc.bo_osc_ativa
 AND tb_osc.id_osc <> 789809
 GROUP BY localidade
@@ -199,8 +196,6 @@ LEFT JOIN osc.tb_projeto
 ON tb_osc.id_osc = tb_projeto.id_osc
 LEFT JOIN osc.tb_localizacao
 ON tb_osc.id_osc = tb_localizacao.id_osc
-LEFT JOIN spat.ed_regiao
-ON (SELECT SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1))::NUMERIC(1, 0) = ed_regiao.edre_cd_regiao
 WHERE tb_osc.bo_osc_ativa
 AND tb_osc.id_osc <> 789809
 GROUP BY localidade;
