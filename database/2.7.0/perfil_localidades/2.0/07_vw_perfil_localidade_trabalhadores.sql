@@ -6,7 +6,7 @@ SELECT
 	SUM(COALESCE(tb_relacoes_trabalho.nr_trabalhadores_vinculo, 0)) AS vinculos,
 	SUM(COALESCE(tb_relacoes_trabalho.nr_trabalhadores_deficiencia, 0)) AS deficiencia,
 	SUM(COALESCE(tb_relacoes_trabalho.nr_trabalhadores_voluntarios, 0)) AS voluntarios,
-	('{' || TRIM(TRANSLATE(
+	REPLACE(('{' || TRIM(TRANSLATE(
 		(
 			SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
 			ARRAY_CAT(
@@ -23,7 +23,7 @@ SELECT
 				ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho.ft_trabalhadores_voluntarios, ''))
 			))) AS a
 		)::TEXT
-	, '"\{}', ''), ',') || '}')::TEXT[] AS fontes_caracteristicas
+	, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes_caracteristicas
 FROM osc.tb_osc
 LEFT JOIN osc.tb_relacoes_trabalho
 ON tb_osc.id_osc = tb_relacoes_trabalho.id_osc
@@ -40,7 +40,7 @@ SELECT
 	SUM(COALESCE(tb_relacoes_trabalho.nr_trabalhadores_vinculo, 0)) AS vinculos,
 	SUM(COALESCE(tb_relacoes_trabalho.nr_trabalhadores_deficiencia, 0)) AS deficiencia,
 	SUM(COALESCE(tb_relacoes_trabalho.nr_trabalhadores_voluntarios, 0)) AS voluntarios,
-	('{' || TRIM(TRANSLATE(
+	REPLACE(('{' || TRIM(TRANSLATE(
 		(
 			SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
 			ARRAY_CAT(
@@ -57,7 +57,7 @@ SELECT
 				ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho.ft_trabalhadores_voluntarios, ''))
 			))) AS a
 		)::TEXT
-	, '"\{}', ''), ',') || '}')::TEXT[] AS fontes_caracteristicas
+	, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes_caracteristicas
 FROM osc.tb_osc
 LEFT JOIN osc.tb_relacoes_trabalho
 ON tb_osc.id_osc = tb_relacoes_trabalho.id_osc
@@ -74,7 +74,7 @@ SELECT
 	SUM(COALESCE(tb_relacoes_trabalho.nr_trabalhadores_vinculo, 0)) AS vinculos,
 	SUM(COALESCE(tb_relacoes_trabalho.nr_trabalhadores_deficiencia, 0)) AS deficiencia,
 	SUM(COALESCE(tb_relacoes_trabalho.nr_trabalhadores_voluntarios, 0)) AS voluntarios,
-	('{' || TRIM(TRANSLATE(
+	REPLACE(('{' || TRIM(TRANSLATE(
 		(
 			SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
 			ARRAY_CAT(
@@ -91,7 +91,7 @@ SELECT
 				ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho.ft_trabalhadores_voluntarios, ''))
 			))) AS a
 		)::TEXT
-	, '"\{}', ''), ',') || '}')::TEXT[] AS fontes_caracteristicas
+	, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes_caracteristicas
 FROM osc.tb_osc
 LEFT JOIN osc.tb_relacoes_trabalho
 ON tb_osc.id_osc = tb_relacoes_trabalho.id_osc
