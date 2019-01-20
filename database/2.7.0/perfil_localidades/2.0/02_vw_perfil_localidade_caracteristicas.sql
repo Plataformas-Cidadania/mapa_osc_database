@@ -15,7 +15,7 @@ SELECT
 		COALESCE(tb_recursos_outro_osc.nr_valor_recursos_outro_osc, 0)
 	), 0) AS nr_quantidade_recursos,
 	COUNT(tb_projeto) AS nr_quantidade_projetos,
-	('{' || TRIM(TRANSLATE(
+	REPLACE(('{' || TRIM(TRANSLATE(
 		(
 		    SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
 			ARRAY_CAT(
@@ -48,7 +48,7 @@ SELECT
 			)
 		    )) AS a
 		)::TEXT
-	, '"\{}', ''), ',') || '}')::TEXT[] AS fontes_caracteristicas
+	, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes_caracteristicas
 FROM osc.tb_osc
 LEFT JOIN osc.tb_relacoes_trabalho
 ON tb_osc.id_osc = tb_relacoes_trabalho.id_osc
@@ -82,7 +82,7 @@ SELECT
 		COALESCE(tb_recursos_outro_osc.nr_valor_recursos_outro_osc, 0)
 	), 0) AS nr_quantidade_recursos,
 	COUNT(tb_projeto) AS nr_quantidade_projetos,
-	('{' || TRIM(TRANSLATE(
+	REPLACE(('{' || TRIM(TRANSLATE(
 		(
 		    SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
 			ARRAY_CAT(
@@ -115,7 +115,7 @@ SELECT
 			)
 		    )) AS a
 		)::TEXT
-	, '"\{}', ''), ',') || '}')::TEXT[] AS fontes_caracteristicas
+	, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes_caracteristicas
 FROM osc.tb_osc
 LEFT JOIN osc.tb_relacoes_trabalho
 ON tb_osc.id_osc = tb_relacoes_trabalho.id_osc
@@ -149,7 +149,7 @@ SELECT
 		COALESCE(tb_recursos_outro_osc.nr_valor_recursos_outro_osc, 0)
 	), 0) AS nr_quantidade_recursos,
 	COUNT(tb_projeto) AS nr_quantidade_projetos,
-	('{' || TRIM(TRANSLATE(
+	REPLACE(('{' || TRIM(TRANSLATE(
 		(
 		    SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
 			ARRAY_CAT(
@@ -182,7 +182,7 @@ SELECT
 			)
 		    )) AS a
 		)::TEXT
-	, '"\{}', ''), ',') || '}')::TEXT[] AS fontes_caracteristicas
+	, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes_caracteristicas
 FROM osc.tb_osc
 LEFT JOIN osc.tb_relacoes_trabalho
 ON tb_osc.id_osc = tb_relacoes_trabalho.id_osc
