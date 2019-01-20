@@ -4,7 +4,7 @@ CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_area_atuacao AS
 SELECT 
 	COALESCE(SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1), 'Sem informação') AS localidade,
 	COALESCE(dc_area_atuacao.tx_nome_area_atuacao::TEXT, 'Sem informação') AS area_atuacao,
-	COUNT(tb_osc) AS nr_quantidade_oscs,
+	COUNT(tb_osc) AS quantidade_oscs,
 	REPLACE(('{' || TRIM(TRANSLATE(
 		(
 		    SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
