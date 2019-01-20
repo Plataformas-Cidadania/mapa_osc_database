@@ -7,7 +7,7 @@ CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_repasse_recursos AS
 		COALESCE(dc_fonte_recursos_osc.tx_nome_fonte_recursos_osc::TEXT, 'Sem informação') AS fonte_recursos,
 		COALESCE(DATE_PART('year', tb_recursos_osc.dt_ano_recursos_osc)::TEXT, 'Sem informação') AS ano,
 		SUM(COALESCE(tb_recursos_osc.nr_valor_recursos_osc, 0)) AS valor_recursos,
-		('{' || TRIM(TRANSLATE(
+		REPLACE(('{' || TRIM(TRANSLATE(
 			(
 				SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
 				ARRAY_CAT(
@@ -24,7 +24,7 @@ CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_repasse_recursos AS
 					ARRAY_AGG(DISTINCT COALESCE(tb_recursos_osc.ft_valor_recursos_osc, ''))
 				))) AS a
 			)::TEXT
-		, '"\{}', ''), ',') || '}')::TEXT[] AS fontes_caracteristicas
+		, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes_caracteristicas
 	FROM osc.tb_osc
 	LEFT JOIN osc.tb_dados_gerais
 	ON tb_osc.id_osc = tb_dados_gerais.id_osc
@@ -45,7 +45,7 @@ CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_repasse_recursos AS
 		COALESCE(tb_recursos_outro_osc.tx_nome_fonte_recursos_outro_osc::TEXT, 'Sem informação') AS fonte_recursos,
 		COALESCE(DATE_PART('year', tb_recursos_outro_osc.dt_ano_recursos_outro_osc)::TEXT, 'Sem informação') AS ano,
 		SUM(COALESCE(tb_recursos_outro_osc.nr_valor_recursos_outro_osc, 0)) AS valor_recursos,
-		('{' || TRIM(TRANSLATE(
+		REPLACE(('{' || TRIM(TRANSLATE(
 			(
 				SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
 				ARRAY_CAT(
@@ -62,7 +62,7 @@ CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_repasse_recursos AS
 					ARRAY_AGG(DISTINCT COALESCE(tb_recursos_outro_osc.ft_valor_recursos_outro_osc, ''))
 				))) AS a
 			)::TEXT
-		, '"\{}', ''), ',') || '}')::TEXT[] AS fontes_caracteristicas
+		, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes_caracteristicas
 	FROM osc.tb_osc
 	LEFT JOIN osc.tb_dados_gerais
 	ON tb_osc.id_osc = tb_dados_gerais.id_osc
@@ -83,7 +83,7 @@ UNION
 		COALESCE(dc_fonte_recursos_osc.tx_nome_fonte_recursos_osc::TEXT, 'Sem informação') AS fonte_recursos,
 		COALESCE(DATE_PART('year', tb_recursos_osc.dt_ano_recursos_osc)::TEXT, 'Sem informação') AS ano,
 		SUM(COALESCE(tb_recursos_osc.nr_valor_recursos_osc, 0)) AS valor_recursos,
-		('{' || TRIM(TRANSLATE(
+		REPLACE(('{' || TRIM(TRANSLATE(
 			(
 				SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
 				ARRAY_CAT(
@@ -100,7 +100,7 @@ UNION
 					ARRAY_AGG(DISTINCT COALESCE(tb_recursos_osc.ft_valor_recursos_osc, ''))
 				))) AS a
 			)::TEXT
-		, '"\{}', ''), ',') || '}')::TEXT[] AS fontes_caracteristicas
+		, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes_caracteristicas
 	FROM osc.tb_osc
 	LEFT JOIN osc.tb_dados_gerais
 	ON tb_osc.id_osc = tb_dados_gerais.id_osc
@@ -121,7 +121,7 @@ UNION
 		COALESCE(tb_recursos_outro_osc.tx_nome_fonte_recursos_outro_osc::TEXT, 'Sem informação') AS fonte_recursos,
 		COALESCE(DATE_PART('year', tb_recursos_outro_osc.dt_ano_recursos_outro_osc)::TEXT, 'Sem informação') AS ano,
 		SUM(COALESCE(tb_recursos_outro_osc.nr_valor_recursos_outro_osc, 0)) AS valor_recursos,
-		('{' || TRIM(TRANSLATE(
+		REPLACE(('{' || TRIM(TRANSLATE(
 			(
 				SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
 				ARRAY_CAT(
@@ -138,7 +138,7 @@ UNION
 					ARRAY_AGG(DISTINCT COALESCE(tb_recursos_outro_osc.ft_valor_recursos_outro_osc, ''))
 				))) AS a
 			)::TEXT
-		, '"\{}', ''), ',') || '}')::TEXT[] AS fontes_caracteristicas
+		, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes_caracteristicas
 	FROM osc.tb_osc
 	LEFT JOIN osc.tb_dados_gerais
 	ON tb_osc.id_osc = tb_dados_gerais.id_osc
@@ -159,7 +159,7 @@ UNION
 		COALESCE(dc_fonte_recursos_osc.tx_nome_fonte_recursos_osc::TEXT, 'Sem informação') AS fonte_recursos,
 		COALESCE(DATE_PART('year', tb_recursos_osc.dt_ano_recursos_osc)::TEXT, 'Sem informação') AS ano,
 		SUM(COALESCE(tb_recursos_osc.nr_valor_recursos_osc, 0)) AS valor_recursos,
-		('{' || TRIM(TRANSLATE(
+		REPLACE(('{' || TRIM(TRANSLATE(
 			(
 				SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
 				ARRAY_CAT(
@@ -176,7 +176,7 @@ UNION
 					ARRAY_AGG(DISTINCT COALESCE(tb_recursos_osc.ft_valor_recursos_osc, ''))
 				))) AS a
 			)::TEXT
-		, '"\{}', ''), ',') || '}')::TEXT[] AS fontes_caracteristicas
+		, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes_caracteristicas
 	FROM osc.tb_osc
 	LEFT JOIN osc.tb_dados_gerais
 	ON tb_osc.id_osc = tb_dados_gerais.id_osc
@@ -197,7 +197,7 @@ UNION
 		COALESCE(tb_recursos_outro_osc.tx_nome_fonte_recursos_outro_osc::TEXT, 'Sem informação') AS fonte_recursos,
 		COALESCE(DATE_PART('year', tb_recursos_outro_osc.dt_ano_recursos_outro_osc)::TEXT, 'Sem informação') AS ano,
 		SUM(COALESCE(tb_recursos_outro_osc.nr_valor_recursos_outro_osc, 0)) AS valor_recursos,
-		('{' || TRIM(TRANSLATE(
+		REPLACE(('{' || TRIM(TRANSLATE(
 			(
 				SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
 				ARRAY_CAT(
@@ -214,7 +214,7 @@ UNION
 					ARRAY_AGG(DISTINCT COALESCE(tb_recursos_outro_osc.ft_valor_recursos_outro_osc, ''))
 				))) AS a
 			)::TEXT
-		, '"\{}', ''), ',') || '}')::TEXT[] AS fontes_caracteristicas
+		, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes_caracteristicas
 	FROM osc.tb_osc
 	LEFT JOIN osc.tb_dados_gerais
 	ON tb_osc.id_osc = tb_dados_gerais.id_osc
