@@ -5,7 +5,7 @@ SELECT
 	COALESCE(SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1), 'Sem informação') AS localidade,
 	COALESCE(dc_natureza_juridica.tx_nome_natureza_juridica::TEXT, 'Sem informação') AS natureza_juridica,
 	COUNT(tb_osc) AS quantidade_oscs,
-	('{' || TRIM(TRANSLATE(
+	REPLACE(('{' || TRIM(TRANSLATE(
 		(
 		    SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
 			ARRAY_CAT(
@@ -17,7 +17,7 @@ SELECT
 			)
 		    )) AS a
 		)::TEXT
-	, '"\{}', ''), ',') || '}')::TEXT[] AS fontes_caracteristicas
+	, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes_caracteristicas
 FROM osc.tb_osc
 LEFT JOIN osc.tb_dados_gerais
 ON tb_osc.id_osc = tb_dados_gerais.id_osc
@@ -35,7 +35,7 @@ SELECT
 	COALESCE(SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2), 'Sem informação') AS localidade,
 	COALESCE(dc_natureza_juridica.tx_nome_natureza_juridica::TEXT, 'Sem informação') AS natureza_juridica,
 	COUNT(tb_osc) AS nr_quantidade_oscs,
-	('{' || TRIM(TRANSLATE(
+	REPLACE(('{' || TRIM(TRANSLATE(
 		(
 		    SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
 			ARRAY_CAT(
@@ -47,7 +47,7 @@ SELECT
 			)
 		    )) AS a
 		)::TEXT
-	, '"\{}', ''), ',') || '}')::TEXT[] AS fontes_caracteristicas
+	, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes_caracteristicas
 FROM osc.tb_osc
 LEFT JOIN osc.tb_dados_gerais
 ON tb_osc.id_osc = tb_dados_gerais.id_osc
@@ -65,7 +65,7 @@ SELECT
 	COALESCE(tb_localizacao.cd_municipio::TEXT, 'Sem informação') AS localidade,
 	COALESCE(dc_natureza_juridica.tx_nome_natureza_juridica::TEXT, 'Sem informação') AS natureza_juridica,
 	COUNT(tb_osc) AS nr_quantidade_oscs,
-	('{' || TRIM(TRANSLATE(
+	REPLACE(('{' || TRIM(TRANSLATE(
 		(
 		    SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
 			ARRAY_CAT(
@@ -77,7 +77,7 @@ SELECT
 			)
 		    )) AS a
 		)::TEXT
-	, '"\{}', ''), ',') || '}')::TEXT[] AS fontes_caracteristicas
+	, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes_caracteristicas
 FROM osc.tb_osc
 LEFT JOIN osc.tb_dados_gerais
 ON tb_osc.id_osc = tb_dados_gerais.id_osc
