@@ -25,7 +25,7 @@ SELECT
 			0::DOUBLE PRECISION
 		)
 	END AS porcertagem_maior,
-	a.fontes_caracteristicas::TEXT
+	a.fontes::TEXT
 FROM analysis.vw_perfil_localidade_trabalhadores AS a
 LEFT JOIN (
 	SELECT

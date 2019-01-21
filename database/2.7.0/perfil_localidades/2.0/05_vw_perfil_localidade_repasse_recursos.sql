@@ -24,7 +24,7 @@ CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_repasse_recursos AS
 					ARRAY_AGG(DISTINCT COALESCE(tb_recursos_osc.ft_valor_recursos_osc, ''))
 				))) AS a
 			)::TEXT
-		, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes_caracteristicas
+		, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes
 	FROM osc.tb_osc
 	LEFT JOIN osc.tb_dados_gerais
 	ON tb_osc.id_osc = tb_dados_gerais.id_osc
@@ -62,7 +62,7 @@ CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_repasse_recursos AS
 					ARRAY_AGG(DISTINCT COALESCE(tb_recursos_outro_osc.ft_valor_recursos_outro_osc, ''))
 				))) AS a
 			)::TEXT
-		, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes_caracteristicas
+		, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes
 	FROM osc.tb_osc
 	LEFT JOIN osc.tb_dados_gerais
 	ON tb_osc.id_osc = tb_dados_gerais.id_osc
@@ -100,7 +100,7 @@ UNION
 					ARRAY_AGG(DISTINCT COALESCE(tb_recursos_osc.ft_valor_recursos_osc, ''))
 				))) AS a
 			)::TEXT
-		, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes_caracteristicas
+		, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes
 	FROM osc.tb_osc
 	LEFT JOIN osc.tb_dados_gerais
 	ON tb_osc.id_osc = tb_dados_gerais.id_osc
@@ -138,7 +138,7 @@ UNION
 					ARRAY_AGG(DISTINCT COALESCE(tb_recursos_outro_osc.ft_valor_recursos_outro_osc, ''))
 				))) AS a
 			)::TEXT
-		, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes_caracteristicas
+		, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes
 	FROM osc.tb_osc
 	LEFT JOIN osc.tb_dados_gerais
 	ON tb_osc.id_osc = tb_dados_gerais.id_osc
@@ -176,7 +176,7 @@ UNION
 					ARRAY_AGG(DISTINCT COALESCE(tb_recursos_osc.ft_valor_recursos_osc, ''))
 				))) AS a
 			)::TEXT
-		, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes_caracteristicas
+		, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes
 	FROM osc.tb_osc
 	LEFT JOIN osc.tb_dados_gerais
 	ON tb_osc.id_osc = tb_dados_gerais.id_osc
@@ -214,7 +214,7 @@ UNION
 					ARRAY_AGG(DISTINCT COALESCE(tb_recursos_outro_osc.ft_valor_recursos_outro_osc, ''))
 				))) AS a
 			)::TEXT
-		, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes_caracteristicas
+		, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes
 	FROM osc.tb_osc
 	LEFT JOIN osc.tb_dados_gerais
 	ON tb_osc.id_osc = tb_dados_gerais.id_osc

@@ -17,7 +17,7 @@ SELECT
 			)
 		    )) AS a
 		)::TEXT
-	, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes_caracteristicas
+	, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes
 FROM osc.tb_osc
 LEFT JOIN osc.tb_dados_gerais
 ON tb_osc.id_osc = tb_dados_gerais.id_osc
@@ -45,7 +45,7 @@ SELECT
 			)
 		    )) AS a
 		)::TEXT
-	, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes_caracteristicas
+	, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes
 FROM osc.tb_osc
 LEFT JOIN osc.tb_dados_gerais
 ON tb_osc.id_osc = tb_dados_gerais.id_osc
@@ -73,7 +73,7 @@ SELECT
 			)
 		    )) AS a
 		)::TEXT
-	, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes_caracteristicas
+	, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes
 FROM osc.tb_osc
 LEFT JOIN osc.tb_dados_gerais
 ON tb_osc.id_osc = tb_dados_gerais.id_osc

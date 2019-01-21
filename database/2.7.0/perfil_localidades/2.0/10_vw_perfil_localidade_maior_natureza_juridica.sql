@@ -10,7 +10,7 @@ SELECT
 		* 100
 	) AS porcertagem_maior,
 	REPLACE(('{' || TRIM(TRANSLATE(
-		ARRAY_AGG(fontes_caracteristicas::TEXT)::TEXT
+		ARRAY_AGG(fontes::TEXT)::TEXT
 	, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes
 FROM analysis.vw_perfil_localidade_natureza_juridica AS a
 RIGHT JOIN (
@@ -41,7 +41,7 @@ SELECT
 		* 100
 	) AS porcertagem_maior,
 	REPLACE(('{' || TRIM(TRANSLATE(
-		ARRAY_AGG(fontes_caracteristicas::TEXT)::TEXT
+		ARRAY_AGG(fontes::TEXT)::TEXT
 	, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes
 FROM analysis.vw_perfil_localidade_natureza_juridica AS a
 RIGHT JOIN (
@@ -72,7 +72,7 @@ SELECT
 		* 100
 	) AS porcertagem_maior,
 	REPLACE(('{' || TRIM(TRANSLATE(
-		ARRAY_AGG(fontes_caracteristicas::TEXT)::TEXT
+		ARRAY_AGG(fontes::TEXT)::TEXT
 	, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes
 FROM analysis.vw_perfil_localidade_natureza_juridica AS a
 RIGHT JOIN (

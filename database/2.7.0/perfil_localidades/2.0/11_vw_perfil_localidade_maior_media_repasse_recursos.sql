@@ -28,7 +28,7 @@ SELECT
 		)
 	END AS porcertagem_maior,
 	REPLACE(('{' || TRIM(TRANSLATE(
-		ARRAY_AGG(fontes_caracteristicas::TEXT)::TEXT
+		ARRAY_AGG(fontes::TEXT)::TEXT
 	, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes
 FROM analysis.vw_perfil_localidade_repasse_recursos AS a
 RIGHT JOIN (
@@ -77,7 +77,7 @@ SELECT
 		)
 	END AS porcertagem_maior,
 	REPLACE(('{' || TRIM(TRANSLATE(
-		ARRAY_AGG(fontes_caracteristicas::TEXT)::TEXT
+		ARRAY_AGG(fontes::TEXT)::TEXT
 	, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes
 FROM analysis.vw_perfil_localidade_repasse_recursos AS a
 RIGHT JOIN (
@@ -126,7 +126,7 @@ SELECT
 		)
 	END AS porcertagem_maior,
 	REPLACE(('{' || TRIM(TRANSLATE(
-		ARRAY_AGG(fontes_caracteristicas::TEXT)::TEXT
+		ARRAY_AGG(fontes::TEXT)::TEXT
 	, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes
 FROM analysis.vw_perfil_localidade_repasse_recursos AS a
 RIGHT JOIN (

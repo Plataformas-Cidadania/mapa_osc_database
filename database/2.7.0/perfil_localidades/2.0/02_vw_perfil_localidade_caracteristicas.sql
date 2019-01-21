@@ -48,7 +48,7 @@ SELECT
 			)
 		    )) AS a
 		)::TEXT
-	, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes_caracteristicas
+	, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes
 FROM osc.tb_osc
 LEFT JOIN osc.tb_relacoes_trabalho
 ON tb_osc.id_osc = tb_relacoes_trabalho.id_osc
