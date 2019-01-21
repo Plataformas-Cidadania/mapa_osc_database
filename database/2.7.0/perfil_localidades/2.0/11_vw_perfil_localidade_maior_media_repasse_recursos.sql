@@ -1,10 +1,23 @@
-DROP MATERIALIZED VIEW IF EXISTS analysis.vw_perfil_localidade_maior_repasse_recursos CASCADE;
-CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_maior_repasse_recursos AS 
+DROP MATERIALIZED VIEW IF EXISTS analysis.vw_perfil_localidade_maior_media_repasse_recursos CASCADE;
+CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_maior_media_repasse_recursos AS 
 
 SELECT
 	a.localidade,
 	ARRAY_AGG(a.fonte_recursos),
-	CASE 
+	(
+		SELECT
+			CASE 
+				WHEN SUM(valor_recursos) > 0 THEN (
+					(COUNT(*) / SUM(valor_recursos))::DOUBLE PRECISION
+				)
+				ELSE (
+					0::DOUBLE PRECISION
+				)
+			END
+		FROM analysis.vw_perfil_localidade_repasse_recursos
+		WHERE localidade = a.localidade
+	) AS media,
+	CASE
 		WHEN MAX(a.valor_recursos) > 0 THEN (
 			MAX(a.valor_recursos)::DOUBLE PRECISION / 
 			(SELECT SUM(valor_recursos) FROM analysis.vw_perfil_localidade_repasse_recursos WHERE localidade = a.localidade)::DOUBLE PRECISION 
@@ -40,6 +53,19 @@ UNION
 SELECT
 	a.localidade,
 	ARRAY_AGG(a.fonte_recursos),
+	(
+		SELECT
+			CASE 
+				WHEN SUM(valor_recursos) > 0 THEN (
+					(COUNT(*) / SUM(valor_recursos))::DOUBLE PRECISION
+				)
+				ELSE (
+					0::DOUBLE PRECISION
+				)
+			END
+		FROM analysis.vw_perfil_localidade_repasse_recursos
+		WHERE localidade = a.localidade
+	) AS media,
 	CASE 
 		WHEN MAX(a.valor_recursos) > 0 THEN (
 			MAX(a.valor_recursos)::DOUBLE PRECISION / 
@@ -76,6 +102,19 @@ UNION
 SELECT
 	a.localidade,
 	ARRAY_AGG(a.fonte_recursos),
+	(
+		SELECT
+			CASE 
+				WHEN SUM(valor_recursos) > 0 THEN (
+					(COUNT(*) / SUM(valor_recursos))::DOUBLE PRECISION
+				)
+				ELSE (
+					0::DOUBLE PRECISION
+				)
+			END
+		FROM analysis.vw_perfil_localidade_repasse_recursos
+		WHERE localidade = a.localidade
+	) AS media,
 	CASE 
 		WHEN MAX(a.valor_recursos) > 0 THEN (
 			MAX(a.valor_recursos)::DOUBLE PRECISION / 
