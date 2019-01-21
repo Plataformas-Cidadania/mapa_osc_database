@@ -6,6 +6,11 @@ SELECT
 	SUM(COALESCE(tb_relacoes_trabalho.nr_trabalhadores_vinculo, 0)) AS vinculos,
 	SUM(COALESCE(tb_relacoes_trabalho.nr_trabalhadores_deficiencia, 0)) AS deficiencia,
 	SUM(COALESCE(tb_relacoes_trabalho.nr_trabalhadores_voluntarios, 0)) AS voluntarios,
+	SUM(
+		COALESCE(tb_relacoes_trabalho.nr_trabalhadores_vinculo, 0) + 
+		COALESCE(tb_relacoes_trabalho.nr_trabalhadores_deficiencia, 0) +
+		COALESCE(tb_relacoes_trabalho.nr_trabalhadores_voluntarios, 0)
+	) AS total,
 	REPLACE(('{' || TRIM(TRANSLATE(
 		(
 			SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
@@ -40,6 +45,11 @@ SELECT
 	SUM(COALESCE(tb_relacoes_trabalho.nr_trabalhadores_vinculo, 0)) AS vinculos,
 	SUM(COALESCE(tb_relacoes_trabalho.nr_trabalhadores_deficiencia, 0)) AS deficiencia,
 	SUM(COALESCE(tb_relacoes_trabalho.nr_trabalhadores_voluntarios, 0)) AS voluntarios,
+	SUM(
+		COALESCE(tb_relacoes_trabalho.nr_trabalhadores_vinculo, 0) + 
+		COALESCE(tb_relacoes_trabalho.nr_trabalhadores_deficiencia, 0) +
+		COALESCE(tb_relacoes_trabalho.nr_trabalhadores_voluntarios, 0)
+	) AS total,
 	REPLACE(('{' || TRIM(TRANSLATE(
 		(
 			SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
@@ -74,6 +84,11 @@ SELECT
 	SUM(COALESCE(tb_relacoes_trabalho.nr_trabalhadores_vinculo, 0)) AS vinculos,
 	SUM(COALESCE(tb_relacoes_trabalho.nr_trabalhadores_deficiencia, 0)) AS deficiencia,
 	SUM(COALESCE(tb_relacoes_trabalho.nr_trabalhadores_voluntarios, 0)) AS voluntarios,
+	SUM(
+		COALESCE(tb_relacoes_trabalho.nr_trabalhadores_vinculo, 0) + 
+		COALESCE(tb_relacoes_trabalho.nr_trabalhadores_deficiencia, 0) +
+		COALESCE(tb_relacoes_trabalho.nr_trabalhadores_voluntarios, 0)
+	) AS total,
 	REPLACE(('{' || TRIM(TRANSLATE(
 		(
 			SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
