@@ -3,106 +3,38 @@ CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_maior_trabalhadores AS
 
 SELECT
 	a.localidade,
-	ARRAY_AGG(a.fonte_recursos),
+	(
+		CASE
+			WHEN a.vinculos = b.quantidade_trabalhadores AND a.deficiencia = b.quantidade_trabalhadores AND a.voluntarios = b.quantidade_trabalhadores THEN '{vinculos, deficiencia, voluntarios}'
+			WHEN a.vinculos = b.quantidade_trabalhadores AND a.deficiencia = b.quantidade_trabalhadores THEN '{vinculos, deficiencia}'
+			WHEN a.vinculos = b.quantidade_trabalhadores AND a.voluntarios = b.quantidade_trabalhadores THEN '{vinculos, voluntarios}'
+			WHEN a.deficiencia = b.quantidade_trabalhadores AND a.voluntarios = b.quantidade_trabalhadores THEN '{deficiencia, voluntarios}'
+			WHEN a.vinculos = b.quantidade_trabalhadores THEN '{vinculos}'
+			WHEN a.deficiencia = b.quantidade_trabalhadores THEN '{deficiencia}'
+			WHEN a.voluntarios = b.quantidade_trabalhadores THEN '{voluntarios}'
+			ELSE '{}'
+		END
+	)::TEXT[] AS tipo_trabalhadores,
 	CASE 
-		WHEN MAX(a.valor_recursos) > 0 THEN (
-			MAX(a.valor_recursos)::DOUBLE PRECISION / 
-			(SELECT SUM(valor_recursos) FROM analysis.vw_perfil_localidade_repasse_recursos WHERE localidade = a.localidade)::DOUBLE PRECISION 
+		WHEN b.quantidade_trabalhadores > 0 THEN (
+			b.quantidade_trabalhadores::DOUBLE PRECISION / 
+			a.total::DOUBLE PRECISION 
 			* 100
 		)::DOUBLE PRECISION
 		ELSE (
 			0::DOUBLE PRECISION
 		)
 	END AS porcertagem_maior,
-	REPLACE(('{' || TRIM(TRANSLATE(
-		ARRAY_AGG(fontes_caracteristicas::TEXT)::TEXT
-	, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes
-FROM analysis.vw_perfil_localidade_repasse_recursos AS a
-RIGHT JOIN (
+	a.fontes_caracteristicas::TEXT
+FROM analysis.vw_perfil_localidade_trabalhadores AS a
+LEFT JOIN (
 	SELECT
 		localidade,
-		MAX(valor_recursos) AS valor_recursos
-	FROM analysis.vw_perfil_localidade_repasse_recursos
-	WHERE (
-		CASE 
-			WHEN SUBSTRING(localidade FROM '[0-9]*') = '' THEN '0'
-			ELSE SUBSTRING(localidade FROM '[0-9]*')
-		END
-	)::INTEGER BETWEEN 1 AND 9
-	GROUP BY localidade
+		GREATEST(
+			vinculos,
+			deficiencia,
+			voluntarios
+		) AS quantidade_trabalhadores
+	FROM analysis.vw_perfil_localidade_trabalhadores
 ) AS b
-ON a.localidade = b.localidade
-AND a.valor_recursos = b.valor_recursos
-GROUP BY a.localidade
-
-UNION
-
-SELECT
-	a.localidade,
-	ARRAY_AGG(a.fonte_recursos),
-	CASE 
-		WHEN MAX(a.valor_recursos) > 0 THEN (
-			MAX(a.valor_recursos)::DOUBLE PRECISION / 
-			(SELECT SUM(valor_recursos) FROM analysis.vw_perfil_localidade_repasse_recursos WHERE localidade = a.localidade)::DOUBLE PRECISION 
-			* 100
-		)::DOUBLE PRECISION
-		ELSE (
-			0::DOUBLE PRECISION
-		)
-	END AS porcertagem_maior,
-	REPLACE(('{' || TRIM(TRANSLATE(
-		ARRAY_AGG(fontes_caracteristicas::TEXT)::TEXT
-	, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes
-FROM analysis.vw_perfil_localidade_repasse_recursos AS a
-RIGHT JOIN (
-	SELECT
-		localidade,
-		MAX(valor_recursos) AS valor_recursos
-	FROM analysis.vw_perfil_localidade_repasse_recursos
-	WHERE (
-		CASE 
-			WHEN SUBSTRING(localidade FROM '[0-9]*') = '' THEN '0'
-			ELSE SUBSTRING(localidade FROM '[0-9]*')
-		END
-	)::INTEGER BETWEEN 10 AND 99
-	GROUP BY localidade
-) AS b
-ON a.localidade = b.localidade
-AND a.valor_recursos = b.valor_recursos
-GROUP BY a.localidade
-
-UNION
-
-SELECT
-	a.localidade,
-	ARRAY_AGG(a.fonte_recursos),
-	CASE 
-		WHEN MAX(a.valor_recursos) > 0 THEN (
-			MAX(a.valor_recursos)::DOUBLE PRECISION / 
-			(SELECT SUM(valor_recursos) FROM analysis.vw_perfil_localidade_repasse_recursos WHERE localidade = a.localidade)::DOUBLE PRECISION 
-			* 100
-		)::DOUBLE PRECISION
-		ELSE (
-			0::DOUBLE PRECISION
-		)
-	END AS porcertagem_maior,
-	REPLACE(('{' || TRIM(TRANSLATE(
-		ARRAY_AGG(fontes_caracteristicas::TEXT)::TEXT
-	, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[] AS fontes
-FROM analysis.vw_perfil_localidade_repasse_recursos AS a
-RIGHT JOIN (
-	SELECT
-		localidade,
-		MAX(valor_recursos) AS valor_recursos
-	FROM analysis.vw_perfil_localidade_repasse_recursos
-	WHERE (
-		CASE 
-			WHEN SUBSTRING(localidade FROM '[0-9]*') = '' THEN '0'
-			ELSE SUBSTRING(localidade FROM '[0-9]*')
-		END
-	)::INTEGER > 99
-	GROUP BY localidade
-) AS b
-ON a.localidade = b.localidade
-AND a.valor_recursos = b.valor_recursos
-GROUP BY a.localidade;
+ON a.localidade = b.localidade;
