@@ -3,6 +3,8 @@ CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_caracteristicas AS
 
 SELECT 
 	COALESCE(SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1), 'Sem informação') AS localidade,
+	ed_regiao.edre_nm_regiao AS nome_localidade,
+	'regiao' AS tipo_localidade,
 	COUNT(tb_osc) AS quantidade_oscs,
 	COALESCE(SUM(
 		COALESCE(tb_relacoes_trabalho.nr_trabalhadores_vinculo, 0) + 
@@ -62,14 +64,18 @@ LEFT JOIN osc.tb_projeto
 ON tb_osc.id_osc = tb_projeto.id_osc
 LEFT JOIN osc.tb_localizacao
 ON tb_osc.id_osc = tb_localizacao.id_osc
+LEFT JOIN spat.ed_regiao
+ON edre_cd_regiao = SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1)::NUMERIC
 WHERE tb_osc.bo_osc_ativa
 AND tb_osc.id_osc <> 789809
-GROUP BY localidade
+GROUP BY localidade, nome_localidade
 
 UNION
 
 SELECT
 	COALESCE(SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2), 'Sem informação') AS localidade,
+	ed_uf.eduf_nm_uf || ' - ' || ed_uf.eduf_sg_uf AS nome_localidade,
+	'estado' AS tipo_localidade,
 	COUNT(tb_osc) AS nr_quantidade_oscs,
 	COALESCE(SUM(
 		COALESCE(tb_relacoes_trabalho.nr_trabalhadores_vinculo, 0) + 
@@ -129,14 +135,18 @@ LEFT JOIN osc.tb_projeto
 ON tb_osc.id_osc = tb_projeto.id_osc
 LEFT JOIN osc.tb_localizacao
 ON tb_osc.id_osc = tb_localizacao.id_osc
+LEFT JOIN spat.ed_uf
+ON eduf_cd_uf = SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2)::NUMERIC
 WHERE tb_osc.bo_osc_ativa
 AND tb_osc.id_osc <> 789809
-GROUP BY localidade
+GROUP BY localidade, nome_localidade
 
 UNION
 
 SELECT 
 	COALESCE(tb_localizacao.cd_municipio::TEXT, 'Sem informação') AS localidade,
+	ed_municipio.edmu_nm_municipio AS nome_localidade,
+	'municipio' AS tipo_localidade,
 	COUNT(tb_osc) AS nr_quantidade_oscs,
 	COALESCE(SUM(
 		COALESCE(tb_relacoes_trabalho.nr_trabalhadores_vinculo, 0) + 
@@ -196,6 +206,8 @@ LEFT JOIN osc.tb_projeto
 ON tb_osc.id_osc = tb_projeto.id_osc
 LEFT JOIN osc.tb_localizacao
 ON tb_osc.id_osc = tb_localizacao.id_osc
+LEFT JOIN spat.ed_municipio
+ON edmu_cd_municipio = tb_localizacao.cd_municipio
 WHERE tb_osc.bo_osc_ativa
 AND tb_osc.id_osc <> 789809
-GROUP BY localidade;
+GROUP BY localidade, nome_localidade;
