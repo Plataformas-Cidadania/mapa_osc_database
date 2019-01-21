@@ -3,7 +3,7 @@ CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_maior_area_atuacao AS
 
 SELECT
 	a.localidade,
-	ARRAY_AGG(a.area_atuacao),
+	ARRAY_AGG(a.area_atuacao) AS area_atuacao,
 	(
 		MAX(a.quantidade_oscs)::DOUBLE PRECISION
 		/ (SELECT SUM(quantidade_oscs) FROM analysis.vw_perfil_localidade_area_atuacao WHERE localidade = a.localidade)::DOUBLE PRECISION 
