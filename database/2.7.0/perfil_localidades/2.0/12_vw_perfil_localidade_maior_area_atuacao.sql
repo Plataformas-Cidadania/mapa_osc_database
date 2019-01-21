@@ -5,8 +5,8 @@ SELECT
 	a.localidade,
 	ARRAY_AGG(a.area_atuacao),
 	(
-		MAX(a.quantidade_oscs)::DOUBLE PRECISION / 
-		(SELECT SUM(quantidade_oscs) FROM analysis.vw_perfil_localidade_area_atuacao WHERE localidade = a.localidade)::DOUBLE PRECISION 
+		MAX(a.quantidade_oscs)::DOUBLE PRECISION
+		/ (SELECT SUM(quantidade_oscs) FROM analysis.vw_perfil_localidade_area_atuacao WHERE localidade = a.localidade)::DOUBLE PRECISION 
 		* 100
 	) AS porcertagem_maior,
 	REPLACE(('{' || TRIM(TRANSLATE(
@@ -36,8 +36,8 @@ SELECT
 	a.localidade,
 	ARRAY_AGG(a.area_atuacao),
 	(
-		MAX(a.quantidade_oscs)::DOUBLE PRECISION / 
-		(SELECT SUM(quantidade_oscs) FROM analysis.vw_perfil_localidade_area_atuacao WHERE localidade = a.localidade)::DOUBLE PRECISION 
+		MAX(a.quantidade_oscs)::DOUBLE PRECISION
+		/ (SELECT SUM(quantidade_oscs) FROM analysis.vw_perfil_localidade_area_atuacao WHERE localidade = a.localidade)::DOUBLE PRECISION 
 		* 100
 	) AS porcertagem_maior,
 	REPLACE(('{' || TRIM(TRANSLATE(
@@ -67,8 +67,8 @@ SELECT
 	a.localidade,
 	ARRAY_AGG(a.area_atuacao),
 	(
-		MAX(a.quantidade_oscs)::DOUBLE PRECISION / 
-		(SELECT SUM(quantidade_oscs) FROM analysis.vw_perfil_localidade_area_atuacao WHERE localidade = a.localidade)::DOUBLE PRECISION 
+		MAX(a.quantidade_oscs)::DOUBLE PRECISION
+		/ (SELECT SUM(quantidade_oscs) FROM analysis.vw_perfil_localidade_area_atuacao WHERE localidade = a.localidade)::DOUBLE PRECISION 
 		* 100
 	) AS porcertagem_maior,
 	REPLACE(('{' || TRIM(TRANSLATE(

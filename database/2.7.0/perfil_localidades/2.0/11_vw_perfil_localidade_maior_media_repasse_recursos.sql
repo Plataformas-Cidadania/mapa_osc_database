@@ -19,8 +19,8 @@ SELECT
 	) AS media,
 	CASE
 		WHEN MAX(a.valor_recursos) > 0 THEN (
-			MAX(a.valor_recursos)::DOUBLE PRECISION / 
-			(SELECT SUM(valor_recursos) FROM analysis.vw_perfil_localidade_repasse_recursos WHERE localidade = a.localidade)::DOUBLE PRECISION 
+			MAX(a.valor_recursos)::DOUBLE PRECISION
+			/ (SELECT SUM(valor_recursos) FROM analysis.vw_perfil_localidade_repasse_recursos WHERE localidade = a.localidade)::DOUBLE PRECISION 
 			* 100
 		)::DOUBLE PRECISION
 		ELSE (
@@ -68,8 +68,8 @@ SELECT
 	) AS media,
 	CASE 
 		WHEN MAX(a.valor_recursos) > 0 THEN (
-			MAX(a.valor_recursos)::DOUBLE PRECISION / 
-			(SELECT SUM(valor_recursos) FROM analysis.vw_perfil_localidade_repasse_recursos WHERE localidade = a.localidade)::DOUBLE PRECISION 
+			MAX(a.valor_recursos)::DOUBLE PRECISION
+			/ (SELECT SUM(valor_recursos) FROM analysis.vw_perfil_localidade_repasse_recursos WHERE localidade = a.localidade)::DOUBLE PRECISION 
 			* 100
 		)::DOUBLE PRECISION
 		ELSE (
@@ -117,8 +117,8 @@ SELECT
 	) AS media,
 	CASE 
 		WHEN MAX(a.valor_recursos) > 0 THEN (
-			MAX(a.valor_recursos)::DOUBLE PRECISION / 
-			(SELECT SUM(valor_recursos) FROM analysis.vw_perfil_localidade_repasse_recursos WHERE localidade = a.localidade)::DOUBLE PRECISION 
+			MAX(a.valor_recursos)::DOUBLE PRECISION
+			/ (SELECT SUM(valor_recursos) FROM analysis.vw_perfil_localidade_repasse_recursos WHERE localidade = a.localidade)::DOUBLE PRECISION 
 			* 100
 		)::DOUBLE PRECISION
 		ELSE (

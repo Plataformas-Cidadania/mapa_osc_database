@@ -17,8 +17,8 @@ SELECT
 	)::TEXT[] AS tipo_trabalhadores,
 	CASE 
 		WHEN b.quantidade_trabalhadores > 0 THEN (
-			b.quantidade_trabalhadores::DOUBLE PRECISION / 
-			a.total::DOUBLE PRECISION 
+			b.quantidade_trabalhadores::DOUBLE PRECISION
+			/ a.total::DOUBLE PRECISION 
 			* 100
 		)::DOUBLE PRECISION
 		ELSE (
