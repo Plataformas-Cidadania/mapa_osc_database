@@ -9,6 +9,8 @@ CREATE OR REPLACE FUNCTION portal.obter_perfil_localidade(id_localidade INTEGER)
 DECLARE
 	caracteristicas_json JSONB;
 	caracteristicas_fontes_json JSONB;
+	evolucao_anual_json JSONB;
+	evolucao_anual_fontes_json JSONB;
 	natureza_juridica_json JSONB;
 	natureza_juridica_maior_media_nacional_json JSONB;
 	natureza_juridica_fontes_json JSONB;
@@ -47,6 +49,36 @@ BEGIN
 	) AS c;
 
 	resultado := resultado || caracteristicas_json || caracteristicas_fontes_json;
+
+	/* ==================== Evolução Anual ==================== */
+	SELECT INTO evolucao_anual_json
+		row_to_json(b)
+	FROM (
+			SELECT json_agg(a) AS caracteristicas
+			FROM (
+				SELECT
+					fundacao AS x,
+					quantidade_oscs AS y
+				FROM analysis.vw_perfil_localidade_evolucao_anual
+				WHERE localidade = id_localidade::TEXT
+			) AS a
+	) AS b;
+
+	SELECT INTO evolucao_anual_fontes_json
+		row_to_json(c) 
+	FROM (
+		SELECT ARRAY_AGG(b.fontes) AS fontes FROM (
+			SELECT 
+				DISTINCT UNNEST(a.fontes) AS fontes
+			FROM (
+				SELECT a.fontes
+				FROM analysis.vw_perfil_localidade_evolucao_anual AS a
+				WHERE a.localidade = id_localidade::TEXT
+			) AS a
+		) AS b
+	) AS c;
+	
+	resultado := resultado || evolucao_anual_json || evolucao_anual_fontes_json;
 
 	/* ==================== Natureza Jurídica ==================== */
 	SELECT INTO natureza_juridica_json
