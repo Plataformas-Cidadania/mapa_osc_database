@@ -3,7 +3,7 @@ DROP FUNCTION IF EXISTS analysis.obter_perfil_localidade(INTEGER) CASCADE;
 CREATE OR REPLACE FUNCTION analysis.obter_perfil_localidade(id_localidade INTEGER) RETURNS TABLE (
 	resultado JSONB,
 	mensagem TEXT,
-	flag BOOLEAN
+	codigo INTEGER
 ) AS $$ 
 
 DECLARE
@@ -133,7 +133,7 @@ BEGIN
 	resultado := resultado || natureza_juridica_json || natureza_juridica_fontes_json || natureza_juridica_maior_media_nacional_json;
 	
 	/* ------------------------------ RESULTADO ------------------------------ */
-	flag := true;
+	codigo := 200;
 	mensagem := 'Perfil de localidade retornado.';
 
 	RETURN NEXT;
@@ -141,7 +141,7 @@ BEGIN
 EXCEPTION
 	WHEN others THEN
 		RAISE NOTICE '%', SQLERRM;
-		flag := false;
+		codigo := 400;
 		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, null, null, null, false, null) AS a;
 		RETURN NEXT;
 
