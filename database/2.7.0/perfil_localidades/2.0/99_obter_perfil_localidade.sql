@@ -8,9 +8,10 @@ CREATE OR REPLACE FUNCTION portal.obter_perfil_localidade(id_localidade INTEGER)
 
 DECLARE
 	natureza_juridica_json JSONB;
+	natureza_juridica_maior_media_nacional_json JSONB;
 	fontes_json JSONB;
 
-BEGIN 
+BEGIN
 	SELECT INTO natureza_juridica_json
 		row_to_json(b) 
 	FROM (
@@ -50,7 +51,17 @@ BEGIN
 		) AS b
 	) AS c;
 	
-	natureza_juridica_json := natureza_juridica_json || fontes_json;
+	SELECT INTO natureza_juridica_maior_media_nacional_json
+		row_to_json(a) 
+	FROM (
+		SELECT
+			65 AS nr_porcentagem_maior_media_nacional,
+			dado AS tx_porcentagem_maior_media_nacional
+		FROM analysis.vw_perfil_localidade_media_nacional
+		WHERE tipo_dado = 'maior_natureza_juridica'
+	) AS a;
+	
+	natureza_juridica_json := natureza_juridica_json || fontes_json || natureza_juridica_maior_media_nacional_json;
 	
 	resultado := natureza_juridica_json;
 
@@ -61,6 +72,7 @@ BEGIN
 
 EXCEPTION
 	WHEN others THEN
+		RAISE NOTICE '%', SQLERRM;
 		flag := false;
 		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, null, null, null, false, null) AS a;
 		RETURN NEXT;
