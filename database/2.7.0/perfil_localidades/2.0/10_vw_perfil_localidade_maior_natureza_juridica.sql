@@ -2,8 +2,8 @@ DROP MATERIALIZED VIEW IF EXISTS analysis.vw_perfil_localidade_maior_natureza_ju
 CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_maior_natureza_juridica AS 
 
 SELECT
-	a.localidade,
-	ARRAY_AGG(a.natureza_juridica),
+	a.localidade AS localidade,
+	ARRAY_AGG(a.natureza_juridica) AS natureza_juridica,
 	(
 		MAX(a.quantidade_oscs)::DOUBLE PRECISION
 		/ (SELECT SUM(quantidade_oscs) FROM analysis.vw_perfil_localidade_natureza_juridica WHERE localidade = a.localidade)::DOUBLE PRECISION 
@@ -33,8 +33,8 @@ GROUP BY a.localidade
 UNION
 
 SELECT
-	a.localidade,
-	ARRAY_AGG(a.natureza_juridica),
+	a.localidade AS localidade,
+	ARRAY_AGG(a.natureza_juridica) AS natureza_juridica,
 	(
 		MAX(a.quantidade_oscs)::DOUBLE PRECISION
 		/ (SELECT SUM(quantidade_oscs) FROM analysis.vw_perfil_localidade_natureza_juridica WHERE localidade = a.localidade)::DOUBLE PRECISION 
@@ -64,8 +64,8 @@ GROUP BY a.localidade
 UNION
 
 SELECT
-	a.localidade,
-	ARRAY_AGG(a.natureza_juridica),
+	a.localidade AS localidade,
+	ARRAY_AGG(a.natureza_juridica) AS natureza_juridica,
 	(
 		MAX(a.quantidade_oscs)::DOUBLE PRECISION
 		/ (SELECT SUM(quantidade_oscs) FROM analysis.vw_perfil_localidade_natureza_juridica WHERE localidade = a.localidade)::DOUBLE PRECISION 
