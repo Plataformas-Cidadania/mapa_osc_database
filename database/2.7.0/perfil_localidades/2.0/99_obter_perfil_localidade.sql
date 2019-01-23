@@ -7,11 +7,48 @@ CREATE OR REPLACE FUNCTION portal.obter_perfil_localidade(id_localidade INTEGER)
 ) AS $$ 
 
 DECLARE
+	caracteristicas_json JSONB;
+	caracteristicas_fontes_json JSONB;
 	natureza_juridica_json JSONB;
 	natureza_juridica_maior_media_nacional_json JSONB;
-	fontes_json JSONB;
+	natureza_juridica_fontes_json JSONB;
 
 BEGIN
+	resultado := '{}'::JSONB;
+	
+	/* ==================== Características ==================== */
+	SELECT INTO caracteristicas_json
+		row_to_json(b)
+	FROM (
+			SELECT json_agg(a) AS caracteristicas
+			FROM (
+				SELECT
+					quantidade_oscs AS quantidade,
+					quantidade_trabalhadores AS nr_quantidade_trabalhadores,
+					quantidade_recursos AS nr_quantidade_recursos,
+					quantidade_projetos AS nr_quantidade_projetos
+				FROM analysis.vw_perfil_localidade_caracteristicas
+				WHERE localidade = 35::TEXT
+			) AS a
+	) AS b;
+
+	SELECT INTO caracteristicas_fontes_json
+		row_to_json(c) 
+	FROM (
+		SELECT ARRAY_AGG(b.fontes) AS fontes FROM (
+			SELECT 
+				DISTINCT UNNEST(a.fontes) AS fontes
+			FROM (
+				SELECT a.fontes
+				FROM analysis.vw_perfil_localidade_caracteristicas AS a
+				WHERE a.localidade = id_localidade::TEXT
+			) AS a
+		) AS b
+	) AS c;
+
+	resultado := resultado || caracteristicas_json || caracteristicas_fontes_json;
+
+	/* ==================== Natureza Jurídica ==================== */
 	SELECT INTO natureza_juridica_json
 		row_to_json(b) 
 	FROM (
@@ -19,7 +56,7 @@ BEGIN
 			a.natureza_juridica AS tx_porcentagem_maior,
 			a.porcertagem_maior AS nr_porcentagem_maior,
 			(
-				SELECT json_agg(row_to_json(a))
+				SELECT json_agg(a)
 				FROM (
 					SELECT
 						quantidade_oscs,
@@ -33,7 +70,7 @@ BEGIN
 		WHERE localidade = id_localidade::TEXT
 	) AS b;
 
-	SELECT INTO fontes_json
+	SELECT INTO natureza_juridica_fontes_json
 		row_to_json(c) 
 	FROM (
 		SELECT ARRAY_AGG(b.fontes) AS fontes FROM (
@@ -61,10 +98,9 @@ BEGIN
 		WHERE tipo_dado = 'maior_natureza_juridica'
 	) AS a;
 	
-	natureza_juridica_json := natureza_juridica_json || fontes_json || natureza_juridica_maior_media_nacional_json;
+	resultado := resultado || natureza_juridica_json || natureza_juridica_fontes_json || natureza_juridica_maior_media_nacional_json;
 	
-	resultado := natureza_juridica_json;
-
+	/* ------------------------------ RESULTADO ------------------------------ */
 	flag := true;
 	mensagem := 'Perfil de localidade retornado.';
 
