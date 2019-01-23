@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS portal.obter_perfil_localidade(INTEGER) CASCADE;
+DROP FUNCTION IF EXISTS analysis.obter_perfil_localidade(INTEGER) CASCADE;
 
-CREATE OR REPLACE FUNCTION portal.obter_perfil_localidade(id_localidade INTEGER) RETURNS TABLE (
+CREATE OR REPLACE FUNCTION analysis.obter_perfil_localidade(id_localidade INTEGER) RETURNS TABLE (
 	resultado JSONB,
 	mensagem TEXT,
 	flag BOOLEAN
@@ -149,4 +149,4 @@ END;
 
 $$ LANGUAGE 'plpgsql';
 
-SELECT * FROM portal.obter_perfil_localidade(35);
+SELECT * FROM analysis.obter_perfil_localidade(35);
