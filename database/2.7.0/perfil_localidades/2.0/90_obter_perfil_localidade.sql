@@ -39,7 +39,7 @@ BEGIN
 			row_to_json(a) AS caracteristicas
 		FROM (
 			SELECT
-				quantidade_oscs AS quantidade,
+				quantidade_oscs AS nr_quantidade_oscs,
 				quantidade_trabalhadores AS nr_quantidade_trabalhadores,
 				quantidade_recursos AS nr_quantidade_recursos,
 				quantidade_projetos AS nr_quantidade_projetos,
@@ -212,7 +212,7 @@ BEGIN
 	END IF;
 	
 	FOR record IN
-		SELECT dado AS tx_porcentagem_maior_media_nacional, maior_porcentagem AS nr_porcentagem_maior_media_nacional
+		SELECT dado AS tx_porcentagem_maior_media_nacional, valor AS nr_porcentagem_maior_media_nacional
 		FROM analysis.vw_perfil_localidade_media_nacional
 		WHERE tipo_dado = 'maior_natureza_juridica'
 	LOOP
@@ -265,9 +265,9 @@ BEGIN
 	-- ==================== Repasse de Recursos ==================== --
 	
 	FOR record IN
-		SELECT dado AS tx_porcentagem_maior_media_nacional, maior_porcentagem AS nr_porcentagem_maior_media_nacional
+		SELECT valor
 		FROM analysis.vw_perfil_localidade_media_nacional
-		WHERE tipo_dado = 'maior_repasse_recursos'
+		WHERE tipo_dado = 'media_repasse_recursos'
 	LOOP
 		SELECT INTO repasse_recursos_json
 			row_to_json(d) 
@@ -276,6 +276,7 @@ BEGIN
 				row_to_json(c) AS repasse_recursos
 			FROM (
 				SELECT
+					record.valor AS nr_repasse_media_nacional,
 					tipo_repasse AS tx_maior_tipo_repasse,
 					porcertagem_maior AS nr_porcentagem_maior,
 					(
@@ -331,7 +332,7 @@ BEGIN
 	-- ==================== Área de Atuação ==================== --
 	
 	FOR record IN
-		SELECT dado AS tx_porcentagem_maior_media_nacional, maior_porcentagem AS nr_porcentagem_maior_media_nacional
+		SELECT dado AS tx_porcentagem_maior_media_nacional, valor AS nr_porcentagem_maior_media_nacional
 		FROM analysis.vw_perfil_localidade_media_nacional
 		WHERE tipo_dado = 'maior_area_atuacao'
 	LOOP
@@ -384,7 +385,7 @@ BEGIN
 	-- ==================== Trabalhadores ==================== --
 	
 	FOR record IN
-		SELECT dado AS tx_porcentagem_maior_media_nacional, maior_porcentagem AS nr_porcentagem_maior_media_nacional
+		SELECT dado AS tx_porcentagem_maior_media_nacional, valor AS nr_porcentagem_maior_media_nacional
 		FROM analysis.vw_perfil_localidade_media_nacional
 		WHERE tipo_dado = 'maior_trabalhadores'
 	LOOP

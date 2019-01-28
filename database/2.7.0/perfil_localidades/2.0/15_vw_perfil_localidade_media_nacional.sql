@@ -8,7 +8,7 @@ SELECT
 		MAX(a.quantidade_osc)
 		/ (SELECT SUM(quantidade_oscs) FROM analysis.vw_perfil_localidade_natureza_juridica AS c)
 		* 100
-	) AS maior_porcentagem
+	) AS valor
 FROM (
 	SELECT 
 		natureza_juridica,
@@ -34,7 +34,7 @@ SELECT
 		MAX(a.valor_recursos)
 		/ (SELECT SUM(valor_recursos) FROM analysis.vw_perfil_localidade_repasse_recursos AS c)
 		* 100
-	) AS maior_porcentagem
+	) AS valor
 FROM (
 	SELECT 
 		fonte_recursos,
@@ -54,13 +54,27 @@ ON a.valor_recursos = b.valor_recursos
 UNION
 
 SELECT
+	'media_repasse_recursos'::TEXT AS tipo_dado,
+	null AS dado,
+	SUM(a.valor) / SUM(a.quantidade) AS valor
+FROM (
+	SELECT
+		COUNT(*) AS quantidade,
+		SUM(valor_recursos) AS valor
+	FROM analysis.vw_perfil_localidade_repasse_recursos
+	GROUP BY fonte_recursos
+) AS a
+
+UNION
+
+SELECT
 	'maior_area_atuacao'::TEXT AS tipo_dado,
 	ARRAY_AGG(a.area_atuacao) AS dado,
 	(
 		MAX(a.quantidade_osc)
 		/ (SELECT SUM(quantidade_oscs) FROM analysis.vw_perfil_localidade_area_atuacao AS c)
 		* 100
-	) AS maior_porcentagem
+	) AS valor
 FROM (
 	SELECT 
 		area_atuacao,
@@ -84,7 +98,7 @@ SELECT
 	ARRAY_AGG(tipo_trabalhadores) AS dado,
 	(
 		MAX(quantidade_trabalhadores) / MAX(total) * 100
-	) AS porcentagem_maior_trabalhadores
+	) AS valor
 FROM (
 	SELECT
 		'Trabalhadores com vínculos'::TEXT AS tipo_trabalhadores,
