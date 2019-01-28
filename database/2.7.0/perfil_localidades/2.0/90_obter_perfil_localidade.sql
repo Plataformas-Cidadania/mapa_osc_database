@@ -276,6 +276,11 @@ BEGIN
 				row_to_json(c) AS repasse_recursos
 			FROM (
 				SELECT
+					(
+						SELECT media
+						FROM analysis.vw_perfil_localidade_media_repasse_recursos
+						WHERE localidade = id_localidade::TEXT
+					) AS nr_repasse_media,
 					record.valor AS nr_repasse_media_nacional,
 					tipo_repasse AS tx_maior_tipo_repasse,
 					porcertagem_maior AS nr_porcentagem_maior,

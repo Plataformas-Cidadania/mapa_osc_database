@@ -7,8 +7,7 @@ SELECT
 	SUM(valor_recursos) AS valor_repasses,
 	SUM(valor_recursos) / COUNT(*) AS media
 FROM analysis.vw_perfil_localidade_repasse_recursos AS a
-GROUP BY a.localidade
-ORDER BY valor_repasses DESC;
+GROUP BY a.localidade;
 
 CREATE INDEX ix_localidade_vw_perfil_localidade_media_repasse_recursos
     ON analysis.vw_perfil_localidade_media_repasse_recursos USING btree
