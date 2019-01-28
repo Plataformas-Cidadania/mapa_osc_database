@@ -10,9 +10,13 @@ DECLARE
 	natureza_juridica_json JSONB;
 	repasse_recursos_json JSONB;
 	area_atuacao_json JSONB;
+	
+	localidades_maior_media_nacional_natureza_juridica TEXT[];
+	valor_maior_media_nacional_natureza_juridica DOUBLE PRECISION;
 
 BEGIN
 	-- ==================== Características ==================== --
+	/*
 	SELECT INTO caracteristicas_json
 		row_to_json(b)
 	FROM (
@@ -77,8 +81,19 @@ BEGIN
 	) AS c;
 
 	resultado := resultado || evolucao_anual_json;
-	
+	*/
 	-- ==================== Natureza Jurídica ==================== --
+	SELECT INTO localidades_maior_media_nacional_natureza_juridica, valor_maior_media_nacional_natureza_juridica 
+		ARRAY_AGG(b.nome_localidade), MAX(a.porcertagem_maior)
+	FROM analysis.vw_perfil_localidade_maior_natureza_juridica AS a
+	INNER JOIN analysis.vw_perfil_localidade_caracteristicas AS b
+	ON a.localidade = b.localidade
+	WHERE a.porcertagem_maior = (
+		SELECT MAX(porcertagem_maior)
+		FROM analysis.vw_perfil_localidade_maior_natureza_juridica
+		WHERE localidade::INTEGER > 99
+	);
+	
 	FOR record IN
 		SELECT dado AS tx_porcentagem_maior_media_nacional, maior_porcentagem AS nr_porcentagem_maior_media_nacional
 		FROM analysis.vw_perfil_localidade_media_nacional
@@ -93,6 +108,8 @@ BEGIN
 				SELECT
 					a.natureza_juridica AS tx_porcentagem_maior,
 					a.porcertagem_maior AS nr_porcentagem_maior,
+					localidades_maior_media_nacional_natureza_juridica AS tx_porcentagem_maior_media_nacional,
+					valor_maior_media_nacional_natureza_juridica AS nr_porcentagem_maior_media_nacional,
 					(
 						SELECT json_agg(a)
 						FROM (
@@ -122,34 +139,6 @@ BEGIN
 				WHERE localidade = id_localidade::TEXT
 			) AS b
 		) AS c;
-	END LOOP;
-	
-	FOR record IN
-		SELECT ARRAY_AGG(b.nome_localidade) AS tx_primeiro_colocado, MAX(a.quantidade_oscs) AS nr_quantidade_oscs_primeiro_colocado
-		FROM analysis.vw_perfil_localidade_ranking_quantidade_osc AS a
-		INNER JOIN analysis.vw_perfil_localidade_caracteristicas AS b
-		ON a.localidade = b.localidade
-		WHERE a.rank = (
-			SELECT MIN(rank)
-			FROM analysis.vw_perfil_localidade_ranking_quantidade_osc
-			WHERE localidade::INTEGER > 99
-		)
-	LOOP
-		--RAISE NOTICE '%', to_json(record);
-	END LOOP;
-
-	FOR record IN
-		SELECT ARRAY_AGG(b.nome_localidade) AS tx_ultimo_colocado, MAX(a.quantidade_oscs) AS nr_quantidade_oscs_ultimo_colocado
-		FROM analysis.vw_perfil_localidade_ranking_quantidade_osc AS a
-		INNER JOIN analysis.vw_perfil_localidade_caracteristicas AS b
-		ON a.localidade = b.localidade
-		WHERE a.rank = (
-			SELECT MAX(rank)
-			FROM analysis.vw_perfil_localidade_ranking_quantidade_osc
-			WHERE localidade::INTEGER > 99
-		)
-	LOOP
-		--RAISE NOTICE '%', to_json(record);
 	END LOOP;
 	
 	resultado := resultado || natureza_juridica_json;
