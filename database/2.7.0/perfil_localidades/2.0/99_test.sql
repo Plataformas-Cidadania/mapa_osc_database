@@ -10,6 +10,7 @@ DECLARE
 	natureza_juridica_json JSONB;
 	repasse_recursos_json JSONB;
 	area_atuacao_json JSONB;
+	trabalhadores_json JSONB;
 	
 	localidades_maior_media_nacional_natureza_juridica TEXT[];
 	valor_maior_media_nacional_natureza_juridica DOUBLE PRECISION;
@@ -310,7 +311,7 @@ BEGIN
 	resultado := resultado || repasse_recursos_json;
 	*/
 	-- ==================== Área de Atuação ==================== --
-	
+	/*
 	FOR record IN
 		SELECT dado AS tx_porcentagem_maior_media_nacional, maior_porcentagem AS nr_porcentagem_maior_media_nacional
 		FROM analysis.vw_perfil_localidade_media_nacional
@@ -357,9 +358,61 @@ BEGIN
 			) AS b
 		) AS c;
 	END LOOP;
-	
-	resultado := resultado || area_atuacao_json;
 
+	resultado := resultado || area_atuacao_json;
+	*/
+	-- ==================== Área de Atuação ==================== --
+	
+	FOR record IN
+		SELECT dado AS tx_porcentagem_maior_media_nacional, maior_porcentagem AS nr_porcentagem_maior_media_nacional
+		FROM analysis.vw_perfil_localidade_media_nacional
+		WHERE tipo_dado = 'maior_trabalhadores'
+	LOOP
+		SELECT INTO trabalhadores_json
+			row_to_json(c) 
+		FROM (
+			SELECT
+				row_to_json(b) AS trabalhadores
+			FROM (
+				SELECT
+					record.tx_porcentagem_maior_media_nacional,
+					record.nr_porcentagem_maior_media_nacional,
+					a.area_atuacao AS tx_porcentagem_maior,
+					a.porcertagem_maior AS nr_porcentagem_maior,
+					(
+						SELECT json_agg(a)
+						FROM (
+							SELECT
+								area_atuacao AS label,
+								quantidade_oscs AS value
+							FROM analysis.vw_perfil_localidade_area_atuacao
+							WHERE localidade = id_localidade::TEXT
+						) AS a
+					) AS series_1,
+					(
+						SELECT ARRAY_AGG(b.fontes) FROM (
+							SELECT 
+								DISTINCT UNNEST(a.fontes) AS fontes
+							FROM (
+								SELECT a.fontes
+								FROM analysis.vw_perfil_localidade_area_atuacao AS a
+								WHERE a.localidade = id_localidade::TEXT
+								UNION
+								SELECT a.fontes
+								FROM analysis.vw_perfil_localidade_maior_natureza_juridica AS a
+								WHERE a.localidade = id_localidade::TEXT
+							) AS a
+						) AS b
+					) AS fontes
+				FROM analysis.vw_perfil_localidade_maior_area_atuacao AS a
+				WHERE localidade = id_localidade::TEXT
+			) AS b
+		) AS c;
+	END LOOP;
+	
+	resultado := resultado || trabalhadores_json;
+	
+	-- -------------------- RESULTADO -------------------- --
 	RAISE NOTICE '%', resultado;
 END;
 $$ LANGUAGE 'plpgsql';
