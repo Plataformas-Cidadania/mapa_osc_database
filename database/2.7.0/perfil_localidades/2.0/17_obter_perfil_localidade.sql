@@ -1,9 +1,12 @@
-DO $$
+DROP FUNCTION IF EXISTS analysis.obter_perfil_localidade(INTEGER) CASCADE;
+
+CREATE OR REPLACE FUNCTION analysis.obter_perfil_localidade(id_localidade INTEGER) RETURNS TABLE (
+	resultado JSONB,
+	mensagem TEXT,
+	codigo INTEGER
+) AS $$ 
 
 DECLARE
-	id_localidade INTEGER := 1;
-	resultado JSONB := '{}';
-	
 	record RECORD;
 	caracteristicas_json JSONB;
 	evolucao_anual_json JSONB;
@@ -12,7 +15,7 @@ DECLARE
 	area_atuacao_json JSONB;
 	trabalhadores_json JSONB;
 	
-	localidades_maior_media_nacional_natureza_juridica TEXT[];
+	maior_media_nacional_natureza_juridica TEXT[];
 	valor_maior_media_nacional_natureza_juridica DOUBLE PRECISION;
 	localidades_primeiro_colocado_quantidade_osc TEXT[];
 	valor_primeiro_colocado_quantidade_osc INTEGER;
@@ -20,6 +23,19 @@ DECLARE
 	valor_ultimo_colocado_quantidade_osc INTEGER;
 	
 BEGIN
+	SELECT INTO resultado row_to_json(a)
+	FROM (
+		SELECT
+			nome_localidade AS tx_localidade,
+			CASE
+				WHEN tipo_localidade = 'regiao' THEN 'Região'
+				WHEN tipo_localidade = 'estado' THEN 'Estado'
+				WHEN tipo_localidade = 'municipio' THEN 'Município'
+			END AS tx_tipo_localidade
+		FROM analysis.vw_perfil_localidade_caracteristicas
+		WHERE localidade = id_localidade::TEXT
+	) AS a;
+	
 	-- ==================== Características ==================== --
 	
 	SELECT INTO caracteristicas_json
@@ -29,7 +45,7 @@ BEGIN
 			row_to_json(a) AS caracteristicas
 		FROM (
 			SELECT
-				quantidade_oscs AS quantidade,
+				quantidade_oscs AS nr_quantidade_oscs,
 				quantidade_trabalhadores AS nr_quantidade_trabalhadores,
 				quantidade_recursos AS nr_quantidade_recursos,
 				quantidade_projetos AS nr_quantidade_projetos,
@@ -49,9 +65,11 @@ BEGIN
 			WHERE localidade = 35::TEXT
 		) AS a
 	) AS b;
-
-	resultado := resultado || caracteristicas_json;
 	
+	IF caracteristicas_json IS NOT NULL THEN
+		resultado := resultado || caracteristicas_json;
+	END IF;
+
 	-- ==================== Evolução Anual ==================== --
 	
 	IF id_localidade > 99 THEN
@@ -158,39 +176,35 @@ BEGIN
 		) AS b
 	) AS c;
 
-	resultado := resultado || evolucao_anual_json;
-	
+	IF evolucao_anual_json IS NOT NULL THEN
+		resultado := resultado || evolucao_anual_json;
+	END IF;
+
 	-- ==================== Natureza Jurídica ==================== --
 	
 	IF id_localidade > 99 THEN
-		SELECT INTO localidades_maior_media_nacional_natureza_juridica, valor_maior_media_nacional_natureza_juridica 
-			ARRAY_AGG(b.nome_localidade), MAX(a.porcertagem_maior)
-		FROM analysis.vw_perfil_localidade_maior_natureza_juridica AS a
-		INNER JOIN analysis.vw_perfil_localidade_caracteristicas AS b
-		ON a.localidade = b.localidade
-		WHERE a.porcertagem_maior = (
+		SELECT INTO maior_media_nacional_natureza_juridica, valor_maior_media_nacional_natureza_juridica 
+			natureza_juridica, porcertagem_maior
+		FROM analysis.vw_perfil_localidade_maior_natureza_juridica
+		WHERE porcertagem_maior = (
 			SELECT MAX(porcertagem_maior)
 			FROM analysis.vw_perfil_localidade_maior_natureza_juridica
 			WHERE localidade::INTEGER > 99
 		);
 	ELSIF id_localidade BETWEEN 0 AND 9 THEN
-		SELECT INTO localidades_maior_media_nacional_natureza_juridica, valor_maior_media_nacional_natureza_juridica 
-			ARRAY_AGG(b.nome_localidade), MAX(a.porcertagem_maior)
-		FROM analysis.vw_perfil_localidade_maior_natureza_juridica AS a
-		INNER JOIN analysis.vw_perfil_localidade_caracteristicas AS b
-		ON a.localidade = b.localidade
-		WHERE a.porcertagem_maior = (
+		SELECT INTO maior_media_nacional_natureza_juridica, valor_maior_media_nacional_natureza_juridica 
+			natureza_juridica, porcertagem_maior
+		FROM analysis.vw_perfil_localidade_maior_natureza_juridica
+		WHERE porcertagem_maior = (
 			SELECT MAX(porcertagem_maior)
 			FROM analysis.vw_perfil_localidade_maior_natureza_juridica
 			WHERE localidade::INTEGER BETWEEN 0 AND 9
 		);
 	ELSIF id_localidade BETWEEN 10 AND 99 THEN
-		SELECT INTO localidades_maior_media_nacional_natureza_juridica, valor_maior_media_nacional_natureza_juridica 
-			ARRAY_AGG(b.nome_localidade), MAX(a.porcertagem_maior)
-		FROM analysis.vw_perfil_localidade_maior_natureza_juridica AS a
-		INNER JOIN analysis.vw_perfil_localidade_caracteristicas AS b
-		ON a.localidade = b.localidade
-		WHERE a.porcertagem_maior = (
+		SELECT INTO maior_media_nacional_natureza_juridica, valor_maior_media_nacional_natureza_juridica 
+			natureza_juridica, porcertagem_maior
+		FROM analysis.vw_perfil_localidade_maior_natureza_juridica
+		WHERE porcertagem_maior = (
 			SELECT MAX(porcertagem_maior)
 			FROM analysis.vw_perfil_localidade_maior_natureza_juridica
 			WHERE localidade::INTEGER BETWEEN 10 AND 99
@@ -198,7 +212,7 @@ BEGIN
 	END IF;
 	
 	FOR record IN
-		SELECT dado AS tx_porcentagem_maior_media_nacional, maior_porcentagem AS nr_porcentagem_maior_media_nacional
+		SELECT dado AS tx_porcentagem_maior_media_nacional, valor AS nr_porcentagem_maior_media_nacional
 		FROM analysis.vw_perfil_localidade_media_nacional
 		WHERE tipo_dado = 'maior_natureza_juridica'
 	LOOP
@@ -211,7 +225,7 @@ BEGIN
 				SELECT
 					a.natureza_juridica AS tx_porcentagem_maior,
 					a.porcertagem_maior AS nr_porcentagem_maior,
-					localidades_maior_media_nacional_natureza_juridica AS tx_porcentagem_maior_media_nacional,
+					maior_media_nacional_natureza_juridica AS tx_porcentagem_maior_media_nacional,
 					valor_maior_media_nacional_natureza_juridica AS nr_porcentagem_maior_media_nacional,
 					(
 						SELECT json_agg(a)
@@ -244,14 +258,16 @@ BEGIN
 		) AS c;
 	END LOOP;
 	
-	resultado := resultado || natureza_juridica_json;
+	IF natureza_juridica_json IS NOT NULL THEN
+		resultado := resultado || natureza_juridica_json;
+	END IF;
 	
 	-- ==================== Repasse de Recursos ==================== --
 	
 	FOR record IN
-		SELECT dado AS tx_porcentagem_maior_media_nacional, maior_porcentagem AS nr_porcentagem_maior_media_nacional
+		SELECT valor
 		FROM analysis.vw_perfil_localidade_media_nacional
-		WHERE tipo_dado = 'maior_repasse_recursos'
+		WHERE tipo_dado = 'media_repasse_recursos'
 	LOOP
 		SELECT INTO repasse_recursos_json
 			row_to_json(d) 
@@ -260,8 +276,14 @@ BEGIN
 				row_to_json(c) AS repasse_recursos
 			FROM (
 				SELECT
+					(
+						SELECT media
+						FROM analysis.vw_perfil_localidade_media_repasse_recursos
+						WHERE localidade = id_localidade::TEXT
+					) AS nr_repasse_media,
+					record.valor AS nr_repasse_media_nacional,
 					tipo_repasse AS tx_maior_tipo_repasse,
-					porcertagem_maior AS nr_porcentagem_maior,
+					porcertagem_maior AS nr_porcentagem_maior_tipo_repasse,
 					(
 						SELECT rank
 						FROM analysis.vw_perfil_localidade_ranking_repasse_recursos
@@ -308,12 +330,14 @@ BEGIN
 		) AS d;
 	END LOOP;
 	
-	resultado := resultado || repasse_recursos_json;
+	IF repasse_recursos_json IS NOT NULL THEN
+		resultado := resultado || repasse_recursos_json;
+	END IF;
 	
 	-- ==================== Área de Atuação ==================== --
 	
 	FOR record IN
-		SELECT dado AS tx_porcentagem_maior_media_nacional, maior_porcentagem AS nr_porcentagem_maior_media_nacional
+		SELECT dado AS tx_porcentagem_maior_media_nacional, valor AS nr_porcentagem_maior_media_nacional
 		FROM analysis.vw_perfil_localidade_media_nacional
 		WHERE tipo_dado = 'maior_area_atuacao'
 	LOOP
@@ -358,13 +382,15 @@ BEGIN
 			) AS b
 		) AS c;
 	END LOOP;
-
-	resultado := resultado || area_atuacao_json;
+	
+	IF area_atuacao_json IS NOT NULL THEN
+		resultado := resultado || area_atuacao_json;
+	END IF;
 	
 	-- ==================== Trabalhadores ==================== --
 	
 	FOR record IN
-		SELECT dado AS tx_porcentagem_maior_media_nacional, maior_porcentagem AS nr_porcentagem_maior_media_nacional
+		SELECT dado AS tx_porcentagem_maior_media_nacional, valor AS nr_porcentagem_maior_media_nacional
 		FROM analysis.vw_perfil_localidade_media_nacional
 		WHERE tipo_dado = 'maior_trabalhadores'
 	LOOP
@@ -422,9 +448,25 @@ BEGIN
 		) AS c;
 	END LOOP;
 	
-	resultado := resultado || trabalhadores_json;
+	IF trabalhadores_json IS NOT NULL THEN
+		resultado := resultado || trabalhadores_json;
+	END IF;
 	
-	-- -------------------- RESULTADO -------------------- --
-	RAISE NOTICE '%', resultado;
+	/* ------------------------------ RESULTADO ------------------------------ */
+	codigo := 200;
+	mensagem := 'Perfil de localidade retornado.';
+
+	RETURN NEXT;
+
+EXCEPTION
+	WHEN others THEN
+		RAISE NOTICE '%', SQLERRM;
+		codigo := 400;
+		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, null, null, null, false, null) AS a;
+		RETURN NEXT;
+
 END;
+
 $$ LANGUAGE 'plpgsql';
+
+SELECT * FROM analysis.obter_perfil_localidade(35);

@@ -75,7 +75,7 @@ UNION
 
 SELECT
 	SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2) AS localidade,
-	ed_uf.eduf_nm_uf || ' - ' || ed_uf.eduf_sg_uf AS nome_localidade,
+	ed_uf.eduf_nm_uf AS nome_localidade,
 	'estado' AS tipo_localidade,
 	COUNT(tb_osc) AS nr_quantidade_oscs,
 	COALESCE(SUM(
@@ -147,7 +147,7 @@ UNION
 
 SELECT 
 	tb_localizacao.cd_municipio::TEXT AS localidade,
-	ed_municipio.edmu_nm_municipio AS nome_localidade,
+	ed_municipio.edmu_nm_municipio || ' - ' || ed_uf.eduf_sg_uf AS nome_localidade,
 	'municipio' AS tipo_localidade,
 	COUNT(tb_osc) AS nr_quantidade_oscs,
 	COALESCE(SUM(
@@ -210,6 +210,8 @@ LEFT JOIN osc.tb_localizacao
 ON tb_osc.id_osc = tb_localizacao.id_osc
 LEFT JOIN spat.ed_municipio
 ON edmu_cd_municipio = tb_localizacao.cd_municipio
+LEFT JOIN spat.ed_uf
+ON ed_uf.eduf_cd_uf = SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2)::NUMERIC
 WHERE tb_osc.bo_osc_ativa
 AND tb_osc.id_osc <> 789809
 AND tb_localizacao.cd_municipio IS NOT NULL
