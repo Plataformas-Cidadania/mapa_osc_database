@@ -361,7 +361,7 @@ BEGIN
 
 	resultado := resultado || area_atuacao_json;
 	*/
-	-- ==================== Área de Atuação ==================== --
+	-- ==================== Trabalhadores ==================== --
 	
 	FOR record IN
 		SELECT dado AS tx_porcentagem_maior_media_nacional, maior_porcentagem AS nr_porcentagem_maior_media_nacional
@@ -383,9 +383,21 @@ BEGIN
 						SELECT json_agg(a)
 						FROM (
 							SELECT
-								area_atuacao AS label,
-								quantidade_oscs AS value
-							FROM analysis.vw_perfil_localidade_area_atuacao
+								'Trabalhadores com vínculos' AS label,
+								vinculos AS value
+							FROM analysis.vw_perfil_localidade_trabalhadores
+							WHERE localidade = id_localidade::TEXT
+							UNION
+							SELECT
+								'Trabalhadores com deficiência' AS label,
+								deficiencia AS value
+							FROM analysis.vw_perfil_localidade_trabalhadores
+							WHERE localidade = id_localidade::TEXT
+							UNION
+							SELECT
+								'Trabalhadores voluntários' AS label,
+								voluntarios AS value
+							FROM analysis.vw_perfil_localidade_trabalhadores
 							WHERE localidade = id_localidade::TEXT
 						) AS a
 					) AS series_1,
@@ -395,11 +407,11 @@ BEGIN
 								DISTINCT UNNEST(a.fontes) AS fontes
 							FROM (
 								SELECT a.fontes
-								FROM analysis.vw_perfil_localidade_area_atuacao AS a
+								FROM analysis.vw_perfil_localidade_trabalhadores AS a
 								WHERE a.localidade = id_localidade::TEXT
 								UNION
 								SELECT a.fontes
-								FROM analysis.vw_perfil_localidade_maior_natureza_juridica AS a
+								FROM analysis.vw_perfil_localidade_maior_trabalhadores AS a
 								WHERE a.localidade = id_localidade::TEXT
 							) AS a
 						) AS b
