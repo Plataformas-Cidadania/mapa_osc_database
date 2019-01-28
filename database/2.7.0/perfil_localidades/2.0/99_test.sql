@@ -2,6 +2,7 @@ DO $$
 
 DECLARE
 	id_localidade INTEGER := 35;
+	resultado JSONB := '{}';
 	
 	record RECORD;
 	caracteristicas_json JSONB;
@@ -12,6 +13,8 @@ DECLARE
 	natureza_juridica_fontes_json JSONB;
 	repasse_recursos_json JSONB;
 	repasse_recursos_fontes_json JSONB;
+	area_atuacao_json JSONB;
+	area_atuacao_fontes_json JSONB;
 
 BEGIN
 	/* ==================== Características ==================== */
@@ -47,6 +50,9 @@ BEGIN
 	--RAISE NOTICE '%', to_json(caracteristicas_json);
 	--RAISE NOTICE '%', to_json(caracteristicas_fontes_json);
 	
+	caracteristicas_json := caracteristicas_json || caracteristicas_fontes_json;
+	resultado := resultado || caracteristicas_json;
+	RAISE NOTICE '%', to_json(resultado);
 	/* ==================== Evolução Anual ==================== */
 	SELECT INTO evolucao_anual_json
 		row_to_json(b) AS evolucao_quantidade_osc_ano
@@ -98,9 +104,8 @@ BEGIN
 					SELECT json_agg(a)
 					FROM (
 						SELECT
-							quantidade_oscs,
-							natureza_juridica,
-							quantidade_oscs
+							natureza_juridica AS label,
+							quantidade_oscs AS value
 						FROM analysis.vw_perfil_localidade_natureza_juridica
 						WHERE localidade = id_localidade::TEXT
 					) AS a
@@ -222,5 +227,52 @@ BEGIN
 	RAISE NOTICE '%', to_json(repasse_recursos_json);
 	RAISE NOTICE '%', to_json(repasse_recursos_fontes_json);
 
+	/* ==================== Área de Atuação ==================== */
+	FOR record IN
+		SELECT dado AS tx_porcentagem_maior_media_nacional, maior_porcentagem AS nr_porcentagem_maior_media_nacional
+		FROM analysis.vw_perfil_localidade_media_nacional
+		WHERE tipo_dado = 'maior_area_atuacao'
+	LOOP
+		SELECT INTO area_atuacao_json
+			row_to_json(b) 
+		FROM (
+			SELECT
+				a.area_atuacao AS tx_porcentagem_maior,
+				a.porcertagem_maior AS nr_porcentagem_maior,
+				(
+					SELECT json_agg(a)
+					FROM (
+						SELECT
+							area_atuacao AS label,
+							quantidade_oscs AS value
+						FROM analysis.vw_perfil_localidade_area_atuacao
+						WHERE localidade = id_localidade::TEXT
+					) AS a
+				) AS series_1
+			FROM analysis.vw_perfil_localidade_maior_area_atuacao AS a
+			WHERE localidade = id_localidade::TEXT
+		) AS b;
+	END LOOP;
+
+	SELECT INTO area_atuacao_fontes_json
+		row_to_json(c) 
+	FROM (
+		SELECT ARRAY_AGG(b.fontes) AS fontes FROM (
+			SELECT 
+				DISTINCT UNNEST(a.fontes) AS fontes
+			FROM (
+				SELECT a.fontes
+				FROM analysis.vw_perfil_localidade_area_atuacao AS a
+				WHERE a.localidade = id_localidade::TEXT
+				UNION
+				SELECT a.fontes
+				FROM analysis.vw_perfil_localidade_maior_natureza_juridica AS a
+				WHERE a.localidade = id_localidade::TEXT
+			) AS a
+		) AS b
+	) AS c;
+	
+	RAISE NOTICE '%', to_json(area_atuacao_json);
+	RAISE NOTICE '%', to_json(area_atuacao_fontes_json);
 END;
 $$ LANGUAGE 'plpgsql';
