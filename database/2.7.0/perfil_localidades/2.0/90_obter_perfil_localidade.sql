@@ -23,8 +23,13 @@ DECLARE
 	valor_ultimo_colocado_quantidade_osc INTEGER;
 	
 BEGIN
-	resultado := '{}'::JSONB;
-
+	SELECT INTO resultado row_to_json(a)
+	FROM (
+		SELECT nome_localidade AS tx_localidade, tipo_localidade AS tx_tipo_localidade
+		FROM analysis.vw_perfil_localidade_caracteristicas
+		WHERE localidade = id_localidade::TEXT
+	) AS a;
+	
 	-- ==================== Características ==================== --
 	
 	SELECT INTO caracteristicas_json
@@ -54,9 +59,11 @@ BEGIN
 			WHERE localidade = 35::TEXT
 		) AS a
 	) AS b;
-
-	resultado := resultado || caracteristicas_json;
 	
+	IF caracteristicas_json IS NOT NULL THEN
+		resultado := resultado || caracteristicas_json;
+	END IF;
+
 	-- ==================== Evolução Anual ==================== --
 	
 	IF id_localidade > 99 THEN
@@ -163,8 +170,10 @@ BEGIN
 		) AS b
 	) AS c;
 
-	resultado := resultado || evolucao_anual_json;
-	
+	IF evolucao_anual_json IS NOT NULL THEN
+		resultado := resultado || evolucao_anual_json;
+	END IF;
+
 	-- ==================== Natureza Jurídica ==================== --
 	
 	IF id_localidade > 99 THEN
@@ -249,7 +258,9 @@ BEGIN
 		) AS c;
 	END LOOP;
 	
-	resultado := resultado || natureza_juridica_json;
+	IF natureza_juridica_json IS NOT NULL THEN
+		resultado := resultado || natureza_juridica_json;
+	END IF;
 	
 	-- ==================== Repasse de Recursos ==================== --
 	
@@ -313,7 +324,9 @@ BEGIN
 		) AS d;
 	END LOOP;
 	
-	resultado := resultado || repasse_recursos_json;
+	IF repasse_recursos_json IS NOT NULL THEN
+		resultado := resultado || repasse_recursos_json;
+	END IF;
 	
 	-- ==================== Área de Atuação ==================== --
 	
@@ -363,8 +376,10 @@ BEGIN
 			) AS b
 		) AS c;
 	END LOOP;
-
-	resultado := resultado || area_atuacao_json;
+	
+	IF area_atuacao_json IS NOT NULL THEN
+		resultado := resultado || area_atuacao_json;
+	END IF;
 	
 	-- ==================== Trabalhadores ==================== --
 	
@@ -427,7 +442,9 @@ BEGIN
 		) AS c;
 	END LOOP;
 	
-	resultado := resultado || trabalhadores_json;
+	IF trabalhadores_json IS NOT NULL THEN
+		resultado := resultado || trabalhadores_json;
+	END IF;
 	
 	/* ------------------------------ RESULTADO ------------------------------ */
 	codigo := 200;
