@@ -83,16 +83,41 @@ BEGIN
 	resultado := resultado || evolucao_anual_json;
 	*/
 	-- ==================== Natureza Jurídica ==================== --
-	SELECT INTO localidades_maior_media_nacional_natureza_juridica, valor_maior_media_nacional_natureza_juridica 
-		ARRAY_AGG(b.nome_localidade), MAX(a.porcertagem_maior)
-	FROM analysis.vw_perfil_localidade_maior_natureza_juridica AS a
-	INNER JOIN analysis.vw_perfil_localidade_caracteristicas AS b
-	ON a.localidade = b.localidade
-	WHERE a.porcertagem_maior = (
-		SELECT MAX(porcertagem_maior)
-		FROM analysis.vw_perfil_localidade_maior_natureza_juridica
-		WHERE localidade::INTEGER > 99
-	);
+	IF id_localidade > 99 THEN
+		SELECT INTO localidades_maior_media_nacional_natureza_juridica, valor_maior_media_nacional_natureza_juridica 
+			ARRAY_AGG(b.nome_localidade), MAX(a.porcertagem_maior)
+		FROM analysis.vw_perfil_localidade_maior_natureza_juridica AS a
+		INNER JOIN analysis.vw_perfil_localidade_caracteristicas AS b
+		ON a.localidade = b.localidade
+		WHERE a.porcertagem_maior = (
+			SELECT MAX(porcertagem_maior)
+			FROM analysis.vw_perfil_localidade_maior_natureza_juridica
+			WHERE localidade::INTEGER > 99
+		);
+	ELSIF id_localidade BETWEEN 0 AND 9 THEN
+		SELECT INTO localidades_maior_media_nacional_natureza_juridica, valor_maior_media_nacional_natureza_juridica 
+			ARRAY_AGG(b.nome_localidade), MAX(a.porcertagem_maior)
+		FROM analysis.vw_perfil_localidade_maior_natureza_juridica AS a
+		INNER JOIN analysis.vw_perfil_localidade_caracteristicas AS b
+		ON a.localidade = b.localidade
+		WHERE a.porcertagem_maior = (
+			SELECT MAX(porcertagem_maior)
+			FROM analysis.vw_perfil_localidade_maior_natureza_juridica
+			WHERE localidade::INTEGER BETWEEN 0 AND 9
+		);
+	ELSIF id_localidade BETWEEN 10 AND 99 THEN
+		SELECT INTO localidades_maior_media_nacional_natureza_juridica, valor_maior_media_nacional_natureza_juridica 
+			ARRAY_AGG(b.nome_localidade), MAX(a.porcertagem_maior)
+		FROM analysis.vw_perfil_localidade_maior_natureza_juridica AS a
+		INNER JOIN analysis.vw_perfil_localidade_caracteristicas AS b
+		ON a.localidade = b.localidade
+		WHERE a.porcertagem_maior = (
+			SELECT MAX(porcertagem_maior)
+			FROM analysis.vw_perfil_localidade_maior_natureza_juridica
+			WHERE localidade::INTEGER BETWEEN 10 AND 99
+		);
+	END IF;
+	
 	
 	FOR record IN
 		SELECT dado AS tx_porcentagem_maior_media_nacional, maior_porcentagem AS nr_porcentagem_maior_media_nacional
