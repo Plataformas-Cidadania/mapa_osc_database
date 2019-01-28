@@ -21,7 +21,7 @@ DECLARE
 	
 BEGIN
 	-- ==================== Características ==================== --
-	/*
+	
 	SELECT INTO caracteristicas_json
 		row_to_json(b)
 	FROM (
@@ -51,9 +51,9 @@ BEGIN
 	) AS b;
 
 	resultado := resultado || caracteristicas_json;
-	*/
+	
 	-- ==================== Evolução Anual ==================== --
-	/*
+	
 	IF id_localidade > 99 THEN
 		SELECT INTO localidades_primeiro_colocado_quantidade_osc, valor_primeiro_colocado_quantidade_osc
 			ARRAY_AGG(b.nome_localidade), MAX(a.quantidade_oscs)
@@ -159,9 +159,9 @@ BEGIN
 	) AS c;
 
 	resultado := resultado || evolucao_anual_json;
-	*/
+	
 	-- ==================== Natureza Jurídica ==================== --
-	/*
+	
 	IF id_localidade > 99 THEN
 		SELECT INTO localidades_maior_media_nacional_natureza_juridica, valor_maior_media_nacional_natureza_juridica 
 			ARRAY_AGG(b.nome_localidade), MAX(a.porcertagem_maior)
@@ -245,9 +245,9 @@ BEGIN
 	END LOOP;
 	
 	resultado := resultado || natureza_juridica_json;
-	*/
+	
 	-- ==================== Repasse de Recursos ==================== --
-	/*
+	
 	FOR record IN
 		SELECT dado AS tx_porcentagem_maior_media_nacional, maior_porcentagem AS nr_porcentagem_maior_media_nacional
 		FROM analysis.vw_perfil_localidade_media_nacional
@@ -309,9 +309,9 @@ BEGIN
 	END LOOP;
 	
 	resultado := resultado || repasse_recursos_json;
-	*/
+	
 	-- ==================== Área de Atuação ==================== --
-	/*
+	
 	FOR record IN
 		SELECT dado AS tx_porcentagem_maior_media_nacional, maior_porcentagem AS nr_porcentagem_maior_media_nacional
 		FROM analysis.vw_perfil_localidade_media_nacional
@@ -360,7 +360,7 @@ BEGIN
 	END LOOP;
 
 	resultado := resultado || area_atuacao_json;
-	*/
+	
 	-- ==================== Trabalhadores ==================== --
 	
 	FOR record IN
