@@ -79,7 +79,7 @@ BEGIN
 		INNER JOIN analysis.vw_perfil_localidade_caracteristicas AS b
 		ON a.localidade = b.localidade
 		WHERE a.rank = (
-			SELECT MAX(rank)
+			SELECT MIN(rank)
 			FROM analysis.vw_perfil_localidade_ranking_quantidade_osc
 			WHERE localidade::INTEGER > 99
 		);
@@ -90,10 +90,11 @@ BEGIN
 		INNER JOIN analysis.vw_perfil_localidade_caracteristicas AS b
 		ON a.localidade = b.localidade
 		WHERE a.rank = (
-			SELECT MIN(rank)
+			SELECT MAX(rank)
 			FROM analysis.vw_perfil_localidade_ranking_quantidade_osc
 			WHERE localidade::INTEGER > 99
 		);
+
 	ELSIF id_localidade BETWEEN 0 AND 9 THEN
 		SELECT INTO localidades_primeiro_colocado_quantidade_osc, valor_primeiro_colocado_quantidade_osc
 			ARRAY_AGG(b.nome_localidade), MAX(a.quantidade_oscs)
@@ -101,7 +102,7 @@ BEGIN
 		INNER JOIN analysis.vw_perfil_localidade_caracteristicas AS b
 		ON a.localidade = b.localidade
 		WHERE a.rank = (
-			SELECT MIN(rank)
+			SELECT MAX(rank)
 			FROM analysis.vw_perfil_localidade_ranking_quantidade_osc
 			WHERE localidade::INTEGER BETWEEN 0 AND 9
 		);
@@ -112,10 +113,11 @@ BEGIN
 		INNER JOIN analysis.vw_perfil_localidade_caracteristicas AS b
 		ON a.localidade = b.localidade
 		WHERE a.rank = (
-			SELECT MIN(rank)
+			SELECT MAX(rank)
 			FROM analysis.vw_perfil_localidade_ranking_quantidade_osc
 			WHERE localidade::INTEGER BETWEEN 0 AND 9
 		);
+
 	ELSIF id_localidade BETWEEN 10 AND 99 THEN
 		SELECT INTO localidades_primeiro_colocado_quantidade_osc, valor_primeiro_colocado_quantidade_osc
 			ARRAY_AGG(b.nome_localidade), MAX(a.quantidade_oscs)
@@ -134,7 +136,7 @@ BEGIN
 		INNER JOIN analysis.vw_perfil_localidade_caracteristicas AS b
 		ON a.localidade = b.localidade
 		WHERE a.rank = (
-			SELECT MIN(rank)
+			SELECT MAX(rank)
 			FROM analysis.vw_perfil_localidade_ranking_quantidade_osc
 			WHERE localidade::INTEGER BETWEEN 10 AND 99
 		);
@@ -169,9 +171,19 @@ BEGIN
 					) AS b
 				) AS fontes
 			FROM (
-				SELECT ano_fundacao AS x, quantidade_oscs AS y
-				FROM analysis.vw_perfil_localidade_evolucao_anual
-				WHERE localidade = 35::TEXT
+				SELECT
+					'Quantidade OSC'::TEXT AS key,
+					''::TEXT AS tipo_valor,
+					true::BOOLEAN AS area,
+					'#99d8ff'::TEXT AS color,
+					(
+						SELECT json_agg(a)
+						FROM (
+							SELECT ano_fundacao AS x, quantidade_oscs AS y
+							FROM analysis.vw_perfil_localidade_evolucao_anual
+							WHERE localidade = 35::TEXT
+						) AS a
+					) AS values
 			) AS a
 		) AS b
 	) AS c;
@@ -293,6 +305,7 @@ BEGIN
 						SELECT json_agg(b)
 						FROM (
 							SELECT
+								'$'::TEXT AS tipo_valor,
 								fonte_recursos AS key, 
 								(
 									SELECT json_agg(a)
