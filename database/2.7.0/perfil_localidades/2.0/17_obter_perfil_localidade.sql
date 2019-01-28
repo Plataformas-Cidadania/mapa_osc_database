@@ -224,7 +224,7 @@ BEGIN
 	END IF;
 	
 	FOR record IN
-		SELECT dado AS tx_porcentagem_maior_media_nacional, valor AS nr_porcentagem_maior_media_nacional
+		SELECT dado, valor
 		FROM analysis.vw_perfil_localidade_media_nacional
 		WHERE tipo_dado = 'maior_natureza_juridica'
 	LOOP
@@ -235,10 +235,10 @@ BEGIN
 				row_to_json(b) AS natureza_juridica
 			FROM (
 				SELECT
+					record.dado AS tx_porcentagem_maior_media_nacional,
+					ROUND(record.valor::DECIMAL, 2)::DOUBLE PRECISION AS nr_porcentagem_maior_media_nacional,
 					a.natureza_juridica AS tx_porcentagem_maior,
-					a.porcertagem_maior AS nr_porcentagem_maior,
-					maior_media_nacional_natureza_juridica AS tx_porcentagem_maior_media_nacional,
-					valor_maior_media_nacional_natureza_juridica AS nr_porcentagem_maior_media_nacional,
+					ROUND(a.porcertagem_maior::DECIMAL, 2)::DOUBLE PRECISION AS nr_porcentagem_maior,
 					(
 						SELECT json_agg(a)
 						FROM (
@@ -293,9 +293,9 @@ BEGIN
 						FROM analysis.vw_perfil_localidade_media_repasse_recursos
 						WHERE localidade = id_localidade::TEXT
 					) AS nr_repasse_media,
-					record.valor AS nr_repasse_media_nacional,
+					ROUND(record.valor::DECIMAL, 2)::DOUBLE PRECISION AS nr_repasse_media_nacional,
 					tipo_repasse AS tx_maior_tipo_repasse,
-					porcertagem_maior AS nr_porcentagem_maior_tipo_repasse,
+					ROUND(porcertagem_maior::DECIMAL, 2)::DOUBLE PRECISION AS nr_porcentagem_maior_tipo_repasse,
 					(
 						SELECT rank
 						FROM analysis.vw_perfil_localidade_ranking_repasse_recursos
@@ -350,7 +350,7 @@ BEGIN
 	-- ==================== Área de Atuação ==================== --
 	
 	FOR record IN
-		SELECT dado AS tx_porcentagem_maior_media_nacional, valor AS nr_porcentagem_maior_media_nacional
+		SELECT dado, valor
 		FROM analysis.vw_perfil_localidade_media_nacional
 		WHERE tipo_dado = 'maior_area_atuacao'
 	LOOP
@@ -361,10 +361,10 @@ BEGIN
 				row_to_json(b) AS area_atuacao
 			FROM (
 				SELECT
-					record.tx_porcentagem_maior_media_nacional,
-					record.nr_porcentagem_maior_media_nacional,
+					record.dado AS tx_porcentagem_maior_media_nacional,
+					ROUND(record.valor::DECIMAL, 2)::DOUBLE PRECISION AS nr_porcentagem_maior_media_nacional,
 					a.area_atuacao AS tx_porcentagem_maior,
-					a.porcertagem_maior AS nr_porcentagem_maior,
+					ROUND(a.porcertagem_maior::DECIMAL, 2)::DOUBLE PRECISION AS nr_porcentagem_maior,
 					(
 						SELECT json_agg(a)
 						FROM (
@@ -403,7 +403,7 @@ BEGIN
 	-- ==================== Trabalhadores ==================== --
 	
 	FOR record IN
-		SELECT dado AS tx_porcentagem_maior_media_nacional, valor AS nr_porcentagem_maior_media_nacional
+		SELECT dado, valor
 		FROM analysis.vw_perfil_localidade_media_nacional
 		WHERE tipo_dado = 'maior_trabalhadores'
 	LOOP
@@ -414,10 +414,10 @@ BEGIN
 				row_to_json(b) AS trabalhadores
 			FROM (
 				SELECT
-					record.tx_porcentagem_maior_media_nacional,
-					record.nr_porcentagem_maior_media_nacional,
+					record.dado AS tx_porcentagem_maior_media_nacional,
+					ROUND(record.valor::DECIMAL, 2)::DOUBLE PRECISION AS nr_porcentagem_maior_media_nacional,
 					a.area_atuacao AS tx_porcentagem_maior,
-					a.porcertagem_maior AS nr_porcentagem_maior,
+					ROUND(a.porcertagem_maior::DECIMAL, 2)::DOUBLE PRECISION AS nr_porcentagem_maior,
 					(
 						SELECT json_agg(a)
 						FROM (
