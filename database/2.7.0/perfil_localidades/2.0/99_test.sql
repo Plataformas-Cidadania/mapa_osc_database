@@ -1,7 +1,7 @@
 DO $$
 
 DECLARE
-	id_localidade INTEGER := 35;
+	id_localidade INTEGER := 1;
 	resultado JSONB := '{}';
 	
 	record RECORD;
@@ -52,6 +52,7 @@ BEGIN
 	resultado := resultado || caracteristicas_json;
 	*/
 	-- ==================== Evolução Anual ==================== --
+	/*
 	IF id_localidade > 99 THEN
 		SELECT INTO localidades_primeiro_colocado_quantidade_osc, valor_primeiro_colocado_quantidade_osc
 			ARRAY_AGG(b.nome_localidade), MAX(a.quantidade_oscs)
@@ -157,8 +158,7 @@ BEGIN
 	) AS c;
 
 	resultado := resultado || evolucao_anual_json;
-	RAISE NOTICE '%', resultado;
-	
+	*/
 	-- ==================== Natureza Jurídica ==================== --
 	/*
 	IF id_localidade > 99 THEN
@@ -246,70 +246,71 @@ BEGIN
 	resultado := resultado || natureza_juridica_json;
 	*/
 	-- ==================== Repasse de Recursos ==================== --
-	/*
+	
 	FOR record IN
 		SELECT dado AS tx_porcentagem_maior_media_nacional, maior_porcentagem AS nr_porcentagem_maior_media_nacional
 		FROM analysis.vw_perfil_localidade_media_nacional
-		WHERE tipo_dado = '"maior_repasse_recursos"'
+		WHERE tipo_dado = 'maior_repasse_recursos'
 	LOOP
 		SELECT INTO repasse_recursos_json
-			row_to_json(c) 
+			row_to_json(d) 
 		FROM (
 			SELECT
-				tipo_repasse AS tx_maior_tipo_repasse,
-				porcertagem_maior AS nr_porcentagem_maior,
-				(
-					SELECT rank
-					FROM analysis.vw_perfil_localidade_ranking_repasse_recursos
-					WHERE localidade = id_localidade::TEXT
-				) AS nr_colocacao_nacional,
-				(
-					SELECT json_agg(b)
-					FROM (
-						SELECT
-							fonte_recursos AS key, 
-							(
-								SELECT json_agg(a)
-								FROM (
-									SELECT ano AS x, SUM(valor_recursos) AS y
-									FROM analysis.vw_perfil_localidade_repasse_recursos
-									WHERE localidade = id_localidade::TEXT
-									AND fonte_recursos = a.fonte_recursos
-									GROUP BY ano
-								) AS a
-							) AS values
-						FROM analysis.vw_perfil_localidade_repasse_recursos AS a
-						WHERE localidade = id_localidade::TEXT
-						GROUP BY fonte_recursos
-					) AS b
-				) AS series_1
-			FROM analysis.vw_perfil_localidade_maior_media_repasse_recursos AS a
-			WHERE localidade = id_localidade::TEXT
-		) AS c;
-	END LOOP;
-
-	SELECT INTO repasse_recursos_fontes_json
-		row_to_json(c) 
-	FROM (
-		SELECT ARRAY_AGG(b.fontes) AS fontes FROM (
-			SELECT 
-				DISTINCT UNNEST(a.fontes) AS fontes
+				row_to_json(c) AS repasse_recursos
 			FROM (
-				SELECT a.fontes
-				FROM analysis.vw_perfil_localidade_repasse_recursos AS a
-				WHERE a.localidade = id_localidade::TEXT
-				UNION
-				SELECT a.fontes
+				SELECT
+					tipo_repasse AS tx_maior_tipo_repasse,
+					porcertagem_maior AS nr_porcentagem_maior,
+					(
+						SELECT rank
+						FROM analysis.vw_perfil_localidade_ranking_repasse_recursos
+						WHERE localidade = id_localidade::TEXT
+					) AS nr_colocacao_nacional,
+					(
+						SELECT json_agg(b)
+						FROM (
+							SELECT
+								fonte_recursos AS key, 
+								(
+									SELECT json_agg(a)
+									FROM (
+										SELECT ano AS x, SUM(valor_recursos) AS y
+										FROM analysis.vw_perfil_localidade_repasse_recursos
+										WHERE localidade = id_localidade::TEXT
+										AND fonte_recursos = a.fonte_recursos
+										GROUP BY ano
+									) AS a
+								) AS values
+							FROM analysis.vw_perfil_localidade_repasse_recursos AS a
+							WHERE localidade = id_localidade::TEXT
+							GROUP BY fonte_recursos
+						) AS b
+					) AS series_1,
+					(
+						SELECT ARRAY_AGG(b.fontes) FROM (
+							SELECT 
+								DISTINCT UNNEST(a.fontes) AS fontes
+							FROM (
+								SELECT a.fontes
+								FROM analysis.vw_perfil_localidade_repasse_recursos AS a
+								WHERE a.localidade = id_localidade::TEXT
+								UNION
+								SELECT a.fontes
+								FROM analysis.vw_perfil_localidade_maior_media_repasse_recursos AS a
+								WHERE a.localidade = id_localidade::TEXT
+							) AS a
+						) AS b
+					) AS fontes
 				FROM analysis.vw_perfil_localidade_maior_media_repasse_recursos AS a
-				WHERE a.localidade = id_localidade::TEXT
-			) AS a
-		) AS b
-	) AS c;
+				WHERE localidade = id_localidade::TEXT
+			) AS c
+		) AS d;
+	END LOOP;
 	
-	--RAISE NOTICE '%', to_json(repasse_recursos_json);
-	--RAISE NOTICE '%', to_json(repasse_recursos_fontes_json);
-
+	resultado := resultado || repasse_recursos_json;
+	
 	-- ==================== Área de Atuação ==================== --
+	/*
 	FOR record IN
 		SELECT dado AS tx_porcentagem_maior_media_nacional, maior_porcentagem AS nr_porcentagem_maior_media_nacional
 		FROM analysis.vw_perfil_localidade_media_nacional
@@ -353,9 +354,8 @@ BEGIN
 			) AS a
 		) AS b
 	) AS c;
-	
-	--RAISE NOTICE '%', to_json(area_atuacao_json);
-	--RAISE NOTICE '%', to_json(area_atuacao_fontes_json);
 	*/
+
+	RAISE NOTICE '%', resultado;
 END;
 $$ LANGUAGE 'plpgsql';
