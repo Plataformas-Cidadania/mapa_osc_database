@@ -283,7 +283,7 @@ BEGIN
 					) AS nr_repasse_media,
 					record.valor AS nr_repasse_media_nacional,
 					tipo_repasse AS tx_maior_tipo_repasse,
-					porcertagem_maior AS nr_porcentagem_maior,
+					porcertagem_maior AS nr_porcentagem_maior_tipo_repasse,
 					(
 						SELECT rank
 						FROM analysis.vw_perfil_localidade_ranking_repasse_recursos
