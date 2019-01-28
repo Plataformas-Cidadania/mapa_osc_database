@@ -2,8 +2,8 @@ DROP MATERIALIZED VIEW IF EXISTS analysis.vw_perfil_localidade_evolucao_anual CA
 CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_evolucao_anual AS 
 
 SELECT 
-	COALESCE(SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1), 'Sem informação') AS localidade,
-	COALESCE(DATE_PART('year', tb_dados_gerais.dt_fundacao_osc)::TEXT, 'Sem informação') AS fundacao,
+	SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1) AS localidade,
+	COALESCE(DATE_PART('year', tb_dados_gerais.dt_fundacao_osc)::TEXT, 'Sem informação') AS ano_fundacao,
 	COUNT(tb_osc) AS quantidade_oscs,
 	REPLACE(('{' || TRIM(TRANSLATE(
 		(
@@ -25,13 +25,14 @@ LEFT JOIN osc.tb_localizacao
 ON tb_osc.id_osc = tb_localizacao.id_osc
 WHERE tb_osc.bo_osc_ativa
 AND tb_osc.id_osc <> 789809
-GROUP BY localidade, fundacao
+AND tb_localizacao.cd_municipio IS NOT NULL
+GROUP BY localidade, ano_fundacao
 
 UNION
 
 SELECT 
-	COALESCE(SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2), 'Sem informação') AS localidade,
-	COALESCE(DATE_PART('year', tb_dados_gerais.dt_fundacao_osc)::TEXT, 'Sem informação') AS fundacao,
+	SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2) AS localidade,
+	COALESCE(DATE_PART('year', tb_dados_gerais.dt_fundacao_osc)::TEXT, 'Sem informação') AS ano_fundacao,
 	COUNT(tb_osc) AS quantidade_oscs,
 	REPLACE(('{' || TRIM(TRANSLATE(
 		(
@@ -53,13 +54,14 @@ LEFT JOIN osc.tb_localizacao
 ON tb_osc.id_osc = tb_localizacao.id_osc
 WHERE tb_osc.bo_osc_ativa
 AND tb_osc.id_osc <> 789809
-GROUP BY localidade, fundacao
+AND tb_localizacao.cd_municipio IS NOT NULL
+GROUP BY localidade, ano_fundacao
 
 UNION
 
 SELECT 
-	COALESCE(tb_localizacao.cd_municipio::TEXT, 'Sem informação') AS localidade,
-	COALESCE(DATE_PART('year', tb_dados_gerais.dt_fundacao_osc)::TEXT, 'Sem informação') AS fundacao,
+	tb_localizacao.cd_municipio::TEXT AS localidade,
+	COALESCE(DATE_PART('year', tb_dados_gerais.dt_fundacao_osc)::TEXT, 'Sem informação') AS ano_fundacao,
 	COUNT(tb_osc) AS quantidade_oscs,
 	REPLACE(('{' || TRIM(TRANSLATE(
 		(
@@ -81,4 +83,15 @@ LEFT JOIN osc.tb_localizacao
 ON tb_osc.id_osc = tb_localizacao.id_osc
 WHERE tb_osc.bo_osc_ativa
 AND tb_osc.id_osc <> 789809
-GROUP BY localidade, fundacao;
+AND tb_localizacao.cd_municipio IS NOT NULL
+GROUP BY localidade, ano_fundacao;
+
+CREATE INDEX ix_localidade_vw_perfil_localidade_evolucao_anual
+    ON analysis.vw_perfil_localidade_evolucao_anual USING btree
+    (localidade ASC NULLS LAST)
+    TABLESPACE pg_default;
+
+CREATE INDEX ix_ano_fundacao_vw_perfil_localidade_evolucao_anual
+    ON analysis.vw_perfil_localidade_evolucao_anual USING btree
+    (ano_fundacao ASC NULLS LAST)
+    TABLESPACE pg_default;

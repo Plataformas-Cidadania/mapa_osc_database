@@ -46,3 +46,8 @@ WHERE (
 	END
 )::INTEGER > 99
 GROUP BY localidade;
+
+CREATE INDEX ix_localidade_vw_perfil_localidade_ranking_repasse_recursos
+    ON analysis.vw_perfil_localidade_ranking_repasse_recursos USING btree
+    (localidade ASC NULLS LAST)
+    TABLESPACE pg_default;

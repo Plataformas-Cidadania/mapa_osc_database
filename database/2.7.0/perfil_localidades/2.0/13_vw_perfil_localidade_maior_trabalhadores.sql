@@ -38,3 +38,8 @@ LEFT JOIN (
 	FROM analysis.vw_perfil_localidade_trabalhadores
 ) AS b
 ON a.localidade = b.localidade;
+
+CREATE INDEX ix_localidade_vw_perfil_localidade_maior_trabalhadores
+    ON analysis.vw_perfil_localidade_maior_trabalhadores USING btree
+    (localidade ASC NULLS LAST)
+    TABLESPACE pg_default;

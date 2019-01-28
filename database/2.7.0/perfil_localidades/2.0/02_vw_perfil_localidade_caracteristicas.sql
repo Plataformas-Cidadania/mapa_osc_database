@@ -2,7 +2,7 @@ DROP MATERIALIZED VIEW IF EXISTS analysis.vw_perfil_localidade_caracteristicas C
 CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_caracteristicas AS 
 
 SELECT 
-	COALESCE(SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1), 'Sem informação') AS localidade,
+	SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1) AS localidade,
 	ed_regiao.edre_nm_regiao AS nome_localidade,
 	'regiao' AS tipo_localidade,
 	COUNT(tb_osc) AS quantidade_oscs,
@@ -68,12 +68,13 @@ LEFT JOIN spat.ed_regiao
 ON edre_cd_regiao = SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1)::NUMERIC
 WHERE tb_osc.bo_osc_ativa
 AND tb_osc.id_osc <> 789809
+AND tb_localizacao.cd_municipio IS NOT NULL
 GROUP BY localidade, nome_localidade
 
 UNION
 
 SELECT
-	COALESCE(SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2), 'Sem informação') AS localidade,
+	SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2) AS localidade,
 	ed_uf.eduf_nm_uf || ' - ' || ed_uf.eduf_sg_uf AS nome_localidade,
 	'estado' AS tipo_localidade,
 	COUNT(tb_osc) AS nr_quantidade_oscs,
@@ -139,12 +140,13 @@ LEFT JOIN spat.ed_uf
 ON eduf_cd_uf = SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2)::NUMERIC
 WHERE tb_osc.bo_osc_ativa
 AND tb_osc.id_osc <> 789809
+AND tb_localizacao.cd_municipio IS NOT NULL
 GROUP BY localidade, nome_localidade
 
 UNION
 
 SELECT 
-	COALESCE(tb_localizacao.cd_municipio::TEXT, 'Sem informação') AS localidade,
+	tb_localizacao.cd_municipio::TEXT AS localidade,
 	ed_municipio.edmu_nm_municipio AS nome_localidade,
 	'municipio' AS tipo_localidade,
 	COUNT(tb_osc) AS nr_quantidade_oscs,
@@ -210,4 +212,10 @@ LEFT JOIN spat.ed_municipio
 ON edmu_cd_municipio = tb_localizacao.cd_municipio
 WHERE tb_osc.bo_osc_ativa
 AND tb_osc.id_osc <> 789809
+AND tb_localizacao.cd_municipio IS NOT NULL
 GROUP BY localidade, nome_localidade;
+
+CREATE INDEX ix_localidade_vw_perfil_localidade_caracteristicas
+    ON analysis.vw_perfil_localidade_caracteristicas USING btree
+    (localidade ASC NULLS LAST)
+    TABLESPACE pg_default;

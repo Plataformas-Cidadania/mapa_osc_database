@@ -91,3 +91,8 @@ RIGHT JOIN (
 ON a.localidade = b.localidade
 AND a.quantidade_oscs = b.quantidade_oscs
 GROUP BY a.localidade;
+
+CREATE INDEX ix_localidade_vw_perfil_localidade_maior_area_atuacao
+    ON analysis.vw_perfil_localidade_maior_area_atuacao USING btree
+    (localidade ASC NULLS LAST)
+    TABLESPACE pg_default;

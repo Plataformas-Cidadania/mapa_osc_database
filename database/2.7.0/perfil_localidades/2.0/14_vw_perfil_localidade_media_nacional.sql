@@ -129,3 +129,8 @@ WHERE quantidade_trabalhadores IN (
 	ORDER BY porcentagem_maior_trabalhadores DESC
 	LIMIT 1
 );
+
+CREATE INDEX ix_tipo_dado_vw_perfil_localidade_media_nacional
+    ON analysis.vw_perfil_localidade_media_nacional USING btree
+    (tipo_dado ASC NULLS LAST)
+    TABLESPACE pg_default;

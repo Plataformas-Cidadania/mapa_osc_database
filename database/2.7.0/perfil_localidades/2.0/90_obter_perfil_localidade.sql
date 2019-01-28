@@ -30,7 +30,7 @@ BEGIN
 					quantidade_recursos AS nr_quantidade_recursos,
 					quantidade_projetos AS nr_quantidade_projetos
 				FROM analysis.vw_perfil_localidade_caracteristicas
-				WHERE localidade = 35::TEXT
+				WHERE localidade = id_localidade::TEXT
 			) AS a
 	) AS b;
 
@@ -57,7 +57,7 @@ BEGIN
 			SELECT json_agg(a) AS caracteristicas
 			FROM (
 				SELECT
-					fundacao AS x,
+					ano_fundacao AS x,
 					quantidade_oscs AS y
 				FROM analysis.vw_perfil_localidade_evolucao_anual
 				WHERE localidade = id_localidade::TEXT
@@ -124,8 +124,8 @@ BEGIN
 		row_to_json(a) 
 	FROM (
 		SELECT
-			65 AS nr_porcentagem_maior_media_nacional,
-			dado AS tx_porcentagem_maior_media_nacional
+			dado AS tx_porcentagem_maior_media_nacional,
+			maior_porcentagem AS nr_porcentagem_maior_media_nacional
 		FROM analysis.vw_perfil_localidade_media_nacional
 		WHERE tipo_dado = 'maior_natureza_juridica'
 	) AS a;

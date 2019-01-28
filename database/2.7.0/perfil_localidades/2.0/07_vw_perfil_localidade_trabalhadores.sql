@@ -118,3 +118,8 @@ WHERE tb_osc.bo_osc_ativa
 AND tb_osc.id_osc <> 789809
 AND tb_localizacao.cd_municipio IS NOT NULL
 GROUP BY localidade;
+
+CREATE INDEX ix_localidade_vw_perfil_localidade_trabalhadores
+    ON analysis.vw_perfil_localidade_trabalhadores USING btree
+    (localidade ASC NULLS LAST)
+    TABLESPACE pg_default;

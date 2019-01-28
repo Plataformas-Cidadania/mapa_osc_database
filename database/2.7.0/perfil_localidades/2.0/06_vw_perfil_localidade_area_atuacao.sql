@@ -2,7 +2,7 @@ DROP MATERIALIZED VIEW IF EXISTS analysis.vw_perfil_localidade_area_atuacao CASC
 CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_area_atuacao AS 
 
 SELECT 
-	COALESCE(SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1), 'Sem informação') AS localidade,
+	SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1) AS localidade,
 	COALESCE(dc_area_atuacao.tx_nome_area_atuacao::TEXT, 'Sem informação') AS area_atuacao,
 	COUNT(tb_osc) AS quantidade_oscs,
 	REPLACE(('{' || TRIM(TRANSLATE(
@@ -27,12 +27,13 @@ LEFT JOIN osc.tb_localizacao
 ON tb_osc.id_osc = tb_localizacao.id_osc
 WHERE tb_osc.bo_osc_ativa
 AND tb_osc.id_osc <> 789809
+AND tb_localizacao.cd_municipio IS NOT NULL
 GROUP BY localidade, area_atuacao
 
 UNION
 
 SELECT 
-	COALESCE(SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2), 'Sem informação') AS localidade,
+	SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2) AS localidade,
 	COALESCE(dc_area_atuacao.tx_nome_area_atuacao::TEXT, 'Sem informação') AS area_atuacao,
 	COUNT(tb_osc) AS nr_quantidade_oscs,
 	REPLACE(('{' || TRIM(TRANSLATE(
@@ -57,12 +58,13 @@ LEFT JOIN osc.tb_localizacao
 ON tb_osc.id_osc = tb_localizacao.id_osc
 WHERE tb_osc.bo_osc_ativa
 AND tb_osc.id_osc <> 789809
+AND tb_localizacao.cd_municipio IS NOT NULL
 GROUP BY localidade, area_atuacao
 
 UNION
 
 SELECT 
-	COALESCE(tb_localizacao.cd_municipio::TEXT, 'Sem informação') AS localidade,
+	tb_localizacao.cd_municipio::TEXT AS localidade,
 	COALESCE(dc_area_atuacao.tx_nome_area_atuacao::TEXT, 'Sem informação') AS area_atuacao,
 	COUNT(tb_osc) AS nr_quantidade_oscs,
 	REPLACE(('{' || TRIM(TRANSLATE(
@@ -87,4 +89,15 @@ LEFT JOIN osc.tb_localizacao
 ON tb_osc.id_osc = tb_localizacao.id_osc
 WHERE tb_osc.bo_osc_ativa
 AND tb_osc.id_osc <> 789809
+AND tb_localizacao.cd_municipio IS NOT NULL
 GROUP BY localidade, area_atuacao;
+
+CREATE INDEX ix_localidade_vw_perfil_localidade_area_atuacao
+    ON analysis.vw_perfil_localidade_area_atuacao USING btree
+    (localidade ASC NULLS LAST)
+    TABLESPACE pg_default;
+
+CREATE INDEX ix_area_atuacao_vw_perfil_localidade_area_atuacao
+    ON analysis.vw_perfil_localidade_area_atuacao USING btree
+    (area_atuacao ASC NULLS LAST)
+    TABLESPACE pg_default;

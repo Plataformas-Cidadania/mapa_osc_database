@@ -3,7 +3,7 @@ CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_repasse_recursos AS
 
 (
 	SELECT 
-		COALESCE(SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1), 'Sem informação') AS localidade,
+		SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1) AS localidade,
 		COALESCE(dc_fonte_recursos_osc.tx_nome_fonte_recursos_osc::TEXT, 'Sem informação') AS fonte_recursos,
 		COALESCE(DATE_PART('year', tb_recursos_osc.dt_ano_recursos_osc)::TEXT, 'Sem informação') AS ano,
 		SUM(COALESCE(tb_recursos_osc.nr_valor_recursos_osc, 0)) AS valor_recursos,
@@ -36,12 +36,13 @@ CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_repasse_recursos AS
 	ON tb_osc.id_osc = tb_localizacao.id_osc
 	WHERE tb_osc.bo_osc_ativa
 	AND tb_osc.id_osc <> 789809
+	AND tb_localizacao.cd_municipio IS NOT NULL
 	GROUP BY localidade, ano, fonte_recursos
 
 	UNION
 
 	SELECT 
-		COALESCE(SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1), 'Sem informação') AS localidade,
+		SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1) AS localidade,
 		COALESCE(tb_recursos_outro_osc.tx_nome_fonte_recursos_outro_osc::TEXT, 'Sem informação') AS fonte_recursos,
 		COALESCE(DATE_PART('year', tb_recursos_outro_osc.dt_ano_recursos_outro_osc)::TEXT, 'Sem informação') AS ano,
 		SUM(COALESCE(tb_recursos_outro_osc.nr_valor_recursos_outro_osc, 0)) AS valor_recursos,
@@ -72,6 +73,7 @@ CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_repasse_recursos AS
 	ON tb_osc.id_osc = tb_localizacao.id_osc
 	WHERE tb_osc.bo_osc_ativa
 	AND tb_osc.id_osc <> 789809
+	AND tb_localizacao.cd_municipio IS NOT NULL
 	GROUP BY localidade, ano, fonte_recursos
 )
 
@@ -79,7 +81,7 @@ UNION
 
 (
 	SELECT 
-		COALESCE(SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2), 'Sem informação') AS localidade,
+		SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2) AS localidade,
 		COALESCE(dc_fonte_recursos_osc.tx_nome_fonte_recursos_osc::TEXT, 'Sem informação') AS fonte_recursos,
 		COALESCE(DATE_PART('year', tb_recursos_osc.dt_ano_recursos_osc)::TEXT, 'Sem informação') AS ano,
 		SUM(COALESCE(tb_recursos_osc.nr_valor_recursos_osc, 0)) AS valor_recursos,
@@ -112,12 +114,13 @@ UNION
 	ON tb_osc.id_osc = tb_localizacao.id_osc
 	WHERE tb_osc.bo_osc_ativa
 	AND tb_osc.id_osc <> 789809
+	AND tb_localizacao.cd_municipio IS NOT NULL
 	GROUP BY localidade, ano, fonte_recursos
 
 	UNION
 
 	SELECT 
-		COALESCE(SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2), 'Sem informação') AS localidade,
+		SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2) AS localidade,
 		COALESCE(tb_recursos_outro_osc.tx_nome_fonte_recursos_outro_osc::TEXT, 'Sem informação') AS fonte_recursos,
 		COALESCE(DATE_PART('year', tb_recursos_outro_osc.dt_ano_recursos_outro_osc)::TEXT, 'Sem informação') AS ano,
 		SUM(COALESCE(tb_recursos_outro_osc.nr_valor_recursos_outro_osc, 0)) AS valor_recursos,
@@ -148,6 +151,7 @@ UNION
 	ON tb_osc.id_osc = tb_localizacao.id_osc
 	WHERE tb_osc.bo_osc_ativa
 	AND tb_osc.id_osc <> 789809
+	AND tb_localizacao.cd_municipio IS NOT NULL
 	GROUP BY localidade, ano, fonte_recursos
 )
 
@@ -155,7 +159,7 @@ UNION
 
 (
 	SELECT 
-		COALESCE(tb_localizacao.cd_municipio::TEXT, 'Sem informação') AS localidade,
+		tb_localizacao.cd_municipio::TEXT AS localidade,
 		COALESCE(dc_fonte_recursos_osc.tx_nome_fonte_recursos_osc::TEXT, 'Sem informação') AS fonte_recursos,
 		COALESCE(DATE_PART('year', tb_recursos_osc.dt_ano_recursos_osc)::TEXT, 'Sem informação') AS ano,
 		SUM(COALESCE(tb_recursos_osc.nr_valor_recursos_osc, 0)) AS valor_recursos,
@@ -188,12 +192,13 @@ UNION
 	ON tb_osc.id_osc = tb_localizacao.id_osc
 	WHERE tb_osc.bo_osc_ativa
 	AND tb_osc.id_osc <> 789809
+	AND tb_localizacao.cd_municipio IS NOT NULL
 	GROUP BY localidade, ano, fonte_recursos
 
 	UNION
 
 	SELECT 
-		COALESCE(tb_localizacao.cd_municipio::TEXT, 'Sem informação') AS localidade,
+		tb_localizacao.cd_municipio::TEXT AS localidade,
 		COALESCE(tb_recursos_outro_osc.tx_nome_fonte_recursos_outro_osc::TEXT, 'Sem informação') AS fonte_recursos,
 		COALESCE(DATE_PART('year', tb_recursos_outro_osc.dt_ano_recursos_outro_osc)::TEXT, 'Sem informação') AS ano,
 		SUM(COALESCE(tb_recursos_outro_osc.nr_valor_recursos_outro_osc, 0)) AS valor_recursos,
@@ -224,5 +229,21 @@ UNION
 	ON tb_osc.id_osc = tb_localizacao.id_osc
 	WHERE tb_osc.bo_osc_ativa
 	AND tb_osc.id_osc <> 789809
+	AND tb_localizacao.cd_municipio IS NOT NULL
 	GROUP BY localidade, ano, fonte_recursos
 );
+
+CREATE INDEX ix_localidade_vw_perfil_localidade_repasse_recursos
+    ON analysis.vw_perfil_localidade_repasse_recursos USING btree
+    (localidade ASC NULLS LAST)
+    TABLESPACE pg_default;
+
+CREATE INDEX ix_ano_vw_perfil_localidade_repasse_recursos
+    ON analysis.vw_perfil_localidade_repasse_recursos USING btree
+    (ano ASC NULLS LAST)
+    TABLESPACE pg_default;
+
+CREATE INDEX ix_fonte_recursos_vw_perfil_localidade_repasse_recursos
+    ON analysis.vw_perfil_localidade_repasse_recursos USING btree
+    (fonte_recursos ASC NULLS LAST)
+    TABLESPACE pg_default;

@@ -3,7 +3,7 @@ CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_maior_media_repasse_recur
 
 SELECT
 	a.localidade,
-	ARRAY_AGG(a.fonte_recursos),
+	ARRAY_AGG(a.fonte_recursos) AS tipo_repasse,
 	(
 		SELECT
 			CASE 
@@ -52,7 +52,7 @@ UNION
 
 SELECT
 	a.localidade,
-	ARRAY_AGG(a.fonte_recursos),
+	ARRAY_AGG(a.fonte_recursos) AS tipo_repasse,
 	(
 		SELECT
 			CASE 
@@ -101,7 +101,7 @@ UNION
 
 SELECT
 	a.localidade,
-	ARRAY_AGG(a.fonte_recursos),
+	ARRAY_AGG(a.fonte_recursos) AS tipo_repasse,
 	(
 		SELECT
 			CASE 
@@ -145,3 +145,8 @@ RIGHT JOIN (
 ON a.localidade = b.localidade
 AND a.valor_recursos = b.valor_recursos
 GROUP BY a.localidade;
+
+CREATE INDEX ix_localidade_vw_perfil_localidade_maior_media_repasse_recursos
+    ON analysis.vw_perfil_localidade_maior_media_repasse_recursos USING btree
+    (localidade ASC NULLS LAST)
+    TABLESPACE pg_default;
