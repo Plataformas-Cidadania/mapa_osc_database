@@ -15,12 +15,17 @@ DECLARE
 	area_atuacao_json JSONB;
 	trabalhadores_json JSONB;
 	
+	localidades_primeiro_colocado_quantidade_osc_municipio TEXT[];
+	valor_primeiro_colocado_quantidade_osc_municipio INTEGER;
+	localidades_ultimo_colocado_quantidade_osc_municipio TEXT[];
+	valor_ultimo_colocado_quantidade_osc_municipio INTEGER;
+	localidades_primeiro_colocado_quantidade_osc_estado TEXT[];
+	valor_primeiro_colocado_quantidade_osc_estado INTEGER;
+	localidades_ultimo_colocado_quantidade_osc_estado TEXT[];
+	valor_ultimo_colocado_quantidade_osc_estado INTEGER;
+
 	maior_media_nacional_natureza_juridica TEXT[];
 	valor_maior_media_nacional_natureza_juridica DOUBLE PRECISION;
-	localidades_primeiro_colocado_quantidade_osc TEXT[];
-	valor_primeiro_colocado_quantidade_osc INTEGER;
-	localidades_ultimo_colocado_quantidade_osc TEXT[];
-	valor_ultimo_colocado_quantidade_osc INTEGER;
 	
 BEGIN
 	SELECT INTO resultado row_to_json(a)
@@ -72,76 +77,50 @@ BEGIN
 
 	-- ==================== Evolução Anual ==================== --
 	
-	IF id_localidade > 99 THEN
-		SELECT INTO localidades_primeiro_colocado_quantidade_osc, valor_primeiro_colocado_quantidade_osc
-			ARRAY_AGG(b.nome_localidade), MAX(a.quantidade_oscs)
-		FROM analysis.vw_perfil_localidade_ranking_quantidade_osc AS a
-		INNER JOIN analysis.vw_perfil_localidade_caracteristicas AS b
-		ON a.localidade = b.localidade
-		WHERE a.rank = (
-			SELECT MIN(rank)
-			FROM analysis.vw_perfil_localidade_ranking_quantidade_osc
-			WHERE localidade::INTEGER > 99
-		);
-		
-		SELECT INTO localidades_ultimo_colocado_quantidade_osc, valor_ultimo_colocado_quantidade_osc
-			ARRAY_AGG(b.nome_localidade), MAX(a.quantidade_oscs)
-		FROM analysis.vw_perfil_localidade_ranking_quantidade_osc AS a
-		INNER JOIN analysis.vw_perfil_localidade_caracteristicas AS b
-		ON a.localidade = b.localidade
-		WHERE a.rank = (
-			SELECT MAX(rank)
-			FROM analysis.vw_perfil_localidade_ranking_quantidade_osc
-			WHERE localidade::INTEGER > 99
-		);
-
-	ELSIF id_localidade BETWEEN 0 AND 9 THEN
-		SELECT INTO localidades_primeiro_colocado_quantidade_osc, valor_primeiro_colocado_quantidade_osc
-			ARRAY_AGG(b.nome_localidade), MAX(a.quantidade_oscs)
-		FROM analysis.vw_perfil_localidade_ranking_quantidade_osc AS a
-		INNER JOIN analysis.vw_perfil_localidade_caracteristicas AS b
-		ON a.localidade = b.localidade
-		WHERE a.rank = (
-			SELECT MAX(rank)
-			FROM analysis.vw_perfil_localidade_ranking_quantidade_osc
-			WHERE localidade::INTEGER BETWEEN 0 AND 9
-		);
-		
-		SELECT INTO localidades_ultimo_colocado_quantidade_osc, valor_ultimo_colocado_quantidade_osc
-			ARRAY_AGG(b.nome_localidade), MAX(a.quantidade_oscs)
-		FROM analysis.vw_perfil_localidade_ranking_quantidade_osc AS a
-		INNER JOIN analysis.vw_perfil_localidade_caracteristicas AS b
-		ON a.localidade = b.localidade
-		WHERE a.rank = (
-			SELECT MAX(rank)
-			FROM analysis.vw_perfil_localidade_ranking_quantidade_osc
-			WHERE localidade::INTEGER BETWEEN 0 AND 9
-		);
-
-	ELSIF id_localidade BETWEEN 10 AND 99 THEN
-		SELECT INTO localidades_primeiro_colocado_quantidade_osc, valor_primeiro_colocado_quantidade_osc
-			ARRAY_AGG(b.nome_localidade), MAX(a.quantidade_oscs)
-		FROM analysis.vw_perfil_localidade_ranking_quantidade_osc AS a
-		INNER JOIN analysis.vw_perfil_localidade_caracteristicas AS b
-		ON a.localidade = b.localidade
-		WHERE a.rank = (
-			SELECT MIN(rank)
-			FROM analysis.vw_perfil_localidade_ranking_quantidade_osc
-			WHERE localidade::INTEGER BETWEEN 10 AND 99
-		);
-		
-		SELECT INTO localidades_ultimo_colocado_quantidade_osc, valor_ultimo_colocado_quantidade_osc
-			ARRAY_AGG(b.nome_localidade), MAX(a.quantidade_oscs)
-		FROM analysis.vw_perfil_localidade_ranking_quantidade_osc AS a
-		INNER JOIN analysis.vw_perfil_localidade_caracteristicas AS b
-		ON a.localidade = b.localidade
-		WHERE a.rank = (
-			SELECT MAX(rank)
-			FROM analysis.vw_perfil_localidade_ranking_quantidade_osc
-			WHERE localidade::INTEGER BETWEEN 10 AND 99
-		);
-	END IF;
+	SELECT INTO localidades_primeiro_colocado_quantidade_osc_municipio, valor_primeiro_colocado_quantidade_osc_municipio
+		ARRAY_AGG(b.nome_localidade), MAX(a.quantidade_oscs)
+	FROM analysis.vw_perfil_localidade_ranking_quantidade_osc AS a
+	INNER JOIN analysis.vw_perfil_localidade_caracteristicas AS b
+	ON a.localidade = b.localidade
+	WHERE a.rank = (
+		SELECT MIN(rank)
+		FROM analysis.vw_perfil_localidade_ranking_quantidade_osc
+		WHERE localidade::INTEGER > 99
+	);
 	
+	SELECT INTO localidades_ultimo_colocado_quantidade_osc_municipio, valor_ultimo_colocado_quantidade_osc_municipio
+		ARRAY_AGG(b.nome_localidade), MAX(a.quantidade_oscs)
+	FROM analysis.vw_perfil_localidade_ranking_quantidade_osc AS a
+	INNER JOIN analysis.vw_perfil_localidade_caracteristicas AS b
+	ON a.localidade = b.localidade
+	WHERE a.rank = (
+		SELECT MAX(rank)
+		FROM analysis.vw_perfil_localidade_ranking_quantidade_osc
+		WHERE localidade::INTEGER > 99
+	);
+
+	SELECT INTO localidades_primeiro_colocado_quantidade_osc_estado, valor_primeiro_colocado_quantidade_osc_estado
+		ARRAY_AGG(b.nome_localidade), MAX(a.quantidade_oscs)
+	FROM analysis.vw_perfil_localidade_ranking_quantidade_osc AS a
+	INNER JOIN analysis.vw_perfil_localidade_caracteristicas AS b
+	ON a.localidade = b.localidade
+	WHERE a.rank = (
+		SELECT MIN(rank)
+		FROM analysis.vw_perfil_localidade_ranking_quantidade_osc
+		WHERE localidade::INTEGER BETWEEN 10 AND 99
+	);
+	
+	SELECT INTO localidades_ultimo_colocado_quantidade_osc_estado, valor_ultimo_colocado_quantidade_osc_estado
+		ARRAY_AGG(b.nome_localidade), MAX(a.quantidade_oscs)
+	FROM analysis.vw_perfil_localidade_ranking_quantidade_osc AS a
+	INNER JOIN analysis.vw_perfil_localidade_caracteristicas AS b
+	ON a.localidade = b.localidade
+	WHERE a.rank = (
+		SELECT MAX(rank)
+		FROM analysis.vw_perfil_localidade_ranking_quantidade_osc
+		WHERE localidade::INTEGER BETWEEN 10 AND 99
+	);
+
 	SELECT INTO evolucao_anual_json
 		row_to_json(c)
 	FROM (
@@ -154,10 +133,14 @@ BEGIN
 					FROM analysis.vw_perfil_localidade_ranking_quantidade_osc
 					WHERE localidade = 35::TEXT
 				) AS nr_colocacao_nacional,
-				localidades_primeiro_colocado_quantidade_osc AS tx_primeiro_colocado,
-				valor_primeiro_colocado_quantidade_osc AS nr_quantidade_oscs_primeiro_colocado,
-				localidades_ultimo_colocado_quantidade_osc AS tx_ultimo_colocado,
-				valor_ultimo_colocado_quantidade_osc AS nr_quantidade_oscs_ultimo_colocado,
+				localidades_primeiro_colocado_quantidade_osc_municipio AS tx_primeiro_colocado_municipio,
+				valor_primeiro_colocado_quantidade_osc_municipio AS nr_quantidade_oscs_primeiro_colocado_municipio,
+				localidades_ultimo_colocado_quantidade_osc_municipio AS tx_ultimo_colocado_municipio,
+				valor_ultimo_colocado_quantidade_osc_municipio AS nr_quantidade_oscs_ultimo_colocado_municipio,
+				localidades_primeiro_colocado_quantidade_osc_estado AS tx_primeiro_colocado_estado,
+				valor_primeiro_colocado_quantidade_osc_estado AS nr_quantidade_oscs_primeiro_colocado_estado,
+				localidades_ultimo_colocado_quantidade_osc_estado AS tx_ultimo_colocado_estado,
+				valor_ultimo_colocado_quantidade_osc_estado AS nr_quantidade_oscs_ultimo_colocado_estado,
 				json_agg(a) AS series_1,
 				(
 					SELECT ARRAY_AGG(b.fontes) FROM (
@@ -203,15 +186,7 @@ BEGIN
 			FROM analysis.vw_perfil_localidade_maior_natureza_juridica
 			WHERE localidade::INTEGER > 99
 		);
-	ELSIF id_localidade BETWEEN 0 AND 9 THEN
-		SELECT INTO maior_media_nacional_natureza_juridica, valor_maior_media_nacional_natureza_juridica 
-			natureza_juridica, porcertagem_maior
-		FROM analysis.vw_perfil_localidade_maior_natureza_juridica
-		WHERE porcertagem_maior = (
-			SELECT MAX(porcertagem_maior)
-			FROM analysis.vw_perfil_localidade_maior_natureza_juridica
-			WHERE localidade::INTEGER BETWEEN 0 AND 9
-		);
+	
 	ELSIF id_localidade BETWEEN 10 AND 99 THEN
 		SELECT INTO maior_media_nacional_natureza_juridica, valor_maior_media_nacional_natureza_juridica 
 			natureza_juridica, porcertagem_maior
@@ -221,6 +196,17 @@ BEGIN
 			FROM analysis.vw_perfil_localidade_maior_natureza_juridica
 			WHERE localidade::INTEGER BETWEEN 10 AND 99
 		);
+
+	ELSIF id_localidade BETWEEN 0 AND 9 THEN
+		SELECT INTO maior_media_nacional_natureza_juridica, valor_maior_media_nacional_natureza_juridica 
+			natureza_juridica, porcertagem_maior
+		FROM analysis.vw_perfil_localidade_maior_natureza_juridica
+		WHERE porcertagem_maior = (
+			SELECT MAX(porcertagem_maior)
+			FROM analysis.vw_perfil_localidade_maior_natureza_juridica
+			WHERE localidade::INTEGER BETWEEN 0 AND 9
+		);
+
 	END IF;
 	
 	FOR record IN
