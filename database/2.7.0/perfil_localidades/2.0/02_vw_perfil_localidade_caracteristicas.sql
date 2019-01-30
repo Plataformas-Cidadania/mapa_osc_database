@@ -2,8 +2,8 @@ DROP MATERIALIZED VIEW IF EXISTS analysis.vw_perfil_localidade_caracteristicas C
 CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_caracteristicas AS 
 
 SELECT 
-	SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1) AS localidade,
-	ed_regiao.edre_nm_regiao AS nome_localidade,
+	COALESCE(SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1), 'Sem informação')::TEXT AS localidade,
+	COALESCE(ed_regiao.edre_nm_regiao, 'Sem informação')::TEXT AS nome_localidade,
 	'regiao' AS tipo_localidade,
 	COUNT(tb_osc) AS quantidade_oscs,
 	COALESCE(SUM(
@@ -74,8 +74,8 @@ GROUP BY localidade, nome_localidade
 UNION
 
 SELECT
-	SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2) AS localidade,
-	ed_uf.eduf_nm_uf AS nome_localidade,
+	COALESCE(SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2), 'Sem informação')::TEXT AS localidade,
+	COALESCE(ed_uf.eduf_nm_uf, 'Sem informação')::TEXT AS nome_localidade,
 	'estado' AS tipo_localidade,
 	COUNT(tb_osc) AS nr_quantidade_oscs,
 	COALESCE(SUM(
@@ -146,8 +146,8 @@ GROUP BY localidade, nome_localidade
 UNION
 
 SELECT 
-	tb_localizacao.cd_municipio::TEXT AS localidade,
-	ed_municipio.edmu_nm_municipio || ' - ' || ed_uf.eduf_sg_uf AS nome_localidade,
+	COALESCE(tb_localizacao.cd_municipio::TEXT, 'Sem informação')::TEXT AS localidade,
+	COALESCE(ed_municipio.edmu_nm_municipio || ' - ' || ed_uf.eduf_sg_uf, 'Sem informação')::TEXT AS nome_localidade,
 	'municipio' AS tipo_localidade,
 	COUNT(tb_osc) AS nr_quantidade_oscs,
 	COALESCE(SUM(
