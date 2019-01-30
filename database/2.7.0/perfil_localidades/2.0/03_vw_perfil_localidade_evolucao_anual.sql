@@ -3,7 +3,7 @@ CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_evolucao_anual AS
 
 SELECT 
 	SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1) AS localidade,
-	COALESCE(DATE_PART('year', tb_dados_gerais.dt_fundacao_osc)::TEXT, 'Sem informação') AS ano_fundacao,
+	DATE_PART('year', tb_dados_gerais.dt_fundacao_osc)::TEXT AS ano_fundacao,
 	COUNT(tb_osc) AS quantidade_oscs,
 	REPLACE(('{' || TRIM(TRANSLATE(
 		(
@@ -26,13 +26,14 @@ ON tb_osc.id_osc = tb_localizacao.id_osc
 WHERE tb_osc.bo_osc_ativa
 AND tb_osc.id_osc <> 789809
 AND tb_localizacao.cd_municipio IS NOT NULL
+AND tb_dados_gerais.dt_fundacao_osc IS NOT NULL
 GROUP BY localidade, ano_fundacao
 
 UNION
 
 SELECT 
 	SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2) AS localidade,
-	COALESCE(DATE_PART('year', tb_dados_gerais.dt_fundacao_osc)::TEXT, 'Sem informação') AS ano_fundacao,
+	DATE_PART('year', tb_dados_gerais.dt_fundacao_osc)::TEXT AS ano_fundacao,
 	COUNT(tb_osc) AS quantidade_oscs,
 	REPLACE(('{' || TRIM(TRANSLATE(
 		(
@@ -55,13 +56,14 @@ ON tb_osc.id_osc = tb_localizacao.id_osc
 WHERE tb_osc.bo_osc_ativa
 AND tb_osc.id_osc <> 789809
 AND tb_localizacao.cd_municipio IS NOT NULL
+AND tb_dados_gerais.dt_fundacao_osc IS NOT NULL
 GROUP BY localidade, ano_fundacao
 
 UNION
 
 SELECT 
 	tb_localizacao.cd_municipio::TEXT AS localidade,
-	COALESCE(DATE_PART('year', tb_dados_gerais.dt_fundacao_osc)::TEXT, 'Sem informação') AS ano_fundacao,
+	DATE_PART('year', tb_dados_gerais.dt_fundacao_osc)::TEXT AS ano_fundacao,
 	COUNT(tb_osc) AS quantidade_oscs,
 	REPLACE(('{' || TRIM(TRANSLATE(
 		(
@@ -84,6 +86,7 @@ ON tb_osc.id_osc = tb_localizacao.id_osc
 WHERE tb_osc.bo_osc_ativa
 AND tb_osc.id_osc <> 789809
 AND tb_localizacao.cd_municipio IS NOT NULL
+AND tb_dados_gerais.dt_fundacao_osc IS NOT NULL
 GROUP BY localidade, ano_fundacao;
 
 CREATE INDEX ix_localidade_vw_perfil_localidade_evolucao_anual

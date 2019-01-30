@@ -37,6 +37,8 @@ CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_repasse_recursos AS
 	WHERE tb_osc.bo_osc_ativa
 	AND tb_osc.id_osc <> 789809
 	AND tb_localizacao.cd_municipio IS NOT NULL
+	AND dc_fonte_recursos_osc.tx_nome_fonte_recursos_osc IS NOT NULL
+	AND tb_recursos_osc.dt_ano_recursos_osc IS NOT NULL
 	GROUP BY localidade, ano, fonte_recursos
 
 	UNION
@@ -74,6 +76,8 @@ CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_repasse_recursos AS
 	WHERE tb_osc.bo_osc_ativa
 	AND tb_osc.id_osc <> 789809
 	AND tb_localizacao.cd_municipio IS NOT NULL
+	AND dc_fonte_recursos_osc.tx_nome_fonte_recursos_osc IS NOT NULL
+	AND tb_recursos_osc.dt_ano_recursos_osc IS NOT NULL
 	GROUP BY localidade, ano, fonte_recursos
 )
 
@@ -115,6 +119,8 @@ UNION
 	WHERE tb_osc.bo_osc_ativa
 	AND tb_osc.id_osc <> 789809
 	AND tb_localizacao.cd_municipio IS NOT NULL
+	AND dc_fonte_recursos_osc.tx_nome_fonte_recursos_osc IS NOT NULL
+	AND tb_recursos_osc.dt_ano_recursos_osc IS NOT NULL
 	GROUP BY localidade, ano, fonte_recursos
 
 	UNION
@@ -152,6 +158,8 @@ UNION
 	WHERE tb_osc.bo_osc_ativa
 	AND tb_osc.id_osc <> 789809
 	AND tb_localizacao.cd_municipio IS NOT NULL
+	AND dc_fonte_recursos_osc.tx_nome_fonte_recursos_osc IS NOT NULL
+	AND tb_recursos_osc.dt_ano_recursos_osc IS NOT NULL
 	GROUP BY localidade, ano, fonte_recursos
 )
 
@@ -193,6 +201,8 @@ UNION
 	WHERE tb_osc.bo_osc_ativa
 	AND tb_osc.id_osc <> 789809
 	AND tb_localizacao.cd_municipio IS NOT NULL
+	AND dc_fonte_recursos_osc.tx_nome_fonte_recursos_osc IS NOT NULL
+	AND tb_recursos_osc.dt_ano_recursos_osc IS NOT NULL
 	GROUP BY localidade, ano, fonte_recursos
 
 	UNION
@@ -230,6 +240,8 @@ UNION
 	WHERE tb_osc.bo_osc_ativa
 	AND tb_osc.id_osc <> 789809
 	AND tb_localizacao.cd_municipio IS NOT NULL
+	AND dc_fonte_recursos_osc.tx_nome_fonte_recursos_osc IS NOT NULL
+	AND tb_recursos_osc.dt_ano_recursos_osc IS NOT NULL
 	GROUP BY localidade, ano, fonte_recursos
 );
 
