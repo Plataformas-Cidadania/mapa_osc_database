@@ -1,4 +1,3 @@
-DROP FUNCTION IF EXISTS portal.obter_osc_projetos(TEXT, TEXT, INTEGER);
 
 CREATE OR REPLACE FUNCTION portal.obter_osc_projetos(identificador TEXT, tipo_identificador TEXT, tipo INTEGER) RETURNS TABLE (
 	resultado JSON,
