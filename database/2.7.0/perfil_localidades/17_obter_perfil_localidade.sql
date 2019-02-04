@@ -62,12 +62,12 @@ BEGIN
 						FROM (
 							SELECT a.fontes
 							FROM analysis.vw_perfil_localidade_caracteristicas AS a
-							WHERE a.localidade = 35::TEXT
+							WHERE a.localidade = id_localidade::TEXT
 						) AS a
 					) AS b
 				) AS fontes
 			FROM analysis.vw_perfil_localidade_caracteristicas
-			WHERE localidade = 35::TEXT
+			WHERE localidade = id_localidade::TEXT
 		) AS a
 	) AS b;
 	
@@ -131,7 +131,7 @@ BEGIN
 				(
 					SELECT rank
 					FROM analysis.vw_perfil_localidade_ranking_quantidade_osc
-					WHERE localidade = 35::TEXT
+					WHERE localidade = id_localidade::TEXT
 				) AS nr_colocacao_nacional,
 				localidades_primeiro_colocado_quantidade_osc_municipio AS tx_primeiro_colocado_municipio,
 				valor_primeiro_colocado_quantidade_osc_municipio AS nr_quantidade_oscs_primeiro_colocado_municipio,
@@ -149,7 +149,7 @@ BEGIN
 						FROM (
 							SELECT a.fontes
 							FROM analysis.vw_perfil_localidade_evolucao_anual AS a
-							WHERE a.localidade = 35::TEXT
+							WHERE a.localidade = id_localidade::TEXT
 						) AS a
 					) AS b
 				) AS fontes
@@ -164,7 +164,7 @@ BEGIN
 						FROM (
 							SELECT ano_fundacao AS x, quantidade_oscs AS y
 							FROM analysis.vw_perfil_localidade_evolucao_anual
-							WHERE localidade = 35::TEXT
+							WHERE localidade = id_localidade::TEXT
 						) AS a
 					) AS values
 			) AS a
