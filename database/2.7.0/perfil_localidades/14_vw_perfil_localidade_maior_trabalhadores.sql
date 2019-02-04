@@ -5,10 +5,10 @@ SELECT
 	a.localidade,
 	(
 		CASE
-			WHEN a.vinculos = b.quantidade_trabalhadores AND a.deficiencia = b.quantidade_trabalhadores AND a.voluntarios = b.quantidade_trabalhadores THEN '{vinculos, deficiencia, voluntarios}'
-			WHEN a.vinculos = b.quantidade_trabalhadores AND a.deficiencia = b.quantidade_trabalhadores THEN '{vinculos, deficiencia}'
-			WHEN a.vinculos = b.quantidade_trabalhadores AND a.voluntarios = b.quantidade_trabalhadores THEN '{vinculos, voluntarios}'
-			WHEN a.deficiencia = b.quantidade_trabalhadores AND a.voluntarios = b.quantidade_trabalhadores THEN '{deficiencia, voluntarios}'
+			WHEN a.vinculos = b.quantidade_trabalhadores AND a.deficiencia = b.quantidade_trabalhadores AND a.voluntarios = b.quantidade_trabalhadores THEN '{Trabalhadores com vínculos, Trabalhadores com deficiência, Trabalhadores voluntários}'
+			WHEN a.vinculos = b.quantidade_trabalhadores AND a.deficiencia = b.quantidade_trabalhadores THEN '{Trabalhadores com vínculos, Trabalhadores com deficiência}'
+			WHEN a.vinculos = b.quantidade_trabalhadores AND a.voluntarios = b.quantidade_trabalhadores THEN '{Trabalhadores com vínculos, Trabalhadores voluntários}'
+			WHEN a.deficiencia = b.quantidade_trabalhadores AND a.voluntarios = b.quantidade_trabalhadores THEN '{Trabalhadores com deficiência, Trabalhadores voluntários}'
 			WHEN a.vinculos = b.quantidade_trabalhadores THEN '{Trabalhadores com vínculos}'
 			WHEN a.deficiencia = b.quantidade_trabalhadores THEN '{Trabalhadores com deficiência}'
 			WHEN a.voluntarios = b.quantidade_trabalhadores THEN '{Trabalhadores voluntários}'
