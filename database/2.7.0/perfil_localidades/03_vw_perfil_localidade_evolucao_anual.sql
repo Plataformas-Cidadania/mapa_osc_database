@@ -3,7 +3,7 @@ CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_evolucao_anual AS
 
 SELECT 
 	SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1) AS localidade,
-	DATE_PART('year', tb_dados_gerais.dt_fundacao_osc)::TEXT AS ano_fundacao,
+	DATE_PART('year', tb_dados_gerais.dt_fundacao_osc)::INTEGER AS ano_fundacao,
 	COUNT(DISTINCT tb_osc.id_osc) AS quantidade_oscs,
 	REPLACE(('{' || TRIM(TRANSLATE(
 		(
@@ -33,7 +33,7 @@ UNION
 
 SELECT 
 	SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2) AS localidade,
-	DATE_PART('year', tb_dados_gerais.dt_fundacao_osc)::TEXT AS ano_fundacao,
+	DATE_PART('year', tb_dados_gerais.dt_fundacao_osc)::INTEGER AS ano_fundacao,
 	COUNT(DISTINCT tb_osc.id_osc) AS quantidade_oscs,
 	REPLACE(('{' || TRIM(TRANSLATE(
 		(
@@ -63,7 +63,7 @@ UNION
 
 SELECT 
 	tb_localizacao.cd_municipio::TEXT AS localidade,
-	DATE_PART('year', tb_dados_gerais.dt_fundacao_osc)::TEXT AS ano_fundacao,
+	DATE_PART('year', tb_dados_gerais.dt_fundacao_osc)::INTEGER AS ano_fundacao,
 	COUNT(DISTINCT tb_osc.id_osc) AS quantidade_oscs,
 	REPLACE(('{' || TRIM(TRANSLATE(
 		(
