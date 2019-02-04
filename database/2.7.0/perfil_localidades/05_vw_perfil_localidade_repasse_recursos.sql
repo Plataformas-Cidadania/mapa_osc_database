@@ -38,7 +38,6 @@ ON tb_osc.id_osc = tb_localizacao.id_osc
 WHERE tb_osc.bo_osc_ativa
 AND tb_osc.id_osc <> 789809
 AND tb_localizacao.cd_municipio IS NOT NULL
-AND dc_origem_fonte_recursos_osc.tx_nome_origem_fonte_recursos_osc IS NOT NULL
 GROUP BY localidade, ano, fonte_recursos
 
 UNION
@@ -80,7 +79,6 @@ ON tb_osc.id_osc = tb_localizacao.id_osc
 WHERE tb_osc.bo_osc_ativa
 AND tb_osc.id_osc <> 789809
 AND tb_localizacao.cd_municipio IS NOT NULL
-AND dc_origem_fonte_recursos_osc.tx_nome_origem_fonte_recursos_osc IS NOT NULL
 GROUP BY localidade, ano, fonte_recursos
 
 UNION
@@ -122,7 +120,6 @@ ON tb_osc.id_osc = tb_localizacao.id_osc
 WHERE tb_osc.bo_osc_ativa
 AND tb_osc.id_osc <> 789809
 AND tb_localizacao.cd_municipio IS NOT NULL
-AND dc_origem_fonte_recursos_osc.tx_nome_origem_fonte_recursos_osc IS NOT NULL
 GROUP BY localidade, ano, fonte_recursos;
 
 CREATE INDEX ix_localidade_vw_perfil_localidade_repasse_recursos
