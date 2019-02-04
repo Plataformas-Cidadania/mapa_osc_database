@@ -3,7 +3,12 @@ CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_evolucao_anual AS
 
 SELECT 
 	SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1) AS localidade,
-	DATE_PART('year', tb_dados_gerais.dt_fundacao_osc)::INTEGER AS ano_fundacao,
+	(
+		CASE 
+			WHEN tb_dados_gerais.dt_fundacao_osc > '1500-01-01'::DATE THEN DATE_PART('year', tb_dados_gerais.dt_fundacao_osc)::INTEGER
+			ELSE null
+		END
+	) AS ano_fundacao,
 	COUNT(DISTINCT tb_osc.id_osc) AS quantidade_oscs,
 	REPLACE(('{' || TRIM(TRANSLATE(
 		(
@@ -33,7 +38,12 @@ UNION
 
 SELECT 
 	SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2) AS localidade,
-	DATE_PART('year', tb_dados_gerais.dt_fundacao_osc)::INTEGER AS ano_fundacao,
+	(
+		CASE 
+			WHEN tb_dados_gerais.dt_fundacao_osc > '1500-01-01'::DATE THEN DATE_PART('year', tb_dados_gerais.dt_fundacao_osc)::INTEGER
+			ELSE null
+		END
+	) AS ano_fundacao,
 	COUNT(DISTINCT tb_osc.id_osc) AS quantidade_oscs,
 	REPLACE(('{' || TRIM(TRANSLATE(
 		(
@@ -63,7 +73,12 @@ UNION
 
 SELECT 
 	tb_localizacao.cd_municipio::TEXT AS localidade,
-	DATE_PART('year', tb_dados_gerais.dt_fundacao_osc)::INTEGER AS ano_fundacao,
+	(
+		CASE 
+			WHEN tb_dados_gerais.dt_fundacao_osc > '1500-01-01'::DATE THEN DATE_PART('year', tb_dados_gerais.dt_fundacao_osc)::INTEGER
+			ELSE null
+		END
+	) AS ano_fundacao,
 	COUNT(DISTINCT tb_osc.id_osc) AS quantidade_oscs,
 	REPLACE(('{' || TRIM(TRANSLATE(
 		(
