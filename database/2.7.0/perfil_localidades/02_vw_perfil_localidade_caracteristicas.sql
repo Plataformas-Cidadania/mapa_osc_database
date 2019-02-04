@@ -5,7 +5,7 @@ SELECT
 	COALESCE(SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1), 'Sem informação')::TEXT AS localidade,
 	COALESCE(ed_regiao.edre_nm_regiao, 'Sem informação')::TEXT AS nome_localidade,
 	'regiao' AS tipo_localidade,
-	COUNT(DISTINCT tb_osc.id_osc) AS nr_quantidade_oscs,
+	COUNT(DISTINCT tb_osc.id_osc) AS quantidade_oscs,
 	COALESCE(SUM(
 		COALESCE(tb_relacoes_trabalho.nr_trabalhadores_vinculo, 0) + 
 		COALESCE(tb_relacoes_trabalho.nr_trabalhadores_deficiencia, 0) + 
@@ -77,7 +77,7 @@ SELECT
 	COALESCE(SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2), 'Sem informação')::TEXT AS localidade,
 	COALESCE(ed_uf.eduf_nm_uf, 'Sem informação')::TEXT AS nome_localidade,
 	'estado' AS tipo_localidade,
-	COUNT(DISTINCT tb_osc.id_osc) AS nr_quantidade_oscs,
+	COUNT(DISTINCT tb_osc.id_osc) AS quantidade_oscs,
 	COALESCE(SUM(
 		COALESCE(tb_relacoes_trabalho.nr_trabalhadores_vinculo, 0) + 
 		COALESCE(tb_relacoes_trabalho.nr_trabalhadores_deficiencia, 0) + 
@@ -149,7 +149,7 @@ SELECT
 	COALESCE(tb_localizacao.cd_municipio::TEXT, 'Sem informação')::TEXT AS localidade,
 	COALESCE(ed_municipio.edmu_nm_municipio || ' - ' || ed_uf.eduf_sg_uf, 'Sem informação')::TEXT AS nome_localidade,
 	'municipio' AS tipo_localidade,
-	COUNT(DISTINCT tb_osc.id_osc) AS nr_quantidade_oscs,
+	COUNT(DISTINCT tb_osc.id_osc) AS quantidade_oscs,
 	COALESCE(SUM(
 		COALESCE(tb_relacoes_trabalho.nr_trabalhadores_vinculo, 0) + 
 		COALESCE(tb_relacoes_trabalho.nr_trabalhadores_deficiencia, 0) + 
