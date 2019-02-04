@@ -16,7 +16,7 @@ SELECT
 		COALESCE(tb_recursos_osc.nr_valor_recursos_osc, 0) +
 		COALESCE(tb_recursos_outro_osc.nr_valor_recursos_outro_osc, 0)
 	), 0) AS quantidade_recursos,
-	COUNT(tb_projeto) AS quantidade_projetos,
+	COUNT(DISTINCT tb_projeto.id_projeto) AS quantidade_projetos,
 	REPLACE(('{' || TRIM(TRANSLATE(
 		(
 		    SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
@@ -88,7 +88,7 @@ SELECT
 		COALESCE(tb_recursos_osc.nr_valor_recursos_osc, 0) +
 		COALESCE(tb_recursos_outro_osc.nr_valor_recursos_outro_osc, 0)
 	), 0) AS nr_quantidade_recursos,
-	COUNT(tb_projeto) AS nr_quantidade_projetos,
+	COUNT(DISTINCT tb_projeto.id_projeto) AS quantidade_projetos,
 	REPLACE(('{' || TRIM(TRANSLATE(
 		(
 		    SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
@@ -160,7 +160,7 @@ SELECT
 		COALESCE(tb_recursos_osc.nr_valor_recursos_osc, 0) +
 		COALESCE(tb_recursos_outro_osc.nr_valor_recursos_outro_osc, 0)
 	), 0) AS nr_quantidade_recursos,
-	COUNT(tb_projeto) AS nr_quantidade_projetos,
+	COUNT(DISTINCT tb_projeto.id_projeto) AS quantidade_projetos,
 	REPLACE(('{' || TRIM(TRANSLATE(
 		(
 		    SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
@@ -172,11 +172,11 @@ SELECT
 								ARRAY_CAT(
 									ARRAY_CAT(
 										ARRAY_CAT(
-										ARRAY_CAT(
-											ARRAY_AGG(DISTINCT COALESCE(tb_osc.ft_osc_ativa, '')),
-											ARRAY_AGG(DISTINCT COALESCE(tb_localizacao.ft_municipio, ''))
-										),
-										ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho.ft_trabalhadores_vinculo, ''))
+											ARRAY_CAT(
+												ARRAY_AGG(DISTINCT COALESCE(tb_osc.ft_osc_ativa, '')),
+												ARRAY_AGG(DISTINCT COALESCE(tb_localizacao.ft_municipio, ''))
+											),
+											ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho.ft_trabalhadores_vinculo, ''))
 										),
 										ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho.ft_trabalhadores_deficiencia, ''))
 									),
