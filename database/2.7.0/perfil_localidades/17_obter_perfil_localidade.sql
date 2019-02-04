@@ -71,9 +71,8 @@ BEGIN
 		) AS a
 	) AS b;
 	
-	IF caracteristicas_json IS NOT NULL THEN
-		resultado := resultado || caracteristicas_json;
-	END IF;
+	caracteristicas_json := COALESCE(caracteristicas_json, '{"caracteristicas": null}'::JSONB);
+	resultado := resultado || caracteristicas_json;
 
 	-- ==================== Evolução Anual ==================== --
 	
@@ -171,9 +170,8 @@ BEGIN
 		) AS b
 	) AS c;
 
-	IF evolucao_anual_json IS NOT NULL THEN
-		resultado := resultado || evolucao_anual_json;
-	END IF;
+	evolucao_anual_json := COALESCE(evolucao_anual_json, '{"evolucao_quantidade_osc_ano": null}'::JSONB);
+	resultado := resultado || evolucao_anual_json;
 
 	-- ==================== Natureza Jurídica ==================== --
 	
@@ -256,9 +254,8 @@ BEGIN
 		) AS c;
 	END LOOP;
 	
-	IF natureza_juridica_json IS NOT NULL THEN
-		resultado := resultado || natureza_juridica_json;
-	END IF;
+	natureza_juridica_json := COALESCE(natureza_juridica_json, '{"natureza_juridica": null}'::JSONB);
+	resultado := resultado || natureza_juridica_json;
 	
 	-- ==================== Repasse de Recursos ==================== --
 	
@@ -329,9 +326,8 @@ BEGIN
 		) AS d;
 	END LOOP;
 	
-	IF repasse_recursos_json IS NOT NULL THEN
-		resultado := resultado || repasse_recursos_json;
-	END IF;
+	repasse_recursos_json := COALESCE(repasse_recursos_json, '{"repasse_recursos": null}'::JSONB);
+	resultado := resultado || repasse_recursos_json;
 	
 	-- ==================== Área de Atuação ==================== --
 	
@@ -382,9 +378,8 @@ BEGIN
 		) AS c;
 	END LOOP;
 	
-	IF area_atuacao_json IS NOT NULL THEN
-		resultado := resultado || area_atuacao_json;
-	END IF;
+	area_atuacao_json := COALESCE(area_atuacao_json, '{"area_atuacao": null}'::JSONB);
+	resultado := resultado || area_atuacao_json;
 	
 	-- ==================== Trabalhadores ==================== --
 	
@@ -447,9 +442,8 @@ BEGIN
 		) AS c;
 	END LOOP;
 	
-	IF trabalhadores_json IS NOT NULL THEN
-		resultado := resultado || trabalhadores_json;
-	END IF;
+	trabalhadores_json := COALESCE(trabalhadores_json, '{"area_atuacao": null}'::JSONB);
+	resultado := resultado || trabalhadores_json;
 	
 	/* ------------------------------ RESULTADO ------------------------------ */
 	codigo := 200;
