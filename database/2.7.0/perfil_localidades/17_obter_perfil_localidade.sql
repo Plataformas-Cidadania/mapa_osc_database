@@ -397,7 +397,7 @@ BEGIN
 				SELECT
 					record.dado AS tx_porcentagem_maior_media_nacional,
 					ROUND(record.valor::DECIMAL, 2)::DOUBLE PRECISION AS nr_porcentagem_maior_media_nacional,
-					a.area_atuacao AS tx_porcentagem_maior,
+					a.tipo_trabalhadores AS tx_porcentagem_maior,
 					ROUND(a.porcertagem_maior::DECIMAL, 2)::DOUBLE PRECISION AS nr_porcentagem_maior,
 					(
 						SELECT json_agg(a)
@@ -436,7 +436,7 @@ BEGIN
 							) AS a
 						) AS b
 					) AS fontes
-				FROM analysis.vw_perfil_localidade_maior_area_atuacao AS a
+				FROM analysis.vw_perfil_localidade_maior_trabalhadores AS a
 				WHERE localidade = id_localidade::TEXT
 			) AS b
 		) AS c;

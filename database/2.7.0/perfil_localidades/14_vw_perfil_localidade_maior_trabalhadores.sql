@@ -9,9 +9,9 @@ SELECT
 			WHEN a.vinculos = b.quantidade_trabalhadores AND a.deficiencia = b.quantidade_trabalhadores THEN '{vinculos, deficiencia}'
 			WHEN a.vinculos = b.quantidade_trabalhadores AND a.voluntarios = b.quantidade_trabalhadores THEN '{vinculos, voluntarios}'
 			WHEN a.deficiencia = b.quantidade_trabalhadores AND a.voluntarios = b.quantidade_trabalhadores THEN '{deficiencia, voluntarios}'
-			WHEN a.vinculos = b.quantidade_trabalhadores THEN '{vinculos}'
-			WHEN a.deficiencia = b.quantidade_trabalhadores THEN '{deficiencia}'
-			WHEN a.voluntarios = b.quantidade_trabalhadores THEN '{voluntarios}'
+			WHEN a.vinculos = b.quantidade_trabalhadores THEN '{Trabalhadores com vínculos}'
+			WHEN a.deficiencia = b.quantidade_trabalhadores THEN '{Trabalhadores com deficiência}'
+			WHEN a.voluntarios = b.quantidade_trabalhadores THEN '{Trabalhadores voluntários}'
 			ELSE '{}'
 		END
 	)::TEXT[] AS tipo_trabalhadores,
