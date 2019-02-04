@@ -5,7 +5,7 @@ SELECT
 	COALESCE(SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1), 'Sem informação')::TEXT AS localidade,
 	COALESCE(ed_regiao.edre_nm_regiao, 'Sem informação')::TEXT AS nome_localidade,
 	'regiao' AS tipo_localidade,
-	COUNT(tb_osc) AS quantidade_oscs,
+	COUNT(DISTINCT tb_osc.id_osc) AS nr_quantidade_oscs,
 	COALESCE(SUM(
 		COALESCE(tb_relacoes_trabalho.nr_trabalhadores_vinculo, 0) + 
 		COALESCE(tb_relacoes_trabalho.nr_trabalhadores_deficiencia, 0) + 
@@ -22,29 +22,29 @@ SELECT
 		    SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
 			ARRAY_CAT(
 			    ARRAY_CAT(
-				ARRAY_CAT(
-				    ARRAY_CAT(
 					ARRAY_CAT(
-					    ARRAY_CAT(
 						ARRAY_CAT(
-						    ARRAY_CAT(
 							ARRAY_CAT(
-							    ARRAY_AGG(DISTINCT COALESCE(tb_osc.ft_osc_ativa, '')),
-							    ARRAY_AGG(DISTINCT COALESCE(tb_localizacao.ft_municipio, ''))
+								ARRAY_CAT(
+									ARRAY_CAT(
+										ARRAY_CAT(
+											ARRAY_CAT(
+												ARRAY_AGG(DISTINCT COALESCE(tb_osc.ft_osc_ativa, '')),
+												ARRAY_AGG(DISTINCT COALESCE(tb_localizacao.ft_municipio, ''))
+											),
+											ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho.ft_trabalhadores_vinculo, ''))
+										),
+										ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho.ft_trabalhadores_deficiencia, ''))
+									),
+									ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho.ft_trabalhadores_voluntarios, ''))
+								),
+								ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho_outra.ft_trabalhadores, ''))
 							),
-							ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho.ft_trabalhadores_vinculo, ''))
-						    ),
-						    ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho.ft_trabalhadores_deficiencia, ''))
+							ARRAY_AGG(DISTINCT COALESCE(tb_recursos_osc.ft_valor_recursos_osc, ''))
 						),
-						ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho.ft_trabalhadores_voluntarios, ''))
-					    ),
-					    ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho_outra.ft_trabalhadores, ''))
+						ARRAY_AGG(DISTINCT COALESCE(tb_recursos_outro_osc.ft_valor_recursos_outro_osc, ''))
 					),
-					ARRAY_AGG(DISTINCT COALESCE(tb_recursos_osc.ft_valor_recursos_osc, ''))
-				    ),
-				    ARRAY_AGG(DISTINCT COALESCE(tb_recursos_outro_osc.ft_valor_recursos_outro_osc, ''))
-				),
-				ARRAY_AGG(DISTINCT COALESCE(tb_projeto.ft_nome_projeto, ''))
+					ARRAY_AGG(DISTINCT COALESCE(tb_projeto.ft_nome_projeto, ''))
 			    ),
 			    ARRAY_AGG(DISTINCT COALESCE(tb_projeto.ft_identificador_projeto_externo, ''))
 			)
@@ -77,7 +77,7 @@ SELECT
 	COALESCE(SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2), 'Sem informação')::TEXT AS localidade,
 	COALESCE(ed_uf.eduf_nm_uf, 'Sem informação')::TEXT AS nome_localidade,
 	'estado' AS tipo_localidade,
-	COUNT(tb_osc) AS nr_quantidade_oscs,
+	COUNT(DISTINCT tb_osc.id_osc) AS nr_quantidade_oscs,
 	COALESCE(SUM(
 		COALESCE(tb_relacoes_trabalho.nr_trabalhadores_vinculo, 0) + 
 		COALESCE(tb_relacoes_trabalho.nr_trabalhadores_deficiencia, 0) + 
@@ -94,29 +94,29 @@ SELECT
 		    SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
 			ARRAY_CAT(
 			    ARRAY_CAT(
-				ARRAY_CAT(
-				    ARRAY_CAT(
 					ARRAY_CAT(
-					    ARRAY_CAT(
 						ARRAY_CAT(
-						    ARRAY_CAT(
 							ARRAY_CAT(
-							    ARRAY_AGG(DISTINCT COALESCE(tb_osc.ft_osc_ativa, '')),
-							    ARRAY_AGG(DISTINCT COALESCE(tb_localizacao.ft_municipio, ''))
+								ARRAY_CAT(
+								ARRAY_CAT(
+									ARRAY_CAT(
+										ARRAY_CAT(
+											ARRAY_AGG(DISTINCT COALESCE(tb_osc.ft_osc_ativa, '')),
+											ARRAY_AGG(DISTINCT COALESCE(tb_localizacao.ft_municipio, ''))
+										),
+										ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho.ft_trabalhadores_vinculo, ''))
+									),
+									ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho.ft_trabalhadores_deficiencia, ''))
+								),
+								ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho.ft_trabalhadores_voluntarios, ''))
+								),
+								ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho_outra.ft_trabalhadores, ''))
 							),
-							ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho.ft_trabalhadores_vinculo, ''))
-						    ),
-						    ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho.ft_trabalhadores_deficiencia, ''))
+							ARRAY_AGG(DISTINCT COALESCE(tb_recursos_osc.ft_valor_recursos_osc, ''))
 						),
-						ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho.ft_trabalhadores_voluntarios, ''))
-					    ),
-					    ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho_outra.ft_trabalhadores, ''))
+						ARRAY_AGG(DISTINCT COALESCE(tb_recursos_outro_osc.ft_valor_recursos_outro_osc, ''))
 					),
-					ARRAY_AGG(DISTINCT COALESCE(tb_recursos_osc.ft_valor_recursos_osc, ''))
-				    ),
-				    ARRAY_AGG(DISTINCT COALESCE(tb_recursos_outro_osc.ft_valor_recursos_outro_osc, ''))
-				),
-				ARRAY_AGG(DISTINCT COALESCE(tb_projeto.ft_nome_projeto, ''))
+					ARRAY_AGG(DISTINCT COALESCE(tb_projeto.ft_nome_projeto, ''))
 			    ),
 			    ARRAY_AGG(DISTINCT COALESCE(tb_projeto.ft_identificador_projeto_externo, ''))
 			)
@@ -145,11 +145,11 @@ GROUP BY localidade, nome_localidade
 
 UNION
 
-SELECT 
+SELECT
 	COALESCE(tb_localizacao.cd_municipio::TEXT, 'Sem informação')::TEXT AS localidade,
 	COALESCE(ed_municipio.edmu_nm_municipio || ' - ' || ed_uf.eduf_sg_uf, 'Sem informação')::TEXT AS nome_localidade,
 	'municipio' AS tipo_localidade,
-	COUNT(tb_osc) AS nr_quantidade_oscs,
+	COUNT(DISTINCT tb_osc.id_osc) AS nr_quantidade_oscs,
 	COALESCE(SUM(
 		COALESCE(tb_relacoes_trabalho.nr_trabalhadores_vinculo, 0) + 
 		COALESCE(tb_relacoes_trabalho.nr_trabalhadores_deficiencia, 0) + 
@@ -166,29 +166,29 @@ SELECT
 		    SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
 			ARRAY_CAT(
 			    ARRAY_CAT(
-				ARRAY_CAT(
-				    ARRAY_CAT(
 					ARRAY_CAT(
-					    ARRAY_CAT(
 						ARRAY_CAT(
-						    ARRAY_CAT(
 							ARRAY_CAT(
-							    ARRAY_AGG(DISTINCT COALESCE(tb_osc.ft_osc_ativa, '')),
-							    ARRAY_AGG(DISTINCT COALESCE(tb_localizacao.ft_municipio, ''))
+								ARRAY_CAT(
+									ARRAY_CAT(
+										ARRAY_CAT(
+										ARRAY_CAT(
+											ARRAY_AGG(DISTINCT COALESCE(tb_osc.ft_osc_ativa, '')),
+											ARRAY_AGG(DISTINCT COALESCE(tb_localizacao.ft_municipio, ''))
+										),
+										ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho.ft_trabalhadores_vinculo, ''))
+										),
+										ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho.ft_trabalhadores_deficiencia, ''))
+									),
+									ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho.ft_trabalhadores_voluntarios, ''))
+								),
+								ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho_outra.ft_trabalhadores, ''))
 							),
-							ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho.ft_trabalhadores_vinculo, ''))
-						    ),
-						    ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho.ft_trabalhadores_deficiencia, ''))
+							ARRAY_AGG(DISTINCT COALESCE(tb_recursos_osc.ft_valor_recursos_osc, ''))
 						),
-						ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho.ft_trabalhadores_voluntarios, ''))
-					    ),
-					    ARRAY_AGG(DISTINCT COALESCE(tb_relacoes_trabalho_outra.ft_trabalhadores, ''))
+						ARRAY_AGG(DISTINCT COALESCE(tb_recursos_outro_osc.ft_valor_recursos_outro_osc, ''))
 					),
-					ARRAY_AGG(DISTINCT COALESCE(tb_recursos_osc.ft_valor_recursos_osc, ''))
-				    ),
-				    ARRAY_AGG(DISTINCT COALESCE(tb_recursos_outro_osc.ft_valor_recursos_outro_osc, ''))
-				),
-				ARRAY_AGG(DISTINCT COALESCE(tb_projeto.ft_nome_projeto, ''))
+					ARRAY_AGG(DISTINCT COALESCE(tb_projeto.ft_nome_projeto, ''))
 			    ),
 			    ARRAY_AGG(DISTINCT COALESCE(tb_projeto.ft_identificador_projeto_externo, ''))
 			)
