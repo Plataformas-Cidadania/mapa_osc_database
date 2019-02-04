@@ -4,7 +4,7 @@ CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_repasse_recursos AS
 (
 	SELECT 
 		SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1) AS localidade,
-		COALESCE(dc_fonte_recursos_osc.tx_nome_fonte_recursos_osc::TEXT, 'Sem informação') AS fonte_recursos,
+		COALESCE(dc_origem_fonte_recursos_osc.tx_nome_origem_fonte_recursos_osc::TEXT, 'Sem informação') AS fonte_recursos,
 		DATE_PART('year', tb_recursos_osc.dt_ano_recursos_osc)::TEXT AS ano,
 		SUM(COALESCE(tb_recursos_osc.nr_valor_recursos_osc, 0)) AS valor_recursos,
 		REPLACE(('{' || TRIM(TRANSLATE(
@@ -32,6 +32,8 @@ CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_repasse_recursos AS
 	ON tb_osc.id_osc = tb_recursos_osc.id_osc
 	LEFT JOIN syst.dc_fonte_recursos_osc
 	ON tb_recursos_osc.cd_fonte_recursos_osc = dc_fonte_recursos_osc.cd_fonte_recursos_osc
+	LEFT JOIN syst.dc_origem_fonte_recursos_osc
+	ON dc_fonte_recursos_osc.cd_origem_fonte_recursos_osc = dc_origem_fonte_recursos_osc.cd_origem_fonte_recursos_osc
 	LEFT JOIN osc.tb_localizacao
 	ON tb_osc.id_osc = tb_localizacao.id_osc
 	WHERE tb_osc.bo_osc_ativa
@@ -82,7 +84,7 @@ UNION
 (
 	SELECT 
 		SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2) AS localidade,
-		COALESCE(dc_fonte_recursos_osc.tx_nome_fonte_recursos_osc::TEXT, 'Sem informação') AS fonte_recursos,
+		COALESCE(dc_origem_fonte_recursos_osc.tx_nome_origem_fonte_recursos_osc::TEXT, 'Sem informação') AS fonte_recursos,
 		DATE_PART('year', tb_recursos_osc.dt_ano_recursos_osc)::TEXT AS ano,
 		SUM(COALESCE(tb_recursos_osc.nr_valor_recursos_osc, 0)) AS valor_recursos,
 		REPLACE(('{' || TRIM(TRANSLATE(
@@ -110,6 +112,8 @@ UNION
 	ON tb_osc.id_osc = tb_recursos_osc.id_osc
 	LEFT JOIN syst.dc_fonte_recursos_osc
 	ON tb_recursos_osc.cd_fonte_recursos_osc = dc_fonte_recursos_osc.cd_fonte_recursos_osc
+	LEFT JOIN syst.dc_origem_fonte_recursos_osc
+	ON dc_fonte_recursos_osc.cd_origem_fonte_recursos_osc = dc_origem_fonte_recursos_osc.cd_origem_fonte_recursos_osc
 	LEFT JOIN osc.tb_localizacao
 	ON tb_osc.id_osc = tb_localizacao.id_osc
 	WHERE tb_osc.bo_osc_ativa
@@ -160,7 +164,7 @@ UNION
 (
 	SELECT 
 		tb_localizacao.cd_municipio::TEXT AS localidade,
-		COALESCE(dc_fonte_recursos_osc.tx_nome_fonte_recursos_osc::TEXT, 'Sem informação') AS fonte_recursos,
+		COALESCE(dc_origem_fonte_recursos_osc.tx_nome_origem_fonte_recursos_osc::TEXT, 'Sem informação') AS fonte_recursos,
 		DATE_PART('year', tb_recursos_osc.dt_ano_recursos_osc)::TEXT AS ano,
 		SUM(COALESCE(tb_recursos_osc.nr_valor_recursos_osc, 0)) AS valor_recursos,
 		REPLACE(('{' || TRIM(TRANSLATE(
@@ -188,6 +192,8 @@ UNION
 	ON tb_osc.id_osc = tb_recursos_osc.id_osc
 	LEFT JOIN syst.dc_fonte_recursos_osc
 	ON tb_recursos_osc.cd_fonte_recursos_osc = dc_fonte_recursos_osc.cd_fonte_recursos_osc
+	LEFT JOIN syst.dc_origem_fonte_recursos_osc
+	ON dc_fonte_recursos_osc.cd_origem_fonte_recursos_osc = dc_origem_fonte_recursos_osc.cd_origem_fonte_recursos_osc
 	LEFT JOIN osc.tb_localizacao
 	ON tb_osc.id_osc = tb_localizacao.id_osc
 	WHERE tb_osc.bo_osc_ativa
