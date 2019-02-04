@@ -302,6 +302,7 @@ BEGIN
 								) AS values
 							FROM analysis.vw_perfil_localidade_repasse_recursos AS a
 							WHERE localidade = id_localidade::TEXT
+							AND fonte_recursos IS NOT NULL
 							GROUP BY fonte_recursos
 						) AS b
 					) AS series_1,
