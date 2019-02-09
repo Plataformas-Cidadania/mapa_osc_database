@@ -31,7 +31,7 @@ BEGIN
 	END LOOP;
 	
 	EXECUTE '
-		SELECT row_to_json(a)
+		SELECT to_json(array_agg(row_to_json(a)))
 		FROM (
 			SELECT
 				a.id_osc AS id_osc,
