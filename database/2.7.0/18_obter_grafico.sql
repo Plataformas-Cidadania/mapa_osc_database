@@ -1,81 +1,53 @@
-DROP FUNCTION IF EXISTS portal.obter_exportacao_busca(INTEGER[], INTEGER[]);
+DROP FUNCTION IF EXISTS portal.obter_grafico(TEXT);
 
-CREATE OR REPLACE FUNCTION portal.obter_exportacao_busca(lista_osc INTEGER[], variaveis_adicionais INTEGER[]) RETURNS TABLE (
+CREATE OR REPLACE FUNCTION portal.obter_grafico(param TEXT) RETURNS TABLE (
 	resultado JSONB, 
 	mensagem TEXT, 
 	codigo INTEGER
 ) AS $$ 
 
-DECLARE
-	indice INTEGER;
-	apelido TEXT;
-	colunas_adicionais TEXT;
+DECLARE 
+	linha RECORD;
 
-BEGIN
-	colunas_adicionais := '';
+BEGIN 
+	SELECT INTO linha 
+		tb_analise.configuracao, 
+		tb_tipo_grafico.nome_tipo_grafico AS tipo_grafico, 
+		tb_analise.titulo, 
+		tb_analise.legenda, 
+		tb_analise.titulo_colunas, 
+		tb_analise.legenda_x, 
+		tb_analise.legenda_y, 
+		tb_analise.series_1, 
+		tb_analise.series_2, 
+		tb_analise.fontes, 
+		tb_analise.inverter_label, 
+		tb_analise.slug
+	FROM 
+		portal.tb_analise 
+	INNER JOIN 
+		syst.tb_tipo_grafico 
+	ON 
+		tb_analise.tipo_grafico = tb_tipo_grafico.id_grafico  
+	WHERE 
+		tb_analise.id_analise = param::INTEGER 
+	AND tb_analise.ativo;
 
-	FOREACH indice IN ARRAY variaveis_adicionais
-	LOOP
-		SELECT INTO apelido
-			regexp_replace(reverse(split_part(reverse(tx_nome_indice), ' - ', 1)), '^[0-9]*', '')
-		FROM ipeadata.tb_indice
-		WHERE cd_indice = indice;
-
-		IF apelido IS NOT null THEN
-			colunas_adicionais := colunas_adicionais || ', (
-				SELECT nr_valor AS ' || apelido || '
-				FROM ipeadata.tb_ipeadata
-				WHERE cd_indice = ' || indice::TEXT || '
-			)';
-		END IF;
-	END LOOP;
-	
-	EXECUTE '
-		SELECT row_to_json(a)
-		FROM (
-			SELECT
-				a.id_osc AS id_osc,
-				a.tx_razao_social_osc AS tx_razao_social,
-				b.tx_nome_natureza_juridica AS tx_natureza_juridica,
-				c.tx_nome_classe_atividade_economica AS tx_classe_atividade_economica,
-				d.edmu_nm_municipio AS tx_municipio,
-				d.eduf_nm_uf AS tx_estado
-				' || colunas_adicionais || '
-			FROM osc.tb_dados_gerais AS a
-			LEFT JOIN syst.dc_natureza_juridica AS b
-			ON a.cd_natureza_juridica_osc = b.cd_natureza_juridica
-			LEFT JOIN syst.dc_classe_atividade_economica AS c
-			ON a.cd_classe_atividade_economica_osc = c.cd_classe_atividade_economica
-			LEFT JOIN (
-				osc.tb_localizacao AS a
-				INNER JOIN spat.ed_municipio AS b
-				ON a.cd_municipio = b.edmu_cd_municipio
-				INNER JOIN spat.ed_uf AS c
-				ON b.eduf_cd_uf = c.eduf_cd_uf
-			) AS d
-			ON a.id_osc = d.id_osc
-			WHERE a.id_osc = ANY($1)
-		) AS a
-	'
-	INTO resultado
-	USING lista_osc;
-
-	IF resultado IS NOT null THEN
+	IF linha != (null::TEXT[], null::INTEGER, null::TEXT, null::TEXT, null::TEXT[], null::TEXT, null::TEXT, null::JSONB, null::JSONB, null::TEXT[], null::BOOLEAN, null::TEXT)::RECORD THEN 
+		resultado := to_jsonb(linha);
 		codigo := 200;
-		mensagem := 'OSCs retornadas.';
-	ELSE
+		mensagem := 'Dados de gráfico retornado.';
+	ELSE 
 		codigo := 404;
-		mensagem := 'OSCs não encontrada.';
+		mensagem := 'Gráfico não encontrada.';
 	END IF;
 
 	RETURN NEXT;
 	
 EXCEPTION
-	WHEN others THEN
+	WHEN others THEN 
 		codigo := 400;
 		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, null, null, null, false, null) AS a;
 		RETURN NEXT;
 END;
 $$ LANGUAGE 'plpgsql';
-
-SELECT * FROM portal.obter_exportacao_busca('{1221321, 987654}'::INTEGER[], '{1, 8}'::INTEGER[]);
