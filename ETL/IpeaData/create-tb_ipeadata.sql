@@ -7,6 +7,7 @@ CREATE TABLE ipeadata.tb_indice
 (
 cd_indice serial NOT NULL, -- Código do Indice do IPEAData
 tx_nome_indice text NOT NULL, -- Nome do Indice do IPEAData
+tx_sigla text NOT NULL, -- Sigla do Indice do IPEAData
 CONSTRAINT pk_dc_indice PRIMARY KEY (cd_indice) -- Chave primária do Indice do IPEAData (dicionário)
 );
 
@@ -14,6 +15,7 @@ COMMENT ON TABLE ipeadata.tb_indice IS 'Tabela dos indices do IpeaData';
 
 COMMENT ON COLUMN ipeadata.tb_indice.cd_indice IS 'Código do indice do IpeaData no MapaOSC';
 COMMENT ON COLUMN ipeadata.tb_indice.tx_nome_indice IS 'Nome do Indice do IPEAData';
+COMMENT ON COLUMN ipeadata.tb_indice.tx_sigla IS 'Sigla do Indice do IPEAData';
 
 COMMENT ON CONSTRAINT pk_dc_indice ON ipeadata.tb_indice IS 'Chave primária da tabela de dicionário de indices';
 -- -- --
