@@ -74,7 +74,7 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>114</xloc>
+      <xloc>82</xloc>
       <yloc>177</yloc>
       </entry>
     <entry>
@@ -84,8 +84,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>824</xloc>
-      <yloc>177</yloc>
+      <xloc>924</xloc>
+      <yloc>176</yloc>
       </entry>
     <entry>
       <name>Transf IPEAData</name>
@@ -117,14 +117,14 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>537</xloc>
-      <yloc>178</yloc>
+      <xloc>575</xloc>
+      <yloc>177</yloc>
       </entry>
     <entry>
       <name>SQL</name>
       <description/>
       <type>SQL</type>
-      <sql>DO&#xa;&#x24;do&#x24;&#xa;&#xa;BEGIN&#xa;	IF NOT EXISTS &#x28;select &#x2a; from INFORMATION_SCHEMA.SCHEMATA where SCHEMA_NAME &#x3d; &#x27;ipeadata&#x27;&#x29; THEN &#xa;		CREATE SCHEMA ipeadata&#x3b;&#xa;	END IF&#x3b;&#xa;END&#xa;&#xa;&#x24;do&#x24;</sql>
+      <sql>UPDATE ipeadata.tb_indice &#xa;SET tx_tema &#x3d; &#x27;Qualidade de vida e bem-estar&#x27;&#xa;WHERE tx_sigla &#x3d; &#x27;T_MULCHEFEFIF014&#x27; &#x3b;&#xa;&#xa;UPDATE ipeadata.tb_indice &#xa;SET tx_tema &#x3d; &#x27;Outros&#x27;&#xa;WHERE tx_sigla ilike &#x27;PESO&#x25;&#x27; &#x3b;</sql>
       <useVariableSubstitution>F</useVariableSubstitution>
       <sqlfromfile>T</sqlfromfile>
       <sqlfilename>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;create-tb_ipeadata.sql</sqlfilename>
@@ -133,7 +133,7 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>305</xloc>
+      <xloc>273</xloc>
       <yloc>179</yloc>
       </entry>
     <entry>
@@ -168,7 +168,7 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>211</xloc>
+      <xloc>179</xloc>
       <yloc>177</yloc>
       </entry>
     <entry>
@@ -201,7 +201,7 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>416</xloc>
+      <xloc>384</xloc>
       <yloc>178</yloc>
       </entry>
     <entry>
@@ -234,8 +234,57 @@
       </parameters>      <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>672</xloc>
-      <yloc>180</yloc>
+      <xloc>710</xloc>
+      <yloc>179</yloc>
+      </entry>
+    <entry>
+      <name>Transf_Homic</name>
+      <description/>
+      <type>TRANS</type>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;Transf_Homic.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <parameters>        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>823</xloc>
+      <yloc>181</yloc>
+      </entry>
+    <entry>
+      <name>SQL 2</name>
+      <description/>
+      <type>SQL</type>
+      <sql>UPDATE ipeadata.tb_indice &#xa;SET tx_tema &#x3d; &#x27;Qualidade de vida e bem-estar&#x27;&#xa;WHERE tx_sigla &#x3d; &#x27;T_MULCHEFEFIF014&#x27; &#x3b;&#xa;&#xa;UPDATE ipeadata.tb_indice &#xa;SET tx_tema &#x3d; &#x27;Outros&#x27;&#xa;WHERE tx_sigla ilike &#x27;PESO&#x25;&#x27; &#x3b;</sql>
+      <useVariableSubstitution>F</useVariableSubstitution>
+      <sqlfromfile>F</sqlfromfile>
+      <sqlfilename>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;create-tb_ipeadata.sql</sqlfilename>
+      <sendOneStatement>F</sendOneStatement>
+      <connection>banco</connection>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>473</xloc>
+      <yloc>179</yloc>
       </entry>
   </entries>
   <hops>
@@ -267,15 +316,6 @@
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>Transf Indice</from>
-      <to>Transf IPEAData</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
-    </hop>
-    <hop>
       <from>Transf IPEAData</from>
       <to>Transf IPEAData 2</to>
       <from_nr>0</from_nr>
@@ -286,7 +326,34 @@
     </hop>
     <hop>
       <from>Transf IPEAData 2</from>
+      <to>Transf_Homic</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Transf_Homic</from>
       <to>Success</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>Transf Indice</from>
+      <to>SQL 2</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>Y</unconditional>
+    </hop>
+    <hop>
+      <from>SQL 2</from>
+      <to>Transf IPEAData</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
