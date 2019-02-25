@@ -133,8 +133,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>273</xloc>
-      <yloc>179</yloc>
+      <xloc>282</xloc>
+      <yloc>174</yloc>
       </entry>
     <entry>
       <name>Set variables</name>
@@ -274,7 +274,7 @@
       <name>SQL 2</name>
       <description/>
       <type>SQL</type>
-      <sql>UPDATE ipeadata.tb_indice &#xa;SET tx_tema &#x3d; &#x27;Qualidade de vida e bem-estar&#x27;&#xa;WHERE tx_sigla &#x3d; &#x27;T_MULCHEFEFIF014&#x27; &#x3b;&#xa;&#xa;UPDATE ipeadata.tb_indice &#xa;SET tx_tema &#x3d; &#x27;Outros&#x27;&#xa;WHERE tx_sigla ilike &#x27;PESO&#x25;&#x27; &#x3b;</sql>
+      <sql>UPDATE ipeadata.tb_indice &#xa;SET tx_tema &#x3d; &#x27;Qualidade&#x27;&#xa;WHERE tx_sigla &#x3d; &#x27;T_MULCHEFEFIF014&#x27; &#x3b;&#xa;&#xa;UPDATE ipeadata.tb_indice &#xa;SET tx_tema &#x3d; &#x27;Outros&#x27;&#xa;WHERE tx_sigla ilike &#x27;PESO&#x25;&#x27; &#x3b;</sql>
       <useVariableSubstitution>F</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename>&#x24;&#x7b;Internal.Job.Filename.Directory&#x7d;&#x2f;create-tb_ipeadata.sql</sqlfilename>

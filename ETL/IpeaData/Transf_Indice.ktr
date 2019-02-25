@@ -610,7 +610,7 @@
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>IDHm</replace_string>
-        <replace_by_string>Qualidade de vida e bem-estar</replace_by_string>
+        <replace_by_string>Qualidade</replace_by_string>
         <set_empty_string>N</set_empty_string>
         <replace_field_by_string/>
         <whole_word>no</whole_word>
@@ -643,7 +643,7 @@
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>Demografia</replace_string>
-        <replace_by_string>Qualidade de vida e bem-estar</replace_by_string>
+        <replace_by_string>Qualidade</replace_by_string>
         <set_empty_string>N</set_empty_string>
         <replace_field_by_string/>
         <whole_word>no</whole_word>
@@ -654,7 +654,7 @@
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>Saude</replace_string>
-        <replace_by_string>Qualidade de vida e bem-estar</replace_by_string>
+        <replace_by_string>Qualidade</replace_by_string>
         <set_empty_string>N</set_empty_string>
         <replace_field_by_string/>
         <whole_word>no</whole_word>
@@ -665,7 +665,7 @@
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>Habitacao</replace_string>
-        <replace_by_string>Qualidade de vida e bem-estar</replace_by_string>
+        <replace_by_string>Qualidade</replace_by_string>
         <set_empty_string>N</set_empty_string>
         <replace_field_by_string/>
         <whole_word>no</whole_word>
