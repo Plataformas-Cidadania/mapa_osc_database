@@ -27,51 +27,49 @@ BEGIN
 	
 	/* BUSCA POR SIMILARIDADE */
 	IF tipo_busca = 0 THEN 
-		query_where := 'similarity(vw_busca_osc.cd_identificador_osc::TEXT, ''' || param_cnpj || ''') > 0.45 
+		query_where := 'SIMILARITY(tb_osc.cd_identificador_osc::TEXT, ''' || param_cnpj || ''') > 0.45 
 						OR 
 						(
 							document @@ to_tsquery(''portuguese_unaccent'', ''' || param_tsquery || ''') 
 							AND 
 							(
-								similarity(vw_busca_osc.tx_razao_social_osc::TEXT, ''' || param_normal || ''') > 0.05 
+								SIMILARITY(UNACCENT(tb_dados_gerais.tx_razao_social_osc), ''' || param_normal || ''') > 0.05 
 								OR 
-								similarity(vw_busca_osc.tx_nome_fantasia_osc::TEXT, ''' || param_normal || ''') > 0.05 
+								SIMILARITY(UNACCENT(tb_dados_gerais.tx_nome_fantasia_osc), ''' || param_normal || ''') > 0.05 
 							)
 						) '; 
 	/* BUSCA IDÊNTICA */
 	ELSIF tipo_busca = 1 THEN 
-		query_where := 'vw_busca_osc.cd_identificador_osc::TEXT = ''' || param_cnpj || ''' 
+		query_where := 'tb_osc.cd_identificador_osc::TEXT = ''' || param_cnpj || ''' 
 						OR 
 						(
-							LOWER(UNACCENT(vw_busca_osc.tx_razao_social_osc::TEXT)) = ''' || param_normal || '''
+							LOWER(UNACCENT(tb_dados_gerais.tx_razao_social_osc)) = ''' || param_normal || '''
 							OR 
-							LOWER(UNACCENT(vw_busca_osc.tx_nome_fantasia_osc::TEXT)) = ''' || param_normal || '''
+							LOWER(UNACCENT(tb_dados_gerais.tx_nome_fantasia_osc)) = ''' || param_normal || '''
 						) '; 
 	/* BUSCA PARA AUTOCOMPLETE */
 	ELSIF tipo_busca = 2 THEN 
-		query_where := 'vw_busca_osc.cd_identificador_osc::TEXT ILIKE ''' || param_cnpj || ''' || ''%'' 
+		query_where := 'tb_osc.cd_identificador_osc::TEXT ILIKE ''' || param_cnpj || ''' || ''%'' 
 						OR 
 						(
-							LOWER(vw_busca_osc.tx_razao_social_osc::TEXT) ILIKE ''' || param_normal || '%'' 
+							LOWER(UNACCENT(tb_dados_gerais.tx_razao_social_osc)) ILIKE ''' || param_normal || '%'' 
 							OR 
-							LOWER(vw_busca_osc.tx_nome_fantasia_osc::TEXT) ILIKE ''' || param_normal || '%''
+							LOWER(UNACCENT(tb_dados_gerais.tx_nome_fantasia_osc)) ILIKE ''' || param_normal || '%''
 						) '; 
 	ELSE 
 		RETURN; 
 		
 	END IF; 
 	
-	RETURN QUERY 
-		EXECUTE 
-			'SELECT vw_busca_osc.id_osc 
-			FROM osc.vw_busca_osc 
-			WHERE ' || query_where || '
-			ORDER BY GREATEST(
-				similarity(vw_busca_osc.cd_identificador_osc::TEXT, ''' || param_cnpj || '''), 
-				similarity(vw_busca_osc.tx_razao_social_osc::TEXT, ''' || param_normal || '''), 
-				similarity(vw_busca_osc.tx_nome_fantasia_osc::TEXT, ''' || param_normal || ''')
-			) DESC, vw_busca_osc.tx_nome_osc ASC ' || query_limit; 
+	RETURN QUERY EXECUTE
+		'SELECT tb_osc.id_osc
+		FROM osc.tb_osc
+		LEFT JOIN osc.tb_dados_gerais
+		ON tb_osc.id_osc = tb_dados_gerais.id_osc
+		ORDER BY GREATEST(
+			similarity(tb_osc.cd_identificador_osc::TEXT, ''' || param_cnpj || '''), 
+			similarity(tb_dados_gerais.tx_razao_social_osc, ''' || param_normal || '''), 
+			similarity(tb_dados_gerais.tx_nome_fantasia_osc, ''' || param_normal || ''')
+		) DESC, COALESCE(tb_dados_gerais.tx_nome_fantasia_osc, tb_dados_gerais.tx_razao_social_osc) ASC ' || query_limit;
 END; 
 $$ LANGUAGE 'plpgsql';
-
-SELECT * FROM portal.buscar_osc('fundacao_abh'::TEXT, '10'::INTEGER, '0'::INTEGER, '1'::INTEGER);
