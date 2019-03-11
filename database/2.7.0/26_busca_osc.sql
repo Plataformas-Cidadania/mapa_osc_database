@@ -40,7 +40,7 @@ BEGIN
 						) '; 
 	/* BUSCA IDÊNTICA */
 	ELSIF tipo_busca = 1 THEN 
-		query_where := 'tb_osc.cd_identificador_osc::TEXT = ''' || param_cnpj || ''' 
+		query_where := 'vw_busca_osc.cd_identificador_osc::TEXT = ''' || param_cnpj || ''' 
 						OR 
 						(
 							LOWER(UNACCENT(vw_busca_osc.tx_razao_social_osc)) = ''' || param_normal || '''
@@ -49,7 +49,7 @@ BEGIN
 						) '; 
 	/* BUSCA PARA AUTOCOMPLETE */
 	ELSIF tipo_busca = 2 THEN 
-		query_where := 'tb_osc.cd_identificador_osc::TEXT ILIKE ''' || param_cnpj || ''' || ''%'' 
+		query_where := 'vw_busca_osc.cd_identificador_osc::TEXT ILIKE ''' || param_cnpj || ''' || ''%'' 
 						OR 
 						(
 							LOWER(UNACCENT(vw_busca_osc.tx_razao_social_osc)) ILIKE ''' || param_normal || '%'' 
