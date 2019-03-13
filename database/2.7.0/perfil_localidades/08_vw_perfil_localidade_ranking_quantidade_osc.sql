@@ -3,8 +3,8 @@ CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_ranking_quantidade_osc AS
 
 SELECT
 	localidade,
-	quantidade_oscs,
-	RANK() over (ORDER BY quantidade_oscs DESC) as rank,
+	nr_quantidade_osc,
+	RANK() over (ORDER BY nr_quantidade_osc DESC) as rank,
 	'regiao' AS tipo_rank
 FROM analysis.vw_perfil_localidade_caracteristicas
 WHERE (
@@ -18,8 +18,8 @@ UNION
 
 SELECT
 	localidade,
-	quantidade_oscs,
-	RANK() over (ORDER BY quantidade_oscs DESC) as rank,
+	nr_quantidade_osc,
+	RANK() over (ORDER BY nr_quantidade_osc DESC) as rank,
 	'estado' AS tipo_rank
 FROM analysis.vw_perfil_localidade_caracteristicas
 WHERE (
@@ -33,8 +33,8 @@ UNION
 
 SELECT
 	localidade,
-	quantidade_oscs,
-	RANK() over (ORDER BY quantidade_oscs DESC) as rank,
+	nr_quantidade_osc,
+	RANK() over (ORDER BY nr_quantidade_osc DESC) as rank,
 	'municipio' AS tipo_rank
 FROM analysis.vw_perfil_localidade_caracteristicas
 WHERE (

@@ -50,22 +50,14 @@ BEGIN
 			row_to_json(a) AS caracteristicas
 		FROM (
 			SELECT
-				quantidade_oscs AS nr_quantidade_oscs,
-				quantidade_trabalhadores AS nr_quantidade_trabalhadores,
-				quantidade_recursos AS nr_quantidade_recursos,
-				quantidade_projetos AS nr_quantidade_projetos,
-				(
-					SELECT ARRAY_AGG(b.fontes)
-					FROM (
-						SELECT 
-							DISTINCT UNNEST(a.fontes) AS fontes
-						FROM (
-							SELECT a.fontes
-							FROM analysis.vw_perfil_localidade_caracteristicas AS a
-							WHERE a.localidade = id_localidade::TEXT
-						) AS a
-					) AS b
-				) AS fontes
+				nr_quantidade_osc,
+				ft_quantidade_osc,
+				nr_quantidade_trabalhadores,
+				ft_quantidade_trabalhadores
+				nr_quantidade_recursos,
+				ft_quantidade_recursos
+				nr_quantidade_projetos,
+				ft_quantidade_projetos
 			FROM analysis.vw_perfil_localidade_caracteristicas
 			WHERE localidade = id_localidade::TEXT
 		) AS a
@@ -77,7 +69,7 @@ BEGIN
 	-- ==================== Evolução Anual ==================== --
 	
 	SELECT INTO localidades_primeiro_colocado_quantidade_osc_municipio, valor_primeiro_colocado_quantidade_osc_municipio
-		ARRAY_AGG(b.nome_localidade), MAX(a.quantidade_oscs)
+		ARRAY_AGG(b.nome_localidade), MAX(a.nr_quantidade_osc)
 	FROM analysis.vw_perfil_localidade_ranking_quantidade_osc AS a
 	INNER JOIN analysis.vw_perfil_localidade_caracteristicas AS b
 	ON a.localidade = b.localidade
@@ -88,7 +80,7 @@ BEGIN
 	);
 	
 	SELECT INTO localidades_ultimo_colocado_quantidade_osc_municipio, valor_ultimo_colocado_quantidade_osc_municipio
-		ARRAY_AGG(b.nome_localidade), MAX(a.quantidade_oscs)
+		ARRAY_AGG(b.nome_localidade), MAX(a.nr_quantidade_osc)
 	FROM analysis.vw_perfil_localidade_ranking_quantidade_osc AS a
 	INNER JOIN analysis.vw_perfil_localidade_caracteristicas AS b
 	ON a.localidade = b.localidade
@@ -99,7 +91,7 @@ BEGIN
 	);
 
 	SELECT INTO localidades_primeiro_colocado_quantidade_osc_estado, valor_primeiro_colocado_quantidade_osc_estado
-		ARRAY_AGG(b.nome_localidade), MAX(a.quantidade_oscs)
+		ARRAY_AGG(b.nome_localidade), MAX(a.nr_quantidade_osc)
 	FROM analysis.vw_perfil_localidade_ranking_quantidade_osc AS a
 	INNER JOIN analysis.vw_perfil_localidade_caracteristicas AS b
 	ON a.localidade = b.localidade
@@ -110,7 +102,7 @@ BEGIN
 	);
 	
 	SELECT INTO localidades_ultimo_colocado_quantidade_osc_estado, valor_ultimo_colocado_quantidade_osc_estado
-		ARRAY_AGG(b.nome_localidade), MAX(a.quantidade_oscs)
+		ARRAY_AGG(b.nome_localidade), MAX(a.nr_quantidade_osc)
 	FROM analysis.vw_perfil_localidade_ranking_quantidade_osc AS a
 	INNER JOIN analysis.vw_perfil_localidade_caracteristicas AS b
 	ON a.localidade = b.localidade
@@ -454,7 +446,6 @@ BEGIN
 
 EXCEPTION
 	WHEN others THEN
-		RAISE NOTICE '%', SQLERRM;
 		codigo := 400;
 		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, null, null, null, false, null) AS a;
 		RETURN NEXT;
@@ -462,5 +453,3 @@ EXCEPTION
 END;
 
 $$ LANGUAGE 'plpgsql';
-
-SELECT * FROM analysis.obter_perfil_localidade(35);
