@@ -5,7 +5,7 @@ SELECT
 	COALESCE(SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1), 'Sem informação')::TEXT AS localidade,
 	COALESCE(ed_regiao.edre_nm_regiao, 'Sem informação')::TEXT AS nome_localidade,
 	'regiao' AS tipo_localidade,
-	COUNT(DISTINCT tb_osc.id_osc) AS nr_quantidade_osc,
+	COUNT(DISTINCT tb_osc.id_osc) AS quantidade_osc,
 	(
 		REPLACE(('{' || TRIM(TRANSLATE((
 			SELECT ARRAY_AGG(TRANSLATE(b::TEXT, '()', '')) FROM (
@@ -23,7 +23,7 @@ SELECT
 		COALESCE(tb_relacoes_trabalho.nr_trabalhadores_deficiencia, 0) + 
 		COALESCE(tb_relacoes_trabalho.nr_trabalhadores_voluntarios, 0) + 
 		COALESCE(tb_relacoes_trabalho_outra.nr_trabalhadores, 0)
-	), 0) AS nr_quantidade_trabalhadores,
+	), 0) AS quantidade_trabalhadores,
 	(
 		REPLACE(('{' || TRIM(TRANSLATE((
 			SELECT ARRAY_AGG(TRANSLATE(b::TEXT, '()', '')) FROM (
@@ -45,7 +45,7 @@ SELECT
 	COALESCE(SUM(
 		COALESCE(tb_recursos_osc.nr_valor_recursos_osc, 0) +
 		COALESCE(tb_recursos_outro_osc.nr_valor_recursos_outro_osc, 0)
-	), 0) AS nr_quantidade_recursos,
+	), 0) AS quantidade_recursos,
 	(
 		REPLACE(('{' || TRIM(TRANSLATE((
 			SELECT ARRAY_AGG(TRANSLATE(b::TEXT, '()', '')) FROM (
@@ -58,7 +58,7 @@ SELECT
 			) AS b
 		)::TEXT, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[]
 	) AS ft_quantidade_recursos,
-	COUNT(DISTINCT tb_projeto.id_projeto) AS nr_quantidade_projetos,
+	COUNT(DISTINCT tb_projeto.id_projeto) AS quantidade_projetos,
 	(
 		REPLACE(('{' || TRIM(TRANSLATE((
 			SELECT ARRAY_AGG(TRANSLATE(b::TEXT, '()', '')) FROM (
@@ -97,7 +97,7 @@ SELECT
 	COALESCE(SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2), 'Sem informação')::TEXT AS localidade,
 	COALESCE(ed_uf.eduf_nm_uf, 'Sem informação')::TEXT AS nome_localidade,
 	'estado' AS tipo_localidade,
-	COUNT(DISTINCT tb_osc.id_osc) AS nr_quantidade_oscs,
+	COUNT(DISTINCT tb_osc.id_osc) AS quantidade_oscs,
 	(
 		REPLACE(('{' || TRIM(TRANSLATE((
 			SELECT ARRAY_AGG(TRANSLATE(b::TEXT, '()', '')) FROM (
@@ -115,7 +115,7 @@ SELECT
 		COALESCE(tb_relacoes_trabalho.nr_trabalhadores_deficiencia, 0) + 
 		COALESCE(tb_relacoes_trabalho.nr_trabalhadores_voluntarios, 0) + 
 		COALESCE(tb_relacoes_trabalho_outra.nr_trabalhadores, 0)
-	), 0) AS nr_quantidade_trabalhadores,
+	), 0) AS quantidade_trabalhadores,
 	(
 		REPLACE(('{' || TRIM(TRANSLATE((
 			SELECT ARRAY_AGG(TRANSLATE(b::TEXT, '()', '')) FROM (
@@ -137,7 +137,7 @@ SELECT
 	COALESCE(SUM(
 		COALESCE(tb_recursos_osc.nr_valor_recursos_osc, 0) +
 		COALESCE(tb_recursos_outro_osc.nr_valor_recursos_outro_osc, 0)
-	), 0) AS nr_quantidade_recursos,
+	), 0) AS quantidade_recursos,
 	(
 		REPLACE(('{' || TRIM(TRANSLATE((
 			SELECT ARRAY_AGG(TRANSLATE(b::TEXT, '()', '')) FROM (
@@ -150,7 +150,7 @@ SELECT
 			) AS b
 		)::TEXT, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[]
 	) AS ft_quantidade_recursos,
-	COUNT(DISTINCT tb_projeto.id_projeto) AS nr_quantidade_projetos,
+	COUNT(DISTINCT tb_projeto.id_projeto) AS quantidade_projetos,
 	(
 		REPLACE(('{' || TRIM(TRANSLATE((
 			SELECT ARRAY_AGG(TRANSLATE(b::TEXT, '()', '')) FROM (
@@ -189,7 +189,7 @@ SELECT
 	COALESCE(tb_localizacao.cd_municipio::TEXT, 'Sem informação')::TEXT AS localidade,
 	COALESCE(ed_municipio.edmu_nm_municipio || ' - ' || ed_uf.eduf_sg_uf, 'Sem informação')::TEXT AS nome_localidade,
 	'municipio' AS tipo_localidade,
-	COUNT(DISTINCT tb_osc.id_osc) AS nr_quantidade_oscs,
+	COUNT(DISTINCT tb_osc.id_osc) AS quantidade_oscs,
 	(
 		REPLACE(('{' || TRIM(TRANSLATE((
 			SELECT ARRAY_AGG(TRANSLATE(b::TEXT, '()', '')) FROM (
@@ -207,7 +207,7 @@ SELECT
 		COALESCE(tb_relacoes_trabalho.nr_trabalhadores_deficiencia, 0) + 
 		COALESCE(tb_relacoes_trabalho.nr_trabalhadores_voluntarios, 0) + 
 		COALESCE(tb_relacoes_trabalho_outra.nr_trabalhadores, 0)
-	), 0) AS nr_quantidade_trabalhadores,
+	), 0) AS quantidade_trabalhadores,
 	(
 		REPLACE(('{' || TRIM(TRANSLATE((
 			SELECT ARRAY_AGG(TRANSLATE(b::TEXT, '()', '')) FROM (
@@ -229,7 +229,7 @@ SELECT
 	COALESCE(SUM(
 		COALESCE(tb_recursos_osc.nr_valor_recursos_osc, 0) +
 		COALESCE(tb_recursos_outro_osc.nr_valor_recursos_outro_osc, 0)
-	), 0) AS nr_quantidade_recursos,
+	), 0) AS quantidade_recursos,
 	(
 		REPLACE(('{' || TRIM(TRANSLATE((
 			SELECT ARRAY_AGG(TRANSLATE(b::TEXT, '()', '')) FROM (
@@ -242,7 +242,7 @@ SELECT
 			) AS b
 		)::TEXT, '"\{}', ''), ',') || '}'), ',,', ',')::TEXT[]
 	) AS ft_quantidade_recursos,
-	COUNT(DISTINCT tb_projeto.id_projeto) AS nr_quantidade_projetos,
+	COUNT(DISTINCT tb_projeto.id_projeto) AS quantidade_projetos,
 	(
 		REPLACE(('{' || TRIM(TRANSLATE((
 			SELECT ARRAY_AGG(TRANSLATE(b::TEXT, '()', '')) FROM (
