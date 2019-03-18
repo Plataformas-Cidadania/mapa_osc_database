@@ -396,7 +396,7 @@ BEGIN
 						SELECT json_agg(a)
 						FROM (
 							SELECT
-								'Trabalhadores com vínculos' AS label,
+								'Trabalhadores formais com vínculos' AS label,
 								vinculos AS value
 							FROM analysis.vw_perfil_localidade_trabalhadores
 							WHERE localidade = id_localidade::TEXT
