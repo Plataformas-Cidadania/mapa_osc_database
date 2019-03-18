@@ -53,9 +53,9 @@ BEGIN
 				nr_quantidade_osc,
 				ft_quantidade_osc,
 				nr_quantidade_trabalhadores,
-				ft_quantidade_trabalhadores
+				ft_quantidade_trabalhadores,
 				nr_quantidade_recursos,
-				ft_quantidade_recursos
+				ft_quantidade_recursos,
 				nr_quantidade_projetos,
 				ft_quantidade_projetos
 			FROM analysis.vw_perfil_localidade_caracteristicas
