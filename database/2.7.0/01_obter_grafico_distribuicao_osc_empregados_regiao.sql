@@ -41,7 +41,7 @@ BEGIN
 									FROM (
 										SELECT DISTINCT UNNEST(
 											ARRAY_CAT(
-												ARRAY_AGG(DISTINCT TRIM(tb_relacoes_trabalho.ft_trabalhadores_vinculo)) FILTER (WHERE (TRIM(tb_relacoes_trabalho.ft_trabalhadores_vinculo) = '') IS false), 
+												ARRAY_AGG(DISTINCT TRIM(tb_relacoes_trabalho.ft_trabalhadores_vinculo, '"{}')) FILTER (WHERE (TRIM(tb_relacoes_trabalho.ft_trabalhadores_vinculo) = '') IS false), 
 												ARRAY_AGG(DISTINCT TRIM(tb_osc.ft_identificador_osc, '"{}')) FILTER (WHERE (TRIM(tb_osc.ft_identificador_osc) = '') IS false)
 											)
 										)
@@ -163,7 +163,7 @@ BEGIN
 									FROM (
 										SELECT DISTINCT UNNEST(
 											ARRAY_CAT(
-												ARRAY_AGG(DISTINCT TRIM(tb_relacoes_trabalho.ft_trabalhadores_vinculo)) FILTER (WHERE (TRIM(tb_relacoes_trabalho.ft_trabalhadores_vinculo) = '') IS false), 
+												ARRAY_AGG(DISTINCT TRIM(tb_relacoes_trabalho.ft_trabalhadores_vinculo, '"{}')) FILTER (WHERE (TRIM(tb_relacoes_trabalho.ft_trabalhadores_vinculo) = '') IS false), 
 												ARRAY_AGG(DISTINCT TRIM(tb_osc.ft_identificador_osc, '"{}')) FILTER (WHERE (TRIM(tb_osc.ft_identificador_osc) = '') IS false)
 											)
 										)

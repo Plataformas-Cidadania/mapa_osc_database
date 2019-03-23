@@ -14,31 +14,26 @@ BEGIN
 	RETURN QUERY 
 		SELECT 
 			('[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG(b.dados)::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), ',,', ','), '{'), '}') || '}]')::JSONB AS dados, 
-			(
-				SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()\"', '')) FROM (SELECT DISTINCT UNNEST(
-					TRANSLATE(ARRAY_AGG(REPLACE(REPLACE(REPLACE(TRIM(TRIM(TRANSLATE(b.fontes::TEXT, '"\{}', ''), ' '), ','), '","', ','), ', ,', ','), ',,', ','))::TEXT, '"', '')::TEXT[]
-				)) AS a
-			) AS fontes  
+			('{' || REPLACE(TRIM(ARRAY_AGG(DISTINCT TRIM(b.fontes, '"{}')) FILTER (WHERE (TRIM(b.fontes) = '') IS false)::TEXT, '"{}'), ',"', ',') || '}')::TEXT[] AS fontes  
 		FROM (
 			SELECT 
 				ARRAY_AGG('{"label": "' || COALESCE(a.rotulo::TEXT, 'Outras organizações da sociedade civil') || '", "value": ' || a.valor::TEXT || '}')::TEXT AS dados, 
-				(
-					SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()\"', '')) FROM (SELECT DISTINCT UNNEST(
-						TRANSLATE(ARRAY_AGG(REPLACE(REPLACE(REPLACE(TRIM(TRIM(TRANSLATE(a.fontes::TEXT, '"\{}', ''), ' '), ','), '","', ','), ', ,', ','), ',,', ','))::TEXT, '"', '')::TEXT[]
-					)) AS a
-				) AS fontes 
+				TRIM(ARRAY_AGG(DISTINCT TRIM(a.fontes, '"{}')) FILTER (WHERE (TRIM(a.fontes) = '') IS false)::TEXT, '"{}') AS fontes
 			FROM (
 				SELECT 
 					COALESCE(dc_area_atuacao.tx_nome_area_atuacao, 'Sem informação') AS rotulo, 
 					COUNT(*) AS valor, 
-					(
-						SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
-							ARRAY_CAT(
-								ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_area_atuacao.ft_area_atuacao, ''), '${ETL}', '')), 
-								ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_osc.ft_identificador_osc, ''), '${ETL}', ''))
+					TRIM((
+						SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', ''))
+						FROM (
+							SELECT DISTINCT UNNEST(
+								ARRAY_CAT(
+									ARRAY_AGG(DISTINCT TRIM(tb_area_atuacao.ft_area_atuacao, '"{}')) FILTER (WHERE (TRIM(tb_area_atuacao.ft_area_atuacao) = '') IS false), 
+									ARRAY_AGG(DISTINCT TRIM(tb_osc.ft_identificador_osc, '"{}')) FILTER (WHERE (TRIM(tb_osc.ft_identificador_osc) = '') IS false)
+								)
 							)
-						)) AS a
-					) AS fontes 
+						) AS a
+					)::TEXT, '{}') AS fontes 
 				FROM osc.tb_osc 
 				LEFT JOIN osc.tb_area_atuacao 
 				ON tb_osc.id_osc = tb_area_atuacao.id_osc 
@@ -52,3 +47,5 @@ BEGIN
 END;
 
 $$ LANGUAGE 'plpgsql';
+
+SELECT * FROM portal.obter_grafico_oscs_area_atuacao() 

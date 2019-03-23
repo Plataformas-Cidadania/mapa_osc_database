@@ -33,11 +33,7 @@ BEGIN
 	RETURN QUERY 
 		SELECT 
 			('[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG('{"label": "' || a.rotulo::TEXT || '", "value": ' || a.valor::TEXT || '}')::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), ',,', ','), '{'), '}') || '}]')::JSONB AS dados, 
-			(
-				SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()\"', '')) FROM (SELECT DISTINCT UNNEST(
-					TRANSLATE(ARRAY_AGG(REPLACE(REPLACE(REPLACE(TRIM(TRIM(TRANSLATE(a.fontes::TEXT, '"\{}', ''), ' '), ','), '","', ','), ', ,', ','), ',,', ','))::TEXT, '"', '')::TEXT[]
-				)) AS a
-			) AS fontes 
+			('{' || TRIM(ARRAY_AGG(DISTINCT TRIM(a.fontes, '"{}')) FILTER (WHERE (TRIM(a.fontes) = '') IS false)::TEXT, '"{}') || '}')::TEXT[] AS fontes
 		FROM (
 			SELECT 
 				CASE 
@@ -45,15 +41,18 @@ BEGIN
 					WHEN tb_cnes.ds_tipo_unidade = ANY(tipos_mais_comuns) THEN tb_cnes.ds_tipo_unidade
 					ELSE 'Outros'
 				END AS rotulo, 
-				COUNT(*) AS valor, 
-				(
-					SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
-						ARRAY_CAT(
-							'{"MS/CNES"}'::TEXT[], 
-							ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_osc.ft_identificador_osc, ''), '${ETL}', ''))
+				COUNT(*) AS valor,
+				TRIM((
+					SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', ''))
+					FROM (
+						SELECT DISTINCT UNNEST(
+							ARRAY_CAT(
+								'{"MS/CNES"}'::TEXT[], 
+								ARRAY_AGG(DISTINCT TRIM(tb_osc.ft_identificador_osc, '"{}')) FILTER (WHERE (TRIM(tb_osc.ft_identificador_osc) = '') IS false)
+							)
 						)
-					)) AS a
-				) AS fontes 
+					) AS a
+				)::TEXT, '{}') AS fontes 
 			FROM osc.tb_osc 
 			INNER JOIN graph.tb_cnes 
 			ON tb_osc.cd_identificador_osc = TRANSLATE(tb_cnes.nu_cnpj_requerente, '-', '')::NUMERIC 

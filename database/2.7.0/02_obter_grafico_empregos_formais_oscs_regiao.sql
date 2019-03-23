@@ -9,26 +9,25 @@ BEGIN
 	RETURN QUERY 
 		SELECT 
 			('[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG('{"label": "' || a.rotulo::TEXT || '", "value": ' || a.valor::TEXT || '}')::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), ',,', ','), '{'), '}') || '}]')::JSONB AS dados, 
-			(
-				SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()\"', '')) FROM (SELECT DISTINCT UNNEST(
-					TRANSLATE(ARRAY_AGG(REPLACE(REPLACE(REPLACE(TRIM(TRIM(TRANSLATE(a.fontes::TEXT, '"\{}', ''), ' '), ','), '","', ','), ', ,', ','), ',,', ','))::TEXT, '"', '')::TEXT[]
-				)) AS a
-			) AS fontes 
+			('{' || REPLACE(TRIM(ARRAY_AGG(DISTINCT TRIM(a.fontes, '"{}')) FILTER (WHERE (TRIM(a.fontes) = '') IS false)::TEXT, '"{}'), ',"', ',') || '}')::TEXT[] AS fontes 
 		FROM (
 			SELECT 
 				COALESCE(ed_regiao.edre_nm_regiao, 'Sem informação') AS rotulo, 
 				COALESCE(SUM(tb_relacoes_trabalho.nr_trabalhadores_vinculo), 0) AS valor, 
-				(
-					SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
-						ARRAY_CAT(
+				TRIM((
+					SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', ''))
+					FROM (
+						SELECT DISTINCT UNNEST(
 							ARRAY_CAT(
-								ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_relacoes_trabalho.ft_trabalhadores_vinculo, ''), '${ETL}', '')), 
-								ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_localizacao.ft_municipio, ''), '${ETL}', ''))
-							),
-							ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_osc.ft_identificador_osc, ''), '${ETL}', ''))
+								ARRAY_CAT(
+									ARRAY_AGG(DISTINCT TRIM(tb_relacoes_trabalho.ft_trabalhadores_vinculo, '"{}')) FILTER (WHERE (TRIM(tb_relacoes_trabalho.ft_trabalhadores_vinculo) = '') IS false), 
+									ARRAY_AGG(DISTINCT TRIM(tb_localizacao.ft_municipio, '"{}')) FILTER (WHERE (TRIM(tb_localizacao.ft_municipio) = '') IS false)
+								),
+								ARRAY_AGG(DISTINCT TRIM(tb_osc.ft_identificador_osc, '"{}')) FILTER (WHERE (TRIM(tb_osc.ft_identificador_osc) = '') IS false)
+							)
 						)
-					)) AS a
-				) AS fontes 
+					) AS a
+				)::TEXT, '{}') AS fontes
 			FROM osc.tb_osc 
 			LEFT JOIN osc.tb_dados_gerais 
 			ON tb_osc.id_osc = tb_dados_gerais.id_osc 
