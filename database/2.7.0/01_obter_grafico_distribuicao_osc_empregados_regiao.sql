@@ -14,7 +14,7 @@ BEGIN
 					SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) 
 					FROM (
 						SELECT DISTINCT UNNEST( 
-							('{' || TRIM((REPLACE(ARRAY_AGG(b.fontes)::TEXT, '"', '')), ',{}') || '}')::TEXT[] 
+							('{' || TRIM(REPLACE(TRANSLATE(ARRAY_AGG(b.fontes)::TEXT, '"', ''), ',,', ','), ',{}') || '}')::TEXT[] 
 						)
 					) AS a
 				)::TEXT, '"', ''), ',,', ','), ',{}') || '}')::TEXT[] AS fontes
@@ -25,7 +25,7 @@ BEGIN
 						SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) 
 						FROM (
 							SELECT DISTINCT UNNEST( 
-								('{' || TRIM((REPLACE(ARRAY_AGG(a.fontes)::TEXT, '"', '')), ',{}') || '}')::TEXT[] 
+								('{' || TRIM(REPLACE(TRANSLATE(ARRAY_AGG(a.fontes)::TEXT, '"', ''), ',,', ','), ',{}') || '}')::TEXT[] 
 							)
 						) AS a
 					)::TEXT, '"', ''), ',,', ','), ',{}') AS fontes
@@ -38,7 +38,7 @@ BEGIN
 							SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) 
 							FROM (
 								SELECT DISTINCT UNNEST( 
-									('{' || TRIM((REPLACE(ARRAY_AGG(a.fontes)::TEXT, '"', '')), ',{}') || '}')::TEXT[] 
+									('{' || TRIM(REPLACE(TRANSLATE(ARRAY_AGG(a.fontes)::TEXT, '"', ''), ',,', ','), ',{}') || '}')::TEXT[] 
 								)
 							) AS a
 						)::TEXT, '"', ''), ',,', ','), ',{}') AS fontes
@@ -150,7 +150,7 @@ BEGIN
 					SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) 
 					FROM (
 						SELECT DISTINCT UNNEST( 
-							('{' || TRIM((REPLACE(ARRAY_AGG(b.fontes)::TEXT, '"', '')), ',{}') || '}')::TEXT[] 
+							('{' || TRIM(REPLACE(TRANSLATE(ARRAY_AGG(b.fontes)::TEXT, '"', ''), ',,', ','), ',{}') || '}')::TEXT[] 
 						)
 					) AS a
 				)::TEXT, '"', ''), ',,', ','), ',{}') || '}')::TEXT[] AS fontes
@@ -161,7 +161,7 @@ BEGIN
 						SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) 
 						FROM (
 							SELECT DISTINCT UNNEST( 
-								('{' || TRIM((REPLACE(ARRAY_AGG(a.fontes)::TEXT, '"', '')), ',{}') || '}')::TEXT[] 
+								('{' || TRIM(REPLACE(TRANSLATE(ARRAY_AGG(a.fontes)::TEXT, '"', ''), ',,', ','), ',{}') || '}')::TEXT[] 
 							)
 						) AS a
 					)::TEXT, '"', ''), ',,', ','), ',{}') AS fontes
@@ -174,7 +174,7 @@ BEGIN
 							SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) 
 							FROM (
 								SELECT DISTINCT UNNEST( 
-									('{' || TRIM((REPLACE(ARRAY_AGG(a.fontes)::TEXT, '"', '')), ',{}') || '}')::TEXT[] 
+									('{' || TRIM(REPLACE(TRANSLATE(ARRAY_AGG(a.fontes)::TEXT, '"', ''), ',,', ','), ',{}') || '}')::TEXT[] 
 								)
 							) AS a
 						)::TEXT, '"', ''), ',,', ','), ',{}') AS fontes
