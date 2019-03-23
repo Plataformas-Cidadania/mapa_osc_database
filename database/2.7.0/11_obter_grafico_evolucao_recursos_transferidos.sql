@@ -133,5 +133,3 @@ BEGIN
 END;
 
 $$ LANGUAGE 'plpgsql';
-
---SELECT * FROM portal.obter_grafico_evolucao_recursos_transferidos('[{"tipo_valor": "U$"}, {"tipo_valor": "R$"}]'::JSONB);
