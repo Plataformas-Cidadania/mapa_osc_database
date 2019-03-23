@@ -16,7 +16,7 @@ BEGIN
 			('[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG(b.dados)::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), ',,', ','), '{'), '}') || '}]')::JSONB AS dados, 
 			(
 				SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()\"', '')) FROM (SELECT DISTINCT UNNEST(
-					TRANSLATE(ARRAY_AGG(REPLACE(TRIM(TRANSLATE(b.fontes::TEXT, '"\{}', ''), ','), '","', ','))::TEXT, '"', '')::TEXT[]
+					TRANSLATE(ARRAY_AGG(REPLACE(REPLACE(REPLACE(TRIM(TRIM(TRANSLATE(b.fontes::TEXT, '"\{}', ''), ' '), ','), '","', ','), '","', ','), ',,', ','))::TEXT, '"', '')::TEXT[]
 				)) AS a
 			) AS fontes  
 		FROM (
@@ -24,7 +24,7 @@ BEGIN
 				ARRAY_AGG('{"label": "' || COALESCE(a.rotulo::TEXT, 'Outras organizações da sociedade civil') || '", "value": ' || a.valor::TEXT || '}')::TEXT AS dados, 
 				(
 					SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()\"', '')) FROM (SELECT DISTINCT UNNEST(
-						TRANSLATE(ARRAY_AGG(REPLACE(REPLACE(TRIM(TRANSLATE(a.fontes::TEXT, '"\{}', ''), ','), '","', ','), ',,', ','))::TEXT, '"', '')::TEXT[]
+						TRANSLATE(ARRAY_AGG(REPLACE(REPLACE(REPLACE(TRIM(TRIM(TRANSLATE(a.fontes::TEXT, '"\{}', ''), ' '), ','), '","', ','), '","', ','), ',,', ','))::TEXT, '"', '')::TEXT[]
 					)) AS a
 				) AS fontes 
 			FROM (
