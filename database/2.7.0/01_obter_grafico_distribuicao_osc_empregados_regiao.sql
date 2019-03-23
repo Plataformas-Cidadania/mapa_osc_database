@@ -10,25 +10,17 @@ BEGIN
 		RETURN QUERY 
 			SELECT 
 				('[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG(b.dados)::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), ',,', ','), '{'), '}') || '}]')::JSONB AS dados, 
-				(
-					SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()\"', '')) FROM (SELECT DISTINCT UNNEST(
-						TRANSLATE(ARRAY_AGG(REPLACE(REPLACE(REPLACE(TRIM(TRIM(TRANSLATE(b.fontes::TEXT, '"\{}', ''), ' '), ','), '","', ','), ', ,', ','), ',,', ','))::TEXT, '"', '')::TEXT[]
-					)) AS a
-				) AS fontes 
+				('{' || REPLACE(TRIM(ARRAY_AGG(DISTINCT TRIM(b.fontes, '"{}')) FILTER (WHERE (TRIM(b.fontes) = '') IS false)::TEXT, '"{}'), ',"', ',') || '}')::TEXT[] AS fontes 
 			FROM (
 				SELECT 
 					'{"key": "' || a.rotulo_1 || '", "values": ' || '[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG('{"label": "' || a.rotulo_2::TEXT || '", "value": ' || a.valor::TEXT || '}')::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), ',,', ','), '{'), '}') || '}]}' AS dados, 
-					(
-						SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()\"', '')) FROM (SELECT DISTINCT UNNEST(
-							TRANSLATE(ARRAY_AGG(REPLACE(REPLACE(REPLACE(TRIM(TRIM(TRANSLATE(a.fontes::TEXT, '"\{}', ''), ' '), ','), '","', ','), ', ,', ','), ',,', ','))::TEXT, '"', '')::TEXT[]
-						)) AS a
-					) AS fontes 
+					REPLACE(TRIM(ARRAY_AGG(DISTINCT TRIM(a.fontes, '"{}')) FILTER (WHERE (TRIM(a.fontes) = '') IS false)::TEXT, '"{}'), ',"', ',') AS fontes
 				FROM (
 					SELECT 
 						a.rotulo_1, 
 						a.rotulo_2, 
 						SUM(a.valor) AS valor, 
-						ARRAY_AGG(a.fontes::TEXT) FILTER (WHERE a.fontes IS NOT null) AS fontes 
+						TRIM(ARRAY_AGG(DISTINCT TRIM(a.fontes, '"{}')) FILTER (WHERE (TRIM(a.fontes) = '') IS false)::TEXT, '"{}') AS fontes
 					FROM (
 						SELECT * FROM (
 							SELECT 
@@ -44,14 +36,17 @@ BEGIN
 									END
 								) AS rotulo_2, 
 								COUNT(*) AS valor, 
-								(
-									SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
-										ARRAY_CAT(
-											ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_relacoes_trabalho.ft_trabalhadores_vinculo, ''), '${ETL}', '')), 
-											ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_osc.ft_identificador_osc, ''), '${ETL}', ''))
+								TRIM((
+									SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', ''))
+									FROM (
+										SELECT DISTINCT UNNEST(
+											ARRAY_CAT(
+												ARRAY_AGG(DISTINCT TRIM(tb_relacoes_trabalho.ft_trabalhadores_vinculo)) FILTER (WHERE (TRIM(tb_relacoes_trabalho.ft_trabalhadores_vinculo) = '') IS false), 
+												ARRAY_AGG(DISTINCT TRIM(tb_osc.ft_identificador_osc, '"{}')) FILTER (WHERE (TRIM(tb_osc.ft_identificador_osc) = '') IS false)
+											)
 										)
-									)) AS a
-								) AS fontes 
+									) AS a
+								)::TEXT, '{}') AS fontes 
 							FROM osc.tb_osc 
 							LEFT JOIN osc.tb_dados_gerais 
 							ON tb_osc.id_osc = tb_dados_gerais.id_osc 
@@ -64,68 +59,68 @@ BEGIN
 							WHERE tb_osc.bo_osc_ativa 
 							AND tb_osc.id_osc <> 789809 
 							GROUP BY rotulo_1, rotulo_2 
-							ORDER BY rotulo_1, rotulo_2 
+							ORDER BY rotulo_1, rotulo_2
 						) AS a 
 						UNION 
-						SELECT 'Norte'::TEXT AS rotulo_1, '0'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Norte'::TEXT AS rotulo_1, '0'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Norte'::TEXT AS rotulo_1, '1 a 4'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Norte'::TEXT AS rotulo_1, '1 a 4'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Norte'::TEXT AS rotulo_1, '5 a 19'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Norte'::TEXT AS rotulo_1, '5 a 19'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Norte'::TEXT AS rotulo_1, '20 a 99'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Norte'::TEXT AS rotulo_1, '20 a 99'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Norte'::TEXT AS rotulo_1, '100 ou mais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Norte'::TEXT AS rotulo_1, '100 ou mais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Nordeste'::TEXT AS rotulo_1, '0'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Nordeste'::TEXT AS rotulo_1, '0'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Nordeste'::TEXT AS rotulo_1, '1 a 4'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Nordeste'::TEXT AS rotulo_1, '1 a 4'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Nordeste'::TEXT AS rotulo_1, '5 a 19'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Nordeste'::TEXT AS rotulo_1, '5 a 19'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Nordeste'::TEXT AS rotulo_1, '20 a 99'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Nordeste'::TEXT AS rotulo_1, '20 a 99'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Nordeste'::TEXT AS rotulo_1, '100 ou mais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Nordeste'::TEXT AS rotulo_1, '100 ou mais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Centro Oeste'::TEXT AS rotulo_1, '0'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Centro Oeste'::TEXT AS rotulo_1, '0'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Centro Oeste'::TEXT AS rotulo_1, '1 a 4'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Centro Oeste'::TEXT AS rotulo_1, '1 a 4'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Centro Oeste'::TEXT AS rotulo_1, '5 a 19'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Centro Oeste'::TEXT AS rotulo_1, '5 a 19'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Centro Oeste'::TEXT AS rotulo_1, '20 a 99'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Centro Oeste'::TEXT AS rotulo_1, '20 a 99'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Centro Oeste'::TEXT AS rotulo_1, '100 ou mais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Centro Oeste'::TEXT AS rotulo_1, '100 ou mais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Sudeste'::TEXT AS rotulo_1, '0'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Sudeste'::TEXT AS rotulo_1, '0'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Sudeste'::TEXT AS rotulo_1, '1 a 4'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Sudeste'::TEXT AS rotulo_1, '1 a 4'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Sudeste'::TEXT AS rotulo_1, '5 a 19'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Sudeste'::TEXT AS rotulo_1, '5 a 19'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Sudeste'::TEXT AS rotulo_1, '20 a 99'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Sudeste'::TEXT AS rotulo_1, '20 a 99'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Sudeste'::TEXT AS rotulo_1, '100 ou mais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Sudeste'::TEXT AS rotulo_1, '100 ou mais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Sul'::TEXT AS rotulo_1, '0'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Sul'::TEXT AS rotulo_1, '0'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Sul'::TEXT AS rotulo_1, '1 a 4'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Sul'::TEXT AS rotulo_1, '1 a 4'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Sul'::TEXT AS rotulo_1, '5 a 19'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Sul'::TEXT AS rotulo_1, '5 a 19'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Sul'::TEXT AS rotulo_1, '20 a 99'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Sul'::TEXT AS rotulo_1, '20 a 99'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Sul'::TEXT AS rotulo_1, '100 ou mais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Sul'::TEXT AS rotulo_1, '100 ou mais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Sem informação'::TEXT AS rotulo_1, '0'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Sem informação'::TEXT AS rotulo_1, '0'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Sem informação'::TEXT AS rotulo_1, '1 a 4'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Sem informação'::TEXT AS rotulo_1, '1 a 4'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Sem informação'::TEXT AS rotulo_1, '5 a 19'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Sem informação'::TEXT AS rotulo_1, '5 a 19'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Sem informação'::TEXT AS rotulo_1, '20 a 99'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Sem informação'::TEXT AS rotulo_1, '20 a 99'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Sem informação'::TEXT AS rotulo_1, '100 ou mais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes
+						SELECT 'Sem informação'::TEXT AS rotulo_1, '100 ou mais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes
 					) AS a 
 					GROUP BY rotulo_1, rotulo_2 
 					ORDER BY rotulo_1, rotulo_2
@@ -137,25 +132,17 @@ BEGIN
 		RETURN QUERY 
 			SELECT 
 				('[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG(b.dados)::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), ',,', ','), '{'), '}') || '}]')::JSONB AS dados, 
-				(
-					SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()\"', '')) FROM (SELECT DISTINCT UNNEST(
-						TRANSLATE(ARRAY_AGG(REPLACE(REPLACE(REPLACE(TRIM(TRIM(TRANSLATE(b.fontes::TEXT, '"\{}', ''), ' '), ','), '","', ','), ', ,', ','), ',,', ','))::TEXT, '"', '')::TEXT[]
-					)) AS a
-				) AS fontes 
+				('{' || REPLACE(TRIM(ARRAY_AGG(DISTINCT TRIM(b.fontes, '"{}')) FILTER (WHERE (TRIM(b.fontes) = '') IS false)::TEXT, '"{}'), ',"', ',') || '}')::TEXT[] AS fontes 
 			FROM (
 				SELECT 
 					'{"key": "' || a.rotulo_2 || '", "values": ' || '[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG('{"label": "' || a.rotulo_1::TEXT || '", "value": ' || a.valor::TEXT || '}')::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), ',,', ','), '{'), '}') || '}]}' AS dados, 
-					(
-						SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()\"', '')) FROM (SELECT DISTINCT UNNEST(
-							TRANSLATE(ARRAY_AGG(REPLACE(REPLACE(REPLACE(TRIM(TRIM(TRANSLATE(a.fontes::TEXT, '"\{}', ''), ' '), ','), '","', ','), ', ,', ','), ',,', ','))::TEXT, '"', '')::TEXT[]
-						)) AS a
-					) AS fontes 
+					REPLACE(TRIM(ARRAY_AGG(DISTINCT TRIM(a.fontes, '"{}')) FILTER (WHERE (TRIM(a.fontes) = '') IS false)::TEXT, '"{}'), ',"', ',') AS fontes
 				FROM (
 					SELECT 
 						a.rotulo_1, 
 						a.rotulo_2, 
 						SUM(a.valor) AS valor, 
-						ARRAY_AGG(a.fontes::TEXT) FILTER (WHERE a.fontes IS NOT null) AS fontes 
+						TRIM(ARRAY_AGG(DISTINCT TRIM(a.fontes, '"{}')) FILTER (WHERE (TRIM(a.fontes) = '') IS false)::TEXT, '"{}') AS fontes
 					FROM (
 						SELECT * FROM (
 							SELECT 
@@ -171,14 +158,17 @@ BEGIN
 									END
 								) AS rotulo_2, 
 								COUNT(*) AS valor, 
-								(
-									SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
-										ARRAY_CAT(
-											ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_relacoes_trabalho.ft_trabalhadores_vinculo, ''), '${ETL}', '')), 
-											ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_osc.ft_identificador_osc, ''), '${ETL}', ''))
+								TRIM((
+									SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', ''))
+									FROM (
+										SELECT DISTINCT UNNEST(
+											ARRAY_CAT(
+												ARRAY_AGG(DISTINCT TRIM(tb_relacoes_trabalho.ft_trabalhadores_vinculo)) FILTER (WHERE (TRIM(tb_relacoes_trabalho.ft_trabalhadores_vinculo) = '') IS false), 
+												ARRAY_AGG(DISTINCT TRIM(tb_osc.ft_identificador_osc, '"{}')) FILTER (WHERE (TRIM(tb_osc.ft_identificador_osc) = '') IS false)
+											)
 										)
-									)) AS a
-								) AS fontes 
+									) AS a
+								)::TEXT, '{}') AS fontes 
 							FROM osc.tb_osc 
 							LEFT JOIN osc.tb_dados_gerais 
 							ON tb_osc.id_osc = tb_dados_gerais.id_osc 
@@ -191,68 +181,68 @@ BEGIN
 							WHERE tb_osc.bo_osc_ativa 
 							AND tb_osc.id_osc <> 789809 
 							GROUP BY rotulo_1, rotulo_2 
-							ORDER BY rotulo_1, rotulo_2 
+							ORDER BY rotulo_1, rotulo_2
 						) AS a 
 						UNION 
-						SELECT 'Norte'::TEXT AS rotulo_1, '0'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Norte'::TEXT AS rotulo_1, '0'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Norte'::TEXT AS rotulo_1, '1 a 4'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Norte'::TEXT AS rotulo_1, '1 a 4'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Norte'::TEXT AS rotulo_1, '5 a 19'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Norte'::TEXT AS rotulo_1, '5 a 19'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Norte'::TEXT AS rotulo_1, '20 a 99'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Norte'::TEXT AS rotulo_1, '20 a 99'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Norte'::TEXT AS rotulo_1, '100 ou mais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Norte'::TEXT AS rotulo_1, '100 ou mais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Nordeste'::TEXT AS rotulo_1, '0'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Nordeste'::TEXT AS rotulo_1, '0'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Nordeste'::TEXT AS rotulo_1, '1 a 4'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Nordeste'::TEXT AS rotulo_1, '1 a 4'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Nordeste'::TEXT AS rotulo_1, '5 a 19'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Nordeste'::TEXT AS rotulo_1, '5 a 19'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Nordeste'::TEXT AS rotulo_1, '20 a 99'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Nordeste'::TEXT AS rotulo_1, '20 a 99'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Nordeste'::TEXT AS rotulo_1, '100 ou mais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Nordeste'::TEXT AS rotulo_1, '100 ou mais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Centro Oeste'::TEXT AS rotulo_1, '0'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Centro Oeste'::TEXT AS rotulo_1, '0'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Centro Oeste'::TEXT AS rotulo_1, '1 a 4'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Centro Oeste'::TEXT AS rotulo_1, '1 a 4'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Centro Oeste'::TEXT AS rotulo_1, '5 a 19'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Centro Oeste'::TEXT AS rotulo_1, '5 a 19'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Centro Oeste'::TEXT AS rotulo_1, '20 a 99'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Centro Oeste'::TEXT AS rotulo_1, '20 a 99'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Centro Oeste'::TEXT AS rotulo_1, '100 ou mais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Centro Oeste'::TEXT AS rotulo_1, '100 ou mais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Sudeste'::TEXT AS rotulo_1, '0'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Sudeste'::TEXT AS rotulo_1, '0'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Sudeste'::TEXT AS rotulo_1, '1 a 4'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Sudeste'::TEXT AS rotulo_1, '1 a 4'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Sudeste'::TEXT AS rotulo_1, '5 a 19'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Sudeste'::TEXT AS rotulo_1, '5 a 19'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Sudeste'::TEXT AS rotulo_1, '20 a 99'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Sudeste'::TEXT AS rotulo_1, '20 a 99'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Sudeste'::TEXT AS rotulo_1, '100 ou mais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Sudeste'::TEXT AS rotulo_1, '100 ou mais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Sul'::TEXT AS rotulo_1, '0'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Sul'::TEXT AS rotulo_1, '0'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Sul'::TEXT AS rotulo_1, '1 a 4'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Sul'::TEXT AS rotulo_1, '1 a 4'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Sul'::TEXT AS rotulo_1, '5 a 19'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Sul'::TEXT AS rotulo_1, '5 a 19'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Sul'::TEXT AS rotulo_1, '20 a 99'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Sul'::TEXT AS rotulo_1, '20 a 99'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Sul'::TEXT AS rotulo_1, '100 ou mais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Sul'::TEXT AS rotulo_1, '100 ou mais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Sem informação'::TEXT AS rotulo_1, '0'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Sem informação'::TEXT AS rotulo_1, '0'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Sem informação'::TEXT AS rotulo_1, '1 a 4'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Sem informação'::TEXT AS rotulo_1, '1 a 4'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Sem informação'::TEXT AS rotulo_1, '5 a 19'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Sem informação'::TEXT AS rotulo_1, '5 a 19'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Sem informação'::TEXT AS rotulo_1, '20 a 99'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes 
+						SELECT 'Sem informação'::TEXT AS rotulo_1, '20 a 99'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes 
 						UNION 
-						SELECT 'Sem informação'::TEXT AS rotulo_1, '100 ou mais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT[] AS fontes
+						SELECT 'Sem informação'::TEXT AS rotulo_1, '100 ou mais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes
 					) AS a 
 					GROUP BY rotulo_1, rotulo_2 
 					ORDER BY rotulo_1, rotulo_2
