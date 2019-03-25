@@ -25,14 +25,7 @@ BEGIN
 		FROM (
 			SELECT 
 				ARRAY_AGG('{"label": "' || COALESCE(a.rotulo::TEXT, 'Outras organizações da sociedade civil') || '", "value": ' || a.valor::TEXT || '}')::TEXT AS dados, 
-				TRIM(REPLACE(TRANSLATE((
-					SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) 
-					FROM (
-						SELECT DISTINCT UNNEST( 
-							('{' || TRIM(REPLACE(TRANSLATE(ARRAY_AGG(a.fontes)::TEXT, '\"', ''), ',,', ','), ',{}') || '}')::TEXT[] 
-						)
-					) AS a
-				)::TEXT, '\"', ''), ',,', ','), ',{}') AS fontes
+				TRIM(ARRAY_AGG(DISTINCT TRIM(a.fontes)) FILTER (WHERE (TRIM(a.fontes) = '') IS false)::TEXT, '{}') AS fontes
 			FROM (
 				SELECT 
 					COALESCE(dc_area_atuacao.tx_nome_area_atuacao, 'Sem informação') AS rotulo, 

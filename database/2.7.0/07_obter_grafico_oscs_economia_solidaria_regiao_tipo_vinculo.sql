@@ -21,14 +21,7 @@ BEGIN
 			FROM (
 				SELECT 
 					'{"key": "' || a.rotulo_1 || '", "values": ' || '[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG('{"label": "' || a.rotulo_2::TEXT || '", "value": ' || a.valor::TEXT || '}')::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), ',,', ','), '{'), '}') || '}]}' AS dados, 
-					TRIM(REPLACE(TRANSLATE((
-						SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) 
-						FROM (
-							SELECT DISTINCT UNNEST( 
-								('{' || TRIM(REPLACE(TRANSLATE(ARRAY_AGG(a.fontes)::TEXT, '\"', ''), ',,', ','), ',{}') || '}')::TEXT[] 
-							)
-						) AS a
-					)::TEXT, '\"', ''), ',,', ','), ',{}') AS fontes
+					TRIM(ARRAY_AGG(DISTINCT TRIM(a.fontes)) FILTER (WHERE (TRIM(a.fontes) = '') IS false)::TEXT, '{}') AS fontes
 				FROM (
 					SELECT 
 						a.rotulo_1, 
@@ -150,14 +143,7 @@ BEGIN
 			FROM (
 				SELECT 
 					'{"key": "' || a.rotulo_2 || '", "values": ' || '[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG('{"label": "' || a.rotulo_1::TEXT || '", "value": ' || a.valor::TEXT || '}')::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), ',,', ','), '{'), '}') || '}]}' AS dados, 
-					TRIM(REPLACE(TRANSLATE((
-						SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) 
-						FROM (
-							SELECT DISTINCT UNNEST( 
-								('{' || TRIM(REPLACE(TRANSLATE(ARRAY_AGG(a.fontes)::TEXT, '\"', ''), ',,', ','), ',{}') || '}')::TEXT[] 
-							)
-						) AS a
-					)::TEXT, '\"', ''), ',,', ','), ',{}') AS fontes
+					TRIM(ARRAY_AGG(DISTINCT TRIM(a.fontes)) FILTER (WHERE (TRIM(a.fontes) = '') IS false)::TEXT, '{}') AS fontes
 				FROM (
 					SELECT 
 						a.rotulo_1, 

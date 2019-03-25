@@ -21,27 +21,13 @@ BEGIN
 			FROM (
 				SELECT 
 					'{"key": "' || a.rotulo_1 || '", "values": ' || '[{' || TRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG('{"label": "' || a.rotulo_2::TEXT || '", "value": ' || a.valor::TEXT || '}')::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), ',,', ','), '{}') || '}]}' AS dados, 
-					TRIM(REPLACE(TRANSLATE((
-						SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) 
-						FROM (
-							SELECT DISTINCT UNNEST( 
-								('{' || TRIM(REPLACE(TRANSLATE(ARRAY_AGG(a.fontes)::TEXT, '\"', ''), ',,', ','), ',{}') || '}')::TEXT[] 
-							)
-						) AS a
-					)::TEXT, '\"', ''), ',,', ','), ',{}') AS fontes
+					TRIM(ARRAY_AGG(DISTINCT TRIM(a.fontes)) FILTER (WHERE (TRIM(a.fontes) = '') IS false)::TEXT, '{}') AS fontes
 				FROM (
 					SELECT 
 						a.rotulo_1, 
 						a.rotulo_2, 
 						SUM(a.valor) AS valor,
-						TRIM(REPLACE(TRANSLATE((
-							SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) 
-							FROM (
-								SELECT DISTINCT UNNEST( 
-									('{' || TRIM(REPLACE(TRANSLATE(ARRAY_AGG(a.fontes)::TEXT, '\"', ''), ',,', ','), ',{}') || '}')::TEXT[] 
-								)
-							) AS a
-						)::TEXT, '\"', ''), ',,', ','), ',{}') AS fontes
+						TRIM(ARRAY_AGG(DISTINCT TRIM(a.fontes)) FILTER (WHERE (TRIM(a.fontes) = '') IS false)::TEXT, '{}') AS fontes
 					FROM (
 						SELECT * FROM (
 							SELECT 
@@ -157,27 +143,13 @@ BEGIN
 			FROM (
 				SELECT 
 					'{"key": "' || a.rotulo_2 || '", "values": ' || '[{' || TRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG('{"label": "' || a.rotulo_1::TEXT || '", "value": ' || a.valor::TEXT || '}')::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), ',,', ','), '{}') || '}]}' AS dados, 
-					TRIM(REPLACE(TRANSLATE((
-						SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) 
-						FROM (
-							SELECT DISTINCT UNNEST( 
-								('{' || TRIM(REPLACE(TRANSLATE(ARRAY_AGG(a.fontes)::TEXT, '\"', ''), ',,', ','), ',{}') || '}')::TEXT[] 
-							)
-						) AS a
-					)::TEXT, '\"', ''), ',,', ','), ',{}') AS fontes
+					TRIM(ARRAY_AGG(DISTINCT TRIM(a.fontes)) FILTER (WHERE (TRIM(a.fontes) = '') IS false)::TEXT, '{}') AS fontes
 				FROM (
 					SELECT 
 						a.rotulo_1, 
 						a.rotulo_2, 
 						SUM(a.valor) AS valor,
-						TRIM(REPLACE(TRANSLATE((
-							SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) 
-							FROM (
-								SELECT DISTINCT UNNEST( 
-									('{' || TRIM(REPLACE(TRANSLATE(ARRAY_AGG(a.fontes)::TEXT, '\"', ''), ',,', ','), ',{}') || '}')::TEXT[] 
-								)
-							) AS a
-						)::TEXT, '"', ''), ',,', ','), ',{}') AS fontes
+						TRIM(ARRAY_AGG(DISTINCT TRIM(a.fontes)) FILTER (WHERE (TRIM(a.fontes) = '') IS false)::TEXT, '{}') AS fontes
 					FROM (
 						SELECT * FROM (
 							SELECT 
@@ -272,7 +244,7 @@ BEGIN
 						UNION 
 						SELECT 'Sem informação'::TEXT AS rotulo_1, '100 ou mais'::TEXT AS rotulo_2, 0::BIGINT AS valor, null::TEXT AS fontes
 					) AS a 
-					GROUP BY rotulo_2, rotulo_1 
+					GROUP BY rotulo_1, rotulo_2 
 					ORDER BY rotulo_2, rotulo_1
 				) AS a 
 				GROUP BY a.rotulo_2
