@@ -30,7 +30,7 @@ BEGIN
 				FROM (
 					SELECT DISTINCT UNNEST(
 						ARRAY_CAT(
-							'{"MDS/CNEAS"}'::TEXT[], 
+							'{"CNEAS/MDS"}'::TEXT[], 
 							ARRAY_AGG(DISTINCT TRIM(tb_osc.ft_identificador_osc, '"{}')) FILTER (WHERE (TRIM(tb_osc.ft_identificador_osc) = '') IS false)
 						)
 					)

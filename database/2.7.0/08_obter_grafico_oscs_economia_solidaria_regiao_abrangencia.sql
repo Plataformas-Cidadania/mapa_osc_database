@@ -10,25 +10,24 @@ BEGIN
 		RETURN QUERY 
 			SELECT 
 				('[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG(b.dados)::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), ',,', ','), '{'), '}') || '}]')::JSONB AS dados, 
-				(
-					SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()\"', '')) FROM (SELECT DISTINCT UNNEST(
-						TRANSLATE(ARRAY_AGG(REPLACE(REPLACE(REPLACE(TRIM(TRIM(TRANSLATE(b.fontes::TEXT, '"\{}', ''), ' '), ','), '","', ','), ', ,', ','), ',,', ','))::TEXT, '"', '')::TEXT[]
-					)) AS a
-				) AS fontes 
+				('{' || TRIM(REPLACE(TRANSLATE((
+					SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) 
+					FROM (
+						SELECT DISTINCT UNNEST( 
+							('{' || TRIM(REPLACE(TRANSLATE(ARRAY_AGG(b.fontes)::TEXT, '\"', ''), ',,', ','), ',{}') || '}')::TEXT[] 
+						)
+					) AS a
+				)::TEXT, '\"', ''), ',,', ','), ',{}') || '}')::TEXT[] AS fontes
 			FROM (
 				SELECT 
 					'{"key": "' || a.rotulo_1 || '", "values": ' || '[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG('{"label": "' || a.rotulo_2::TEXT || '", "value": ' || a.valor::TEXT || '}')::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), ',,', ','), '{'), '}') || '}]}' AS dados, 
-					(
-						SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()\"', '')) FROM (SELECT DISTINCT UNNEST(
-							TRANSLATE(ARRAY_AGG(REPLACE(REPLACE(REPLACE(TRIM(TRIM(TRANSLATE(a.fontes::TEXT, '"\{}', ''), ' '), ','), '","', ','), ', ,', ','), ',,', ','))::TEXT, '"', '')::TEXT[]
-						)) AS a
-					) AS fontes 
+					TRIM(ARRAY_AGG(DISTINCT TRIM(a.fontes)) FILTER (WHERE (TRIM(a.fontes) = '') IS false)::TEXT, '{}') AS fontes
 				FROM (
 					SELECT 
 						a.rotulo_1, 
 						a.rotulo_2, 
 						SUM(a.valor) AS valor, 
-						ARRAY_AGG(a.fontes::TEXT) FILTER (WHERE a.fontes IS NOT null) AS fontes 
+						TRIM(ARRAY_AGG(DISTINCT TRIM(a.fontes)) FILTER (WHERE (TRIM(a.fontes) = '') IS false)::TEXT, '{}') AS fontes
 					FROM (
 						SELECT * FROM (
 							SELECT 
@@ -36,15 +35,9 @@ BEGIN
 								COALESCE(tb_senaes.abr_13, 'Sem informação') AS rotulo_2, 
 								COUNT(*) AS valor, 
 								(
-									SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
-										ARRAY_CAT(
-											ARRAY_CAT(
-												'{"MTE/SENAES"}'::TEXT[], 
-												ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_localizacao.ft_municipio, ''), '${ETL}', ''))
-											),
-											ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_osc.ft_identificador_osc, ''), '${ETL}', ''))
-										)
-									)) AS a
+									'SENAES/MTE,' || 
+									TRIM(ARRAY_AGG(DISTINCT TRIM(tb_localizacao.ft_municipio)) FILTER (WHERE (TRIM(tb_localizacao.ft_municipio) = '') IS false)::TEXT, '{}') || ',' || 
+									TRIM(ARRAY_AGG(DISTINCT TRIM(tb_osc.ft_identificador_osc)) FILTER (WHERE (TRIM(tb_osc.ft_identificador_osc) = '') IS false)::TEXT, '{}')
 								) AS fontes 
 							FROM osc.tb_osc 
 							INNER JOIN graph.tb_senaes 
@@ -58,35 +51,35 @@ BEGIN
 							ORDER BY rotulo_1, rotulo_2
 						) AS a 
 						UNION 
-						SELECT 'Centro Oeste'::CHARACTER VARYING, 'Estadual e/ou inter-estadual'::TEXT, 0::BIGINT, null::TEXT[] 
+						SELECT 'Centro Oeste'::CHARACTER VARYING, 'Estadual e/ou inter-estadual'::TEXT, 0::BIGINT, null::TEXT 
 						UNION 
-						SELECT 'Centro Oeste'::CHARACTER VARYING, 'Municipal e/ou inter-municipal'::TEXT, 0::BIGINT, null::TEXT[] 
+						SELECT 'Centro Oeste'::CHARACTER VARYING, 'Municipal e/ou inter-municipal'::TEXT, 0::BIGINT, null::TEXT 
 						UNION 
-						SELECT 'Centro Oeste'::CHARACTER VARYING, 'Nacional'::TEXT, 0::BIGINT, null::TEXT[] 
+						SELECT 'Centro Oeste'::CHARACTER VARYING, 'Nacional'::TEXT, 0::BIGINT, null::TEXT 
 						UNION 
-						SELECT 'Nordeste'::CHARACTER VARYING, 'Estadual e/ou inter-estadual'::TEXT, 0::BIGINT, null::TEXT[] 
+						SELECT 'Nordeste'::CHARACTER VARYING, 'Estadual e/ou inter-estadual'::TEXT, 0::BIGINT, null::TEXT 
 						UNION 
-						SELECT 'Nordeste'::CHARACTER VARYING, 'Municipal e/ou inter-municipal'::TEXT, 0::BIGINT, null::TEXT[] 
+						SELECT 'Nordeste'::CHARACTER VARYING, 'Municipal e/ou inter-municipal'::TEXT, 0::BIGINT, null::TEXT 
 						UNION 
-						SELECT 'Nordeste'::CHARACTER VARYING, 'Nacional'::TEXT, 0::BIGINT, null::TEXT[] 
+						SELECT 'Nordeste'::CHARACTER VARYING, 'Nacional'::TEXT, 0::BIGINT, null::TEXT 
 						UNION 
-						SELECT 'Norte'::CHARACTER VARYING, 'Estadual e/ou inter-estadual'::TEXT, 0::BIGINT, null::TEXT[] 
+						SELECT 'Norte'::CHARACTER VARYING, 'Estadual e/ou inter-estadual'::TEXT, 0::BIGINT, null::TEXT 
 						UNION 
-						SELECT 'Norte'::CHARACTER VARYING, 'Municipal e/ou inter-municipal'::TEXT, 0::BIGINT, null::TEXT[] 
+						SELECT 'Norte'::CHARACTER VARYING, 'Municipal e/ou inter-municipal'::TEXT, 0::BIGINT, null::TEXT 
 						UNION 
-						SELECT 'Norte'::CHARACTER VARYING, 'Nacional'::TEXT, 0::BIGINT, null::TEXT[] 
+						SELECT 'Norte'::CHARACTER VARYING, 'Nacional'::TEXT, 0::BIGINT, null::TEXT 
 						UNION 
-						SELECT 'Sudeste'::CHARACTER VARYING, 'Estadual e/ou inter-estadual'::TEXT, 0::BIGINT, null::TEXT[] 
+						SELECT 'Sudeste'::CHARACTER VARYING, 'Estadual e/ou inter-estadual'::TEXT, 0::BIGINT, null::TEXT 
 						UNION 
-						SELECT 'Sudeste'::CHARACTER VARYING, 'Municipal e/ou inter-municipal'::TEXT, 0::BIGINT, null::TEXT[] 
+						SELECT 'Sudeste'::CHARACTER VARYING, 'Municipal e/ou inter-municipal'::TEXT, 0::BIGINT, null::TEXT 
 						UNION 
-						SELECT 'Sudeste'::CHARACTER VARYING, 'Nacional'::TEXT, 0::BIGINT, null::TEXT[] 
+						SELECT 'Sudeste'::CHARACTER VARYING, 'Nacional'::TEXT, 0::BIGINT, null::TEXT 
 						UNION 
-						SELECT 'Sul'::CHARACTER VARYING, 'Estadual e/ou inter-estadual'::TEXT, 0::BIGINT, null::TEXT[] 
+						SELECT 'Sul'::CHARACTER VARYING, 'Estadual e/ou inter-estadual'::TEXT, 0::BIGINT, null::TEXT 
 						UNION 
-						SELECT 'Sul'::CHARACTER VARYING, 'Municipal e/ou inter-municipal'::TEXT, 0::BIGINT, null::TEXT[] 
+						SELECT 'Sul'::CHARACTER VARYING, 'Municipal e/ou inter-municipal'::TEXT, 0::BIGINT, null::TEXT 
 						UNION 
-						SELECT 'Sul'::CHARACTER VARYING, 'Nacional'::TEXT, 0::BIGINT, null::TEXT[]
+						SELECT 'Sul'::CHARACTER VARYING, 'Nacional'::TEXT, 0::BIGINT, null::TEXT
 					) AS a 
 					GROUP BY rotulo_1, rotulo_2 
 					ORDER BY rotulo_1, rotulo_2
@@ -98,25 +91,24 @@ BEGIN
 		RETURN QUERY 
 			SELECT 
 				('[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG(b.dados)::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), ',,', ','), '{'), '}') || '}]')::JSONB AS dados, 
-				(
-					SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()\"', '')) FROM (SELECT DISTINCT UNNEST(
-						TRANSLATE(ARRAY_AGG(REPLACE(REPLACE(REPLACE(TRIM(TRIM(TRANSLATE(b.fontes::TEXT, '"\{}', ''), ' '), ','), '","', ','), ', ,', ','), ',,', ','))::TEXT, '"', '')::TEXT[]
-					)) AS a
-				) AS fontes 
+				('{' || TRIM(REPLACE(TRANSLATE((
+					SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) 
+					FROM (
+						SELECT DISTINCT UNNEST( 
+							('{' || TRIM(REPLACE(TRANSLATE(ARRAY_AGG(b.fontes)::TEXT, '\"', ''), ',,', ','), ',{}') || '}')::TEXT[] 
+						)
+					) AS a
+				)::TEXT, '\"', ''), ',,', ','), ',{}') || '}')::TEXT[] AS fontes
 			FROM (
 				SELECT 
 					'{"key": "' || a.rotulo_2 || '", "values": ' || '[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG('{"label": "' || a.rotulo_1::TEXT || '", "value": ' || a.valor::TEXT || '}')::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), ',,', ','), '{'), '}') || '}]}' AS dados, 
-					(
-						SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()\"', '')) FROM (SELECT DISTINCT UNNEST(
-							TRANSLATE(ARRAY_AGG(REPLACE(REPLACE(REPLACE(TRIM(TRIM(TRANSLATE(a.fontes::TEXT, '"\{}', ''), ' '), ','), '","', ','), ', ,', ','), ',,', ','))::TEXT, '"', '')::TEXT[]
-						)) AS a
-					) AS fontes 
+					TRIM(ARRAY_AGG(DISTINCT TRIM(a.fontes)) FILTER (WHERE (TRIM(a.fontes) = '') IS false)::TEXT, '{}') AS fontes
 				FROM (
 					SELECT 
 						a.rotulo_1, 
 						a.rotulo_2, 
 						SUM(a.valor) AS valor, 
-						ARRAY_AGG(a.fontes::TEXT) FILTER (WHERE a.fontes IS NOT null) AS fontes 
+						TRIM(ARRAY_AGG(DISTINCT TRIM(a.fontes)) FILTER (WHERE (TRIM(a.fontes) = '') IS false)::TEXT, '{}') AS fontes
 					FROM (
 						SELECT * FROM (
 							SELECT 
@@ -124,15 +116,9 @@ BEGIN
 								COALESCE(tb_senaes.abr_13, 'Sem informação') AS rotulo_2, 
 								COUNT(*) AS valor, 
 								(
-									SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) FROM (SELECT DISTINCT UNNEST(
-										ARRAY_CAT(
-											ARRAY_CAT(
-												'{"MTE/SENAES"}'::TEXT[], 
-												ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_localizacao.ft_municipio, ''), '${ETL}', ''))
-											),
-											ARRAY_AGG(DISTINCT REPLACE(COALESCE(tb_osc.ft_identificador_osc, ''), '${ETL}', ''))
-										)
-									)) AS a
+									'SENAES/MTE,' || 
+									TRIM(ARRAY_AGG(DISTINCT TRIM(tb_localizacao.ft_municipio)) FILTER (WHERE (TRIM(tb_localizacao.ft_municipio) = '') IS false)::TEXT, '{}') || ',' || 
+									TRIM(ARRAY_AGG(DISTINCT TRIM(tb_osc.ft_identificador_osc)) FILTER (WHERE (TRIM(tb_osc.ft_identificador_osc) = '') IS false)::TEXT, '{}')
 								) AS fontes 
 							FROM osc.tb_osc 
 							INNER JOIN graph.tb_senaes 
@@ -146,42 +132,41 @@ BEGIN
 							ORDER BY rotulo_1, rotulo_2
 						) AS a 
 						UNION 
-						SELECT 'Centro Oeste'::CHARACTER VARYING, 'Estadual e/ou inter-estadual'::TEXT, 0::BIGINT, null::TEXT[] 
+						SELECT 'Centro Oeste'::CHARACTER VARYING, 'Estadual e/ou inter-estadual'::TEXT, 0::BIGINT, null::TEXT 
 						UNION 
-						SELECT 'Centro Oeste'::CHARACTER VARYING, 'Municipal e/ou inter-municipal'::TEXT, 0::BIGINT, null::TEXT[] 
+						SELECT 'Centro Oeste'::CHARACTER VARYING, 'Municipal e/ou inter-municipal'::TEXT, 0::BIGINT, null::TEXT 
 						UNION 
-						SELECT 'Centro Oeste'::CHARACTER VARYING, 'Nacional'::TEXT, 0::BIGINT, null::TEXT[] 
+						SELECT 'Centro Oeste'::CHARACTER VARYING, 'Nacional'::TEXT, 0::BIGINT, null::TEXT 
 						UNION 
-						SELECT 'Nordeste'::CHARACTER VARYING, 'Estadual e/ou inter-estadual'::TEXT, 0::BIGINT, null::TEXT[] 
+						SELECT 'Nordeste'::CHARACTER VARYING, 'Estadual e/ou inter-estadual'::TEXT, 0::BIGINT, null::TEXT 
 						UNION 
-						SELECT 'Nordeste'::CHARACTER VARYING, 'Municipal e/ou inter-municipal'::TEXT, 0::BIGINT, null::TEXT[] 
+						SELECT 'Nordeste'::CHARACTER VARYING, 'Municipal e/ou inter-municipal'::TEXT, 0::BIGINT, null::TEXT 
 						UNION 
-						SELECT 'Nordeste'::CHARACTER VARYING, 'Nacional'::TEXT, 0::BIGINT, null::TEXT[] 
+						SELECT 'Nordeste'::CHARACTER VARYING, 'Nacional'::TEXT, 0::BIGINT, null::TEXT 
 						UNION 
-						SELECT 'Norte'::CHARACTER VARYING, 'Estadual e/ou inter-estadual'::TEXT, 0::BIGINT, null::TEXT[] 
+						SELECT 'Norte'::CHARACTER VARYING, 'Estadual e/ou inter-estadual'::TEXT, 0::BIGINT, null::TEXT 
 						UNION 
-						SELECT 'Norte'::CHARACTER VARYING, 'Municipal e/ou inter-municipal'::TEXT, 0::BIGINT, null::TEXT[] 
+						SELECT 'Norte'::CHARACTER VARYING, 'Municipal e/ou inter-municipal'::TEXT, 0::BIGINT, null::TEXT 
 						UNION 
-						SELECT 'Norte'::CHARACTER VARYING, 'Nacional'::TEXT, 0::BIGINT, null::TEXT[] 
+						SELECT 'Norte'::CHARACTER VARYING, 'Nacional'::TEXT, 0::BIGINT, null::TEXT 
 						UNION 
-						SELECT 'Sudeste'::CHARACTER VARYING, 'Estadual e/ou inter-estadual'::TEXT, 0::BIGINT, null::TEXT[] 
+						SELECT 'Sudeste'::CHARACTER VARYING, 'Estadual e/ou inter-estadual'::TEXT, 0::BIGINT, null::TEXT 
 						UNION 
-						SELECT 'Sudeste'::CHARACTER VARYING, 'Municipal e/ou inter-municipal'::TEXT, 0::BIGINT, null::TEXT[] 
+						SELECT 'Sudeste'::CHARACTER VARYING, 'Municipal e/ou inter-municipal'::TEXT, 0::BIGINT, null::TEXT 
 						UNION 
-						SELECT 'Sudeste'::CHARACTER VARYING, 'Nacional'::TEXT, 0::BIGINT, null::TEXT[] 
+						SELECT 'Sudeste'::CHARACTER VARYING, 'Nacional'::TEXT, 0::BIGINT, null::TEXT 
 						UNION 
-						SELECT 'Sul'::CHARACTER VARYING, 'Estadual e/ou inter-estadual'::TEXT, 0::BIGINT, null::TEXT[] 
+						SELECT 'Sul'::CHARACTER VARYING, 'Estadual e/ou inter-estadual'::TEXT, 0::BIGINT, null::TEXT 
 						UNION 
-						SELECT 'Sul'::CHARACTER VARYING, 'Municipal e/ou inter-municipal'::TEXT, 0::BIGINT, null::TEXT[] 
+						SELECT 'Sul'::CHARACTER VARYING, 'Municipal e/ou inter-municipal'::TEXT, 0::BIGINT, null::TEXT 
 						UNION 
-						SELECT 'Sul'::CHARACTER VARYING, 'Nacional'::TEXT, 0::BIGINT, null::TEXT[]
+						SELECT 'Sul'::CHARACTER VARYING, 'Nacional'::TEXT, 0::BIGINT, null::TEXT
 					) AS a 
 					GROUP BY rotulo_1, rotulo_2 
-					ORDER BY rotulo_1, rotulo_2
+					ORDER BY rotulo_2, rotulo_1
 				) AS a 
 				GROUP BY a.rotulo_2
 			) AS b;
-
 	END IF;
 END;
 

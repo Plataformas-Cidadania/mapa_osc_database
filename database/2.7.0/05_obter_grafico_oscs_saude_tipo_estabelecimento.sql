@@ -50,7 +50,7 @@ BEGIN
 				END AS rotulo, 
 				COUNT(*) AS valor,
 				(
-					'MS/CNES,' || 
+					'CNES/MS,' || 
 					TRIM(ARRAY_AGG(DISTINCT TRIM(tb_osc.ft_identificador_osc)) FILTER (WHERE (TRIM(tb_osc.ft_identificador_osc) = '') IS false)::TEXT, '{}')
 				) AS fontes 
 			FROM osc.tb_osc 
