@@ -13,10 +13,10 @@ BEGIN
 				SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) 
 				FROM (
 					SELECT DISTINCT UNNEST( 
-						('{' || TRIM(REPLACE(TRANSLATE(ARRAY_AGG(a.fontes)::TEXT, '"', ''), ',,', ','), ',{}') || '}')::TEXT[] 
+						('{' || TRIM(REPLACE(TRANSLATE(ARRAY_AGG(a.fontes)::TEXT, '\"', ''), ',,', ','), ',{}') || '}')::TEXT[] 
 					)
 				) AS a
-			)::TEXT, '"', ''), ',,', ','), ',{}') || '}')::TEXT[] AS fontes
+			)::TEXT, '\"', ''), ',,', ','), ',{}') || '}')::TEXT[] AS fontes
 		FROM (
 			SELECT 
 				COALESCE(ed_regiao.edre_nm_regiao, 'Sem informação') AS rotulo, 
