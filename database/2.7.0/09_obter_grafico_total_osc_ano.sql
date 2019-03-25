@@ -43,7 +43,7 @@ BEGIN
 		RTRIM((dados->>1)::TEXT, '}') || ', ' || '"bar": ' || COALESCE('"' || ((parametros->>1)::JSONB->>'bar')::TEXT || '"', 'null') || '}' ||
 	']';
 	
-	fontes := '{''MTE/RAIS'', ''MPS/CNIS''}'::TEXT[];
+	fontes := '{''RAIS/MTE'', ''CNIS/MPS''}'::TEXT[];
 	
 	RETURN QUERY 
 		SELECT dados, fontes;
