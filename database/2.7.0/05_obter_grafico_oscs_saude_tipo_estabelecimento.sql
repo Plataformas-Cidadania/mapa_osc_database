@@ -33,7 +33,14 @@ BEGIN
 	RETURN QUERY 
 		SELECT 
 			('[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG('{"label": "' || a.rotulo::TEXT || '", "value": ' || a.valor::TEXT || '}')::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), ',,', ','), '{'), '}') || '}]')::JSONB AS dados, 
-			('{' || TRIM(ARRAY_AGG(DISTINCT TRIM(a.fontes, '"{}')) FILTER (WHERE (TRIM(a.fontes) = '') IS false)::TEXT, '"{}') || '}')::TEXT[] AS fontes
+			('{' || TRIM(REPLACE(TRANSLATE((
+				SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) 
+				FROM (
+					SELECT DISTINCT UNNEST( 
+						('{' || TRIM(REPLACE(TRANSLATE(ARRAY_AGG(a.fontes)::TEXT, '\"', ''), ',,', ','), ',{}') || '}')::TEXT[] 
+					)
+				) AS a
+			)::TEXT, '\"', ''), ',,', ','), ',{}') || '}')::TEXT[] AS fontes
 		FROM (
 			SELECT 
 				CASE 
@@ -42,17 +49,10 @@ BEGIN
 					ELSE 'Outros'
 				END AS rotulo, 
 				COUNT(*) AS valor,
-				TRIM((
-					SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', ''))
-					FROM (
-						SELECT DISTINCT UNNEST(
-							ARRAY_CAT(
-								'{"MS/CNES"}'::TEXT[], 
-								ARRAY_AGG(DISTINCT TRIM(tb_osc.ft_identificador_osc, '"{}')) FILTER (WHERE (TRIM(tb_osc.ft_identificador_osc) = '') IS false)
-							)
-						)
-					) AS a
-				)::TEXT, '{}') AS fontes 
+				(
+					'MS/CNES,' || 
+					TRIM(ARRAY_AGG(DISTINCT TRIM(tb_osc.ft_identificador_osc)) FILTER (WHERE (TRIM(tb_osc.ft_identificador_osc) = '') IS false)::TEXT, '{}')
+				) AS fontes 
 			FROM osc.tb_osc 
 			INNER JOIN graph.tb_cnes 
 			ON tb_osc.cd_identificador_osc = TRANSLATE(tb_cnes.nu_cnpj_requerente, '-', '')::NUMERIC 

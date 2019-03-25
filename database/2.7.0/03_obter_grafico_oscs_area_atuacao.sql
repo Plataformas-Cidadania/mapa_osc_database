@@ -37,17 +37,10 @@ BEGIN
 				SELECT 
 					COALESCE(dc_area_atuacao.tx_nome_area_atuacao, 'Sem informação') AS rotulo, 
 					COUNT(*) AS valor, 
-					TRIM((
-						SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', ''))
-						FROM (
-							SELECT DISTINCT UNNEST(
-								ARRAY_CAT(
-									ARRAY_AGG(DISTINCT TRIM(tb_area_atuacao.ft_area_atuacao, '"{}')) FILTER (WHERE (TRIM(tb_area_atuacao.ft_area_atuacao) = '') IS false), 
-									ARRAY_AGG(DISTINCT TRIM(tb_osc.ft_identificador_osc, '"{}')) FILTER (WHERE (TRIM(tb_osc.ft_identificador_osc) = '') IS false)
-								)
-							)
-						) AS a
-					)::TEXT, '{}') AS fontes 
+					(
+						TRIM(ARRAY_AGG(DISTINCT TRIM(tb_area_atuacao.ft_area_atuacao)) FILTER (WHERE (TRIM(tb_area_atuacao.ft_area_atuacao) = '') IS false)::TEXT, '{}') || ',' || 
+						TRIM(ARRAY_AGG(DISTINCT TRIM(tb_osc.ft_identificador_osc)) FILTER (WHERE (TRIM(tb_osc.ft_identificador_osc) = '') IS false)::TEXT, '{}')
+					) AS fontes 
 				FROM osc.tb_osc 
 				LEFT JOIN osc.tb_area_atuacao 
 				ON tb_osc.id_osc = tb_area_atuacao.id_osc 

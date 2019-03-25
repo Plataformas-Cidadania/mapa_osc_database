@@ -10,37 +10,49 @@ BEGIN
 		RETURN QUERY 
 			SELECT 
 				('[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG(b.dados)::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), ',,', ','), '{'), '}') || '}]')::JSONB AS dados, 
-				('{' || REPLACE(TRIM(ARRAY_AGG(DISTINCT TRIM(b.fontes, '"{}')) FILTER (WHERE (TRIM(b.fontes) = '') IS false)::TEXT, '"{}'), ',"', ',') || '}')::TEXT[] AS fontes 
+				('{' || TRIM(REPLACE(TRANSLATE((
+					SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) 
+					FROM (
+						SELECT DISTINCT UNNEST( 
+							('{' || TRIM(REPLACE(TRANSLATE(ARRAY_AGG(b.fontes)::TEXT, '\"', ''), ',,', ','), ',{}') || '}')::TEXT[] 
+						)
+					) AS a
+				)::TEXT, '\"', ''), ',,', ','), ',{}') || '}')::TEXT[] AS fontes
 			FROM (
 				SELECT 
 					'{"key": "' || a.rotulo_1 || '", "values": ' || '[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG('{"label": "' || a.rotulo_2::TEXT || '", "value": ' || a.valor::TEXT || '}')::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), ',,', ','), '{'), '}') || '}]}' AS dados, 
-					REPLACE(TRIM(ARRAY_AGG(DISTINCT TRIM(a.fontes, '"{}')) FILTER (WHERE (TRIM(a.fontes) = '') IS false)::TEXT, '"{}'), ',"', ',') AS fontes
+					TRIM(REPLACE(TRANSLATE((
+						SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) 
+						FROM (
+							SELECT DISTINCT UNNEST( 
+								('{' || TRIM(REPLACE(TRANSLATE(ARRAY_AGG(a.fontes)::TEXT, '\"', ''), ',,', ','), ',{}') || '}')::TEXT[] 
+							)
+						) AS a
+					)::TEXT, '\"', ''), ',,', ','), ',{}') AS fontes
 				FROM (
 					SELECT 
 						a.rotulo_1, 
 						a.rotulo_2, 
 						SUM(a.valor) AS valor, 
-						TRIM(ARRAY_AGG(DISTINCT TRIM(a.fontes, '"{}')) FILTER (WHERE (TRIM(a.fontes) = '') IS false)::TEXT, '"{}') AS fontes
+						TRIM(REPLACE(TRANSLATE((
+							SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) 
+							FROM (
+								SELECT DISTINCT UNNEST( 
+									('{' || TRIM(REPLACE(TRANSLATE(ARRAY_AGG(a.fontes)::TEXT, '\"', ''), ',,', ','), ',{}') || '}')::TEXT[] 
+								)
+							) AS a
+						)::TEXT, '\"', ''), ',,', ','), ',{}') AS fontes
 					FROM (
 						SELECT * FROM (
 							SELECT 
 								COALESCE(ed_regiao.edre_nm_regiao, 'Sem informação') AS rotulo_1, 
 								COALESCE(tb_cnes.ds_gestao, 'Sem informação') AS rotulo_2, 
 								COUNT(*) AS valor, 
-								TRIM((
-									SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', ''))
-									FROM (
-										SELECT DISTINCT UNNEST(
-											ARRAY_CAT(
-												'{"MS/CNES"}'::TEXT[], 
-												ARRAY_CAT(
-													ARRAY_AGG(DISTINCT TRIM(tb_localizacao.ft_municipio, '"{}')) FILTER (WHERE (TRIM(tb_localizacao.ft_municipio) = '') IS false), 
-													ARRAY_AGG(DISTINCT TRIM(tb_osc.ft_identificador_osc, '"{}')) FILTER (WHERE (TRIM(tb_osc.ft_identificador_osc) = '') IS false)
-												)
-											)
-										)
-									) AS a
-								)::TEXT, '{}') AS fontes 
+								(
+									'MS/CNES,' || 
+									TRIM(ARRAY_AGG(DISTINCT TRIM(tb_localizacao.ft_municipio)) FILTER (WHERE (TRIM(tb_localizacao.ft_municipio) = '') IS false)::TEXT, '{}') || ',' || 
+									TRIM(ARRAY_AGG(DISTINCT TRIM(tb_osc.ft_identificador_osc)) FILTER (WHERE (TRIM(tb_osc.ft_identificador_osc) = '') IS false)::TEXT, '{}')
+								) AS fontes 
 							FROM osc.tb_osc 
 							INNER JOIN graph.tb_cnes 
 							ON tb_osc.cd_identificador_osc = TRANSLATE(tb_cnes.nu_cnpj_requerente, '-', '')::NUMERIC 
@@ -113,37 +125,49 @@ BEGIN
 		RETURN QUERY 
 			SELECT 
 				('[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG(b.dados)::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), ',,', ','), '{'), '}') || '}]')::JSONB AS dados, 
-				('{' || REPLACE(TRIM(ARRAY_AGG(DISTINCT TRIM(b.fontes, '"{}')) FILTER (WHERE (TRIM(b.fontes) = '') IS false)::TEXT, '"{}'), ',"', ',') || '}')::TEXT[] AS fontes 
+				('{' || TRIM(REPLACE(TRANSLATE((
+					SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) 
+					FROM (
+						SELECT DISTINCT UNNEST( 
+							('{' || TRIM(REPLACE(TRANSLATE(ARRAY_AGG(b.fontes)::TEXT, '\"', ''), ',,', ','), ',{}') || '}')::TEXT[] 
+						)
+					) AS a
+				)::TEXT, '\"', ''), ',,', ','), ',{}') || '}')::TEXT[] AS fontes
 			FROM (
 				SELECT 
 					'{"key": "' || a.rotulo_2 || '", "values": ' || '[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG('{"label": "' || a.rotulo_1::TEXT || '", "value": ' || a.valor::TEXT || '}')::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), ',,', ','), '{'), '}') || '}]}' AS dados, 
-					REPLACE(TRIM(ARRAY_AGG(DISTINCT TRIM(a.fontes, '"{}')) FILTER (WHERE (TRIM(a.fontes) = '') IS false)::TEXT, '"{}'), ',"', ',') AS fontes
+					TRIM(REPLACE(TRANSLATE((
+						SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) 
+						FROM (
+							SELECT DISTINCT UNNEST( 
+								('{' || TRIM(REPLACE(TRANSLATE(ARRAY_AGG(a.fontes)::TEXT, '\"', ''), ',,', ','), ',{}') || '}')::TEXT[] 
+							)
+						) AS a
+					)::TEXT, '\"', ''), ',,', ','), ',{}') AS fontes
 				FROM (
 					SELECT 
 						a.rotulo_1, 
 						a.rotulo_2, 
 						SUM(a.valor) AS valor, 
-						TRIM(ARRAY_AGG(DISTINCT TRIM(a.fontes, '"{}')) FILTER (WHERE (TRIM(a.fontes) = '') IS false)::TEXT, '"{}') AS fontes
+						TRIM(REPLACE(TRANSLATE((
+							SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) 
+							FROM (
+								SELECT DISTINCT UNNEST( 
+									('{' || TRIM(REPLACE(TRANSLATE(ARRAY_AGG(a.fontes)::TEXT, '\"', ''), ',,', ','), ',{}') || '}')::TEXT[] 
+								)
+							) AS a
+						)::TEXT, '\"', ''), ',,', ','), ',{}') AS fontes
 					FROM (
 						SELECT * FROM (
 							SELECT 
 								COALESCE(ed_regiao.edre_nm_regiao, 'Sem informação') AS rotulo_1, 
 								COALESCE(tb_cnes.ds_gestao, 'Sem informação') AS rotulo_2, 
 								COUNT(*) AS valor, 
-								TRIM((
-									SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', ''))
-									FROM (
-										SELECT DISTINCT UNNEST(
-											ARRAY_CAT(
-												'{"MS/CNES"}'::TEXT[], 
-												ARRAY_CAT(
-													ARRAY_AGG(DISTINCT TRIM(tb_localizacao.ft_municipio, '"{}')) FILTER (WHERE (TRIM(tb_localizacao.ft_municipio) = '') IS false), 
-													ARRAY_AGG(DISTINCT TRIM(tb_osc.ft_identificador_osc, '"{}')) FILTER (WHERE (TRIM(tb_osc.ft_identificador_osc) = '') IS false)
-												)
-											)
-										)
-									) AS a
-								)::TEXT, '{}') AS fontes 
+								(
+									'MS/CNES,' || 
+									TRIM(ARRAY_AGG(DISTINCT TRIM(tb_localizacao.ft_municipio)) FILTER (WHERE (TRIM(tb_localizacao.ft_municipio) = '') IS false)::TEXT, '{}') || ',' || 
+									TRIM(ARRAY_AGG(DISTINCT TRIM(tb_osc.ft_identificador_osc)) FILTER (WHERE (TRIM(tb_osc.ft_identificador_osc) = '') IS false)::TEXT, '{}')
+								) AS fontes 
 							FROM osc.tb_osc 
 							INNER JOIN graph.tb_cnes 
 							ON tb_osc.cd_identificador_osc = TRANSLATE(tb_cnes.nu_cnpj_requerente, '-', '')::NUMERIC 
@@ -207,7 +231,7 @@ BEGIN
 						SELECT 'Sul'::CHARACTER VARYING, 'Sem informação'::TEXT, 0::BIGINT, null::TEXT
 					) AS a 
 					GROUP BY rotulo_1, rotulo_2 
-					ORDER BY rotulo_1, rotulo_2
+					ORDER BY rotulo_2, rotulo_1
 				) AS a 
 				GROUP BY a.rotulo_2
 			) AS b;
