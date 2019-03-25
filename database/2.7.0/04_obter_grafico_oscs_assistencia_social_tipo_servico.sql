@@ -9,7 +9,14 @@ BEGIN
 	RETURN QUERY 
 		SELECT 
 			('[{' || RTRIM(LTRIM(REPLACE(REPLACE(REPLACE(REPLACE(REPLACE((TRANSLATE(ARRAY_AGG('{"label": "' || a.rotulo::TEXT || '", "value": ' || a.valor::TEXT || '}')::TEXT, '\', '') || '}'), '""', '"'), '}",', '},'), '"}', '}'), '"{', '{'), ',,', ','), '{'), '}') || '}]')::JSONB AS dados, 
-			('{' || TRIM(ARRAY_AGG(DISTINCT TRIM(a.fontes, '"{}')) FILTER (WHERE (TRIM(a.fontes) = '') IS false)::TEXT, '"{}') || '}')::TEXT[] AS fontes 
+			('{' || TRIM(REPLACE(TRANSLATE((
+				SELECT ARRAY_AGG(TRANSLATE(a::TEXT, '()', '')) 
+				FROM (
+					SELECT DISTINCT UNNEST( 
+						('{' || TRIM(REPLACE(TRANSLATE(ARRAY_AGG(a.fontes)::TEXT, '\"', ''), ',,', ','), ',{}') || '}')::TEXT[] 
+					)
+				) AS a
+			)::TEXT, '\"', ''), ',,', ','), ',{}') || '}')::TEXT[] AS fontes
 		FROM (
 			SELECT (
 				CASE 
