@@ -291,6 +291,7 @@ BEGIN
 										WHERE localidade = id_localidade::TEXT
 										AND fonte_recursos = a.fonte_recursos
 										GROUP BY ano
+										ORDER BY x
 									) AS a
 								) AS values
 							FROM analysis.vw_perfil_localidade_repasse_recursos AS a
