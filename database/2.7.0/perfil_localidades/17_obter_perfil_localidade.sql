@@ -156,6 +156,7 @@ BEGIN
 							SELECT ano_fundacao AS x, quantidade_oscs AS y
 							FROM analysis.vw_perfil_localidade_evolucao_anual
 							WHERE localidade = id_localidade::TEXT
+							ORDER BY x
 						) AS a
 					) AS values
 			) AS a
