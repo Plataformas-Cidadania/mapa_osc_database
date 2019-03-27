@@ -1,4 +1,4 @@
--- DROP TABLE portal.tb_acesso_ip;
+DROP TABLE IF EXISTS portal.tb_acesso_ip;
 
 CREATE TABLE portal.tb_acesso_ip
 (
