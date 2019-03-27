@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS syst.tb_tipo_grafico;
+
 CREATE TABLE syst.tb_tipo_grafico(
 	id_grafico SERIAL, 
 	nome_tipo_grafico TEXT, 
