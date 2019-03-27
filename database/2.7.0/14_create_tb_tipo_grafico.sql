@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS syst.tb_tipo_grafico;
+DROP TABLE IF EXISTS syst.tb_tipo_grafico CASCADE;
 
 CREATE TABLE syst.tb_tipo_grafico(
 	id_grafico SERIAL, 
