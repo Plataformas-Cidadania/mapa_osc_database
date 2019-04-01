@@ -73,11 +73,8 @@ BEGIN
 	FROM analysis.vw_perfil_localidade_ranking_quantidade_osc AS a
 	INNER JOIN analysis.vw_perfil_localidade_caracteristicas AS b
 	ON a.localidade = b.localidade
-	WHERE a.rank = (
-		SELECT MIN(rank)
-		FROM analysis.vw_perfil_localidade_ranking_quantidade_osc
-		WHERE localidade::INTEGER > 99
-	);
+	WHERE a.rank = 1
+	AND tipo_rank = 'municipio';
 	
 	SELECT INTO localidades_ultimo_colocado_quantidade_osc_municipio, valor_ultimo_colocado_quantidade_osc_municipio
 		ARRAY_AGG(b.nome_localidade), MAX(a.nr_quantidade_osc)
@@ -88,18 +85,16 @@ BEGIN
 		SELECT MAX(rank)
 		FROM analysis.vw_perfil_localidade_ranking_quantidade_osc
 		WHERE localidade::INTEGER > 99
-	);
+	)
+	AND tipo_rank = 'municipio';
 
 	SELECT INTO localidades_primeiro_colocado_quantidade_osc_estado, valor_primeiro_colocado_quantidade_osc_estado
 		ARRAY_AGG(b.nome_localidade), MAX(a.nr_quantidade_osc)
 	FROM analysis.vw_perfil_localidade_ranking_quantidade_osc AS a
 	INNER JOIN analysis.vw_perfil_localidade_caracteristicas AS b
 	ON a.localidade = b.localidade
-	WHERE a.rank = (
-		SELECT MIN(rank)
-		FROM analysis.vw_perfil_localidade_ranking_quantidade_osc
-		WHERE localidade::INTEGER BETWEEN 10 AND 99
-	);
+	WHERE a.rank = 1
+	AND tipo_rank = 'estado';
 	
 	SELECT INTO localidades_ultimo_colocado_quantidade_osc_estado, valor_ultimo_colocado_quantidade_osc_estado
 		ARRAY_AGG(b.nome_localidade), MAX(a.nr_quantidade_osc)
@@ -110,7 +105,8 @@ BEGIN
 		SELECT MAX(rank)
 		FROM analysis.vw_perfil_localidade_ranking_quantidade_osc
 		WHERE localidade::INTEGER BETWEEN 10 AND 99
-	);
+	)
+	AND tipo_rank = 'estado';
 
 	SELECT INTO evolucao_anual_json
 		row_to_json(c)
