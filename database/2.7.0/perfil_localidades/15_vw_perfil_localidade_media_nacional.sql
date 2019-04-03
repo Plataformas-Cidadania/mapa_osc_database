@@ -101,7 +101,7 @@ SELECT
 	) AS valor
 FROM (
 	SELECT
-		'Trabalhadores com vínculos'::TEXT AS tipo_trabalhadores,
+		'Trabalhadores formais com vínculos'::TEXT AS tipo_trabalhadores,
 		SUM(total) AS total,
 		SUM(vinculos)::DOUBLE PRECISION AS quantidade_trabalhadores
 	FROM analysis.vw_perfil_localidade_trabalhadores
