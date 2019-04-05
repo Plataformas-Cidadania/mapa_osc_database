@@ -1,13 +1,13 @@
 DROP FUNCTION IF EXISTS cache.obter_cache_exportar(INTEGER);
 
 CREATE OR REPLACE FUNCTION cache.obter_cache_exportar(id INTEGER) RETURNS TABLE (
-	resultado JSONB, 
+	resultado TEXT, 
 	mensagem TEXT, 
 	codigo INTEGER
 ) AS $$ 
 
 BEGIN 
-    SELECT INTO resultado to_jsonb(tx_dado)
+    SELECT INTO resultado tx_dado
 		FROM cache.tb_exportar
         WHERE id_exportar = id;
 
