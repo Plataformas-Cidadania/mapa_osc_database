@@ -1,15 +1,15 @@
-DROP FUNCTION IF EXISTS cache.obter_cache_exportar(INTEGER);
+DROP FUNCTION IF EXISTS cache.obter_cache_exportar(TEXT);
 
-CREATE OR REPLACE FUNCTION cache.obter_cache_exportar(id INTEGER) RETURNS TABLE (
+CREATE OR REPLACE FUNCTION cache.obter_cache_exportar(chave TEXT) RETURNS TABLE (
 	resultado TEXT, 
 	mensagem TEXT, 
 	codigo INTEGER
 ) AS $$ 
 
 BEGIN 
-    SELECT INTO resultado tx_dado
+    SELECT INTO resultado tx_valor
 		FROM cache.tb_exportar
-        WHERE id_exportar = id;
+        WHERE tx_chave = chave;
 
 	IF resultado IS NOT null THEN
 		codigo := 200;
