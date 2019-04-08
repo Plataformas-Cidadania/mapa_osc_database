@@ -5,9 +5,12 @@ CREATE OR REPLACE FUNCTION cache.inserir_cache_exportar(chave TEXT, valor TEXT) 
 	codigo INTEGER
 ) AS $$ 
 
+DECLARE
+	resultado INTEGER;
+
 BEGIN 
 	INSERT INTO cache.tb_exportar(tx_chave, tx_valor) 
-		VALUES (chave, valor);
+		VALUES (chave, valor) RETURNING id_exportar INTO resultado;
 
 	IF resultado IS NOT null THEN
 		codigo := 200;
@@ -21,7 +24,12 @@ BEGIN
 
 EXCEPTION
 	WHEN others THEN
-		codigo := 400;
+		IF SQLSTATE = '23505' THEN
+			codigo := 200;
+		ELSE
+			codigo := 400;
+		END IF;
+
 		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, null, null, null, false, null) AS a;
 		RETURN NEXT;
 END;
