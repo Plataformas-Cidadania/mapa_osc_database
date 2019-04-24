@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS cache.obter_geo_idh_municipio();
+DROP FUNCTION IF EXISTS cache.obter_geo_idh_municipio_por_estado(INTEGER);
 
-CREATE OR REPLACE FUNCTION cache.obter_geo_idh_municipio() RETURNS TABLE (
+CREATE OR REPLACE FUNCTION cache.obter_geo_idh_municipio_por_estado(cd_estado INTEGER) RETURNS TABLE (
 	resultado JSONB, 
 	mensagem TEXT, 
 	codigo INTEGER
@@ -24,6 +24,7 @@ BEGIN
 		FROM spat.ed_municipio AS a
 		INNER JOIN spat.ed_uf AS b
 		ON a.eduf_cd_uf = b.eduf_cd_uf
+		WHERE a.eduf_cd_uf = cd_estado
 		LIMIT 3
 	) AS a;
 
@@ -46,4 +47,4 @@ EXCEPTION
 END;
 $$ LANGUAGE 'plpgsql';
 
-SELECT * FROM cache.obter_geo_idh_municipio();
+SELECT * FROM cache.obter_geo_idh_municipio_por_estado(11::INTEGER);
