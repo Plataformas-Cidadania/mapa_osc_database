@@ -1,0 +1,2 @@
+INSERT INTO syst.dc_fonte_dados(cd_sigla_fonte_dados, tx_nome_fonte_dados, tx_descricao_fonte_dados,tx_referencia_fonte_dados, nr_prioridade)
+    VALUES ('SIGABR', 'SIGA Brasil', 'O SIGA Brasil é um sistema de informações sobre orçamento público federal, que permite acesso amplo e facilitado aos dados do Sistema Integrado de Administração Financeira-SIAFI e a outras bases de dados sobre planos e orçamentos públicos. Esse acesso pode ser realizado pelo SIGA Brasil Painéis e pelo SIGA Brasil Relatórios.', 'https://www12.senado.leg.br/orcamento/sigabrasil', '6');
