@@ -361,13 +361,21 @@ BEGIN
 		) AS b
 	) AS c;
 
-	RAISE NOTICE '%', area_atuacao_json->'area_atuacao'->'tx_porcentagem_maior';
-	/*
-	SELECT media 
-	FROM analysis.vw_perfil_localidade_area_atuacao_nacional
-	WHERE area_atuacao = 'Assistência social';
-	*/
+	area_atuacao_json = ('{"area_atuacao": ' || (area_atuacao_json->'area_atuacao' || '{"media_nacional": []}')::TEXT || '}')::JSON;
 
+	FOR record IN
+		SELECT json_array_elements_text((area_atuacao_json->'area_atuacao'->'tx_porcentagem_maior')::JSON) AS nome_area_atuacao
+	LOOP
+		 area_atuacao_json := jsonb_insert(
+			(area_atuacao_json)::JSONB,
+			'{area_atuacao, media_nacional, 0}',
+			('{"tx_area_atuacao": "' || record.nome_area_atuacao || '", "nr_area_atuacao": "' || (
+				SELECT media FROM analysis.vw_perfil_localidade_area_atuacao_nacional WHERE area_atuacao = record.nome_area_atuacao
+			)::TEXT || '"}')::JSONB,
+			true
+		);
+	END LOOP;
+	
 	area_atuacao_json := COALESCE(area_atuacao_json, '{"area_atuacao": null}'::JSONB);
 	resultado := resultado || area_atuacao_json;
 	

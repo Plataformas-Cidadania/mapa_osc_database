@@ -3,13 +3,13 @@ CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_area_atuacao_nacional AS
 
 SELECT 
 	area_atuacao,
-	SUM(quantidade_oscs) AS quantidade_osc,
+	SUM(a.quantidade_oscs) AS quantidade_osc,
     (
-		MAX(quantidade_oscs)
+		MAX(a.quantidade_oscs)
 		/ (SELECT SUM(quantidade_oscs) FROM analysis.vw_perfil_localidade_area_atuacao AS c)
 		* 100
-	) AS media
-FROM analysis.vw_perfil_localidade_area_atuacao
+	) AS valor
+FROM analysis.vw_perfil_localidade_area_atuacao AS a
 GROUP BY area_atuacao;
 
 CREATE INDEX ix_area_atuacao_vw_perfil_localidade_area_atuacao_nacional
