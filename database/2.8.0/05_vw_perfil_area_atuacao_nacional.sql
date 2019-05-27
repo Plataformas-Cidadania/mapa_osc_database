@@ -1,12 +1,12 @@
 DROP MATERIALIZED VIEW IF EXISTS analysis.vw_perfil_localidade_area_atuacao_nacional CASCADE;
 CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_area_atuacao_nacional AS 
 
-SELECT 
+SELECT
 	area_atuacao,
-	SUM(a.quantidade_oscs) AS quantidade_osc,
-    (
-		MAX(a.quantidade_oscs)
-		/ (SELECT SUM(quantidade_oscs) FROM analysis.vw_perfil_localidade_area_atuacao AS c)
+	SUM(quantidade_oscs) AS quantidade_osc,
+	(
+		SUM(quantidade_oscs)
+		/ (SELECT SUM(quantidade_oscs) FROM analysis.vw_perfil_localidade_area_atuacao)
 		* 100
 	) AS valor
 FROM analysis.vw_perfil_localidade_area_atuacao AS a
