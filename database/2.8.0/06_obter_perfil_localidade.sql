@@ -370,7 +370,7 @@ BEGIN
 			(area_atuacao_json)::JSONB,
 			'{area_atuacao, media_nacional, 0}',
 			('{"tx_area_atuacao": "' || record.nome_area_atuacao || '", "nr_area_atuacao": "' || (
-				SELECT media FROM analysis.vw_perfil_localidade_area_atuacao_nacional WHERE area_atuacao = record.nome_area_atuacao
+				SELECT valor FROM analysis.vw_perfil_localidade_area_atuacao_nacional WHERE area_atuacao = record.nome_area_atuacao
 			)::TEXT || '"}')::JSONB,
 			true
 		);
