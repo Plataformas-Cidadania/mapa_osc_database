@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS analysis.obter_perfil_localidade(INTEGER) CASCADE;
+DROP FUNCTION IF EXISTS analysis.obter_perfil_localidade2(INTEGER) CASCADE;
 
-CREATE OR REPLACE FUNCTION analysis.obter_perfil_localidade(id_localidade INTEGER) RETURNS TABLE (
+CREATE OR REPLACE FUNCTION analysis.obter_perfil_localidade2(id_localidade INTEGER) RETURNS TABLE (
 	resultado JSONB,
 	mensagem TEXT,
 	codigo INTEGER
@@ -14,6 +14,7 @@ DECLARE
 	repasse_recursos_json JSONB;
 	area_atuacao_json JSONB;
 	trabalhadores_json JSONB;
+	orcamento_json JSONB;
 	
 	localidades_primeiro_colocado_quantidade_osc_municipio TEXT[];
 	valor_primeiro_colocado_quantidade_osc_municipio INTEGER;
@@ -57,7 +58,9 @@ BEGIN
 				nr_quantidade_recursos,
 				ft_quantidade_recursos,
 				nr_quantidade_projetos,
-				ft_quantidade_projetos
+				ft_quantidade_projetos,
+				nr_orcamento_empenhado,
+				ft_orcamento_empenhado
 			FROM analysis.vw_perfil_localidade_caracteristicas
 			WHERE localidade = id_localidade::TEXT
 		) AS a
@@ -435,6 +438,30 @@ BEGIN
 	trabalhadores_json := COALESCE(trabalhadores_json, '{"area_atuacao": null}'::JSONB);
 	resultado := resultado || trabalhadores_json;
 	
+	-- ==================== Orçamento ==================== --
+
+	SELECT INTO orcamento_json
+		row_to_json(c)
+	FROM (
+		SELECT
+			b AS orcamento
+		FROM (
+			SELECT
+				array_agg(a) AS series_1,
+				'SIGABR' AS fontes
+			FROM (
+				SELECT
+					ano,
+					empenhado
+				FROM analysis.vw_perfil_localidade_orcamento
+				WHERE localidade = id_localidade::TEXT
+			) AS a
+		) AS b
+	) AS c;
+
+	orcamento_json := COALESCE(orcamento_json, '{"orcamento": null}'::JSONB);
+	resultado := resultado || orcamento_json;
+
 	/* ------------------------------ RESULTADO ------------------------------ */
 	codigo := 200;
 	mensagem := 'Perfil de localidade retornado.';
