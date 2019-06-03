@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS analysis.obter_perfil_localidade2(INTEGER) CASCADE;
+DROP FUNCTION IF EXISTS analysis.obter_perfil_localidade(INTEGER) CASCADE;
 
-CREATE OR REPLACE FUNCTION analysis.obter_perfil_localidade2(id_localidade INTEGER) RETURNS TABLE (
+CREATE OR REPLACE FUNCTION analysis.obter_perfil_localidade(id_localidade INTEGER) RETURNS TABLE (
 	resultado JSONB,
 	mensagem TEXT,
 	codigo INTEGER
@@ -381,64 +381,56 @@ BEGIN
 	
 	-- ==================== Trabalhadores ==================== --
 	
-	FOR record IN
-		SELECT dado, valor
-		FROM analysis.vw_perfil_localidade_media_nacional
-		WHERE tipo_dado = 'maior_trabalhadores'
-	LOOP
-		SELECT INTO trabalhadores_json
-			row_to_json(c) 
+	SELECT INTO trabalhadores_json
+		row_to_json(c) 
+	FROM (
+		SELECT
+			row_to_json(b) AS trabalhadores
 		FROM (
 			SELECT
-				row_to_json(b) AS trabalhadores
-			FROM (
-				SELECT
-					record.dado AS tx_porcentagem_maior_media_nacional,
-					ROUND(record.valor::DECIMAL, 2)::DOUBLE PRECISION AS nr_porcentagem_maior_media_nacional,
-					a.tipo_trabalhadores AS tx_porcentagem_maior,
-					ROUND(a.porcertagem_maior::DECIMAL, 2)::DOUBLE PRECISION AS nr_porcentagem_maior,
-					(
-						SELECT json_agg(a)
+				a.tipo_trabalhadores AS tx_porcentagem_maior,
+				ROUND(a.porcertagem_maior::DECIMAL, 2)::DOUBLE PRECISION AS nr_porcentagem_maior,
+				(
+					SELECT json_agg(a)
+					FROM (
+						SELECT
+							'Trabalhadores formais com vínculos' AS label,
+							vinculos AS value
+						FROM analysis.vw_perfil_localidade_trabalhadores
+						WHERE localidade = id_localidade::TEXT
+						UNION
+						SELECT
+							'Trabalhadores com deficiência' AS label,
+							deficiencia AS value
+						FROM analysis.vw_perfil_localidade_trabalhadores
+						WHERE localidade = id_localidade::TEXT
+						UNION
+						SELECT
+							'Trabalhadores voluntários' AS label,
+							voluntarios AS value
+						FROM analysis.vw_perfil_localidade_trabalhadores
+						WHERE localidade = id_localidade::TEXT
+					) AS a
+				) AS series_1,
+				(
+					SELECT ARRAY_AGG(b.fontes) FROM (
+						SELECT 
+							DISTINCT UNNEST(a.fontes) AS fontes
 						FROM (
-							SELECT
-								'Trabalhadores formais com vínculos' AS label,
-								vinculos AS value
-							FROM analysis.vw_perfil_localidade_trabalhadores
-							WHERE localidade = id_localidade::TEXT
+							SELECT a.fontes
+							FROM analysis.vw_perfil_localidade_trabalhadores AS a
+							WHERE a.localidade = id_localidade::TEXT
 							UNION
-							SELECT
-								'Trabalhadores com deficiência' AS label,
-								deficiencia AS value
-							FROM analysis.vw_perfil_localidade_trabalhadores
-							WHERE localidade = id_localidade::TEXT
-							UNION
-							SELECT
-								'Trabalhadores voluntários' AS label,
-								voluntarios AS value
-							FROM analysis.vw_perfil_localidade_trabalhadores
-							WHERE localidade = id_localidade::TEXT
+							SELECT a.fontes
+							FROM analysis.vw_perfil_localidade_maior_trabalhadores AS a
+							WHERE a.localidade = id_localidade::TEXT
 						) AS a
-					) AS series_1,
-					(
-						SELECT ARRAY_AGG(b.fontes) FROM (
-							SELECT 
-								DISTINCT UNNEST(a.fontes) AS fontes
-							FROM (
-								SELECT a.fontes
-								FROM analysis.vw_perfil_localidade_trabalhadores AS a
-								WHERE a.localidade = id_localidade::TEXT
-								UNION
-								SELECT a.fontes
-								FROM analysis.vw_perfil_localidade_maior_trabalhadores AS a
-								WHERE a.localidade = id_localidade::TEXT
-							) AS a
-						) AS b
-					) AS fontes
-				FROM analysis.vw_perfil_localidade_maior_trabalhadores AS a
-				WHERE localidade = id_localidade::TEXT
-			) AS b
-		) AS c;
-	END LOOP;
+					) AS b
+				) AS fontes
+			FROM analysis.vw_perfil_localidade_maior_trabalhadores AS a
+			WHERE localidade = id_localidade::TEXT
+		) AS b
+	) AS c;
 	
 	trabalhadores_json := COALESCE(trabalhadores_json, '{"area_atuacao": null}'::JSONB);
 	resultado := resultado || trabalhadores_json;
@@ -458,5 +450,3 @@ EXCEPTION
 END;
 
 $$ LANGUAGE 'plpgsql';
-
-SELECT * FROM analysis.obter_perfil_localidade2(1100064::INTEGER);
