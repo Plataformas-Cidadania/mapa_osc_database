@@ -1,6 +1,6 @@
-DROP FUNCTION IF EXISTS analysis.obter_perfil_localidade2(INTEGER) CASCADE;
+DROP FUNCTION IF EXISTS analysis.obter_perfil_localidade(INTEGER) CASCADE;
 
-CREATE OR REPLACE FUNCTION analysis.obter_perfil_localidade2(id_localidade INTEGER) RETURNS TABLE (
+CREATE OR REPLACE FUNCTION analysis.obter_perfil_localidade(id_localidade INTEGER) RETURNS TABLE (
 	resultado JSONB,
 	mensagem TEXT,
 	codigo INTEGER
