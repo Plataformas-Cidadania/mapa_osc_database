@@ -142,7 +142,7 @@ LEFT JOIN (
 	SELECT
 		COALESCE(SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1), 'Sem informação')::TEXT AS localidade,
 		SUM(tb_orcamento_def.nr_vl_empenhado_def) AS nr_orcamento_empenhado,
-		'{"SIGABR"}'::TEXT[] AS ft_orcamento_empenhado
+		'{"SIGA Brasil 2010-2018, Valores deflacionados para dez/2018, IPCA IBGE 2018"}'::TEXT[] AS fontes
 	FROM osc.tb_osc
 	LEFT JOIN graph.tb_orcamento_def
 	ON tb_osc.cd_identificador_osc = tb_orcamento_def.nr_orcamento_cnpj
@@ -300,7 +300,7 @@ LEFT JOIN (
 	SELECT
 		COALESCE(SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2), 'Sem informação')::TEXT AS localidade,
 		SUM(tb_orcamento_def.nr_vl_empenhado_def) AS nr_orcamento_empenhado,
-		'{"SIGABR"}'::TEXT[] AS ft_orcamento_empenhado
+		'{"SIGA Brasil 2010-2018, Valores deflacionados para dez/2018, IPCA IBGE 2018"}'::TEXT[] AS fontes
 	FROM osc.tb_osc
 	LEFT JOIN graph.tb_orcamento_def
 	ON tb_osc.cd_identificador_osc = tb_orcamento_def.nr_orcamento_cnpj
@@ -460,7 +460,7 @@ LEFT JOIN (
 	SELECT
 		COALESCE(tb_localizacao.cd_municipio::TEXT, 'Sem informação')::TEXT AS localidade,
 		SUM(tb_orcamento_def.nr_vl_empenhado_def) AS nr_orcamento_empenhado,
-		'{"SIGABR"}'::TEXT[] AS ft_orcamento_empenhado
+		'{"SIGA Brasil 2010-2018, Valores deflacionados para dez/2018, IPCA IBGE 2018"}'::TEXT[] AS fontes
 	FROM osc.tb_osc
 	LEFT JOIN graph.tb_orcamento_def
 	ON tb_osc.cd_identificador_osc = tb_orcamento_def.nr_orcamento_cnpj

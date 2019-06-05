@@ -6,7 +6,7 @@ SELECT
 	COALESCE(ed_regiao.edre_nm_regiao, 'Sem informação')::TEXT AS nome_localidade,
 	tb_orcamento_def.nr_orcamento_ano AS ano,
 	SUM(tb_orcamento_def.nr_vl_empenhado_def) AS empenhado,
-	'{"SIGABR"}'::TEXT[] AS fontes
+	'{"SIGA Brasil 2010-2018, Valores deflacionados para dez/2018, IPCA IBGE 2018"}'::TEXT[] AS fontes
 FROM graph.tb_orcamento_def
 LEFT JOIN osc.tb_osc
 ON tb_orcamento_def.nr_orcamento_cnpj = tb_osc.cd_identificador_osc
@@ -26,7 +26,7 @@ SELECT
 	COALESCE(ed_regiao.edre_nm_regiao, 'Sem informação')::TEXT AS nome_localidade,
 	tb_orcamento_def.nr_orcamento_ano AS ano,
 	SUM(tb_orcamento_def.nr_vl_empenhado_def) AS empenhado,
-	'{"SIGABR"}'::TEXT[] AS fontes
+	'{"SIGA Brasil 2010-2018, Valores deflacionados para dez/2018, IPCA IBGE 2018"}'::TEXT[] AS fontes
 FROM graph.tb_orcamento_def
 LEFT JOIN osc.tb_osc
 ON tb_orcamento_def.nr_orcamento_cnpj = tb_osc.cd_identificador_osc
@@ -46,7 +46,7 @@ SELECT
 	COALESCE(ed_regiao.edre_nm_regiao, 'Sem informação')::TEXT AS nome_localidade,
 	tb_orcamento_def.nr_orcamento_ano AS ano,
 	SUM(tb_orcamento_def.nr_vl_empenhado_def) AS empenhado,
-	'{"SIGABR"}'::TEXT[] AS fontes
+	'{"SIGA Brasil 2010-2018, Valores deflacionados para dez/2018, IPCA IBGE 2018"}'::TEXT[] AS fontes
 FROM graph.tb_orcamento_def
 LEFT JOIN osc.tb_osc
 ON tb_orcamento_def.nr_orcamento_cnpj = tb_osc.cd_identificador_osc

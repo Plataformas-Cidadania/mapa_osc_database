@@ -448,7 +448,7 @@ BEGIN
 		FROM (
 			SELECT
 				array_agg(a) AS series_1,
-				'SIGABR' AS fontes
+				'{"SIGA Brasil 2010-2018, Valores deflacionados para dez/2018, IPCA IBGE 2018"}' AS fontes
 			FROM (
 				SELECT
 					ano,
