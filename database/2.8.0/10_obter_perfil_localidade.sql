@@ -374,7 +374,7 @@ BEGIN
 			(area_atuacao_json)::JSONB,
 			'{area_atuacao, media_nacional, 0}',
 			('{"tx_area_atuacao": "' || record.nome_area_atuacao || '", "nr_area_atuacao": "' || (
-				SELECT valor FROM analysis.vw_perfil_localidade_area_atuacao_nacional WHERE area_atuacao = record.nome_area_atuacao
+				SELECT ROUND(CAST(valor as NUMERIC), 2) FROM analysis.vw_perfil_localidade_area_atuacao_nacional WHERE area_atuacao = record.nome_area_atuacao
 			)::TEXT || '"}')::JSONB,
 			true
 		);
@@ -445,7 +445,7 @@ BEGIN
 		row_to_json(c)
 	FROM (
 		SELECT
-			row_to_json(b) AS series_1
+			('[' || row_to_json(b)::TEXT || ']')::JSON AS series_1
 		FROM (
 		SELECT
 			'Orçamento empenhado'::TEXT AS key,
