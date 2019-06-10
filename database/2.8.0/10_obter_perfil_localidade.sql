@@ -438,47 +438,48 @@ BEGIN
 	
 	trabalhadores_json := COALESCE(trabalhadores_json, '{"area_atuacao": null}'::JSONB);
 	resultado := resultado || trabalhadores_json;
-	
+
 	-- ==================== Orçamento ==================== --
 
 	SELECT INTO orcamento_json
-		row_to_json(c)
+		row_to_json(b)
 	FROM (
 		SELECT
-			b AS orcamento
-		FROM (
-			SELECT
-				array_agg(a) AS series_1
-			FROM (
+			'Orçamento empenhado'::TEXT AS key,
+			''::TEXT AS tipo_valor,
+			true::BOOLEAN AS area,
+			'#99d8ff'::TEXT AS color,
+			(
 				SELECT
-					ano,
-					empenhado
-				FROM analysis.vw_perfil_localidade_orcamento
-				WHERE localidade = id_localidade::TEXT
-			) AS a
-		) AS b
-	) AS c;
-
-	orcamento_json = ('{"orcamento": ' || (orcamento_json->'orcamento' || '{"fontes": ["SIGA Brasil 2010-2018, Valores deflacionados para dez/2018, IPCA IBGE 2018"]}')::TEXT || '}')::JSON;
+					array_agg(a) AS series_1
+				FROM (
+					SELECT
+						ano AS x,
+						empenhado AS y
+					FROM analysis.vw_perfil_localidade_orcamento
+					WHERE localidade = id_localidade::TEXT
+				) AS a
+			) AS values
+	) b;
 
 	IF id_localidade > 99 THEN
 		SELECT INTO media_orcamento media FROM analysis.vw_perfil_localidade_orcamento_media_nacional WHERE tipo_localidade = 'Município';
-		orcamento_json = '{"orcamento": ' || ((orcamento_json->'orcamento')::JSONB || ('{"media_municipal": "' || media_orcamento::TEXT || '"}')::JSONB)::TEXT || '}';
+		orcamento_json = '{"orcamento": ' || ((orcamento_json)::JSONB || ('{"media": "' || media_orcamento::TEXT || '"}')::JSONB)::TEXT || '}';
 
 	ELSIF id_localidade BETWEEN 10 AND 99 THEN
 		SELECT INTO media_orcamento media FROM analysis.vw_perfil_localidade_orcamento_media_nacional WHERE tipo_localidade = 'Estado';
-		orcamento_json = '{"orcamento": ' || ((orcamento_json->'orcamento')::JSONB || ('{"media_estadual": "' || media_orcamento::TEXT || '"}')::JSONB)::TEXT || '}';
+		orcamento_json = '{"orcamento": ' || ((orcamento_json)::JSONB || ('{"media": "' || media_orcamento::TEXT || '"}')::JSONB)::TEXT || '}';
 
 	ELSIF id_localidade BETWEEN 0 AND 9 THEN
 		SELECT INTO media_orcamento media FROM analysis.vw_perfil_localidade_orcamento_media_nacional WHERE tipo_localidade = 'Região';
-		orcamento_json = '{"orcamento": ' || ((orcamento_json->'orcamento')::JSONB || ('{"media_regional": "' || media_orcamento::TEXT || '"}')::JSONB)::TEXT || '}';
+		orcamento_json = '{"orcamento": ' || ((orcamento_json)::JSONB || ('{"media": "' || media_orcamento::TEXT || '"}')::JSONB)::TEXT || '}';
 
 	END IF;
 	
-	
-	
+	orcamento_json = ('{"orcamento": ' || (orcamento_json->'orcamento' || '{"fontes": ["SIGA Brasil 2010-2018, Valores deflacionados para dez/2018, IPCA IBGE 2018"]}')::TEXT || '}')::JSON;
+
 	orcamento_json := COALESCE(orcamento_json, '{"orcamento": null}'::JSONB);
-	
+
 	resultado := resultado || orcamento_json;
 
 	/* ------------------------------ RESULTADO ------------------------------ */
