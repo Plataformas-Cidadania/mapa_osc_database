@@ -42,7 +42,7 @@ BEGIN
 		ativo := null;
 		representacao := null;
 
-		SELECT INTO nome_fonte, prioridade cd_sigla_fonte_dados, nr_prioridade
+		SELECT INTO prioridade nr_prioridade
 		FROM syst.dc_fonte_dados
 		WHERE dc_fonte_dados.cd_sigla_fonte_dados = fonte
 		OR dc_fonte_dados.cd_sigla_fonte_dados = fonte_ajustada
