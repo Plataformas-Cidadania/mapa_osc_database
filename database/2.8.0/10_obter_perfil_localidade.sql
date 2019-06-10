@@ -442,13 +442,17 @@ BEGIN
 	-- ==================== Orçamento ==================== --
 
 	SELECT INTO orcamento_json
-		row_to_json(b)
+		row_to_json(c)
 	FROM (
+		SELECT
+			row_to_json(b) AS series_1
+		FROM (
 		SELECT
 			'Orçamento empenhado'::TEXT AS key,
 			''::TEXT AS tipo_valor,
 			true::BOOLEAN AS area,
 			'#99d8ff'::TEXT AS color,
+			'$' AS tipo_valor,
 			(
 				SELECT
 					array_agg(a) AS series_1
@@ -460,7 +464,8 @@ BEGIN
 					WHERE localidade = id_localidade::TEXT
 				) AS a
 			) AS values
-	) b;
+		) AS b
+	) c;
 
 	IF id_localidade > 99 THEN
 		SELECT INTO media_orcamento ROUND(CAST(media as NUMERIC), 2) FROM analysis.vw_perfil_localidade_orcamento_media_nacional WHERE tipo_localidade = 'Município';
