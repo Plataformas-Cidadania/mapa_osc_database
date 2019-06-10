@@ -27,7 +27,6 @@ DECLARE
 
 	maior_media_nacional_natureza_juridica TEXT[];
 	valor_maior_media_nacional_natureza_juridica DOUBLE PRECISION;
-
 	media_orcamento DOUBLE PRECISION;
 	
 BEGIN
@@ -449,8 +448,7 @@ BEGIN
 			b AS orcamento
 		FROM (
 			SELECT
-				array_agg(a) AS series_1,
-				'{"SIGA Brasil 2010-2018, Valores deflacionados para dez/2018, IPCA IBGE 2018"}' AS fontes
+				array_agg(a) AS series_1
 			FROM (
 				SELECT
 					ano,
@@ -461,18 +459,26 @@ BEGIN
 		) AS b
 	) AS c;
 
+	orcamento_json = ('{"orcamento": ' || (orcamento_json->'orcamento' || '{"fontes": ["SIGA Brasil 2010-2018, Valores deflacionados para dez/2018, IPCA IBGE 2018"]}')::TEXT || '}')::JSON;
+
 	IF id_localidade > 99 THEN
 		SELECT INTO media_orcamento media FROM analysis.vw_perfil_localidade_orcamento_media_nacional WHERE tipo_localidade = 'Município';
-	
+		orcamento_json = '{"orcamento": ' || ((orcamento_json->'orcamento')::JSONB || ('{"media_municipal": "' || media_orcamento::TEXT || '"}')::JSONB)::TEXT || '}';
+
 	ELSIF id_localidade BETWEEN 10 AND 99 THEN
 		SELECT INTO media_orcamento media FROM analysis.vw_perfil_localidade_orcamento_media_nacional WHERE tipo_localidade = 'Estado';
+		orcamento_json = '{"orcamento": ' || ((orcamento_json->'orcamento')::JSONB || ('{"media_estadual": "' || media_orcamento::TEXT || '"}')::JSONB)::TEXT || '}';
 
 	ELSIF id_localidade BETWEEN 0 AND 9 THEN
 		SELECT INTO media_orcamento media FROM analysis.vw_perfil_localidade_orcamento_media_nacional WHERE tipo_localidade = 'Região';
+		orcamento_json = '{"orcamento": ' || ((orcamento_json->'orcamento')::JSONB || ('{"media_regional": "' || media_orcamento::TEXT || '"}')::JSONB)::TEXT || '}';
 
-	orcamento_json := ('{"orcamento": ' || (orcamento_json->'area_atuacao' || '{"media_nacional": ' || media_orcamento::TEXT || '}')::TEXT || '}')::JSON;
+	END IF;
+	
+	
 	
 	orcamento_json := COALESCE(orcamento_json, '{"orcamento": null}'::JSONB);
+	
 	resultado := resultado || orcamento_json;
 
 	/* ------------------------------ RESULTADO ------------------------------ */
@@ -490,5 +496,3 @@ EXCEPTION
 END;
 
 $$ LANGUAGE 'plpgsql';
-
-SELECT * FROM analysis.obter_perfil_localidade(33::INTEGER);
