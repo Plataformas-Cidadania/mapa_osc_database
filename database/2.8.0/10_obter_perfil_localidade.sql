@@ -60,7 +60,7 @@ BEGIN
 				ft_quantidade_recursos,
 				nr_quantidade_projetos,
 				ft_quantidade_projetos,
-				ROUND(CAST(nr_orcamento_empenhado as NUMERIC), 2),
+				ROUND(CAST(nr_orcamento_empenhado as NUMERIC), 2) AS nr_orcamento_empenhado,
 				ft_orcamento_empenhado
 			FROM analysis.vw_perfil_localidade_caracteristicas
 			WHERE localidade = id_localidade::TEXT
