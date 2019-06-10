@@ -60,7 +60,7 @@ BEGIN
 				ft_quantidade_recursos,
 				nr_quantidade_projetos,
 				ft_quantidade_projetos,
-				nr_orcamento_empenhado,
+				ROUND(CAST(nr_orcamento_empenhado as NUMERIC), 2),
 				ft_orcamento_empenhado
 			FROM analysis.vw_perfil_localidade_caracteristicas
 			WHERE localidade = id_localidade::TEXT
@@ -269,9 +269,9 @@ BEGIN
 						FROM analysis.vw_perfil_localidade_media_repasse_recursos
 						WHERE localidade = id_localidade::TEXT
 					) AS nr_repasse_media,
-					ROUND(record.valor::DECIMAL, 2)::DOUBLE PRECISION AS nr_repasse_media_nacional,
+					ROUND(CAST(record.valor as NUMERIC), 2) AS nr_repasse_media_nacional,
 					tipo_repasse AS tx_maior_tipo_repasse,
-					ROUND(porcertagem_maior::DECIMAL, 2)::DOUBLE PRECISION AS nr_porcentagem_maior_tipo_repasse,
+					ROUND(CAST(porcertagem_maior as NUMERIC), 2) AS nr_porcentagem_maior_tipo_repasse,
 					(
 						SELECT rank
 						FROM analysis.vw_perfil_localidade_ranking_repasse_recursos
@@ -334,7 +334,7 @@ BEGIN
 		FROM (
 			SELECT
 				a.area_atuacao AS tx_porcentagem_maior,
-				ROUND(a.porcertagem_maior::DECIMAL, 2)::DOUBLE PRECISION AS nr_porcentagem_maior,
+				ROUND(CAST(a.porcertagem_maior as NUMERIC), 2) AS nr_porcentagem_maior,
 				(
 					SELECT json_agg(a)
 					FROM (
@@ -393,7 +393,7 @@ BEGIN
 		FROM (
 			SELECT
 				a.tipo_trabalhadores AS tx_porcentagem_maior,
-				ROUND(a.porcertagem_maior::DECIMAL, 2)::DOUBLE PRECISION AS nr_porcentagem_maior,
+				ROUND(CAST(a.porcertagem_maior as NUMERIC), 2) AS nr_porcentagem_maior,
 				(
 					SELECT json_agg(a)
 					FROM (
@@ -455,7 +455,7 @@ BEGIN
 				FROM (
 					SELECT
 						ano AS x,
-						empenhado AS y
+						ROUND(CAST(empenhado as NUMERIC), 2) AS y
 					FROM analysis.vw_perfil_localidade_orcamento
 					WHERE localidade = id_localidade::TEXT
 				) AS a
@@ -463,19 +463,18 @@ BEGIN
 	) b;
 
 	IF id_localidade > 99 THEN
-		SELECT INTO media_orcamento media FROM analysis.vw_perfil_localidade_orcamento_media_nacional WHERE tipo_localidade = 'Município';
-		orcamento_json = '{"orcamento": ' || ((orcamento_json)::JSONB || ('{"media": "' || media_orcamento::TEXT || '"}')::JSONB)::TEXT || '}';
+		SELECT INTO media_orcamento ROUND(CAST(media as NUMERIC), 2) FROM analysis.vw_perfil_localidade_orcamento_media_nacional WHERE tipo_localidade = 'Município';
 
 	ELSIF id_localidade BETWEEN 10 AND 99 THEN
-		SELECT INTO media_orcamento media FROM analysis.vw_perfil_localidade_orcamento_media_nacional WHERE tipo_localidade = 'Estado';
-		orcamento_json = '{"orcamento": ' || ((orcamento_json)::JSONB || ('{"media": "' || media_orcamento::TEXT || '"}')::JSONB)::TEXT || '}';
+		SELECT INTO media_orcamento ROUND(CAST(media as NUMERIC), 2) FROM analysis.vw_perfil_localidade_orcamento_media_nacional WHERE tipo_localidade = 'Estado';
 
 	ELSIF id_localidade BETWEEN 0 AND 9 THEN
-		SELECT INTO media_orcamento media FROM analysis.vw_perfil_localidade_orcamento_media_nacional WHERE tipo_localidade = 'Região';
-		orcamento_json = '{"orcamento": ' || ((orcamento_json)::JSONB || ('{"media": "' || media_orcamento::TEXT || '"}')::JSONB)::TEXT || '}';
+		SELECT INTO media_orcamento ROUND(CAST(media as NUMERIC), 2) FROM analysis.vw_perfil_localidade_orcamento_media_nacional WHERE tipo_localidade = 'Região';
+		
 
 	END IF;
-	
+
+	orcamento_json = '{"orcamento": ' || ((orcamento_json)::JSONB || ('{"media": ' || media_orcamento::TEXT || '}')::JSONB)::TEXT || '}';
 	orcamento_json = ('{"orcamento": ' || (orcamento_json->'orcamento' || '{"fontes": ["SIGA Brasil 2010-2018, Valores deflacionados para dez/2018, IPCA IBGE 2018"]}')::TEXT || '}')::JSON;
 
 	orcamento_json := COALESCE(orcamento_json, '{"orcamento": null}'::JSONB);
