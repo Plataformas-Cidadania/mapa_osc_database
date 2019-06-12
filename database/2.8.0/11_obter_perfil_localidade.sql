@@ -462,7 +462,7 @@ BEGIN
 						ano AS x,
 						ROUND(CAST(empenhado as NUMERIC), 2) AS y
 					FROM analysis.vw_perfil_localidade_orcamento
-					WHERE localidade = id_localidade::TEXT
+					WHERE localidade = id_localidade
 				) AS a
 			) AS values
 		) AS b
@@ -507,5 +507,3 @@ EXCEPTION
 END;
 
 $$ LANGUAGE 'plpgsql';
-
-SELECT * FROM analysis.obter_perfil_localidade(789809::INTEGER);

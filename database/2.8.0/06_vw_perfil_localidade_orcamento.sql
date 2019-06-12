@@ -2,7 +2,7 @@ DROP MATERIALIZED VIEW IF EXISTS analysis.vw_perfil_localidade_orcamento CASCADE
 CREATE MATERIALIZED VIEW analysis.vw_perfil_localidade_orcamento AS 
 
 SELECT
-	COALESCE(SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1), 'Sem informação')::TEXT AS localidade,
+	COALESCE(SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 1), 'Sem informação')::INTEGER AS localidade,
 	COALESCE(ed_regiao.edre_nm_regiao, 'Sem informação')::TEXT AS nome_localidade,
 	tb_orcamento_def.nr_orcamento_ano AS ano,
 	SUM(tb_orcamento_def.nr_vl_empenhado_def) AS empenhado,
@@ -22,7 +22,7 @@ GROUP BY localidade, nome_localidade, nr_orcamento_ano
 UNION
 
 SELECT
-	COALESCE(SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2), 'Sem informação')::TEXT AS localidade,
+	COALESCE(SUBSTR(tb_localizacao.cd_municipio::TEXT, 1, 2), 'Sem informação')::INTEGER AS localidade,
 	COALESCE(ed_regiao.edre_nm_regiao, 'Sem informação')::TEXT AS nome_localidade,
 	tb_orcamento_def.nr_orcamento_ano AS ano,
 	SUM(tb_orcamento_def.nr_vl_empenhado_def) AS empenhado,
@@ -42,7 +42,7 @@ GROUP BY localidade, nome_localidade, nr_orcamento_ano
 UNION
 
 SELECT
-	COALESCE(tb_localizacao.cd_municipio::TEXT, 'Sem informação')::TEXT AS localidade,
+	COALESCE(tb_localizacao.cd_municipio::TEXT, 'Sem informação')::INTEGER AS localidade,
 	COALESCE(ed_regiao.edre_nm_regiao, 'Sem informação')::TEXT AS nome_localidade,
 	tb_orcamento_def.nr_orcamento_ano AS ano,
 	SUM(tb_orcamento_def.nr_vl_empenhado_def) AS empenhado,
