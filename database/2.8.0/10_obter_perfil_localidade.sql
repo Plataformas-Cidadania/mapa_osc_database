@@ -28,6 +28,7 @@ DECLARE
 	maior_media_nacional_natureza_juridica TEXT[];
 	valor_maior_media_nacional_natureza_juridica DOUBLE PRECISION;
 	media_orcamento DOUBLE PRECISION;
+	quantidade_localidades INTEGER;
 	
 BEGIN
 	SELECT INTO resultado row_to_json(a)
@@ -468,18 +469,23 @@ BEGIN
 	) c;
 
 	IF id_localidade > 99 THEN
-		SELECT INTO media_orcamento ROUND(CAST(media as NUMERIC), 2) FROM analysis.vw_perfil_localidade_orcamento_media_nacional WHERE tipo_localidade = 'Município';
+		SELECT INTO media_orcamento, quantidade_localidades ROUND(CAST(vw_perfil_localidade_orcamento_media_nacional.media as NUMERIC), 2), vw_perfil_localidade_orcamento_media_nacional.quantidade_localidades
+			FROM analysis.vw_perfil_localidade_orcamento_media_nacional
+			WHERE tipo_localidade = 'Município';
 
 	ELSIF id_localidade BETWEEN 10 AND 99 THEN
-		SELECT INTO media_orcamento ROUND(CAST(media as NUMERIC), 2) FROM analysis.vw_perfil_localidade_orcamento_media_nacional WHERE tipo_localidade = 'Estado';
+		SELECT INTO media_orcamento, quantidade_localidades ROUND(CAST(vw_perfil_localidade_orcamento_media_nacional.media as NUMERIC), 2), vw_perfil_localidade_orcamento_media_nacional.quantidade_localidades
+			FROM analysis.vw_perfil_localidade_orcamento_media_nacional
+			WHERE tipo_localidade = 'Estado';
 
 	ELSIF id_localidade BETWEEN 0 AND 9 THEN
-		SELECT INTO media_orcamento ROUND(CAST(media as NUMERIC), 2) FROM analysis.vw_perfil_localidade_orcamento_media_nacional WHERE tipo_localidade = 'Região';
-		
+		SELECT INTO media_orcamento, quantidade_localidades ROUND(CAST(vw_perfil_localidade_orcamento_media_nacional.media as NUMERIC), 2), vw_perfil_localidade_orcamento_media_nacional.quantidade_localidades
+			FROM analysis.vw_perfil_localidade_orcamento_media_nacional
+			WHERE tipo_localidade = 'Região';
 
 	END IF;
 
-	orcamento_json = '{"orcamento": ' || ((orcamento_json)::JSONB || ('{"media": ' || media_orcamento::TEXT || '}')::JSONB)::TEXT || '}';
+	orcamento_json = '{"orcamento": ' || ((orcamento_json)::JSONB || ('{"media": ' || media_orcamento::TEXT || ',"quantidade_localidades":' || quantidade_localidades::TEXT || '}')::JSONB)::TEXT || '}';
 	orcamento_json = ('{"orcamento": ' || (orcamento_json->'orcamento' || '{"fontes": ["SIGA Brasil 2010-2018, Valores deflacionados para dez/2018, IPCA IBGE 2018"]}')::TEXT || '}')::JSON;
 
 	orcamento_json := COALESCE(orcamento_json, '{"orcamento": null}'::JSONB);
@@ -501,3 +507,5 @@ EXCEPTION
 END;
 
 $$ LANGUAGE 'plpgsql';
+
+SELECT * FROM analysis.obter_perfil_localidade(789809::INTEGER);
