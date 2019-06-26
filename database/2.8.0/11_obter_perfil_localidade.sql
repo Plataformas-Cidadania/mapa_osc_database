@@ -371,13 +371,12 @@ BEGIN
 	FOR record IN
 		SELECT json_array_elements_text((area_atuacao_json->'area_atuacao'->'tx_porcentagem_maior')::JSON) AS nome_area_atuacao
 	LOOP
-		 area_atuacao_json := jsonb_insert(
+		 area_atuacao_json := jsonb_set(
 			(area_atuacao_json)::JSONB,
 			'{area_atuacao, media_nacional, 0}',
 			('{"tx_area_atuacao": "' || record.nome_area_atuacao || '", "nr_area_atuacao": "' || (
 				SELECT ROUND(CAST(valor as NUMERIC), 2) FROM analysis.vw_perfil_localidade_area_atuacao_nacional WHERE area_atuacao = record.nome_area_atuacao
-			)::TEXT || '"}')::JSONB,
-			true
+			)::TEXT || '"}')::JSONB
 		);
 	END LOOP;
 	
