@@ -1,4 +1,4 @@
-DROP FUNCTION IF EXISTS analysis.obter_perfil_localidade(INTEGER) CASCADE;
+--DROP FUNCTION IF EXISTS analysis.obter_perfil_localidade(INTEGER) CASCADE;
 
 CREATE OR REPLACE FUNCTION analysis.obter_perfil_localidade(id_localidade INTEGER) RETURNS TABLE (
 	resultado JSONB,
@@ -462,6 +462,7 @@ BEGIN
 						ROUND(CAST(empenhado as NUMERIC), 2) AS y
 					FROM analysis.vw_perfil_localidade_orcamento
 					WHERE localidade = id_localidade
+					ORDER BY x
 				) AS a
 			) AS values
 		) AS b
