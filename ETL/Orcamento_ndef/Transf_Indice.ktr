@@ -592,7 +592,7 @@
     <single_statement>N</single_statement>
     <replace_variables>N</replace_variables>
     <quoteString>N</quoteString>
-    <sql>ALTER TABLE osc.tb_recursos DISABLE TRIGGER ALL&#x3b;</sql>
+    <sql>ALTER TABLE osc.tb_recursos_osc DISABLE TRIGGER ALL&#x3b;</sql>
     <set_params>N</set_params>
     <insert_field/>
     <update_field/>
@@ -624,7 +624,7 @@
     <single_statement>N</single_statement>
     <replace_variables>N</replace_variables>
     <quoteString>N</quoteString>
-    <sql>ALTER TABLE osc.tb_recursos ENABLE TRIGGER ALL&#x3b;</sql>
+    <sql>ALTER TABLE osc.tb_recursos_osc ENABLE TRIGGER ALL&#x3b;</sql>
     <set_params>N</set_params>
     <insert_field/>
     <update_field/>
