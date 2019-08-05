@@ -1,79 +1,147 @@
-drop function if exists portal.atualizar_participacao_social_osc(fonte text, identificador numeric, tipo_identificador text, data_atualizacao timestamp without time zone, json jsonb, null_valido boolean, delete_valido boolean, erro_log boolean, id_carga integer, tipo_busca integer);
+drop function if exists portal.atualizar_participacao_social_outra(fonte text, identificador numeric, tipo_identificador text,
+                                                           data_atualizacao timestamp without time zone, json jsonb,
+                                                           null_valido boolean, delete_valido boolean, erro_log boolean,
+                                                           id_carga integer);
 
-create function portal.atualizar_participacao_social_osc(fonte text, identificador numeric, tipo_identificador text,
-                                                         data_atualizacao timestamp without time zone, json jsonb,
-                                                         null_valido boolean, delete_valido boolean, erro_log boolean,
-                                                         id_carga integer, tipo_busca integer) returns TABLE
-                                                                                                       (
-                                                                                                           mensagem text,
-                                                                                                           flag boolean
-                                                                                                       )
+create function portal.atualizar_participacao_social_outra(fonte text, identificador numeric, tipo_identificador text, data_atualizacao timestamp without time zone, json jsonb, null_valido boolean, delete_valido boolean, erro_log boolean, id_carga integer)
+    returns TABLE(mensagem text, flag boolean)
     language plpgsql
 as
 $$
 DECLARE
-    conferencia           JSONB;
-    conselho              JSONB;
-    outra                 JSONB;
-    record_funcao_externa RECORD;
+	nome_tabela TEXT;
+	fonte_dados RECORD;
+	objeto RECORD;
+	dado_anterior RECORD;
+	dado_posterior RECORD;
+	dado_nao_delete INTEGER[];
+	flag_update BOOLEAN;
+	osc RECORD;
+	nao_possui BOOLEAN;
 
 BEGIN
-    conferencia := COALESCE((json ->> 'conferencia'), null)::JSONB;
-    conselho := COALESCE((json ->> 'conselho'), null)::JSONB;
-    outra := COALESCE((json ->> 'outra'), null)::JSONB;
+	nome_tabela := 'osc.tb_participacao_social_outra';
+	tipo_identificador := lower(tipo_identificador);
+	nao_possui := false;
+	dado_nao_delete := '{}'::INTEGER[];
 
-    IF conferencia IS NOT null THEN
-        SELECT INTO record_funcao_externa *
-        FROM portal.atualizar_participacao_social_conferencia(fonte::TEXT, identificador::NUMERIC,
-                                                              tipo_identificador::TEXT, data_atualizacao::TIMESTAMP,
-                                                              conferencia::JSONB, null_valido::BOOLEAN,
-                                                              delete_valido::BOOLEAN, erro_log::BOOLEAN,
-                                                              id_carga::INTEGER, tipo_busca::INTEGER);
-        IF record_funcao_externa.flag = false THEN
-            RETURN QUERY (SELECT record_funcao_externa.mensagem, false);
-            RETURN;
-        END IF;
-    END IF;
+	nao_possui := json#>'{bo_nao_possui}';
 
-    IF conselho IS NOT null THEN
-        SELECT INTO record_funcao_externa *
-        FROM portal.atualizar_participacao_social_conselho(fonte::TEXT, identificador::NUMERIC,
-                                                           tipo_identificador::TEXT, data_atualizacao::TIMESTAMP,
-                                                           conselho::JSONB, null_valido::BOOLEAN,
-                                                           delete_valido::BOOLEAN, erro_log::BOOLEAN, id_carga::INTEGER,
-                                                           tipo_busca::INTEGER);
-        IF record_funcao_externa.flag = false THEN
-            RETURN QUERY (SELECT record_funcao_externa.mensagem, false);
-            RETURN;
-        END IF;
-    END IF;
+	IF nao_possui THEN
+        json := '[{"tx_nome_participacao_social_outra":"Não possui","bo_nao_possui":true}]';
+    end if;
+	
+	SELECT INTO fonte_dados * FROM portal.verificar_fonte(fonte);
+	
+	IF tipo_identificador = 'cnpj' THEN
+		SELECT * INTO osc FROM osc.tb_osc WHERE cd_identificador_osc = identificador::NUMERIC;
+	ELSIF tipo_identificador = 'id_osc' THEN
+		SELECT * INTO osc FROM osc.tb_osc WHERE id_osc = identificador::INTEGER;
+	ELSE 
+		RAISE EXCEPTION 'tipo_identificador_invalido';
+	END IF;
+	
+	IF fonte_dados IS null THEN
+		RAISE EXCEPTION 'fonte_invalida';
+	ELSIF osc IS null THEN
+		RAISE EXCEPTION 'osc_nao_encontrada';
+	ELSIF osc.id_osc != ALL(fonte_dados.representacao) THEN
+		RAISE EXCEPTION 'permissao_negada_usuario';
+	ELSIF osc.bo_osc_ativa IS false THEN
+		RAISE EXCEPTION 'osc_inativa';
+	END IF;
+	
+	FOR objeto IN (SELECT * FROM jsonb_populate_recordset(null::osc.tb_participacao_social_outra, json))
+	LOOP
+		dado_anterior := null;
+		
+		SELECT INTO dado_anterior *
+		FROM osc.tb_participacao_social_outra
+		WHERE id_participacao_social_outra = objeto.id_participacao_social_outra;
 
-    IF outra IS NOT null THEN
-        SELECT INTO record_funcao_externa *
-        FROM portal.atualizar_participacao_social_outra(fonte::TEXT, identificador::NUMERIC, tipo_identificador::TEXT,
-                                                        data_atualizacao::TIMESTAMP, outra::JSONB, null_valido::BOOLEAN,
-                                                        delete_valido::BOOLEAN, erro_log::BOOLEAN, id_carga::INTEGER);
-        IF record_funcao_externa.flag = false THEN
-            RETURN QUERY (SELECT record_funcao_externa.mensagem, false);
-            RETURN;
-        END IF;
-    END IF;
+		--IF objeto.bo_nao_possui IS true THEN
+		--	objeto.tx_nome_participacao_social_outra = null;
+		--END IF;
 
-    flag := true;
-    mensagem := 'Participação social atualizada.';
+		IF dado_anterior.id_participacao_social_outra IS null THEN
+			INSERT INTO osc.tb_participacao_social_outra (
+				id_osc,
+				tx_nome_participacao_social_outra,
+				bo_nao_possui,
+				ft_participacao_social_outra
+			) VALUES (
+				osc.id_osc,
+				objeto.tx_nome_participacao_social_outra,
+				objeto.bo_nao_possui,
+				fonte_dados.nome_fonte
+			) RETURNING * INTO dado_posterior;
+			
+			dado_nao_delete := array_append(dado_nao_delete, dado_posterior.id_participacao_social_outra);
+			
+			PERFORM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, null::JSON, row_to_json(dado_posterior), id_carga);
+			
+		ELSE
+			dado_posterior := dado_anterior;
+			dado_nao_delete := array_append(dado_nao_delete, dado_posterior.id_participacao_social_outra);
+			flag_update := false;
+			
+			IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_nome_participacao_social_outra::TEXT, dado_anterior.ft_participacao_social_outra, objeto.tx_nome_participacao_social_outra::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+				dado_posterior.tx_nome_participacao_social_outra := objeto.tx_nome_participacao_social_outra;
+				dado_posterior.ft_participacao_social_outra := fonte_dados.nome_fonte;
+				flag_update := true;
+			END IF;
+			
+			IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.bo_nao_possui::TEXT, dado_anterior.ft_participacao_social_outra, objeto.bo_nao_possui::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+				dado_posterior.bo_nao_possui := objeto.bo_nao_possui;
+				dado_posterior.ft_participacao_social_outra := fonte_dados.nome_fonte;
+				flag_update := true;
+			END IF;
+			
+			IF flag_update THEN
+				UPDATE osc.tb_participacao_social_outra
+				SET	tx_nome_participacao_social_outra = dado_posterior.tx_nome_participacao_social_outra,
+					bo_nao_possui = dado_posterior.bo_nao_possui,
+					ft_participacao_social_outra = dado_posterior.ft_participacao_social_outra
+				WHERE id_participacao_social_outra = dado_posterior.id_participacao_social_outra;
+				
+				PERFORM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, row_to_json(dado_anterior), row_to_json(dado_posterior), id_carga);
+			END IF;
+		END IF;
+		
+		IF objeto.bo_nao_possui IS true THEN
+			dado_nao_delete := ('{' || dado_posterior.id_participacao_social_outra::TEXT || '}')::INTEGER[];
+			nao_possui := true;
+			EXIT;
+		END IF;
+	END LOOP;
 
-    RETURN NEXT;
+	IF delete_valido THEN
+		FOR objeto IN (SELECT * FROM osc.tb_participacao_social_outra WHERE id_osc = osc.id_osc AND id_participacao_social_outra != ALL(dado_nao_delete))
+		LOOP
+			IF (SELECT a.flag FROM portal.verificar_delete(fonte_dados.prioridade, ARRAY[objeto.ft_participacao_social_outra]) AS a) THEN
+				DELETE FROM osc.tb_participacao_social_outra WHERE id_participacao_social_outra = objeto.id_participacao_social_outra AND id_participacao_social_outra != ALL(dado_nao_delete);
+				PERFORM portal.inserir_log_atualizacao(nome_tabela, osc.id_osc, fonte, data_atualizacao, row_to_json(objeto), null::JSON, id_carga);
+			END IF;
+		END LOOP;
+	END IF;
+	
+	IF nao_possui AND (SELECT EXISTS(SELECT * FROM osc.tb_participacao_social_outra WHERE bo_nao_possui IS false AND id_osc = osc.id_osc)) THEN 
+		RAISE EXCEPTION 'nao_possui_invalido';
+	END IF;
+	
+	flag := true;
+	mensagem := 'Outra participação social atualizada.';
+	
+	RETURN NEXT;
 
 EXCEPTION
-    WHEN others THEN
-        flag := false;
-        SELECT INTO mensagem a.mensagem
-        FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, identificador, data_atualizacao::TIMESTAMP, erro_log,
-                                   id_carga) AS a;
-
-        RETURN NEXT;
+	WHEN others THEN
+		flag := false;
+		SELECT INTO mensagem a.mensagem FROM portal.verificar_erro(SQLSTATE, SQLERRM, fonte, identificador, data_atualizacao::TIMESTAMP, erro_log, id_carga) AS a;
+		
+		RETURN NEXT;
 
 END;
 $$;
 
-alter function portal.atualizar_participacao_social_osc(text, numeric, text, timestamp, jsonb, boolean, boolean, boolean, integer, integer) owner to postgres;
+alter function portal.atualizar_participacao_social_outra(text, numeric, text, timestamp, jsonb, boolean, boolean, boolean, integer) owner to postgres;
