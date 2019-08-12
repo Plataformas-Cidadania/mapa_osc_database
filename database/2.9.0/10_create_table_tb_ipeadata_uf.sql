@@ -9,7 +9,7 @@ create table ipeadata.tb_ipeadata_uf
    nr_ano       integer,
    cd_indice    integer
        constraint fk_cd_indice_uf
-           references ipeadata.tb_indice1,
+           references ipeadata.tb_indice,
    nr_valor     double precision
 );
 alter table ipeadata.tb_ipeadata_uf

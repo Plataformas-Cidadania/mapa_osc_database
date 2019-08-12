@@ -110,10 +110,7 @@ BEGIN
 	END LOOP;
 	
 	id := 11;
-	--parametros_grafico := COALESCE((SELECT parametros FROM portal.tb_analise WHERE id_analise = 11), '[{"tipo_valor": "$"}, {"tipo_valor": "$"}, {"tipo_valor": "$"}]'::JSONB);
-
 	FOR grafico IN SELECT * FROM portal.obter_grafico_evolucao_recursos_transferidos() LOOP
-		RAISE NOTICE 'T: %', grafico.fontes;
 	    UPDATE portal.tb_analise
 			SET series_1 = grafico.dados, fontes = grafico.fontes 
 			WHERE id_analise = id;
@@ -122,7 +119,7 @@ BEGIN
 	id := 12;
 	FOR grafico IN SELECT * FROM portal.obter_grafico_osc_titulos_certificados() LOOP
 		UPDATE portal.tb_analise 
-			SET series_1 = grafico.dados, fontes = ''
+			SET series_1 = grafico.dados, fontes = grafico.fontes
 			WHERE id_analise = id;
 	END LOOP;
 	
