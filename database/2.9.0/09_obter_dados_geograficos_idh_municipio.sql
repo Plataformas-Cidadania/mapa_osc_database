@@ -28,7 +28,7 @@ BEGIN
                     ST_ASGEOJSON(v.edmu_geometry) as geometry,
                     v.nr_valor                    as nr_valor
              FROM ipeadata.vw_dados_geograficos_idh_municipio v
-             WHERE v.eduf_cd_uf = 33
+             WHERE v.eduf_cd_uf = cd_uf
         LOOP
             path[0] := cont;
 
