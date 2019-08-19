@@ -1,11 +1,10 @@
 DROP FUNCTION IF EXISTS analysis.obter_perfil_localidade(INTEGER);
 
-CREATE OR REPLACE FUNCTION analysis.obter_perfil_localidade(id_localidade INTEGER) RETURNS TABLE (
-	resultado JSONB,
-	mensagem TEXT,
-	codigo INTEGER
-) AS $$ 
-
+create function analysis.obter_perfil_localidade(id_localidade integer)
+    returns TABLE(resultado jsonb, mensagem text, codigo integer)
+    language plpgsql
+as
+$$
 DECLARE
 	record RECORD;
 	caracteristicas_json JSONB;
@@ -15,7 +14,7 @@ DECLARE
 	area_atuacao_json JSONB;
 	trabalhadores_json JSONB;
 	orcamento_json JSONB;
-	
+
 	localidades_primeiro_colocado_quantidade_osc_municipio TEXT[];
 	valor_primeiro_colocado_quantidade_osc_municipio INTEGER;
 	localidades_ultimo_colocado_quantidade_osc_municipio TEXT[];
@@ -29,8 +28,7 @@ DECLARE
 	valor_maior_media_nacional_natureza_juridica DOUBLE PRECISION;
 	media_orcamento DOUBLE PRECISION;
 	quantidade_localidades INTEGER;
-    vetor_zerado TEXT;
-	
+
 BEGIN
 	SELECT INTO resultado row_to_json(a)
 	FROM (
@@ -44,9 +42,9 @@ BEGIN
 		FROM analysis.vw_perfil_localidade_caracteristicas
 		WHERE localidade = id_localidade::TEXT
 	) AS a;
-	vetor_zerado := 'Sem recurso';
+
 	-- ==================== Características ==================== --
-	
+
 	SELECT INTO caracteristicas_json
 		row_to_json(b)
 	FROM (
@@ -68,12 +66,12 @@ BEGIN
 			WHERE localidade = id_localidade::TEXT
 		) AS a
 	) AS b;
-	
+
 	caracteristicas_json := COALESCE(caracteristicas_json, '{"caracteristicas": null}'::JSONB);
 	resultado := resultado || caracteristicas_json;
 
 	-- ==================== Evolução Anual ==================== --
-	
+
 	SELECT INTO localidades_primeiro_colocado_quantidade_osc_municipio, valor_primeiro_colocado_quantidade_osc_municipio
 		ARRAY_AGG(b.nome_localidade), MAX(a.nr_quantidade_osc)
 	FROM analysis.vw_perfil_localidade_ranking_quantidade_osc AS a
@@ -81,7 +79,7 @@ BEGIN
 	ON a.localidade = b.localidade
 	WHERE a.rank = 1
 	AND tipo_rank = 'municipio';
-	
+
 	SELECT INTO localidades_ultimo_colocado_quantidade_osc_municipio, valor_ultimo_colocado_quantidade_osc_municipio
 		ARRAY_AGG(b.nome_localidade), MAX(a.nr_quantidade_osc)
 	FROM analysis.vw_perfil_localidade_ranking_quantidade_osc AS a
@@ -101,7 +99,7 @@ BEGIN
 	ON a.localidade = b.localidade
 	WHERE a.rank = 1
 	AND tipo_rank = 'estado';
-	
+
 	SELECT INTO localidades_ultimo_colocado_quantidade_osc_estado, valor_ultimo_colocado_quantidade_osc_estado
 		ARRAY_AGG(b.nome_localidade), MAX(a.nr_quantidade_osc)
 	FROM analysis.vw_perfil_localidade_ranking_quantidade_osc AS a
@@ -120,7 +118,7 @@ BEGIN
 		SELECT
 			row_to_json(b) AS evolucao_quantidade_osc_ano
 		FROM (
-			SELECT 
+			SELECT
 				(
 					SELECT rank
 					FROM analysis.vw_perfil_localidade_ranking_quantidade_osc
@@ -137,7 +135,7 @@ BEGIN
 				json_agg(a) AS series_1,
 				(
 					SELECT ARRAY_AGG(b.fontes) FROM (
-						SELECT 
+						SELECT
 							DISTINCT UNNEST(a.fontes) AS fontes
 						FROM (
 							SELECT a.fontes
@@ -169,9 +167,9 @@ BEGIN
 	resultado := resultado || evolucao_anual_json;
 
 	-- ==================== Natureza Jurídica ==================== --
-	
+
 	IF id_localidade > 99 THEN
-		SELECT INTO maior_media_nacional_natureza_juridica, valor_maior_media_nacional_natureza_juridica 
+		SELECT INTO maior_media_nacional_natureza_juridica, valor_maior_media_nacional_natureza_juridica
 			natureza_juridica, porcertagem_maior
 		FROM analysis.vw_perfil_localidade_maior_natureza_juridica
 		WHERE porcertagem_maior = (
@@ -179,9 +177,9 @@ BEGIN
 			FROM analysis.vw_perfil_localidade_maior_natureza_juridica
 			WHERE localidade::INTEGER > 99
 		);
-	
+
 	ELSIF id_localidade BETWEEN 10 AND 99 THEN
-		SELECT INTO maior_media_nacional_natureza_juridica, valor_maior_media_nacional_natureza_juridica 
+		SELECT INTO maior_media_nacional_natureza_juridica, valor_maior_media_nacional_natureza_juridica
 			natureza_juridica, porcertagem_maior
 		FROM analysis.vw_perfil_localidade_maior_natureza_juridica
 		WHERE porcertagem_maior = (
@@ -191,7 +189,7 @@ BEGIN
 		);
 
 	ELSIF id_localidade BETWEEN 0 AND 9 THEN
-		SELECT INTO maior_media_nacional_natureza_juridica, valor_maior_media_nacional_natureza_juridica 
+		SELECT INTO maior_media_nacional_natureza_juridica, valor_maior_media_nacional_natureza_juridica
 			natureza_juridica, porcertagem_maior
 		FROM analysis.vw_perfil_localidade_maior_natureza_juridica
 		WHERE porcertagem_maior = (
@@ -201,14 +199,14 @@ BEGIN
 		);
 
 	END IF;
-	
+
 	FOR record IN
 		SELECT dado, valor
 		FROM analysis.vw_perfil_localidade_media_nacional
 		WHERE tipo_dado = 'maior_natureza_juridica'
 	LOOP
 		SELECT INTO natureza_juridica_json
-			row_to_json(c) 
+			row_to_json(c)
 		FROM (
 			SELECT
 				row_to_json(b) AS natureza_juridica
@@ -230,7 +228,7 @@ BEGIN
 					) AS series_1,
 					(
 						SELECT ARRAY_AGG(b.fontes) FROM (
-							SELECT 
+							SELECT
 								DISTINCT UNNEST(a.fontes) AS fontes
 							FROM (
 								SELECT a.fontes
@@ -248,19 +246,19 @@ BEGIN
 			) AS b
 		) AS c;
 	END LOOP;
-	
+
 	natureza_juridica_json := COALESCE(natureza_juridica_json, '{"natureza_juridica": null}'::JSONB);
 	resultado := resultado || natureza_juridica_json;
-	
+
 	-- ==================== Repasse de Recursos ==================== --
-	
+
 	FOR record IN
 		SELECT valor
 		FROM analysis.vw_perfil_localidade_media_nacional
 		WHERE tipo_dado = 'media_repasse_recursos'
 	LOOP
 		SELECT INTO repasse_recursos_json
-			row_to_json(d) 
+			row_to_json(d)
 		FROM (
 			SELECT
 				row_to_json(c) AS repasse_recursos
@@ -272,20 +270,19 @@ BEGIN
 						WHERE localidade = id_localidade::TEXT
 					) AS nr_repasse_media,
 					ROUND(CAST(record.valor as NUMERIC), 2) AS nr_repasse_media_nacional,
-					COALESCE(tipo_repasse[0], vetor_zerado) AS tx_maior_tipo_repasse,
+					tipo_repasse AS tx_maior_tipo_repasse,
 					ROUND(CAST(porcertagem_maior as NUMERIC), 2) AS nr_porcentagem_maior_tipo_repasse,
 					(
 						SELECT rank
 						FROM analysis.vw_perfil_localidade_ranking_repasse_recursos
 						WHERE localidade = id_localidade::TEXT
 					) AS nr_colocacao_nacional,
-					COALESCE(
-				       (
+					(
 						SELECT json_agg(b)
 						FROM (
 							SELECT
 								'$'::TEXT AS tipo_valor,
-								fonte_recursos AS key, 
+								fonte_recursos AS key,
 								(
 									SELECT json_agg(a)
 									FROM (
@@ -302,11 +299,10 @@ BEGIN
 							AND fonte_recursos IS NOT NULL
 							GROUP BY fonte_recursos
 						) AS b
-					), '"Sem série"'::json) AS series_1,
-					COALESCE(
-				       (
+					) AS series_1,
+					(
 						SELECT ARRAY_AGG(b.fontes) FROM (
-							SELECT 
+							SELECT
 								DISTINCT UNNEST(a.fontes) AS fontes
 							FROM (
 								SELECT a.fontes
@@ -318,20 +314,20 @@ BEGIN
 								WHERE a.localidade = id_localidade::TEXT
 							) AS a
 						) AS b
-					)[0], 'Sem fontes'::text )AS fontes
+					) AS fontes
 				FROM analysis.vw_perfil_localidade_maior_media_repasse_recursos AS a
 				WHERE localidade = id_localidade::TEXT
 			) AS c
 		) AS d;
 	END LOOP;
-	
+
 	repasse_recursos_json := COALESCE(repasse_recursos_json, '{"repasse_recursos": null}'::JSONB);
 	resultado := resultado || repasse_recursos_json;
-	
+
 	-- ==================== Área de Atuação ==================== --
-	
+
 	SELECT INTO area_atuacao_json
-		row_to_json(c) 
+		row_to_json(c)
 	FROM (
 		SELECT
 			row_to_json(b) AS area_atuacao
@@ -351,7 +347,7 @@ BEGIN
 				) AS series_1,
 				(
 					SELECT ARRAY_AGG(b.fontes) FROM (
-						SELECT 
+						SELECT
 							DISTINCT UNNEST(a.fontes) AS fontes
 						FROM (
 							SELECT a.fontes
@@ -379,17 +375,18 @@ BEGIN
 			'{area_atuacao, media_nacional, 0}',
 			('{"tx_area_atuacao": "' || record.nome_area_atuacao || '", "nr_area_atuacao": "' || (
 				SELECT ROUND(CAST(valor as NUMERIC), 2) FROM analysis.vw_perfil_localidade_area_atuacao_nacional WHERE area_atuacao = record.nome_area_atuacao
-			)::TEXT || '"}')::JSONB
+			)::TEXT || '"}')::JSONB,
+			true
 		);
 	END LOOP;
-	
+
 	area_atuacao_json := COALESCE(area_atuacao_json, '{"area_atuacao": null}'::JSONB);
 	resultado := resultado || area_atuacao_json;
-	
+
 	-- ==================== Trabalhadores ==================== --
-	
+
 	SELECT INTO trabalhadores_json
-		row_to_json(c) 
+		row_to_json(c)
 	FROM (
 		SELECT
 			row_to_json(b) AS trabalhadores
@@ -421,7 +418,7 @@ BEGIN
 				) AS series_1,
 				(
 					SELECT ARRAY_AGG(b.fontes) FROM (
-						SELECT 
+						SELECT
 							DISTINCT UNNEST(a.fontes) AS fontes
 						FROM (
 							SELECT a.fontes
@@ -438,7 +435,7 @@ BEGIN
 			WHERE localidade = id_localidade::TEXT
 		) AS b
 	) AS c;
-	
+
 	trabalhadores_json := COALESCE(trabalhadores_json, '{"area_atuacao": null}'::JSONB);
 	resultado := resultado || trabalhadores_json;
 
@@ -450,24 +447,23 @@ BEGIN
 		SELECT
 			('[' || row_to_json(b)::TEXT || ']')::JSON AS series_1
 		FROM (
-		SELECT
-			'Orçamento empenhado'::TEXT AS key,
-			''::TEXT AS tipo_valor,
-			true::BOOLEAN AS area,
-			'#99d8ff'::TEXT AS color,
-			'$' AS tipo_valor,
-			(
-				SELECT
-					array_agg(a) AS series_1
-				FROM (
-					SELECT
-						ano AS x,
-						ROUND(CAST(empenhado as NUMERIC), 2) AS y
-					FROM analysis.vw_perfil_localidade_orcamento
-					WHERE localidade = id_localidade
-					ORDER BY x
-				) AS a
-			) AS values
+		SELECT 'Orçamento empenhado'::TEXT AS key,
+       ''::TEXT                    AS tipo_valor,
+       true::BOOLEAN               AS area,
+       '#99d8ff'::TEXT             AS color,
+       '$'                         AS tipo_valor,
+
+       coalesce(
+                (
+                   SELECT array_agg(a) AS series_1
+                   FROM (
+                            SELECT ano                                  AS x,
+                                   ROUND(CAST(empenhado as NUMERIC), 2) AS y
+                            FROM analysis.vw_perfil_localidade_orcamento
+                            WHERE localidade = id_localidade
+                        ) AS a), array_agg(ROW(00,00))
+
+           ) as values
 		) AS b
 	) c;
 
@@ -509,4 +505,6 @@ EXCEPTION
 
 END;
 
-$$ LANGUAGE 'plpgsql';
+$$;
+
+alter function analysis.obter_perfil_localidade(integer) owner to i3geo;
