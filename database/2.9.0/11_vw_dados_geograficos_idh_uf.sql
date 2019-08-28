@@ -1,7 +1,7 @@
 DROP MATERIALIZED VIEW IF EXISTS ipeadata.vw_dados_geograficos_idh_uf;
 CREATE MATERIALIZED VIEW ipeadata.vw_dados_geograficos_idh_uf AS
 
-SELECT u.eduf_cd_uf, u.eduf_nm_uf, u.eduf_geometry, p.nr_valor
+SELECT u.eduf_cd_uf, u.eduf_nm_uf, u.edre_cd_regiao, u.eduf_geometry, p.nr_valor
 FROM spat.ed_uf u,
      ipeadata.tb_ipeadata_uf p
 WHERE u.eduf_cd_uf = p.cd_uf

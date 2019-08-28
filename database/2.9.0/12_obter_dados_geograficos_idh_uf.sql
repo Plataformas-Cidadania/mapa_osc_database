@@ -24,6 +24,7 @@ BEGIN
 
     FOR r IN SELECT v.eduf_cd_uf           as cod_uf,
                     v.eduf_nm_uf           as nm_uf,
+                    v.edre_cd_regiao       as cod_regiao,
                     ST_ASGEOJSON(v.eduf_geometry) as geometry,
                     v.nr_valor                    as nr_valor
              FROM ipeadata.vw_dados_geograficos_idh_uf v
@@ -38,6 +39,7 @@ BEGIN
             ------------------------------Elemento Properties------------------------------------
             objetos := jsonb_set(objetos, '{properties}', '{}');
             objetos := jsonb_set(objetos, '{properties, cod_uf}', r.cod_uf::text::jsonb);
+            objetos := jsonb_set(objetos, '{properties, Regiao}', r.cod_regiao::text::jsonb);
             objetos := jsonb_set(objetos, '{properties, nm_uf}', to_jsonb(r.nm_uf));
             objetos := jsonb_set(objetos, '{properties, nr_valor}', r.nr_valor::text::jsonb);
             ------------------------------Elemento Geometry--------------------------------------
