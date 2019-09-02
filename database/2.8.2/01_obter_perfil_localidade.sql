@@ -439,7 +439,7 @@ BEGIN
 	trabalhadores_json := COALESCE(trabalhadores_json, '{"area_atuacao": null}'::JSONB);
 	resultado := resultado || trabalhadores_json;
 
-	-- ==================== Orçamento ==================== --
+	-- ==================== Orçamento Empenhado ==================== --
 
 	SELECT INTO orcamento_json
 		row_to_json(c)
@@ -460,9 +460,8 @@ BEGIN
                             SELECT ano                                  AS x,
                                    ROUND(CAST(empenhado as NUMERIC), 2) AS y
                             FROM analysis.vw_perfil_localidade_orcamento
-                            WHERE localidade = id_localidade
+                            WHERE localidade = id_localidade ORDER BY x
                         ) AS a), array_agg(ROW(00,00))
-
            ) as values
 		) AS b
 	) c;
