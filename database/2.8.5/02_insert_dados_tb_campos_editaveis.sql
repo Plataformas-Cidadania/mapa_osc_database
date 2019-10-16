@@ -1,0 +1,1 @@
+INSERT INTO syst.tb_campos_editaveis (nome_campo, editavel) VALUES ('tx_nome_fantasia_osc', true);
