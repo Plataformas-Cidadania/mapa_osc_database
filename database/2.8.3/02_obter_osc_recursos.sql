@@ -37,7 +37,7 @@ BEGIN
                                      'ft_nao_possui', ft_nao_possui
                                  ) as l
                       FROM osc.tb_recursos_osc
-                      WHERE id_osc = 784138
+                      WHERE id_osc = param::INTEGER
                       ORDER BY dt_ano_recursos_osc) as t
             ),
                     'recursos_outros', (
