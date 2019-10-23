@@ -12,6 +12,57 @@
   <modified_date>2019/08/19 18:17:51.255</modified_date>
   <parameters>
     </parameters>
+  <connection>
+    <name>etl</name>
+    <server>${db_host}</server>
+    <type>POSTGRESQL</type>
+    <access>Native</access>
+    <database>${db_name}</database>
+    <port>${db_port}</port>
+    <username>${db_user}</username>
+    <password>${db_pass}</password>
+    <servername />
+    <data_tablespace />
+    <index_tablespace />
+    <attributes>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>IS_CLUSTERED</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>PORT_NUMBER</code>
+        <attribute>${db_port}</attribute>
+      </attribute>
+      <attribute>
+        <code>PRESERVE_RESERVED_WORD_CASE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>QUOTE_ALL_FIELDS</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>USE_POOLING</code>
+        <attribute>N</attribute>
+      </attribute>
+    </attributes>
+  </connection>
   <slaveservers>
     </slaveservers>
   <job-log-table>
@@ -317,27 +368,27 @@
       <fields>
         <field>
           <variable_name>db_host</variable_name>
-          <variable_value>mapaosc-dev</variable_value>
+          <variable_value />
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>db_name</variable_name>
-          <variable_value>portal_osc2</variable_value>
+          <variable_value />
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>db_port</variable_name>
-          <variable_value>5434</variable_value>
+          <variable_value />
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>db_user</variable_name>
-          <variable_value>i3geo</variable_value>
+          <variable_value />
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>db_pass</variable_name>
-          <variable_value>ipea001</variable_value>
+          <variable_value />
           <variable_type>JVM</variable_type>
         </field>
         <field>
@@ -420,7 +471,7 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>400</xloc>
+      <xloc>784</xloc>
       <yloc>208</yloc>
     </entry>
     <entry>
@@ -453,7 +504,7 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>480</xloc>
+      <xloc>864</xloc>
       <yloc>208</yloc>
     </entry>
     <entry>
@@ -486,7 +537,7 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>576</xloc>
+      <xloc>960</xloc>
       <yloc>208</yloc>
     </entry>
     <entry>
@@ -519,7 +570,7 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>672</xloc>
+      <xloc>1072</xloc>
       <yloc>208</yloc>
     </entry>
     <entry>
@@ -530,31 +581,60 @@
 
 UPDATE osc.tb_dados_gerais SET tx_nome_fantasia_osc = tb.nome
 FROM
-(select id_osc,convert_to(unaccent(regexp_replace(tx_nome_fantasia_osc, '[^a-zA-Zà-úÀ-Ú0-9+?/:().,"''&amp;@ -]','','g')),'utf8') as nome, tx_nome_fantasia_osc
-from osc.tb_dados_gerais where tx_nome_fantasia_osc ~ '[^a-zA-Zà-úÀ-Ú0-9+?/:().,"''&amp;@ -]'
+(
+--select id_osc,convert_to(unaccent(regexp_replace(tx_nome_fantasia_osc, '[^a-zA-Zà-úÀ-Ú0-9+?/:().,"''&amp;@ -]','','g')),'utf8') as nome, tx_nome_fantasia_osc
+--from osc.tb_dados_gerais where tx_nome_fantasia_osc ~ '[^a-zA-Zà-úÀ-Ú0-9+?/:().,"''&amp;@ -]'
+--union all
+--select id_osc,convert_to(unaccent(regexp_replace(tx_nome_fantasia_osc, '[^a-zA-Z0-9+?/:(),"''&amp;@ -]','','g')),'utf8') as nome, tx_nome_fantasia_osc
+--from osc.tb_dados_gerais where tx_nome_fantasia_osc = '.'
+--union all
+--select id_osc,convert_to(unaccent(regexp_replace(tx_nome_fantasia_osc, '[^a-zA-Z0-9+?/:(),"''&amp;@ -]',' ','g')),'utf8') as nome, tx_nome_fantasia_osc
+--from osc.tb_dados_gerais where tx_nome_fantasia_osc like '%...%'
+--union all
+--select id_osc,convert_to(unaccent(regexp_replace(tx_nome_fantasia_osc, '[^a-zA-Z0-9+?/:(),"''&amp;@ ]','','g')),'utf8') as nome, tx_nome_fantasia_osc
+--from osc.tb_dados_gerais where tx_nome_fantasia_osc = '-'
+--union all
+--select id_osc,convert_to(unaccent(regexp_replace(tx_nome_fantasia_osc, '[^a-zA-Z0-9+?/:()"''&amp;@ ]','','g')),'utf8') as nome, tx_nome_fantasia_osc
+--from osc.tb_dados_gerais where tx_nome_fantasia_osc = ','
+--union all
+--select id_osc,convert_to(unaccent(regexp_replace(tx_nome_fantasia_osc, '[^a-zA-Z+?/:()"''&amp;@ ]','','g')),'utf8') as nome, tx_nome_fantasia_osc
+--from osc.tb_dados_gerais where tx_nome_fantasia_osc like '000%'
+--union all
+--select id_osc,null nome, tx_nome_fantasia_osc
+--from osc.tb_dados_gerais where trim(tx_nome_fantasia_osc) in('-0-','--','---','----','-------','-------------','--------------------------------------')
+--union all
+select id_osc,regexp_replace(tx_nome_fantasia_osc, '[@|-|;|_|*|\|()|!|?|#|$|%|&amp;|''|"]',' ','g') as nome, tx_nome_fantasia_osc
+from osc.tb_dados_gerais where tx_nome_fantasia_osc ~ '[@|-|;|_|*|\|()|!|?|#|$|%|&amp;|''|"]'
 union all
-select id_osc,convert_to(unaccent(regexp_replace(tx_nome_fantasia_osc, '[^a-zA-Z0-9+?/:(),"''&amp;@ -]','','g')),'utf8') as nome, tx_nome_fantasia_osc
-from osc.tb_dados_gerais where tx_nome_fantasia_osc = '.'
+select id_osc,regexp_replace(tx_nome_fantasia_osc, '[-]',' ','g') as nome, tx_nome_fantasia_osc
+from osc.tb_dados_gerais where tx_nome_fantasia_osc = '- - -'
 union all
-select id_osc,convert_to(unaccent(regexp_replace(tx_nome_fantasia_osc, '[^a-zA-Z0-9+?/:(),"''&amp;@ -]',' ','g')),'utf8') as nome, tx_nome_fantasia_osc
-from osc.tb_dados_gerais where tx_nome_fantasia_osc like '%...%'
-union all
-select id_osc,convert_to(unaccent(regexp_replace(tx_nome_fantasia_osc, '[^a-zA-Z0-9+?/:(),"''&amp;@ ]','','g')),'utf8') as nome, tx_nome_fantasia_osc
-from osc.tb_dados_gerais where tx_nome_fantasia_osc = '-'
-union all
-select id_osc,convert_to(unaccent(regexp_replace(tx_nome_fantasia_osc, '[^a-zA-Z0-9+?/:()"''&amp;@ ]','','g')),'utf8') as nome, tx_nome_fantasia_osc
-from osc.tb_dados_gerais where tx_nome_fantasia_osc = ','
-union all
-select id_osc,convert_to(unaccent(regexp_replace(tx_nome_fantasia_osc, '[^a-zA-Z+?/:()"''&amp;@ ]','','g')),'utf8') as nome, tx_nome_fantasia_osc
-from osc.tb_dados_gerais where tx_nome_fantasia_osc like '000%'
-union all
-select id_osc,null nome, tx_nome_fantasia_osc
-from osc.tb_dados_gerais where trim(tx_nome_fantasia_osc) in('-0-','--','---','----','-------','-------------','--------------------------------------')
+select id_osc,regexp_replace(tx_nome_fantasia_osc, '[-]',' ','g') as nome, tx_nome_fantasia_osc
+from osc.tb_dados_gerais where tx_nome_fantasia_osc = '------------------------------'
 ) as tb
 WHERE osc.tb_dados_gerais.id_osc = tb.id_osc;
 
 UPDATE osc.tb_dados_gerais SET tx_nome_fantasia_osc = null
 where length(tx_nome_fantasia_osc) &lt;= 2;
+
+UPDATE osc.tb_dados_gerais SET tx_razao_social_osc = regexp_replace(tx_razao_social_osc, '[@|-|;|_|*|\|()|.|!|?|#|$|%|&amp;|''|"|:]',' ','g')
+WHERE tx_razao_social_osc ~ '[@|-|;|_|*|\|()|.|!|?|#|$|%|&amp;|''|"|:]';
+
+
+UPDATE osc.tb_dados_gerais SET ft_nome_fantasia_osc = null WHERE ft_nome_fantasia_osc is not null and ft_nome_fantasia_osc &lt;&gt; 'Representante de OSC' and tx_nome_fantasia_osc is null;
+UPDATE osc.tb_dados_gerais SET ft_logo = null WHERE ft_logo is not null and ft_logo &lt;&gt; 'Representante de OSC' and im_logo is null;
+UPDATE osc.tb_dados_gerais SET ft_missao_osc = null WHERE ft_missao_osc is not null and ft_missao_osc &lt;&gt; 'Representante de OSC' and tx_missao_osc is null;
+UPDATE osc.tb_dados_gerais SET ft_visao_osc = null WHERE ft_visao_osc is not null and ft_visao_osc &lt;&gt; 'Representante de OSC' and tx_visao_osc is null;
+UPDATE osc.tb_dados_gerais SET ft_sigla_osc = null WHERE ft_sigla_osc is not null and ft_sigla_osc &lt;&gt; 'Representante de OSC' and tx_sigla_osc is null;
+UPDATE osc.tb_dados_gerais SET ft_resumo_osc = null WHERE ft_resumo_osc is not null and ft_resumo_osc &lt;&gt; 'Representante de OSC' and tx_resumo_osc is null;
+UPDATE osc.tb_dados_gerais SET ft_situacao_imovel_osc = null WHERE ft_situacao_imovel_osc is not null and ft_situacao_imovel_osc &lt;&gt; 'Representante de OSC' and cd_situacao_imovel_osc is null;
+UPDATE osc.tb_dados_gerais SET ft_link_estatuto_osc = null WHERE ft_link_estatuto_osc is not null and ft_link_estatuto_osc &lt;&gt; 'Representante de OSC' and tx_link_estatuto_osc is null;
+UPDATE osc.tb_dados_gerais SET ft_historico = null WHERE ft_historico is not null and ft_historico &lt;&gt; 'Representante de OSC' and tx_historico is null;
+UPDATE osc.tb_dados_gerais SET ft_finalidades_estatutarias = null WHERE ft_finalidades_estatutarias is not null and ft_finalidades_estatutarias &lt;&gt; 'Representante de OSC' and tx_finalidades_estatutarias is null;
+UPDATE osc.tb_dados_gerais SET ft_link_relatorio_auditoria = null WHERE ft_link_relatorio_auditoria is not null and ft_link_relatorio_auditoria &lt;&gt; 'Representante de OSC' and tx_link_relatorio_auditoria is null;
+UPDATE osc.tb_dados_gerais SET ft_link_demonstracao_contabil = null WHERE ft_link_demonstracao_contabil is not null and ft_link_demonstracao_contabil &lt;&gt; 'Representante de OSC' and tx_link_demonstracao_contabil is null;
+UPDATE osc.tb_dados_gerais SET ft_nome_responsavel_legal = null WHERE ft_nome_responsavel_legal is not null and ft_nome_responsavel_legal &lt;&gt; 'Representante de OSC' and tx_nome_responsavel_legal is null;
+
 
 ALTER TABLE osc.tb_dados_gerais ENABLE TRIGGER ALL; 
 
@@ -574,16 +654,83 @@ and cd_municipio = edmu_cd_municipio;
 
 select RefreshAllMaterializedViews('spat');
 select RefreshAllMaterializedViews('osc');
-select RefreshAllMaterializedViews('portal');</sql>
+select RefreshAllMaterializedViews('portal');
+select RefreshAllMaterializedViews('analysis');</sql>
       <useVariableSubstitution>F</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename />
       <sendOneStatement>F</sendOneStatement>
-      <connection />
+      <connection>etl</connection>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>320</xloc>
+      <yloc>208</yloc>
+    </entry>
+    <entry>
+      <name>Orçamento Não Deflacionado</name>
+      <description />
+      <type>JOB</type>
+      <specification_method>filename</specification_method>
+      <job_object_id />
+      <filename>${folder_ETL}Orcamento_ndef/Main.kjb</filename>
+      <jobname />
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <set_logfile>N</set_logfile>
+      <logfile />
+      <logext />
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <slave_server_name />
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <expand_remote_job>N</expand_remote_job>
+      <create_parent_folder>N</create_parent_folder>
+      <pass_export>N</pass_export>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>
+      <set_append_logfile>N</set_append_logfile>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>448</xloc>
+      <yloc>208</yloc>
+    </entry>
+    <entry>
+      <name>Orçamento Deflacionado</name>
+      <description />
+      <type>JOB</type>
+      <specification_method>filename</specification_method>
+      <job_object_id />
+      <filename>${folder_ETL}Orcamento_def/Main.kjb</filename>
+      <jobname />
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <set_logfile>N</set_logfile>
+      <logfile />
+      <logext />
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <slave_server_name />
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <expand_remote_job>N</expand_remote_job>
+      <create_parent_folder>N</create_parent_folder>
+      <pass_export>N</pass_export>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>
+      <set_append_logfile>N</set_append_logfile>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>656</xloc>
       <yloc>208</yloc>
     </entry>
   </entries>
@@ -611,7 +758,7 @@ select RefreshAllMaterializedViews('portal');</sql>
       <to>CEBAS/MS</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
@@ -620,7 +767,7 @@ select RefreshAllMaterializedViews('portal');</sql>
       <to>CNEA</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
@@ -629,7 +776,7 @@ select RefreshAllMaterializedViews('portal');</sql>
       <to>Censo SUAS</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
@@ -644,10 +791,28 @@ select RefreshAllMaterializedViews('portal');</sql>
     </hop>
     <hop>
       <from>SQL</from>
+      <to>Orçamento Não Deflacionado</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Orçamento Não Deflacionado</from>
+      <to>Orçamento Deflacionado</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Orçamento Deflacionado</from>
       <to>RAIS</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>

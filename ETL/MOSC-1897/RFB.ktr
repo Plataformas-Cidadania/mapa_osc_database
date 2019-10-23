@@ -499,21 +499,6 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
-      <from>Dados Gerais</from>
-      <to>Contato</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Contato</from>
-      <to>Localizacao</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
-      <from>Localizacao</from>
-      <to>Área de Atuação</to>
-      <enabled>Y</enabled>
-    </hop>
-    <hop>
       <from>Strings cut</from>
       <to>select</to>
       <enabled>Y</enabled>
@@ -572,6 +557,36 @@
       <from>select</from>
       <to>Strings cut 2</to>
       <enabled>N</enabled>
+    </hop>
+    <hop>
+      <from>Filter rows</from>
+      <to>Recursos</to>
+      <enabled>N</enabled>
+    </hop>
+    <hop>
+      <from>Contato</from>
+      <to>Filter rows 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Filter rows 2</from>
+      <to>Localizacao</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Dados Gerais</from>
+      <to>Área de Atuação</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Área de Atuação</from>
+      <to>Contato</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Filter rows 2</from>
+      <to>OSCs exterior</to>
+      <enabled>Y</enabled>
     </hop>
   </order>
   <step>
@@ -1369,17 +1384,6 @@
         <precision>14</precision>
         <trim_type>none</trim_type>
       </field>
-      <field>
-        <name>cnpj_1</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-      </field>
     </fields>
     <cluster_schema />
     <remotesteps>
@@ -1707,7 +1711,7 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>928</xloc>
+      <xloc>1040</xloc>
       <yloc>144</yloc>
       <draw>Y</draw>
     </GUI>
@@ -1729,7 +1733,7 @@
     <replace_variables>Y</replace_variables>
     <quoteString>N</quoteString>
     <sql>SELECT portal.atualizar_dados_gerais_osc('${ETL}'::TEXT, ?::NUMERIC, 'CNPJ'::TEXT, (SELECT NOW()::TIMESTAMP), 
-'{"tx_razao_social_osc":"?", "tx_nome_fantasia_osc":"?", "cd_classe_atividade_economica_osc":"?", "cd_natureza_juridica_osc":"?"}'::JSONB || jsonb_build_object('dt_fundacao_osc',(SELECT to_date('?','YYYY-MM-DD')::TEXT)),
+'{"tx_razao_social_osc":"?", "tx_nome_fantasia_osc":"?", "cd_classe_atividade_economica_osc":"?", "cd_natureza_juridica_osc":"?"}'::JSONB || jsonb_build_object('dt_fundacao_osc',(SELECT to_date('?','YYYYMMDD')::TEXT)),
 FALSE, TRUE, TRUE, '${ID_CARGA}'::INTEGER,2);
 </sql>
     <set_params>N</set_params>
@@ -1767,6 +1771,83 @@ FALSE, TRUE, TRUE, '${ID_CARGA}'::INTEGER,2);
     <GUI>
       <xloc>784</xloc>
       <yloc>144</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Filter rows</name>
+    <type>FilterRows</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <send_true_to>Recursos</send_true_to>
+    <send_false_to />
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>empenhado</leftvalue>
+        <function>IS NOT NULL</function>
+        <rightvalue />
+      </condition>
+    </compare>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1216</xloc>
+      <yloc>224</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Filter rows 2</name>
+    <type>FilterRows</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <send_true_to>Localizacao</send_true_to>
+    <send_false_to>OSCs exterior</send_false_to>
+    <compare>
+      <condition>
+        <negated>N</negated>
+        <leftvalue>municipio</leftvalue>
+        <function>&lt;></function>
+        <rightvalue />
+        <value>
+          <name>constant</name>
+          <type>String</type>
+          <text>EXTERIOR</text>
+          <length>-1</length>
+          <precision>-1</precision>
+          <isnull>N</isnull>
+          <mask />
+        </value>
+      </condition>
+    </compare>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1040</xloc>
+      <yloc>240</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1962,8 +2043,8 @@ FALSE, TRUE, '${ID_CARGA}'::INTEGER);
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1056</xloc>
-      <yloc>144</yloc>
+      <xloc>976</xloc>
+      <yloc>352</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -2009,6 +2090,111 @@ FALSE, TRUE, '${ID_CARGA}'::INTEGER);
     <GUI>
       <xloc>608</xloc>
       <yloc>144</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>OSCs exterior</name>
+    <type>ExecSQL</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>etls</connection>
+    <execute_each_row>Y</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>Y</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>INSERT INTO osc.tb_localizacao(id_osc,tx_endereco,ft_endereco,tx_bairro,nr_cep,tx_endereco_corrigido,cd_municipio,qualidade_classificacao,geo_localizacao,bo_oficial)
+SELECT id_osc, 'Não informado','${ETL}'::TEXT, null, null,null,0,null,null,true
+from osc.tb_osc
+where cd_identificador_osc = '?'
+and not exists (select * from osc.tb_localizacao where osc.tb_localizacao.id_osc = osc.tb_osc.id_osc);
+
+UPDATE osc.tb_localizacao 
+SET tx_endereco = 'Não informado',
+	ft_endereco = '${ETL}'::TEXT,
+    tx_bairro=null,
+    nr_cep=null,
+    tx_endereco_corrigido=null,
+    cd_municipio=0,
+    qualidade_classificacao=null,
+    geo_localizacao=null, 
+    bo_oficial=true
+where osc.tb_localizacao.id_osc = (select osc.tb_osc.id_osc from osc.tb_osc where osc.tb_osc.cd_identificador_osc = '?');
+</sql>
+    <set_params>N</set_params>
+    <insert_field />
+    <update_field />
+    <delete_field />
+    <read_field />
+    <arguments>
+      <argument>
+        <name>cnpj</name>
+      </argument>
+      <argument>
+        <name>cnpj</name>
+      </argument>
+    </arguments>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1104</xloc>
+      <yloc>352</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Recursos</name>
+    <type>ExecSQL</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <connection>etls</connection>
+    <execute_each_row>Y</execute_each_row>
+    <single_statement>N</single_statement>
+    <replace_variables>Y</replace_variables>
+    <quoteString>N</quoteString>
+    <sql>SELECT portal.atualizar_recursos_osc('SIGABR 12/2018'::TEXT, ?::NUMERIC, 'CNPJ'::TEXT, (SELECT NOW()::TIMESTAMP),
+'{"dt_ano_recursos_osc":"${DT_EMPENHADO}", "bo_nao_possui": "false", "recursos":[{"cd_fonte_recursos_osc":157, "nr_valor_recursos_osc":?}]}'::JSONB, 
+FALSE,FALSE, TRUE, '${ID_CARGA}'::INTEGER,2);</sql>
+    <set_params>N</set_params>
+    <insert_field />
+    <update_field />
+    <delete_field />
+    <read_field />
+    <arguments>
+      <argument>
+        <name>cnpj</name>
+      </argument>
+      <argument>
+        <name>empenhado</name>
+      </argument>
+    </arguments>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>1216</xloc>
+      <yloc>304</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3226,6 +3412,9 @@ FALSE, TRUE, '${ID_CARGA}'::INTEGER);
       <field>
         <name>macro_area_atuacao</name>
       </field>
+      <field>
+        <name>municipio</name>
+      </field>
       <select_unspecified>N</select_unspecified>
     </fields>
     <cluster_schema />
@@ -3290,7 +3479,7 @@ from (
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1216</xloc>
+      <xloc>912</xloc>
       <yloc>144</yloc>
       <draw>Y</draw>
     </GUI>

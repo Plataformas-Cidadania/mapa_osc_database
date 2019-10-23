@@ -2,47 +2,408 @@
 <transformation>
   <info>
     <name>TRANS_RAIS_ANO</name>
-    <description/>
-    <extended_description/>
-    <trans_version/>
+    <description />
+    <extended_description />
+    <trans_version />
     <trans_type>Normal</trans_type>
-    <directory>&#x2f;</directory>
+    <directory>/</directory>
     <parameters>
     </parameters>
     <log>
-<trans-log-table><connection/>
-<schema/>
-<table/>
-<size_limit_lines/>
-<interval/>
-<timeout_days/>
-<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>TRANSNAME</id><enabled>Y</enabled><name>TRANSNAME</name></field><field><id>STATUS</id><enabled>Y</enabled><name>STATUS</name></field><field><id>LINES_READ</id><enabled>Y</enabled><name>LINES_READ</name><subject/></field><field><id>LINES_WRITTEN</id><enabled>Y</enabled><name>LINES_WRITTEN</name><subject/></field><field><id>LINES_UPDATED</id><enabled>Y</enabled><name>LINES_UPDATED</name><subject/></field><field><id>LINES_INPUT</id><enabled>Y</enabled><name>LINES_INPUT</name><subject/></field><field><id>LINES_OUTPUT</id><enabled>Y</enabled><name>LINES_OUTPUT</name><subject/></field><field><id>LINES_REJECTED</id><enabled>Y</enabled><name>LINES_REJECTED</name><subject/></field><field><id>ERRORS</id><enabled>Y</enabled><name>ERRORS</name></field><field><id>STARTDATE</id><enabled>Y</enabled><name>STARTDATE</name></field><field><id>ENDDATE</id><enabled>Y</enabled><name>ENDDATE</name></field><field><id>LOGDATE</id><enabled>Y</enabled><name>LOGDATE</name></field><field><id>DEPDATE</id><enabled>Y</enabled><name>DEPDATE</name></field><field><id>REPLAYDATE</id><enabled>Y</enabled><name>REPLAYDATE</name></field><field><id>LOG_FIELD</id><enabled>Y</enabled><name>LOG_FIELD</name></field><field><id>EXECUTING_SERVER</id><enabled>N</enabled><name>EXECUTING_SERVER</name></field><field><id>EXECUTING_USER</id><enabled>N</enabled><name>EXECUTING_USER</name></field><field><id>CLIENT</id><enabled>N</enabled><name>CLIENT</name></field></trans-log-table>
-<perf-log-table><connection/>
-<schema/>
-<table/>
-<interval/>
-<timeout_days/>
-<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>SEQ_NR</id><enabled>Y</enabled><name>SEQ_NR</name></field><field><id>LOGDATE</id><enabled>Y</enabled><name>LOGDATE</name></field><field><id>TRANSNAME</id><enabled>Y</enabled><name>TRANSNAME</name></field><field><id>STEPNAME</id><enabled>Y</enabled><name>STEPNAME</name></field><field><id>STEP_COPY</id><enabled>Y</enabled><name>STEP_COPY</name></field><field><id>LINES_READ</id><enabled>Y</enabled><name>LINES_READ</name></field><field><id>LINES_WRITTEN</id><enabled>Y</enabled><name>LINES_WRITTEN</name></field><field><id>LINES_UPDATED</id><enabled>Y</enabled><name>LINES_UPDATED</name></field><field><id>LINES_INPUT</id><enabled>Y</enabled><name>LINES_INPUT</name></field><field><id>LINES_OUTPUT</id><enabled>Y</enabled><name>LINES_OUTPUT</name></field><field><id>LINES_REJECTED</id><enabled>Y</enabled><name>LINES_REJECTED</name></field><field><id>ERRORS</id><enabled>Y</enabled><name>ERRORS</name></field><field><id>INPUT_BUFFER_ROWS</id><enabled>Y</enabled><name>INPUT_BUFFER_ROWS</name></field><field><id>OUTPUT_BUFFER_ROWS</id><enabled>Y</enabled><name>OUTPUT_BUFFER_ROWS</name></field></perf-log-table>
-<channel-log-table><connection/>
-<schema/>
-<table/>
-<timeout_days/>
-<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>LOG_DATE</id><enabled>Y</enabled><name>LOG_DATE</name></field><field><id>LOGGING_OBJECT_TYPE</id><enabled>Y</enabled><name>LOGGING_OBJECT_TYPE</name></field><field><id>OBJECT_NAME</id><enabled>Y</enabled><name>OBJECT_NAME</name></field><field><id>OBJECT_COPY</id><enabled>Y</enabled><name>OBJECT_COPY</name></field><field><id>REPOSITORY_DIRECTORY</id><enabled>Y</enabled><name>REPOSITORY_DIRECTORY</name></field><field><id>FILENAME</id><enabled>Y</enabled><name>FILENAME</name></field><field><id>OBJECT_ID</id><enabled>Y</enabled><name>OBJECT_ID</name></field><field><id>OBJECT_REVISION</id><enabled>Y</enabled><name>OBJECT_REVISION</name></field><field><id>PARENT_CHANNEL_ID</id><enabled>Y</enabled><name>PARENT_CHANNEL_ID</name></field><field><id>ROOT_CHANNEL_ID</id><enabled>Y</enabled><name>ROOT_CHANNEL_ID</name></field></channel-log-table>
-<step-log-table><connection/>
-<schema/>
-<table/>
-<timeout_days/>
-<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>LOG_DATE</id><enabled>Y</enabled><name>LOG_DATE</name></field><field><id>TRANSNAME</id><enabled>Y</enabled><name>TRANSNAME</name></field><field><id>STEPNAME</id><enabled>Y</enabled><name>STEPNAME</name></field><field><id>STEP_COPY</id><enabled>Y</enabled><name>STEP_COPY</name></field><field><id>LINES_READ</id><enabled>Y</enabled><name>LINES_READ</name></field><field><id>LINES_WRITTEN</id><enabled>Y</enabled><name>LINES_WRITTEN</name></field><field><id>LINES_UPDATED</id><enabled>Y</enabled><name>LINES_UPDATED</name></field><field><id>LINES_INPUT</id><enabled>Y</enabled><name>LINES_INPUT</name></field><field><id>LINES_OUTPUT</id><enabled>Y</enabled><name>LINES_OUTPUT</name></field><field><id>LINES_REJECTED</id><enabled>Y</enabled><name>LINES_REJECTED</name></field><field><id>ERRORS</id><enabled>Y</enabled><name>ERRORS</name></field><field><id>LOG_FIELD</id><enabled>N</enabled><name>LOG_FIELD</name></field></step-log-table>
-<metrics-log-table><connection/>
-<schema/>
-<table/>
-<timeout_days/>
-<field><id>ID_BATCH</id><enabled>Y</enabled><name>ID_BATCH</name></field><field><id>CHANNEL_ID</id><enabled>Y</enabled><name>CHANNEL_ID</name></field><field><id>LOG_DATE</id><enabled>Y</enabled><name>LOG_DATE</name></field><field><id>METRICS_DATE</id><enabled>Y</enabled><name>METRICS_DATE</name></field><field><id>METRICS_CODE</id><enabled>Y</enabled><name>METRICS_CODE</name></field><field><id>METRICS_DESCRIPTION</id><enabled>Y</enabled><name>METRICS_DESCRIPTION</name></field><field><id>METRICS_SUBJECT</id><enabled>Y</enabled><name>METRICS_SUBJECT</name></field><field><id>METRICS_TYPE</id><enabled>Y</enabled><name>METRICS_TYPE</name></field><field><id>METRICS_VALUE</id><enabled>Y</enabled><name>METRICS_VALUE</name></field></metrics-log-table>
+      <trans-log-table>
+        <connection />
+        <schema />
+        <table />
+        <size_limit_lines />
+        <interval />
+        <timeout_days />
+        <field>
+          <id>ID_BATCH</id>
+          <enabled>Y</enabled>
+          <name>ID_BATCH</name>
+        </field>
+        <field>
+          <id>CHANNEL_ID</id>
+          <enabled>Y</enabled>
+          <name>CHANNEL_ID</name>
+        </field>
+        <field>
+          <id>TRANSNAME</id>
+          <enabled>Y</enabled>
+          <name>TRANSNAME</name>
+        </field>
+        <field>
+          <id>STATUS</id>
+          <enabled>Y</enabled>
+          <name>STATUS</name>
+        </field>
+        <field>
+          <id>LINES_READ</id>
+          <enabled>Y</enabled>
+          <name>LINES_READ</name>
+          <subject />
+        </field>
+        <field>
+          <id>LINES_WRITTEN</id>
+          <enabled>Y</enabled>
+          <name>LINES_WRITTEN</name>
+          <subject />
+        </field>
+        <field>
+          <id>LINES_UPDATED</id>
+          <enabled>Y</enabled>
+          <name>LINES_UPDATED</name>
+          <subject />
+        </field>
+        <field>
+          <id>LINES_INPUT</id>
+          <enabled>Y</enabled>
+          <name>LINES_INPUT</name>
+          <subject />
+        </field>
+        <field>
+          <id>LINES_OUTPUT</id>
+          <enabled>Y</enabled>
+          <name>LINES_OUTPUT</name>
+          <subject />
+        </field>
+        <field>
+          <id>LINES_REJECTED</id>
+          <enabled>Y</enabled>
+          <name>LINES_REJECTED</name>
+          <subject />
+        </field>
+        <field>
+          <id>ERRORS</id>
+          <enabled>Y</enabled>
+          <name>ERRORS</name>
+        </field>
+        <field>
+          <id>STARTDATE</id>
+          <enabled>Y</enabled>
+          <name>STARTDATE</name>
+        </field>
+        <field>
+          <id>ENDDATE</id>
+          <enabled>Y</enabled>
+          <name>ENDDATE</name>
+        </field>
+        <field>
+          <id>LOGDATE</id>
+          <enabled>Y</enabled>
+          <name>LOGDATE</name>
+        </field>
+        <field>
+          <id>DEPDATE</id>
+          <enabled>Y</enabled>
+          <name>DEPDATE</name>
+        </field>
+        <field>
+          <id>REPLAYDATE</id>
+          <enabled>Y</enabled>
+          <name>REPLAYDATE</name>
+        </field>
+        <field>
+          <id>LOG_FIELD</id>
+          <enabled>Y</enabled>
+          <name>LOG_FIELD</name>
+        </field>
+        <field>
+          <id>EXECUTING_SERVER</id>
+          <enabled>N</enabled>
+          <name>EXECUTING_SERVER</name>
+        </field>
+        <field>
+          <id>EXECUTING_USER</id>
+          <enabled>N</enabled>
+          <name>EXECUTING_USER</name>
+        </field>
+        <field>
+          <id>CLIENT</id>
+          <enabled>N</enabled>
+          <name>CLIENT</name>
+        </field>
+      </trans-log-table>
+      <perf-log-table>
+        <connection />
+        <schema />
+        <table />
+        <interval />
+        <timeout_days />
+        <field>
+          <id>ID_BATCH</id>
+          <enabled>Y</enabled>
+          <name>ID_BATCH</name>
+        </field>
+        <field>
+          <id>SEQ_NR</id>
+          <enabled>Y</enabled>
+          <name>SEQ_NR</name>
+        </field>
+        <field>
+          <id>LOGDATE</id>
+          <enabled>Y</enabled>
+          <name>LOGDATE</name>
+        </field>
+        <field>
+          <id>TRANSNAME</id>
+          <enabled>Y</enabled>
+          <name>TRANSNAME</name>
+        </field>
+        <field>
+          <id>STEPNAME</id>
+          <enabled>Y</enabled>
+          <name>STEPNAME</name>
+        </field>
+        <field>
+          <id>STEP_COPY</id>
+          <enabled>Y</enabled>
+          <name>STEP_COPY</name>
+        </field>
+        <field>
+          <id>LINES_READ</id>
+          <enabled>Y</enabled>
+          <name>LINES_READ</name>
+        </field>
+        <field>
+          <id>LINES_WRITTEN</id>
+          <enabled>Y</enabled>
+          <name>LINES_WRITTEN</name>
+        </field>
+        <field>
+          <id>LINES_UPDATED</id>
+          <enabled>Y</enabled>
+          <name>LINES_UPDATED</name>
+        </field>
+        <field>
+          <id>LINES_INPUT</id>
+          <enabled>Y</enabled>
+          <name>LINES_INPUT</name>
+        </field>
+        <field>
+          <id>LINES_OUTPUT</id>
+          <enabled>Y</enabled>
+          <name>LINES_OUTPUT</name>
+        </field>
+        <field>
+          <id>LINES_REJECTED</id>
+          <enabled>Y</enabled>
+          <name>LINES_REJECTED</name>
+        </field>
+        <field>
+          <id>ERRORS</id>
+          <enabled>Y</enabled>
+          <name>ERRORS</name>
+        </field>
+        <field>
+          <id>INPUT_BUFFER_ROWS</id>
+          <enabled>Y</enabled>
+          <name>INPUT_BUFFER_ROWS</name>
+        </field>
+        <field>
+          <id>OUTPUT_BUFFER_ROWS</id>
+          <enabled>Y</enabled>
+          <name>OUTPUT_BUFFER_ROWS</name>
+        </field>
+      </perf-log-table>
+      <channel-log-table>
+        <connection />
+        <schema />
+        <table />
+        <timeout_days />
+        <field>
+          <id>ID_BATCH</id>
+          <enabled>Y</enabled>
+          <name>ID_BATCH</name>
+        </field>
+        <field>
+          <id>CHANNEL_ID</id>
+          <enabled>Y</enabled>
+          <name>CHANNEL_ID</name>
+        </field>
+        <field>
+          <id>LOG_DATE</id>
+          <enabled>Y</enabled>
+          <name>LOG_DATE</name>
+        </field>
+        <field>
+          <id>LOGGING_OBJECT_TYPE</id>
+          <enabled>Y</enabled>
+          <name>LOGGING_OBJECT_TYPE</name>
+        </field>
+        <field>
+          <id>OBJECT_NAME</id>
+          <enabled>Y</enabled>
+          <name>OBJECT_NAME</name>
+        </field>
+        <field>
+          <id>OBJECT_COPY</id>
+          <enabled>Y</enabled>
+          <name>OBJECT_COPY</name>
+        </field>
+        <field>
+          <id>REPOSITORY_DIRECTORY</id>
+          <enabled>Y</enabled>
+          <name>REPOSITORY_DIRECTORY</name>
+        </field>
+        <field>
+          <id>FILENAME</id>
+          <enabled>Y</enabled>
+          <name>FILENAME</name>
+        </field>
+        <field>
+          <id>OBJECT_ID</id>
+          <enabled>Y</enabled>
+          <name>OBJECT_ID</name>
+        </field>
+        <field>
+          <id>OBJECT_REVISION</id>
+          <enabled>Y</enabled>
+          <name>OBJECT_REVISION</name>
+        </field>
+        <field>
+          <id>PARENT_CHANNEL_ID</id>
+          <enabled>Y</enabled>
+          <name>PARENT_CHANNEL_ID</name>
+        </field>
+        <field>
+          <id>ROOT_CHANNEL_ID</id>
+          <enabled>Y</enabled>
+          <name>ROOT_CHANNEL_ID</name>
+        </field>
+      </channel-log-table>
+      <step-log-table>
+        <connection />
+        <schema />
+        <table />
+        <timeout_days />
+        <field>
+          <id>ID_BATCH</id>
+          <enabled>Y</enabled>
+          <name>ID_BATCH</name>
+        </field>
+        <field>
+          <id>CHANNEL_ID</id>
+          <enabled>Y</enabled>
+          <name>CHANNEL_ID</name>
+        </field>
+        <field>
+          <id>LOG_DATE</id>
+          <enabled>Y</enabled>
+          <name>LOG_DATE</name>
+        </field>
+        <field>
+          <id>TRANSNAME</id>
+          <enabled>Y</enabled>
+          <name>TRANSNAME</name>
+        </field>
+        <field>
+          <id>STEPNAME</id>
+          <enabled>Y</enabled>
+          <name>STEPNAME</name>
+        </field>
+        <field>
+          <id>STEP_COPY</id>
+          <enabled>Y</enabled>
+          <name>STEP_COPY</name>
+        </field>
+        <field>
+          <id>LINES_READ</id>
+          <enabled>Y</enabled>
+          <name>LINES_READ</name>
+        </field>
+        <field>
+          <id>LINES_WRITTEN</id>
+          <enabled>Y</enabled>
+          <name>LINES_WRITTEN</name>
+        </field>
+        <field>
+          <id>LINES_UPDATED</id>
+          <enabled>Y</enabled>
+          <name>LINES_UPDATED</name>
+        </field>
+        <field>
+          <id>LINES_INPUT</id>
+          <enabled>Y</enabled>
+          <name>LINES_INPUT</name>
+        </field>
+        <field>
+          <id>LINES_OUTPUT</id>
+          <enabled>Y</enabled>
+          <name>LINES_OUTPUT</name>
+        </field>
+        <field>
+          <id>LINES_REJECTED</id>
+          <enabled>Y</enabled>
+          <name>LINES_REJECTED</name>
+        </field>
+        <field>
+          <id>ERRORS</id>
+          <enabled>Y</enabled>
+          <name>ERRORS</name>
+        </field>
+        <field>
+          <id>LOG_FIELD</id>
+          <enabled>N</enabled>
+          <name>LOG_FIELD</name>
+        </field>
+      </step-log-table>
+      <metrics-log-table>
+        <connection />
+        <schema />
+        <table />
+        <timeout_days />
+        <field>
+          <id>ID_BATCH</id>
+          <enabled>Y</enabled>
+          <name>ID_BATCH</name>
+        </field>
+        <field>
+          <id>CHANNEL_ID</id>
+          <enabled>Y</enabled>
+          <name>CHANNEL_ID</name>
+        </field>
+        <field>
+          <id>LOG_DATE</id>
+          <enabled>Y</enabled>
+          <name>LOG_DATE</name>
+        </field>
+        <field>
+          <id>METRICS_DATE</id>
+          <enabled>Y</enabled>
+          <name>METRICS_DATE</name>
+        </field>
+        <field>
+          <id>METRICS_CODE</id>
+          <enabled>Y</enabled>
+          <name>METRICS_CODE</name>
+        </field>
+        <field>
+          <id>METRICS_DESCRIPTION</id>
+          <enabled>Y</enabled>
+          <name>METRICS_DESCRIPTION</name>
+        </field>
+        <field>
+          <id>METRICS_SUBJECT</id>
+          <enabled>Y</enabled>
+          <name>METRICS_SUBJECT</name>
+        </field>
+        <field>
+          <id>METRICS_TYPE</id>
+          <enabled>Y</enabled>
+          <name>METRICS_TYPE</name>
+        </field>
+        <field>
+          <id>METRICS_VALUE</id>
+          <enabled>Y</enabled>
+          <name>METRICS_VALUE</name>
+        </field>
+      </metrics-log-table>
     </log>
     <maxdate>
-      <connection/>
-      <table/>
-      <field/>
+      <connection />
+      <table />
+      <field />
       <offset>0.0</offset>
       <maxdiff>0.0</maxdiff>
     </maxdate>
@@ -53,7 +414,7 @@
     <feedback_shown>Y</feedback_shown>
     <feedback_size>50000</feedback_size>
     <using_thread_priorities>Y</using_thread_priorities>
-    <shared_objects_file/>
+    <shared_objects_file />
     <capture_step_performance>N</capture_step_performance>
     <step_performance_capturing_delay>1000</step_performance_capturing_delay>
     <step_performance_capturing_size_limit>100</step_performance_capturing_size_limit>
@@ -65,174 +426,1061 @@
     </slaveservers>
     <clusterschemas>
     </clusterschemas>
-  <created_user>-</created_user>
-  <created_date>2017&#x2f;11&#x2f;30 17&#x3a;46&#x3a;13.451</created_date>
-  <modified_user>-</modified_user>
-  <modified_date>2017&#x2f;11&#x2f;30 17&#x3a;46&#x3a;13.451</modified_date>
-    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA&#x3d;</key_for_session_key>
+    <created_user>-</created_user>
+    <created_date>2017/11/30 17:46:13.451</created_date>
+    <modified_user>-</modified_user>
+    <modified_date>2017/11/30 17:46:13.451</modified_date>
+    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
   </notepads>
   <connection>
-    <name>desenv</name>
-    <server>10.1.4.110</server>
-    <type>POSTGRESQL</type>
-    <access>Native</access>
-    <database>portalosc</database>
-    <port>5432</port>
-    <username>i3geo</username>
-    <password>Encrypted 2be98afc86aa7f2e4cb10be75dfc2ff8b</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>5432</attribute></attribute>
-      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>N</attribute></attribute>
-      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
-      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
-      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>Y</attribute></attribute>
-      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
-    </attributes>
-  </connection>
-  <connection>
     <name>etl</name>
-    <server>&#x24;&#x7b;db_host&#x7d;</server>
+    <server>${db_host}</server>
     <type>POSTGRESQL</type>
     <access>Native</access>
-    <database>&#x24;&#x7b;db_name&#x7d;</database>
-    <port>&#x24;&#x7b;db_port&#x7d;</port>
-    <username>&#x24;&#x7b;db_user&#x7d;</username>
-    <password>&#x24;&#x7b;db_pass&#x7d;</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
+    <database>${db_name}</database>
+    <port>${db_port}</port>
+    <username>${db_user}</username>
+    <password>${db_pass}</password>
+    <servername />
+    <data_tablespace />
+    <index_tablespace />
     <attributes>
-      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>&#x24;&#x7b;db_port&#x7d;</attribute></attribute>
-      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>N</attribute></attribute>
-      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
-      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
-      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>Y</attribute></attribute>
-      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
-    </attributes>
-  </connection>
-  <connection>
-    <name>localhost</name>
-    <server>localhost</server>
-    <type>POSTGRESQL</type>
-    <access>Native</access>
-    <database>portalosc_producao</database>
-    <port>5432</port>
-    <username>postgres</username>
-    <password>Encrypted 2be98afc86aa7f2e4cb79a760db93bdd0</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
-    <attributes>
-      <attribute><code>FORCE_IDENTIFIERS_TO_LOWERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>FORCE_IDENTIFIERS_TO_UPPERCASE</code><attribute>N</attribute></attribute>
-      <attribute><code>IS_CLUSTERED</code><attribute>N</attribute></attribute>
-      <attribute><code>PORT_NUMBER</code><attribute>5432</attribute></attribute>
-      <attribute><code>PRESERVE_RESERVED_WORD_CASE</code><attribute>N</attribute></attribute>
-      <attribute><code>QUOTE_ALL_FIELDS</code><attribute>N</attribute></attribute>
-      <attribute><code>SUPPORTS_BOOLEAN_DATA_TYPE</code><attribute>Y</attribute></attribute>
-      <attribute><code>SUPPORTS_TIMESTAMP_DATA_TYPE</code><attribute>Y</attribute></attribute>
-      <attribute><code>USE_POOLING</code><attribute>N</attribute></attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>IS_CLUSTERED</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>PORT_NUMBER</code>
+        <attribute>${db_port}</attribute>
+      </attribute>
+      <attribute>
+        <code>PRESERVE_RESERVED_WORD_CASE</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>QUOTE_ALL_FIELDS</code>
+        <attribute>N</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
+        <attribute>Y</attribute>
+      </attribute>
+      <attribute>
+        <code>USE_POOLING</code>
+        <attribute>N</attribute>
+      </attribute>
     </attributes>
   </connection>
   <order>
-  <hop> <from>Text file input</from><to>Filter rows</to><enabled>Y</enabled> </hop>
-  <hop> <from>Filter rows</from><to>Execute SQL script 2</to><enabled>Y</enabled> </hop>
+    <hop>
+      <from>CSV file input</from>
+      <to>Select values</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Select values</from>
+      <to>Filter rows</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
+      <from>Filter rows</from>
+      <to>Execute SQL script 2</to>
+      <enabled>Y</enabled>
+    </hop>
   </order>
+  <step>
+    <name>CSV file input</name>
+    <type>CsvInput</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <filename>${folder_path}osc_2019_geo.csv</filename>
+    <filename_field />
+    <rownum_field />
+    <include_filename>N</include_filename>
+    <separator>;</separator>
+    <enclosure>"</enclosure>
+    <header>Y</header>
+    <buffer_size>50000</buffer_size>
+    <lazy_conversion>N</lazy_conversion>
+    <add_filename_result>N</add_filename_result>
+    <parallel>N</parallel>
+    <newline_possible>N</newline_possible>
+    <encoding>UTF-8</encoding>
+    <fields>
+      <field>
+        <name>cnpj</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>identificador_matriz_filial</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>6</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>razao_social</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>64</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>nome_fantasia</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>48</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>situacao</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>situacao_desc</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>8</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>data_situacao</name>
+        <type>String</type>
+        <format>yyyyMMdd</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>motivo_situacao</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>motivo_situacao_desc</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>12</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>natureza_juridica</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>nat_jur_desc</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>21</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>data_inicio</name>
+        <type>String</type>
+        <format>yyyyMMdd</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>ano_inicio</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>cnae_subclasse</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>subclasse_desc</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>114</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>cnae_classe</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>classe_desc</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>139</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>cnae_grupo</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>grupo_desc</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>180</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>cnae_divisao</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>divisao_desc</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>121</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>endereco_completo</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>43</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>tipo_logradouro</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>8</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>endereco</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>35</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>numero</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>4</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>complemento</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>34</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>bairro</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>27</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>cep</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>codemun</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>municipio</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>21</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>geocod_ibge_2018</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>nome_munic_ibge</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>21</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>uf</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>2</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>cidade_exterior</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>cod_pais</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>nome_pais</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>ddd1</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>telefone1</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>ddd2</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>telefone2</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>nu_ddd_fax</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>nu_fax</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>email</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>40</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>qualificacao</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>capital_social</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>porte_empresa</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>opcao_simples</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>data_opcao_simples</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>data_exclusao_simples</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>opcao_mei</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>situacao_especial</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>data_situacao_especial</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>ind_osc</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>id_mapa</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>certificado_OSCIP</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>macro_area_atuacao</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>49</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>micro_area_atuacao</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>36</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>n_vinc_ativos</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>n_vinc_def</name>
+        <type>Integer</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>empenhado</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>pago</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>empenhado_def</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>pago_def</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>-1</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>cnae_secundaria</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>cnae2_classe</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>cnae2_classe_desc</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>139</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>PrecisionDepth</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>10</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>MatchedAddress</name>
+        <type>String</type>
+        <format />
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>83</length>
+        <precision>-1</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Longitude</name>
+        <type>String</type>
+        <format>#.#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>17</length>
+        <precision>13</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>Latitude</name>
+        <type>String</type>
+        <format>#.#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>17</length>
+        <precision>14</precision>
+        <trim_type>none</trim_type>
+      </field>
+      <field>
+        <name>cnpj_1</name>
+        <type>String</type>
+        <format>#</format>
+        <currency>R$</currency>
+        <decimal>,</decimal>
+        <group>.</group>
+        <length>15</length>
+        <precision>0</precision>
+        <trim_type>none</trim_type>
+      </field>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>528</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
   <step>
     <name>Execute SQL script 2</name>
     <type>ExecSQL</type>
-    <description/>
+    <description />
     <distribute>Y</distribute>
-    <custom_distribution/>
+    <custom_distribution />
     <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
     <connection>etl</connection>
     <execute_each_row>Y</execute_each_row>
     <single_statement>N</single_statement>
     <replace_variables>Y</replace_variables>
     <quoteString>N</quoteString>
-    <sql>SELECT portal.atualizar_relacoes_trabalho_osc&#x28;&#x27;&#x24;&#x7b;ETL&#x7d;&#x27;, &#x3f;&#x3a;&#x3a;NUMERIC, &#x27;CNPJ&#x27;, &#x28;SELECT NOW&#x28;&#x29;&#x3a;&#x3a;TIMESTAMP&#x29;, &#xa;&#x27;&#x7b;&#x22;nr_trabalhadores_vinculo&#x22;&#x3a;&#x22;&#x3f;&#x22;,&#x22;nr_trabalhadores_deficiencia&#x22;&#x3a;&#x22;&#x3f;&#x22;&#x7d;&#x27;, FALSE, TRUE, &#x27;&#x24;&#x7b;ID_CARGA&#x7d;&#x27;&#x29;&#x3b;&#xa;</sql>
+    <sql>SELECT portal.atualizar_relacoes_trabalho_osc('${ETL}'::TEXT, ?::NUMERIC, 'CNPJ'::TEXT, (SELECT NOW()::TIMESTAMP), 
+'{"nr_trabalhadores_vinculo":"?","nr_trabalhadores_deficiencia":"?"}'::JSONB, FALSE, TRUE, '${ID_CARGA}');
+</sql>
     <set_params>N</set_params>
-    <insert_field/>
-    <update_field/>
-    <delete_field/>
-    <read_field/>
+    <insert_field />
+    <update_field />
+    <delete_field />
+    <read_field />
     <arguments>
-       <argument><name>id_estab</name></argument>
-       <argument><name>qtd_vinc_ativos</name></argument>
-       <argument><name>qtd_portador_defic</name></argument>
+      <argument>
+        <name>cnpj</name>
+      </argument>
+      <argument>
+        <name>n_vinc_ativos</name>
+      </argument>
+      <argument>
+        <name>n_vinc_def</name>
+      </argument>
     </arguments>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
       <xloc>488</xloc>
       <yloc>264</yloc>
       <draw>Y</draw>
-      </GUI>
-    </step>
-
+    </GUI>
+  </step>
   <step>
     <name>Filter rows</name>
     <type>FilterRows</type>
-    <description/>
+    <description />
     <distribute>Y</distribute>
-    <custom_distribution/>
+    <custom_distribution />
     <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
-<send_true_to>Execute SQL script 2</send_true_to>
-<send_false_to/>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <send_true_to>Execute SQL script 2</send_true_to>
+    <send_false_to />
     <compare>
-<condition>
- <negated>N</negated>
- <leftvalue>ano_rais</leftvalue>
- <function>&#x3d;</function>
- <rightvalue/>
- <value><name>constant</name><type>Integer</type><text>2015</text><length>-1</length><precision>0</precision><isnull>N</isnull><mask>&#x23;&#x3b;-&#x23;</mask></value> </condition>
+      <condition>
+        <negated>N</negated>
+        <conditions>
+          <condition>
+            <negated>N</negated>
+            <leftvalue>n_vinc_ativos</leftvalue>
+            <function>IS NOT NULL</function>
+            <rightvalue />
+            <value>
+              <name>constant</name>
+              <type>Integer</type>
+              <text>2015</text>
+              <length>-1</length>
+              <precision>0</precision>
+              <isnull>N</isnull>
+              <mask>#;-#</mask>
+            </value>
+          </condition>
+          <condition>
+            <negated>N</negated>
+            <operator>OR</operator>
+            <leftvalue>n_vinc_def</leftvalue>
+            <function>IS NOT NULL</function>
+            <rightvalue />
+          </condition>
+        </conditions>
+      </condition>
     </compare>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
-      <xloc>318</xloc>
-      <yloc>264</yloc>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>352</yloc>
       <draw>Y</draw>
-      </GUI>
-    </step>
-
+    </GUI>
+  </step>
+  <step>
+    <name>Select values</name>
+    <type>SelectValues</type>
+    <description />
+    <distribute>Y</distribute>
+    <custom_distribution />
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
+    <fields>
+      <field>
+        <name>cnpj</name>
+      </field>
+      <field>
+        <name>n_vinc_ativos</name>
+      </field>
+      <field>
+        <name>n_vinc_def</name>
+      </field>
+      <select_unspecified>N</select_unspecified>
+    </fields>
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>480</xloc>
+      <yloc>432</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
   <step>
     <name>Text file input</name>
     <type>TextFileInput</type>
-    <description/>
+    <description />
     <distribute>Y</distribute>
-    <custom_distribution/>
+    <custom_distribution />
     <copies>1</copies>
-         <partitioning>
-           <method>none</method>
-           <schema_name/>
-           </partitioning>
+    <partitioning>
+      <method>none</method>
+      <schema_name />
+    </partitioning>
     <accept_filenames>N</accept_filenames>
     <passing_through_fields>N</passing_through_fields>
-    <accept_field/>
-    <accept_stepname/>
-    <separator>&#x3b;</separator>
-    <enclosure>&#x22;</enclosure>
+    <accept_field />
+    <accept_stepname />
+    <separator>;</separator>
+    <enclosure>"</enclosure>
     <enclosure_breaks>N</enclosure_breaks>
-    <escapechar/>
+    <escapechar />
     <header>Y</header>
     <nr_headerlines>1</nr_headerlines>
     <footer>N</footer>
@@ -244,17 +1492,18 @@
     <nr_lines_doc_header>0</nr_lines_doc_header>
     <noempty>Y</noempty>
     <include>N</include>
-    <include_field/>
+    <include_field />
     <rownum>N</rownum>
     <rownumByFile>N</rownumByFile>
-    <rownum_field/>
+    <rownum_field />
     <format>Unix</format>
     <encoding>UTF-8</encoding>
+    <length />
     <add_to_result_filenames>Y</add_to_result_filenames>
     <file>
-      <name>&#x24;&#x7b;folder_path&#x7d;rais_serie&#x2f;tb-rais-serie.csv</name>
-      <filemask/>
-      <exclude_filemask/>
+      <name>${folder_path}rais_serie/tb-rais-serie.csv</name>
+      <filemask />
+      <exclude_filemask />
       <file_required>N</file_required>
       <include_subfolders>N</include_subfolders>
       <type>CSV</type>
@@ -266,12 +1515,12 @@
       <field>
         <name>id_estab</name>
         <type>Integer</type>
-        <format>&#x23;</format>
-        <currency>R&#x24;</currency>
+        <format>#</format>
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>15</length>
         <precision>0</precision>
@@ -281,12 +1530,12 @@
       <field>
         <name>codemun</name>
         <type>Integer</type>
-        <format>&#x23;</format>
-        <currency>R&#x24;</currency>
+        <format>#</format>
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>15</length>
         <precision>0</precision>
@@ -296,12 +1545,12 @@
       <field>
         <name>nm_mun</name>
         <type>String</type>
-        <format/>
-        <currency>R&#x24;</currency>
+        <format />
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>24</length>
         <precision>-1</precision>
@@ -311,12 +1560,12 @@
       <field>
         <name>uf</name>
         <type>Integer</type>
-        <format>&#x23;</format>
-        <currency>R&#x24;</currency>
+        <format>#</format>
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>15</length>
         <precision>0</precision>
@@ -326,12 +1575,12 @@
       <field>
         <name>nm_uf</name>
         <type>String</type>
-        <format/>
-        <currency>R&#x24;</currency>
+        <format />
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>14</length>
         <precision>-1</precision>
@@ -341,12 +1590,12 @@
       <field>
         <name>regiao</name>
         <type>Integer</type>
-        <format>&#x23;</format>
-        <currency>R&#x24;</currency>
+        <format>#</format>
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>15</length>
         <precision>0</precision>
@@ -356,12 +1605,12 @@
       <field>
         <name>nm_regiao</name>
         <type>String</type>
-        <format/>
-        <currency>R&#x24;</currency>
+        <format />
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>12</length>
         <precision>-1</precision>
@@ -371,12 +1620,12 @@
       <field>
         <name>secao_cnae20</name>
         <type>String</type>
-        <format/>
-        <currency>R&#x24;</currency>
+        <format />
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>1</length>
         <precision>-1</precision>
@@ -386,12 +1635,12 @@
       <field>
         <name>div_cnae20</name>
         <type>Integer</type>
-        <format>&#x23;</format>
-        <currency>R&#x24;</currency>
+        <format>#</format>
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>15</length>
         <precision>0</precision>
@@ -401,12 +1650,12 @@
       <field>
         <name>grp_cnae20</name>
         <type>Integer</type>
-        <format>&#x23;</format>
-        <currency>R&#x24;</currency>
+        <format>#</format>
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>15</length>
         <precision>0</precision>
@@ -416,12 +1665,12 @@
       <field>
         <name>clas_cnae20</name>
         <type>Integer</type>
-        <format>&#x23;</format>
-        <currency>R&#x24;</currency>
+        <format>#</format>
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>15</length>
         <precision>0</precision>
@@ -431,12 +1680,12 @@
       <field>
         <name>sbcl_cnae20</name>
         <type>Integer</type>
-        <format>&#x23;</format>
-        <currency>R&#x24;</currency>
+        <format>#</format>
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>15</length>
         <precision>0</precision>
@@ -446,12 +1695,12 @@
       <field>
         <name>nat_jur</name>
         <type>Integer</type>
-        <format>&#x23;</format>
-        <currency>R&#x24;</currency>
+        <format>#</format>
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>15</length>
         <precision>0</precision>
@@ -461,12 +1710,12 @@
       <field>
         <name>razao_social</name>
         <type>String</type>
-        <format/>
-        <currency>R&#x24;</currency>
+        <format />
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>52</length>
         <precision>-1</precision>
@@ -476,12 +1725,12 @@
       <field>
         <name>tamestab</name>
         <type>Integer</type>
-        <format>&#x23;</format>
-        <currency>R&#x24;</currency>
+        <format>#</format>
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>15</length>
         <precision>0</precision>
@@ -491,12 +1740,12 @@
       <field>
         <name>tamestab2</name>
         <type>Integer</type>
-        <format>&#x23;</format>
-        <currency>R&#x24;</currency>
+        <format>#</format>
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>15</length>
         <precision>0</precision>
@@ -506,12 +1755,12 @@
       <field>
         <name>qtd_vinc_ativos</name>
         <type>Integer</type>
-        <format>&#x23;</format>
-        <currency>R&#x24;</currency>
+        <format>#</format>
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>15</length>
         <precision>0</precision>
@@ -521,12 +1770,12 @@
       <field>
         <name>qtd_portador_defic</name>
         <type>Integer</type>
-        <format>&#x23;</format>
-        <currency>R&#x24;</currency>
+        <format>#</format>
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>15</length>
         <precision>0</precision>
@@ -536,12 +1785,12 @@
       <field>
         <name>data_abertura</name>
         <type>String</type>
-        <format/>
-        <currency>R&#x24;</currency>
+        <format />
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>2</length>
         <precision>-1</precision>
@@ -551,12 +1800,12 @@
       <field>
         <name>data_encerramento</name>
         <type>String</type>
-        <format/>
-        <currency>R&#x24;</currency>
+        <format />
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>2</length>
         <precision>-1</precision>
@@ -566,12 +1815,12 @@
       <field>
         <name>data_baixa</name>
         <type>String</type>
-        <format/>
-        <currency>R&#x24;</currency>
+        <format />
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>-1</length>
         <precision>-1</precision>
@@ -581,12 +1830,12 @@
       <field>
         <name>ind_atividade</name>
         <type>Integer</type>
-        <format>&#x23;</format>
-        <currency>R&#x24;</currency>
+        <format>#</format>
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>15</length>
         <precision>0</precision>
@@ -596,12 +1845,12 @@
       <field>
         <name>ind_rais_neg</name>
         <type>Integer</type>
-        <format>&#x23;</format>
-        <currency>R&#x24;</currency>
+        <format>#</format>
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>15</length>
         <precision>0</precision>
@@ -611,12 +1860,12 @@
       <field>
         <name>ind_osc</name>
         <type>Integer</type>
-        <format>&#x23;</format>
-        <currency>R&#x24;</currency>
+        <format>#</format>
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>15</length>
         <precision>0</precision>
@@ -626,12 +1875,12 @@
       <field>
         <name>ano_abertura</name>
         <type>String</type>
-        <format/>
-        <currency>R&#x24;</currency>
+        <format />
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>2</length>
         <precision>-1</precision>
@@ -641,12 +1890,12 @@
       <field>
         <name>ano_rais</name>
         <type>Integer</type>
-        <format>&#x23;</format>
-        <currency>R&#x24;</currency>
+        <format>#</format>
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>15</length>
         <precision>0</precision>
@@ -656,12 +1905,12 @@
       <field>
         <name>nat_jur_corrigido</name>
         <type>Integer</type>
-        <format>&#x23;</format>
-        <currency>R&#x24;</currency>
+        <format>#</format>
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>15</length>
         <precision>0</precision>
@@ -671,12 +1920,12 @@
       <field>
         <name>sbcl_cnae_corrigido</name>
         <type>String</type>
-        <format/>
-        <currency>R&#x24;</currency>
+        <format />
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>7</length>
         <precision>-1</precision>
@@ -686,12 +1935,12 @@
       <field>
         <name>in_cnis16</name>
         <type>Integer</type>
-        <format>&#x23;</format>
-        <currency>R&#x24;</currency>
+        <format>#</format>
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>15</length>
         <precision>0</precision>
@@ -701,12 +1950,12 @@
       <field>
         <name>ano_true</name>
         <type>Integer</type>
-        <format>&#x23;</format>
-        <currency>R&#x24;</currency>
+        <format>#</format>
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>15</length>
         <precision>0</precision>
@@ -716,12 +1965,12 @@
       <field>
         <name>div_cnae20_corrigido</name>
         <type>String</type>
-        <format/>
-        <currency>R&#x24;</currency>
+        <format />
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>2</length>
         <precision>-1</precision>
@@ -731,12 +1980,12 @@
       <field>
         <name>grp_cnae20_corrigido</name>
         <type>String</type>
-        <format/>
-        <currency>R&#x24;</currency>
+        <format />
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>3</length>
         <precision>-1</precision>
@@ -746,12 +1995,12 @@
       <field>
         <name>clas_cnae20_corrigido</name>
         <type>String</type>
-        <format/>
-        <currency>R&#x24;</currency>
+        <format />
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>5</length>
         <precision>-1</precision>
@@ -761,12 +2010,12 @@
       <field>
         <name>secao_cnae20_corrigido</name>
         <type>String</type>
-        <format/>
-        <currency>R&#x24;</currency>
+        <format />
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>2</length>
         <precision>-1</precision>
@@ -776,12 +2025,12 @@
       <field>
         <name>micro_area_atuacao</name>
         <type>String</type>
-        <format/>
-        <currency>R&#x24;</currency>
+        <format />
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>57</length>
         <precision>-1</precision>
@@ -791,12 +2040,12 @@
       <field>
         <name>macro_area_atuacao</name>
         <type>String</type>
-        <format/>
-        <currency>R&#x24;</currency>
+        <format />
+        <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
         <nullif>-</nullif>
-        <ifnull/>
+        <ifnull />
         <position>-1</position>
         <length>57</length>
         <precision>-1</precision>
@@ -807,40 +2056,44 @@
     <limit>0</limit>
     <error_ignored>N</error_ignored>
     <skip_bad_files>N</skip_bad_files>
-    <file_error_field/>
-    <file_error_message_field/>
+    <file_error_field />
+    <file_error_message_field />
     <error_line_skipped>N</error_line_skipped>
-    <error_count_field/>
-    <error_fields_field/>
-    <error_text_field/>
-    <bad_line_files_destination_directory/>
+    <error_count_field />
+    <error_fields_field />
+    <error_text_field />
+    <bad_line_files_destination_directory />
     <bad_line_files_extension>warning</bad_line_files_extension>
-    <error_line_files_destination_directory/>
+    <error_line_files_destination_directory />
     <error_line_files_extension>error</error_line_files_extension>
-    <line_number_files_destination_directory/>
+    <line_number_files_destination_directory />
     <line_number_files_extension>line</line_number_files_extension>
     <date_format_lenient>Y</date_format_lenient>
     <date_format_locale>pt_BR</date_format_locale>
-    <shortFileFieldName/>
-    <pathFieldName/>
-    <hiddenFieldName/>
-    <lastModificationTimeFieldName/>
-    <uriNameFieldName/>
-    <rootUriNameFieldName/>
-    <extensionFieldName/>
-    <sizeFieldName/>
-     <cluster_schema/>
- <remotesteps>   <input>   </input>   <output>   </output> </remotesteps>    <GUI>
+    <shortFileFieldName />
+    <pathFieldName />
+    <hiddenFieldName />
+    <lastModificationTimeFieldName />
+    <uriNameFieldName />
+    <rootUriNameFieldName />
+    <extensionFieldName />
+    <sizeFieldName />
+    <cluster_schema />
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
       <xloc>156</xloc>
       <yloc>263</yloc>
       <draw>Y</draw>
-      </GUI>
-    </step>
-
+    </GUI>
+  </step>
   <step_error_handling>
   </step_error_handling>
-   <slave-step-copy-partition-distribution>
-</slave-step-copy-partition-distribution>
-   <slave_transformation>N</slave_transformation>
-
+  <slave-step-copy-partition-distribution>
+  </slave-step-copy-partition-distribution>
+  <slave_transformation>N</slave_transformation>
 </transformation>
