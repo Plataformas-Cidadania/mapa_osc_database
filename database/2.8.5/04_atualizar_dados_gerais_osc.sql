@@ -135,7 +135,8 @@ BEGIN
 			flag_update := true;
 		END IF;
 
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.im_logo::TEXT, dado_anterior.ft_logo, objeto.im_logo::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+		nome_campo := 'im_logo';
+		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.im_logo::TEXT, dado_anterior.ft_logo, objeto.im_logo::TEXT, fonte_dados.prioridade, nome_campo, null_valido) AS a) THEN
 			dado_posterior.im_logo := objeto.im_logo;
 			dado_posterior.ft_logo := fonte_dados.nome_fonte;
 			flag_update := true;
@@ -153,7 +154,8 @@ BEGIN
 			flag_update := true;
 		END IF;
 
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_sigla_osc::TEXT, dado_anterior.ft_sigla_osc, objeto.tx_sigla_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+		nome_campo := 'tx_sigla_osc';
+		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_sigla_osc::TEXT, dado_anterior.ft_sigla_osc, objeto.tx_sigla_osc::TEXT, fonte_dados.prioridade, nome_campo, null_valido) AS a) THEN
 			dado_posterior.tx_sigla_osc := objeto.tx_sigla_osc;
 			dado_posterior.ft_sigla_osc := fonte_dados.nome_fonte;
 			flag_update := true;
@@ -174,13 +176,15 @@ BEGIN
 			END IF;
 		END IF;
 
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_resumo_osc::TEXT, dado_anterior.ft_resumo_osc, objeto.tx_resumo_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+		nome_campo := 'tx_resumo_osc';
+		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_resumo_osc::TEXT, dado_anterior.ft_resumo_osc, objeto.tx_resumo_osc::TEXT, fonte_dados.prioridade, nome_campo, null_valido) AS a) THEN
 			dado_posterior.tx_resumo_osc := objeto.tx_resumo_osc;
 			dado_posterior.ft_resumo_osc := fonte_dados.nome_fonte;
 			flag_update := true;
 		END IF;
 
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.cd_situacao_imovel_osc::TEXT, dado_anterior.ft_situacao_imovel_osc, objeto.cd_situacao_imovel_osc::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+		nome_campo := 'cd_situacao_imovel_osc';
+		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.cd_situacao_imovel_osc::TEXT, dado_anterior.ft_situacao_imovel_osc, objeto.cd_situacao_imovel_osc::TEXT, fonte_dados.prioridade, nome_campo, null_valido) AS a) THEN
 			dado_posterior.cd_situacao_imovel_osc := objeto.cd_situacao_imovel_osc;
 			dado_posterior.ft_situacao_imovel_osc := fonte_dados.nome_fonte;
 			flag_update := true;
@@ -198,7 +202,8 @@ BEGIN
 			flag_update := true;
 		END IF;
 
-		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_nome_responsavel_legal::TEXT, dado_anterior.ft_nome_responsavel_legal, objeto.tx_nome_responsavel_legal::TEXT, fonte_dados.prioridade, null_valido) AS a) THEN
+		nome_campo := 'tx_nome_responsavel_legal';
+		IF (SELECT a.flag FROM portal.verificar_dado(dado_anterior.tx_nome_responsavel_legal::TEXT, dado_anterior.ft_nome_responsavel_legal, objeto.tx_nome_responsavel_legal::TEXT, fonte_dados.prioridade, nome_campo, null_valido) AS a) THEN
 			dado_posterior.tx_nome_responsavel_legal := objeto.tx_nome_responsavel_legal;
 			dado_posterior.ft_nome_responsavel_legal := fonte_dados.nome_fonte;
 			flag_update := true;
