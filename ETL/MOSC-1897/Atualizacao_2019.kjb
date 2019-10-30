@@ -368,27 +368,27 @@
       <fields>
         <field>
           <variable_name>db_host</variable_name>
-          <variable_value />
+          <variable_value>mapaosc-dev</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>db_name</variable_name>
-          <variable_value />
+          <variable_value>portal_osc2</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>db_port</variable_name>
-          <variable_value />
+          <variable_value>5434</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>db_user</variable_name>
-          <variable_value />
+          <variable_value>i3geo</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>db_pass</variable_name>
-          <variable_value />
+          <variable_value>ipea001</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
@@ -472,7 +472,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>784</xloc>
-      <yloc>208</yloc>
+      <yloc>336</yloc>
     </entry>
     <entry>
       <name>CEBAS/MS</name>
@@ -733,6 +733,36 @@ select RefreshAllMaterializedViews('analysis');</sql>
       <xloc>656</xloc>
       <yloc>208</yloc>
     </entry>
+    <entry>
+      <name>SQL 2</name>
+      <description />
+      <type>SQL</type>
+      <sql>select RefreshAllMaterializedViews('spat');
+select RefreshAllMaterializedViews('osc');
+select RefreshAllMaterializedViews('portal');
+select RefreshAllMaterializedViews('analysis');
+select RefreshAllMaterializedViews('ipeadata');</sql>
+      <useVariableSubstitution>F</useVariableSubstitution>
+      <sqlfromfile>F</sqlfromfile>
+      <sqlfilename />
+      <sendOneStatement>F</sendOneStatement>
+      <connection>etl</connection>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>1184</xloc>
+      <yloc>208</yloc>
+    </entry>
+    <entry>
+      <name>Success</name>
+      <description />
+      <type>SUCCESS</type>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>1264</xloc>
+      <yloc>208</yloc>
+    </entry>
   </entries>
   <hops>
     <hop>
@@ -749,7 +779,7 @@ select RefreshAllMaterializedViews('analysis');</sql>
       <to>RFB</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
@@ -758,7 +788,7 @@ select RefreshAllMaterializedViews('analysis');</sql>
       <to>CEBAS/MS</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
@@ -767,7 +797,7 @@ select RefreshAllMaterializedViews('analysis');</sql>
       <to>CNEA</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
@@ -776,7 +806,7 @@ select RefreshAllMaterializedViews('analysis');</sql>
       <to>Censo SUAS</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
@@ -785,7 +815,7 @@ select RefreshAllMaterializedViews('analysis');</sql>
       <to>SQL</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
@@ -794,7 +824,7 @@ select RefreshAllMaterializedViews('analysis');</sql>
       <to>Orçamento Não Deflacionado</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
@@ -803,7 +833,7 @@ select RefreshAllMaterializedViews('analysis');</sql>
       <to>Orçamento Deflacionado</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
@@ -812,7 +842,34 @@ select RefreshAllMaterializedViews('analysis');</sql>
       <to>RAIS</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
+      <enabled>N</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Set variables</from>
+      <to>RAIS</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
       <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Censo SUAS</from>
+      <to>SQL 2</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>N</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>SQL 2</from>
+      <to>Success</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>N</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>

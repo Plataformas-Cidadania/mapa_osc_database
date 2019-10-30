@@ -424,7 +424,9 @@
       <name>SQL 2</name>
       <description />
       <type>SQL</type>
-      <sql>select RefreshAllMaterializedViews('portal');
+      <sql>select RefreshAllMaterializedViews('osc');
+select RefreshAllMaterializedViews('portal');
+select RefreshAllMaterializedViews('analysis');
 
 ALTER TABLE osc.tb_relacoes_trabalho ENABLE TRIGGER ALL;
 
@@ -589,7 +591,7 @@ WHERE id_carga = ${ID_CARGA};</sql>
       <to>SQL 2 2</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <evaluation>N</evaluation>
       <unconditional>N</unconditional>
     </hop>
@@ -598,7 +600,7 @@ WHERE id_carga = ${ID_CARGA};</sql>
       <to>Abort job</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>

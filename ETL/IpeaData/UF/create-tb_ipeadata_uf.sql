@@ -1,4 +1,4 @@
-CREATE TABLE ipeadata.tb_ipeadata_uf
+CREATE TABLE IF NOT EXISTS ipeadata.tb_ipeadata_uf 
 (
  id_ipeadata_uf serial NOT NULL,
  cd_uf numeric(2,0) NOT NULL,
@@ -24,5 +24,5 @@ COMMENT ON COLUMN ipeadata.tb_ipeadata_uf.nr_valor IS 'Valor do indice';
 
 COMMENT ON CONSTRAINT pk_tb_ipeadata_uf ON ipeadata.tb_ipeadata_uf IS 'Chave primária da tabela IpeaData UF';
 
-CREATE INDEX ix_ipeadata_uf ON ipeadata.tb_ipeadata_uf(cd_uf,cd_indice);
+CREATE INDEX IF NOT EXISTS ix_ipeadata_uf ON ipeadata.tb_ipeadata_uf(cd_uf,cd_indice);
 
