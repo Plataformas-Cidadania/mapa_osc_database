@@ -540,7 +540,9 @@ WHERE id_carga = ${ID_CARGA};</sql>
       <name>SQL</name>
       <description />
       <type>SQL</type>
-      <sql>ALTER TABLE osc.tb_recursos_osc DISABLE TRIGGER ALL;</sql>
+      <sql>ALTER TABLE osc.tb_recursos_osc DISABLE TRIGGER ALL;
+
+DELETE FROM osc.tb_recursos_osc WHERE cd_fonte_recursos_osc = 157;</sql>
       <useVariableSubstitution>F</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename />
@@ -579,7 +581,7 @@ WHERE id_carga = ${ID_CARGA};</sql>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
       <evaluation>Y</evaluation>
-      <unconditional>Y</unconditional>
+      <unconditional>N</unconditional>
     </hop>
     <hop>
       <from>SQL Falha</from>
