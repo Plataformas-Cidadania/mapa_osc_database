@@ -530,8 +530,8 @@
     <fields>
       <field>
         <name>cnpj</name>
-        <type>Integer</type>
-        <format>#</format>
+        <type>String</type>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -575,7 +575,7 @@
       <field>
         <name>situacao</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -597,7 +597,7 @@
       <field>
         <name>data_situacao</name>
         <type>String</type>
-        <format>yyyyMMdd</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -608,7 +608,7 @@
       <field>
         <name>motivo_situacao</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -630,7 +630,7 @@
       <field>
         <name>natureza_juridica</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -652,7 +652,7 @@
       <field>
         <name>data_inicio</name>
         <type>String</type>
-        <format>yyyyMMdd</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -663,7 +663,7 @@
       <field>
         <name>ano_inicio</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -674,7 +674,7 @@
       <field>
         <name>cnae_subclasse</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -696,7 +696,7 @@
       <field>
         <name>cnae_classe</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -718,7 +718,7 @@
       <field>
         <name>cnae_grupo</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -740,7 +740,7 @@
       <field>
         <name>cnae_divisao</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -828,7 +828,7 @@
       <field>
         <name>cep</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -839,7 +839,7 @@
       <field>
         <name>codemun</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -861,7 +861,7 @@
       <field>
         <name>geocod_ibge_2018</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -927,7 +927,7 @@
       <field>
         <name>ddd1</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -938,7 +938,7 @@
       <field>
         <name>telefone1</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -949,7 +949,7 @@
       <field>
         <name>ddd2</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -960,7 +960,7 @@
       <field>
         <name>telefone2</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -971,7 +971,7 @@
       <field>
         <name>nu_ddd_fax</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -982,7 +982,7 @@
       <field>
         <name>nu_fax</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1004,7 +1004,7 @@
       <field>
         <name>qualificacao</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1015,7 +1015,7 @@
       <field>
         <name>capital_social</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1026,7 +1026,7 @@
       <field>
         <name>porte_empresa</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1037,7 +1037,7 @@
       <field>
         <name>opcao_simples</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1048,7 +1048,7 @@
       <field>
         <name>data_opcao_simples</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1059,7 +1059,7 @@
       <field>
         <name>data_exclusao_simples</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1092,7 +1092,7 @@
       <field>
         <name>data_situacao_especial</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1103,7 +1103,7 @@
       <field>
         <name>ind_osc</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1114,7 +1114,7 @@
       <field>
         <name>id_mapa</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1158,7 +1158,7 @@
       <field>
         <name>n_vinc_ativos</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1169,7 +1169,7 @@
       <field>
         <name>n_vinc_def</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1224,7 +1224,7 @@
       <field>
         <name>cnae_secundaria</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1235,7 +1235,7 @@
       <field>
         <name>cnae2_classe</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1279,7 +1279,7 @@
       <field>
         <name>Longitude</name>
         <type>String</type>
-        <format>#.#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1290,7 +1290,7 @@
       <field>
         <name>Latitude</name>
         <type>String</type>
-        <format>#.#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1301,7 +1301,7 @@
       <field>
         <name>cnpj_1</name>
         <type>String</type>
-        <format>#</format>
+        <format />
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1336,11 +1336,11 @@
     </partitioning>
     <connection>etl</connection>
     <execute_each_row>Y</execute_each_row>
-    <single_statement>N</single_statement>
+    <single_statement>Y</single_statement>
     <replace_variables>Y</replace_variables>
     <quoteString>N</quoteString>
     <sql>SELECT portal.atualizar_relacoes_trabalho_osc('${ETL}'::TEXT, ?::NUMERIC, 'CNPJ'::TEXT, (SELECT NOW()::TIMESTAMP), 
-'{"nr_trabalhadores_vinculo":"?","nr_trabalhadores_deficiencia":"?"}'::JSONB, TRUE, TRUE, '${ID_CARGA}');
+'{"nr_trabalhadores_vinculo":?,"nr_trabalhadores_deficiencia":?}'::JSONB, TRUE, TRUE, '${ID_CARGA}');
 </sql>
     <set_params>N</set_params>
     <insert_field />
@@ -1367,62 +1367,7 @@
     </remotesteps>
     <GUI>
       <xloc>480</xloc>
-      <yloc>208</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
-    <name>Filter rows</name>
-    <type>FilterRows</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <send_true_to>Execute SQL script 2</send_true_to>
-    <send_false_to />
-    <compare>
-      <condition>
-        <negated>N</negated>
-        <conditions>
-          <condition>
-            <negated>N</negated>
-            <leftvalue>n_vinc_ativos</leftvalue>
-            <function>IS NOT NULL</function>
-            <rightvalue />
-            <value>
-              <name>constant</name>
-              <type>Integer</type>
-              <text>2015</text>
-              <length>-1</length>
-              <precision>0</precision>
-              <isnull>N</isnull>
-              <mask>#;-#</mask>
-            </value>
-          </condition>
-          <condition>
-            <negated>N</negated>
-            <operator>OR</operator>
-            <leftvalue>n_vinc_def</leftvalue>
-            <function>IS NOT NULL</function>
-            <rightvalue />
-          </condition>
-        </conditions>
-      </condition>
-    </compare>
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>160</xloc>
-      <yloc>336</yloc>
+      <yloc>240</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -1440,15 +1385,12 @@
     <fields>
       <field>
         <name>cnpj</name>
-        <rename />
       </field>
       <field>
         <name>n_vinc_ativos</name>
-        <rename />
       </field>
       <field>
         <name>n_vinc_def</name>
-        <rename />
       </field>
       <select_unspecified>N</select_unspecified>
     </fields>
@@ -1466,635 +1408,6 @@
     </GUI>
   </step>
   <step>
-    <name>Text file input</name>
-    <type>TextFileInput</type>
-    <description />
-    <distribute>Y</distribute>
-    <custom_distribution />
-    <copies>1</copies>
-    <partitioning>
-      <method>none</method>
-      <schema_name />
-    </partitioning>
-    <accept_filenames>N</accept_filenames>
-    <passing_through_fields>N</passing_through_fields>
-    <accept_field />
-    <accept_stepname />
-    <separator>;</separator>
-    <enclosure>"</enclosure>
-    <enclosure_breaks>N</enclosure_breaks>
-    <escapechar />
-    <header>Y</header>
-    <nr_headerlines>1</nr_headerlines>
-    <footer>N</footer>
-    <nr_footerlines>1</nr_footerlines>
-    <line_wrapped>N</line_wrapped>
-    <nr_wraps>1</nr_wraps>
-    <layout_paged>N</layout_paged>
-    <nr_lines_per_page>80</nr_lines_per_page>
-    <nr_lines_doc_header>0</nr_lines_doc_header>
-    <noempty>Y</noempty>
-    <include>N</include>
-    <include_field />
-    <rownum>N</rownum>
-    <rownumByFile>N</rownumByFile>
-    <rownum_field />
-    <format>Unix</format>
-    <encoding>UTF-8</encoding>
-    <length />
-    <add_to_result_filenames>Y</add_to_result_filenames>
-    <file>
-      <name>${folder_path}rais_serie/tb-rais-serie.csv</name>
-      <filemask />
-      <exclude_filemask />
-      <file_required>N</file_required>
-      <include_subfolders>N</include_subfolders>
-      <type>CSV</type>
-      <compression>None</compression>
-    </file>
-    <filters>
-    </filters>
-    <fields>
-      <field>
-        <name>id_estab</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>codemun</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>nm_mun</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>24</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>uf</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>nm_uf</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>14</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>regiao</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>nm_regiao</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>12</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>secao_cnae20</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>div_cnae20</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>grp_cnae20</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>clas_cnae20</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>sbcl_cnae20</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>nat_jur</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>razao_social</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>52</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>tamestab</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>tamestab2</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>qtd_vinc_ativos</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>qtd_portador_defic</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>data_abertura</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>2</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>data_encerramento</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>2</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>data_baixa</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>-1</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>ind_atividade</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>ind_rais_neg</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>ind_osc</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>ano_abertura</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>2</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>ano_rais</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>nat_jur_corrigido</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>sbcl_cnae_corrigido</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>7</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>in_cnis16</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>ano_true</name>
-        <type>Integer</type>
-        <format>#</format>
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>15</length>
-        <precision>0</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>div_cnae20_corrigido</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>2</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>grp_cnae20_corrigido</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>3</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>clas_cnae20_corrigido</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>5</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>secao_cnae20_corrigido</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>2</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>micro_area_atuacao</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>57</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-      <field>
-        <name>macro_area_atuacao</name>
-        <type>String</type>
-        <format />
-        <currency>R$</currency>
-        <decimal>,</decimal>
-        <group>.</group>
-        <nullif>-</nullif>
-        <ifnull />
-        <position>-1</position>
-        <length>57</length>
-        <precision>-1</precision>
-        <trim_type>none</trim_type>
-        <repeat>N</repeat>
-      </field>
-    </fields>
-    <limit>0</limit>
-    <error_ignored>N</error_ignored>
-    <skip_bad_files>N</skip_bad_files>
-    <file_error_field />
-    <file_error_message_field />
-    <error_line_skipped>N</error_line_skipped>
-    <error_count_field />
-    <error_fields_field />
-    <error_text_field />
-    <bad_line_files_destination_directory />
-    <bad_line_files_extension>warning</bad_line_files_extension>
-    <error_line_files_destination_directory />
-    <error_line_files_extension>error</error_line_files_extension>
-    <line_number_files_destination_directory />
-    <line_number_files_extension>line</line_number_files_extension>
-    <date_format_lenient>Y</date_format_lenient>
-    <date_format_locale>pt_BR</date_format_locale>
-    <shortFileFieldName />
-    <pathFieldName />
-    <hiddenFieldName />
-    <lastModificationTimeFieldName />
-    <uriNameFieldName />
-    <rootUriNameFieldName />
-    <extensionFieldName />
-    <sizeFieldName />
-    <cluster_schema />
-    <remotesteps>
-      <input>
-      </input>
-      <output>
-      </output>
-    </remotesteps>
-    <GUI>
-      <xloc>156</xloc>
-      <yloc>263</yloc>
-      <draw>Y</draw>
-    </GUI>
-  </step>
-  <step>
     <name>If field value is null</name>
     <type>IfNull</type>
     <description />
@@ -2107,25 +1420,19 @@
     </partitioning>
     <replaceAllByValue />
     <replaceAllMask />
-    <selectFields>Y</selectFields>
-    <selectValuesType>N</selectValuesType>
+    <selectFields>N</selectFields>
+    <selectValuesType>Y</selectValuesType>
     <setEmptyStringAll>N</setEmptyStringAll>
     <valuetypes>
-      </valuetypes>
+      <valuetype>
+        <name>String</name>
+        <value>null</value>
+        <mask />
+        <set_type_empty_string>N</set_type_empty_string>
+      </valuetype>
+    </valuetypes>
     <fields>
-      <field>
-        <name>n_vinc_ativos</name>
-        <value>null</value>
-        <mask />
-        <set_empty_string>N</set_empty_string>
-      </field>
-      <field>
-        <name>n_vinc_def</name>
-        <value>null</value>
-        <mask />
-        <set_empty_string>N</set_empty_string>
-      </field>
-    </fields>
+      </fields>
     <cluster_schema />
     <remotesteps>
       <input>
@@ -2135,7 +1442,7 @@
     </remotesteps>
     <GUI>
       <xloc>480</xloc>
-      <yloc>320</yloc>
+      <yloc>336</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

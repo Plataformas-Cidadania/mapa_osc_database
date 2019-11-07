@@ -471,8 +471,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>784</xloc>
-      <yloc>336</yloc>
+      <xloc>768</xloc>
+      <yloc>208</yloc>
     </entry>
     <entry>
       <name>CEBAS/MS</name>
@@ -843,15 +843,6 @@ select RefreshAllMaterializedViews('ipeadata');</sql>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Set variables</from>
-      <to>RAIS</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>N</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>

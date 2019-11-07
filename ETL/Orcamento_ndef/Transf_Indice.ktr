@@ -491,12 +491,12 @@
     <hop>
       <from>CSV file input 3</from>
       <to>Select values 3</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>Select values 3</from>
       <to>Tabela_id-cnpj</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>CSV file input 3</from>
@@ -506,27 +506,27 @@
     <hop>
       <from>Tabela_id-cnpj</from>
       <to>Ordena</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>Ordena 2</from>
       <to>Junta_id</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>Ordena</from>
       <to>Junta_id</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>Junta_id</from>
       <to>Unique rows (HashSet)</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>Unique rows (HashSet)</from>
       <to>Select values 2</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>Select values</from>
@@ -536,10 +536,15 @@
     <hop>
       <from>Replace in string</from>
       <to>Ordena 2</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>Select values 2</from>
+      <to>UPDATE</to>
+      <enabled>N</enabled>
+    </hop>
+    <hop>
+      <from>Replace in string</from>
       <to>UPDATE</to>
       <enabled>Y</enabled>
     </hop>
@@ -644,8 +649,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>133</xloc>
-      <yloc>162</yloc>
+      <xloc>256</xloc>
+      <yloc>336</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -895,8 +900,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>388</xloc>
-      <yloc>243</yloc>
+      <xloc>496</xloc>
+      <yloc>336</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -931,8 +936,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>290</xloc>
-      <yloc>240</yloc>
+      <xloc>368</xloc>
+      <yloc>336</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -967,8 +972,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>857</xloc>
-      <yloc>198</yloc>
+      <xloc>832</xloc>
+      <yloc>192</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -986,7 +991,6 @@
     <fields>
       <field>
         <name>cnpj</name>
-        <rename />
       </field>
       <field>
         <name>cnpj</name>
@@ -1055,7 +1059,7 @@
     <single_statement>N</single_statement>
     <replace_variables>Y</replace_variables>
     <quoteString>N</quoteString>
-    <sql>SELECT portal.atualizar_recursos_osc('${ETL}'::TEXT,?::NUMERIC, 'id_osc'::TEXT,(SELECT NOW()::TIMESTAMP),
+    <sql>SELECT portal.atualizar_recursos_osc('${ETL}'::TEXT,?::NUMERIC, 'CNPJ'::TEXT,(SELECT NOW()::TIMESTAMP),
 '{ "dt_ano_recursos_osc":"?","bo_nao_possui": "false","recursos":[{"cd_fonte_recursos_osc":157, "nr_valor_recursos_osc":?}]}', TRUE, TRUE, TRUE,'${ID_CARGA}'::INTEGER,2::INTEGER) ;
 </sql>
     <set_params>N</set_params>
@@ -1065,7 +1069,7 @@
     <read_field />
     <arguments>
       <argument>
-        <name>id_osc</name>
+        <name>cnpj</name>
       </argument>
       <argument>
         <name>ano</name>
@@ -1082,8 +1086,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>953</xloc>
-      <yloc>199</yloc>
+      <xloc>624</xloc>
+      <yloc>336</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
