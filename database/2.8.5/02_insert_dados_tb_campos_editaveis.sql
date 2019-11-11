@@ -1,4 +1,4 @@
-DELETE FROM syst.tb_campos_editaveis;
+DELETE FROM syst.tb_campos_editaveis WHERE 1 = 1;
 
 INSERT INTO syst.tb_campos_editaveis (nome_campo, editavel) VALUES ('cd_natureza_juridica_osc', false);
 
