@@ -89,7 +89,7 @@ BEGIN
 	END LOOP;
 	
 	id := 9;
-	parametros_grafico := COALESCE((SELECT parametros FROM portal.tb_analise WHERE id_analise = 9), '[{"bar": true, "color": "#ccf"}, {"color": "#ff7f0e"}]'::JSONB);
+	parametros_grafico := COALESCE((SELECT parametros FROM portal.tb_analise WHERE id_analise = 9), '[{"bar": true, "color": "#ff7f0e"}, {"color": "#ff7f0e"}]'::JSONB);
 	FOR grafico IN SELECT * FROM portal.obter_grafico_total_osc_ano(parametros_grafico) LOOP
 		UPDATE portal.tb_analise 
 			SET series_1 = grafico.dados, fontes = grafico.fontes 
