@@ -782,8 +782,8 @@ true;
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>1212</xloc>
-      <yloc>322</yloc>
+      <xloc>1120</xloc>
+      <yloc>320</yloc>
     </entry>
     <entry>
       <name>Ativar triggers </name>
@@ -962,6 +962,15 @@ true;
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Deszipar convênios</from>
+      <to>Carregar Siconv</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>N</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
