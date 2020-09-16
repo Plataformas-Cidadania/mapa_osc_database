@@ -1,8 +1,6 @@
 SELECT
        osc.id_osc AS id,
-       osc.cd_identificador_osc AS cnpj,
-       --tc.tx_telefone,
-       --tc.tx_email,
+       tdg.tx_razao_social_osc AS razao_social,
         CASE
            WHEN tc.tx_telefone='NA' THEN '(NO)'
            WHEN tc.tx_telefone IS NULL THEN '(NO)'
@@ -27,8 +25,19 @@ SELECT
            WHEN tc.tx_linkedin IS NULL THEN '(NO)'
            WHEN tc.tx_linkedin='NA' THEN '(NO)'
             ELSE 'Yes'
-           END AS linkedin
+           END AS linkedin,
+        CASE
+           WHEN tc.tx_google IS NULL THEN '(NO)'
+           WHEN tc.tx_google='NA' THEN '(NO)'
+            ELSE 'Yes'
+           END AS google,
+        CASE
+           WHEN tc.tx_twitter IS NULL THEN '(NO)'
+           WHEN tc.tx_twitter='NA' THEN '(NO)'
+            ELSE 'Yes'
+           END AS twitter
 FROM osc.tb_osc osc
+    LEFT JOIN osc.tb_dados_gerais tdg on osc.id_osc = tdg.id_osc
     LEFT JOIN osc.tb_contato tc ON osc.id_osc = tc.id_osc
 WHERE bo_osc_ativa = TRUE
 ORDER BY id;
