@@ -36,6 +36,7 @@ WHERE os.id_osc = dg.id_osc
   AND os.id_osc = tbarea.id_osc
   AND tbarea.cd_area_atuacao = arat.cd_area_atuacao
   AND dg.cd_classe_atividade_economica_osc = atec.cd_classe_atividade_economica
+  --AND arat.cd_area_atuacao = 9
 GROUP BY os.id_osc, loc.cd_municipio,
          uf.eduf_nm_uf,
          nj.cd_natureza_juridica,
