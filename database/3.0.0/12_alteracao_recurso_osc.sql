@@ -1,5 +1,5 @@
 -- auto-generated definition
-create table tb_n_recurso_osc_ano
+create table osc.tb_n_recurso_osc_ano
 (
     id_osc                       integer not null
         constraint tb_n_recurso_osc_ano_tb_osc__fk
@@ -39,8 +39,8 @@ where A.cd_origem_fonte_recursos_osc is null and A.cd_fonte_recursos_osc is null
 ------------------ Pega todas as oscs que tiveram recursos no ano de uma determinada origem---------------
 SELECT id_osc as osc, "substring"(dt_ano_recursos_osc::text, 1, 4):: integer as ano, ft_nao_possui as ft, cd_origem_fonte_recursos_osc
 FROM osc.tb_recursos_osc
-WHERE bo_nao_possui and cd_origem_fonte_recursos_osc is not null;
-order by id_osc, dt_ano_recursos_osc, cd_origem_fonte_recursos_osc;
+WHERE bo_nao_possui and cd_origem_fonte_recursos_osc is not null
+ORDER BY id_osc, dt_ano_recursos_osc, cd_origem_fonte_recursos_osc;
 
 insert into osc.tb_n_recurso_osc_ano (id_osc, ano, ft_nao_possui, cd_origem_fonte_recursos_osc )
 SELECT id_osc as osc, "substring"(dt_ano_recursos_osc::text, 1, 4):: integer as ano, ft_nao_possui as ft, cd_origem_fonte_recursos_osc
@@ -49,6 +49,8 @@ WHERE bo_nao_possui and cd_origem_fonte_recursos_osc is not null;
 -------------------------------------------------------------------------------
 
 DELETE FROM osc.tb_recursos_osc WHERE nr_valor_recursos_osc is NULL;
+
+DROP MATERIALIZED VIEW portal.vw_osc_recursos_osc;
 
 alter table osc.tb_recursos_osc drop column bo_nao_possui;
 
