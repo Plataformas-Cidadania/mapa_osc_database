@@ -31,7 +31,7 @@ from osc.tb_recursos_osc A, syst.dc_origem_fonte_recursos_osc B
 where A.cd_origem_fonte_recursos_osc is null and A.cd_fonte_recursos_osc is null and A.bo_nao_possui;
 
 insert into osc.tb_n_recurso_osc_ano (id_osc, ano, ft_nao_possui, cd_origem_fonte_recursos_osc)
-SELECT A.id_osc, "substring"(A.dt_ano_recursos_osc::text, 1, 4)::integer as ano, B.cd_origem_fonte_recursos_osc
+SELECT A.id_osc, "substring"(A.dt_ano_recursos_osc::text, 1, 4)::integer as ano, A.ft_nao_possui, B.cd_origem_fonte_recursos_osc
 from osc.tb_recursos_osc A, syst.dc_origem_fonte_recursos_osc B
 where A.cd_origem_fonte_recursos_osc is null and A.cd_fonte_recursos_osc is null and A.bo_nao_possui;
 ----------------------------------------------------------------------------------------------------------
