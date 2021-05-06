@@ -14,15 +14,15 @@ create table osc.tb_n_recurso_osc_ano
         primary key (id_osc, ano, cd_origem_fonte_recursos_osc)
 );
 
-comment on table tb_n_recurso_osc_ano is 'Armazena os anos que a osc teve recurso';
+comment on table osc.tb_n_recurso_osc_ano is 'Armazena os anos que a osc teve recurso';
 
-comment on column tb_n_recurso_osc_ano.id_osc is 'Contem o id da osc';
+comment on column osc.tb_n_recurso_osc_ano.id_osc is 'Contem o id da osc';
 
-comment on column tb_n_recurso_osc_ano.ano is 'ano do que houve algum recurso';
+comment on column osc.tb_n_recurso_osc_ano.ano is 'ano do que houve algum recurso';
 
-comment on column tb_n_recurso_osc_ano.ft_nao_possui is 'Fonte da informaçao de nao possui recurso no ano';
+comment on column osc.tb_n_recurso_osc_ano.ft_nao_possui is 'Fonte da informaçao de nao possui recurso no ano';
 
-alter table tb_n_recurso_osc_ano
+alter table osc.tb_n_recurso_osc_ano
     owner to postgres;
 
 ----Pega todas as oscs que não tiveram nenhum recurso no ano e insere na tabela tb_n_recurso_ano colocando um registro pra cada origem---------------------------------------------------
