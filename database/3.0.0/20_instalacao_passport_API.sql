@@ -1,0 +1,3 @@
+INSERT INTO public.oauth_clients (user_id,"name",secret,redirect,personal_access_client,password_client,revoked,created_at,updated_at) VALUES
+	 (NULL,' Personal Access Client','rZqiW4ABmnVui3tjBGkPlWeVnZxN946EbXmOcOg8','http://localhost',true,false,false,'2021-05-04 18:29:12','2021-05-04 18:29:12'),
+	 (NULL,' Password Grant Client','QYDGG3kPaK3ubJhCE3a6EHup9etYfd2hDrY4JbnL','http://localhost',false,true,false,'2021-05-04 18:29:12','2021-05-04 18:29:12');
