@@ -1,4 +1,4 @@
-CREATE OR REPLACE FUNCTION limpa_recursos_osc_ano_origem() RETURNS trigger
+CREATE OR REPLACE FUNCTION osc.limpa_recursos_osc_ano_origem() RETURNS trigger
     language plpgsql
 as
 $$
@@ -12,9 +12,9 @@ BEGIN
 END;
 $$;
 
-alter function limpa_recursos_osc_ano_origem() owner to postgres;
+alter function osc.limpa_recursos_osc_ano_origem() owner to postgres;
 
 CREATE TRIGGER limpa_recursos_trigger
 AFTER INSERT ON osc.tb_n_recurso_osc_ano
 FOR EACH ROW
-EXECUTE PROCEDURE limpa_recursos_osc_ano_origem();
+EXECUTE PROCEDURE osc.limpa_recursos_osc_ano_origem();
