@@ -27,3 +27,5 @@
       false,
       false
     );
+SELECT u.id_usuario FROM portal.tb_usuario u WHERE u.nr_cpf_usuario = 46857256322;
+insert into portal.tb_representacao (id_osc, id_usuario) values (789809, );
