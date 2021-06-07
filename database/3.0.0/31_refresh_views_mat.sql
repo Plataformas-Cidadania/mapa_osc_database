@@ -11,3 +11,6 @@ refresh materialized view analysis.vw_perfil_localidade_orcamento_media_nacional
 refresh materialized view analysis.vw_perfil_localidade_area_atuacao;
 refresh materialized view analysis.vw_perfil_localidade_area_atuacao_nacional;
 refresh materialized view analysis.vw_perfil_localidade_trabalhadores;
+refresh materialized view osc.vw_busca_resultado;
+refresh materialized view osc.vw_busca_osc_geo;
+refresh materialized view osc.vw_busca_resultado;
