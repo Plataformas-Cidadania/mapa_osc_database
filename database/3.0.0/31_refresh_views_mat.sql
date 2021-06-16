@@ -14,3 +14,6 @@ refresh materialized view analysis.vw_perfil_localidade_trabalhadores;
 refresh materialized view osc.vw_busca_resultado;
 refresh materialized view osc.vw_busca_osc_geo;
 refresh materialized view osc.vw_busca_resultado;
+refresh materialized view osc.vw_busca_osc;
+refresh materialized view ipeadata.vw_dados_geograficos_idh_municipio;
+refresh materialized view ipeadata.vw_dados_geograficos_idh_uf;
