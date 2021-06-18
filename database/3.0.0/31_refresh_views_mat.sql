@@ -18,3 +18,4 @@ refresh materialized view osc.vw_busca_osc;
 refresh materialized view osc.vw_geo_osc;
 refresh materialized view ipeadata.vw_dados_geograficos_idh_municipio;
 refresh materialized view ipeadata.vw_dados_geograficos_idh_uf;
+refresh materialized view portal.vw_osc_dados_gerais;
