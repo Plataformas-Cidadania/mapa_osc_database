@@ -455,13 +455,13 @@ WHERE id_carga = ${ID_CARGA};</sql>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>Transformation ID_CARGA</name>
+      <name>Inserção no LOG BD - ID_CARGA</name>
       <description/>
       <type>TRANS</type>
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${Internal.Entry.Current.Directory}/CARGA.ktr</filename>
+      <filename>${Internal.Entry.Current.Directory}/ID_CARGA.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>Y</params_from_previous>
@@ -572,7 +572,7 @@ WHERE id_carga = ${ID_CARGA};</sql>
     </hop>
     <hop>
       <from>Set variables</from>
-      <to>Transformation ID_CARGA</to>
+      <to>Inserção no LOG BD - ID_CARGA</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -580,7 +580,7 @@ WHERE id_carga = ${ID_CARGA};</sql>
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Transformation ID_CARGA</from>
+      <from>Inserção no LOG BD - ID_CARGA</from>
       <to>Transformation RAIS ANO</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -611,7 +611,7 @@ WHERE id_carga = ${ID_CARGA};</sql>
       <to>SQL 2 2</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
       <evaluation>N</evaluation>
       <unconditional>N</unconditional>
     </hop>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <job>
-  <name>Dados_RFB</name>
+  <name>Dados_Principais_OSC</name>
   <description/>
   <extended_description/>
   <job_version/>
@@ -361,13 +361,13 @@
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>Transformation CNIS</name>
+      <name>Dados_Principais_OSC</name>
       <description/>
       <type>TRANS</type>
       <attributes/>
       <specification_method>filename</specification_method>
       <trans_object_id/>
-      <filename>${Internal.Entry.Current.Directory}/RFB.ktr</filename>
+      <filename>${Internal.Entry.Current.Directory}/Dados_Principais_OSC.ktr</filename>
       <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>Y</params_from_previous>
@@ -395,7 +395,7 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>464</xloc>
+      <xloc>496</xloc>
       <yloc>432</yloc>
       <attributes_kjc/>
     </entry>
@@ -407,8 +407,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>643</xloc>
-      <yloc>252</yloc>
+      <xloc>720</xloc>
+      <yloc>256</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
@@ -448,9 +448,9 @@ WHERE id_area_atuacao IN
                      FROM osc.tb_area_atuacao) t
               WHERE t.rnum > 1);
 
-select RefreshAllMaterializedViews('spat');
-select RefreshAllMaterializedViews('osc');
-select RefreshAllMaterializedViews('portal');
+--select RefreshAllMaterializedViews('spat');
+--select RefreshAllMaterializedViews('osc');
+--select RefreshAllMaterializedViews('portal');
 
 ALTER TABLE osc.tb_osc ENABLE TRIGGER ALL;
 ALTER TABLE osc.tb_dados_gerais ENABLE TRIGGER ALL;
@@ -468,12 +468,12 @@ WHERE id_carga = ${ID_CARGA};</sql>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>467</xloc>
-      <yloc>251</yloc>
+      <xloc>496</xloc>
+      <yloc>256</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>Transformation ID_CARGA</name>
+      <name>Inserção no LOG BD - ID_CARGA</name>
       <description/>
       <type>TRANS</type>
       <attributes/>
@@ -543,9 +543,9 @@ WHERE id_carga = ${ID_CARGA};</sql>
       <description/>
       <type>SQL</type>
       <attributes/>
-      <sql>select RefreshAllMaterializedViews('spat');
-select RefreshAllMaterializedViews('osc');
-select RefreshAllMaterializedViews('portal');
+      <sql>--select RefreshAllMaterializedViews('spat');
+--select RefreshAllMaterializedViews('osc');
+--select RefreshAllMaterializedViews('portal');
 
 ALTER TABLE osc.tb_osc ENABLE TRIGGER ALL;
 ALTER TABLE osc.tb_dados_gerais ENABLE TRIGGER ALL;
@@ -563,8 +563,8 @@ WHERE id_carga = ${ID_CARGA};</sql>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>465</xloc>
-      <yloc>550</yloc>
+      <xloc>496</xloc>
+      <yloc>576</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
@@ -576,8 +576,8 @@ WHERE id_carga = ${ID_CARGA};</sql>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>648</xloc>
-      <yloc>554</yloc>
+      <xloc>720</xloc>
+      <yloc>576</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
@@ -591,7 +591,7 @@ WHERE id_carga = ${ID_CARGA};</sql>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>640</xloc>
+      <xloc>768</xloc>
       <yloc>432</yloc>
       <attributes_kjc/>
     </entry>
@@ -617,7 +617,7 @@ WHERE id_carga = ${ID_CARGA};</sql>
     </hop>
     <hop>
       <from>Set variables</from>
-      <to>Transformation ID_CARGA</to>
+      <to>Inserção no LOG BD - ID_CARGA</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -625,8 +625,8 @@ WHERE id_carga = ${ID_CARGA};</sql>
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Transformation ID_CARGA</from>
-      <to>Transformation CNIS</to>
+      <from>Inserção no LOG BD - ID_CARGA</from>
+      <to>Dados_Principais_OSC</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -634,7 +634,7 @@ WHERE id_carga = ${ID_CARGA};</sql>
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Transformation CNIS</from>
+      <from>Dados_Principais_OSC</from>
       <to>SQL 2</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -652,7 +652,7 @@ WHERE id_carga = ${ID_CARGA};</sql>
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Transformation CNIS</from>
+      <from>Dados_Principais_OSC</from>
       <to>Write To Log</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
@@ -661,7 +661,7 @@ WHERE id_carga = ${ID_CARGA};</sql>
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Transformation CNIS</from>
+      <from>Dados_Principais_OSC</from>
       <to>SQL 2 2</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>

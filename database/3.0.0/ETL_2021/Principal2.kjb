@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <job>
-  <name>Principal2</name>
+  <name>Principal_Reduzido</name>
   <description/>
   <extended_description/>
   <job_version/>
@@ -356,8 +356,8 @@
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>77</xloc>
-      <yloc>208</yloc>
+      <xloc>80</xloc>
+      <yloc>192</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
@@ -371,32 +371,32 @@
       <fields>
         <field>
           <variable_name>db_host</variable_name>
-          <variable_value/>
+          <variable_value>localhost</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>db_name</variable_name>
-          <variable_value/>
+          <variable_value>portal_osc_2020_04_06</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>db_port</variable_name>
-          <variable_value/>
+          <variable_value>5432</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>db_user</variable_name>
-          <variable_value/>
+          <variable_value>postgres</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>db_pass</variable_name>
-          <variable_value/>
+          <variable_value>postgres</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>folder_path</variable_name>
-          <variable_value>D:\projetos\ipea\dados_2019\</variable_value>
+          <variable_value>D:\projetos\ipea\dados_2021\</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
@@ -564,12 +564,7 @@ from spat.ed_municipio
 inner join spat.ed_uf on spat.ed_municipio.eduf_cd_uf = spat.ed_uf.eduf_cd_uf
 inner join osc.tb_osc on osc.tb_osc.id_osc =id_osc
 where ST_Contains(edmu_bounding_box,geo_localizacao) = false
-and cd_municipio = edmu_cd_municipio;
-
-select RefreshAllMaterializedViews('spat');
-select RefreshAllMaterializedViews('osc');
-select RefreshAllMaterializedViews('portal');
-select RefreshAllMaterializedViews('analysis');</sql>
+and cd_municipio = edmu_cd_municipio;</sql>
       <useVariableSubstitution>F</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename/>

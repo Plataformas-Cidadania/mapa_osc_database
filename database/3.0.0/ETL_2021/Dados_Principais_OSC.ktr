@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <transformation>
   <info>
-    <name>RFB</name>
+    <name>Dados_Principais_OSC</name>
     <description/>
     <extended_description/>
     <trans_version/>
@@ -1835,8 +1835,8 @@ FALSE, TRUE, TRUE, '${ID_CARGA}'::INTEGER,2);
       </output>
     </remotesteps>
     <GUI>
-      <xloc>1218</xloc>
-      <yloc>532</yloc>
+      <xloc>944</xloc>
+      <yloc>496</yloc>
       <draw>Y</draw>
     </GUI>
   </step>

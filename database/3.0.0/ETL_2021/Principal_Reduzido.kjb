@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <job>
-  <name>Dados_RFB</name>
+  <name>Principal_Reduzido</name>
   <description/>
   <extended_description/>
   <job_version/>
   <job_status>0</job_status>
   <directory>/</directory>
   <created_user>-</created_user>
-  <created_date>2019/08/19 18:56:39.716</created_date>
+  <created_date>2019/08/19 18:17:51.255</created_date>
   <modified_user>-</modified_user>
-  <modified_date>2019/08/19 18:56:39.716</modified_date>
+  <modified_date>2019/08/19 18:17:51.255</modified_date>
   <parameters>
     </parameters>
   <connection>
@@ -43,7 +43,7 @@
       </attribute>
       <attribute>
         <code>PRESERVE_RESERVED_WORD_CASE</code>
-        <attribute>N</attribute>
+        <attribute>Y</attribute>
       </attribute>
       <attribute>
         <code>QUOTE_ALL_FIELDS</code>
@@ -357,158 +357,7 @@
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>80</xloc>
-      <yloc>160</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>Transformation CNIS</name>
-      <description/>
-      <type>TRANS</type>
-      <attributes/>
-      <specification_method>filename</specification_method>
-      <trans_object_id/>
-      <filename>${Internal.Entry.Current.Directory}/RFB.ktr</filename>
-      <transname/>
-      <arg_from_previous>N</arg_from_previous>
-      <params_from_previous>Y</params_from_previous>
-      <exec_per_row>N</exec_per_row>
-      <clear_rows>N</clear_rows>
-      <clear_files>N</clear_files>
-      <set_logfile>N</set_logfile>
-      <logfile/>
-      <logext/>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <loglevel>Basic</loglevel>
-      <cluster>N</cluster>
-      <slave_server_name/>
-      <set_append_logfile>N</set_append_logfile>
-      <wait_until_finished>Y</wait_until_finished>
-      <follow_abort_remote>N</follow_abort_remote>
-      <create_parent_folder>N</create_parent_folder>
-      <logging_remote_work>N</logging_remote_work>
-      <run_configuration>Pentaho local</run_configuration>
-      <suppress_result_data>N</suppress_result_data>
-      <parameters>
-        <pass_all_parameters>Y</pass_all_parameters>
-      </parameters>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>464</xloc>
-      <yloc>432</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>Success</name>
-      <description/>
-      <type>SUCCESS</type>
-      <attributes/>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>643</xloc>
-      <yloc>252</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>SQL</name>
-      <description/>
-      <type>SQL</type>
-      <attributes/>
-      <sql>ALTER TABLE osc.tb_osc DISABLE TRIGGER ALL;
-ALTER TABLE osc.tb_dados_gerais DISABLE TRIGGER ALL;
-ALTER TABLE osc.tb_contato DISABLE TRIGGER ALL;
-ALTER TABLE osc.tb_localizacao DISABLE TRIGGER ALL;
-ALTER TABLE osc.tb_area_atuacao DISABLE TRIGGER ALL;
-
-UPDATE osc.tb_osc SET bo_osc_ativa = false;</sql>
-      <useVariableSubstitution>F</useVariableSubstitution>
-      <sqlfromfile>F</sqlfromfile>
-      <sqlfilename/>
-      <sendOneStatement>F</sendOneStatement>
-      <connection>etl</connection>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>240</xloc>
-      <yloc>160</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>SQL 2</name>
-      <description/>
-      <type>SQL</type>
-      <attributes/>
-      <sql>DELETE FROM osc.tb_area_atuacao
-WHERE id_area_atuacao IN
-(SELECT id_area_atuacao
-              FROM (SELECT id_area_atuacao,
-                             ROW_NUMBER() OVER (partition BY id_osc, cd_area_atuacao, cd_subarea_atuacao ORDER BY id_osc) AS rnum
-                     FROM osc.tb_area_atuacao) t
-              WHERE t.rnum > 1);
-
-select RefreshAllMaterializedViews('spat');
-select RefreshAllMaterializedViews('osc');
-select RefreshAllMaterializedViews('portal');
-
-ALTER TABLE osc.tb_osc ENABLE TRIGGER ALL;
-ALTER TABLE osc.tb_dados_gerais ENABLE TRIGGER ALL;
-ALTER TABLE osc.tb_contato ENABLE TRIGGER ALL;
-ALTER TABLE osc.tb_localizacao ENABLE TRIGGER ALL;
-ALTER TABLE osc.tb_area_atuacao ENABLE TRIGGER ALL;
-
-UPDATE log.tb_log_carga SET dt_fim = NOW()::timestamp, cd_status = 9
-WHERE id_carga = ${ID_CARGA};</sql>
-      <useVariableSubstitution>T</useVariableSubstitution>
-      <sqlfromfile>F</sqlfromfile>
-      <sqlfilename/>
-      <sendOneStatement>F</sendOneStatement>
-      <connection>etl</connection>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>467</xloc>
-      <yloc>251</yloc>
-      <attributes_kjc/>
-    </entry>
-    <entry>
-      <name>Transformation ID_CARGA</name>
-      <description/>
-      <type>TRANS</type>
-      <attributes/>
-      <specification_method>filename</specification_method>
-      <trans_object_id/>
-      <filename>${Internal.Entry.Current.Directory}/ID_CARGA.ktr</filename>
-      <transname/>
-      <arg_from_previous>N</arg_from_previous>
-      <params_from_previous>Y</params_from_previous>
-      <exec_per_row>N</exec_per_row>
-      <clear_rows>N</clear_rows>
-      <clear_files>N</clear_files>
-      <set_logfile>N</set_logfile>
-      <logfile/>
-      <logext/>
-      <add_date>N</add_date>
-      <add_time>N</add_time>
-      <loglevel>Basic</loglevel>
-      <cluster>N</cluster>
-      <slave_server_name/>
-      <set_append_logfile>N</set_append_logfile>
-      <wait_until_finished>Y</wait_until_finished>
-      <follow_abort_remote>N</follow_abort_remote>
-      <create_parent_folder>N</create_parent_folder>
-      <logging_remote_work>N</logging_remote_work>
-      <run_configuration>Pentaho local</run_configuration>
-      <suppress_result_data>N</suppress_result_data>
-      <parameters>
-        <pass_all_parameters>Y</pass_all_parameters>
-      </parameters>
-      <parallel>N</parallel>
-      <draw>Y</draw>
-      <nr>0</nr>
-      <xloc>240</xloc>
-      <yloc>432</yloc>
+      <yloc>192</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
@@ -521,41 +370,202 @@ WHERE id_carga = ${ID_CARGA};</sql>
       <file_variable_type>JVM</file_variable_type>
       <fields>
         <field>
-          <variable_name>ETL</variable_name>
-          <variable_value>CNPJ/SRF/MF 2018</variable_value>
+          <variable_name>db_host</variable_name>
+          <variable_value>localhost</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
-          <variable_name>DT_EMPENHADO</variable_name>
-          <variable_value>2018-12-31</variable_value>
+          <variable_name>db_name</variable_name>
+          <variable_value>portal_osc_2020_04_06</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>db_port</variable_name>
+          <variable_value>5432</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>db_user</variable_name>
+          <variable_value>postgres</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>db_pass</variable_name>
+          <variable_value>postgres</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>folder_path</variable_name>
+          <variable_value>D:\projetos\ipea\dados_2021\</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>folder_ETL</variable_name>
+          <variable_value>D:\projetos\ipea\mapa_osc_database\ETL\</variable_value>
           <variable_type>JVM</variable_type>
         </field>
       </fields>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>240</xloc>
-      <yloc>288</yloc>
+      <xloc>80</xloc>
+      <yloc>368</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>SQL 2 2</name>
+      <name>Dados_Principais_OSC</name>
+      <description/>
+      <type>JOB</type>
+      <attributes/>
+      <specification_method>filename</specification_method>
+      <job_object_id/>
+      <filename>${Internal.Entry.Current.Directory}/Dados_Principais_OSC.kjb</filename>
+      <jobname/>
+      <directory/>
+      <arg_from_previous>Y</arg_from_previous>
+      <params_from_previous>Y</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <slave_server_name/>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <expand_remote_job>N</expand_remote_job>
+      <create_parent_folder>N</create_parent_folder>
+      <pass_export>N</pass_export>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>
+      <set_append_logfile>N</set_append_logfile>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>240</xloc>
+      <yloc>368</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>Dados_Relações_Trabalho</name>
+      <description/>
+      <type>JOB</type>
+      <attributes/>
+      <specification_method>filename</specification_method>
+      <job_object_id/>
+      <filename>${Internal.Entry.Current.Directory}/Dados_Relacoes_Trabalho.kjb</filename>
+      <jobname/>
+      <directory/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Nothing</loglevel>
+      <slave_server_name/>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <expand_remote_job>N</expand_remote_job>
+      <create_parent_folder>N</create_parent_folder>
+      <pass_export>N</pass_export>
+      <run_configuration>Pentaho local</run_configuration>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>
+      <set_append_logfile>N</set_append_logfile>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>592</xloc>
+      <yloc>368</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>SQL</name>
       <description/>
       <type>SQL</type>
       <attributes/>
-      <sql>select RefreshAllMaterializedViews('spat');
-select RefreshAllMaterializedViews('osc');
-select RefreshAllMaterializedViews('portal');
+      <sql>ALTER TABLE osc.tb_dados_gerais DISABLE TRIGGER ALL; 
 
-ALTER TABLE osc.tb_osc ENABLE TRIGGER ALL;
-ALTER TABLE osc.tb_dados_gerais ENABLE TRIGGER ALL;
-ALTER TABLE osc.tb_contato ENABLE TRIGGER ALL;
-ALTER TABLE osc.tb_localizacao ENABLE TRIGGER ALL;
-ALTER TABLE osc.tb_area_atuacao ENABLE TRIGGER ALL;
+UPDATE osc.tb_dados_gerais SET tx_nome_fantasia_osc = tb.nome
+FROM
+(
+--select id_osc,convert_to(unaccent(regexp_replace(tx_nome_fantasia_osc, '[^a-zA-Zà-úÀ-Ú0-9+?/:().,"''&amp;@ -]','','g')),'utf8') as nome, tx_nome_fantasia_osc
+--from osc.tb_dados_gerais where tx_nome_fantasia_osc ~ '[^a-zA-Zà-úÀ-Ú0-9+?/:().,"''&amp;@ -]'
+--union all
+--select id_osc,convert_to(unaccent(regexp_replace(tx_nome_fantasia_osc, '[^a-zA-Z0-9+?/:(),"''&amp;@ -]','','g')),'utf8') as nome, tx_nome_fantasia_osc
+--from osc.tb_dados_gerais where tx_nome_fantasia_osc = '.'
+--union all
+--select id_osc,convert_to(unaccent(regexp_replace(tx_nome_fantasia_osc, '[^a-zA-Z0-9+?/:(),"''&amp;@ -]',' ','g')),'utf8') as nome, tx_nome_fantasia_osc
+--from osc.tb_dados_gerais where tx_nome_fantasia_osc like '%...%'
+--union all
+--select id_osc,convert_to(unaccent(regexp_replace(tx_nome_fantasia_osc, '[^a-zA-Z0-9+?/:(),"''&amp;@ ]','','g')),'utf8') as nome, tx_nome_fantasia_osc
+--from osc.tb_dados_gerais where tx_nome_fantasia_osc = '-'
+--union all
+--select id_osc,convert_to(unaccent(regexp_replace(tx_nome_fantasia_osc, '[^a-zA-Z0-9+?/:()"''&amp;@ ]','','g')),'utf8') as nome, tx_nome_fantasia_osc
+--from osc.tb_dados_gerais where tx_nome_fantasia_osc = ','
+--union all
+--select id_osc,convert_to(unaccent(regexp_replace(tx_nome_fantasia_osc, '[^a-zA-Z+?/:()"''&amp;@ ]','','g')),'utf8') as nome, tx_nome_fantasia_osc
+--from osc.tb_dados_gerais where tx_nome_fantasia_osc like '000%'
+--union all
+--select id_osc,null nome, tx_nome_fantasia_osc
+--from osc.tb_dados_gerais where trim(tx_nome_fantasia_osc) in('-0-','--','---','----','-------','-------------','--------------------------------------')
+--union all
+select id_osc,regexp_replace(tx_nome_fantasia_osc, '[@|-|;|_|*|\|()|!|?|#|$|%|&amp;|''|"]',' ','g') as nome, tx_nome_fantasia_osc
+from osc.tb_dados_gerais where tx_nome_fantasia_osc ~ '[@|-|;|_|*|\|()|!|?|#|$|%|&amp;|''|"]'
+union all
+select id_osc,regexp_replace(tx_nome_fantasia_osc, '[-]',' ','g') as nome, tx_nome_fantasia_osc
+from osc.tb_dados_gerais where tx_nome_fantasia_osc = '- - -'
+union all
+select id_osc,regexp_replace(tx_nome_fantasia_osc, '[-]',' ','g') as nome, tx_nome_fantasia_osc
+from osc.tb_dados_gerais where tx_nome_fantasia_osc = '------------------------------'
+) as tb
+WHERE osc.tb_dados_gerais.id_osc = tb.id_osc;
 
-UPDATE log.tb_log_carga SET dt_fim = NOW()::timestamp, cd_status = 2
-WHERE id_carga = ${ID_CARGA};</sql>
-      <useVariableSubstitution>T</useVariableSubstitution>
+UPDATE osc.tb_dados_gerais SET tx_nome_fantasia_osc = null
+where length(tx_nome_fantasia_osc) &lt;= 2;
+
+UPDATE osc.tb_dados_gerais SET tx_razao_social_osc = regexp_replace(tx_razao_social_osc, '[@|-|;|_|*|\|()|.|!|?|#|$|%|&amp;|''|"|:]',' ','g')
+WHERE tx_razao_social_osc ~ '[@|-|;|_|*|\|()|.|!|?|#|$|%|&amp;|''|"|:]';
+
+
+UPDATE osc.tb_dados_gerais SET ft_nome_fantasia_osc = null WHERE ft_nome_fantasia_osc is not null and ft_nome_fantasia_osc &lt;&gt; 'Representante de OSC' and tx_nome_fantasia_osc is null;
+UPDATE osc.tb_dados_gerais SET ft_logo = null WHERE ft_logo is not null and ft_logo &lt;&gt; 'Representante de OSC' and im_logo is null;
+UPDATE osc.tb_dados_gerais SET ft_missao_osc = null WHERE ft_missao_osc is not null and ft_missao_osc &lt;&gt; 'Representante de OSC' and tx_missao_osc is null;
+UPDATE osc.tb_dados_gerais SET ft_visao_osc = null WHERE ft_visao_osc is not null and ft_visao_osc &lt;&gt; 'Representante de OSC' and tx_visao_osc is null;
+UPDATE osc.tb_dados_gerais SET ft_sigla_osc = null WHERE ft_sigla_osc is not null and ft_sigla_osc &lt;&gt; 'Representante de OSC' and tx_sigla_osc is null;
+UPDATE osc.tb_dados_gerais SET ft_resumo_osc = null WHERE ft_resumo_osc is not null and ft_resumo_osc &lt;&gt; 'Representante de OSC' and tx_resumo_osc is null;
+UPDATE osc.tb_dados_gerais SET ft_situacao_imovel_osc = null WHERE ft_situacao_imovel_osc is not null and ft_situacao_imovel_osc &lt;&gt; 'Representante de OSC' and cd_situacao_imovel_osc is null;
+UPDATE osc.tb_dados_gerais SET ft_link_estatuto_osc = null WHERE ft_link_estatuto_osc is not null and ft_link_estatuto_osc &lt;&gt; 'Representante de OSC' and tx_link_estatuto_osc is null;
+UPDATE osc.tb_dados_gerais SET ft_historico = null WHERE ft_historico is not null and ft_historico &lt;&gt; 'Representante de OSC' and tx_historico is null;
+UPDATE osc.tb_dados_gerais SET ft_finalidades_estatutarias = null WHERE ft_finalidades_estatutarias is not null and ft_finalidades_estatutarias &lt;&gt; 'Representante de OSC' and tx_finalidades_estatutarias is null;
+UPDATE osc.tb_dados_gerais SET ft_link_relatorio_auditoria = null WHERE ft_link_relatorio_auditoria is not null and ft_link_relatorio_auditoria &lt;&gt; 'Representante de OSC' and tx_link_relatorio_auditoria is null;
+UPDATE osc.tb_dados_gerais SET ft_link_demonstracao_contabil = null WHERE ft_link_demonstracao_contabil is not null and ft_link_demonstracao_contabil &lt;&gt; 'Representante de OSC' and tx_link_demonstracao_contabil is null;
+UPDATE osc.tb_dados_gerais SET ft_nome_responsavel_legal = null WHERE ft_nome_responsavel_legal is not null and ft_nome_responsavel_legal &lt;&gt; 'Representante de OSC' and tx_nome_responsavel_legal is null;
+
+
+ALTER TABLE osc.tb_dados_gerais ENABLE TRIGGER ALL; 
+
+update osc.tb_localizacao SET geo_localizacao = edmu_centroid
+from spat.ed_municipio
+inner join spat.ed_uf on spat.ed_municipio.eduf_cd_uf = spat.ed_uf.eduf_cd_uf
+inner join osc.tb_osc on osc.tb_osc.id_osc = id_osc
+where ST_Contains(eduf_bounding_box,geo_localizacao) = false
+and cd_municipio = edmu_cd_municipio;
+
+update osc.tb_localizacao SET geo_localizacao = edmu_centroid
+from spat.ed_municipio
+inner join spat.ed_uf on spat.ed_municipio.eduf_cd_uf = spat.ed_uf.eduf_cd_uf
+inner join osc.tb_osc on osc.tb_osc.id_osc =id_osc
+where ST_Contains(edmu_bounding_box,geo_localizacao) = false
+and cd_municipio = edmu_cd_municipio;</sql>
+      <useVariableSubstitution>F</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
       <sqlfilename/>
       <sendOneStatement>F</sendOneStatement>
@@ -563,43 +573,49 @@ WHERE id_carga = ${ID_CARGA};</sql>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>465</xloc>
-      <yloc>550</yloc>
+      <xloc>240</xloc>
+      <yloc>208</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>Abort job</name>
+      <name>SQL 2</name>
       <description/>
-      <type>ABORT</type>
+      <type>SQL</type>
       <attributes/>
-      <message/>
+      <sql>--select RefreshAllMaterializedViews('spat');
+--select RefreshAllMaterializedViews('osc');
+--select RefreshAllMaterializedViews('portal');
+--select RefreshAllMaterializedViews('analysis');
+--select RefreshAllMaterializedViews('ipeadata');</sql>
+      <useVariableSubstitution>F</useVariableSubstitution>
+      <sqlfromfile>F</sqlfromfile>
+      <sqlfilename/>
+      <sendOneStatement>F</sendOneStatement>
+      <connection>etl</connection>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>648</xloc>
-      <yloc>554</yloc>
+      <xloc>944</xloc>
+      <yloc>368</yloc>
       <attributes_kjc/>
     </entry>
     <entry>
-      <name>Write To Log</name>
+      <name>Success</name>
       <description/>
-      <type>WRITE_TO_LOG</type>
+      <type>SUCCESS</type>
       <attributes/>
-      <logmessage/>
-      <loglevel>Error</loglevel>
-      <logsubject/>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>640</xloc>
-      <yloc>432</yloc>
+      <xloc>1136</xloc>
+      <yloc>368</yloc>
       <attributes_kjc/>
     </entry>
   </entries>
   <hops>
     <hop>
       <from>START</from>
-      <to>SQL</to>
+      <to>Set variables</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -607,17 +623,8 @@ WHERE id_carga = ${ID_CARGA};</sql>
       <unconditional>Y</unconditional>
     </hop>
     <hop>
-      <from>SQL</from>
-      <to>Set variables</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
       <from>Set variables</from>
-      <to>Transformation ID_CARGA</to>
+      <to>Dados_Principais_OSC</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -625,17 +632,8 @@ WHERE id_carga = ${ID_CARGA};</sql>
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Transformation ID_CARGA</from>
-      <to>Transformation CNIS</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>Y</enabled>
-      <evaluation>Y</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>Transformation CNIS</from>
-      <to>SQL 2</to>
+      <from>Dados_Principais_OSC</from>
+      <to>SQL</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -652,8 +650,8 @@ WHERE id_carga = ${ID_CARGA};</sql>
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Transformation CNIS</from>
-      <to>Write To Log</to>
+      <from>SQL</from>
+      <to>Dados_Relações_Trabalho</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
@@ -661,36 +659,16 @@ WHERE id_carga = ${ID_CARGA};</sql>
       <unconditional>N</unconditional>
     </hop>
     <hop>
-      <from>Transformation CNIS</from>
-      <to>SQL 2 2</to>
+      <from>Dados_Relações_Trabalho</from>
+      <to>SQL 2</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>N</enabled>
-      <evaluation>N</evaluation>
-      <unconditional>N</unconditional>
-    </hop>
-    <hop>
-      <from>SQL 2 2</from>
-      <to>Abort job</to>
-      <from_nr>0</from_nr>
-      <to_nr>0</to_nr>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
   </hops>
   <notepads>
   </notepads>
-  <attributes>
-    <group>
-      <name>METASTORE.pentaho</name>
-      <attribute>
-        <key>Default Run Configuration</key>
-        <value>{"namespace":"pentaho","id":"Default Run Configuration","name":"Default Run Configuration","description":"Defines a default run configuration","metaStoreName":null}</value>
-      </attribute>
-    </group>
-    <group>
-      <name>{"_":"Embedded MetaStore Elements","namespace":"pentaho","type":"Default Run Configuration"}</name>
-    </group>
-  </attributes>
+  <attributes/>
 </job>
