@@ -600,11 +600,11 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>/home/thiago/media/Dados/projetos/ipea/dados_2021/osc_2021_geo_teste_fabio.csv</filename>
+    <filename>/home/thiago/media/Dados/projetos/ipea/dados_2021/osc_2021_geo_teste.csv</filename>
     <filename_field>${folder_path}osc_2019_geo.csv</filename_field>
     <rownum_field/>
     <include_filename>N</include_filename>
-    <separator>,</separator>
+    <separator>;</separator>
     <enclosure>"</enclosure>
     <header>Y</header>
     <buffer_size>50000</buffer_size>
@@ -2179,11 +2179,59 @@ FALSE,FALSE, TRUE, '${ID_CARGA}'::INTEGER,2);</sql>
     </partitioning>
     <fields>
       <field>
+        <in_stream_name>data_situacao</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>-</replace_string>
+        <replace_by_string/>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+        <is_unicode>no</is_unicode>
+      </field>
+      <field>
+        <in_stream_name>data_inicio</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>-</replace_string>
+        <replace_by_string/>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+        <is_unicode>no</is_unicode>
+      </field>
+      <field>
+        <in_stream_name>Latitude</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>NA</replace_string>
+        <replace_by_string>0</replace_by_string>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+        <is_unicode>no</is_unicode>
+      </field>
+      <field>
         <in_stream_name>Latitude</in_stream_name>
         <out_stream_name/>
         <use_regex>no</use_regex>
         <replace_string>,</replace_string>
         <replace_by_string>.</replace_by_string>
+        <set_empty_string>N</set_empty_string>
+        <replace_field_by_string/>
+        <whole_word>no</whole_word>
+        <case_sensitive>no</case_sensitive>
+        <is_unicode>no</is_unicode>
+      </field>
+      <field>
+        <in_stream_name>Longitude</in_stream_name>
+        <out_stream_name/>
+        <use_regex>no</use_regex>
+        <replace_string>NA</replace_string>
+        <replace_by_string>0</replace_by_string>
         <set_empty_string>N</set_empty_string>
         <replace_field_by_string/>
         <whole_word>no</whole_word>
