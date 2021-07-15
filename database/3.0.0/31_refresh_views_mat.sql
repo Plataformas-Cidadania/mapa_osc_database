@@ -1,5 +1,5 @@
 refresh materialized view analysis.vw_perfil_localidade_repasse_recursos;
-refresh materialized view analysis.vw_perfil_localidade_media_nacional;
+--refresh materialized view analysis.vw_perfil_localidade_media_nacional;
 refresh materialized view analysis.vw_perfil_localidade_media_repasse_recursos;
 refresh materialized view analysis.vw_perfil_localidade_ranking_repasse_recursos;
 refresh materialized view analysis.vw_perfil_localidade_caracteristicas;
