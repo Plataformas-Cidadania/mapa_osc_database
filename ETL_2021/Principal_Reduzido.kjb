@@ -371,12 +371,12 @@
       <fields>
         <field>
           <variable_name>db_host</variable_name>
-          <variable_value>localhost</variable_value>
+          <variable_value>postgresql95-dev</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>db_name</variable_name>
-          <variable_value>portal_osc_2020_04_06</variable_value>
+          <variable_value>portal_osc2_dev</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
@@ -386,12 +386,12 @@
         </field>
         <field>
           <variable_name>db_user</variable_name>
-          <variable_value>postgres</variable_value>
+          <variable_value>thiago.ramos</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>db_pass</variable_name>
-          <variable_value>postgres</variable_value>
+          <variable_value>ipea001</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
