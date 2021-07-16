@@ -1736,7 +1736,7 @@
     <replace_variables>Y</replace_variables>
     <quoteString>N</quoteString>
     <sql>SELECT portal.atualizar_dados_gerais_osc('${ETL}'::TEXT, ?::NUMERIC, 'CNPJ'::TEXT, (SELECT NOW()::TIMESTAMP), 
-'{"tx_razao_social_osc":"?", "tx_nome_fantasia_osc":"?", "cd_classe_atividade_economica_osc":"?", "cd_natureza_juridica_osc":"?"}'::JSONB || jsonb_build_object('dt_fundacao_osc',(SELECT to_date('?','YYYYMMDD')::TEXT)),
+'{"tx_razao_social_osc":"?", "tx_nome_fantasia_osc":"?", "cd_classe_atividade_economica_osc":"?", "cd_natureza_juridica_osc":"?"}'::JSONB || jsonb_build_object('dt_fundacao_osc',(SELECT to_date('?','YMD')::TEXT)),
 FALSE, TRUE, TRUE, '${ID_CARGA}'::INTEGER,2);
 </sql>
     <set_params>N</set_params>
