@@ -416,7 +416,7 @@
       <description/>
       <type>SQL</type>
       <attributes/>
-      <sql>ALTER TABLE osc.tb_relacoes_trabalho DISABLE TRIGGER ALL;
+      <sql>--ALTER TABLE osc.tb_relacoes_trabalho DISABLE TRIGGER ALL;
 </sql>
       <useVariableSubstitution>F</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
@@ -439,7 +439,7 @@
 --select RefreshAllMaterializedViews('portal');
 --select RefreshAllMaterializedViews('analysis');
 
-ALTER TABLE osc.tb_relacoes_trabalho ENABLE TRIGGER ALL;
+--ALTER TABLE osc.tb_relacoes_trabalho ENABLE TRIGGER ALL;
 
 UPDATE log.tb_log_carga SET dt_fim = NOW()::timestamp, cd_status = 9
 WHERE id_carga = ${ID_CARGA};</sql>
@@ -522,7 +522,7 @@ WHERE id_carga = ${ID_CARGA};</sql>
       <type>SQL</type>
       <attributes/>
       <sql>--select RefreshAllMaterializedViews('portal');
-ALTER TABLE osc.tb_relacoes_trabalho ENABLE TRIGGER ALL;
+--ALTER TABLE osc.tb_relacoes_trabalho ENABLE TRIGGER ALL;
 
 UPDATE log.tb_log_carga SET dt_fim = NOW()::timestamp, cd_status = 2
 WHERE id_carga = ${ID_CARGA};</sql>

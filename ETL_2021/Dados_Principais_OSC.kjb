@@ -416,11 +416,11 @@
       <description/>
       <type>SQL</type>
       <attributes/>
-      <sql>ALTER TABLE osc.tb_osc DISABLE TRIGGER ALL;
-ALTER TABLE osc.tb_dados_gerais DISABLE TRIGGER ALL;
-ALTER TABLE osc.tb_contato DISABLE TRIGGER ALL;
-ALTER TABLE osc.tb_localizacao DISABLE TRIGGER ALL;
-ALTER TABLE osc.tb_area_atuacao DISABLE TRIGGER ALL;
+      <sql>--ALTER TABLE osc.tb_osc DISABLE TRIGGER ALL;
+--ALTER TABLE osc.tb_dados_gerais DISABLE TRIGGER ALL;
+--ALTER TABLE osc.tb_contato DISABLE TRIGGER ALL;
+--ALTER TABLE osc.tb_localizacao DISABLE TRIGGER ALL;
+--ALTER TABLE osc.tb_area_atuacao DISABLE TRIGGER ALL;
 
 UPDATE osc.tb_osc SET bo_osc_ativa = false;</sql>
       <useVariableSubstitution>F</useVariableSubstitution>
@@ -452,11 +452,11 @@ WHERE id_area_atuacao IN
 --select RefreshAllMaterializedViews('osc');
 --select RefreshAllMaterializedViews('portal');
 
-ALTER TABLE osc.tb_osc ENABLE TRIGGER ALL;
-ALTER TABLE osc.tb_dados_gerais ENABLE TRIGGER ALL;
-ALTER TABLE osc.tb_contato ENABLE TRIGGER ALL;
-ALTER TABLE osc.tb_localizacao ENABLE TRIGGER ALL;
-ALTER TABLE osc.tb_area_atuacao ENABLE TRIGGER ALL;
+--ALTER TABLE osc.tb_osc ENABLE TRIGGER ALL;
+--ALTER TABLE osc.tb_dados_gerais ENABLE TRIGGER ALL;
+--ALTER TABLE osc.tb_contato ENABLE TRIGGER ALL;
+--ALTER TABLE osc.tb_localizacao ENABLE TRIGGER ALL;
+--ALTER TABLE osc.tb_area_atuacao ENABLE TRIGGER ALL;
 
 UPDATE log.tb_log_carga SET dt_fim = NOW()::timestamp, cd_status = 9
 WHERE id_carga = ${ID_CARGA};</sql>
@@ -547,11 +547,11 @@ WHERE id_carga = ${ID_CARGA};</sql>
 --select RefreshAllMaterializedViews('osc');
 --select RefreshAllMaterializedViews('portal');
 
-ALTER TABLE osc.tb_osc ENABLE TRIGGER ALL;
-ALTER TABLE osc.tb_dados_gerais ENABLE TRIGGER ALL;
-ALTER TABLE osc.tb_contato ENABLE TRIGGER ALL;
-ALTER TABLE osc.tb_localizacao ENABLE TRIGGER ALL;
-ALTER TABLE osc.tb_area_atuacao ENABLE TRIGGER ALL;
+--ALTER TABLE osc.tb_osc ENABLE TRIGGER ALL;
+--ALTER TABLE osc.tb_dados_gerais ENABLE TRIGGER ALL;
+--ALTER TABLE osc.tb_contato ENABLE TRIGGER ALL;
+--ALTER TABLE osc.tb_localizacao ENABLE TRIGGER ALL;
+--ALTER TABLE osc.tb_area_atuacao ENABLE TRIGGER ALL;
 
 UPDATE log.tb_log_carga SET dt_fim = NOW()::timestamp, cd_status = 2
 WHERE id_carga = ${ID_CARGA};</sql>

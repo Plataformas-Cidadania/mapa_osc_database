@@ -600,7 +600,7 @@
       <method>none</method>
       <schema_name/>
     </partitioning>
-    <filename>/home/thiago/media/Dados/projetos/ipea/dados_2021/osc_2021_total_teste.csv</filename>
+    <filename>/home/thiago/media/Dados/projetos/ipea/dados_2021/full/osc_2021_total_teste.csv</filename>
     <filename_field>${folder_path}osc_2019_geo.csv</filename_field>
     <rownum_field/>
     <include_filename>N</include_filename>
