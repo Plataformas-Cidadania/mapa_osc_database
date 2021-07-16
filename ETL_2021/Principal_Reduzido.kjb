@@ -371,12 +371,12 @@
       <fields>
         <field>
           <variable_name>db_host</variable_name>
-          <variable_value>postgresql95-dev</variable_value>
+          <variable_value>localhost</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>db_name</variable_name>
-          <variable_value>portal_osc2_dev</variable_value>
+          <variable_value>portal_osc_2020_04_06</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
@@ -386,12 +386,12 @@
         </field>
         <field>
           <variable_name>db_user</variable_name>
-          <variable_value>thiago.ramos</variable_value>
+          <variable_value>postgres</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>db_pass</variable_name>
-          <variable_value>ipea001</variable_value>
+          <variable_value>postgres</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
@@ -550,7 +550,7 @@ UPDATE osc.tb_dados_gerais SET ft_link_demonstracao_contabil = null WHERE ft_lin
 UPDATE osc.tb_dados_gerais SET ft_nome_responsavel_legal = null WHERE ft_nome_responsavel_legal is not null and ft_nome_responsavel_legal &lt;&gt; 'Representante de OSC' and tx_nome_responsavel_legal is null;
 
 
-ALTER TABLE osc.tb_dados_gerais ENABLE TRIGGER ALL; 
+--ALTER TABLE osc.tb_dados_gerais ENABLE TRIGGER ALL; 
 
 update osc.tb_localizacao SET geo_localizacao = edmu_centroid
 from spat.ed_municipio
