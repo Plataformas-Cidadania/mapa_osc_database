@@ -18,7 +18,7 @@ BEGIN
 				{"label": 2015, "value": 525591},
 				{"label": 2016, "value": 820186},
 				{"label": 2018, "value": 781921},
-                {"label": 2020, "value": 815675}
+                {"label": 2020, "value": 815676}
 			]
 		}
 
