@@ -1,0 +1,1 @@
+SELECT * FROM portal.atualizar_graficos();
