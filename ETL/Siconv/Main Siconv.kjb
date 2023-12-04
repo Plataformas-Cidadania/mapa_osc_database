@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <job>
   <name>Main Siconv</name>
-  <description />
-  <extended_description />
-  <job_version />
+  <description/>
+  <extended_description/>
+  <job_version/>
   <job_status>0</job_status>
   <directory>/</directory>
   <created_user>-</created_user>
@@ -21,9 +21,9 @@
     <port>${db_port}</port>
     <username>${db_user}</username>
     <password>${db_pass}</password>
-    <servername />
-    <data_tablespace />
-    <index_tablespace />
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
     <attributes>
       <attribute>
         <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
@@ -63,66 +63,15 @@
       </attribute>
     </attributes>
   </connection>
-  <connection>
-    <name>localhost</name>
-    <server>localhost</server>
-    <type>POSTGRESQL</type>
-    <access>Native</access>
-    <database>portalosc_homologa_050318</database>
-    <port>5432</port>
-    <username>postgres</username>
-    <password>Encrypted 2be98afc86aa7f2e4cb79a760db93bdd0</password>
-    <servername />
-    <data_tablespace />
-    <index_tablespace />
-    <attributes>
-      <attribute>
-        <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>FORCE_IDENTIFIERS_TO_UPPERCASE</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>IS_CLUSTERED</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>PORT_NUMBER</code>
-        <attribute>5432</attribute>
-      </attribute>
-      <attribute>
-        <code>PRESERVE_RESERVED_WORD_CASE</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>QUOTE_ALL_FIELDS</code>
-        <attribute>N</attribute>
-      </attribute>
-      <attribute>
-        <code>SUPPORTS_BOOLEAN_DATA_TYPE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>SUPPORTS_TIMESTAMP_DATA_TYPE</code>
-        <attribute>Y</attribute>
-      </attribute>
-      <attribute>
-        <code>USE_POOLING</code>
-        <attribute>N</attribute>
-      </attribute>
-    </attributes>
-  </connection>
   <slaveservers>
     </slaveservers>
   <job-log-table>
-    <connection />
-    <schema />
-    <table />
-    <size_limit_lines />
-    <interval />
-    <timeout_days />
+    <connection/>
+    <schema/>
+    <table/>
+    <size_limit_lines/>
+    <interval/>
+    <timeout_days/>
     <field>
       <id>ID_JOB</id>
       <enabled>Y</enabled>
@@ -230,10 +179,10 @@
     </field>
   </job-log-table>
   <jobentry-log-table>
-    <connection />
-    <schema />
-    <table />
-    <timeout_days />
+    <connection/>
+    <schema/>
+    <table/>
+    <timeout_days/>
     <field>
       <id>ID_BATCH</id>
       <enabled>Y</enabled>
@@ -321,10 +270,10 @@
     </field>
   </jobentry-log-table>
   <channel-log-table>
-    <connection />
-    <schema />
-    <table />
-    <timeout_days />
+    <connection/>
+    <schema/>
+    <table/>
+    <timeout_days/>
     <field>
       <id>ID_BATCH</id>
       <enabled>Y</enabled>
@@ -387,12 +336,13 @@
     </field>
   </channel-log-table>
   <pass_batchid>N</pass_batchid>
-  <shared_objects_file />
+  <shared_objects_file/>
   <entries>
     <entry>
       <name>START</name>
-      <description />
+      <description/>
       <type>SPECIAL</type>
+      <attributes/>
       <start>Y</start>
       <dummy>N</dummy>
       <repeat>N</repeat>
@@ -408,11 +358,13 @@
       <nr>0</nr>
       <xloc>73</xloc>
       <yloc>236</yloc>
+      <attributes_kjc/>
     </entry>
     <entry>
       <name>Criar diretório</name>
-      <description />
+      <description/>
       <type>CREATE_FOLDER</type>
+      <attributes/>
       <foldername>${DIRETORIO_DOWNLOAD}</foldername>
       <fail_of_folder_exists>N</fail_of_folder_exists>
       <parallel>N</parallel>
@@ -420,22 +372,26 @@
       <nr>0</nr>
       <xloc>457</xloc>
       <yloc>236</yloc>
+      <attributes_kjc/>
     </entry>
     <entry>
       <name>Verificar se convênios existe</name>
-      <description />
+      <description/>
       <type>FILE_EXISTS</type>
+      <attributes/>
       <filename>${CONVENIOS_ZIP}</filename>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>1004</xloc>
       <yloc>236</yloc>
+      <attributes_kjc/>
     </entry>
     <entry>
       <name>Criar variáveis</name>
-      <description />
+      <description/>
       <type>EVAL</type>
+      <attributes/>
       <script>date = new java.util.Date();
 date.setDate(date.getDate());
 
@@ -466,26 +422,28 @@ true;
       <nr>0</nr>
       <xloc>191</xloc>
       <yloc>236</yloc>
+      <attributes_kjc/>
     </entry>
     <entry>
       <name>Baixar convênios</name>
-      <description />
+      <description/>
       <type>HTTP</type>
+      <attributes/>
       <url>${CONVENIOS_URL}</url>
       <targetfilename>${CONVENIOS_ZIP}</targetfilename>
       <file_appended>N</file_appended>
       <date_time_added>N</date_time_added>
-      <targetfilename_extension />
-      <uploadfilename />
+      <targetfilename_extension/>
+      <uploadfilename/>
       <run_every_row>N</run_every_row>
-      <url_fieldname />
-      <upload_fieldname />
-      <dest_fieldname />
-      <username />
+      <url_fieldname/>
+      <upload_fieldname/>
+      <dest_fieldname/>
+      <username/>
       <password>Encrypted </password>
       <proxy_host>cache.ipea.gov.br</proxy_host>
       <proxy_port>3128</proxy_port>
-      <non_proxy_hosts />
+      <non_proxy_hosts/>
       <addfilenameresult>Y</addfilenameresult>
       <headers>
       </headers>
@@ -494,37 +452,41 @@ true;
       <nr>0</nr>
       <xloc>1004</xloc>
       <yloc>100</yloc>
+      <attributes_kjc/>
     </entry>
     <entry>
       <name>Verificar se propostas existe</name>
-      <description />
+      <description/>
       <type>FILE_EXISTS</type>
+      <attributes/>
       <filename>${PROPOSTAS_ZIP}</filename>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>618</xloc>
       <yloc>236</yloc>
+      <attributes_kjc/>
     </entry>
     <entry>
       <name>Baixar propostas</name>
-      <description />
+      <description/>
       <type>HTTP</type>
+      <attributes/>
       <url>${PROPOSTAS_URL}</url>
       <targetfilename>${PROPOSTAS_ZIP}</targetfilename>
       <file_appended>N</file_appended>
       <date_time_added>N</date_time_added>
-      <targetfilename_extension />
-      <uploadfilename />
+      <targetfilename_extension/>
+      <uploadfilename/>
       <run_every_row>N</run_every_row>
-      <url_fieldname />
-      <upload_fieldname />
-      <dest_fieldname />
-      <username />
+      <url_fieldname/>
+      <upload_fieldname/>
+      <dest_fieldname/>
+      <username/>
       <password>Encrypted </password>
       <proxy_host>cache.ipea.gov.br</proxy_host>
       <proxy_port>3128</proxy_port>
-      <non_proxy_hosts />
+      <non_proxy_hosts/>
       <addfilenameresult>Y</addfilenameresult>
       <headers>
       </headers>
@@ -533,16 +495,18 @@ true;
       <nr>0</nr>
       <xloc>618</xloc>
       <yloc>101</yloc>
+      <attributes_kjc/>
     </entry>
     <entry>
       <name>Deszipar propostas</name>
-      <description />
+      <description/>
       <type>UNZIP</type>
+      <attributes/>
       <zipfilename>${PROPOSTAS_ZIP}</zipfilename>
-      <wildcard />
-      <wildcardexclude />
+      <wildcard/>
+      <wildcardexclude/>
       <targetdirectory>${DIRETORIO_DOWNLOAD}</targetdirectory>
-      <movetodirectory />
+      <movetodirectory/>
       <afterunzip>0</afterunzip>
       <addfiletoresult>N</addfiletoresult>
       <isfromprevious>N</isfromprevious>
@@ -550,11 +514,11 @@ true;
       <addtime>N</addtime>
       <addOriginalTimestamp>N</addOriginalTimestamp>
       <SpecifyFormat>N</SpecifyFormat>
-      <date_time_format />
+      <date_time_format/>
       <rootzip>N</rootzip>
       <createfolder>N</createfolder>
       <nr_limit>10</nr_limit>
-      <wildcardSource />
+      <wildcardSource/>
       <success_condition>success_if_no_errors</success_condition>
       <iffileexists>SKIP</iffileexists>
       <create_move_to_directory>N</create_move_to_directory>
@@ -564,16 +528,18 @@ true;
       <nr>0</nr>
       <xloc>818</xloc>
       <yloc>236</yloc>
+      <attributes_kjc/>
     </entry>
     <entry>
       <name>Deszipar convênios</name>
-      <description />
+      <description/>
       <type>UNZIP</type>
+      <attributes/>
       <zipfilename>${CONVENIOS_ZIP}</zipfilename>
-      <wildcard />
-      <wildcardexclude />
+      <wildcard/>
+      <wildcardexclude/>
       <targetdirectory>${DIRETORIO_DOWNLOAD}</targetdirectory>
-      <movetodirectory />
+      <movetodirectory/>
       <afterunzip>0</afterunzip>
       <addfiletoresult>N</addfiletoresult>
       <isfromprevious>N</isfromprevious>
@@ -581,11 +547,11 @@ true;
       <addtime>N</addtime>
       <addOriginalTimestamp>N</addOriginalTimestamp>
       <SpecifyFormat>N</SpecifyFormat>
-      <date_time_format />
+      <date_time_format/>
       <rootzip>N</rootzip>
       <createfolder>N</createfolder>
       <nr_limit>10</nr_limit>
-      <wildcardSource />
+      <wildcardSource/>
       <success_condition>success_if_no_errors</success_condition>
       <iffileexists>SKIP</iffileexists>
       <create_move_to_directory>N</create_move_to_directory>
@@ -595,11 +561,13 @@ true;
       <nr>0</nr>
       <xloc>1216</xloc>
       <yloc>236</yloc>
+      <attributes_kjc/>
     </entry>
     <entry>
       <name>Delete files 1</name>
-      <description />
+      <description/>
       <type>DELETE_FILES</type>
+      <attributes/>
       <arg_from_previous>N</arg_from_previous>
       <include_subfolders>N</include_subfolders>
       <fields>
@@ -613,34 +581,37 @@ true;
       <nr>0</nr>
       <xloc>905</xloc>
       <yloc>404</yloc>
+      <attributes_kjc/>
     </entry>
     <entry>
       <name>Carregar Siconv</name>
-      <description />
+      <description/>
       <type>TRANS</type>
+      <attributes/>
       <specification_method>filename</specification_method>
-      <trans_object_id />
+      <trans_object_id/>
       <filename>${Internal.Job.Filename.Directory}/Carregar Siconv.ktr</filename>
-      <transname />
+      <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
       <exec_per_row>N</exec_per_row>
       <clear_rows>N</clear_rows>
       <clear_files>N</clear_files>
       <set_logfile>N</set_logfile>
-      <logfile />
-      <logext />
+      <logfile/>
+      <logext/>
       <add_date>N</add_date>
       <add_time>N</add_time>
       <loglevel>Basic</loglevel>
       <cluster>N</cluster>
-      <slave_server_name />
+      <slave_server_name/>
       <set_append_logfile>N</set_append_logfile>
       <wait_until_finished>Y</wait_until_finished>
       <follow_abort_remote>N</follow_abort_remote>
       <create_parent_folder>N</create_parent_folder>
       <logging_remote_work>N</logging_remote_work>
-      <run_configuration />
+      <run_configuration/>
+      <suppress_result_data>N</suppress_result_data>
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
       </parameters>
@@ -649,21 +620,25 @@ true;
       <nr>0</nr>
       <xloc>1216</xloc>
       <yloc>402</yloc>
+      <attributes_kjc/>
     </entry>
     <entry>
       <name>Success</name>
-      <description />
+      <description/>
       <type>SUCCESS</type>
+      <attributes/>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>576</xloc>
       <yloc>400</yloc>
+      <attributes_kjc/>
     </entry>
     <entry>
       <name>Delete files 2</name>
-      <description />
+      <description/>
       <type>DELETE_FILES</type>
+      <attributes/>
       <arg_from_previous>N</arg_from_previous>
       <include_subfolders>N</include_subfolders>
       <fields>
@@ -677,13 +652,15 @@ true;
       <nr>0</nr>
       <xloc>1216</xloc>
       <yloc>541</yloc>
+      <attributes_kjc/>
     </entry>
     <entry>
       <name>Set variables</name>
-      <description />
+      <description/>
       <type>SET_VARIABLES</type>
+      <attributes/>
       <replacevars>Y</replacevars>
-      <filename />
+      <filename/>
       <file_variable_type>JVM</file_variable_type>
       <fields>
         <field>
@@ -703,27 +680,27 @@ true;
         </field>
         <field>
           <variable_name>db_host</variable_name>
-          <variable_value />
+          <variable_value/>
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>db_name</variable_name>
-          <variable_value />
+          <variable_value/>
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>db_port</variable_name>
-          <variable_value />
+          <variable_value/>
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>db_user</variable_name>
-          <variable_value />
+          <variable_value/>
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>db_pass</variable_name>
-          <variable_value />
+          <variable_value/>
           <variable_type>JVM</variable_type>
         </field>
       </fields>
@@ -732,34 +709,37 @@ true;
       <nr>0</nr>
       <xloc>322</xloc>
       <yloc>237</yloc>
+      <attributes_kjc/>
     </entry>
     <entry>
       <name>Carregar Siconv 2</name>
-      <description />
+      <description/>
       <type>TRANS</type>
+      <attributes/>
       <specification_method>filename</specification_method>
-      <trans_object_id />
+      <trans_object_id/>
       <filename>${Internal.Job.Filename.Directory}/Carregar Siconv_2.ktr</filename>
-      <transname />
+      <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
       <exec_per_row>N</exec_per_row>
       <clear_rows>N</clear_rows>
       <clear_files>N</clear_files>
       <set_logfile>N</set_logfile>
-      <logfile />
-      <logext />
+      <logfile/>
+      <logext/>
       <add_date>N</add_date>
       <add_time>N</add_time>
       <loglevel>Basic</loglevel>
       <cluster>N</cluster>
-      <slave_server_name />
+      <slave_server_name/>
       <set_append_logfile>N</set_append_logfile>
       <wait_until_finished>Y</wait_until_finished>
       <follow_abort_remote>N</follow_abort_remote>
       <create_parent_folder>N</create_parent_folder>
       <logging_remote_work>N</logging_remote_work>
-      <run_configuration />
+      <run_configuration/>
+      <suppress_result_data>N</suppress_result_data>
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
       </parameters>
@@ -768,15 +748,17 @@ true;
       <nr>0</nr>
       <xloc>1061</xloc>
       <yloc>403</yloc>
+      <attributes_kjc/>
     </entry>
     <entry>
       <name>Desativar triggers</name>
-      <description />
+      <description/>
       <type>SQL</type>
+      <attributes/>
       <sql>ALTER TABLE osc.tb_projeto DISABLE TRIGGER ALL;</sql>
       <useVariableSubstitution>F</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
-      <sqlfilename />
+      <sqlfilename/>
       <sendOneStatement>F</sendOneStatement>
       <connection>etl</connection>
       <parallel>N</parallel>
@@ -784,15 +766,17 @@ true;
       <nr>0</nr>
       <xloc>1120</xloc>
       <yloc>320</yloc>
+      <attributes_kjc/>
     </entry>
     <entry>
       <name>Ativar triggers </name>
-      <description />
+      <description/>
       <type>SQL</type>
+      <attributes/>
       <sql>ALTER TABLE osc.tb_projeto ENABLE TRIGGER ALL;</sql>
       <useVariableSubstitution>F</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
-      <sqlfilename />
+      <sqlfilename/>
       <sendOneStatement>F</sendOneStatement>
       <connection>etl</connection>
       <parallel>N</parallel>
@@ -800,6 +784,7 @@ true;
       <nr>0</nr>
       <xloc>741</xloc>
       <yloc>401</yloc>
+      <attributes_kjc/>
     </entry>
   </entries>
   <hops>
@@ -977,4 +962,5 @@ true;
   </hops>
   <notepads>
   </notepads>
+  <attributes/>
 </job>

@@ -1,5 +1,7 @@
 CREATE EXTENSION postgis;
 
+CREATE EXTENSION pg_trgm;
+
 SELECT * FROM PostGis_Full_Version();
 
 create schema analysis;
