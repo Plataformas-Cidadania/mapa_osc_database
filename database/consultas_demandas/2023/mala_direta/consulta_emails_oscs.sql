@@ -1,0 +1,1 @@
+\COPY (select distinct lower(tx_email) from osc.tb_contato where tx_email != 'NA' and id_osc in (select id_osc from osc.tb_osc where bo_osc_ativa = true)) TO 'emails_oscs.csv' WITH (FORMAT CSV, HEADER, DELIMITER ';');
