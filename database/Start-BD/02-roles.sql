@@ -1,3 +1,7 @@
+create user r1691506a
+    superuser
+    createdb
+    createrole;
 
 create user t07155479683
     superuser
