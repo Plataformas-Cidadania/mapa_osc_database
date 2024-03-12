@@ -20,10 +20,10 @@
     <database>${db_name}</database>
     <port>${db_port}</port>
     <username>${db_user}</username>
-    <password>Encrypted 2be98afc86aa7f2e4bb16bd64d980aac9</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
+    <password>${db_pass}</password>
+    <servername />
+    <data_tablespace />
+    <index_tablespace />
     <attributes>
       <attribute>
         <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
@@ -442,9 +442,9 @@ true;
       <dest_fieldname/>
       <username/>
       <password>Encrypted </password>
-      <proxy_host/>
-      <proxy_port/>
-      <non_proxy_hosts/>
+      <proxy_host>cache.ipea.gov.br</proxy_host>
+      <proxy_port>3128</proxy_port>
+      <non_proxy_hosts />
       <addfilenameresult>Y</addfilenameresult>
       <headers>
       </headers>
@@ -485,9 +485,9 @@ true;
       <dest_fieldname/>
       <username/>
       <password>Encrypted </password>
-      <proxy_host/>
-      <proxy_port/>
-      <non_proxy_hosts/>
+      <proxy_host>cache.ipea.gov.br</proxy_host>
+      <proxy_port>3128</proxy_port>
+      <non_proxy_hosts />
       <addfilenameresult>Y</addfilenameresult>
       <headers>
       </headers>
@@ -681,27 +681,27 @@ true;
         </field>
         <field>
           <variable_name>db_host</variable_name>
-          <variable_value>${DBHOST}</variable_value>
+          <variable_value />
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>db_name</variable_name>
-          <variable_value>${DBNAME}</variable_value>
+          <variable_value />
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>db_port</variable_name>
-          <variable_value>${DBPORT}</variable_value>
+          <variable_value />
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>db_user</variable_name>
-          <variable_value>${DBUSER}</variable_value>
+          <variable_value />
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>db_pass</variable_name>
-          <variable_value>${DBPASS}</variable_value>
+          <variable_value />
           <variable_type>JVM</variable_type>
         </field>
       </fields>
