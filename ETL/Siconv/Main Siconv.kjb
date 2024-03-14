@@ -21,9 +21,9 @@
     <port>${db_port}</port>
     <username>${db_user}</username>
     <password>${db_pass}</password>
-    <servername/>
-    <data_tablespace/>
-    <index_tablespace/>
+    <servername />
+    <data_tablespace />
+    <index_tablespace />
     <attributes>
       <attribute>
         <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
@@ -404,16 +404,17 @@ var diretorio_download = diretorio_base.concat("/Download/") + ano + "/" + mes +
 
 parent_job.setVariable("DIRETORIO_DOWNLOAD", diretorio_download);
 
-parent_job.setVariable("PROPOSTAS_URL", "http://plataformamaisbrasil.gov.br/images/docs/CGSIS/csv/siconv_proposta.csv.zip");
+parent_job.setVariable("PROPOSTAS_URL", "http://repositorio.dados.gov.br/seges/detru/siconv_proposta.csv.zip");
 parent_job.setVariable("PROPOSTAS_ZIP", diretorio_download + "/siconv_proposta.csv.zip");
 parent_job.setVariable("PROPOSTAS_CSV", diretorio_download + "/siconv_proposta.csv");
 
-parent_job.setVariable("CONVENIOS_URL", "http://plataformamaisbrasil.gov.br/images/docs/CGSIS/csv/siconv_convenio.csv.zip");
+parent_job.setVariable("CONVENIOS_URL", "http://repositorio.dados.gov.br/seges/detru/siconv_convenio.csv.zip");
 parent_job.setVariable("CONVENIOS_ZIP", diretorio_download + "/siconv_convenio.csv.zip");
 parent_job.setVariable("CONVENIOS_CSV", diretorio_download + "/siconv_convenio.csv");
 parent_job.setVariable("SICONV_CSV", diretorio_download + "/siconv.csv");
 
 parent_job.setVariable("FONTE_CARGA", "SICONV/MPOG " + dia + "-" + mes + "-" + ano);
+
 
 true;
 </script>
@@ -443,7 +444,7 @@ true;
       <password>Encrypted </password>
       <proxy_host>cache.ipea.gov.br</proxy_host>
       <proxy_port>3128</proxy_port>
-      <non_proxy_hosts/>
+      <non_proxy_hosts />
       <addfilenameresult>Y</addfilenameresult>
       <headers>
       </headers>
@@ -486,7 +487,7 @@ true;
       <password>Encrypted </password>
       <proxy_host>cache.ipea.gov.br</proxy_host>
       <proxy_port>3128</proxy_port>
-      <non_proxy_hosts/>
+      <non_proxy_hosts />
       <addfilenameresult>Y</addfilenameresult>
       <headers>
       </headers>
@@ -680,27 +681,27 @@ true;
         </field>
         <field>
           <variable_name>db_host</variable_name>
-          <variable_value/>
+          <variable_value />
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>db_name</variable_name>
-          <variable_value/>
+          <variable_value />
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>db_port</variable_name>
-          <variable_value/>
+          <variable_value />
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>db_user</variable_name>
-          <variable_value/>
+          <variable_value />
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>db_pass</variable_name>
-          <variable_value/>
+          <variable_value />
           <variable_type>JVM</variable_type>
         </field>
       </fields>
@@ -874,7 +875,7 @@ true;
       <to>Delete files 2</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <evaluation>N</evaluation>
       <unconditional>N</unconditional>
     </hop>
@@ -919,7 +920,7 @@ true;
       <to>Desativar triggers</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
@@ -928,7 +929,7 @@ true;
       <to>Carregar Siconv</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
@@ -955,7 +956,7 @@ true;
       <to>Carregar Siconv</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
