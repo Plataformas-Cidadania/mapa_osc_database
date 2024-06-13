@@ -38,6 +38,14 @@ alter materialized view portal.vw_osc_area_atuacao owner to postgres;
 
 alter materialized view portal.vw_osc_barra_transparencia owner to postgres;
 
+alter materialized view spat.vw_geo_cluster_regiao owner to postgres;
+
+alter materialized view spat.vw_spat_estado owner to postgres;
+
+alter materialized view spat.vw_spat_municipio owner to postgres;
+
+alter materialized view spat.vw_spat_regiao owner to postgres;
+
 refresh materialized view portal.vw_osc_dados_gerais;
 
 refresh materialized view portal.vw_osc_descricao;
@@ -77,3 +85,11 @@ refresh materialized view portal.vw_osc_objetivo_osc;
 refresh materialized view portal.vw_osc_area_atuacao;
 
 refresh materialized view portal.vw_osc_barra_transparencia;
+
+refresh materialized view spat.vw_geo_cluster_regiao;
+
+refresh materialized view spat.vw_spat_estado;
+
+refresh materialized view spat.vw_spat_municipio;
+
+refresh materialized view spat.vw_spat_regiao;
