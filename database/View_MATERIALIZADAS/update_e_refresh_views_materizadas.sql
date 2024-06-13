@@ -1,3 +1,5 @@
+-------------------------- ALTER PERMISSON MATERIALIZED VIEW ------------------------
+
 alter materialized view portal.vw_osc_dados_gerais owner to postgres;
 
 alter materialized view portal.vw_osc_descricao owner to postgres;
@@ -45,6 +47,8 @@ alter materialized view spat.vw_spat_estado owner to postgres;
 alter materialized view spat.vw_spat_municipio owner to postgres;
 
 alter materialized view spat.vw_spat_regiao owner to postgres;
+
+-------------------------- REFRESH MATERIALIZED VIEW ------------------------
 
 refresh materialized view portal.vw_osc_dados_gerais;
 
