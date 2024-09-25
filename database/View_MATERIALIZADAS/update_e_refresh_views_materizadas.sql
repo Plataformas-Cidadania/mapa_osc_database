@@ -90,10 +90,10 @@ refresh materialized view portal.vw_osc_area_atuacao;
 
 refresh materialized view portal.vw_osc_barra_transparencia;
 
-refresh materialized view spat.vw_geo_cluster_regiao;
-
 refresh materialized view spat.vw_spat_estado;
 
 refresh materialized view spat.vw_spat_municipio;
 
 refresh materialized view spat.vw_spat_regiao;
+
+refresh materialized view spat.vw_geo_cluster_regiao;
