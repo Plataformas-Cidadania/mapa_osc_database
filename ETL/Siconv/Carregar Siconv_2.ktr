@@ -1605,71 +1605,71 @@ AND NOT EXISTS (SELECT * FROM osc.tb_projeto WHERE osc.tb_projeto.tx_identificad
 
 if(SIT_CONVENIO == 'Proposta/Plano de Trabalho Aprovado')
 {
-	cd_status_projeto = 1;
+	cd_status_projeto = 3;
 }
 else if(SIT_CONVENIO == 'Proposta/Plano de Trabalho Complementado Enviado para Análise')
 {
-	cd_status_projeto = 1;
+	cd_status_projeto = 3;
 }
 else if(SIT_CONVENIO == 'Em execução')
 {
-	cd_status_projeto = 2;
+	cd_status_projeto = 4;
 }
 else if(SIT_CONVENIO == 'Assinado')
 {
-	cd_status_projeto = 2;
+	cd_status_projeto = 4;
 }
 else if(SIT_CONVENIO == 'Assinado Pendente Registro TV Siafi')
 {
-	cd_status_projeto = 2;
+	cd_status_projeto = 4;
 }
 else if(SIT_CONVENIO == 'Inadimplente')
 {
-	cd_status_projeto = 3;
+	cd_status_projeto = 2;
 }
 else if(SIT_CONVENIO == 'Aguardando Prestação de Contas')
 {
-	cd_status_projeto = 3;
+	cd_status_projeto = 2;
 }
 else if(SIT_CONVENIO == 'Prestação de Contas Aprovada')
 {
-	cd_status_projeto = 3;
+	cd_status_projeto = 2;
 }
 else if(SIT_CONVENIO == 'Prestação de Contas Aprovada com Ressalvas')
 {
-	cd_status_projeto = 3;
+	cd_status_projeto = 2;
 }
 else if(SIT_CONVENIO == 'Prestação de Contas em Análise')
 {
-	cd_status_projeto = 3;
+	cd_status_projeto = 2;
 }
 else if(SIT_CONVENIO == 'Prestação de Contas em Complementação')
 {
-	cd_status_projeto = 3;
+	cd_status_projeto = 2;
 }
 else if(SIT_CONVENIO == 'Prestação de Contas enviada para Análise')
 {
-	cd_status_projeto = 3;
+	cd_status_projeto = 2;
 }
 else if(SIT_CONVENIO == 'Prestação de Contas Iniciada Por Antecipação')
 {
-	cd_status_projeto = 3;
+	cd_status_projeto = 2;
 }
 else if(SIT_CONVENIO == 'Prestação de Contas Rejeitada')
 {
-	cd_status_projeto = 3;
+	cd_status_projeto = 2;
 }
 else if(SIT_CONVENIO == 'Cancelado')
 {
-	cd_status_projeto = 5;
+	cd_status_projeto = 1;
 }
 else if(SIT_CONVENIO == 'Convênio Anulado')
 {
-	cd_status_projeto = 5;
+	cd_status_projeto = 1;
 }
 else
 {
-	cd_status_projeto = 5;
+	cd_status_projeto = 4;
 }</jsScript_script>
       </jsScript>
     </jsScripts>
