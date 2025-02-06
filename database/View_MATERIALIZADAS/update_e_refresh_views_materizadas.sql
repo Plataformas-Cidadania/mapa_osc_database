@@ -48,6 +48,8 @@ alter materialized view spat.vw_spat_municipio owner to postgres;
 
 alter materialized view spat.vw_spat_regiao owner to postgres;
 
+alter materialized view osc.vw_busca_osc owner to postgres;
+
 -------------------------- REFRESH MATERIALIZED VIEW ------------------------
 
 refresh materialized view portal.vw_osc_dados_gerais;
