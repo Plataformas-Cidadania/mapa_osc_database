@@ -1,0 +1,3 @@
+create sequence syst.dc_situacao_cadastral_cd_situacao_cadastral_seq;
+
+alter sequence syst.dc_situacao_cadastral_cd_situacao_cadastral_seq owner to postgres;

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="SqlDialectMappings">
+    <file url="file://$PROJECT_DIR$/Anonimização de Dados/Associação Amigos dos Animais de Ribeirão Preto-CNPJ36685970000115.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/Anonimização de Dados/Saica Betsaida-CNPJ66063231000314.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/database/MOSC-2531/create_table_quadro_societario.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/database/View_MATERIALIZADAS/update_e_refresh_views_materizadas.sql" dialect="PostgreSQL" />
   </component>
