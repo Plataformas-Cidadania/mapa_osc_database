@@ -1,0 +1,1 @@
+create sequence portal.tb_assinatura_termo_seq;
