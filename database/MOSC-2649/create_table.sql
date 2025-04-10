@@ -1,4 +1,4 @@
-create table portal.tb_termos
+create table portal.tb_termo
 (
     id_termo bigserial
         constraint pk_tb_termos
@@ -7,7 +7,7 @@ create table portal.tb_termos
 );
 
 
-create table portal.tb_assinatura_termos
+create table portal.tb_assinatura_termo
 (
     id_assinatura    bigserial
         constraint pk_tb_assinatura_termo
@@ -15,10 +15,10 @@ create table portal.tb_assinatura_termos
     id_representacao bigint not null
         constraint tb_assinatura_termo_tb_representacao_id_representacao_fk
             references portal.tb_representacao,
-    id_termos        bigint not null
+    id_termo        bigint not null
         constraint tb_assinatura_termo_tb_termos_id_termos_fk
-            references portal.tb_termos (id_termo),
+            references portal.tb_termo (id_termo),
     constraint tb_assinatura_termo_unique
-        unique (id_termos, id_representacao)
+        unique (id_termo, id_representacao)
 );
 
