@@ -22,3 +22,6 @@ create table portal.tb_assinatura_termo
         unique (id_termo, id_representacao)
 );
 
+
+alter table portal.tb_assinatura_termo
+    add dt_assinatura_termo DATE default now();
