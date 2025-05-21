@@ -2,9 +2,9 @@
 <transformation>
   <info>
     <name>Preparar Siconv</name>
-    <description />
-    <extended_description />
-    <trans_version />
+    <description/>
+    <extended_description/>
+    <trans_version/>
     <trans_type>Normal</trans_type>
     <trans_status>0</trans_status>
     <directory>/</directory>
@@ -12,12 +12,12 @@
     </parameters>
     <log>
       <trans-log-table>
-        <connection />
-        <schema />
-        <table />
-        <size_limit_lines />
-        <interval />
-        <timeout_days />
+        <connection/>
+        <schema/>
+        <table/>
+        <size_limit_lines/>
+        <interval/>
+        <timeout_days/>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -42,37 +42,37 @@
           <id>LINES_READ</id>
           <enabled>Y</enabled>
           <name>LINES_READ</name>
-          <subject />
+          <subject/>
         </field>
         <field>
           <id>LINES_WRITTEN</id>
           <enabled>Y</enabled>
           <name>LINES_WRITTEN</name>
-          <subject />
+          <subject/>
         </field>
         <field>
           <id>LINES_UPDATED</id>
           <enabled>Y</enabled>
           <name>LINES_UPDATED</name>
-          <subject />
+          <subject/>
         </field>
         <field>
           <id>LINES_INPUT</id>
           <enabled>Y</enabled>
           <name>LINES_INPUT</name>
-          <subject />
+          <subject/>
         </field>
         <field>
           <id>LINES_OUTPUT</id>
           <enabled>Y</enabled>
           <name>LINES_OUTPUT</name>
-          <subject />
+          <subject/>
         </field>
         <field>
           <id>LINES_REJECTED</id>
           <enabled>Y</enabled>
           <name>LINES_REJECTED</name>
-          <subject />
+          <subject/>
         </field>
         <field>
           <id>ERRORS</id>
@@ -126,11 +126,11 @@
         </field>
       </trans-log-table>
       <perf-log-table>
-        <connection />
-        <schema />
-        <table />
-        <interval />
-        <timeout_days />
+        <connection/>
+        <schema/>
+        <table/>
+        <interval/>
+        <timeout_days/>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -208,10 +208,10 @@
         </field>
       </perf-log-table>
       <channel-log-table>
-        <connection />
-        <schema />
-        <table />
-        <timeout_days />
+        <connection/>
+        <schema/>
+        <table/>
+        <timeout_days/>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -274,10 +274,10 @@
         </field>
       </channel-log-table>
       <step-log-table>
-        <connection />
-        <schema />
-        <table />
-        <timeout_days />
+        <connection/>
+        <schema/>
+        <table/>
+        <timeout_days/>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -350,10 +350,10 @@
         </field>
       </step-log-table>
       <metrics-log-table>
-        <connection />
-        <schema />
-        <table />
-        <timeout_days />
+        <connection/>
+        <schema/>
+        <table/>
+        <timeout_days/>
         <field>
           <id>ID_BATCH</id>
           <enabled>Y</enabled>
@@ -402,9 +402,9 @@
       </metrics-log-table>
     </log>
     <maxdate>
-      <connection />
-      <table />
-      <field />
+      <connection/>
+      <table/>
+      <field/>
       <offset>0.0</offset>
       <maxdiff>0.0</maxdiff>
     </maxdate>
@@ -415,7 +415,7 @@
     <feedback_shown>Y</feedback_shown>
     <feedback_size>50000</feedback_size>
     <using_thread_priorities>Y</using_thread_priorities>
-    <shared_objects_file />
+    <shared_objects_file/>
     <capture_step_performance>N</capture_step_performance>
     <step_performance_capturing_delay>1000</step_performance_capturing_delay>
     <step_performance_capturing_size_limit>100</step_performance_capturing_size_limit>
@@ -431,7 +431,7 @@
     <created_date>2016/09/11 17:12:04.421</created_date>
     <modified_user>-</modified_user>
     <modified_date>2016/09/11 17:12:04.421</modified_date>
-    <key_for_session_key>H4sIAAAAAAAAAAMAAAAAAAAAAAA=</key_for_session_key>
+    <key_for_session_key>H4sIAAAAAAAA/wMAAAAAAAAAAAA=</key_for_session_key>
     <is_key_private>N</is_key_private>
   </info>
   <notepads>
@@ -460,7 +460,7 @@
     <hop>
       <from>Ler convenios 2</from>
       <to>Sort rows 2</to>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
     </hop>
     <hop>
       <from>Ler propostas 2</from>
@@ -478,25 +478,87 @@
       <enabled>Y</enabled>
     </hop>
     <hop>
+      <from>If field value is null</from>
+      <to>Sort rows 2</to>
+      <enabled>Y</enabled>
+    </hop>
+    <hop>
       <from>Merge Join</from>
       <to>Text file output</to>
       <enabled>Y</enabled>
     </hop>
+    <hop>
+      <from>Ler convenios 2</from>
+      <to>If field value is null</to>
+      <enabled>Y</enabled>
+    </hop>
   </order>
   <step>
-    <name>Ler convenios</name>
-    <type>CsvInput</type>
-    <description />
+    <name>If field value is null</name>
+    <type>IfNull</type>
+    <description/>
     <distribute>N</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
+    </partitioning>
+    <replaceAllByValue/>
+    <replaceAllMask/>
+    <selectFields>Y</selectFields>
+    <selectValuesType>N</selectValuesType>
+    <setEmptyStringAll>N</setEmptyStringAll>
+    <valuetypes>
+      <valuetype>
+        <name>String</name>
+        <value>String</value>
+        <mask/>
+        <set_type_empty_string>N</set_type_empty_string>
+      </valuetype>
+    </valuetypes>
+    <fields>
+      <field>
+        <name>VL_DESEMBOLSADO_CONV</name>
+        <value>0</value>
+        <mask/>
+        <set_empty_string>N</set_empty_string>
+      </field>
+      <field>
+        <name>VL_REPASSE_CONV</name>
+        <value>0</value>
+        <mask/>
+        <set_empty_string>N</set_empty_string>
+      </field>
+    </fields>
+    <attributes/>
+    <cluster_schema/>
+    <remotesteps>
+      <input>
+      </input>
+      <output>
+      </output>
+    </remotesteps>
+    <GUI>
+      <xloc>400</xloc>
+      <yloc>480</yloc>
+      <draw>Y</draw>
+    </GUI>
+  </step>
+  <step>
+    <name>Ler convenios</name>
+    <type>CsvInput</type>
+    <description/>
+    <distribute>N</distribute>
+    <custom_distribution/>
+    <copies>1</copies>
+    <partitioning>
+      <method>none</method>
+      <schema_name/>
     </partitioning>
     <filename>${CONVENIOS_CSV}</filename>
-    <filename_field />
-    <rownum_field />
+    <filename_field/>
+    <rownum_field/>
     <include_filename>N</include_filename>
     <separator>;</separator>
     <enclosure>"</enclosure>
@@ -506,6 +568,7 @@
     <add_filename_result>N</add_filename_result>
     <parallel>N</parallel>
     <newline_possible>N</newline_possible>
+    <format/>
     <encoding>UTF-8</encoding>
     <fields>
       <field>
@@ -577,7 +640,7 @@
       <field>
         <name>SIT_CONVENIO</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -588,7 +651,7 @@
       <field>
         <name>SUBSITUACAO_CONV</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -599,7 +662,7 @@
       <field>
         <name>SITUACAO_PUBLICACAO</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -610,7 +673,7 @@
       <field>
         <name>INSTRUMENTO_ATIVO</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -621,7 +684,7 @@
       <field>
         <name>IND_OPERA_OBTV</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -632,7 +695,7 @@
       <field>
         <name>NR_PROCESSO</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -817,7 +880,8 @@
         <trim_type>none</trim_type>
       </field>
     </fields>
-    <cluster_schema />
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -833,26 +897,27 @@
   <step>
     <name>Ler convenios 2</name>
     <type>CsvInput</type>
-    <description />
+    <description/>
     <distribute>N</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
     <filename>${CONVENIOS_CSV}</filename>
-    <filename_field />
-    <rownum_field />
+    <filename_field/>
+    <rownum_field/>
     <include_filename>N</include_filename>
     <separator>;</separator>
     <enclosure>"</enclosure>
     <header>Y</header>
     <buffer_size>50000</buffer_size>
-    <lazy_conversion>Y</lazy_conversion>
+    <lazy_conversion>N</lazy_conversion>
     <add_filename_result>N</add_filename_result>
     <parallel>N</parallel>
     <newline_possible>N</newline_possible>
+    <format>mixed</format>
     <encoding>UTF-8</encoding>
     <fields>
       <field>
@@ -924,7 +989,7 @@
       <field>
         <name>SIT_CONVENIO</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -935,7 +1000,7 @@
       <field>
         <name>SUBSITUACAO_CONV</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -946,7 +1011,7 @@
       <field>
         <name>SITUACAO_PUBLICACAO</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -957,7 +1022,7 @@
       <field>
         <name>INSTRUMENTO_ATIVO</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -968,7 +1033,7 @@
       <field>
         <name>IND_OPERA_OBTV</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -979,7 +1044,7 @@
       <field>
         <name>NR_PROCESSO</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1034,10 +1099,10 @@
       <field>
         <name>DIA_FIM_VIGENC_ORIGINAL_CONV</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
@@ -1067,10 +1132,10 @@
       <field>
         <name>DATA_SUSPENSIVA</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
@@ -1078,10 +1143,10 @@
       <field>
         <name>DATA_RETIRADA_SUSPENSIVA</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
@@ -1089,10 +1154,10 @@
       <field>
         <name>DIAS_CLAUSULA_SUSPENSIVA</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
@@ -1100,7 +1165,7 @@
       <field>
         <name>SITUACAO_CONTRATACAO</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1111,7 +1176,7 @@
       <field>
         <name>IND_ASSINADO</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1122,10 +1187,10 @@
       <field>
         <name>MOTIVO_SUSPENSAO</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
@@ -1133,10 +1198,10 @@
       <field>
         <name>IND_FOTO</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
@@ -1276,10 +1341,10 @@
       <field>
         <name>VL_SALDO_CONTA</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
@@ -1287,16 +1352,17 @@
       <field>
         <name>VALOR_GLOBAL_ORIGINAL_CONV</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
       </field>
     </fields>
-    <cluster_schema />
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -1304,25 +1370,25 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>288</xloc>
-      <yloc>377</yloc>
+      <xloc>176</xloc>
+      <yloc>384</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
   <step>
     <name>Ler propostas</name>
     <type>CsvInput</type>
-    <description />
+    <description/>
     <distribute>N</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
     <filename>${PROPOSTAS_CSV}</filename>
-    <filename_field />
-    <rownum_field />
+    <filename_field/>
+    <rownum_field/>
     <include_filename>N</include_filename>
     <separator>;</separator>
     <enclosure>"</enclosure>
@@ -1332,12 +1398,13 @@
     <add_filename_result>N</add_filename_result>
     <parallel>N</parallel>
     <newline_possible>N</newline_possible>
+    <format/>
     <encoding>UTF-8</encoding>
     <fields>
       <field>
         <name>﻿ID_PROPOSTA</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1348,7 +1415,7 @@
       <field>
         <name>UF_PROPONENTE</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1359,7 +1426,7 @@
       <field>
         <name>MUNIC_PROPONENTE</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1370,7 +1437,7 @@
       <field>
         <name>COD_MUNIC_IBGE</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1381,7 +1448,7 @@
       <field>
         <name>COD_ORGAO_SUP</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1392,7 +1459,7 @@
       <field>
         <name>DESC_ORGAO_SUP</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1403,7 +1470,7 @@
       <field>
         <name>NATUREZA_JURIDICA</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1414,7 +1481,7 @@
       <field>
         <name>NR_PROPOSTA</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1425,7 +1492,7 @@
       <field>
         <name>DIA_PROP</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1458,7 +1525,7 @@
       <field>
         <name>DIA_PROPOSTA</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1480,7 +1547,7 @@
       <field>
         <name>DESC_ORGAO</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1491,7 +1558,7 @@
       <field>
         <name>MODALIDADE</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1513,7 +1580,7 @@
       <field>
         <name>NM_PROPONENTE</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1524,7 +1591,7 @@
       <field>
         <name>CEP_PROPONENTE</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1535,7 +1602,7 @@
       <field>
         <name>ENDERECO_PROPONENTE</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1546,7 +1613,7 @@
       <field>
         <name>BAIRRO_PROPONENTE</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1557,7 +1624,7 @@
       <field>
         <name>NM_BANCO</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1568,7 +1635,7 @@
       <field>
         <name>SITUACAO_CONTA</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1579,7 +1646,7 @@
       <field>
         <name>SITUACAO_PROJETO_BASICO</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1590,7 +1657,7 @@
       <field>
         <name>SIT_PROPOSTA</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1623,7 +1690,7 @@
       <field>
         <name>OBJETO_PROPOSTA</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1665,7 +1732,8 @@
         <trim_type>none</trim_type>
       </field>
     </fields>
-    <cluster_schema />
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -1681,17 +1749,17 @@
   <step>
     <name>Ler propostas 2</name>
     <type>CsvInput</type>
-    <description />
+    <description/>
     <distribute>N</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
     <filename>${PROPOSTAS_CSV}</filename>
-    <filename_field />
-    <rownum_field />
+    <filename_field/>
+    <rownum_field/>
     <include_filename>N</include_filename>
     <separator>;</separator>
     <enclosure>"</enclosure>
@@ -1701,6 +1769,7 @@
     <add_filename_result>N</add_filename_result>
     <parallel>N</parallel>
     <newline_possible>N</newline_possible>
+    <format>mixed</format>
     <encoding>UTF-8</encoding>
     <fields>
       <field>
@@ -1717,7 +1786,7 @@
       <field>
         <name>UF_PROPONENTE</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1728,7 +1797,7 @@
       <field>
         <name>MUNIC_PROPONENTE</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1761,7 +1830,7 @@
       <field>
         <name>DESC_ORGAO_SUP</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1772,7 +1841,7 @@
       <field>
         <name>NATUREZA_JURIDICA</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1783,7 +1852,7 @@
       <field>
         <name>NR_PROPOSTA</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1849,7 +1918,7 @@
       <field>
         <name>DESC_ORGAO</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1860,7 +1929,7 @@
       <field>
         <name>MODALIDADE</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1882,7 +1951,7 @@
       <field>
         <name>NM_PROPONENTE</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1904,7 +1973,7 @@
       <field>
         <name>ENDERECO_PROPONENTE</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1915,7 +1984,7 @@
       <field>
         <name>BAIRRO_PROPONENTE</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1926,7 +1995,7 @@
       <field>
         <name>NM_BANCO</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1937,7 +2006,7 @@
       <field>
         <name>SITUACAO_CONTA</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1948,7 +2017,7 @@
       <field>
         <name>SITUACAO_PROJETO_BASICO</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1959,7 +2028,7 @@
       <field>
         <name>SIT_PROPOSTA</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -1992,7 +2061,7 @@
       <field>
         <name>OBJETO_PROPOSTA</name>
         <type>String</type>
-        <format />
+        <format/>
         <currency>R$</currency>
         <decimal>,</decimal>
         <group>.</group>
@@ -2003,10 +2072,10 @@
       <field>
         <name>ITEM_INVESTIMENTO</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
@@ -2014,10 +2083,10 @@
       <field>
         <name>ENVIADA_MANDATARIA</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
         <length>-1</length>
         <precision>-1</precision>
         <trim_type>both</trim_type>
@@ -2056,7 +2125,8 @@
         <trim_type>both</trim_type>
       </field>
     </fields>
-    <cluster_schema />
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -2072,13 +2142,13 @@
   <step>
     <name>Merge Join</name>
     <type>MergeJoin</type>
-    <description />
+    <description/>
     <distribute>Y</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
     <join_type>INNER</join_type>
     <step1>Sort rows</step1>
@@ -2089,7 +2159,8 @@
     <keys_2>
       <key>ID_PROPOSTA</key>
     </keys_2>
-    <cluster_schema />
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -2105,24 +2176,25 @@
   <step>
     <name>Merge Join 1</name>
     <type>MergeJoin</type>
-    <description />
+    <description/>
     <distribute>N</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
     <join_type>INNER</join_type>
-    <step1 />
-    <step2 />
+    <step1/>
+    <step2/>
     <keys_1>
       <key>﻿ID_PROPOSTA</key>
     </keys_1>
     <keys_2>
       <key>ID_PROPOSTA</key>
     </keys_2>
-    <cluster_schema />
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -2138,20 +2210,20 @@
   <step>
     <name>Sort rows</name>
     <type>SortRows</type>
-    <description />
+    <description/>
     <distribute>Y</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
     <directory>%%java.io.tmpdir%%</directory>
     <prefix>out</prefix>
     <sort_size>1000000</sort_size>
-    <free_memory />
+    <free_memory/>
     <compress>N</compress>
-    <compress_variable />
+    <compress_variable/>
     <unique_rows>N</unique_rows>
     <fields>
       <field>
@@ -2163,7 +2235,8 @@
         <presorted>N</presorted>
       </field>
     </fields>
-    <cluster_schema />
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -2179,20 +2252,20 @@
   <step>
     <name>Sort rows 2</name>
     <type>SortRows</type>
-    <description />
+    <description/>
     <distribute>Y</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
     <directory>%%java.io.tmpdir%%</directory>
     <prefix>out</prefix>
     <sort_size>1000000</sort_size>
-    <free_memory />
+    <free_memory/>
     <compress>N</compress>
-    <compress_variable />
+    <compress_variable/>
     <unique_rows>N</unique_rows>
     <fields>
       <field>
@@ -2204,7 +2277,8 @@
         <presorted>N</presorted>
       </field>
     </fields>
-    <cluster_schema />
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -2220,20 +2294,20 @@
   <step>
     <name>Sort rows convenios</name>
     <type>SortRows</type>
-    <description />
+    <description/>
     <distribute>Y</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
     <directory>%%java.io.tmpdir%%</directory>
     <prefix>out</prefix>
     <sort_size>1000000</sort_size>
-    <free_memory />
+    <free_memory/>
     <compress>N</compress>
-    <compress_variable />
+    <compress_variable/>
     <unique_rows>N</unique_rows>
     <fields>
       <field>
@@ -2245,7 +2319,8 @@
         <presorted>N</presorted>
       </field>
     </fields>
-    <cluster_schema />
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -2261,20 +2336,20 @@
   <step>
     <name>Sort rows propostas</name>
     <type>SortRows</type>
-    <description />
+    <description/>
     <distribute>Y</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
     <directory>%%java.io.tmpdir%%</directory>
     <prefix>out</prefix>
     <sort_size>1000000</sort_size>
-    <free_memory />
+    <free_memory/>
     <compress>N</compress>
-    <compress_variable />
+    <compress_variable/>
     <unique_rows>N</unique_rows>
     <fields>
       <field>
@@ -2286,7 +2361,8 @@
         <presorted>N</presorted>
       </field>
     </fields>
-    <cluster_schema />
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -2302,13 +2378,13 @@
   <step>
     <name>Text file output</name>
     <type>TextFileOutput</type>
-    <description />
+    <description/>
     <distribute>Y</distribute>
-    <custom_distribution />
+    <custom_distribution/>
     <copies>1</copies>
     <partitioning>
       <method>none</method>
-      <schema_name />
+      <schema_name/>
     </partitioning>
     <separator>|</separator>
     <enclosure>"</enclosure>
@@ -2319,13 +2395,12 @@
     <format>UNIX</format>
     <compression>None</compression>
     <encoding>UTF-8</encoding>
-    <endedLine />
+    <endedLine/>
     <fileNameInField>N</fileNameInField>
-    <fileNameField />
+    <fileNameField/>
     <create_parent_folder>Y</create_parent_folder>
     <file>
       <name>${DIRETORIO_DOWNLOAD}/new_file</name>
-      <is_command>N</is_command>
       <servlet_output>N</servlet_output>
       <do_not_open_new_file_init>N</do_not_open_new_file_init>
       <extention>csv</extention>
@@ -2335,7 +2410,7 @@
       <add_date>N</add_date>
       <add_time>N</add_time>
       <SpecifyFormat>N</SpecifyFormat>
-      <date_time_format />
+      <date_time_format/>
       <add_to_result_filenames>Y</add_to_result_filenames>
       <pad>Y</pad>
       <fast_dump>N</fast_dump>
@@ -2346,10 +2421,10 @@
         <name>﻿ID_PROPOSTA</name>
         <type>String</type>
         <format>#</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>15</length>
         <precision>-1</precision>
@@ -2357,11 +2432,11 @@
       <field>
         <name>UF_PROPONENTE</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>2</length>
         <precision>-1</precision>
@@ -2369,11 +2444,11 @@
       <field>
         <name>MUNIC_PROPONENTE</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>25</length>
         <precision>-1</precision>
@@ -2382,10 +2457,10 @@
         <name>COD_MUNIC_IBGE</name>
         <type>String</type>
         <format>#</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>15</length>
         <precision>-1</precision>
@@ -2394,10 +2469,10 @@
         <name>COD_ORGAO_SUP</name>
         <type>String</type>
         <format>#</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>15</length>
         <precision>-1</precision>
@@ -2405,11 +2480,11 @@
       <field>
         <name>DESC_ORGAO_SUP</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>59</length>
         <precision>-1</precision>
@@ -2417,11 +2492,11 @@
       <field>
         <name>NATUREZA_JURIDICA</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>53</length>
         <precision>-1</precision>
@@ -2429,11 +2504,11 @@
       <field>
         <name>NR_PROPOSTA</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>8</length>
         <precision>-1</precision>
@@ -2442,10 +2517,10 @@
         <name>DIA_PROP</name>
         <type>String</type>
         <format>#</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>15</length>
         <precision>-1</precision>
@@ -2454,10 +2529,10 @@
         <name>MES_PROP</name>
         <type>String</type>
         <format>#</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>15</length>
         <precision>-1</precision>
@@ -2466,10 +2541,10 @@
         <name>ANO_PROP</name>
         <type>String</type>
         <format>#</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>15</length>
         <precision>-1</precision>
@@ -2478,10 +2553,10 @@
         <name>DIA_PROPOSTA</name>
         <type>String</type>
         <format>dd/MM/yyyy</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>-1</length>
         <precision>-1</precision>
@@ -2490,10 +2565,10 @@
         <name>COD_ORGAO</name>
         <type>String</type>
         <format>#</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>15</length>
         <precision>-1</precision>
@@ -2501,11 +2576,11 @@
       <field>
         <name>DESC_ORGAO</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>59</length>
         <precision>-1</precision>
@@ -2513,11 +2588,11 @@
       <field>
         <name>MODALIDADE</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>19</length>
         <precision>-1</precision>
@@ -2526,10 +2601,10 @@
         <name>IDENTIF_PROPONENTE</name>
         <type>String</type>
         <format>#</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>15</length>
         <precision>-1</precision>
@@ -2537,11 +2612,11 @@
       <field>
         <name>NM_PROPONENTE</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>101</length>
         <precision>-1</precision>
@@ -2550,10 +2625,10 @@
         <name>CEP_PROPONENTE</name>
         <type>String</type>
         <format>#</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>15</length>
         <precision>-1</precision>
@@ -2561,11 +2636,11 @@
       <field>
         <name>ENDERECO_PROPONENTE</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>125</length>
         <precision>-1</precision>
@@ -2573,11 +2648,11 @@
       <field>
         <name>BAIRRO_PROPONENTE</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>16</length>
         <precision>-1</precision>
@@ -2585,11 +2660,11 @@
       <field>
         <name>NM_BANCO</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>23</length>
         <precision>-1</precision>
@@ -2597,11 +2672,11 @@
       <field>
         <name>SITUACAO_CONTA</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>11</length>
         <precision>-1</precision>
@@ -2609,11 +2684,11 @@
       <field>
         <name>SITUACAO_PROJETO_BASICO</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>14</length>
         <precision>-1</precision>
@@ -2621,11 +2696,11 @@
       <field>
         <name>SIT_PROPOSTA</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>55</length>
         <precision>-1</precision>
@@ -2634,10 +2709,10 @@
         <name>DIA_INIC_VIGENCIA_PROPOSTA</name>
         <type>String</type>
         <format>dd/MM/yyyy</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>-1</length>
         <precision>-1</precision>
@@ -2646,10 +2721,10 @@
         <name>DIA_FIM_VIGENCIA_PROPOSTA</name>
         <type>String</type>
         <format>dd/MM/yyyy</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>-1</length>
         <precision>-1</precision>
@@ -2657,11 +2732,11 @@
       <field>
         <name>OBJETO_PROPOSTA</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>3811</length>
         <precision>-1</precision>
@@ -2669,11 +2744,11 @@
       <field>
         <name>ITEM_INVESTIMENTO</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>-1</length>
         <precision>-1</precision>
@@ -2681,11 +2756,11 @@
       <field>
         <name>ENVIADA_MANDATARIA</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>-1</length>
         <precision>-1</precision>
@@ -2694,10 +2769,10 @@
         <name>VL_GLOBAL_PROP</name>
         <type>String</type>
         <format>#.#</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>15</length>
         <precision>-1</precision>
@@ -2706,10 +2781,10 @@
         <name>VL_REPASSE_PROP</name>
         <type>String</type>
         <format>#.#</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>15</length>
         <precision>-1</precision>
@@ -2718,10 +2793,10 @@
         <name>VL_CONTRAPARTIDA_PROP</name>
         <type>String</type>
         <format>#.#</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>15</length>
         <precision>-1</precision>
@@ -2730,10 +2805,10 @@
         <name>﻿NR_CONVENIO</name>
         <type>String</type>
         <format>#</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>none</trim_type>
         <length>15</length>
         <precision>-1</precision>
@@ -2742,10 +2817,10 @@
         <name>ID_PROPOSTA</name>
         <type>String</type>
         <format>#</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>none</trim_type>
         <length>15</length>
         <precision>-1</precision>
@@ -2754,10 +2829,10 @@
         <name>DIA</name>
         <type>String</type>
         <format>#</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>none</trim_type>
         <length>15</length>
         <precision>-1</precision>
@@ -2766,10 +2841,10 @@
         <name>MES</name>
         <type>String</type>
         <format>#</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>none</trim_type>
         <length>15</length>
         <precision>-1</precision>
@@ -2778,10 +2853,10 @@
         <name>ANO</name>
         <type>String</type>
         <format>#</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>15</length>
         <precision>-1</precision>
@@ -2790,10 +2865,10 @@
         <name>DIA_ASSIN_CONV</name>
         <type>String</type>
         <format>dd/MM/yyyy</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>-1</length>
         <precision>-1</precision>
@@ -2801,11 +2876,11 @@
       <field>
         <name>SIT_CONVENIO</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>61</length>
         <precision>-1</precision>
@@ -2813,11 +2888,11 @@
       <field>
         <name>SUBSITUACAO_CONV</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>30</length>
         <precision>-1</precision>
@@ -2825,11 +2900,11 @@
       <field>
         <name>SITUACAO_PUBLICACAO</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>9</length>
         <precision>-1</precision>
@@ -2837,11 +2912,11 @@
       <field>
         <name>INSTRUMENTO_ATIVO</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>3</length>
         <precision>-1</precision>
@@ -2849,11 +2924,11 @@
       <field>
         <name>IND_OPERA_OBTV</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>3</length>
         <precision>-1</precision>
@@ -2861,11 +2936,11 @@
       <field>
         <name>NR_PROCESSO</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>20</length>
         <precision>-1</precision>
@@ -2874,10 +2949,10 @@
         <name>UG_EMITENTE</name>
         <type>String</type>
         <format>#</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>15</length>
         <precision>-1</precision>
@@ -2886,10 +2961,10 @@
         <name>DIA_PUBL_CONV</name>
         <type>String</type>
         <format>dd/MM/yyyy</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>-1</length>
         <precision>-1</precision>
@@ -2898,10 +2973,10 @@
         <name>DIA_INIC_VIGENC_CONV</name>
         <type>String</type>
         <format>dd/MM/yyyy</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>-1</length>
         <precision>-1</precision>
@@ -2910,10 +2985,10 @@
         <name>DIA_FIM_VIGENC_CONV</name>
         <type>String</type>
         <format>dd/MM/yyyy</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>-1</length>
         <precision>-1</precision>
@@ -2921,11 +2996,11 @@
       <field>
         <name>DIA_FIM_VIGENC_ORIGINAL_CONV</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>-1</length>
         <precision>-1</precision>
@@ -2934,10 +3009,10 @@
         <name>DIAS_PREST_CONTAS</name>
         <type>String</type>
         <format>#</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>15</length>
         <precision>-1</precision>
@@ -2946,10 +3021,10 @@
         <name>DIA_LIMITE_PREST_CONTAS</name>
         <type>String</type>
         <format>dd/MM/yyyy</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>-1</length>
         <precision>-1</precision>
@@ -2957,11 +3032,11 @@
       <field>
         <name>DATA_SUSPENSIVA</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>-1</length>
         <precision>-1</precision>
@@ -2969,11 +3044,11 @@
       <field>
         <name>DATA_RETIRADA_SUSPENSIVA</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>-1</length>
         <precision>-1</precision>
@@ -2981,11 +3056,11 @@
       <field>
         <name>DIAS_CLAUSULA_SUSPENSIVA</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>-1</length>
         <precision>-1</precision>
@@ -2993,11 +3068,11 @@
       <field>
         <name>SITUACAO_CONTRATACAO</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>19</length>
         <precision>-1</precision>
@@ -3005,11 +3080,11 @@
       <field>
         <name>IND_ASSINADO</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>3</length>
         <precision>-1</precision>
@@ -3017,11 +3092,11 @@
       <field>
         <name>MOTIVO_SUSPENSAO</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>-1</length>
         <precision>-1</precision>
@@ -3029,11 +3104,11 @@
       <field>
         <name>IND_FOTO</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>-1</length>
         <precision>-1</precision>
@@ -3042,10 +3117,10 @@
         <name>QTDE_CONVENIOS</name>
         <type>String</type>
         <format>#</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>15</length>
         <precision>-1</precision>
@@ -3054,10 +3129,10 @@
         <name>QTD_TA</name>
         <type>String</type>
         <format>#</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>15</length>
         <precision>-1</precision>
@@ -3066,10 +3141,10 @@
         <name>QTD_PRORROGA</name>
         <type>String</type>
         <format>#</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>15</length>
         <precision>-1</precision>
@@ -3078,10 +3153,10 @@
         <name>VL_GLOBAL_CONV</name>
         <type>String</type>
         <format>#.#</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>15</length>
         <precision>-1</precision>
@@ -3090,10 +3165,10 @@
         <name>VL_REPASSE_CONV</name>
         <type>String</type>
         <format>#.#</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>15</length>
         <precision>-1</precision>
@@ -3102,10 +3177,10 @@
         <name>VL_CONTRAPARTIDA_CONV</name>
         <type>String</type>
         <format>#.#</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>15</length>
         <precision>-1</precision>
@@ -3114,10 +3189,10 @@
         <name>VL_EMPENHADO_CONV</name>
         <type>String</type>
         <format>#.#</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>15</length>
         <precision>-1</precision>
@@ -3126,10 +3201,10 @@
         <name>VL_DESEMBOLSADO_CONV</name>
         <type>String</type>
         <format>#.#</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>15</length>
         <precision>-1</precision>
@@ -3138,10 +3213,10 @@
         <name>VL_SALDO_REMAN_TESOURO</name>
         <type>String</type>
         <format>#.#</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>15</length>
         <precision>-1</precision>
@@ -3150,10 +3225,10 @@
         <name>VL_SALDO_REMAN_CONVENENTE</name>
         <type>String</type>
         <format>#.#</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>15</length>
         <precision>-1</precision>
@@ -3162,10 +3237,10 @@
         <name>VL_RENDIMENTO_APLICACAO</name>
         <type>String</type>
         <format>#.#</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>15</length>
         <precision>-1</precision>
@@ -3174,10 +3249,10 @@
         <name>VL_INGRESSO_CONTRAPARTIDA</name>
         <type>String</type>
         <format>#.#</format>
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>15</length>
         <precision>-1</precision>
@@ -3185,11 +3260,11 @@
       <field>
         <name>VL_SALDO_CONTA</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>-1</length>
         <precision>-1</precision>
@@ -3197,17 +3272,18 @@
       <field>
         <name>VALOR_GLOBAL_ORIGINAL_CONV</name>
         <type>String</type>
-        <format />
-        <currency />
-        <decimal />
-        <group />
-        <nullif />
+        <format/>
+        <currency/>
+        <decimal/>
+        <group/>
+        <nullif/>
         <trim_type>both</trim_type>
         <length>-1</length>
         <precision>-1</precision>
       </field>
     </fields>
-    <cluster_schema />
+    <attributes/>
+    <cluster_schema/>
     <remotesteps>
       <input>
       </input>
@@ -3215,8 +3291,8 @@
       </output>
     </remotesteps>
     <GUI>
-      <xloc>602</xloc>
-      <yloc>325</yloc>
+      <xloc>784</xloc>
+      <yloc>320</yloc>
       <draw>Y</draw>
     </GUI>
   </step>
@@ -3225,4 +3301,5 @@
   <slave-step-copy-partition-distribution>
   </slave-step-copy-partition-distribution>
   <slave_transformation>N</slave_transformation>
+  <attributes/>
 </transformation>
