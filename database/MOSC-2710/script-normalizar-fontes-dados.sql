@@ -16,6 +16,7 @@ BEGIN
         );
         RAISE NOTICE '%', v_sql; -- Remove ou comente esta linha se quiser executar diretamente, é útil para testar.
         EXECUTE v_sql;
+        COMMIT ;
     END LOOP;
 END
 $$;

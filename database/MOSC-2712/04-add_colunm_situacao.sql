@@ -4,4 +4,4 @@ alter table osc.tb_osc
             references syst.dc_situacao_cadastral;
 
 alter table osc.tb_dados_gerais
-    drop column dc_situacao_cadastral;
+    drop column cd_situacao_cadastral;

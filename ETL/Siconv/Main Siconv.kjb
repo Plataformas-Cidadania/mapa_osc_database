@@ -21,9 +21,9 @@
     <port>${db_port}</port>
     <username>${db_user}</username>
     <password>${db_pass}</password>
-    <servername />
-    <data_tablespace />
-    <index_tablespace />
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
     <attributes>
       <attribute>
         <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
@@ -442,9 +442,9 @@ true;
       <dest_fieldname/>
       <username/>
       <password>Encrypted </password>
-      <proxy_host>cache.ipea.gov.br</proxy_host>
-      <proxy_port>3128</proxy_port>
-      <non_proxy_hosts />
+      <proxy_host/>
+      <proxy_port/>
+      <non_proxy_hosts/>
       <addfilenameresult>Y</addfilenameresult>
       <headers>
       </headers>
@@ -929,7 +929,7 @@ true;
       <to>Carregar Siconv</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>N</enabled>
+      <enabled>Y</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
