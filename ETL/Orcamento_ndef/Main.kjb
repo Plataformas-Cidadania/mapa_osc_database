@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <job>
   <name>Main</name>
-  <description />
-  <extended_description />
-  <job_version />
+  <description/>
+  <extended_description/>
+  <job_version/>
   <directory>/</directory>
   <created_user>-</created_user>
   <created_date>2019/01/30 18:27:54.162</created_date>
@@ -20,9 +20,9 @@
     <port>${PORTA}</port>
     <username>${USER}</username>
     <password>${PASS}</password>
-    <servername />
-    <data_tablespace />
-    <index_tablespace />
+    <servername/>
+    <data_tablespace/>
+    <index_tablespace/>
     <attributes>
       <attribute>
         <code>FORCE_IDENTIFIERS_TO_LOWERCASE</code>
@@ -65,12 +65,12 @@
   <slaveservers>
     </slaveservers>
   <job-log-table>
-    <connection />
-    <schema />
-    <table />
-    <size_limit_lines />
-    <interval />
-    <timeout_days />
+    <connection/>
+    <schema/>
+    <table/>
+    <size_limit_lines/>
+    <interval/>
+    <timeout_days/>
     <field>
       <id>ID_JOB</id>
       <enabled>Y</enabled>
@@ -178,10 +178,10 @@
     </field>
   </job-log-table>
   <jobentry-log-table>
-    <connection />
-    <schema />
-    <table />
-    <timeout_days />
+    <connection/>
+    <schema/>
+    <table/>
+    <timeout_days/>
     <field>
       <id>ID_BATCH</id>
       <enabled>Y</enabled>
@@ -269,10 +269,10 @@
     </field>
   </jobentry-log-table>
   <channel-log-table>
-    <connection />
-    <schema />
-    <table />
-    <timeout_days />
+    <connection/>
+    <schema/>
+    <table/>
+    <timeout_days/>
     <field>
       <id>ID_BATCH</id>
       <enabled>Y</enabled>
@@ -335,12 +335,13 @@
     </field>
   </channel-log-table>
   <pass_batchid>N</pass_batchid>
-  <shared_objects_file />
+  <shared_objects_file/>
   <entries>
     <entry>
       <name>START</name>
-      <description />
+      <description/>
       <type>SPECIAL</type>
+      <attributes/>
       <start>Y</start>
       <dummy>N</dummy>
       <repeat>N</repeat>
@@ -356,48 +357,52 @@
       <nr>0</nr>
       <xloc>82</xloc>
       <yloc>177</yloc>
+      <attributes_kjc/>
     </entry>
     <entry>
       <name>Success</name>
-      <description />
+      <description/>
       <type>SUCCESS</type>
+      <attributes/>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>673</xloc>
       <yloc>87</yloc>
+      <attributes_kjc/>
     </entry>
     <entry>
       <name>Set variables</name>
-      <description />
+      <description/>
       <type>SET_VARIABLES</type>
+      <attributes/>
       <replacevars>Y</replacevars>
-      <filename />
+      <filename/>
       <file_variable_type>JVM</file_variable_type>
       <fields>
         <field>
           <variable_name>BANCO</variable_name>
-          <variable_value />
+          <variable_value>portal_osc2</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>PORTA</variable_name>
-          <variable_value />
+          <variable_value>5432</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>USER</variable_name>
-          <variable_value />
+          <variable_value>usrpublica</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>SERV</variable_name>
-          <variable_value />
+          <variable_value>psql12-homolog</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>ETL</variable_name>
-          <variable_value>SIGABR 12/2018</variable_value>
+          <variable_value>SIGABR 12/2024</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
@@ -407,7 +412,12 @@
         </field>
         <field>
           <variable_name>PASS</variable_name>
-          <variable_value />
+          <variable_value>k0IT18gLpMURDECJBmzY</variable_value>
+          <variable_type>JVM</variable_type>
+        </field>
+        <field>
+          <variable_name>ID_CARGA</variable_name>
+          <variable_value>936</variable_value>
           <variable_type>JVM</variable_type>
         </field>
       </fields>
@@ -416,34 +426,37 @@
       <nr>0</nr>
       <xloc>179</xloc>
       <yloc>177</yloc>
+      <attributes_kjc/>
     </entry>
     <entry>
       <name>Transf Indice</name>
-      <description />
+      <description/>
       <type>TRANS</type>
+      <attributes/>
       <specification_method>filename</specification_method>
-      <trans_object_id />
+      <trans_object_id/>
       <filename>${Internal.Job.Filename.Directory}/Transf_Indice.ktr</filename>
-      <transname />
+      <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
       <exec_per_row>N</exec_per_row>
       <clear_rows>N</clear_rows>
       <clear_files>N</clear_files>
       <set_logfile>N</set_logfile>
-      <logfile />
-      <logext />
+      <logfile/>
+      <logext/>
       <add_date>N</add_date>
       <add_time>N</add_time>
       <loglevel>Basic</loglevel>
       <cluster>N</cluster>
-      <slave_server_name />
+      <slave_server_name/>
       <set_append_logfile>N</set_append_logfile>
       <wait_until_finished>Y</wait_until_finished>
       <follow_abort_remote>N</follow_abort_remote>
       <create_parent_folder>N</create_parent_folder>
       <logging_remote_work>N</logging_remote_work>
-      <run_configuration />
+      <run_configuration/>
+      <suppress_result_data>N</suppress_result_data>
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
       </parameters>
@@ -452,54 +465,59 @@
       <nr>0</nr>
       <xloc>416</xloc>
       <yloc>176</yloc>
+      <attributes_kjc/>
     </entry>
     <entry>
       <name>Log_Carga</name>
-      <description />
+      <description/>
       <type>TRANS</type>
+      <attributes/>
       <specification_method>filename</specification_method>
-      <trans_object_id />
-      <filename>${folder_ETL}Orcamento_ndef/CARGA.ktr</filename>
-      <transname />
+      <trans_object_id/>
+      <filename>${Internal.Job.Filename.Directory}/CARGA.ktr</filename>
+      <transname/>
       <arg_from_previous>N</arg_from_previous>
       <params_from_previous>N</params_from_previous>
       <exec_per_row>N</exec_per_row>
       <clear_rows>N</clear_rows>
       <clear_files>N</clear_files>
       <set_logfile>N</set_logfile>
-      <logfile />
-      <logext />
+      <logfile/>
+      <logext/>
       <add_date>N</add_date>
       <add_time>N</add_time>
       <loglevel>Basic</loglevel>
       <cluster>N</cluster>
-      <slave_server_name />
+      <slave_server_name/>
       <set_append_logfile>N</set_append_logfile>
       <wait_until_finished>Y</wait_until_finished>
       <follow_abort_remote>N</follow_abort_remote>
       <create_parent_folder>N</create_parent_folder>
       <logging_remote_work>N</logging_remote_work>
       <run_configuration>Pentaho local</run_configuration>
+      <suppress_result_data>N</suppress_result_data>
       <parameters>
         <pass_all_parameters>Y</pass_all_parameters>
       </parameters>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>276</xloc>
-      <yloc>173</yloc>
+      <xloc>272</xloc>
+      <yloc>64</yloc>
+      <attributes_kjc/>
     </entry>
     <entry>
       <name>SQL Sucesso</name>
-      <description />
+      <description/>
       <type>SQL</type>
+      <attributes/>
       <sql>ALTER TABLE osc.tb_recursos_osc ENABLE TRIGGER ALL;
 
 UPDATE log.tb_log_carga SET dt_fim = NOW()::timestamp, cd_status = 9
 WHERE id_carga = ${ID_CARGA};</sql>
       <useVariableSubstitution>T</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
-      <sqlfilename />
+      <sqlfilename/>
       <sendOneStatement>F</sendOneStatement>
       <connection>banco</connection>
       <parallel>N</parallel>
@@ -507,16 +525,18 @@ WHERE id_carga = ${ID_CARGA};</sql>
       <nr>0</nr>
       <xloc>533</xloc>
       <yloc>86</yloc>
+      <attributes_kjc/>
     </entry>
     <entry>
       <name>SQL Falha</name>
-      <description />
+      <description/>
       <type>SQL</type>
+      <attributes/>
       <sql>UPDATE log.tb_log_carga SET dt_fim = NOW()::timestamp, cd_status = 2
 WHERE id_carga = ${ID_CARGA};</sql>
       <useVariableSubstitution>T</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
-      <sqlfilename />
+      <sqlfilename/>
       <sendOneStatement>F</sendOneStatement>
       <connection>banco</connection>
       <parallel>N</parallel>
@@ -524,35 +544,39 @@ WHERE id_carga = ${ID_CARGA};</sql>
       <nr>0</nr>
       <xloc>528</xloc>
       <yloc>200</yloc>
+      <attributes_kjc/>
     </entry>
     <entry>
       <name>Abort job</name>
-      <description />
+      <description/>
       <type>ABORT</type>
-      <message />
+      <attributes/>
+      <message/>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
       <xloc>674</xloc>
       <yloc>199</yloc>
+      <attributes_kjc/>
     </entry>
     <entry>
       <name>SQL</name>
-      <description />
+      <description/>
       <type>SQL</type>
+      <attributes/>
       <sql>ALTER TABLE osc.tb_recursos_osc DISABLE TRIGGER ALL;
-
 DELETE FROM osc.tb_recursos_osc WHERE cd_fonte_recursos_osc = 157;</sql>
       <useVariableSubstitution>F</useVariableSubstitution>
       <sqlfromfile>F</sqlfromfile>
-      <sqlfilename />
+      <sqlfilename/>
       <sendOneStatement>F</sendOneStatement>
       <connection>banco</connection>
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>352</xloc>
+      <xloc>304</xloc>
       <yloc>176</yloc>
+      <attributes_kjc/>
     </entry>
   </entries>
   <hops>
@@ -641,10 +665,6 @@ DELETE FROM osc.tb_recursos_osc WHERE cd_fonte_recursos_osc = 157;</sql>
     </group>
     <group>
       <name>{"_":"Embedded MetaStore Elements","namespace":"pentaho","type":"Default Run Configuration"}</name>
-      <attribute>
-        <key>Pentaho local</key>
-        <value>{"children":[{"children":[],"id":"server","value":null},{"children":[],"id":"clustered","value":"N"},{"children":[],"id":"name","value":"Pentaho local"},{"children":[],"id":"description","value":null},{"children":[],"id":"readOnly","value":"Y"},{"children":[],"id":"sendResources","value":"N"},{"children":[],"id":"logRemoteExecutionLocally","value":"N"},{"children":[],"id":"remote","value":"N"},{"children":[],"id":"local","value":"Y"},{"children":[],"id":"showTransformations","value":"N"}],"id":"Pentaho local","value":null,"name":"Pentaho local","owner":null,"ownerPermissionsList":[]}</value>
-      </attribute>
     </group>
   </attributes>
 </job>

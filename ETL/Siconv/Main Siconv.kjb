@@ -442,8 +442,8 @@ true;
       <dest_fieldname/>
       <username/>
       <password>Encrypted </password>
-      <proxy_host/>
-      <proxy_port/>
+      <proxy_host>cache.ipea.gov.br</proxy_host>
+      <proxy_port>3128</proxy_port>
       <non_proxy_hosts/>
       <addfilenameresult>Y</addfilenameresult>
       <headers>
@@ -487,7 +487,7 @@ true;
       <password>Encrypted </password>
       <proxy_host>cache.ipea.gov.br</proxy_host>
       <proxy_port>3128</proxy_port>
-      <non_proxy_hosts />
+      <non_proxy_hosts/>
       <addfilenameresult>Y</addfilenameresult>
       <headers>
       </headers>
@@ -631,7 +631,7 @@ true;
       <parallel>N</parallel>
       <draw>Y</draw>
       <nr>0</nr>
-      <xloc>576</xloc>
+      <xloc>400</xloc>
       <yloc>400</yloc>
       <attributes_kjc/>
     </entry>
@@ -681,27 +681,27 @@ true;
         </field>
         <field>
           <variable_name>db_host</variable_name>
-          <variable_value />
+          <variable_value>psql10-df</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>db_name</variable_name>
-          <variable_value />
+          <variable_value>rais_2019</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>db_port</variable_name>
-          <variable_value />
+          <variable_value>5432</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>db_user</variable_name>
-          <variable_value />
+          <variable_value>B41776273800</variable_value>
           <variable_type>JVM</variable_type>
         </field>
         <field>
           <variable_name>db_pass</variable_name>
-          <variable_value />
+          <variable_value/>
           <variable_type>JVM</variable_type>
         </field>
       </fields>
@@ -785,6 +785,45 @@ true;
       <nr>0</nr>
       <xloc>741</xloc>
       <yloc>401</yloc>
+      <attributes_kjc/>
+    </entry>
+    <entry>
+      <name>MigrarTabela</name>
+      <description/>
+      <type>TRANS</type>
+      <attributes/>
+      <specification_method>filename</specification_method>
+      <trans_object_id/>
+      <filename>${Internal.Job.Filename.Directory}/MigrarTabela.ktr</filename>
+      <transname/>
+      <arg_from_previous>N</arg_from_previous>
+      <params_from_previous>N</params_from_previous>
+      <exec_per_row>N</exec_per_row>
+      <clear_rows>N</clear_rows>
+      <clear_files>N</clear_files>
+      <set_logfile>N</set_logfile>
+      <logfile/>
+      <logext/>
+      <add_date>N</add_date>
+      <add_time>N</add_time>
+      <loglevel>Basic</loglevel>
+      <cluster>N</cluster>
+      <slave_server_name/>
+      <set_append_logfile>N</set_append_logfile>
+      <wait_until_finished>Y</wait_until_finished>
+      <follow_abort_remote>N</follow_abort_remote>
+      <create_parent_folder>N</create_parent_folder>
+      <logging_remote_work>N</logging_remote_work>
+      <run_configuration>Pentaho local</run_configuration>
+      <suppress_result_data>N</suppress_result_data>
+      <parameters>
+        <pass_all_parameters>Y</pass_all_parameters>
+      </parameters>
+      <parallel>N</parallel>
+      <draw>Y</draw>
+      <nr>0</nr>
+      <xloc>576</xloc>
+      <yloc>480</yloc>
       <attributes_kjc/>
     </entry>
   </entries>
@@ -947,13 +986,31 @@ true;
       <to>Success</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
-      <enabled>Y</enabled>
+      <enabled>N</enabled>
       <evaluation>Y</evaluation>
       <unconditional>N</unconditional>
     </hop>
     <hop>
       <from>Deszipar convênios</from>
       <to>Carregar Siconv</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>Ativar triggers </from>
+      <to>MigrarTabela</to>
+      <from_nr>0</from_nr>
+      <to_nr>0</to_nr>
+      <enabled>Y</enabled>
+      <evaluation>Y</evaluation>
+      <unconditional>N</unconditional>
+    </hop>
+    <hop>
+      <from>MigrarTabela</from>
+      <to>Success</to>
       <from_nr>0</from_nr>
       <to_nr>0</to_nr>
       <enabled>Y</enabled>
