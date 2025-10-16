@@ -6,6 +6,11 @@
     <file url="file://$PROJECT_DIR$/database/MOSC-2531/create_table_quadro_societario.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/database/MOSC-2649/add_sequence.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/database/MOSC-2649/create_table.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/database/MOSC-2788/01-tab_nivel_federativo.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/database/MOSC-2788/02-tab_tipo_abrangencia_conselho.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/database/MOSC-2788/03-tab_conselho.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/database/MOSC-2788/04-tab_conselheiros.sql" dialect="PostgreSQL" />
+    <file url="file://$PROJECT_DIR$/database/MOSC-2788/05-tab_representacao_conselho.sql" dialect="PostgreSQL" />
     <file url="file://$PROJECT_DIR$/database/View_MATERIALIZADAS/update_e_refresh_views_materizadas.sql" dialect="PostgreSQL" />
   </component>
 </project>
