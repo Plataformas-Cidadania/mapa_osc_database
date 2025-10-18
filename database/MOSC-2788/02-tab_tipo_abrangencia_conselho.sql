@@ -16,3 +16,6 @@ create table syst.dc_abrangencia_conselho
 alter table syst.dc_abrangencia_conselho
     owner to postgres;
 
+
+INSERT INTO syst.dc_abrangencia_conselho (cd_tipo_abrangencia, tx_nome_abrangencia)
+VALUES (DEFAULT, 'Governamental');

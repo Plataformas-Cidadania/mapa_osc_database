@@ -28,3 +28,6 @@ alter table confocos.tb_conselho
 
 create unique index ix_tb_conselho
     on confocos.tb_conselho (id_conselho);
+
+INSERT INTO confocos.tb_conselho (id_conselho, tx_nome_conselho, tx_ato_legal, tx_website, bo_conselho_ativo, cd_nivel_federativo, cd_tipo_abrangencia)
+VALUES (1, 'Teste', 'Teste', 'www.teste.com', true, 1, 1);

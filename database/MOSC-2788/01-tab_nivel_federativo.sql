@@ -16,3 +16,6 @@ create table syst.dc_nivel_federativo
 alter table syst.dc_situacao_cadastral
     owner to postgres;
 
+
+INSERT INTO syst.dc_nivel_federativo (cd_nivel_federativo, tx_nome_nivel_federativo)
+VALUES (DEFAULT, 'Nacional');
