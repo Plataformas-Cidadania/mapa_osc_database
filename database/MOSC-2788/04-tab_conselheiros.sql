@@ -14,7 +14,7 @@ create table confocos.tb_conselheiro
 
     id_conselho             integer
         constraint tb_conselheiro_tb_consellho_fk
-            references confocos.tb_conselheiro
+            references confocos.tb_conselho
 );
 
 alter table confocos.tb_conselheiro
