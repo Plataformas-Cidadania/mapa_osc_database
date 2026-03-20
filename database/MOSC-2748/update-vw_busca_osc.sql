@@ -1,4 +1,4 @@
-create materialized view vw_busca_osc as
+create materialized view osc.vw_busca_osc as
 SELECT tb_osc.id_osc,
        tb_osc.cd_identificador_osc,
        tb_osc.cd_situacao_cadastral,

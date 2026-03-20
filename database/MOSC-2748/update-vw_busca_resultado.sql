@@ -1,4 +1,4 @@
-create materialized view vw_busca_resultado as
+create materialized view osc.vw_busca_resultado as
 SELECT tb_osc.id_osc,
        btrim(COALESCE("substring"(tb_dados_gerais.tx_nome_fantasia_osc, ''::text, NULL::text),
                       tb_dados_gerais.tx_razao_social_osc))                                                 AS tx_nome_osc,
@@ -38,12 +38,12 @@ FROM osc.tb_osc
          LEFT JOIN osc.tb_localizacao ON tb_osc.id_osc = tb_localizacao.id_osc
 WHERE tb_osc.bo_osc_ativa = true;
 
-comment on column vw_busca_resultado.id_osc is 'Identificador da OSC';
+comment on column osc.vw_busca_resultado.id_osc is 'Identificador da OSC';
 
-comment on column vw_busca_resultado.im_logo is 'Imagem da OSC';
+comment on column osc.vw_busca_resultado.im_logo is 'Imagem da OSC';
 
-alter materialized view vw_busca_resultado owner to postgres;
+alter materialized view osc.vw_busca_resultado owner to postgres;
 
 create unique index ix_vw_busca_resultado
-    on vw_busca_resultado (id_osc);
+    on osc.vw_busca_resultado (id_osc);
 
